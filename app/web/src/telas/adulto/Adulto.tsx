@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CONFIG_PADRAO, CONQUISTA_POR_ID, FASE_POR_ID, type ConfigPlataforma } from '@fonema/conteudo';
-import { avaliarConquistas, filaProfessor, mapaHabilidades, progressoInicial, resumoFamilia, type Crianca, type Demonstracao, type Evento, type Progresso, type StatusDemonstracao } from '@fonema/motor';
+import { avaliarConquistas, calcularNivel, fasesConcluidas as fasesConcluidasDe, filaProfessor, mapaHabilidades, progressoInicial, resumoFamilia, type Crianca, type Demonstracao, type Evento, type Progresso, type StatusDemonstracao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
-import { AvatarMini, Carregando, Topo } from '../../componentes/basicos.tsx';
+import { AvatarMini, Carregando, Logo, Topo } from '../../componentes/basicos.tsx';
+import { IcCadeado, IcMais, IcMusica, IcSeta } from '../../componentes/icones.tsx';
 import { BarraObjetivo, Termometro } from '../../componentes/recompensas.tsx';
 import { asset } from '../../servicos/ambiente.ts';
 import { voz } from '../../servicos/voz.ts';
@@ -38,37 +39,77 @@ export function Porteira({ children }: { children: ReactNode }) {
   );
 }
 
-/* ------------------------------ início (quem vai jogar?) ------------------------------ */
+/* ------------------------------ início (quem vai aprender?) ------------------------------ */
+/** Tela inicial: arte 3D da vila em tela cheia, dupla em destaque, perfis como cartões e a Área do adulto discreta. */
 export function Inicio() {
   const { repo, pronto } = useApp();
-  const [criancas, setCriancas] = useState<Crianca[] | null>(null);
-  useEffect(() => { repo.listarCriancas().then(setCriancas); }, [repo]);
-  if (!pronto || !criancas) return <Carregando />;
+  const [perfis, setPerfis] = useState<{ c: Crianca; p?: Progresso }[] | null>(null);
+  const [musica, setMusica] = useState(false);
+  const audio = useRef<HTMLAudioElement | null>(null);
+  const palco = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    repo.listarCriancas().then(async (cs) => setPerfis(await Promise.all(cs.map(async (c) => ({ c, p: await repo.obterProgresso(c.id) })))));
+  }, [repo]);
+  useEffect(() => () => audio.current?.pause(), []);
+  const alternarMusica = () => {
+    if (!audio.current) { audio.current = new Audio(asset('audio/musica-vogais.mp3')); audio.current.loop = true; audio.current.volume = 0.25; }
+    if (musica) audio.current.pause(); else audio.current.play().catch(() => undefined);
+    setMusica(!musica);
+  };
+  const mover = (e: React.PointerEvent) => {
+    const r = palco.current?.getBoundingClientRect();
+    if (!r) return;
+    palco.current!.style.setProperty('--px', String((e.clientX - r.left) / r.width - 0.5));
+    palco.current!.style.setProperty('--py', String((e.clientY - r.top) / r.height - 0.5));
+  };
+  if (!pronto || !perfis) return <Carregando />;
+  const entrar = (c: Crianca) => { voz.definirNome(c.pronuncia.fala); navegar(`c/${c.id}/mundo`); };
   return (
-    <div className="tela-inicio">
-      <img className="cenario" src={asset('fundos/vila.webp')} alt="" />
-      <Topo titulo="plataforma de alfabetização" />
-      <main className="palco inicio">
-        <section className="cartao inicio-cartao">
-          <img className="dupla-corpo pequeno" src={asset('dupla/dupla-corpo.webp')} alt="Sofia e Tales" />
-          <h1 className="t">Quem vai aprender hoje?</h1>
-          {criancas.length ? (
+    <div className="tela-inicio" ref={palco} onPointerMove={mover}>
+      <div className="inicio-fundo" aria-hidden="true"><img src={asset('fundos/vila.webp')} alt="" /></div>
+      <div className="inicio-veu" aria-hidden="true" />
+      <header className="inicio-topo">
+        <Logo grande subtitulo="aprender a ler com a Sofia e o Tales" />
+        <div className="inicio-acoes">
+          <button className={`chip ${musica ? 'ativo' : ''}`} onClick={alternarMusica} aria-pressed={musica} title="Música ambiente"><IcMusica tamanho={22} ligado={musica} /> <span>Música</span></button>
+          <button className="chip" onClick={() => navegar(perfis.length ? 'adulto' : 'adulto/cadastro')} data-testid="area-adulto"><IcCadeado tamanho={22} /> <span>Área do adulto</span></button>
+        </div>
+      </header>
+      <main className="inicio-palco">
+        <section className="inicio-texto">
+          <p className="inicio-sobre entra" style={{ animationDelay: '.1s' }}>Vila das Letras</p>
+          <h1 className="inicio-titulo entra" style={{ animationDelay: '.2s' }}>{perfis.length ? 'Quem vai aprender hoje?' : 'Vamos aprender a ler juntos?'}</h1>
+          {perfis.length ? (
             <div className="perfis">
-              {criancas.map((c) => (
-                <button key={c.id} className="perfil" onClick={() => navegar(`c/${c.id}/mundo`)} data-perfil={c.nome}>
-                  <AvatarMini crianca={c} tamanho={96} />
-                  <b>{c.nome}</b>
-                </button>
-              ))}
+              {perfis.map(({ c, p }, i) => {
+                const n = p ? calcularNivel(p.desafios, p.fases['R0-F01']?.estado === 'concluida', fasesConcluidasDe(p)) : null;
+                return (
+                  <button key={c.id} className="perfil entra" style={{ animationDelay: `${0.3 + i * 0.08}s` }} onClick={() => entrar(c)} data-perfil={c.nome}>
+                    <AvatarMini crianca={c} tamanho={92} />
+                    <span className="perfil-txt"><b>{c.nome}</b><small>{n && n.nivel ? `${n.titulo} ${n.sub} · nível ${n.nivel}` : 'Começando a aventura'}</small></span>
+                    <span className="perfil-seta" aria-hidden="true"><IcSeta tamanho={26} /></span>
+                  </button>
+                );
+              })}
+              <button className="perfil perfil-novo entra" style={{ animationDelay: `${0.3 + perfis.length * 0.08}s` }} onClick={() => navegar('adulto/cadastro')}>
+                <span className="perfil-mais" aria-hidden="true"><IcMais tamanho={34} /></span>
+                <span className="perfil-txt"><b>Nova criança</b><small>O adulto cadastra em 2 minutos</small></span>
+              </button>
             </div>
           ) : (
-            <p>Bem-vindos! Um adulto cadastra a criança primeiro (2 minutos).</p>
+            <>
+              <p className="inicio-sub entra" style={{ animationDelay: '.3s' }}>Sons, letras, histórias e muitas descobertas na Vila das Letras. Um adulto começa o cadastro e depois entrega o aparelho para a criança.</p>
+              <button className="btn-brilho entra" style={{ animationDelay: '.4s' }} onClick={() => navegar('adulto/cadastro')} data-testid="comecar-aventura">
+                Começar a aventura <IcSeta tamanho={30} />
+              </button>
+            </>
           )}
-          <div className="linha-botoes">
-            <button className="btn grande pri" onClick={() => navegar(criancas.length ? 'adulto' : 'adulto/cadastro')} data-testid="area-adulto">👤 {criancas.length ? 'Área do adulto' : 'Cadastrar uma criança'}</button>
-          </div>
-          <p className="nota-mic">Tudo fica neste aparelho (funciona sem internet). Nenhum dado é enviado.</p>
+          <p className="inicio-nota entra" style={{ animationDelay: '.6s' }}>Funciona sem internet. Os dados ficam neste aparelho.</p>
         </section>
+        <div className="inicio-dupla" aria-hidden="true">
+          <div className="dupla-sombra" />
+          <img className="dupla-idle" src={asset('dupla/dupla-corpo.webp')} alt="" />
+        </div>
       </main>
     </div>
   );
