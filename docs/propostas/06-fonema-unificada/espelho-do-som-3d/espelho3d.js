@@ -151,7 +151,7 @@ function texBolinha() {
 /* ------------------------------------------------------------------ câmeras */
 const CAMS = {
   frente: { pos: V3(0, 0.02, 5.4), alvo: V3(0, -0.12, 0), fov: 30 },
-  lado: { pos: V3(15.2, -0.6, -2.3), alvo: V3(0, -0.75, -2.3), fov: 32 },
+  lado: { pos: V3(16.4, -0.7, -2.2), alvo: V3(0, -0.85, -2.2), fov: 32 },
   dentro: { pos: V3(3.3, 0.75, -1.2), alvo: V3(0, 0.3, -2.15), fov: 52 },
   dentroFundo: { pos: V3(0.05, 0.66, -0.8), alvo: V3(0, 0.95, -4.1), fov: 72 },
   corpo: { pos: V3(31, -5.6, -2.8), alvo: V3(0, -5.6, -2.8), fov: 32 }
@@ -578,7 +578,7 @@ export function criar(container, opts = {}) {
   /* ------------------------------------------------------------------ laço */
   function quadro() {
     if (parado) return;
-    const agora = performance.now(), dt = Math.min(0.05, (agora - ultimo) / 1000); ultimo = agora; tempo += dt;
+    const agora = performance.now(), dt = Math.min(opts.capturas ? 0.5 : 0.1, (agora - ultimo) / 1000); ultimo = agora; tempo += dt;
     const o = poseAgora();
     mand.rotation.x = THREE.MathUtils.degToRad(o.jaw); if (vis.casca > 0.02) cabeca.atualiza(o.jaw);
     const ptsL = montaLingua(o); montaVeu(o); montaLabios(o);

@@ -23,11 +23,6 @@
 <main class="tela">
   <section class="palco-area">
     <div id="palco" class="palco" aria-label="Boca em 3D"></div>
-    <div class="cartaz" aria-live="polite">
-      <div class="letra" id="cLetra">A</div>
-      <div><div class="ipa" id="cIpa">/a/</div><div class="ex" id="cEx">abelha</div></div>
-      <div class="selos"><span class="selo-voz" id="cVoz">🐝 tem voz</span><span class="selo-ar" id="cAr">💨 ar pela boca</span></div>
-    </div>
     <nav class="modos" aria-label="Como olhar a boca">
       <button data-modo="frente" class="on">😮 De frente</button>
       <button data-modo="lado">🩻 Raio-X de lado</button>
@@ -35,13 +30,20 @@
       <button data-modo="corpo">🫁 Do pulmão à boca</button>
       <button id="bGirar" aria-pressed="false">🔄 Girar 360°</button>
     </nav>
-    <button class="ouvir" id="bOuvir" aria-label="Ouvir o som">🔊 Ouvir</button>
   </section>
 
   <aside class="lado">
-    <div class="espelho-sofia">
-      <div class="moldura"><img id="sofiaBoca" src="recortes/sofia-boca-A.png" alt="Boca da Sofia de frente"></div>
-      <p id="sofiaLeg">A Sofia faz assim</p>
+    <div class="som-atual">
+      <div class="cartaz" aria-live="polite">
+      <div class="letra" id="cLetra">A</div>
+      <div><div class="ipa" id="cIpa">/a/</div><div class="ex" id="cEx">abelha</div></div>
+      <div class="selos"><span class="selo-voz" id="cVoz">🐝 tem voz</span><span class="selo-ar" id="cAr">💨 ar pela boca</span></div>
+    </div>
+      <div class="espelho-sofia">
+        <div class="moldura"><img id="sofiaBoca" src="recortes/sofia-boca-A.png" alt="Boca da Sofia de frente"></div>
+        <p id="sofiaLeg">A Sofia faz assim</p>
+        <button class="ouvir" id="bOuvir" aria-label="Ouvir o som">🔊 Ouvir</button>
+      </div>
     </div>
     <div class="abas" role="tablist">
       <button role="tab" data-aba="explorar" class="on">Explorar</button>

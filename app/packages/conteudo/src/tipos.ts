@@ -79,6 +79,8 @@ export interface ItemEscolha {
   pergunta?: Fala;
   /** O que a voz toca antes de mostrar as opções (ex.: "sssapo… lua"). */
   ouvir?: string;
+  /** Palavra/letra escrita mostrada em destaque (itens de LEITURA: ler e tocar a figura). */
+  mostrar?: string;
   opcoes: Opcao[];
   correta: string;
   pseudo?: boolean;
@@ -115,6 +117,8 @@ export interface AtividadeMontar extends AtividadeBase {
   /** Palavras (ou sílabas) a montar. "$NOME" monta o nome da criança. */
   palavras: string[];
   mostrarModelo: boolean;
+  /** Peças são sílabas (tábua de sílabas) em vez de letras. */
+  porSilaba?: boolean;
   distratoras?: string[];
 }
 
