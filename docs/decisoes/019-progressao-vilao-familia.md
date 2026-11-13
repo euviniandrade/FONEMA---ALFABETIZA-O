@@ -1,3 +1,5 @@
+> **Atualizado pela D022:** os títulos passam a ser neutros (Primeiros Sons → … → Maestria da Leitura), e a curva vai até 24 desafios por nível nos níveis finais.
+
 # Decisão 019: Fases quase infinitas, níveis com conquistas, novo "vilão leve", capoeira e foco das primeiras fases
 
 **Data:** 13/11/2026 · **Status:** aprovada pelo dono do projeto
