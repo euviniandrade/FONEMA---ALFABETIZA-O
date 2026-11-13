@@ -8,9 +8,17 @@ import { novoId } from '../../dados/repositorio.ts';
 import { gravar, temGravacao } from '../../servicos/microfone.ts';
 import { voz } from '../../servicos/voz.ts';
 import { BASES } from '../crianca/Avatar.tsx';
+import { asset } from '../../servicos/ambiente.ts';
 
 const ANO = new Date().getFullYear();
 type Passo = 'quem' | 'nome' | 'apoios' | 'entrega';
+const ORDEM: Passo[] = ['quem', 'nome', 'apoios', 'entrega'];
+const ILUSTRA: Record<Passo, { img: string; titulo: string; texto: string }> = {
+  quem: { img: 'dupla-praca', titulo: 'Que bom ter vocês aqui!', texto: 'O FONEMA ensina a ler pelo som das letras, com a Sofia e o Tales. Só o adulto cadastra; leva 2 minutos.' },
+  nome: { img: 'serie-palmas', titulo: 'O nome, falado do jeito certo', texto: 'A dupla chama [NOME] pelo nome em toda a jornada. Escolha a pronúncia que soa igual à de casa.' },
+  apoios: { img: 'serie-licao', titulo: 'Cada criança no seu ritmo', texto: 'Todo mundo começa do começo. Quem já sabe passa mais rápido, sem pular nenhuma fase.' },
+  entrega: { img: 'serie-eco', titulo: 'Tudo pronto!', texto: 'Fique por perto nos primeiros 10 minutos. Depois, acompanhe tudo no Painel da família.' }
+};
 
 /**
  * Cadastro pelo adulto (D002, D013; jogo-completo/01 §1): primeiro nome, gênero (3 opções), idade,
@@ -78,11 +86,17 @@ export function Cadastro() {
 
   return (
     <div className="tela-adulto">
-      <Topo voltar="adulto" titulo="Área do adulto · cadastro" />
+      <Topo voltar="" titulo="Área do adulto · cadastro" />
       <main className="palco adulto">
         <ol className="passos-adulto">
-          {(['quem', 'nome', 'apoios', 'entrega'] as Passo[]).map((p, i) => <li key={p} className={p === passo ? 'agora' : ''}>{i + 1}. {{ quem: 'Quem vai aprender', nome: 'Nome falado', apoios: 'Apoios e rotina', entrega: 'Entrega' }[p]}</li>)}
+          {ORDEM.map((p, i) => <li key={p} className={p === passo ? 'agora' : i < ORDEM.indexOf(passo) ? 'feito' : ''}>{{ quem: 'Quem vai aprender', nome: 'Nome falado', apoios: 'Apoios e rotina', entrega: 'Entrega' }[p]}</li>)}
         </ol>
+        <div className="cadastro-layout">
+        <aside className="cadastro-ilustra" key={passo}>
+          <img className="entra" src={asset(`fundos/${ILUSTRA[passo].img}.webp`)} alt="" />
+          <div><b>{ILUSTRA[passo].titulo.replace('[NOME]', nomeBonito || 'a criança')}</b><p>{ILUSTRA[passo].texto}</p></div>
+        </aside>
+        <div>
 
         {passo === 'quem' ? (
           <section className="cartao form-adulto">
@@ -94,7 +108,7 @@ export function Cadastro() {
             </label>
             <fieldset className="campo">
               <legend>Gênero (só para a Sofia e o Tales falarem certinho: "pronto" ou "pronta")</legend>
-              <div className="linha-botoes">
+              <div className="genero-opcoes">
                 {([['m', 'Masculino'], ['f', 'Feminino'], ['n', 'Prefiro não informar']] as [Genero, string][]).map(([g, r]) => (
                   <button key={g} className={`btn ${genero === g ? 'pri' : ''}`} aria-pressed={genero === g} onClick={() => setGenero(g)} data-genero={g}>{r}</button>
                 ))}
@@ -195,6 +209,8 @@ export function Cadastro() {
             <button className="btn grande ipe" onClick={() => navegar(`c/${id}/avatar`)} data-testid="entregar">Entregar para {nomeBonito} →</button>
           </section>
         ) : null}
+        </div>
+        </div>
       </main>
     </div>
   );

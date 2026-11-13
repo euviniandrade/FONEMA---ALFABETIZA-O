@@ -50,7 +50,8 @@ def main():
         if not nome or nome == '-':
             continue
         x, y = i % col, i // col
-        cel = im.crop((round(x * cw), round(y * ch), round((x + 1) * cw), round((y + 1) * ch)))
+        m = 0.025  # margem: tira eventuais linhas da grade
+        cel = im.crop((round((x + m) * cw), round((y + m) * ch), round((x + 1 - m) * cw), round((y + 1 - m) * ch)))
         recortar(cel, tamanho).save(os.path.join(saida, nome + '.webp'), quality=88, method=6)
         print('ok', nome)
 
