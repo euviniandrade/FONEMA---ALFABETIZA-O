@@ -224,8 +224,15 @@ async function main() {
   console.log('6. Vila, recado do professor, lojinha e álbum');
   await page.goto(BASE + '#/');
   await page.locator('[data-perfil="Mariana"]').click();
-  await page.getByTestId('vila').waitFor();
+  await page.waitForURL(/\/c\/[^/]+\/(mundo|vila)/);
   const id = page.url().split('/c/')[1].split('/')[0];
+  if (await page.locator('iframe.mundo3d').count()) {
+    await page.waitForTimeout(CAPTURAS ? 6000 : 500);
+    await cap(page, 'mundo-3d-vila');
+    ok(true, 'mundo 3D da vila embutido como tela principal');
+  }
+  await page.goto(BASE + `#/c/${id}/vila`);
+  await page.getByTestId('vila').waitFor();
   await page.waitForTimeout(400);
   await cap(page, 'vila-mapa');
   ok(/Parabéns, Mariana/.test(await page.getByTestId('vila').innerText()), 'a criança ouve o parabéns do professor na vila');

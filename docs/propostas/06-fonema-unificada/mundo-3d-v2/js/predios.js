@@ -185,7 +185,7 @@ export function escola(ctx, x, z, ry, sinoTex) {
     C.add(rbox(1.6, 0.12, 0.08, 0.04), P.madeiraEsc, G2(-s * 0.66, 1.08, 0.08, 0, 0, s * 0.62));
   }
   // pátio com chão de pedra
-  return { L, frente: L.pt(0, 0, mz + 2), placa: L.pt(0, h * 2 + 2.2, d / 2 + 1.45), placaRy: ry };
+  return { L, frente: L.pt(0, 0, mz + 2), placa: L.pt(0, h * 2 + 0.25, d / 2 + 1.52), placaRy: ry };
 }
 
 /** Biblioteca: pórtico com colunas, cúpula azul e pilha de livros gigantes. Frente = +z. */

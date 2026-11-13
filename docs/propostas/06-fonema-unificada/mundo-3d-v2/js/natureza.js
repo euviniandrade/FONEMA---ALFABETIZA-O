@@ -29,16 +29,17 @@ export function criarArvores(U, q) {
   const trunkGeo = new THREE.CylinderGeometry(0.28, 0.42, 1, 9).translate(0, 0.5, 0);
   const copas = [0, 1, 2].map((i) => new Instancias(canopyGeo(10 + i * 3, 5 + i, 1), folha));
   const troncos = new Instancias(trunkGeo, tronco);
+  const longe = new Instancias(blobGeo(77, 1, 0.22), folha); // LOD: copa de 1 bolha para árvores distantes
   const r = rng(77);
   return {
     folha,
     /** árvore redonda: x,z, altura do chão y, escala s, cor da copa */
-    add(x, y, z, s = 1, cor) {
+    add(x, y, z, s = 1, cor, distante = false) {
       const k = Math.floor(r() * 3), h = 1.5 * s, cs = 4.6 * s * (0.85 + r() * 0.3);
       troncos.add(M(x, y - 0.2, z, (r() - 0.5) * 0.12, r() * 6, (r() - 0.5) * 0.12, s * 0.9, h + 0.6, s * 0.9), '#8A5A3A');
-      copas[k].add(M(x, y + h + cs * 0.3, z, 0, r() * 6, 0, cs, cs * (0.8 + r() * 0.2), cs), cor || VERDES[Math.floor(r() * VERDES.length)]);
+      (distante ? longe : copas[k]).add(M(x, y + h + cs * 0.3, z, 0, r() * 6, 0, cs, cs * (0.8 + r() * 0.2), cs), cor || VERDES[Math.floor(r() * VERDES.length)]);
     },
-    build(grupo, fator = 1) { [troncos, ...copas].forEach((c) => { if (c.l.length) grupo.add(c.build(fator)); }); },
+    build(grupo, fator = 1) { [troncos, longe, ...copas].forEach((c) => { if (c.l.length) grupo.add(c.build(fator)); }); },
   };
 }
 

@@ -79,7 +79,7 @@ Regra de ouro: **toda regra pedagógica está no motor** (testável, sem tela); 
 
 ### Integrações com o trabalho de outros agentes
 - **Espelho do Som 3D** (`docs/.../espelho-do-som-3d`): copiado para `web/public/espelho/` a cada `dev`/`build` e embutido por `public/espelho-embed.html` (iframe; API `window.esp`). Se a pasta não existir, o app usa as imagens.
-- **Mundo 3D v2** (`docs/.../mundo-3d-v2`): quando existir `index.html` nessa pasta, ele é copiado para `web/public/mundo3d/` e vira a tela principal da criança (rota `#/c/:id/mundo`, iframe + `postMessage`: o app envia `{tipo:'fonema:init', cena:'vila', regiaoAtual, faseAtual}` ao receber `{tipo:'fonema:pronto'}` e abre a fase ao receber `{tipo:'fonema:missao', faseId}`). **TODO:** enquanto a pasta não tiver `index.html`, a rota cai no mapa 2D da vila.
+- **Mundo 3D v2** (`docs/.../mundo-3d-v2`): quando existir `index.html` nessa pasta, ele é copiado para `web/public/mundo3d/` e vira a tela principal da criança (rota `#/c/:id/mundo`, iframe com `?cena=vila&regiao=R0&fase=<fase atual>&feitas=<fases concluídas>`; o mundo avisa por `postMessage` `{tipo:'fonema:missao', detalhe:{id}}` e o app abre a fase, respeitando a regra de não pular fases). Sem `index.html` nessa pasta, a rota cai no mapa 2D da vila, que continua acessível pelo botão "Mapa 2D".
 - **Vozes oficiais** (`voz/`): coloque os mp3 em `web/public/audio/falas/` e um `manifesto.json` (`{"sofia|Oi, Mariana!": "arquivo.mp3"}`); o serviço de voz usa o mp3 quando existe e cai no `speechSynthesis` quando não.
 
 ## Criar conteúdo ("criar coisas nela")

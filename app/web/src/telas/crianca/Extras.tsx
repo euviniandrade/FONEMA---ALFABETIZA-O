@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { CONQUISTAS, FALAS, FASE_POR_ID, ITENS_LOJA, REGIOES, SONS, SURPRESAS, type ItemLoja } from '@fonema/conteudo';
-import { aplicarSondagem, comprar, infoNome, podeComprar } from '@fonema/motor';
+import { aplicarSondagem, comprar, infoNome, podeComprar, podeEntrar } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { AvatarGrande, Balao, Carregando, Topo } from '../../componentes/basicos.tsx';
@@ -336,7 +336,10 @@ export function Mundo3D({ criancaId }: { criancaId: string }) {
       if (d.tipo === 'fonema:pronto' && progresso) {
         ref.current?.contentWindow?.postMessage({ tipo: 'fonema:init', cena: 'vila', regiaoAtual: progresso.faseAtual.split('-')[0], faseAtual: progresso.faseAtual, nome: crianca?.nome }, '*');
       }
-      if (d.tipo === 'fonema:missao') navegar(`c/${criancaId}/fase/${d.faseId ?? progresso?.faseAtual}`);
+      if (d.tipo === 'fonema:missao') {
+        const fid = d.detalhe?.id ?? d.faseId ?? progresso?.faseAtual;
+        navegar(progresso && podeEntrar(progresso, fid) ? `c/${criancaId}/fase/${fid}` : `c/${criancaId}/fase/${progresso?.faseAtual}`);
+      }
       if (d.tipo === 'fonema:lojinha') navegar(`c/${criancaId}/lojinha`);
       if (d.tipo === 'fonema:album') navegar(`c/${criancaId}/album`);
     };
@@ -347,13 +350,14 @@ export function Mundo3D({ criancaId }: { criancaId: string }) {
   if (!crianca || !progresso || ok === null) return <Carregando />;
   if (!ok) return null;
   const regiao = progresso.faseAtual.split('-')[0];
+  const feitas = Object.entries(progresso.fases).filter(([, f]) => f.estado === 'concluida').map(([k]) => k).join(',');
   return (
     <div className="tela-mundo3d">
       <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} titulo="Vila da Sofia · 3D">
         <button className="btn" onClick={() => navegar(`c/${criancaId}/vila`)}>🗺️ Mapa 2D</button>
         <button className="btn ipe" onClick={() => navegar(`c/${criancaId}/fase/${progresso.faseAtual}`)}>⭐ Missão</button>
       </Topo>
-      <iframe ref={ref} className="mundo3d" src={`./mundo3d/index.html?cena=vila&regiaoAtual=${regiao}&embed=1`} title="Mundo 3D da Vila" allow="autoplay; fullscreen" />
+      <iframe ref={ref} className="mundo3d" src={`./mundo3d/index.html?cena=vila&regiao=${regiao}&fase=${progresso.faseAtual}&feitas=${feitas}`} title="Mundo 3D da Vila" allow="autoplay; fullscreen" />
       <p className="sr">{textoTela('Explore a vila, [NOME]!', crianca)}</p>
     </div>
   );

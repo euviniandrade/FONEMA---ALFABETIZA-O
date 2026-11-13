@@ -280,8 +280,8 @@ export async function criarVila({ U, q, renderer, estados = {} }) {
   ipe(ctx, -9.5, 0.55, -6, 0.95, 3); ipe(ctx, 9.5, 0.55, -6, 0.9, 7); ipe(ctx, -9.5, 0.55, 9, 0.85, 11); ipe(ctx, 9.5, 0.55, 9, 0.92, 5);
   ipe(ctx, 30, altura(30, 30), 30, 1.1, 13); ipe(ctx, -36, altura(-36, -14), -14, 1.2, 17); ipe(ctx, 16, altura(16, 60), 60, 1.1, 19);
   ipe(ctx, -40, altura(-40, 40), 40, 1.05, 23, '#E58AA6', '#F2B2C6'); // ipê-rosa ao longe (2 tons)
-  for (const [x, z, s] of [[38, 16, 1], [36, -2, 1.1], [33, 20, 0.9], [-16, 36, 0.95], [16, -32, 1.05], [-14, -32, 1.0]]) coqueiro(ctx, x, altura(x, z), z, s, x * 3 + z);
-  for (const [x, z] of [[-26, 25], [-15, 38], [15, 30], [27, 30], [-30, -26], [13, -38]]) bananeira(ctx, x, altura(x, z), z, 1, x + z * 7);
+  for (const [x, z, s] of [[38, 16, 1], [36, -2, 1.1], [35.5, 25, 0.9], [-16, 36, 0.95], [16, -32, 1.05], [-14, -32, 1.0]]) coqueiro(ctx, x, altura(x, z), z, s, x * 3 + z);
+  for (const [x, z] of [[-26, 25], [-12, 45], [15, 30], [27, 30], [-30, -26], [13, -38]]) bananeira(ctx, x, altura(x, z), z, 1, x + z * 7);
   const arv = criarArvores(U, q);
   const livre = (x, z) => {
     if (Math.hypot(x, z - 1) < 17) return false; // praça
@@ -312,7 +312,7 @@ export async function criarVila({ U, q, renderer, estados = {} }) {
     const h = altura(x, z);
     const dens = d < 50 ? 0.12 : d < 70 ? 0.55 : 1.0;
     if (r() > dens) continue;
-    arv.add(x, h, z, (d < 60 ? 0.8 : 1.0) + r() * 0.5 + (d > 120 ? 0.4 : 0));
+    arv.add(x, h, z, (d < 60 ? 0.8 : 1.0) + r() * 0.5 + (d > 120 ? 0.4 : 0), undefined, d > 110);
     postas++;
   }
   arv.build(grupo);
@@ -352,10 +352,10 @@ export async function criarVila({ U, q, renderer, estados = {} }) {
   for (let i = 0; i < 8; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: fumTex, transparent: true, depthWrite: false, opacity: 0.5 })); grupo.add(s); fumaca.push(s); }
 
   // ---------- personagens ----------
-  const dupla = await criarSprite('dupla.png', 1.75, { fase: 0 }); dupla.position.set(3.2, 0.05, 11.2); grupo.add(dupla);
-  const sofia = await criarSprite('sofia.png', 1.55, { fase: 1.3 }); sofia.position.set(-2.4, 0.05, -18.6); grupo.add(sofia);
-  const tales = await criarSprite('tales.png', 1.6, { fase: 2.1 }); tales.position.set(-23.6, 0.05, 18.4); grupo.add(tales);
-  const bolota = criarBolota(); bolota.position.set(5.6, 0.05, 12.4); bolota.rotation.y = -2.2; grupo.add(bolota);
+  const dupla = await criarSprite('dupla.png', 1.95, { fase: 0 }); dupla.position.set(-1.6, 0.05, 14.2); grupo.add(dupla);
+  const sofia = await criarSprite('sofia.png', 1.8, { fase: 1.3 }); sofia.position.set(-2.6, 0.05, -18.2); grupo.add(sofia);
+  const tales = await criarSprite('tales.png', 1.85, { fase: 2.1 }); tales.position.set(-24.2, 0.05, 22.6); grupo.add(tales);
+  const bolota = criarBolota(); bolota.position.set(0.9, 0.05, 14.6); bolota.rotation.y = -2.0; grupo.add(bolota);
   const zum = criarZumZum(); grupo.add(zum);
   const bichos = criarBichinhos(grupo, { passaros: q === 'baixo' ? 4 : 10, borboletas: q === 'baixo' ? 5 : 14, centros: [new THREE.Vector3(-9.5, 0.6, -6), new THREE.Vector3(9.5, 0.6, 9), new THREE.Vector3(22, 0.6, 19), new THREE.Vector3(-21, 0.4, 22), new THREE.Vector3(-9.5, 0.6, 9)] });
 
