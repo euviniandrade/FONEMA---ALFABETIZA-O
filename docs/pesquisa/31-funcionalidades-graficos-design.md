@@ -781,3 +781,118 @@ Fontes: [doc 04 §4.3; doc 08 §3.5; doc 21 §3.2; doc 23 §3.9; doc 05 §6.6–
 **Critério de "pronto" de cada jogo:** passa no checklist de tela [doc 09 §3.1], tem alternativa de toque e sem fala, declara a evidência gerada (ECD) e o peso [doc 20 §3.1] e passa no protocolo de teste com crianças (≥ 80% de sucesso sem ajuda, < 15% de toques fora do alvo) [doc 24 §3.9].
 
 ---
+## 5. Catálogo de jogos e atividades (42 + 5 transversais)
+
+**Fases do FONEMA:** (1) consciência fonológica → (2) letra-som → (3) sílabas → (4) palavras → (5) frases → (6) textos decodificáveis → (7) fluência e compreensão → (8) escrita.
+
+A sequência de conteúdo segue a ordem de ensino do doc 02, em 11 etapas (0–10): vogais → contínuas M L F V S N → oclusivas P T B D, com separação no tempo → J Z X CH NH LH → contextuais → nasais → CVC → CCV → arbitrárias → fluência [doc 02 §5.5]. Quando uma mecânica é a mesma do catálogo do doc 04, a referência aparece como "d04#n".
+
+**Colunas:**
+- **Voz/câm.** 🔊 = só ouve; 🎤 = usa microfone (sempre com alternativa por toque); 📷 = câmera opcional.
+- **Adaptações:** **TEA** (previsibilidade, sensorial, compreensão literal), **TDAH** (blocos curtos, feedback < 300 ms, movimento), **DIS** (dislexia: mais repetição, espaçamento, sem pressa) [doc 05 §4; doc 07 §3.2D; doc 11 §3.3; doc 12 §3].
+
+**Regras globais de todos os jogos:**
+- sem tempo-limite;
+- arrastar ⇄ toque-toque;
+- fala ⇄ toque;
+- 2–3 alternativas aos 4–5 anos e 3–4 aos 6–8;
+- erro tratado como pista;
+- celebração depois da resposta.
+
+[doc 09 §3.1; doc 24 §3.1–3.6]
+
+### Fase 1 — Consciência fonológica (oral, sem letras)
+
+| # | Nome | Mecânica | Habilidade fônica / BNCC | Voz/câm. | Adaptações TEA / TDAH / DIS |
+|---|---|---|---|---|---|
+| 1 | **Rima ou Não Rima?** (d04#1) | Dois objetos aparecem e a criança puxa para a cesta "par" ou "não par" | rima; EI03EF02, EF01LP13, EF12LP19 | 🔊 | TEA: objetos concretos e literais, sem trocadilho · TDAH: série de 5 itens com baú visível no fim · DIS: rimas com contraste máximo primeiro, depois as próximas |
+| 2 | **Bate a Sílaba** (d04#2 + doc 14) | A Sofia canta a palavra sobre uma batida estável; a criança toca o tambor 1× por sílaba. A sincronia é registrada como dado de triagem rítmica, **não** como nota | segmentação silábica; EF01LP06 | 🔊 (🎤 opcional: falar silabando) | TEA: batida sem sons súbitos e volume moderado · TDAH: versão "pula/bate o pé" com o corpo · DIS: módulo extra de ritmo [doc 14 §3.2] |
+| 3 | **Caça ao Primeiro Som** (d04#3) | Cenário de esconde-esconde: "ache tudo que começa com /mmm/" | fonema inicial; EF01LP09, EF01LP07 | 🔊 | TEA: cenário fixo e anunciado · TDAH: 3 objetos por rodada · DIS: fonemas contínuos alongados, uma consoante por vez |
+| 4 | **Termina Igual?** | Dois trens chegam; a criança decide se o último vagão (sílaba final) "faz o mesmo som" | sílaba final/medial; EF01LP13 | 🔊 | TEA: pergunta sempre igual · TDAH: feedback imediato · DIS: começar com sílabas longas e contrastantes |
+| 5 | **A Sílaba Sumiu** | O Bolota "come" uma sílaba (SAPATO → PATO) e a criança escolhe a figura que sobrou | supressão/substituição silábica; EF02LP02 | 🔊 | TEA: animação de "comer" suave, sem susto · TDAH: humor curto · DIS: só supressão inicial no começo |
+| 6 | **Robô Fala-Picado** | O robozinho fala /g/…/a/…/t/…/o/ e a criança toca a figura certa (síntese oral) | síntese fonêmica oral; EF01LP05/07 | 🔊 | TEA: voz do robô calma e não metálica · TDAH: 3 opções · DIS: 2–3 fonemas primeiro, depois 4 |
+| 7 | **Cantiga Completa** | Parlenda de domínio público com rima faltando; a criança toca a figura que completa a rima ou canta junto | rima e prosódia; EI03EF02, EF12LP19 | 🔊 🎤 opcional | TEA: música opcional e letra visível (legenda) · TDAH: canção curta (≤ 30 s) · DIS: repetir 3× com eco |
+
+### Fase 2 — Letra-som (grafema ↔ fonema)
+
+| # | Nome | Mecânica | Habilidade / BNCC | Voz/câm. | Adaptações TEA / TDAH / DIS |
+|---|---|---|---|---|---|
+| 8 | **Boquinha no Espelho** (d04#8, W4) | Vídeo da boca real + vista lateral + letra; a criança imita olhando no espelho local; pares mínimos lado a lado com 🖐 na garganta | articulação + CGF; EF01LP07 | 🔊 🎤 📷 (espelho, opt-in) | TEA: opção de Sofia sem rosto / só vídeo, sem contato visual forçado [doc 12 §3.1] · TDAH: vídeo de 3–5 s · DIS: padrão na introdução e em toda correção [doc 10 §3.1] |
+| 9 | **Alimente o Bolota** (d04#4) | O Bolota pede um som; a criança leva a letra até a boca dele (arrastar ou toque-toque) | som → letra; EF01LP07, EF01LP08 | 🔊 | TEA: o Bolota mastiga sem barulho súbito · TDAH: rodadas de 5 · DIS: só 2 letras visualmente distintas no início (nada de b/d juntos) [doc 06 §3A] |
+| 10 | **Memória Som-Letra** (d04#6) | Jogo da memória: um lado tem o ícone de som, o outro a letra | CGF; EF01LP08 | 🔊 | TEA: 4–6 cartas, posição fixa · TDAH: 3 pares · DIS: o par é dito em voz alta ao virar |
+| 11 | **Balões de Letras** (d04#5) | Balões sobem devagar; estourar os do som pedido. **Sem cronômetro**: os balões voltam | reconhecimento rápido; automaticidade | 🔊 | TEA: estouro sem som alto (som "pop" suave) · TDAH: ótimo como jogo de ação · DIS: velocidade adaptativa e latência registrada nos bastidores |
+| 12 | **Traço Mágico** (d04#7) | Ver o traçado animado → traçar com guia → traçar livre → reconhecer entre distratores; a Sofia diz o **som** enquanto a criança traça | grafia + CGF; EF01LP11 | 🔊 | TEA: setas e ordem sempre iguais · TDAH: 1 letra por rodada · DIS: letras espelhadas com âncora ("barriga pra frente"), traçado em partes aceito [doc 24 §3.2; doc 10 §3.4] |
+| 13 | **É Letra ou Não É?** | Separar letras de números, símbolos e desenhos | EF01LP04 | 🔊 | TEA: regra explícita · TDAH: rápido e curto · DIS: aceita para 4–5 anos |
+| 14 | **Barriga pra Frente** | Escolher qual b/d/p/q está "virado certo" e completar a palavra-âncora (b de BOLA) | discriminação de orientação; EF01LP07 | 🔊 | TEA: regra visual fixa · TDAH: 3 itens · DIS: introduzir **b** e só semanas depois **d** [doc 06 §3A, item 5] |
+| 15 | **Nome ou Som?** | Dois botões, "nome da letra" (bê) e "som da letra" (/b/); a Sofia pergunta "o nome começa com o som?" | princípio acrofônico; EF01LP10, EF02LP06 | 🔊 | TEA: distinção nome/som sempre com os mesmos ícones [doc 02 §8, item 13] · TDAH: curto · DIS: ênfase no som |
+
+### Fase 3 — Sílabas (síntese e decodificação silábica)
+
+| # | Nome | Mecânica | Habilidade / BNCC | Voz/câm. | Adaptações TEA / TDAH / DIS |
+|---|---|---|---|---|---|
+| 16 | **Fábrica de Sílabas** (d04#9, W5) | Esteira junta consoante + vogal; a máquina "cospe" MA e toca o som da fusão | síntese CV; EF02LP04, EF01LP08 | 🔊 🎤 opcional (ler a sílaba) | TEA: máquina previsível, sempre igual · TDAH: a máquina pode "acelerar" (variação do *quê*, não do *como*) · DIS: começar com contínuas (M, L, F, S) [doc 02 §5.5] |
+| 17 | **Escorregador de Sons** (d04#11) | Letras no escorregador; ao deslizar o dedo, os sons se fundem ("sssooool") | blending contínuo | 🔊 | TEA: movimento lento · TDAH: usa o corpo (dedo) · DIS: excelente para fusão com som prolongado |
+| 18 | **Ouça e Toque** (d04#12) | A Sofia diz a sílaba e a criança toca entre 2–4 opções (dificuldade adaptativa, estilo GraphoGame) | discriminação sílaba → escrita | 🔊 | TEA: layout fixo · TDAH: feedback < 300 ms · DIS: distratores fonologicamente distantes primeiro, depois pares mínimos |
+| 19 | **Trem das Sílabas** (d04#10) | Montar os vagões na ordem para formar a palavra; o trem lê ao partir | sequência silábica; EF02LP04 | 🔊 | TEA: 2–3 vagões, sempre da esquerda para a direita (EF01LP01) · TDAH: partida curta como prêmio · DIS: vagões com cor de vogal (muleta removida aos poucos) [doc 04 §5.1] |
+| 20 | **Planeta das Palavras de Mentirinha** | Um alienígena do "planeta da Sofia" fala palavras inventadas (FAPO, LUPI); a criança lê ou escolhe a escrita | decodificação pura (pseudopalavras) | 🔊 🎤 | TEA: explicar a regra "palavra de mentirinha não tem significado" · TDAH: personagem engraçado · DIS: medir sem pressa. Sempre fonotáticas e revisadas por fono [doc 20 §3.6] |
+
+### Fase 4 — Palavras
+
+| # | Nome | Mecânica | Habilidade / BNCC | Voz/câm. | Adaptações TEA / TDAH / DIS |
+|---|---|---|---|---|---|
+| 21 | **Monta-Palavra com Silhueta** (d04#13) | O sagui espalhou as letras; recolocar nas silhuetas; a palavra é lida com animação | decodificação/codificação; EF01LP02, EF12LP01 | 🔊 | TEA: "travessura" anunciada, sem susto · TDAH: palavras curtas · DIS: silhueta mostra o formato e as letras ficam espaçadas |
+| 22 | **Palavra Viva** (d04#14) | Ao ler GATO, o gato ganha vida no cenário (a leitura é a recompensa, P1) | significado; EF12LP01 | 🔊 🎤 | TEA: animação congruente e curta · TDAH: recompensa funcional imediata · DIS: leitura em eco permitida |
+| 23 | **Troca-Letra Mágica** (d04#16) | Trocar 1 letra transforma o objeto: PATO → GATO → GALO | consciência fonêmica, substituição; EF02LP02/03 | 🔊 | TEA: cadeia sempre visível · TDAH: "mágica" rápida · DIS: só trocas na posição inicial no começo |
+| 24 | **Lojinha de Palavras** (d04#18) | Atender clientes: ler o pedido escrito e entregar o objeto (faz de conta) | leitura funcional | 🔊 🎤 | TEA: cliente com fala literal e sem ironia · TDAH: fila de 3 clientes · DIS: pedido tocável para ouvir **depois** de tentar ler |
+| 25 | **O Bolota Leu Errado** | O Bolota lê com erro planejado (BATO por PATO); a criança corrige tocando, falando ou arrastando; o Bolota agradece e anota no caderninho | pares mínimos, espelhamento, omissão; efeito protegido | 🔊 🎤 | TEA: erro sinalizado de forma explícita ("o Bolota trocou um som!") · TDAH: alto engajamento · DIS: erros só no que a criança já domina [doc 23 §3.7] |
+| 26 | **Caça-Palavras Falado** (d04#15) | A Sofia diz a palavra e a criança acha na grade pequena (3×3 a 4×4, letra grande) | leitura de palavras | 🔊 | TEA: grade fixa · TDAH: 2 palavras por grade · DIS: grade 3×3, espaçamento ampliado |
+| 27 | **Fala Rápido (RAN)** | Nomear uma grade de 5 itens repetidos (cores/objetos; depois letras). O app cronometra **nos bastidores** e registra hesitações | RAN: sinal de risco, não define fase [doc 20 §3.3; doc 11 §3.2] | 🎤 (alternativa: o adulto marca) | TEA: aceita prosódia atípica · TDAH: curto (~1 min) · DIS: é um indicador. Sem feedback de velocidade para a criança. Para TDL/apraxia, não usar como sinal [doc 05 §7] |
+
+### Fase 5 — Frases
+
+| # | Nome | Mecânica | Habilidade / BNCC | Voz/câm. | Adaptações TEA / TDAH / DIS |
+|---|---|---|---|---|---|
+| 28 | **Frase-Quebra-Cabeça** (d04#22) | Ordenar palavras para formar uma frase que vira cena animada | sintaxe, leitura de frase; EF01LP01 | 🔊 | TEA: frases concretas · TDAH: 3–4 palavras · DIS: palavras grandes e bem separadas |
+| 29 | **Verdadeiro ou Bobagem?** (d04#23) | Ler "O PEIXE VOA" e decidir se é verdade (humor) | compreensão literal | 🔊 | TEA: **atenção ao humor absurdo**; oferecer a versão "certo/errado" sem piada · TDAH: risada como recompensa · DIS: frase tocável depois da tentativa |
+| 30 | **Separa as Palavras** | Frase colada (OMENINOCORRE); a criança toca onde vai o espaço; também conserta "derepente" e "a gora" | segmentação; EF01LP12, EF02LP08 | 🔊 | TEA: regra explícita do espaço · TDAH: 1 frase por vez · DIS: destaque de sílabas como apoio |
+| 31 | **Frase-Ação** | Ler a frase e fazer a ação na cena ("o gato pula na caixa") | compreensão de frase | 🔊 | TEA: checagem de significado ao fim de cada unidade [doc 12 §3.1] · TDAH: interativo · DIS: frase curta |
+
+### Fase 6 — Textos decodificáveis
+
+| # | Nome | Mecânica | Habilidade / BNCC | Voz/câm. | Adaptações TEA / TDAH / DIS |
+|---|---|---|---|---|---|
+| 32 | **Livrinho Decodificável Interativo** (d04#21) | História só com as CGF já ensinadas (linter ≥ 95% em F1–F2); a palavra tocada é lida; a cena anima **ao terminar**; sem hotspots | decodificação em contexto; EF12LP01 | 🔊 🎤 | TEA: temas de interesse cadastrados · TDAH: 4–6 páginas · DIS: poucas palavras por linha e espaçamento ampliado [doc 11 §3.3] |
+| 33 | **Lê pro Bolota Dormir** | A criança lê o livrinho em voz alta para o Bolota; o app escuta, marca acertos e ajuda gentilmente; o Bolota adormece no fim | leitura oral (fluência inicial) | 🎤 (alternativa: adulto confirma) | TEA: rotina idêntica · TDAH: páginas curtas · DIS: tolerante à hesitação, sem tempo [doc 05 §4] |
+| 34 | **Leitura com a Família** (d04#30) | Revezamento: adulto lê uma página, a criança lê a próxima; perguntas CROWD aparecem **para o adulto** | mediação adulta, leitura dialógica | 🔊 | TEA: perguntas literais primeiro · TDAH: turnos curtos · DIS: o adulto lê mais no início |
+
+### Fase 7 — Fluência e compreensão
+
+| # | Nome | Mecânica | Habilidade / BNCC | Voz/câm. | Adaptações TEA / TDAH / DIS |
+|---|---|---|---|---|---|
+| 35 | **Karaokê da Sofia** (d04#19 + doc 25 §3.2) | 4 passos: ouvir com destaque → eco/coral → ler sozinho (destaque segue a criança) → reler até o critério (máx. 3–4 releituras) | fluência (PCPM, precisão); EF12LP01 | 🔊 🎤 | TEA: velocidade da voz ajustável · TDAH: micro-checagens ("toque em BOLA") contra escuta passiva · DIS: destaque por **sílaba** opcional; metas pessoais |
+| 36 | **Detetive do Texto** (d04#24) | Depois da história, achar no texto a palavra que responde a pergunta | compreensão literal/inferencial | 🔊 | TEA: perguntas literais antes das de estado mental [doc 12 §3.1] · TDAH: 3 perguntas · DIS: texto ouvível depois da tentativa |
+| 37 | **Reconto com Figuras** | Ordenar 3–4 cenas e recontar em voz alta (gravação local) com o organizador "quem, onde, problema, solução" | reconto; EI03EF04, compreensão | 🎤 opcional | TEA: organizador gráfico fixo · TDAH: 3 cenas · DIS: sem leitura exigida |
+| 38 | **Palavra Curiosa** | Em textos de **escuta**: 3–5 palavras de camada 2 com definição amigável, imagem e 2 contextos; reaparecem com espaçamento | vocabulário [doc 25 §3.3] | 🔊 | TEA: definições literais · TDAH: 1 palavra por vez · DIS: acesso por áudio |
+
+### Fase 8 — Escrita
+
+| # | Nome | Mecânica | Habilidade / BNCC | Voz/câm. | Adaptações TEA / TDAH / DIS |
+|---|---|---|---|---|---|
+| 39 | **Ditado do Bolota** (d04#17) | O Bolota "fala" uma palavra e a criança escreve com letras móveis (F1–F2) ou teclado grande (depois). Os erros são classificados (Morais) | codificação; EF01LP02, EF02LP03–05 | 🔊 | TEA: repetição a pedido · TDAH: 3 palavras · DIS: letras móveis espaçadas; ouvir de novo ilimitado |
+| 40 | **Escrevo do Meu Jeito** | Escrita inventada; o sistema mostra uma grafia **um passo mais avançada** e compara com a da Sofia, sem "errado" | EI03EF09, EF01LP03 | 🔊 | TEA: comparação lado a lado e explícita · TDAH: curto · DIS: celebra o progresso de hipótese |
+| 41 | **Estúdio de Histórias** (d04#32) | Escolher cenário e personagens, montar frases com palavras dominadas e gravar a própria leitura (local) | produção; EF02LP01, EI03EF06 | 🎤 | TEA: modelos de frase · TDAH: liberdade criativa · DIS: banco de palavras clicável |
+| 42 | **Bilhete pra Família** | Montar um bilhete ou convite curto (função social) e enviar para a área do responsável | escrita com função social (o padrão 743 inclui "escrever bilhetes ou convites simples" [doc 02 §3.3]) | 🔊 | TEA: modelo fixo de bilhete · TDAH: 1 frase · DIS: frase com palavras já dominadas |
+
+### Mecânicas transversais (estrutura, motivação e avaliação)
+
+| # | Nome | O que faz | Evidência |
+|---|---|---|---|
+| T1 | **Mundo/Mapa de regiões** | Estrutura de progressão por família de sons | d04#28; [doc 24 §3.3] |
+| T2 | **Jardim da Revisão** | Repetição espaçada visível; regar = minirrevisão de 1 min; nunca morre | d04#29; [doc 07] |
+| T3 | **Álbum de figurinhas que falam** | Um som dominado = uma figurinha | d04#26; [doc 08 §3.4] |
+| T4 | **Desafio da Sofia / Mini-chefão de região** | Provinha lúdica; a "nuvem bagunceira" apagou as letras e a criança restaura lendo; falhar só dá nova chance | d04#25, d04#31; [doc 20 §3.6; doc 13 §3.5] |
+| T5 | **Parceiro que evolui** | O Bolota ganha acessórios por **marcos de leitura**, nunca por tempo | d04#27; [doc 08 §3.4] |
+
+**MVP:** os 14 jogos de F12 cobrem as fases 1 a 6. A escrita (fase 8) entra pela codificação do #21 (Monta-Palavra). A fluência (fase 7) chega na V1, com o Karaokê (F31). O #8 (Boquinha) entra como parte da lição (F11) e o #12 (Traço Mágico) na V1 (F35).
+
+---
