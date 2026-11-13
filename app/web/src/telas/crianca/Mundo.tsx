@@ -163,7 +163,7 @@ export function Vila({ criancaId }: { criancaId: string }) {
           <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/album`)}><Icone nome="album" />Álbum</button>
           {config.lojinha.naVila ? <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/lojinha`)}><Icone nome="lojinha" />Lojinha</button> : null}
           <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mapa`)}><Icone nome="mapa" />Ilhas</button>
-          {mundo3d ? <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mundo`)} data-ponto="mundo3d"><Icone nome="cubo" />Explorar 3D</button> : null}
+          {mundo3d ? <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mundo`)} data-ponto="mundo3d"><Icone nome="cubo" />Passear 3D</button> : null}
           <button className="btn ipe doca-missao brilha" onClick={() => navegar(`c/${criancaId}/fase/${fase.id}`)} data-testid="ir-missao"><Icone nome="play" />Missão</button>
         </nav>
       </div>

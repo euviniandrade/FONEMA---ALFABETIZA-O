@@ -344,7 +344,7 @@ async function main() {
     ok(await pj.locator('.fase-no.liberada').count() === 6 && !(await pj.locator('.fase-no.concluida').count()), 'fases anteriores ficam abertas para revisar, sem contar como concluídas');
     await pj.goto(BASE + `#/adulto/familia/${idd}`);
     await pj.getByTestId('mudar-nivel').click();
-    await pj.locator('[data-nivel="zero"]').check();
+    await pj.locator('[data-nivel="zero"]').click();
     await pj.getByTestId('mudar-nivel').waitFor();
     ok(/Do zero/.test(await pj.getByTestId('nivel-inicial').innerText()), 'o adulto muda o nível inicial na área da família');
     await ctx2.close();

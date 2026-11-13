@@ -15,16 +15,8 @@ DOCS = RAIZ / 'docs/propostas/06-fonema-unificada'
 SAIDA = Path(__file__).resolve().parents[1] / 'public/assets'
 
 FUNDOS = {
-    'mapa-arquipelago': 'mundo-3d/01-arquipelago-aereo.png',
-    'vila': 'mundo-3d/03-vila-panoramica.png',
-    'praca': 'mundo-3d/05-vila-zoom-praca.png',
-    'vila-entardecer': 'mundo-3d/07-vila-entardecer.png',
-    'quintal': 'ambientes/01-quintal-vila.png',
-    'ilha': 'ambientes/02-ilha-das-vogais.png',
-    'mata': 'ambientes/03-mata-atlantica.png',
-    'mar': 'ambientes/09-litoral-e-mar.png',
-    'sala': 'ambientes/int-escola-sala.png',
-    'biblioteca': 'ambientes/int-biblioteca.png',
+    # D025: os fundos low-poly antigos (vila, quintal, ilha, mata, mar, sala…) saíram; as telas usam as cenas 3D
+    # de public/assets/cenas (série Sofia e Tales) e as artes-chave de public/assets/arte.
     'serie-palmas': 'serie-sofia-e-tales/imagens/P1-03-palmas-silabas-portao.png',
     'serie-eco': 'serie-sofia-e-tales/imagens/P1-04-eco-das-vogais-praia.png',
     'serie-bolota': 'serie-sofia-e-tales/imagens/P1-07-ensinando-o-bolota.png',

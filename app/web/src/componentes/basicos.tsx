@@ -16,7 +16,8 @@ export function Rosto({ quem, humor = 'alegre', tamanho = 84 }: { quem: Personag
   if (src || BUSTO[quem]) {
     return <img className="rosto" style={{ width: tamanho, height: tamanho }} src={src ?? asset(BUSTO[quem]!)} alt={NOMES_PERSONAGEM[quem]} onError={(e) => ((e.target as HTMLImageElement).src = asset(BUSTO[quem]!))} />;
   }
-  if (quem === 'bolota') return <img className="rosto rosto-bicho" style={{ width: tamanho, height: tamanho }} src={asset('figuras/tatu.webp')} alt="Bolota" />;
+  const bicho = ({ bolota: 'tatu', 'dona-cida': 'vovo-f', 'zum-zum': 'abelha' } as Record<string, string>)[quem];
+  if (bicho) return <img className="rosto rosto-bicho" style={{ width: tamanho, height: tamanho }} src={asset(`figuras/${bicho}.webp`)} alt={NOMES_PERSONAGEM[quem]} />;
   return (
     <span className="rosto rosto-letra" style={{ width: tamanho, height: tamanho, background: COR[quem] ?? '#284A86', fontSize: tamanho * 0.42 }} aria-label={NOMES_PERSONAGEM[quem]}>
       {NOMES_PERSONAGEM[quem]?.[0]}

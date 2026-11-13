@@ -5,7 +5,9 @@ Escopo desta entrega: recomendação **P3** da revisão — regiões **R0 Quinta
 
 Funciona **offline** (PWA instalável no tablet/celular), sem servidor: os dados ficam no aparelho (IndexedDB).
 
-![Ritual de fim com selo e moedinhas](docs/capturas/12-ritual-conquista-moedinhas.png)
+![Entrada](docs/capturas/v2-01-entrada.png)
+
+![Mapa da vila](docs/capturas/v2-23-vila-mapa.png)
 
 ## Como rodar
 
@@ -27,14 +29,16 @@ npm run verificar    # lint + typecheck + testes + build
 
 **Publicar:** `web/dist/` é um site estático com caminhos relativos (`base: './'`) e rotas por hash (`#/c/...`), então funciona em qualquer subcaminho (GitHub Pages, S3, Netlify, pendrive com servidor local). O service worker também usa caminhos relativos.
 
-**Primeiro uso:** "Cadastrar uma criança" → a porteira pede uma conta simples (área do adulto) → nome, gênero, autorizações, pronúncia → "Entregar para [nome]". Para testar todas as fases depressa, ligue **Configurações → Modo demonstração** (o domínio passa a valer com 1 sessão).
+**Primeiro uso:** "Começar a aventura" → portão "Área para adultos" (segurar o botão por 3 segundos, sem conta) → cadastro em 5 passos (nome · como falar · gênero · de onde começa · autorização) → "Entregar para [nome]". Para testar todas as fases depressa, ligue **Configurações → Modo demonstração** (o domínio passa a valer com 1 sessão).
 
 ## O que está pronto
 
 | Área | O que funciona |
 |---|---|
-| Adulto | Porteira parental; cadastro (primeiro nome, gênero 3 opções com prévia da concordância, ano, consentimentos LGPD em linguagem simples, "Não pedimos"); gravar o nome (MediaRecorder, fica no aparelho, apagado em 30 dias); 3 pronúncias na voz da Sofia e do Tales + ajuste ("Ka-u-Ã"); o que já sabe, apoios (Previsível, Foco curto, Leitura com reforço, Calmo) e rotina; vários perfis; exportar/apagar dados |
-| Criança | Avatar por peças (17 bases, com óculos, aparelho e cadeira de rodas grátis; sem foto, sem joias); chegada "Oi, [NOME]!"; **mapa da vila** (arte do mundo 3D como fundo 2D com pontos clicáveis); **arquipélago** com as ilhas; trilha de fases por região (**sem pular fases**); entrada da fase com **Minhas Conquistas** (brilhante × apagado com cadeado e a habilidade) |
+| Visual (D025) | Sistema de design em `web/src/estilos.css` (tokens de cor, raio, sombra e movimento) e `web/src/componentes/ui.tsx` (Icone, Figura, Logo, Fundo, Botao3D, Cartao, BotaoSegurar, MapaNavegavel). Entrada com vídeo em loop e logotipo; mapa da vila e arquipélago pintados com pan/zoom e pinos 3D; figuras 3D nas atividades (`public/assets/figuras`, sem emoji); cenas 3D desfocadas atrás das missões (`public/assets/cenas`) |
+| Nível inicial (D026) | No cadastro, "De onde [nome] começa?": Do zero (padrão) · Já conhece as letras e os sons · Já lê palavras. As fases anteriores ficam liberadas para revisar (sem contar como concluídas); o adulto muda o nível no Painel da família. Regra no motor: `packages/motor/src/nivel-inicial.ts` |
+| Adulto | Portão sem cálculo (segurar 3 s); cadastro (primeiro nome, gênero 3 opções com prévia da concordância, ano, consentimentos LGPD em linguagem simples, "Não pedimos"); gravar o nome (MediaRecorder, fica no aparelho, apagado em 30 dias); 3 pronúncias na voz da Sofia e do Tales + ajuste ("Ka-u-Ã"); o que já sabe, apoios (Previsível, Foco curto, Leitura com reforço, Calmo) e rotina; vários perfis; exportar/apagar dados |
+| Criança | Avatar por peças (17 bases, com óculos, aparelho e cadeira de rodas grátis; sem foto, sem joias); chegada "Oi, [NOME]!"; **mapa da vila** pintado em tela cheia (arrastar/pinça, pinos 3D, próximas fases com cadeado, HUD de jogo); **arquipélago** com as ilhas; trilha de fases por região (**sem pular fases**); entrada da fase com **Minhas Conquistas** (brilhante × apagado com cadeado e a habilidade) |
 | Sessão C0–C9 | Acolhida → Jardim da Revisão (revisão espaçada) → cenas da fase → pausa ativa → ritual de fim. **Assiste e Faz** (vídeo curto da dupla com legenda → "Agora é a sua vez, [NOME]!") |
 | Mecânicas | TOCAR/CAÇAR (figura pelo som inicial, rima, síntese, letra do som, ler e tocar a figura), ENSINAR o Bolota, **palmas** nas sílabas (lâmpadas, amarelinha, capoeira-esporte), **montar** com letras ou sílabas, **ditado** ("assim você escreveu / assim os adultos escrevem"), **ler/falar** com microfone opcional (o reconhecimento nunca é juiz: sempre "Eu falei!"), **traçar** a letra, **pausa ativa**. Escada de ajuda: dica → modelo → juntos; sem X vermelho, buzina, perda ou cronômetro |
 | Espelho do Som | Na lição: **frente (boca da Sofia/Tales) + raio-X de lado** (P8-b). Em "Conheça seu corpo": frente, raio-X, dentro da boca, corpo e giro 360°. Integra a demo de `docs/propostas/06-fonema-unificada/espelho-do-som-3d` (copiada no build); sem ela, usa imagens |
@@ -79,14 +83,14 @@ Regra de ouro: **toda regra pedagógica está no motor** (testável, sem tela); 
 
 ### Integrações com o trabalho de outros agentes
 - **Espelho do Som 3D** (`docs/.../espelho-do-som-3d`): copiado para `web/public/espelho/` a cada `dev`/`build` e embutido por `public/espelho-embed.html` (iframe; API `window.esp`). Se a pasta não existir, o app usa as imagens.
-- **Mundo 3D v2** (`docs/.../mundo-3d-v2`): quando existir `index.html` nessa pasta, ele é copiado para `web/public/mundo3d/` e vira a tela principal da criança (rota `#/c/:id/mundo`, iframe com `?cena=vila&regiao=R0&fase=<fase atual>&feitas=<fases concluídas>`; o mundo avisa por `postMessage` `{tipo:'fonema:missao', detalhe:{id}}` e o app abre a fase, respeitando a regra de não pular fases). Sem `index.html` nessa pasta, a rota cai no mapa 2D da vila, que continua acessível pelo botão "Mapa 2D".
+- **Mundo 3D v2** (`docs/.../mundo-3d-v2`): quando existir `index.html` nessa pasta, ele é copiado para `web/public/mundo3d/` e fica como modo SECUNDÁRIO "Passear 3D" (botão na doca do mapa pintado, que é o hub principal; rota `#/c/:id/mundo`, iframe com `?cena=vila&regiao=R0&fase=<fase atual>&feitas=<fases concluídas>`; o mundo avisa por `postMessage` `{tipo:'fonema:missao', detalhe:{id}}` e o app abre a fase, respeitando a regra de não pular fases). Sem `index.html` nessa pasta, a rota cai no mapa 2D da vila, que continua acessível pelo botão "Mapa 2D".
 - **Vozes oficiais** (`voz/`): coloque os mp3 em `web/public/audio/falas/` e um `manifesto.json` (`{"sofia|Oi, Mariana!": "arquivo.mp3"}`); o serviço de voz usa o mp3 quando existe e cai no `speechSynthesis` quando não.
 
 ## Criar conteúdo ("criar coisas nela")
 
 Tudo é dado em `packages/conteudo/src/`. Depois de editar, rode `npm test` (o linter de decodificabilidade e as checagens de referência avisam se algo ficou errado) e `npm run dev`.
 
-**Adicionar palavras:** em `palavras.ts`, `FIGURAS` (palavras ouvidas, com emoji provisório) ou `PALAVRAS_R2A` (palavras que a criança LÊ — só com letras já ensinadas). Pseudopalavras: `p('LUFO', 'LU-FO', '', true)`.
+**Adicionar palavras:** em `palavras.ts`, `FIGURAS` (palavras ouvidas, com emoji provisório no dado; a tela troca pela figura 3D de `web/public/assets/figuras/<palavra>.webp` — ver `Figura` em `componentes/ui.tsx`; para palavra nova, gere a figura com `scripts/recortar-arte.py`) ou `PALAVRAS_R2A` (palavras que a criança LÊ — só com letras já ensinadas). Pseudopalavras: `p('LUFO', 'LU-FO', '', true)`.
 
 **Adicionar uma atividade numa fase:** em `fases/r0.ts` (ou r1, r2a), acrescente uma cena:
 
@@ -122,13 +126,13 @@ Mecânicas disponíveis (`tipo`): `escolher` (com `estilo` tocar/cacar/ensinar/s
 2. **Contas e LGPD**: conta do adulto (e-mail/celular + senha), consentimentos versionados, exclusão a pedido, retenção de 30 dias do áudio do nome; turmas e escolas para o professor; painel da rede.
 3. **Vozes**: script que gera as falas dos roteiros (já são dados) nas vozes "Sofia — FONEMA" e "Tales — FONEMA" com o nome encaixado, + sons isolados gravados por fonoaudióloga.
 4. **App Expo/React Native**: reaproveita `@fonema/conteudo` e `@fonema/motor` sem mudança; as telas migram de React DOM para React Native (ou WebView do PWA na primeira versão). Next.js para o site/Academia e painéis web.
-5. **Mundo 3D** (mundo-3d-v2) como tela principal e **Espelho do Som** validado por fonoaudiólogas (D020).
+5. **Mundo 3D** (mundo-3d-v2) no padrão das artes-chave (hoje é modo secundário) e **Espelho do Som** validado por fonoaudiólogas (D020).
 
 ## O que falta para 100%
 
 - Vozes oficiais pré-geradas (hoje: voz do navegador como simulação) e sons isolados gravados por fonoaudióloga.
 - Conteúdo de R2b em diante (R2b–R10) e as cenas C7 (Hora da História, Papo com a Sofia, Criar) com histórias próprias; vídeos reais da série (hoje: animação com as artes + legenda).
-- Mundo 3D explorável como tela principal (integração pronta; aguardando `mundo-3d-v2/index.html`).
+- Mundo 3D explorável no padrão visual das artes-chave (hoje entra só como "Passear 3D").
 - Backend, contas, sincronização entre aparelhos, turmas reais e envio real de WhatsApp.
 - Teto diário/janela noturna aplicados (os dados da rotina já são coletados), modo Previsível/Calmo com variações de cena, Maternal.
 - Validações externas (fonoaudióloga, linguista, advogado) listadas na revisão.

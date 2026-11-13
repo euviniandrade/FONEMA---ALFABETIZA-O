@@ -5,6 +5,7 @@ import type { Repositorio } from './dados/repositorio.ts';
 import { RepositorioIndexedDB } from './dados/repositorio-idb.ts';
 import { voz } from './servicos/voz.ts';
 import { efeitosLigados } from './servicos/efeitos.ts';
+import { modoTeste } from './servicos/ambiente.ts';
 
 export interface Preferencias { vozLigada: boolean; contraste: boolean; menosMovimento: boolean }
 
@@ -45,7 +46,8 @@ export function ProvedorApp({ children, repo }: { children: ReactNode; repo: Rep
   useEffect(() => {
     voz.configurar({ ligada: prefs.vozLigada, velocidade: configBruta.voz.velocidade, provedor: configBruta.voz.provedor });
     efeitosLigados(prefs.vozLigada);
-    const reduz = prefs.menosMovimento || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    // nos testes E2E (modo rápido) as animações também ficam instantâneas: os cliques não esperam a tela assentar
+    const reduz = prefs.menosMovimento || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || modoTeste();
     document.documentElement.classList.toggle('contraste', prefs.contraste);
     document.documentElement.classList.toggle('menos-movimento', !!reduz);
     localStorage.setItem('fonema-prefs', JSON.stringify(prefs));

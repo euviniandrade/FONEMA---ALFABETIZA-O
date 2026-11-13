@@ -109,7 +109,7 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
 
   return (
     <div className={`tela-sessao ${limpo ? 'fundo-limpo' : ''}`} data-etapa={etapa.tipo} data-cena={etapa.cena?.id}>
-      {!limpo ? <Fundo cena={cenaDe(cenario)} desfoque={16} tom="calmo" /> : null}
+      {!limpo ? <Fundo cena={cenaDe(cenario)} desfoque={10} tom="calmo" /> : null}
       <Topo crianca={crianca} voltar={`c/${criancaId}/vila`} titulo={fase.titulo}>
         <ol className="trilha vidro" aria-label="Trilha do dia">
           {cenas.map((e, k) => (
