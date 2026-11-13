@@ -568,38 +568,49 @@
     ${gl('M32,48 q4,-12 14,-12 q-8,6 -8,16z', .6)}<path d="M60,22 q14,-10 24,-4" stroke="#2F6B43" stroke-width="4" fill="none"/>`));
 
   /* ---------- EVENTOS (voltam todo ano) ---------- */
-  def('bandeirinha', 'BANDEIRINHA', 'evento', c => {
-    const cols = ['#D9483B', '#F2B33D', '#1F6E82', '#2F6B43', '#B23C62', '#E8792E', '#6B5BA8'];
-    const pts = Array.from({ length: 7 }, (_, i) => { const x = 18 + i * 27; const y = 50 + Math.sin(i / 6 * Math.PI) * 30; return [x, y]; });
-    return `<path d="M6,44 Q100,110 194,44" stroke="#7A4B2E" stroke-width="3" fill="none"/>` + pts.map(([x, y], i) => `<path d="M${x - 11},${y} h22 v34 l-11,-9 l-11,9z" fill="${c.l(cols[i], { dir: [0, 0, 1, 1] })}" stroke="${S(cols[i])}" stroke-width="2"/>${gl(`M${x - 9},${y + 2} h5 v22 l-5,4z`, .35)}`).join('') +
-      `<path d="M10,120 Q100,180 190,120" stroke="#7A4B2E" stroke-width="3" fill="none"/>` + pts.map(([x, y], i) => `<path d="M${x - 10},${y + 74} h20 v30 l-10,-8 l-10,8z" fill="${c.l(cols[(i + 3) % 7], { dir: [0, 0, 1, 1] })}" stroke="${S(cols[(i + 3) % 7])}" stroke-width="2"/>`).join('') + spark(100, 20);
+  // Decisão 012: sem bandeirinhas/fogueira juninas nem itens de carnaval. Eventos: feira de leitura, colheita, festival de talentos, formatura.
+  def('varal', 'VARAL DE LIVROS', 'evento', c => {
+    const cols = ['#1F3A6B', '#F2B33D', '#FFFBF4']; // marinho, amarelo-ipê, branco (D009: 2–3 cores)
+    const pts = Array.from({ length: 5 }, (_, i) => { const x = 30 + i * 35; const y = 52 + Math.sin(i / 4 * Math.PI) * 24; return [x, y]; });
+    return c.sh(100, 184, 70) + `<path d="M8,40 Q100,100 192,40" stroke="#7A4B2E" stroke-width="3" fill="none"/>` +
+      pts.map(([x, y], i) => { const col = cols[i % 3]; return `<g transform="rotate(${(i - 2) * 4} ${x} ${y})">
+      <path d="M${x - 15},${y} h30 v40 h-30z" fill="${c.l(col, { dir: [0, 0, 1, 1] })}" stroke="${S(col)}" stroke-width="2.5"/>
+      <path d="M${x},${y} v40" stroke="${S(col, .35)}" stroke-width="2"/>
+      <path d="M${x - 10},${y + 12} h7 M${x - 10},${y + 18} h7 M${x + 3},${y + 12} h7 M${x + 3},${y + 18} h7" stroke="${col === '#FFFBF4' ? '#1F3A6B' : '#FFFBF4'}" stroke-width="2" opacity=".7"/>
+      <rect x="${x - 3}" y="${y - 6}" width="6" height="9" rx="2" fill="#C08A3E"/></g>`; }).join('') +
+      `<path d="M30,150 h140 v10 h-140z" fill="${c.l('#7A4B2E')}" stroke="${S('#7A4B2E')}" stroke-width="2.5"/>
+      ${[[44, '#1F3A6B'], [64, '#F2B33D'], [82, '#2F6B43'], [100, '#1F3A6B'], [118, '#F2B33D']].map(([x, col]) => `<rect x="${x}" y="116" width="15" height="34" rx="2" fill="${c.l(col)}" stroke="${S(col)}" stroke-width="2"/>`).join('')}
+      ${spark(164, 112)}`;
   });
-  def('fogueira', 'FOGUEIRA', 'evento', c => {
-    return c.sh(100, 184, 70) + `
-    <ellipse cx="100" cy="150" rx="90" ry="40" fill="${c.stops([[0, '#FFD36B', .55], [1, '#FFD36B', 0]], [50, 50, 50], true)}"/>
-    ${[[40, 168, -14], [160, 168, 14], [100, 174, 0]].map(([x, y, a]) => `<g transform="rotate(${a} ${x} ${y})"><rect x="${x - 50}" y="${y - 9}" width="100" height="18" rx="9" fill="${c.l('#7A4B2E')}" stroke="${S('#7A4B2E')}" stroke-width="2.5"/><ellipse cx="${x + 50}" cy="${y}" rx="5" ry="9" fill="#E3B35F"/></g>`).join('')}
-    <path d="M100,160 C50,150 52,104 76,84 C76,104 86,104 88,98 C80,72 96,40 116,26 C110,56 140,70 136,104 C146,96 148,88 146,80 C164,104 156,152 100,160Z" fill="${c.stops([[0, '#FFE08A'], [.45, '#F2A33D'], [1, '#D9332B']])}" stroke="#B7321E" stroke-width="2.5"/>
-    <path d="M100,156 C76,150 78,124 92,110 C94,124 100,124 102,118 C102,104 110,96 118,90 C116,110 130,124 122,140 C118,152 110,156 100,156Z" fill="${c.stops([[0, '#FFF7D0'], [1, '#FFC24A']])}"/>
-    ${[[60, 60], [140, 50], [150, 120]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3" fill="#FFC24A"/>`).join('')}`;
+  def('cesta', 'CESTA DA COLHEITA', 'evento', c => {
+    const w = '#C08A3E';
+    return c.sh(100, 184, 76) + `
+    <path d="M40,96 Q100,20 160,96" stroke="${c.l('#7A4B2E')}" stroke-width="8" fill="none" stroke-linecap="round"/>
+    ${[[70, 92, -24], [96, 86, -6], [124, 90, 18]].map(([x, y, a]) => `<g transform="rotate(${a} ${x} ${y})"><ellipse cx="${x}" cy="${y}" rx="11" ry="30" fill="${c.l('#F2C94C', { dir: [0, 0, 1, 0] })}" stroke="#B8862B" stroke-width="2.5"/><path d="M${x - 10},${y + 10} q-8,24 4,34 M${x + 10},${y + 10} q8,24 -4,34" fill="${c.l('#6FA35A')}" stroke="#2F6B43" stroke-width="2"/></g>`).join('')}
+    <circle cx="146" cy="104" r="15" fill="${c.r('#E2432F')}"/><circle cx="54" cy="106" r="13" fill="${c.r('#F2A33D')}"/>
+    <path d="M30,104 h140 l-16,72 q-2,8 -10,8 h-88 q-8,0 -10,-8z" fill="${c.l(w, { dir: [0, 0, 1, 1] })}" stroke="${S(w)}" stroke-width="3.5" ${sw}/>
+    ${[124, 144, 164].map(y => `<path d="M${36 + (y - 104) / 5},${y} H${164 - (y - 104) / 5}" stroke="${S(w, .3)}" stroke-width="3"/>`).join('')}
+    ${[60, 85, 110, 135].map(x => `<path d="M${x},106 l4,76" stroke="${S(w, .3)}" stroke-width="2.5"/>`).join('')}
+    ${gl('M38,110 h18 l-8,40z', .35)}${spark(166, 50)}`;
   });
-  def('sombrinha', 'SOMBRINHA DE FREVO', 'evento', c => {
-    const cols = ['#D9483B', '#F2B33D', '#2F6B43', '#1F6E82', '#B23C62', '#E8792E'];
-    const segs = cols.map((col, i) => { const a1 = Math.PI + i * Math.PI / 6, a2 = a1 + Math.PI / 6; return `<path d="M100,96 L${(100 + Math.cos(a1) * 78).toFixed(1)},${(96 + Math.sin(a1) * 70).toFixed(1)} Q${(100 + Math.cos((a1 + a2) / 2) * 70).toFixed(1)},${(96 + Math.sin((a1 + a2) / 2) * 62).toFixed(1)} ${(100 + Math.cos(a2) * 78).toFixed(1)},${(96 + Math.sin(a2) * 70).toFixed(1)}Z" fill="${c.l(col, { dir: [0, 0, 1, 1] })}" stroke="${S(col)}" stroke-width="2.5"/>`; }).join('');
-    return c.sh(100, 184, 50) + `<g transform="rotate(-14 100 100)">${segs}
-    <path d="M22,96 q13,10 26,0 q13,10 26,0 q13,10 26,0 q13,10 26,0 q13,10 26,0 q13,10 26,0" fill="none" stroke="#FFFBF4" stroke-width="3" stroke-dasharray="2 5" stroke-linecap="round"/>
-    <path d="M100,96 V176 q0,10 -10,10 q-8,0 -8,-8" stroke="${c.l('#7A4B2E')}" stroke-width="6" fill="none" stroke-linecap="round"/>
-    <circle cx="100" cy="24" r="6" fill="${c.r('#F2B33D')}"/>${gl('M100,30 L44,70 Q60,46 96,30Z', .35)}</g>${spark(170, 40)}`;
+  def('microfone', 'MICROFONE', 'evento', c => {
+    const m = '#1F3A6B';
+    return c.sh(100, 186, 46) + `<g transform="rotate(-12 100 100)">
+    <path d="M86,92 h28 l-6,70 h-16z" fill="${c.l(m, { dir: [0, 0, 1, 0] })}" stroke="${S(m)}" stroke-width="3" ${sw}/>
+    <circle cx="100" cy="60" r="34" fill="${c.r('#C9CED6')}" stroke="#6B7280" stroke-width="3"/>
+    ${[44, 56, 68, 80].map(y => `<path d="M${70},${y} H130" stroke="#8A919C" stroke-width="2" opacity=".6"/>`).join('')}
+    <rect x="80" y="90" width="40" height="10" rx="4" fill="${c.l('#F2B33D')}" stroke="${S('#F2B33D')}" stroke-width="2"/>
+    ${gl('M78,44 q8,-16 24,-18 q-14,8 -18,24z', .6)}</g>${spark(160, 40)}${spark(40, 60, .7)}`;
   });
-  def('mascara', 'MÁSCARA', 'evento', c => {
-    const b = '#6B5BA8';
-    return c.sh(100, 170, 70) + `
-    <path d="M24,92 Q20,64 56,62 Q84,62 100,76 Q116,62 144,62 Q180,64 176,92 Q172,130 138,128 Q114,126 100,106 Q86,126 62,128 Q28,130 24,92Z" fill="${c.l(b, { dir: [0, 0, 1, 1] })}" stroke="${S(b)}" stroke-width="3.5"/>
-    <ellipse cx="62" cy="94" rx="20" ry="13" fill="#2B1B12"/><ellipse cx="138" cy="94" rx="20" ry="13" fill="#2B1B12"/>
-    <path d="M30,84 Q60,66 92,82 M108,82 Q140,66 170,84" stroke="#F2B33D" stroke-width="4" fill="none"/>
-    ${[[40, 112], [160, 112], [100, 92], [76, 74], [124, 74]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4" fill="${c.r('#F2B33D')}"/>`).join('')}
-    ${[['#D9483B', -30], ['#F2B33D', -12], ['#2F6B43', 6]].map(([col, a]) => `<path d="M160,70 Q170,${30 + a} ${190 + a / 3},${14 + a / 2}" stroke="${col}" stroke-width="8" fill="none" stroke-linecap="round"/>`).join('')}
-    <path d="M176,90 l18,40" stroke="${c.l('#C08A3E')}" stroke-width="6" stroke-linecap="round"/>
-    ${gl('M34,86 q10,-18 30,-18 q-18,8 -24,20z', .5)}${spark(30, 40)}`;
+  def('capelo', 'CAPELO DE FORMATURA', 'evento', c => {
+    const b = '#1F3A6B';
+    return c.sh(100, 176, 70) + `
+    <path d="M62,104 v34 q38,22 76,0 v-34z" fill="${c.l(b, { dir: [0, 0, 1, 1] })}" stroke="${S(b)}" stroke-width="3.5" ${sw}/>
+    <path d="M100,52 L180,86 L100,120 L20,86Z" fill="${c.l(b, { dir: [0, 0, 1, 1], hi: .45 })}" stroke="${S(b)}" stroke-width="3.5" ${sw}/>
+    <circle cx="100" cy="86" r="6" fill="${c.r('#F2B33D')}"/>
+    <path d="M100,86 Q150,92 152,112 V140" stroke="#F2B33D" stroke-width="4" fill="none"/>
+    <path d="M146,140 h12 l4,22 h-20z" fill="${c.l('#F2B33D')}" stroke="${S('#F2B33D')}" stroke-width="2"/>
+    ${gl('M40,84 L100,58 L84,72Z', .45)}${spark(40, 40)}`;
   });
   def('pipa', 'PIPA', 'evento', c => {
     return c.sh(110, 188, 40) + `<g transform="rotate(-10 100 90)">

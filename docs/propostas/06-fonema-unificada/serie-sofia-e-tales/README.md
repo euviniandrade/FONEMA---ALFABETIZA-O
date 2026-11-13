@@ -141,13 +141,14 @@ Os bordões são **frases-âncora**: previsíveis, iguais em todo episódio e ú
 **Paleta sem arco-íris** (D009):
 - nenhuma cena, objeto, roupa, barco, pipa, bandeira, xilofone ou fundo usa **listras ou faixas multicoloridas em sequência**;
 - cada objeto tem **2–3 cores harmônicas** da paleta da marca e da natureza: azul-marinho, azul-claro, branco, madeira, verdes da mata, amarelo-ipê, terracota;
-- a chuva do roteiro 7 termina **sem arco-íris**; bandeirinhas de festa junina usam 2–3 cores (ex.: azul-marinho, branco, amarelo-ipê);
+- a chuva do roteiro 7 termina **sem arco-íris**; varais de livros e toldos da feira de leitura usam 2–3 cores (ex.: azul-marinho, branco, amarelo-ipê);
 - camisas de times e seleções usam **só as cores** (as cores de bandeiras são permitidas, D009/D010), **sem escudos, nomes, mascotes nem patrocínios** (D010 item 1).
 
 **Outros limites:**
 - sem conteúdo de luto, violência ou separação dos pais (rel. 33 §5.5). Saudade, medo do escuro, chuva que estraga o passeio e brinquedo perdido são os limites de tristeza da série;
 - as famílias de Sofia e Tales aparecem pouco e sem drama: um adulto acolhedor (mãe, pai, avó, avô ou tio), variando por episódio, para que toda criança se reconheça;
-- sem adornos (D006): nada de pulseira, brinco, presilha ou laço, nem em festa (na festa junina, a roupa típica entra sem enfeites; ver §6);
+- sem adornos (D006): nada de pulseira, brinco, presilha ou laço, nem em festa (na feira de leitura e no dia da família, uniforme ou roupa do dia a dia, sem enfeites; ver §6);
+- **valores cristãos e perfil conservador (D012):** nada de festa junina ou festas de santos, carnaval, Halloween, ritos de outras religiões, magia, feitiços, poções, amuletos, "sorte", signos, nem mitos tratados como seres (Saci, Curupira, Iara, Boitatá, Mula sem cabeça). As celebrações da série são a **feira de leitura**, o **dia da família**, o piquenique, a **colheita com gratidão**, o **mutirão da vila**, o **festival de talentos**, a **Copa das Letras** e a **formatura da alfabetização** (Natal só se a escola quiser);
 - sem texto livre nem pergunta sobre a família da criança. A pergunta pessoal vai **para a família**, não é gravada (rel. 33 §5.3–5.4).
 
 ### 1.6 Quem conduz o quê
@@ -241,7 +242,7 @@ Os bordões são **frases-âncora**: previsíveis, iguais em todo episódio e ú
 | 43 | **Chuva no Pantanal (e no quintal).** A chuva cancela o passeio de canoa | R4 · 4→5◐ | CHUVA, JANELA, MOLHADO | Emo: decepção; plano B; Fin: o que levar na canoa | **N12 + N10** (rels. 08, 13, 33): tudo bem ficar chateado (sem positividade tóxica, rel. 33 §4 regra 3); o plano B vira descoberta | V 75 s (roteiro 7) · J "Canoa da Cheia" (n.º 9) |
 | 44 | **O filhote perdido de tuiuiú.** Ler as frases das pistas e pedir ajuda à Iara | R4 · 4→5◐ | NINHO, BICHO, OLHO, PEIXE | Emo: empatia, pedir ajuda; Lóg: onde vive (água, terra, ar) | **N11** (rels. 07, 09): dígrafo marcado como pista retirável. **N2**: ler a frase move o barco | E 3 min · J "Ninho Perdido" (n.º 10) |
 | 45 | **Ipê sem flores no Cerrado.** O Tales descobre que o S entre vogais faz som de Z | R5 · 5◐→6◐ | CASA, ROSA, MESA × SAPO, SOPA | Tec/ciência: seca e floração | **N10** (rels. 08, 35, 41): ver casos → achar o padrão → a Sofia nomeia a regra (jornada R5). Quem descobre é o Tales | V 60 s (regrinha, tipo b) |
-| 46 | **Festa junina no Sertão.** Balão de papel (sem fogo), canjica, forró; no fim da festa, alegria e tristeza juntas | R6 · 6◐→5● | SÃO JOÃO, BALÃO, CANJICA, PAMONHA | Emo: duas emoções ao mesmo tempo (M16); cultura: forró, cordel | **N10** (rels. 08, 35): surpresa no conteúdo (quadrilha com palavras), previsibilidade nas regras. **N12**: celebração sem nota | E 4 min · W "Contem como era a festa junina de vocês" |
+| 46 | **Feira de leitura e dia da família no Sertão.** Bancas de livros e cordel na praça, piquenique com canjica e pamonha da colheita, forró no coreto; cada família lê junto e agradece a colheita; no fim da feira, alegria e tristeza juntas (o primo volta para casa) | R6 · 6◐→5● | FEIJÃO, MAMÃO, CANJICA, PAMONHA | Emo: duas emoções ao mesmo tempo (M16); cultura: forró, cordel | **N10** (rels. 08, 35): surpresa no conteúdo (ciranda com palavras no varal de livros), previsibilidade nas regras. **N12**: celebração sem nota | E 4 min · W "Leiam juntos um livro ou um cordel e contem pelo que a família de vocês agradece hoje" |
 | 47 | **Viagem de barco na Amazônia: saudade e sono na rede.** Longe de casa, a Sofia sente saudade; o Tales não consegue dormir de tanta pergunta | R7 · 5→7 | SAUDADE, REDE, BARCO, DORMIR | Emo: saudade; Tec: pausa de tela | **N4** (rels. 07, 15, 42): os dois descansam; na manhã seguinte, no barco-escola, conferem o que lembram (**N6**) | V 75 s (roteiro 10) |
 
 ### 2.5 Esporte, respeito e meio ambiente (Decisão 010)
@@ -280,6 +281,9 @@ Os bordões são **frases-âncora**: previsíveis, iguais em todo episódio e ú
 - **A Sofia erra o FOGUETE** (R5; GU; o Tales ajuda; **N3**; anti-estereótipo: a Sofia é a construtora do foguete).
 - **O livro da nossa jornada** (R10; reconto de 2 anos; **N6**, **N10**, **N12**; roteiro 12).
 - **Festival de Leitura** (R10; ler um para o outro diante da família; **N12**).
+- **Festival de Talentos da vila** (qualquer região; cada criança mostra um talento ligado à leitura: recitar uma parlenda, ler um cordel, cantar uma cantiga lendo a letra; aplausos para o esforço, sem pódio; **N12**, **N6**).
+- **Mutirão da praça** (R4–R6; a vila lê a lista de tarefas e arruma a praça antes da feira de leitura; VASSOURA, BANCO, LIXO; Emo: cooperação; meio ambiente).
+- **Formatura da alfabetização** (R10; beca simples sem enfeites, cada criança lê uma frase para a família; gratidão a quem ajudou; **N12**).
 
 ---
 
@@ -996,15 +1000,16 @@ Os eventos sazonais **não dependem da região**: usam palavras da etapa em que 
 |---|---|---|---|
 | Fev–Mar | Volta às aulas | n.º 1, 2, 5 | Material escolar e uniforme |
 | Mar–Abr | Chuvas (varia por região do Brasil) | n.º 43 + "chuva no quintal" | O calendário de chuva é regionalizável |
-| Jun–Jul | **Festa junina / São João** | n.º 46 | Balão **de papel e sem fogo**; roupa típica sem adornos; validação com educadores do Nordeste (rel. 33 §4 regra 6) |
+| Jun–Jul | **Feira de Leitura e Dia da Família** (com colheita e gratidão) | n.º 46 | Varal de livros e toldos em 2–3 cores; comidas regionais da colheita (canjica, pamonha, milho) e forró como cultura, sem rito religioso (D012); roupa sem adornos; validação com educadores do Nordeste (rel. 33 §4 regra 6) |
 | Jul | Férias: viagem pelos biomas | n.º 38, 47 | Episódios de viagem; desafio de leitura em família |
-| Ago | Folclore | Dona Cida conta causos e parlendas | Parlendas como trabalho de consciência fonológica |
+| Ago | Mês das parlendas e cantigas | Dona Cida ensina parlendas, cantigas de roda e brincadeiras antigas | Parlendas como trabalho de consciência fonológica; sem causos de assombração nem mitos tratados como seres (D012) |
+| Set–Out | Festival de Talentos e mutirão da vila | Roteiro 9 (versão anual) + n.º 35 | Cada criança mostra o que aprendeu (ler, recitar, tocar, desenhar); mutirão para arrumar a praça antes |
 | Out | Dia das Crianças: brincadeiras de rua | n.º 16, Esconde-esconde | Brincar livre (rel. 40 §5.1) |
 | Nov | Mês da consciência negra (ERER) | Litoral (R8): "minha cor, meu cabelo, minha história" | Revisão por pessoas negras e pardas (rel. 23 §3.9.7) |
 | Jun (5) | Dia do Meio Ambiente | n.º 61, 62, 65 | Missão em família: separar recicláveis |
 | Set (21) | Dia da Árvore | n.º 63 | Plantar uma muda ou cuidar de uma planta |
 | Qualquer mês | Jogos da Vila (semana esportiva) | n.º 48–56; jogos 21–26 | Times misturados; camisas só em cores, sem escudos (D010) |
-| Dez | Fim de ano: Festival de Leitura | Roteiro 12 (versão anual) | Celebração do processo, sem nota |
+| Dez | Fim de ano: Festival de Leitura e **formatura da alfabetização** | Roteiro 12 (versão anual) | Celebração do processo, sem nota; cena de Natal só se a escola escolher (D012) |
 
 ### 5.4 Esporte e meio ambiente em cada bioma (Decisão 010)
 
@@ -1031,8 +1036,9 @@ Os eventos sazonais **não dependem da região**: usam palavras da etapa em que 
 - **Toda cena** começa com "the SAME two children from the reference" e termina com o **bloco de estilo** abaixo.
 - **Proibido em prompt:** closes da boca de criança. O gerador bloqueou esse pedido, e o zoom da boca fica nas pranchas ilustradas (personagens-3d, rodada 2; personagens v2 §6).
 - **Texto na imagem:** os geradores erram letras. Toda palavra que aparece na cena é **sobreposta depois**, em Andika, pelo pipeline. Nos prompts, peça "blank sign", "blank card" etc.
-- **Paleta (D009):** o bloco de estilo já proíbe arco-íris e listras multicoloridas. Na revisão, rejeitar qualquer imagem com faixas coloridas em sequência (velas, pipas, bandeirinhas, roupas, fundos).
+- **Paleta (D009):** o bloco de estilo já proíbe arco-íris e listras multicoloridas. Na revisão, rejeitar qualquer imagem com faixas coloridas em sequência (velas, pipas, varais de enfeites, roupas, fundos).
 - **Esporte (D010):** camisas de times e seleções só nas cores, sem escudos, números de marca, nomes ou patrocínios; nos prompts, pedir "plain jerseys, no logos, no crests".
+- **Valores (D012):** nenhum prompt pede festa junina, fogueira, bandeirinhas juninas, carnaval, Halloween, magia, "sorte" ou mitos folclóricos; festas viram feira de leitura, dia da família, colheita com gratidão, mutirão, festival de talentos ou formatura.
 - **Revisão:** representatividade e "sem adornos" por consultoria (personagens v2 §4; rel. 23 §3.9.7).
 
 **Bloco de estilo (colar no fim de todo prompt):**
@@ -1072,7 +1078,7 @@ Quando o Bolota aparecer, acrescente: `with Bolota, a small cute three-banded ar
 | P2-09 | Sofia constrói o foguete | the SAME two children from the reference in a backyard workshop, the girl assembling a cardboard rocket with tape and tools, the boy holding the instruction sheet and handing her parts + estilo | Anti-estereótipo; situação de reserva |
 | P2-10 | Tales lê para a gata dormir | the SAME two children from the reference in a cozy library, the boy reading softly to a sleeping tabby cat on his lap, the girl choosing a book on a shelf behind him + estilo | Situação n.º 10; anti-estereótipo |
 | P2-11 | Medo antes de ler no cordel (roteiro 9) | the SAME two children from the reference backstage at a sertão cordel fair, colorful booklets hanging on a string, the boy nervously holding a blank booklet, the girl showing three fingers + estilo | Roteiro 9 |
-| P2-12 | Festa junina | the SAME two children from the reference at a June festival in the Brazilian northeast, simple plaid festival shirts without any accessories, paper flags overhead in only navy, white and ipê yellow, paper lanterns (no fire), dancing in a line + estilo | Situação n.º 46 |
+| P2-12 | Feira de leitura e dia da família no Sertão | the SAME two children from the reference at a reading fair and family day in a small village square in the Brazilian sertão, wooden book stalls with plain canvas awnings in navy and white, a string of hanging booklets (cordel) in natural paper colors, families sitting on picnic blankets reading together, a basket of harvested corn and beans, the girl reading aloud to her grandmother, the boy sharing a plate of corn pudding with a neighbor, no flags, no bonfire + estilo | Situação n.º 46 |
 
 ### 6.4 Prioridade 3: Ano 2 e materiais de família
 
@@ -1101,6 +1107,27 @@ Quando o Bolota aparecer, acrescente: `with Bolota, a small cute three-banded ar
 | E-06 | Pedir ajuda ao professor (roteiro 15) | the SAME two children from the reference talking to a kind music teacher in a wheelchair who listens at their eye level in a schoolyard, the boy looking a little sad, the girl standing by his side + estilo | Roteiro 15 |
 | E-07 | Rio sem lixo (roteiro 16) | the SAME two children from the reference with gloves picking up litter on a Pantanal riverbank with a park ranger woman with a blue hearing aid, a natural wood canoe, a fish swimming free + estilo | Roteiro 16 |
 | E-08 | Separar recicláveis na praia | the SAME two children from the reference on a beach sorting litter into three plain bins (wood, navy, terracota) before a village party, with Bolota + estilo | Situação n.º 61 |
+
+### 6.6 Imagens já geradas (`imagens/`)
+
+A primeira leva foi gerada com numeração própria. Esta tabela liga cada arquivo ao prompt de origem.
+
+| Arquivo | Prompt de origem | Observação |
+|---|---|---|
+| `P1-01-folha-modelo-giro.png` | P1-01 | — |
+| `P1-02-folha-emocoes.png` | P1-02 | — |
+| `P1-03-palmas-silabas-portao.png` | P1-03 | — |
+| `P1-04-eco-das-vogais-praia.png` | P1-04 | — |
+| `P1-05-som-vibra-garganta-mata.png` | P1-06 | — |
+| `P1-06-respiracao-calma-varanda.png` | P1-08 | — |
+| `P1-07-ensinando-o-bolota.png` | P1-10 | — |
+| `P1-08-tela-de-licao-fundo-limpo.png` | P1-12 | — |
+| `P1-09-foguete-de-papelao.png` | P2-09 | — |
+| `P1-10-lendo-para-o-gato.png` | P2-10 | — |
+| `P1-11-horta-comunitaria.png` | P2-08 | — |
+| `P1-12-feira-de-leitura-dia-da-familia.png` | **Feira de leitura e dia da família na praça da vila** (abaixo) | Substitui a antiga cena de festa junina (D012) |
+
+**Prompt da P1-12 (feira de leitura e dia da família na praça da vila):** `the SAME two children from the reference at a reading fair and family day in the village square, cobblestone square with a flowering yellow ipê tree, wooden book stalls with blank signs and shelves of books, families sitting on picnic blankets with baskets of bread and fruit, the girl showing a hand-drawn picture book to her parents, the boy handing a fruit basket to a smiling elderly grandmother, children reading together on a blanket, no flags, no bonfire + estilo`. Uso: celebração do calendário (Jun–Jul e Festival de Leitura), cartões W de família e situação n.º 46 (versão da vila).
 
 **Ordem de geração sugerida:** P1-01 e P1-02 primeiro, porque fixam a consistência. Depois P1-12, a tela de lição, porque desbloqueia as telas. Em seguida, o restante do P1 na ordem dos roteiros.
 
@@ -1133,7 +1160,7 @@ Quando o Bolota aparecer, acrescente: `with Bolota, a small cute three-banded ar
 5. **Fonoaudiologia:** validar a variante de /ʁ/ no roteiro 8, a nasal do roteiro 9, o gesto b/d do roteiro 5 e a articulação do PR no roteiro 11.
 6. **Jurídico:** conferir a linguagem das cenas de respeito com a Lei 13.185/2015 e a Lei 14.811/2024, e as missões ambientais com a PNEA (Lei 9.795/1999), como pede a D010.
 7. **Consultorias:**
-   - festa junina e cordel com educadores do Nordeste;
+   - feira de cordel e comidas da colheita com educadores do Nordeste;
    - ERER e identidade (R8) com pessoas negras e pardas;
    - Amazônia e povos da floresta com consultor indígena (jornada R7).
 8. **Hipóteses A/B** **[proposta da série]**:

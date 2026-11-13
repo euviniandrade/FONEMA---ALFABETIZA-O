@@ -54,7 +54,7 @@ body{background:#FFF4E2}
  <div class="h2"><svg width="22" height="22" viewBox="0 0 20 20"><path d="M10,1 l2.6,5.6 6,.8 -4.4,4.2 1.1,6 -5.3,-2.9 -5.3,2.9 1.1,-6 -4.4,-4.2 6,-.8z" fill="#F2B33D" stroke="#B07A12"/></svg>Para que comprar?</div>
  <div class="dest card"><div class="ic" style="background:#FBE2D6" id="d1"></div><span class="k" style="background:#A9472A">A VILA PRECISA</span><div class="tt">A padaria precisa de um <b>FORNO</b></div><div class="sm">Com o forno, a padaria abre e o Seu Zé conta uma história nova.</div></div>
  <div class="dest card"><div class="ic" style="background:#E3F0DF" id="d2"></div><span class="k" style="background:#2F6B43">COLEÇÃO DO CERRADO</span><div class="tt">Falta <b>1</b> para completar!</div><div class="slots" id="slots"></div></div>
- <div class="dest card"><div class="ic" style="background:#FDEBC4" id="d3"></div><span class="k" style="background:#D9483B">FESTA JUNINA NA VILA</span><div class="tt">Enfeite a praça para a festa</div><div class="sm">Volta todo ano. Nada some.</div></div>
+ <div class="dest card"><div class="ic" style="background:#FDEBC4" id="d3"></div><span class="k" style="background:#D9483B">FEIRA DE LEITURA NA VILA</span><div class="tt">Enfeite a praça para a feira</div><div class="sm">Volta todo ano. Nada some.</div></div>
  <div class="dest card"><div class="ic" style="background:#F7E0EA" id="d4"></div><span class="k" style="background:#B23C62">PRESENTE</span><div class="tt">A Dona Ema adora flores</div><div class="sm">Dê a TIARA e ouça o segredo do ipê.</div></div>
 </div>
 
@@ -78,11 +78,11 @@ let tg='';for(let i=0;i<20;i++){const x=i*64;tg+=`<path d="M${x},10 h64 v40 q-32
 document.getElementById('tg').innerHTML=tg;
 document.getElementById('saldo').innerHTML=coin(42)+'<span>31</span>';
 const S=(k,s)=>item(k,`width="${s}" height="${s}"`);
-d1.innerHTML=S('forno',60);d2.innerHTML=S('lobo',60);d3.innerHTML=S('bandeirinha',62);d4.innerHTML=S('tiara',60);
+d1.innerHTML=S('forno',60);d2.innerHTML=S('lobo',60);d3.innerHTML=S('varal',62);d4.innerHTML=S('tiara',60);
 slots.innerHTML=['fig_ipe','tiara','jabuti','bota'].map(k=>`<div class="slot">${S(k,28)}</div>`).join('')+'<div class="slot vazio">?</div>';
 abas.innerHTML=[['Tudo',1],['Roupas'],['Casa'],['Vila'],['Bichinhos'],['Música'],['Festas']].map(([n,on])=>`<div class="aba ${on?'on':''}">${n}</div>`).join('');
 const mini={vila:['VILA','#A9472A'],col:['COLEÇÃO','#2F6B43'],festa:['FESTA','#D9483B'],pres:['PRESENTE','#B23C62'],som:['SOM /s/','#6B5BA8'],bicho:['BICHINHO','#4F8A3A'],casa:['CASA','#7A4B2E'],ler:['LEITURA','#1F6E82']};
-const rows=[[ ['forno',24,'vila',0,0,1],['lobo',26,'col',1],['bandeirinha',6,'festa'],['tiara',16,'pres'] ],
+const rows=[[ ['forno',24,'vila',0,0,1],['lobo',26,'col',1],['varal',6,'festa'],['tiara',16,'pres'] ],
             [ ['sanfona',36,'som',1],['capivara',20,'bicho'],['estante',18,'ler',0,1],['rede',15,'casa'] ],
             [ ['pipa',5,'festa',0,1],['horta',20,'vila'],['bone',8,'casa'],['pandeiro',16,'som'] ]];
 let h='';rows.forEach((r,ri)=>{const y=12+ri*196;h+=`<div class="prat" style="top:${y+150}px"></div>`;

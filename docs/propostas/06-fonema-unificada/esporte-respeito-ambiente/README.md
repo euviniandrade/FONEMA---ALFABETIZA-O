@@ -57,7 +57,7 @@
 | **Rio e lago** | Laguinho da vila, Pantanal, Amazônia | canoagem, natação segura | R4, R7 |
 | **Parque e trilha** | Mata Atlântica, Cerrado | corrida e salto (atletismo), ciclismo na trilha | R2a–R2b, R5 |
 | **Campo aberto** | Pampa | pipa, corrida, salto | R3 |
-| **Sertão** | Caatinga | corrida de saco e pião na festa junina, futebol de terreiro | R6 |
+| **Sertão** | Caatinga | corrida de saco e pião na feira da colheita, futebol de terreiro | R6 |
 | **Quadra da escola e rua da cidade** | Cidade das Letras | basquete, futsal, handebol, ciclismo com placas | R9 |
 | **Mesa da biblioteca e praça** | Arquipélago dos Livros, coreto | xadrez, damas | R10 (damas desde R7) |
 
@@ -188,7 +188,7 @@
 | Adaptação | ♿ bola rolada; TEA: bola macia, sem barulho de impacto |
 | Desafio e recompensa | — (uso principal: situação de exclusão, seção 2.4 n.º 2) |
 
-#### 13. Corrida de saco (quintal e festa junina) — R0 (oral) e R6 (festa no Sertão)
+#### 13. Corrida de saco (quintal e dia da família) — R0 (oral) e R6 (feira da colheita no Sertão)
 | Campo | Conteúdo |
 |---|---|
 | Leitura | R0: pulos ao ritmo das **sílabas batidas** (BO-LO-TA: 3 pulos); R6: pulos por sílaba nasal (SER-TÃO) |
@@ -476,9 +476,9 @@ Formato de cada missão: cena curta → a criança **lê** 2–3 opções (cart�
 | # | Item (etiqueta) | Categoria | Entra | Preço | Propósito (o porquê) | Coleção / emblema |
 |---:|---|---|:---:|---:|---|---|
 | — | **BOLA** (#96, já existe) | Esporte | R3 | 3 | Futebol no campinho e brincar com o bichinho | Col. Quintal |
-| — | **APITO** (#106, já existe) | Esporte | R3 | 4 | Árbitra da Copa; som **suave** no modo calmo | Col. Carnaval + Col. Copa |
+| — | **APITO** (#106, já existe) | Esporte | R3 | 4 | Árbitra da Copa; som **suave** no modo calmo | Col. Copa da Vila |
 | — | **PIPA** (#126, já existe; azul-claro e branco) | Brinquedo | R3 | 5 | Soltar no morro da vila, **sem cerol** | Col. Dia das Crianças |
-| — | **PIÃO** (#127, já existe) | Brinquedo | R6 | 4 | Festa do Sertão | Col. Dia das Crianças |
+| — | **PIÃO** (#127, já existe) | Brinquedo | R6 | 4 | Feira da colheita no Sertão | Col. Dia das Crianças |
 | — | **BERIMBAU** (#103, já existe) | Instrumento | R7 | 28 | Roda de capoeira; toca o /b/ | Col. Instrumentos do Brasil |
 | — | **INGRESSO BARCO NO RIO** (já existe) | Ingresso | R7 | — | Ganha a prova de canoagem | — |
 | E-01 | **ABADÁ** | Roupa | R3 | 10 | Jogar capoeira na praia (branco liso) | Col. Copa da Vila |
@@ -488,7 +488,7 @@ Formato de cada missão: cena curta → a criança **lê** 2–3 opções (cart�
 | E-05 | **COLETE** | Segurança | R5 | grátis (cor extra 6) | Canoa e barco | — |
 | E-06 | **REMO** | Esporte | R5 | 8 | Canoagem no laguinho | Col. Rio |
 | E-07 | **PETECA** | Brinquedo | R5 | 5 | Jogo cooperativo de contar toques | Col. Dia das Crianças |
-| E-08 | **SACO DE CORRIDA** | Festa | R5 | 4 | Corrida de saco da festa junina | Col. Festa Junina |
+| E-08 | **SACO DE CORRIDA** | Festa | R5 | 4 | Corrida de saco no dia da família e na feira da colheita | Col. Feira de Leitura e Colheita |
 | E-09 | **GARRAFA** (de água, reaproveitável) | Utensílio | R5 | 4 | Beber água no jogo; menos descartável (ambiente) | Ajudante da Vila |
 | E-10 | **REDE** (de vôlei, na praia da vila) | Vila | R5 | 20 | Abre o vôlei de praia na vila | Col. Copa da Vila |
 | E-11 | **CANOA** | Vila | R5 | 36 ★ meta | Passeio e prova no laguinho | Poupador |

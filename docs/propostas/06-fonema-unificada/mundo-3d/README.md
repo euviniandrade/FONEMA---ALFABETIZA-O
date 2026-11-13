@@ -56,7 +56,7 @@ O **painel de direção de arte** (topo, para o adulto/equipe) troca a hora do d
 | `02-voo-para-ilha.png` | Meio do voo | A aproximação da Mata Atlântica, com montanha, cachoeira, lago, bromélias, anel "você está aqui", bandeira de progresso, balão e a rota de boias |
 | `03-vila-panoramica.png` | Panorâmica | A vila inteira: biblioteca com cúpula, escola com sino, padaria, casa da Sofia, banco com porquinho, oficina de robôs, horta, poço, campinho, laguinho, cais e ponte |
 | `04-vila-angulo-3-4.png` | 3/4 baixo | Leitura de volumes, telhados, caminhos de pedra, coqueiros, ipês, e o arquipélago ao fundo |
-| `05-vila-zoom-praca.png` | Close na praça | Coreto, calçada em ondas, bandeirolas, placas da **Praça das Emoções** (alegria, calma, tristeza, medo, raiva), **Sofia e Bolota** como ilustrações 2D, com profundidade de campo |
+| `05-vila-zoom-praca.png` | Close na praça | Coreto, calçada em ondas, varais de livros da feira de leitura, placas da **Praça das Emoções** (alegria, calma, tristeza, medo, raiva), **Sofia e Bolota** como ilustrações 2D, com profundidade de campo |
 | `06-vila-zoom-biblioteca.png` | Close na biblioteca | Letreiro **LIVRO** legível (Andika + ícone), pórtico com colunas e frontão, friso de lombadas coloridas, vasos floridos e a pilha de livros gigantes; o cantinho de leitura aparece no vídeo |
 | `07-vila-entardecer.png` | Entardecer | Sol baixo e quente, sombras longas, janelas e postes acesos, vaga-lumes começando, céu rosa e laranja |
 | `08-arquipelago-com-hud.png` | Aéreo + HUD | Casa, termômetro da leitura (sem números), moedinhas, botão grande de jogar, navegação por ícones e a fala da Sofia |
@@ -71,7 +71,7 @@ Para regenerar (com o servidor no ar): `node ferramentas/capturar.js` e `node fe
 1. **"Pintura" sobre o 3D.** O low-poly é facetado (sombreamento plano), mas cada face recebe uma variação de ±5% de tom e um gradiente que escurece a base. É o "pincel" do Quintal Brasil aplicado ao 3D, sem texturas pesadas.
 2. **Paleta do guia de estilo da Proposta 1:** tinta `#3B2A20`, papel `#FFFBF4`, terracota `#A9472A`, sol `#F2B33D`, mar `#1F6E82`, ipê `#B23C62`, lilás `#6B5BA8` (vogais). Sem preto puro e sem vermelho de erro.
 3. **Luz suave e quente.** Céu em gradiente com brilho do sol. Hemisférica azul-céu/areia mais um sol morno com sombras suaves (PCF). Tone mapping ACES. No pós: gradação quente, saturação +16%, vinheta marrom e um grão de papel estático (2,5%).
-4. **Brasil reconhecível, sem clichê:** coreto com bandeirolas de festa junina, calçada portuguesa em ondas, ipês rosa e amarelo, mangueira, bananeira, rede na varanda, vira-lata caramelo, mandacaru, araucária, tuiuiú, capivara, palafita, farol, jangada.
+4. **Brasil reconhecível, sem clichê:** coreto com varais de livros da feira de leitura (Decisão 012), calçada portuguesa em ondas, ipês rosa e amarelo, mangueira, bananeira, rede na varanda, vira-lata caramelo, mandacaru, araucária, tuiuiú, capivara, palafita, farol, jangada.
 5. **Sofia e Bolota em 2D ilustrado.** A pesquisa indica que agente 2D ensina melhor (Decisão 005). Por isso eles são **billboards** desenhados em SVG, com contorno branco de "adesivo" e sombra de contato, e recebem a cor da hora do dia. No produto, o SVG vira o canvas do **Rive** (lip-sync e emoções).
 6. **Letreiros decodificáveis:** PÃO, LIVRO, BOLA, CASA, SAPO, ESCOLA, HORTA, ROBÔ, BANCO. Andika 700 (a e g de um andar), ícone concreto ao lado e placa clara. Ficam legíveis no close e um pouco iluminados à noite.
 7. **HUD sem números para a criança:** o termômetro só enche. As moedinhas têm número porque contam coisas concretas. Os botões têm de 92 a 112 px, ícone primeiro e rótulo curto só de apoio.
@@ -83,7 +83,7 @@ Para regenerar (com o servidor no ar): `node ferramentas/capturar.js` e `node fe
 |---|---|---|---|---|
 | Ciclo **dia / entardecer / noite** | Um relógio só (`tod` 0→2) interpola céu, sol, hemisférica, névoa, mar, janelas, postes, estrelas, lua, vaga-lumes e a cor dos personagens | ✔ | ✔ | ✔ (sem sombra) |
 | **Água estilizada** | Shader próprio: ondas por vértice, facetas por derivadas, faixa rasa turquesa e **espuma por distância à ilha**, anéis que se afastam, brilho especular e cintilas | ✔ | ✔ | ✔ |
-| **Vento** | `onBeforeCompile` em copas, flores e bandeirolas, com balanço proporcional à altura | ✔ | ✔ | ✔ (sem flores) |
+| **Vento** | `onBeforeCompile` em copas, flores e varais de livros, com balanço proporcional à altura | ✔ | ✔ | ✔ (sem flores) |
 | **Partículas** | Pontos com shader e tempo determinístico: pétalas de ipê (dia), vaga-lumes (noite), fumaça da padaria, brilho dos postes, **confete de celebração** | 220 pétalas, 90 vaga-lumes, 500 confetes | 110 / 50 / 220 | 40 / 20 / 90 |
 | **Pós-processamento** | `RenderPass` → **GTAO** (AO em meia resolução) → **Bokeh** (DOF só nos closes, foco no alvo) → **Bloom** suave (limiar 1,0, só o que emite luz) → gradação/vinheta/grão → `OutputPass` (ACES + sRGB) | completo | só bloom (meia-res) + gradação | nenhum (vinheta em CSS) |
 | Sombras | Sol com sombra PCF; o frustum acompanha a câmera | 2048 (4096 nas capturas) | 1024 | sem sombra dinâmica; sombras-bolha nos personagens |

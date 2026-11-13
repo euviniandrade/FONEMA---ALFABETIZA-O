@@ -204,7 +204,7 @@ Cada ficha junta: sons, nível, tema, metas das 5 transversais (rel. 39, matriz 
 | Sons | CVC (R, S, L e nasal no fim da sílaba) + ditongos; L × U no fim (mal/mau) |
 | Tema | "Como os povos da floresta conhecem e cuidam do rio?" Ciclo da água, peixes, canoa, roça; literatura de autoria indígena (licença a conferir); revisita "seres vivos" com a lente da interdependência (espiral) |
 | Transversais | **PC** o mapa do rio como modelo · **Lóg** cadeias (quem come quem) · **Emo** respeito a outros modos de vida · **Tec** satélite que vê a floresta; pausas e cuidado com a tela · **Fin** bens comuns: o rio é de todos (rels. 37, 39) |
-| Ambientes e elenco | Rio, igarapé, aldeia, barco-escola; boto, arara, peixes; Tio Boto (lojinha); pescador ribeirinho e professora indígena [proposta da jornada; consultoria indígena obrigatória] |
+| Ambientes e elenco | Rio, igarapé, aldeia, barco-escola; boto, arara, peixes; Tio Bento, barqueiro (lojinha); pescador ribeirinho e professora indígena [proposta da jornada; consultoria indígena obrigatória] |
 | Academia | (b) **L × U no fim**, **E/I e O/U átonos finais**; (c) trailer do Ano 2 e histórias do rio |
 | Lojinha | BARCO, FORNO, MOINHO, BANCA DE LIVROS, ESTANTE, MICO-LEÃO, TUIUIÚ, BERIMBAU, CAVAQUINHO, INGRESSO BARCO NO RIO; coleção **Amazônia** (recompensa: rio de palavras no barco-escola) |
 | Chefe / projeto | Rio que Esqueceu as Palavras · "Livro do rio" (página bilíngue com palavra de língua indígena validada por consultor) |

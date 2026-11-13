@@ -52,12 +52,12 @@ sala.innerHTML=c.svg(`<rect width="1280" height="560" fill="${wall}"/>${stripes}
 <rect y="530" width="1280" height="30" fill="${c.l('#C08A4E')}"/>
 <path d="M0,560 H1280 V800 H0Z" fill="${c.stops([[0,'#C99A66'],[1,'#B07D4A']])}"/>${planks}
 <rect width="1280" height="800" fill="${c.stops([[0,'#fff',0],[.6,'#fff',0],[1,'#3b1d0c',.18]],[50,40,80],true)}"/>
-${vila}${(()=>{const cols=['#D9483B','#F2B33D','#1F6E82','#2F6B43','#B23C62','#E8792E','#6B5BA8'];let o='';for(let seg=0;seg<3;seg++){const x0=seg*430-20,x1=x0+440;o+=`<path d="M${x0},78 Q${(x0+x1)/2},128 ${x1},78" stroke="#7A4B2E" stroke-width="3" fill="none"/>`;for(let i=1;i<11;i++){const t=i/11,x=x0+(x1-x0)*t,y=78+4*t*(1-t)*25-1;const col=cols[(i+seg*3)%7];o+=`<path d="M${x-14},${y} h28 l-14,30z" fill="${c.l(col,{dir:[0,0,1,1]})}" stroke="${FX.S(col)}" stroke-width="1.5"/>`}}return o})()}
+${vila}${(()=>{const cols=['#1F3A6B','#F2B33D','#FFFBF4'];let o='';for(let seg=0;seg<3;seg++){const x0=seg*430-20,x1=x0+440;o+=`<path d="M${x0},78 Q${(x0+x1)/2},128 ${x1},78" stroke="#7A4B2E" stroke-width="3" fill="none"/>`;for(let i=1;i<8;i++){const t=i/8,x=x0+(x1-x0)*t,y=78+4*t*(1-t)*25-1;const col=cols[(i+seg)%3];o+=`<rect x="${x-11}" y="${y}" width="22" height="28" rx="2" fill="${c.l(col,{dir:[0,0,1,1]})}" stroke="${FX.S(col)}" stroke-width="1.5"/><path d="M${x},${y} v28" stroke="${FX.S(col,.35)}" stroke-width="1.5"/>`}}return o})()}
 <ellipse cx="500" cy="200" rx="300" ry="220" fill="#FFF6D8" opacity=".25"/>`,'0 0 1280 800','width="1280" height="800"').replace(/^<svg[^>]*>|<\/svg>$/g,'');
 })();
 const P=(k,x,y,s,extra='')=>`<div class="a" style="left:${x}px;top:${y}px;${extra}">${item(k,`width="${s}" height="${s}"`)}</div>`;
 let m='';
-// bandeirinhas no teto
+// varal de livros no teto (D012: sem bandeirinhas juninas)
 m+=P('quadro',212,128,132);
 m+=P('pandeiro',672,130,96);
 m+=P('estante',8,268,300);
@@ -84,5 +84,5 @@ ${[200,356,500].map(y=>`<div style="position:absolute;left:12px;right:12px;top:$
 <div class="ad" style="position:absolute;left:24px;top:314px;font-size:11.5px;color:#FFF4E2">Figurinhas: toque e elas falam a palavra</div>
 <div style="position:absolute;left:30px;top:378px;display:flex;gap:16px;align-items:flex-end">${item('banca','width="110" height="110"')}<div style="background:#FFFBF4;border-radius:12px;padding:8px 10px;width:130px;font-size:12.5px;line-height:1.25;box-shadow:0 3px 0 #C9A57A"><b class="t" style="font-size:14px">12 livros lidos</b><br>"A noite do lobo" é o mais novo</div></div>
 <div class="ad" style="position:absolute;left:20px;right:20px;top:516px;font-size:11.5px;color:#FFF4E2;line-height:1.25">A vitrine guarda o que você <b>conquistou</b>: emblemas, figurinhas e livros lidos.</div>`;
-its.innerHTML=['pipa','piao','chocalho','mascara','fogueira','tiara','mochila','tambor','micanga','fonte'].map(k=>`<div class="g">${item(k,'width="62" height="62"')}</div>`).join('');
+its.innerHTML=['pipa','piao','chocalho','capelo','cesta','tiara','mochila','tambor','micanga','fonte'].map(k=>`<div class="g">${item(k,'width="62" height="62"')}</div>`).join('');
 </script></body></html>

@@ -58,7 +58,7 @@ A lojinha abre **no fim da sessão** e no "tempo livre da vila" (rel. 38 §4.1, 
 |---|---|---|---|---|
 | **1. Completar coleções por bioma** | Cada região tem um álbum de 5 a 8 itens (roupa, bichinho, figurinha, enfeite). Todos visíveis desde o início, com preço. Alguns vêm por domínio (sem custo) | "Falta 1 para completar a coleção do Cerrado" | **Recompensa narrativa** ao completar: cena nova na vila + história decodificável nova + emblema Colecionador | Fim conhecido; sem pacote surpresa; nada expira; a coleção não "puxa" a criança com contagem regressiva |
 | **2. Necessidades da vila** | Os prédios precisam de peças (a padaria precisa de FORNO; a horta precisa de ÁGUA). Necessidade aparece **antes** do enfeite (necessidade × desejo, Decisão 002) | "A padaria precisa de um FORNO" | A vila cresce: prédio abre, morador muda de fala, história nova, novas missões com o som da vez | Nada murcha, quebra ou "morre" se a criança escolher outra coisa (rel. 37 M3). A Sofia mostra a escolha **sem julgar** |
-| **3. Eventos e temporadas** | Festa Junina, Carnaval, Folclore (agosto), Dia das Crianças, fim de ano: a vila faz uma festa com enfeites, roupas e brincadeiras | "Enfeite a praça para a festa" | Festa com história própria, música do coreto, dança do avatar | **Voltam todo ano.** O que foi comprado fica para sempre. Proibido "só hoje", contagem regressiva e item que some (rel. 38 S4) |
+| **3. Eventos e temporadas** | Feira de Leitura e Colheita com o Dia da Família (jun–jul), Cantigas e Brincadeiras (agosto), Festival de Talentos, Dia das Crianças, Copa das Letras, formatura da alfabetização e fim de ano (Natal só se a escola quiser). Tudo segue a Decisão 012: sem festa junina, carnaval, Halloween, magia, "sorte" ou mitos folclóricos tratados como seres | "Enfeite a praça para a feira de leitura" | Festa com história própria, música do coreto, dança do avatar | **Voltam todo ano.** O que foi comprado fica para sempre. Proibido "só hoje", contagem regressiva e item que some (rel. 38 S4) |
 | **4. Presentes para moradores** | Cada morador tem um gosto conhecido (Dona Ema adora flores). A criança dá um presente comprado **ou** escreve um bilhete (grátis) | "A Dona Ema adora flores: dê a TIARA e ouça o segredo do ipê" | Reação animada + **história desbloqueada** do morador + emblema Generoso | O morador agradece sempre igual, com ou sem presente caro; **conta o gesto, não o valor**; nunca fica triste por não ganhar |
 | **5. Missões que pedem um item** | Algumas missões opcionais de "mundo" (não da trilha principal) pedem um objeto: "leve a LANTERNA para ler na gruta" | Cartão de missão na vila | Mini-aventura extra, palavras novas da fase | **Sempre há caminho sem comprar** (pegar emprestado na biblioteca da vila ou fazer a versão a pé). A trilha principal nunca exige item |
 | **6. Decorar casa, quarto e vitrine** | Modo "Arrumar": arrastar móveis, quadros, tapetes; a vitrine expõe emblemas, figurinhas e livros lidos | Casa da Lia | Identidade, autoria, criatividade (sandbox sem meta, rel. 37 §3.5) | "Mostrar" envia foto só para o **painel da família**. Sem visitar casas de outras crianças, sem curtidas |
@@ -72,7 +72,7 @@ A lojinha abre **no fim da sessão** e no "tempo livre da vila" (rel. 38 §4.1, 
 | **Dona Ema** | Cerrado | TIARA DE IPÊ, FLOR DE IPÊ | O segredo do ipê que floresce na seca |
 | **Dona Coruja**, bibliotecária | Biblioteca | LIVRO DE PRESENTE, MARCADOR | Abre uma seção nova da estante livre |
 | **Vó Lia** | Casa vizinha | BOLO DE MILHO, VASO | Uma cantiga de roda para ler junto |
-| **Tio Boto** | Rio (Amazônia) | CHOCALHO, COLAR DE SEMENTE | A lenda do rio que esqueceu as palavras |
+| **Tio Bento**, barqueiro | Rio (Amazônia) | CHOCALHO, COLAR DE SEMENTE | A história do rio que esqueceu as palavras (e como os ribeirinhos as reencontraram) |
 | **Mestre Gaúcho** | Pampa | CUIA, PONCHO | Como o vento move o moinho |
 
 O bilhete escrito pela criança (frase decodificável montada com palavras da fase) vale como presente e conta para o emblema Generoso. **Generosidade não depende de moeda.**
@@ -149,9 +149,9 @@ Regras fixas: (1) o ★ e a regra aparecem **no próprio item** e são lidos pel
 | 5 | **MALA** | Acessório | Quintal | R2a | 5 | Levar na viagem de barco para a Ilha | Col. Roupas do Dia | — |
 | 6 | **MOCHILA** | Acessório | Biblioteca | R4 | 14 | Carregar os livros lidos (vitrine) | Emblema Curioso | ✔ |
 | 7 | **CAPA DE LEITOR** | Roupa | Biblioteca | R5 | 40 | Fantasia de leitor para o Festival | ★ meta do cofrinho · Emblema Poupador | ✔ |
-| 8 | **VESTIDO DE CHITA** | Roupa | Festa Junina | R5 | 28 | Dançar a quadrilha da vila | Col. Festa Junina | ✔ |
-| 9 | **CAMISA XADREZ** | Roupa | Festa Junina | R5 | 12 | Dançar a quadrilha da vila | Col. Festa Junina | — |
-| 10 | **CHAPÉU DE PALHA** | Roupa | Festa Junina | R6 | 10 | Quadrilha; presente p/ Seu Zé | Col. Festa Junina | — |
+| 8 | **VESTIDO DE CHITA** | Roupa | Feira da Colheita | R5 | 28 | Dançar a ciranda no dia da família | Col. Feira de Leitura e Colheita | ✔ |
+| 9 | **CAMISA XADREZ** | Roupa | Feira da Colheita | R5 | 12 | Dançar a ciranda no dia da família | Col. Feira de Leitura e Colheita | — |
+| 10 | **CHAPÉU DE PALHA** | Roupa | Feira da Colheita | R6 | 10 | Colher milho na horta; presente p/ Seu Zé | Col. Feira de Leitura e Colheita | — |
 | 11 | **CHAPÉU DE COURO** | Roupa | Sertão | R6 | 34 | Roupa do vaqueiro do Sertão | Col. Sertão ★ (domínio /ch/) | ✔ |
 | 12 | **GIBÃO** | Roupa | Sertão | R6 | 30 | Roupa do vaqueiro do Sertão | Col. Sertão | — |
 | 13 | **PONCHO** | Roupa | Pampa | R6 | 22 | Esquentar no vento do Pampa | Col. Pampa | — |
@@ -160,8 +160,8 @@ Regras fixas: (1) o ★ e a regra aparecem **no próprio item** e são lidos pel
 | 16 | **MAIÔ** | Roupa | Litoral | R2a | 6 | Brincar na praia da Ilha | Col. Litoral | — |
 | 17 | **SUNGA** | Roupa | Litoral | R6 | 6 | Brincar na praia da Ilha | Col. Litoral | — |
 | 18 | **CAPA DE CHUVA** | Roupa | Amazônia | R5 | 14 | Passear na chuva da floresta | Col. Amazônia | — |
-| 19 | **FANTASIA DE ONÇA** | Roupa | Carnaval | R6 | 26 | Desfile de carnaval da vila | Col. Carnaval | — |
-| 20 | **FANTASIA DE FREVO** | Roupa | Carnaval | R7 | 24 | Desfile; combina com SOMBRINHA | Col. Carnaval | — |
+| 19 | **FANTASIA DE ONÇA** | Roupa | Festival de Talentos | R6 | 26 | Peça de teatro "A onça e o tatu" no festival | Col. Festival de Talentos | — |
+| 20 | **BECA** | Roupa | Formatura | R3 | 24 | Formatura da alfabetização; combina com CAPELO | Col. Formatura | — |
 | 21 | **PIJAMA** | Roupa | Casa | R4 | 8 | Ritual de fim de sessão (dormir com o Bolota) | Col. Casa Aconchego | — |
 | 22 | **CAPACETE** | Acessório | Cidade | R7 | 12 | Andar de bicicleta na Cidade das Letras | Col. Cidade | — |
 | 23 | **FIVELA** | Cabelo | Quintal | R2b | 4 | Enfeitar o cabelo | Col. Cabelos do Brasil | ✔ |
@@ -247,7 +247,7 @@ Regras fixas: (1) o ★ e a regra aparecem **no próprio item** e são lidos pel
 | 103 | **BERIMBAU** | Instrumento | Capoeira | R7 | 28 | Toca o som /b/ | Col. Instrumentos do Brasil | — |
 | 104 | **AGOGÔ** | Instrumento | Samba | R5 | 10 | Toca o som /g/ | Col. Instrumentos do Brasil | — |
 | 105 | **FLAUTA** | Instrumento | Vila | R8 | 18 | Toca o som /f/ | Col. Instrumentos do Brasil | — |
-| 106 | **APITO** | Instrumento | Carnaval | R3 | 4 | Puxar o desfile | Col. Carnaval | — |
+| 106 | **APITO** | Instrumento | Copa da Vila | R3 | 4 | Árbitra da Copa; puxar a fila do mutirão | Col. Copa da Vila | — |
 | 107 | **CAVAQUINHO** | Instrumento | Samba | R7 | 32 | Toca o som /k/ | Col. Instrumentos do Brasil | — |
 | 108 | **FIGURINHA IPÊ** | Figurinha | Cerrado | R3 | 3 | Fala a palavra; ou vem ao dominar o /p/ | Col. Cerrado | ✔ |
 | 109 | **FIGURINHA ONÇA** | Figurinha | Pantanal | R6 | 3 | Fala a palavra | Col. Pantanal | ✔ |
@@ -258,22 +258,22 @@ Regras fixas: (1) o ★ e a regra aparecem **no próprio item** e são lidos pel
 | 114 | **FIGURINHA PEQUI** | Figurinha | Cerrado | R5 | 3 | Fala a palavra | Col. Cerrado (2ª página) | — |
 | 115 | **FIGURINHA JANGADA** | Figurinha | Litoral | R6 | 3 | Fala a palavra | Col. Litoral | — |
 | 116 | **FIGURINHA CUIA** | Figurinha | Pampa | R5 | 3 | Fala a palavra | Col. Pampa | — |
-| 117 | **FIGURINHA SACI** | Figurinha | Folclore | R5 | 3 | Fala a palavra (agosto) | Col. Folclore | — |
-| 118 | **BANDEIRINHA** | Festa | Festa Junina | R4 | 6 | Enfeitar a praça; volta todo ano | Col. Festa Junina | ✔ |
-| 119 | **FOGUEIRA (de papel)** | Festa | Festa Junina | R5 | 12 | Cenário da quadrilha | Col. Festa Junina | ✔ |
-| 120 | **MILHO** | Festa | Festa Junina | R7 | 4 | Barraca de comidas da festa | Col. Festa Junina | — |
-| 121 | **PAMONHA** | Festa | Festa Junina | R6 | 5 | Presente p/ Seu Zé | Col. Festa Junina · Generoso | — |
-| 122 | **SOMBRINHA DE FREVO** | Festa | Carnaval | R6 | 15 | Dançar frevo no desfile | Col. Carnaval | ✔ |
-| 123 | **MÁSCARA** | Festa | Carnaval | R5 | 10 | Desfile da vila | Col. Carnaval | ✔ |
-| 124 | **SERPENTINA** | Festa | Carnaval | R7 | 4 | Enfeitar a rua do desfile | Col. Carnaval | — |
-| 125 | **ESTANDARTE** | Festa | Carnaval | R7 | 26 | Bloco da vila (projeto da turma) | Col. Carnaval · Ajudante | — |
+| 117 | **FIGURINHA CIRANDA** | Figurinha | Cantigas e Brincadeiras | R5 | 3 | Fala a palavra e canta a cantiga (agosto) | Col. Cantigas e Brincadeiras | — |
+| 118 | **VARAL DE LIVROS** | Festa | Feira de Leitura | R4 | 6 | Enfeitar a praça para a feira de leitura; volta todo ano | Col. Feira de Leitura e Colheita | ✔ |
+| 119 | **CESTA DA COLHEITA** | Festa | Feira da Colheita | R5 | 12 | Banca da colheita: repartir milho e frutas com os vizinhos (gratidão) | Col. Feira de Leitura e Colheita · Generoso | ✔ |
+| 120 | **MILHO** | Festa | Feira da Colheita | R7 | 4 | Banca de comidas da feira | Col. Feira de Leitura e Colheita | — |
+| 121 | **PAMONHA** | Festa | Feira da Colheita | R6 | 5 | Presente p/ Seu Zé | Col. Feira de Leitura e Colheita · Generoso | — |
+| 122 | **MICROFONE** | Festa | Festival de Talentos | R6 | 15 | Recitar uma parlenda ou ler um cordel no palco | Col. Festival de Talentos | ✔ |
+| 123 | **CAPELO** | Festa | Formatura | R3 | 10 | Chapéu da formatura da alfabetização | Col. Formatura | ✔ |
+| 124 | **CARTAZ** | Festa | Festival de Talentos | R7 | 4 | Anunciar o festival na praça (a criança lê o cartaz) | Col. Festival de Talentos | — |
+| 125 | **ESTANDARTE** | Festa | Festival de Talentos | R7 | 26 | Estandarte da turma no festival (projeto da turma) | Col. Festival de Talentos · Ajudante | — |
 | 126 | **PIPA** | Festa | Dia das Crianças | R3 | 5 | Soltar no morro da vila | Col. Dia das Crianças | ✔ |
 | 127 | **PIÃO** | Festa | Dia das Crianças | R6 | 4 | Brincadeira antiga | Col. Dia das Crianças | ✔ |
 | 128 | **BOLINHA DE GUDE** | Festa | Dia das Crianças | R7 | 4 | Brincadeira antiga | Col. Dia das Crianças | — |
 | 129 | **PERNA DE PAU** | Festa | Dia das Crianças | R7 | 12 | Brincadeira antiga | Col. Dia das Crianças | — |
-| 130 | **CARRANCA** | Festa | Folclore | R7 | 18 | Barco do São Francisco | Col. Folclore | — |
-| 131 | **GORRO DO SACI** | Festa | Folclore | R7 | 8 | Fantasia do folclore | Col. Folclore | — |
-| 132 | **ESTRELA DE NATAL** | Festa | Fim de ano | R8 | 10 | Enfeite de fim de ano | Col. Fim de Ano | — |
+| 130 | **BAMBOLÊ** | Festa | Cantigas e Brincadeiras | R6 | 6 | Rodar o bambolê cantando uma cantiga de roda | Col. Cantigas e Brincadeiras | — |
+| 131 | **CORDA DE PULAR** | Festa | Cantigas e Brincadeiras | R7 | 8 | Pular corda cantando parlendas ("Um, dois, feijão com arroz") | Col. Cantigas e Brincadeiras | — |
+| 132 | **ESTRELA DE NATAL** | Festa | Fim de ano | R8 | 10 | Enfeite de fim de ano (só se a escola ativar o Natal, D012) | Col. Fim de Ano | — |
 | 133 | **MARCADOR DE LIVRO** | Leitura | Biblioteca | R5 | 3 | Marca a página do livro em leitura | Emblema Leitor | — |
 | 134 | **LUPA** | Leitura | Biblioteca | R3 | 6 | Enfeite de detetive de palavras | Emblema Curioso | — |
 | 135 | **LANTERNA** | Leitura | Biblioteca | R6 | 8 | Ler na barraca (cenário) | Emblema Curioso | — |
@@ -305,10 +305,11 @@ Regras fixas: (1) o ★ e a regra aparecem **no próprio item** e são lidos pel
 | **Praça da Vila** | FONTE, HORTA, CORETO ★, PONTE, FORNO, MOINHO, BANCA DE LIVROS | O coreto toca a música da festa e todos os moradores aparecem | Ajudante da Vila |
 | **Casa Aconchego** | SOFÁ, TAPETE, CAMA, COLCHA, CORTINA, BARRACA DE LEITURA | Ritual de "boa noite" especial com o Bolota | Colecionador |
 | **Instrumentos do Brasil** | PANDEIRO, TAMBOR, VIOLA, SANFONA ★, CHOCALHO, BERIMBAU, AGOGÔ, FLAUTA | Banda da vila: cada instrumento toca o som da sua letra, e juntos tocam a música das letras | Colecionador + Domínio de sons |
-| **Festa Junina** | BANDEIRINHA, FOGUEIRA, VESTIDO DE CHITA, CAMISA XADREZ, CHAPÉU DE PALHA, PAMONHA | Quadrilha com o avatar (todo ano) | Colecionador |
-| **Carnaval** | MÁSCARA, SOMBRINHA DE FREVO, FANTASIA DE ONÇA, SERPENTINA, APITO, ESTANDARTE | Desfile do bloco da vila | Colecionador |
+| **Feira de Leitura e Colheita** (jun–jul) | VARAL DE LIVROS, CESTA DA COLHEITA, VESTIDO DE CHITA, CAMISA XADREZ, CHAPÉU DE PALHA, MILHO, PAMONHA | Dia da família na praça: cada morador lê um trecho do seu livro favorito, piquenique com a colheita e ciranda com o avatar (todo ano) | Colecionador |
+| **Festival de Talentos** | MICROFONE, FANTASIA DE ONÇA, CARTAZ, ESTANDARTE | Noite de talentos no coreto: cada morador mostra o que sabe fazer e a criança apresenta uma leitura | Colecionador |
+| **Formatura** | BECA, CAPELO | Formatura da alfabetização: a criança lê uma frase para a família e recebe o diploma (sem nota) | Colecionador |
 | **Dia das Crianças** | PIPA, PIÃO, BOLINHA DE GUDE, PERNA DE PAU | Tarde de brincadeiras antigas com regras para ler | Colecionador |
-| **Folclore** (agosto) | FIGURINHA SACI, GORRO DO SACI, CARRANCA | Roda de lendas na fogueira | Curioso |
+| **Cantigas e Brincadeiras** (agosto) | FIGURINHA CIRANDA, BAMBOLÊ, CORDA DE PULAR | Roda de cantigas e parlendas na praça com a Dona Cida | Curioso |
 
 Itens de coleção podem vir **pela lojinha** ou **por domínio** (ex.: a FIGURINHA IPÊ vem ao dominar o /p/). Quem ganhou por domínio não paga de novo. O álbum mostra quais vieram de cada jeito.
 
@@ -326,7 +327,7 @@ Itens de coleção podem vir **pela lojinha** ou **por domínio** (ex.: a FIGURI
 |---|---|---|---|---|---|---|
 | S1 (meses 1–6) | R0–R2b | 2–5 | 6–12 | 15–25 | nenhum | FIVELA 4, SAIA 6, MALA 5, SOFÁ 22 |
 | S2 (meses 7–12) | R3–R4 | 3–8 | 10–20 | 30–50 | 1 por região | PIPA 5, BONÉ 8, TAPETE 12, FONTE 30, PONTE 38 |
-| S3 (meses 13–18) | R5–R7 | 5–10 | 15–30 | 36–90 | 1–2 por região | MÁSCARA 10, CAPIVARA 20, FORNO 24, SANFONA 36 ★, CORETO 45 ★ |
+| S3 (meses 13–18) | R5–R7 | 5–10 | 15–30 | 36–90 | 1–2 por região | CAPELO 10, CAPIVARA 20, FORNO 24, SANFONA 36 ★, CORETO 45 ★ |
 | S4 (meses 19–24) | R8–R10 | 5–15 | 20–40 | 80–150 | 2 por região | FLAUTA 18, VITRINE 30, TEATRO 90 ★, ESTAÇÃO DE TREM 120 (projeto) |
 
 A criança **nunca vê preço acima da sua numeracia**: itens fora da faixa aparecem como "em breve". Nas fases iniciais, o preço vem em **pilhas de 5 moedas** (subitização), como na `tela-item-detalhe.png`.
@@ -342,7 +343,7 @@ A criança **nunca vê preço acima da sua numeracia**: itens fora da faixa apar
 | Presentes | 5–10% | Pequenos (2–8) para caber em qualquer saldo |
 | Ingressos de mini-aventuras extras | 5–10% | Só conteúdo **bônus**, reutilizável |
 
-Simulação de uma semana em S3 (R = 35): a criança ganha 35; guarda 12 pela regra "1 de cada 3"; compra a FIGURINHA CAJU (3) e a BANDEIRINHA (6); dá um LIVRO DE PRESENTE (8) à Dona Coruja; fica com 6 livres. Razão gasto/ganho = 17/35 ≈ 0,5 na semana; com a meta concluída na semana seguinte (SANFONA 36 + bônus 3), a média de 4 semanas fica perto de 0,8, dentro do alvo de 0,6–0,9 (E3).
+Simulação de uma semana em S3 (R = 35): a criança ganha 35; guarda 12 pela regra "1 de cada 3"; compra a FIGURINHA CAJU (3) e o VARAL DE LIVROS (6); dá um LIVRO DE PRESENTE (8) à Dona Coruja; fica com 6 livres. Razão gasto/ganho = 17/35 ≈ 0,5 na semana; com a meta concluída na semana seguinte (SANFONA 36 + bônus 3), a média de 4 semanas fica perto de 0,8, dentro do alvo de 0,6–0,9 (E3).
 
 ### 5.4 Cofrinho com meta
 - **Saldo livre e cofrinho são separados** e aparecem juntos no topo ("livres 31 · no cofrinho 22").

@@ -139,9 +139,10 @@ export function buildVila(ctx) {
   m.add(G.cone8, '#C2552F', M(PC.x, cy + 5.1, PC.z, 0, Math.PI / 8, 0, 8.2, 2.0, 8.2), { grad: 0.25 });
   m.add(G.cone8, '#D9693D', M(PC.x, cy + 6.3, PC.z, 0, Math.PI / 8, 0, 3.0, 1.2, 3.0));
   m.add(G.ico1, '#F2B33D', M(PC.x, cy + 7.05, PC.z, 0, 0, 0, 0.5));
-  // bandeirolas de festa (do coreto aos postes)
-  const flagCols = ['#F2B33D', '#B23C62', '#1F6E82', '#2F8A49', '#6B5BA8', '#E07F62', '#FFFBF4'];
-  function bunting(a, b, sag = 0.9) {
+  // varais de livros da feira de leitura (do coreto aos postes). Decisão 012: sem bandeirinhas juninas;
+  // Decisão 009: só 3 cores (marinho, amarelo-ipê, branco), sem sequência de arco-íris
+  const bookCols = ['#1F3A6B', '#F2B33D', '#FFFBF4'];
+  function bookLine(a, b, sag = 0.9) {
     const len = a.distanceTo(b), n = Math.floor(len / 0.62);
     let prev = a.clone();
     for (let i = 1; i <= n; i++) {
@@ -150,7 +151,7 @@ export function buildVila(ctx) {
       thin.add(G.box, '#6E5D52', new THREE.Matrix4().compose(mid, new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1, 0, 0), seg.clone().normalize()), new THREE.Vector3(seg.length(), 0.03, 0.03)), { jitter: 0 });
       if (i < n) {
         const ang = Math.atan2(-(b.z - a.z), b.x - a.x);
-        thin.add(G.tri, flagCols[(i + Math.floor(a.x)) % flagCols.length], M(p.x, p.y, p.z, 0, ang, 0, 0.42, 0.5, 1), { jitter: 0.04 });
+        if (i % 2) thin.add(G.box, bookCols[(i + Math.floor(a.x)) % bookCols.length], M(p.x, p.y - 0.24, p.z, 0, ang, 0, 0.34, 0.44, 0.07), { jitter: 0.04 }); // livrinho pendurado
       }
       prev = p;
     }
@@ -165,7 +166,7 @@ export function buildVila(ctx) {
   for (let i = 0; i < 8; i++) {
     const a = i / 8 * Math.PI * 2 + Math.PI / 8;
     const top = new THREE.Vector3(PC.x + Math.cos(a) * 3.6, cy + 4.05, PC.z + Math.sin(a) * 3.6);
-    bunting(top, ringLamps[i], 0.75);
+    bookLine(top, ringLamps[i], 0.75);
   }
   // placas das emoções + bancos + canteiros
   const emos = ['alegria', 'calma', 'tristeza', 'medo', 'raiva'];
