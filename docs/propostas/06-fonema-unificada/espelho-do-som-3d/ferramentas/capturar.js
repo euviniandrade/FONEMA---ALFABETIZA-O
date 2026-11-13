@@ -24,9 +24,9 @@ const srv = http.createServer((q, r) => {
   const foto = async (p, nome, ms = 600) => { await p.waitForTimeout(ms); await p.screenshot({ path: path.join(CAP, nome + '.png'), timeout: 120000 }); console.log('📷', nome); };
   const cenas = [
     ['01-frente-A', 'f=a&m=frente&2d', 0], ['02-frente-L-ponta-sobe', 'f=l&m=frente&2d', 0], ['03-frente-M-fecha', 'f=m&m=frente&2d', 0],
-    ['04-frente-U-biquinho', 'f=u&m=frente&2d', 0], ['04b-frente-K-fundo-sobe', 'f=k&m=frente&2d', 0], ['04c-frente-F-dente-no-labio', 'f=f&m=frente&2d', 0],
+    ['04-frente-U-biquinho', 'f=u&m=frente&2d', 0], ['04b-frente-K-fundo-sobe', 'f=k&m=frente&2d', 0], ['04c-frente-F-dente-no-labio', 'f=f&m=frente&2d', 0], ['04d-frente-O-redonda', 'f=o&m=frente&2d', 0], ['04e-frente-I-sorriso', 'f=i&m=frente&2d', 0],
     ['05-lado-L-ponta-no-alveolo', 'f=l&m=lado&2d', 0], ['06-lado-K-dorso-no-veu', 'f=k&m=lado&2d', 0], ['07-lado-M-nariz-e-voz', 'f=m&m=lado&2d', 0],
-    ['08-lado-S-ar-fininho', 'f=s&m=lado&2d', 0], ['09-lado-A-boca-aberta', 'f=a&m=lado&2d', 0],
+    ['08-lado-S-ar-fininho', 'f=s&m=lado&2d', 0], ['09-lado-A-boca-aberta', 'f=a&m=lado&2d', 0], ['09b-lado-T-ponta-no-alveolo', 'f=t&m=lado&2d', 0], ['09c-lado-CH-biquinho', 'f=x&m=lado&2d', 0],
     ['10-3d-boca-de-frente-A', 'f=a&m=frente3d', 1500], ['11-3d-dentro-da-boca-T', 'f=t&m=dentro', 4000], ['12-3d-dentro-da-boca-K', 'f=k&m=dentro', 4000], ['13-3d-pulmao-a-boca', 'f=a&aba=corpo', 4000]
   ];
   for (const [nome, qy, extra] of cenas) { if (!quer(nome)) continue; const p = await pagina(qy); await foto(p, nome, 900 + extra); await p.close(); }
@@ -42,7 +42,7 @@ const srv = http.createServer((q, r) => {
 
   // Transições quadro a quadro (pose congelada entre dois sons), de lado e de frente
   if (quer('transicoes')) {
-    for (const [a, b] of [['m', 'a'], ['l', 'a'], ['t', 'a']]) for (const m of ['frente', 'lado']) {
+    for (const [a, b, m] of [['m', 'a', 'frente'], ['t', 'a', 'frente'], ['l', 'k', 'lado'], ['t', 'a', 'lado']]) {
       const p = await pagina(`f=${a}&m=${m}&2d`);
       for (const f of [0, 0.33, 0.66, 1]) {
         await p.evaluate(([a, b, f]) => window.DEMO.esp.pose(a, b, f), [a, b, f]);

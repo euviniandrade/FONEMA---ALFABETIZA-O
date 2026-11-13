@@ -20,8 +20,8 @@ O dono pediu que o Espelho do Som use **a boca dos próprios personagens**, com 
 
 | Vista | O que é | Arquivos |
 |---|---|---|
-| **De frente** (padrão) — "Boca gigante" | A boca grande e fofa com a Sofia e o Tales apontando (`estilos-opcoes/base-frente-boca-vazia.png`). A **língua animada** é desenhada entre o fundo e a camada da frente (dentes e lábios ficam na frente dela): ponta sobe atrás dos dentes de cima no T/D/N/L, bate no R, fica deitada e larga no A, sobe na frente no I/E, "embola" para trás no K/G. Os **lábios também mexem**: fecham no M/P/B, fazem biquinho no U/O, o lábio de baixo encosta nos dentes no F/V. Seta amarela curva + frase curtinha ("A ponta da língua sobe!"). Transições com mola | `espelho-frente.js`, `recortes/frente-*.{jpg,png}` |
-| **De lado** — "3D fofinho" | A Sofia de perfil, estilo filme 3D, com a janelinha na bochecha (`estilos-opcoes/base-lado-3d-vazia.png`; o interior de IA foi apagado por `recortar.py`). Dentro dela, o **boneco fiel**: dentes de perfil arredondados com gengiva, céu da boca, véu que sobe e desce, língua coral com brilho, setinhas de ar (boca/nariz) e ondinhas douradas de voz. Os lábios de fora são os da ilustração; o movimento dos lábios aparece na vista de frente | `espelho-svg.js` (personagem `lado3d`), `recortes/lado3d-sofia-limpo.jpg` |
+| **De frente** (padrão) — "Boca gigante" | A boca grande e fofa com a Sofia e o Tales apontando (`estilos-opcoes/base-frente-boca-vazia.png`). A forma dos lábios vem de **6 ilustrações por visema** (`estilos-opcoes/base-frente-*.png`), trocadas com crossfade (~180 ms) e um "squash & stretch" pequeno: **aberta** (A, É, Ê, nasais, T D N L R, K G, NH LH, RR), **U** (U, Ũ), **O** (Ô, Ó, CH, J), **M** (M, P, B), **F** (F, V) e **I** (I, E, S, Z). Só na boca aberta aparece a **língua animada**, desenhada entre o fundo e a camada da frente: ponta sobe atrás dos dentes de cima no T/D/N/L, bate no R, fica deitada e larga no A, "embola" para trás no K/G. Nas outras bases, só setas e frase (no M: "ar pelo nariz"). Seta amarela curva + frase curtinha ("A ponta da língua sobe!"). Transições com mola | `espelho-frente.js`, `recortes/frente-*.{jpg,png}` |
+| **De lado** — "3D fofinho" | A Sofia de perfil, estilo filme 3D, com a janelinha na bochecha (`estilos-opcoes/base-lado-3d-vazia.png`; o interior de IA foi apagado por `recortar.py`). O enquadramento mostra o rosto (olho, nariz, orelha). Dentro da janela, o **boneco fiel**, com **brilho no ponto de contato** e **seta amarela na parte da língua que sobe** (ponta no L/T; dorso no K/G; meio no NH/LH): dentes de perfil arredondados com gengiva, céu da boca, véu que sobe e desce, língua coral com brilho, setinhas de ar (boca/nariz) e ondinhas douradas de voz. Os lábios de fora são os da ilustração; o movimento dos lábios aparece na vista de frente | `espelho-svg.js` (personagem `lado3d`), `recortes/lado3d-sofia-limpo.jpg` |
 | **3D** (opção) | Boca 3D em Three.js: boca de frente, **dentro da boca**, **do pulmão à boca** (usado em "Conheça seu corpo") e **girar 360°** | `espelho3d.js`, `vendor/` |
 
 O raio-X escuro de "vidro" (Sofia/Tales, `espelho-svg.js` personagens `sofia`/`tales`) saiu da lição; o código continua disponível para "Conheça seu corpo".
@@ -81,11 +81,11 @@ Notas: o "rr" (/ʁ/) varia muito entre sotaques (pode soar como [h] ou [χ]); fi
 
 | Arquivo | O quê |
 |---|---|
-| `capturas/01..04c-frente-*` | Boca gigante: A (língua deitada), L (ponta sobe), M (lábios fecham), U (biquinho), K (fundo sobe), F (dente no lábio) |
-| `capturas/05..09-lado-*` | Sofia 3D de lado: L (ponta no alvéolo, ar pelos lados), K (dorso no véu), M (nariz e voz), S (ar fininho), A |
+| `capturas/01..04e-frente-*` | Boca gigante: A, L (ponta sobe), M, U, K (fundo sobe), F, O, I |
+| `capturas/05..09c-lado-*` | Sofia 3D de lado: L (ponta no alvéolo), K (dorso no véu), M (nariz e voz), S, A, T, CH |
 | `capturas/10..13-3d-*` | 3D: boca de frente, dentro da boca (T e K), do pulmão à boca |
 | `capturas/14..17-ex-*` | Exercícios |
-| `capturas/transicao-frente-*.png`, `capturas/transicao-lado-*.png` | Quadros de M→A, L→A e T→A (0, 33, 66 e 100%); quadros soltos em `capturas/transicoes/` |
+| `capturas/transicao-*.png` | Quadros (0, 33, 66, 100%): frente M→A e T→A; lado L→K e T→A; soltos em `capturas/transicoes/` |
 
 ## Imagens de origem (`imagens/`)
 
