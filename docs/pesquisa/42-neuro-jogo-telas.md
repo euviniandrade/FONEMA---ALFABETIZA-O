@@ -141,7 +141,7 @@
 | Weaver et al. 2010 [57] | Adolescentes, laboratório | Jogar antes de dormir aumentou a latência do sono **só levemente**; arquitetura inalterada [V] |
 | Duraccio et al. 2021, ECR [46] | 18–24 anos, n = 167 | **Night Shift não melhorou o sono**. Em quem dorme bem, *não usar o celular* foi melhor [V] |
 | Consenso National Sleep Foundation 2024 [39] | Painel Delphi | Consenso de que a tela em geral **e o conteúdo antes de dormir** prejudicam o sono de crianças e adolescentes. Não houve consenso sobre a luz isolada. Estratégias comportamentais atenuam o efeito [V] |
-| Hale & Guan 2015 [38] | Revisão | 90% dos estudos associam tela a deitar mais tarde e/ou dormir menos [V] |
+| Hale et al. 2015 [38] | Revisão | 90% dos estudos associam tela a deitar mais tarde e/ou dormir menos [V] |
 
 **Conclusão:** para crianças pequenas, o problema noturno é **duplo**:
 - **luz:** os pré-escolares são hipersensíveis, mesmo com pouca luz;
@@ -214,7 +214,7 @@ Filtro de luz azul ou "modo noturno" **não resolve** [46]. A regra correta é *
 - **Competência visível:** mapa de progresso, "livro dos sons" que se completa, palavras que a criança já lê ganham vida (rel. 08).
 - **Curiosidade:** lacunas pequenas e fecháveis, ganchos de fim de sessão (R12).
 - **Autonomia:** escolher entre 2 caminhos/mini-jogos equivalentes, personalizar o avatar com itens ganhos de forma **determinística** (sem sorteio).
-- **Surpresa não contingente e gratuita:** uma figurinha bônus ocasional, *nunca* comprável nem ligada a tempo de uso (rel. 04 [159]; ECA Digital).
+- **Surpresa não contingente e gratuita:** uma figurinha bônus ocasional, *nunca* comprável nem ligada a tempo de uso (rel. 04, recompensas; ECA Digital).
 - **Reciprocidade (PLAY):** turnos com a Sofia, "agora você ensina a Sofia", jogos de imitação e ritmo com movimento corporal (rel. 14 §3.3) [17][19].
 - **Dificuldade adaptativa** na zona de desafio ótimo: a dopamina acompanha o desempenho [1].
 
@@ -269,57 +269,57 @@ Filtro de luz azul ou "modo noturno" **não resolve** [46]. A regra correta é *
 | 5 | Horowitz-Kraus T, Hutton JS | 2018 | Brain connectivity... reading books vs screen-based media | *Acta Paediatr* 107:685-93 | 10.1111/apa.14176 | V | Conectividade de leitura |
 | 6 | Paulus MP, Squeglia LM, et al. | 2019 | Screen media activity and brain structure in youth (ABCD) | *NeuroImage* 185:140-53 | 10.1016/j.neuroimage.2018.10.040 | V | Efeitos d = 0,04–0,10 |
 | 7 | Takeuchi H, Taki Y, et al. | 2016 | Impact of videogame play on the brain's microstructural properties | *Mol Psychiatry* 21:1781-9 | 10.1038/mp.2015.193 | V | Maturação microestrutural, QI verbal |
-| 8 | Chaarani B, Ortigara J, et al. | 2022 | Association of video gaming with cognitive performance among children | *JAMA Netw Open* 5:e2235721 | 10.1001/jamanetworkopen.2022.35721 | V | ABCD: FE e memória de trabalho |
-| 9 | Sauce B, Liebherr M, Judd N, Klingberg T | 2022 | Impact of digital media on children's intelligence... genetic differences | *Sci Rep* 12:7720 | 10.1038/s41598-022-11341-2 | V | Gaming β = +0,17 |
+| 8 | Chaarani B et al. | 2022 | Association of video gaming with cognitive performance among children | *JAMA Netw Open* 5:e2235721 | 10.1001/jamanetworkopen.2022.35721 | V | ABCD: FE e memória de trabalho |
+| 9 | Sauce B et al. | 2022 | Impact of digital media on children's intelligence... genetic differences | *Sci Rep* 12:7720 | 10.1038/s41598-022-11341-2 | V | Gaming β = +0,17 |
 | 10 | Bediou B, Adams DM, Mayer RE, Tipton E, Green CS, Bavelier D | 2018 | Meta-analysis of action video game impact on perceptual, attentional, and cognitive skills | *Psychol Bull* 144:77-110 | 10.1037/bul0000130 | V | g = 0,55 / 0,34 |
 | 11 | Green CS, Bavelier D | 2003 | Action video game modifies visual selective attention | *Nature* 423:534-7 | 10.1038/nature01647 | V | Estudo fundador |
 | 12 | Franceschini S, Gori S, et al. | 2013 | Action video games make dyslexic children read better | *Curr Biol* 23:462-6 | 10.1016/j.cub.2013.01.044 | V | Leitura em disléxicos (a favor) |
 | 13 | Franceschini S et al. | 2017 | AVGs improve reading... English-speaking children with dyslexia | *Sci Rep* 7:5863 | 10.1038/s41598-017-05826-8 | V | Replicação em inglês |
-| 14 | Powers KL, Brooks PJ, et al. | 2013 | Effects of video-game play on information processing: meta-analytic investigation | *Psychon Bull Rev* 20:1055-79 | 10.3758/s13423-013-0418-z | V | Meta-análise complementar |
-| 15 | Kühn S, Gleich T, Lorenz RC, Lindenberger U, Gallinat J | 2014 | Playing Super Mario induces structural brain plasticity | *Mol Psychiatry* 19:265-71 | 10.1038/mp.2013.120 | V | Plasticidade em adultos |
+| 14 | Powers KL et al. | 2013 | Effects of video-game play on information processing: meta-analytic investigation | *Psychon Bull Rev* 20:1055-79 | 10.3758/s13423-013-0418-z | V | Meta-análise complementar |
+| 15 | Kühn S et al. | 2014 | Playing Super Mario induces structural brain plasticity | *Mol Psychiatry* 19:265-71 | 10.1038/mp.2013.120 | V | Plasticidade em adultos |
 | 16 | Kühn S et al. | 2011 | The neural basis of video gaming | *Transl Psychiatry* 1:e53 | 10.1038/tp.2011.53 | V | Estriado ventral em adolescentes |
-| 17 | Pellis SM, Pellis VC, et al. | 2023 | Play fighting and the development of the social brain: the rat's tale | *Neurosci Biobehav Rev* 145:105037 | 10.1016/j.neubiorev.2023.105037 | V | Brincar, CPF medial, reciprocidade |
+| 17 | Pellis SM et al. | 2023 | Play fighting and the development of the social brain: the rat's tale | *Neurosci Biobehav Rev* 145:105037 | 10.1016/j.neubiorev.2023.105037 | V | Brincar, CPF medial, reciprocidade |
 | 18 | Panksepp J | 2007 | Can PLAY diminish ADHD and facilitate the construction of the social brain? | *J Can Acad Child Adolesc Psychiatry* 16:57-66 | PMID 18392153 | V | Sistema PLAY |
-| 19 | Yogman M, Garner A, Hutchinson J, Hirsh-Pasek K, Golinkoff RM; AAP | 2018 | The Power of Play | *Pediatrics* 142:e20182058 | 10.1542/peds.2018-2058 | V | Brincar e FE (AAP) |
+| 19 | Yogman M et al.; AAP Committee on Psychosocial Aspects of Child and Family Health | 2018 | The Power of Play | *Pediatrics* 142:e20182058 | 10.1542/peds.2018-2058 | V | Brincar e FE (AAP) |
 | 20 | Lillard AS, Peterson J | 2011 | Immediate impact of different types of television on young children's EF | *Pediatrics* 128:644-9 | 10.1542/peds.2010-1919 | V | Ritmo rápido prejudica FE |
 | 21 | Christakis DA et al. | 2004 | Early television exposure and subsequent attentional problems | *Pediatrics* 113:708-13 | 10.1542/peds.113.4.708 | V | OR 1,09/h |
-| 22 | Madigan S, Browne D, Racine N, Mori C, Tough S | 2019 | Screen time and children's performance on a developmental screening test | *JAMA Pediatr* 173:244-50 | 10.1001/jamapediatrics.2018.5056 | V | β −0,06/−0,08 |
-| 23 | Madigan S, McArthur BA, et al. | 2020 | Screen use and child language skills: SR and MA | *JAMA Pediatr* 174:665-75 | 10.1001/jamapediatrics.2020.0327 | V | Quantidade vs. qualidade |
+| 22 | Madigan S et al. | 2019 | Screen time and children's performance on a developmental screening test | *JAMA Pediatr* 173:244-50 | 10.1001/jamapediatrics.2018.5056 | V | β −0,06/−0,08 |
+| 23 | Madigan S et al. | 2020 | Screen use and child language skills: SR and MA | *JAMA Pediatr* 174:665-75 | 10.1001/jamapediatrics.2020.0327 | V | Quantidade vs. qualidade |
 | 24 | Al-Jbouri E et al. | 2026 | Screen use and child and adolescent development and mental health: quantitative umbrella review | *JAMA Pediatr* (online) | 10.1001/jamapediatrics.2026.4339 · PMID 42804186 | V | Síntese de efeitos |
 | 25 | Orben A, Przybylski AK | 2019 | Association between adolescent well-being and digital technology use | *Nat Hum Behav* 3:173-82 | 10.1038/s41562-018-0506-1 | V | ≤ 0,4% da variância |
 | 26 | Przybylski AK | 2014 | Electronic gaming and psychosocial adjustment | *Pediatrics* 134:e716-22 | 10.1542/peds.2013-4021 | V | "U invertido" |
 | 27 | Kovess-Masfety V et al. | 2016 | Time playing video games and mental health, cognitive and social skills in young children | *Soc Psychiatry Psychiatr Epidemiol* 51:349-57 | 10.1007/s00127-016-1179-6 | V | 6–11 anos, associações positivas |
-| 28 | Vuorre M, Johannes N, Magnusson K, Przybylski AK | 2022 | Time spent playing video games is unlikely to impact well-being | *R Soc Open Sci* | 10.1098/rsos.220411 | V | Telemetria |
+| 28 | Vuorre M et al. | 2022 | Time spent playing video games is unlikely to impact well-being | *R Soc Open Sci* | 10.1098/rsos.220411 | V | Telemetria |
 | 29 | Stevens MWR, Dorstyn D, Delfabbro PH, King DL | 2021 | Global prevalence of gaming disorder: SR and MA | *Aust N Z J Psychiatry* 55:553-68 | 10.1177/0004867420962851 | V | 3,05% / 1,96% |
 | 30 | Kim HS, Son G, et al. | 2022 | Prevalence of gaming disorder: a meta-analysis | *Addict Behav* 126:107183 | 10.1016/j.addbeh.2021.107183 | V | 3,3% / 1,4% |
-| 31 | Paulus FW, Ohmann S, von Gontard A, Popow C | 2018 | Internet gaming disorder in children and adolescents: SR | *Dev Med Child Neurol* 60:645-59 | 10.1111/dmcn.13754 | V | ~2% em amostras representativas |
+| 31 | Paulus FW et al. | 2018 | Internet gaming disorder in children and adolescents: SR | *Dev Med Child Neurol* 60:645-59 | 10.1111/dmcn.13754 | V | ~2% em amostras representativas |
 | 32 | Gentile DA et al. | 2011 | Pathological video game use among youths: two-year longitudinal study | *Pediatrics* 127:e319-29 | 10.1542/peds.2010-1353 | V | Fatores de risco/desfechos |
-| 33 | Weinstein A, Livny A, Weizman A | 2017 | New developments in brain research of internet and gaming disorder | *Neurosci Biobehav Rev* 75:314-30 | 10.1016/j.neubiorev.2017.01.040 | V | Neurobiologia do transtorno |
-| 34 | Saini N, Hodgins DC | 2024 | SHARP-G Scale: an international Delphi study | *J Behav Addict* 13:450-62 | 10.1556/2006.2024.00026 | V | Checklist de design de risco |
-| 35 | Radesky J, Hiniker A, et al. | 2022 | Prevalence and characteristics of manipulative design in mobile apps used by children | *JAMA Netw Open* 5:e2217641 | 10.1001/jamanetworkopen.2022.17641 | V | Dark patterns infantis |
-| 36 | Zendle D, Meyer R, Over H | 2019 | Adolescents and loot boxes: links with problem gambling | *R Soc Open Sci* 6:190049 | 10.1098/rsos.190049 | V | Loot boxes |
+| 33 | Weinstein A et al. | 2017 | New developments in brain research of internet and gaming disorder | *Neurosci Biobehav Rev* 75:314-30 | 10.1016/j.neubiorev.2017.01.040 | V | Neurobiologia do transtorno |
+| 34 | Saini N et al. | 2024 | SHARP-G Scale: an international Delphi study | *J Behav Addict* 13:450-62 | 10.1556/2006.2024.00026 | V | Checklist de design de risco |
+| 35 | Radesky J et al. | 2022 | Prevalence and characteristics of manipulative design in mobile apps used by children | *JAMA Netw Open* 5:e2217641 | 10.1001/jamanetworkopen.2022.17641 | V | Dark patterns infantis |
+| 36 | Zendle D et al. | 2019 | Adolescents and loot boxes: links with problem gambling | *R Soc Open Sci* 6:190049 | 10.1098/rsos.190049 | V | Loot boxes |
 | 37 | Carter B, Rees P, Hale L, Bhattacharjee D, Paradkar MS | 2016 | Portable screen-based media device access or use and sleep outcomes: SR and MA | *JAMA Pediatr* 170:1202-8 | 10.1001/jamapediatrics.2016.2341 | V | OR 2,17 / 1,79 |
-| 38 | Hale L, Guan S | 2015 | Screen time and sleep among school-aged children and adolescents: SR | *Sleep Med Rev* 21:50-8 | 10.1016/j.smrv.2014.07.007 | V | 90% dos estudos |
+| 38 | Hale L et al. | 2015 | Screen time and sleep among school-aged children and adolescents: SR | *Sleep Med Rev* 21:50-8 | 10.1016/j.smrv.2014.07.007 | V | 90% dos estudos |
 | 39 | Hartstein LE et al. (NSF) | 2024 | Impact of screen use on sleep health across the lifespan: NSF consensus | *Sleep Health* 10:373-84 | 10.1016/j.sleh.2024.05.001 | V | Consenso: conteúdo > luz |
 | 40 | Łuniewska M, Chyl K, et al. | 2018 | Neither action nor phonological video games make dyslexic children read better | *Sci Rep* 8:549 | 10.1038/s41598-017-18878-7 | V | Falha de replicação |
 | 41 | Peters JL, Crewther SG, Murphy MJ, Bavin EL | 2021 | AVG training improves text reading... randomized controlled trial | *Sci Rep* 11:18584 | 10.1038/s41598-021-98146-x | V | ECR a favor (5 h) |
-| 41b | Higuchi S, Nagafuchi Y, Lee SI, Harada T | 2014 | Influence of light at night on melatonin suppression in children | *J Clin Endocrinol Metab* 99:3298-303 | 10.1210/jc.2014-1629 | V | 88% vs. 46% |
-| 42 | Hartstein LE, Behn C, Akacem LD, et al. | 2022 | High sensitivity of melatonin suppression to evening light in preschool-aged children | *J Pineal Res* 72:e12780 | 10.1111/jpi.12780 | V | 85% de supressão com luz fraca |
+| 41b | Higuchi S et al. | 2014 | Influence of light at night on melatonin suppression in children | *J Clin Endocrinol Metab* 99:3298-303 | 10.1210/jc.2014-1629 | V | 88% vs. 46% |
+| 42 | Hartstein LE et al. | 2022 | High sensitivity of melatonin suppression to evening light in preschool-aged children | *J Pineal Res* 72:e12780 | 10.1111/jpi.12780 | V | 85% de supressão com luz fraca |
 | 42b | Bavelier D, Green CS | 2019 | Enhancing attentional control: lessons from action video games | *Neuron* 104:147-63 | 10.1016/j.neuron.2019.09.031 | V | Design determina o efeito |
-| 43 | Akacem LD, Wright KP Jr, LeBourgeois MK | 2018 | Sensitivity of the circadian system to evening bright light in preschool-age children | *Physiol Rep* 6:e13617 | 10.14814/phy2.13617 | V | Sensibilidade circadiana |
+| 43 | Akacem LD et al. | 2018 | Sensitivity of the circadian system to evening bright light in preschool-age children | *Physiol Rep* 6:e13617 | 10.14814/phy2.13617 | V | Sensibilidade circadiana |
 | 44 | Cheung CHM, Bedford R, Saez De Urabain IR, Karmiloff-Smith A, Smith TJ | 2017 | Daily touchscreen use in infants and toddlers... reduced sleep | *Sci Rep* 7:46104 | 10.1038/srep46104 | V | Touchscreen e sono |
 | 45 | Nagata JM et al. | 2023 | Bedtime screen use behaviors and sleep outcomes (ABCD) | *Sleep Health* 9:497-502 | 10.1016/j.sleh.2023.02.005 | V | RR 1,27 (dispositivo no quarto) |
-| 46 | Duraccio KM, Zaugg KK, Blackburn RC, Jensen CD | 2021 | Does iPhone Night Shift mitigate negative effects of smartphone use on sleep? | *Sleep Health* 7:478-84 | 10.1016/j.sleh.2021.03.005 | V | Modo noturno ineficaz |
-| 47 | Hiniker A, Suh H, Cao S, Kientz JA | 2016 | Screen Time Tantrums: how families manage screen media experiences for toddlers and preschoolers | *Proc. CHI 2016* | 10.1145/2858036.2858278 | V (ref.) | Transições e pontos de parada |
+| 46 | Duraccio KM et al. | 2021 | Does iPhone Night Shift mitigate negative effects of smartphone use on sleep? | *Sleep Health* 7:478-84 | 10.1016/j.sleh.2021.03.005 | V | Modo noturno ineficaz |
+| 47 | Hiniker A et al. | 2016 | Screen Time Tantrums: how families manage screen media experiences for toddlers and preschoolers | *Proc. CHI 2016* | 10.1145/2858036.2858278 | V (ref.) | Transições e pontos de parada |
 | 48 | Hiniker A et al. | 2017 | Plan & Play: supporting intentional media use in early childhood | *Proc. IDC 2017* | 10.1145/3078072.3079752 | V (ref.) | Uso intencional |
 | 49 | AAP Council on Communications and Media | 2016 | Media and Young Minds | *Pediatrics* 138:e20162591 | 10.1542/peds.2016-2591 · PMID 27940793 | V (detalhes NV) | ≤ 1 h/dia (2–5 anos), coassistência |
 | 49b | AAP Council on Communications and Media | 2016 | Media Use in School-Aged Children and Adolescents | *Pediatrics* 138:e20162592 | 10.1542/peds.2016-2592 | V | Diretriz 6+ anos |
 | 50 | World Health Organization | 2019 | Guidelines on physical activity, sedentary behaviour and sleep for children under 5 years of age | OMS (IRIS) | ISBN 978-92-4-155053-6 (NV) | V (ref.; rel. 09 [67]) | ≤ 1 h/dia (2–4 anos), sono 10–13 h |
-| 51 | Chong KH, Suesse T, et al. | 2024 | Pooled analysis of physical activity, sedentary behavior, and sleep among children from 33 countries | *JAMA Pediatr* 178:1199-207 | 10.1001/jamapediatrics.2024.3330 | V | 14,3% cumprem a OMS |
+| 51 | Chong KH et al. | 2024 | Pooled analysis of physical activity, sedentary behavior, and sleep among children from 33 countries | *JAMA Pediatr* 178:1199-207 | 10.1001/jamapediatrics.2024.3330 | V | 14,3% cumprem a OMS |
 | 52 | Sociedade Brasileira de Pediatria — GT Saúde Digital | 2019 / 2024 / 2025 | #MenosTelas #MaisSaúde (2019); Atualização 2024; manual ECA Digital (dez/2025) | SBP | sbp.com.br (inacessível na sessão) | NV | Limites brasileiros |
 | 53 | Brasil — Lei 15.211/2025 (ECA Digital) e Decreto 12.880/2026 | 2025 / 2026 | Estatuto Digital da Criança e do Adolescente | DOU | Fontes secundárias: mattosfilho.com.br; unicef.org/brazil; gov.br/anpd (FAQ 18/03/2026); senado.leg.br (20/03/2026) | NV (texto literal) | Loot box, uso compulsivo, pontos de parada |
 | 54 | World Health Organization | 2019 (vigente 2022) | ICD-11 — 6C51 Gaming disorder; QE22 Hazardous gaming | CID-11 | icd.who.int (conferido via reprodução em cismef.org/findacode) | V (fonte secundária) | Critérios diagnósticos |
-| 55 | Gastaud LM, Trettim JP, et al. | 2023 | Screen time: implications for early childhood cognitive development (Pelotas) | *Early Hum Dev* 183:105792 | 10.1016/j.earlhumdev.2023.105792 | V | Dado brasileiro |
+| 55 | Gastaud LM et al. | 2023 | Screen time: implications for early childhood cognitive development (Pelotas) | *Early Hum Dev* 183:105792 | 10.1016/j.earlhumdev.2023.105792 | V | Dado brasileiro |
 | 56 | Hysing M, Pallesen S, et al. | 2015 | Sleep and use of electronic devices in adolescence | *BMJ Open* 5:e006748 | 10.1136/bmjopen-2014-006748 | V | Dose-resposta no sono |
 | 57 | Weaver E, Gradisar M, Dohnt H, Lovato N, Douglas P | 2010 | Effect of presleep video-game playing on adolescent sleep | *J Clin Sleep Med* 6:184-9 | PMID 20411697 | V | Efeito laboratorial modesto |
 
