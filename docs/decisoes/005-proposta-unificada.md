@@ -27,5 +27,6 @@
 
 ## Salvaguardas que continuam valendo
 - A pesquisa indica que agente **2D** ensina melhor que 3D. Por isso a Sofia aparece como personagem ilustrada de alta qualidade sobre o mundo 3D, e as lições continuam claras em 2D. O 3D fica para o mundo, a vila e a exploração.
+  - *Atualizado pela [D007](007-dupla-sofia-e-tales.md): a dupla Sofia e Tales passa a ser 3D alegre de animação em todas as aventuras; a tela de lição continua com fundo limpo e foco na boca, na letra e na palavra.*
 - Desempenho em celular simples: modo leve automático (rel. 24 e Proposta 2).
 - Gráficos 3D só onde ajudam a entender. Os números precisos ficam sempre visíveis (sem distorção de perspectiva).

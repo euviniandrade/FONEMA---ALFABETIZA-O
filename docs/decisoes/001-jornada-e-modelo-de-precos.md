@@ -16,6 +16,7 @@ A construção da plataforma começa **depois** que a coleta bibliográfica (56 
   5. **Colecionáveis que ensinam:** álbum de figurinhas que falam, personagens, histórias desbloqueadas.
   6. **Desafios-chefe** de fim de região (provinhas disfarçadas de aventura).
   7. **Eventos e temporadas** com conteúdo novo (datas, cultura brasileira).
+     - *Atualizado pela [D012](012-valores-cristaos.md): eventos só neutros ou cristãos (feira de leitura, colheita, dia da família, Copa das Letras, formatura; Natal se a escola quiser). Sem festa junina, carnaval, Halloween ou entidades do folclore.*
   8. **Modo infinito de revisão** que mistura tudo, com dificuldade adaptativa (~85% de acerto).
 - **"Vício positivo" (dopamina pelo aprendizado):** surpresa no conteúdo, conquista visível, autonomia de escolha e sensação de competência. As sessões continuam curtas, com um fim natural e convite para voltar amanhã (rel. 08 e 09). A **guarda-corpo legal** continua valendo: o ECA Digital (Lei 15.211/2025) proíbe caixas de recompensa aleatória (loot boxes), e as regras de lojas para apps infantis valem também (rel. 05).
 

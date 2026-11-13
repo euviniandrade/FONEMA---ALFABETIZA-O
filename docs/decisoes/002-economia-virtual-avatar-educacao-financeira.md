@@ -10,6 +10,7 @@
 ## 2. Economia de moedinhas (fictícia)
 - **Como se ganha:** só aprendendo. Concluir atividade, dominar um som, terminar uma missão, revisar, ler uma história, ajudar o Bolota. **Não existe compra de moedas com dinheiro real**, nem anúncio que dê moedas.
 - **Em que se gasta:** personalização do **personagem próprio** (roupinhas, cabelo, cor, acessórios), itens para a **casa/vila/quintal**, figurinhas, bichinhos, cenários, instrumentos, decoração, temas da Sofia, "ingressos" para mini-aventuras extras, presentes para amigos do mundo do jogo.
+  - *Atualizado pela [D008](008-avatar-3d-da-crianca.md): "acessórios" aqui são **utensílios** (mochila, lupa, binóculo…); nunca joias ou adornos.*
 - **Sem sorte nem surpresa paga:** todo item tem preço e aparência visíveis antes da compra. **Nada de baú aleatório nem loot box**, proibidos no ECA Digital. A surpresa fica no conteúdo (histórias, descobertas), não no item comprado (rel. 08).
 - **Cuidado científico (rel. 08):** prêmio tangível anunciado antes, por tarefa, pode reduzir a motivação intrínseca (efeito de superjustificação). Para evitar:
   1. as moedinhas reconhecem **domínio e esforço**, não cliques;
@@ -33,6 +34,9 @@ Ligada à BNCC: o tema contemporâneo transversal "Educação Financeira" e as h
 | Compartilhar/doar | Dar presente a um amigo do jogo ou contribuir para um projeto da vila (ex.: horta comunitária) |
 | Contar dinheiro | Moedinhas com valores (1, 5, 10) para somar, em fase avançada, ligada à matemática |
 | Planejar | "Lista de desejos" com prioridade |
+
+*Nota de linguagem ([D014](014-plataforma-educativa-completa.md)): onde esta decisão diz "jogo", leia "plataforma"/"jornada"; "jogo" fica só para mecânicas específicas.*
+
 
 Regra: a educação financeira é **leve e lúdica**. Não ofusca a alfabetização, que continua sendo o objetivo central.
 

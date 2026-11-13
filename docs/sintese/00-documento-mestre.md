@@ -11,6 +11,12 @@
 >
 > **Legenda de evidência:** **A** = meta-análise, revisão sistemática ou ECR replicado · **B** = ECR isolado, longitudinal ou quase-experimento · **C** = correlacional, neuroimagem, documento oficial ou revisão narrativa · **D** = fonte de fabricante, fonte secundária ou proposta de relatório. **Status de verificação:** "verificada" = conferida em Crossref/PubMed/ERIC na Etapa 2; "não checável" = domínio bloqueado na sessão, o que **não** indica fonte falsa; "[NV]" = não verificada.
 
+> **⚠️ Atualizações posteriores (decisões 005–018).** Este documento é a v1 (base de pesquisa, decisões 001–004). Onde ele conflitar com decisões mais novas, **valem as decisões** ([índice](../decisoes/README.md)). Principais pontos:
+> - **Sofia em 2D → dupla Sofia e Tales em 3D** ([D007](../decisoes/007-dupla-sofia-e-tales.md)): a dupla é 3D alegre de animação; a **tela de lição continua com fundo limpo** e foco na boca, na letra e na palavra (salvaguarda do rel. 23).
+> - **Visual da Sofia:** uniforme escolar, sem joias nem adornos ([D006](../decisoes/006-academia-uniforme-elenco-voz.md), [D008](../decisoes/008-avatar-3d-da-crianca.md)); sem padrão arco-íris ([D009](../decisoes/009-paleta-sem-arco-iris.md)).
+> - **Conteúdo e valores:** perfil cristão e conservador, sem festa junina, carnaval, magia ou entidades do folclore ([D012](../decisoes/012-valores-cristaos.md)).
+> - **Identidade:** FONEMA é **plataforma educativa completa**, não "jogo" ([D014](../decisoes/014-plataforma-educativa-completa.md)); vídeo sempre com atividade ([D015](../decisoes/015-video-sempre-com-atividade.md)); Academia ([D011](../decisoes/011-academia-pintura-vozes.md)); universo infantil ([D016](../decisoes/016-universo-infantil.md)).
+
 ---
 
 ## 1. Sumário executivo
@@ -24,7 +30,7 @@
 **Como o produto funciona (v1).**
 - **Mundo aberto com 11 regiões** (biomas brasileiros), uma por etapa da ordem de ensino do PB. A **trilha principal é liberada por domínio, nunca por tempo**. Há missões paralelas geradas por regras a partir de palavras e textos validados, uma vila para construir, colecionáveis, desafios de fim de região e temporadas.
 - **Sessão curta com fim natural** (10–12 min aos 4–5 anos; 15–20 min aos 7–8), com revisão espaçada, recuperação ativa, feedback imediato e um ritual de encerramento.
-- **Sofia** (mentora, ~9–10 anos, parda, 2D) e **Bolota** (filhote de tatu-bola que aprende com a criança). O recurso de articulação **"Espelho do Som"** mostra boca real, corte lateral e letra sincronizados. O nome "Boquinhas" é marca registrada e não será usado.
+- **Sofia** (mentora, ~9–10 anos, parda, 2D; *atualizado pela D007: dupla Sofia e Tales em 3D, tela de lição com fundo limpo*) e **Bolota** (filhote de tatu-bola que aprende com a criança). O recurso de articulação **"Espelho do Som"** mostra boca real, corte lateral e letra sincronizados. O nome "Boquinhas" é marca registrada e não será usado.
 - **Reconhecimento de fala** que verifica a leitura contra um alvo conhecido, roda no aparelho e **nunca é juiz**: aceita sotaques e as trocas típicas da idade.
 - **Economia de moedinhas fictícias** ganhas só aprendendo, com lojinha cujas etiquetas são palavras decodificáveis, cofrinho com meta e educação financeira leve. Não há dinheiro real, sorteio nem perda.
 - **Seis competências**: a alfabetização é a espinha dorsal. Pensamento computacional, raciocínio lógico, inteligência emocional, tecnologia e educação financeira **entram por dentro** das tarefas de leitura.
@@ -266,6 +272,8 @@ Fontes: rels. 08, 09, 14, 42 e o conflito C2.1 do Bloco A. O teto ajustável pel
 ### 4.6 Sofia e Bolota
 
 **Sofia: mentora e voz da interface** (rels. 04, 23, 28, 31)
+> **Atualizado pela [D007](../decisoes/007-dupla-sofia-e-tales.md):** a protagonista agora é a **dupla Sofia e Tales em 3D** alegre de animação, com uniforme escolar e sem adornos (D006, D008). A salvaguarda abaixo continua: **na tela de lição o fundo é limpo** e o foco fica na boca, na letra e na palavra. O texto abaixo é a especificação v1 e fica como histórico.
+
 - **Aparência**: ilustração 2D vetorial (2D rende mais que 3D: g+ = 0,38 × 0,11). Menina de **~9–10 anos** ("prima que já sabe ler"), **parda**, cabelo cacheado 3C/4A, sem coroa, vestido de princesa ou tiara. Usa camiseta com a letra da semana e tem um objeto-assinatura. Boca grande e legível nos visemas. O elenco é diverso (óculos, aparelho auditivo, cadeira de rodas).
 - **Personalidade**: calorosa, curiosa, paciente e brincalhona. Elogia **esforço e estratégia**. Erra de propósito às vezes para a criança corrigir. É modelo vicário ("eu também trocava…").
 - **Voz**: TTS neural pt-BR expressivo, pré-gerado e versionado. Instruções 10–15% mais lentas que a fala adulta; velocidade ajustável de 0,75× a 1,25×; 15–30 variações por tipo de fala. **Fonemas isolados, pares mínimos, 150–300 falas-chave e canções são gravados por uma dubladora humana**. Clonar a voz da dubladora só com contrato específico ⚖️.

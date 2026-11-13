@@ -3,6 +3,7 @@
 **Data:** 13/11/2026 · **Status:** aprovada pelo dono do projeto
 
 1. **Academia lúdica** (nome a definir, mais lúdico que "academy"): um espaço de vídeos e trilhas curtas para **crianças, famílias e professores**, a partir dos vídeos de amostra (que o dono aprovou).
+   - *Atualizado pela [D011](011-academia-pintura-vozes.md): o nome é **Academia** (Academia FONEMA). "Roda da Sofia" só como seção interna de conversas mediadas.*
 2. **Sofia**:
    - um pouco mais bonita;
    - com **uniforme escolar**;
@@ -13,6 +14,7 @@
 4. **Muitos ambientes para desbravar**, todos 100% profissionais.
 5. **Jornada conectada:** cada etapa se liga à seguinte, com a **neurociência da aprendizagem** embutida no desenho.
 6. **Voz:** além das vozes neurais já previstas, usar o **ElevenLabs** (conta do dono, plano Creator), da forma mais didática possível.
+   - *Atualizado pela [D011](011-academia-pintura-vozes.md) e [D015](015-video-sempre-com-atividade.md): vozes oficiais "Sofia — FONEMA" e "Tales — FONEMA", lúdicas, de desenho animado.*
 7. **Zoom na boca:** o mais detalhado possível, bonito e lúdico. Mostrar a língua, os dentes e a vista lateral de forma visível e eficiente.
 
 ## Observações técnicas
