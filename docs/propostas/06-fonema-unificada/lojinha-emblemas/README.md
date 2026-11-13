@@ -4,6 +4,8 @@
 > Responde ao pedido do dono: os itens "ainda estão muito crus, não chamam atenção" e "tem que ter um propósito, um emblema, um porquê de comprar".
 > Base: Decisões **002** e **005**, rel. **38** (economia virtual), rel. **08** (dopamina e motivação) e rel. **37** (mundo aberto e avatar). Nada aqui é parecer jurídico.
 
+> **Atualizado pela [Decisão 008](../../../decisoes/008-avatar-3d-da-crianca.md) (sem joias nem adornos):** FIVELA, TIARA DE IPÊ, MIÇANGA, FAIXA de cabelo e COLAR DE SEMENTE saíram do catálogo e viraram itens utilitários (TOUCA, MUDA DE IPÊ, BINÓCULO, CANTIL, CADERNO DE SEMENTES). As fontes em `fontes/` já foram ajustadas; as PNGs marcadas com ↻ na tabela e as telas `catalogo-itens.png`, `tela-lojinha.png`, `tela-colecoes.png` e `tela-casa-decorada.png` precisam ser regeradas (`docs/QUALIDADE.md`). A região de entrada dos itens novos segue a regra das letras ensinadas e deve ser revalidada.
+
 ![Lojinha](tela-lojinha.png)
 
 ## 0. Resumo em 8 pontos
@@ -59,7 +61,7 @@ A lojinha abre **no fim da sessão** e no "tempo livre da vila" (rel. 38 §4.1, 
 | **1. Completar coleções por bioma** | Cada região tem um álbum de 5 a 8 itens (roupa, bichinho, figurinha, enfeite). Todos visíveis desde o início, com preço. Alguns vêm por domínio (sem custo) | "Falta 1 para completar a coleção do Cerrado" | **Recompensa narrativa** ao completar: cena nova na vila + história decodificável nova + emblema Colecionador | Fim conhecido; sem pacote surpresa; nada expira; a coleção não "puxa" a criança com contagem regressiva |
 | **2. Necessidades da vila** | Os prédios precisam de peças (a padaria precisa de FORNO; a horta precisa de ÁGUA). Necessidade aparece **antes** do enfeite (necessidade × desejo, Decisão 002) | "A padaria precisa de um FORNO" | A vila cresce: prédio abre, morador muda de fala, história nova, novas missões com o som da vez | Nada murcha, quebra ou "morre" se a criança escolher outra coisa (rel. 37 M3). A Sofia mostra a escolha **sem julgar** |
 | **3. Eventos e temporadas** | Feira de Leitura e Colheita com o Dia da Família (jun–jul), Cantigas e Brincadeiras (agosto), Festival de Talentos, Dia das Crianças, Copa das Letras, formatura da alfabetização e fim de ano (Natal só se a escola quiser). Tudo segue a Decisão 012: sem festa junina, carnaval, Halloween, magia, "sorte" ou mitos folclóricos tratados como seres | "Enfeite a praça para a feira de leitura" | Festa com história própria, música do coreto, dança do avatar | **Voltam todo ano.** O que foi comprado fica para sempre. Proibido "só hoje", contagem regressiva e item que some (rel. 38 S4) |
-| **4. Presentes para moradores** | Cada morador tem um gosto conhecido (Dona Ema adora flores). A criança dá um presente comprado **ou** escreve um bilhete (grátis) | "A Dona Ema adora flores: dê a TIARA e ouça o segredo do ipê" | Reação animada + **história desbloqueada** do morador + emblema Generoso | O morador agradece sempre igual, com ou sem presente caro; **conta o gesto, não o valor**; nunca fica triste por não ganhar |
+| **4. Presentes para moradores** | Cada morador tem um gosto conhecido (Dona Ema adora flores). A criança dá um presente comprado **ou** escreve um bilhete (grátis) | "A Dona Ema adora flores: dê a MUDA DE IPÊ e ouça o segredo do ipê" | Reação animada + **história desbloqueada** do morador + emblema Generoso | O morador agradece sempre igual, com ou sem presente caro; **conta o gesto, não o valor**; nunca fica triste por não ganhar |
 | **5. Missões que pedem um item** | Algumas missões opcionais de "mundo" (não da trilha principal) pedem um objeto: "leve a LANTERNA para ler na gruta" | Cartão de missão na vila | Mini-aventura extra, palavras novas da fase | **Sempre há caminho sem comprar** (pegar emprestado na biblioteca da vila ou fazer a versão a pé). A trilha principal nunca exige item |
 | **6. Decorar casa, quarto e vitrine** | Modo "Arrumar": arrastar móveis, quadros, tapetes; a vitrine expõe emblemas, figurinhas e livros lidos | Casa da Lia | Identidade, autoria, criatividade (sandbox sem meta, rel. 37 §3.5) | "Mostrar" envia foto só para o **painel da família**. Sem visitar casas de outras crianças, sem curtidas |
 | **7. Cuidar de bichinhos** | Bichinhos da fauna brasileira (capivara, jabuti, lobo-guará…) moram na casa/vila; itens de cuidado são agrados opcionais | Capivara no tapete | Animações de carinho, curiosidades lidas sobre o bicho (conhecimento de mundo) | O bichinho **nunca** adoece, fica triste ou vai embora por falta de compra ou de uso (rel. 38 §4.3; pressão parassocial) |
@@ -69,10 +71,10 @@ A lojinha abre **no fim da sessão** e no "tempo livre da vila" (rel. 38 §4.1, 
 | Morador | Onde | Gosta de | O que conta quando recebe |
 |---|---|---|---|
 | **Seu Zé**, padeiro | Padaria (vila) | PAMONHA, CHAPÉU DE PALHA, MILHO | A receita do pão do Bolota (texto de instruções) |
-| **Dona Ema** | Cerrado | TIARA DE IPÊ, FLOR DE IPÊ | O segredo do ipê que floresce na seca |
+| **Dona Ema** | Cerrado | MUDA DE IPÊ, FLOR DE IPÊ | O segredo do ipê que floresce na seca |
 | **Dona Coruja**, bibliotecária | Biblioteca | LIVRO DE PRESENTE, MARCADOR | Abre uma seção nova da estante livre |
 | **Vó Lia** | Casa vizinha | BOLO DE MILHO, VASO | Uma cantiga de roda para ler junto |
-| **Tio Bento**, barqueiro | Rio (Amazônia) | CHOCALHO, COLAR DE SEMENTE | A história do rio que esqueceu as palavras (e como os ribeirinhos as reencontraram) |
+| **Tio Bento**, barqueiro | Rio (Amazônia) | CHOCALHO, CADERNO DE SEMENTES | A história do rio que esqueceu as palavras (e como os ribeirinhos as reencontraram) |
 | **Mestre Gaúcho** | Pampa | CUIA, PONCHO | Como o vento move o moinho |
 
 O bilhete escrito pela criança (frase decodificável montada com palavras da fase) vale como presente e conta para o emblema Generoso. **Generosidade não depende de moeda.**
@@ -138,11 +140,11 @@ Regras fixas: (1) o ★ e a regra aparecem **no próprio item** e são lidos pel
 
 ## 4. Catálogo (143 itens)
 
-**Como ler a tabela.** *Entra na loja* indica a região do mapa (rel. 37 §3.2) a partir da qual (a) **todas as letras do nome já foram ensinadas** e (b) a criança já chegou ao bioma do item (guarda-roupa por região, rel. 37 §3.6), valendo a mais tardia (R0–R1: itens com figura + áudio; R2a: M L F; R2b: V S N; R3: P T B D; R4: J Z X CH NH LH; R5: contextuais C/QU G/GU R/RR S/SS Ç; R6: nasalidade; R7: CVC e ditongos; R8: CCV; R9: concorrências arbitrárias e H). Antes disso, o item aparece como "em breve", **sem preço**. *Todos os nomes passam pelo filtro de decodificabilidade do rel. 25 antes de entrar no catálogo; a coluna é indicativa.* Preços em moedas, fixos e imutáveis depois de publicados. ✔ = desenhado na folha `catalogo-itens.png`.
+**Como ler a tabela.** *Entra na loja* indica a região do mapa (rel. 37 §3.2) a partir da qual (a) **todas as letras do nome já foram ensinadas** e (b) a criança já chegou ao bioma do item (guarda-roupa por região, rel. 37 §3.6), valendo a mais tardia (R0–R1: itens com figura + áudio; R2a: M L F; R2b: V S N; R3: P T B D; R4: J Z X CH NH LH; R5: contextuais C/QU G/GU R/RR S/SS Ç; R6: nasalidade; R7: CVC e ditongos; R8: CCV; R9: concorrências arbitrárias e H). Antes disso, o item aparece como "em breve", **sem preço**. *Todos os nomes passam pelo filtro de decodificabilidade do rel. 25 antes de entrar no catálogo; a coluna é indicativa.* Preços em moedas, fixos e imutáveis depois de publicados. ✔ = desenhado na folha `catalogo-itens.png`. ↻ = desenho trocado nas fontes (D008), PNG a regerar.
 
 | # | Item (etiqueta) | Categoria | Tema / bioma | Entra na loja | Preço | Propósito (o porquê) | Liga a coleção / emblema | Ilustrado |
 |---:|---|---|---|:---:|---:|---|---|:---:|
-| 1 | **SAIA** | Roupa | Quintal | R2b | 6 | Vestir o avatar; combina com FIVELA | Col. Roupas do Dia | ✔ |
+| 1 | **SAIA** | Roupa | Quintal | R2b | 6 | Vestir o avatar; combina com BONÉ | Col. Roupas do Dia | ✔ |
 | 2 | **BONÉ** | Roupa | Quintal | R3 | 8 | Vestir o avatar; dia de sol na vila | Col. Roupas do Dia | ✔ |
 | 3 | **BOTA** | Roupa | Cerrado | R3 | 10 | Trilha do Cerrado (enfeite, sem efeito) | Col. Cerrado | ✔ |
 | 4 | **LUVA** | Roupa | Pampa | R2b | 6 | Vestir no frio do Pampa | Col. Pampa | — |
@@ -164,14 +166,14 @@ Regras fixas: (1) o ★ e a regra aparecem **no próprio item** e são lidos pel
 | 20 | **BECA** | Roupa | Formatura | R3 | 24 | Formatura da alfabetização; combina com CAPELO | Col. Formatura | — |
 | 21 | **PIJAMA** | Roupa | Casa | R4 | 8 | Ritual de fim de sessão (dormir com o Bolota) | Col. Casa Aconchego | — |
 | 22 | **CAPACETE** | Acessório | Cidade | R7 | 12 | Andar de bicicleta na Cidade das Letras | Col. Cidade | — |
-| 23 | **FIVELA** | Cabelo | Quintal | R2b | 4 | Enfeitar o cabelo | Col. Cabelos do Brasil | ✔ |
+| 23 | **TOUCA** | Cabelo | Quintal | R5 | 4 | Proteger os cachos para dormir e no frio (cuidado, não enfeite) | Col. Cabelos do Brasil | ↻ |
 | 24 | **LENÇO** | Cabelo | Quintal | R5 | 9 | Amarração de cabelo | Col. Cabelos do Brasil | ✔ |
-| 25 | **MIÇANGA** | Cabelo | Quintal | R5 | 6 | Contas para tranças | Col. Cabelos do Brasil | ✔ |
-| 26 | **TIARA DE IPÊ** | Cabelo | Cerrado | R5 | 16 | Presente p/ Dona Ema (ouve o segredo do ipê) | Col. Cerrado · Emblema Generoso | ✔ |
-| 27 | **FAIXA** | Cabelo | Quintal | R4 | 4 | Faixa para black power / cachos | Col. Cabelos do Brasil | — |
+| 25 | **BINÓCULO** | Utensílio | Pantanal | R6 | 10 | Observar as aves do Pantanal de longe, sem assustar | Col. Kit do Explorador | ↻ |
+| 26 | **MUDA DE IPÊ** | Planta | Cerrado | R5 | 16 | Presente p/ Dona Ema: plantar um ipê (ouve o segredo do ipê) | Col. Cerrado · Emblema Generoso | ↻ |
+| 27 | **CANTIL** | Utensílio | Cerrado | R6 | 6 | Levar água na trilha (cuidar do corpo) | Col. Kit do Explorador | — |
 | 28 | **PENTE GARFO** | Cabelo | Quintal | R5 | 5 | Cuidar do cabelo crespo (decorativo) | Col. Cabelos do Brasil | — |
 | 29 | **TURBANTE** | Cabelo | Festa da vila | R7 | 14 | Amarração para dias de festa | Col. Cabelos do Brasil | — |
-| 30 | **COLAR DE SEMENTE** | Acessório | Amazônia | R6 | 10 | Artesanato da floresta | Col. Amazônia | — |
+| 30 | **CADERNO DE SEMENTES** | Utensílio | Amazônia | R7 | 10 | Guardar e desenhar as sementes da floresta (ciências) | Col. Amazônia | — |
 | 31 | **ÓCULOS (armação)** | Identidade | — | sempre | grátis | Grátis; armações coloridas custam 3 | — | ✔ |
 | 32 | **APARELHO AUDITIVO** | Identidade | — | sempre | grátis | Grátis; capinha estampada custa 4 | — | ✔ |
 | 33 | **CADEIRA DE RODAS** | Identidade | — | sempre | grátis | Grátis; raios coloridos custam 5 | — | ✔ |
@@ -294,14 +296,15 @@ Regras fixas: (1) o ★ e a regra aparecem **no próprio item** e são lidos pel
 |---|---|---|---|
 | **Quintal da Sofia** (R0–R2) | SAPO, TATU, BOLA, PIPA, FIGURINHA LUA, PUFE | O Bolota ganha uma casinha e conta como chegou ao quintal | Colecionador |
 | **Roupas do Dia** | SAIA, BONÉ, MALA, MAIÔ | Desfile no quintal com a Sofia (animação curta) | Colecionador |
-| **Cabelos do Brasil** | FIVELA, LENÇO, MIÇANGA, FAIXA, TURBANTE | Salão da vila abre; história "Cada cabelo, um jeito" | Colecionador |
+| **Cabelos do Brasil** | TOUCA, LENÇO, PENTE GARFO, TURBANTE | Salão da vila abre; história "Cada cabelo, um jeito" | Colecionador |
+| **Kit do Explorador** | CANTIL, BINÓCULO, LUPA, LANTERNA, MOCHILA | A trilha da mata ganha placas novas para ler | Curioso |
 | **Litoral / Ilha das Vogais** | MAIÔ, SUNGA, SANDÁLIA, PEIXE-BOI, FIGURINHA JANGADA | O farol acende e a Ilha ganha uma história de pescador | Colecionador |
 | **Mata Atlântica** | VASO, TUCANO, MICO-LEÃO, BEIJA-FLOR, JANELA FLORIDA | Ingresso grátis para a Trilha do Tucano (mini-aventura) | Colecionador |
-| **Cerrado** | FIGURINHA IPÊ, TIARA DE IPÊ, JABUTI, BOTA, LOBO-GUARÁ ★ | O ipê da vila floresce; o Lobo-guará conta "A NOITE DO LOBO" | Colecionador |
+| **Cerrado** | FIGURINHA IPÊ, MUDA DE IPÊ, JABUTI, BOTA, LOBO-GUARÁ ★ | O ipê da vila floresce; o Lobo-guará conta "A NOITE DO LOBO" | Colecionador |
 | **Pantanal** | CAPIVARA, TUIUIÚ, ONÇA ★, FIGURINHA ONÇA, VIVEIRO | Os bichos resgatados na Cheia visitam a vila | Colecionador |
 | **Sertão** | CHAPÉU DE COURO ★, GIBÃO, REDE, LAMPARINA, FIGURINHA CAJU | Noite de cordel no coreto (texto rimado decodificável) | Colecionador |
 | **Pampa** | PONCHO, BOMBACHA, LUVA, FIGURINHA CUIA, MOINHO | O moinho gira e a padaria ganha farinha | Colecionador |
-| **Amazônia** | ARARA, BOTO, CHOCALHO, COLAR DE SEMENTE, BARCO | O barco-escola leva a criança por um rio de palavras | Colecionador |
+| **Amazônia** | ARARA, BOTO, CHOCALHO, CADERNO DE SEMENTES, BARCO | O barco-escola leva a criança por um rio de palavras | Colecionador |
 | **Praça da Vila** | FONTE, HORTA, CORETO ★, PONTE, FORNO, MOINHO, BANCA DE LIVROS | O coreto toca a música da festa e todos os moradores aparecem | Ajudante da Vila |
 | **Casa Aconchego** | SOFÁ, TAPETE, CAMA, COLCHA, CORTINA, BARRACA DE LEITURA | Ritual de "boa noite" especial com o Bolota | Colecionador |
 | **Instrumentos do Brasil** | PANDEIRO, TAMBOR, VIOLA, SANFONA ★, CHOCALHO, BERIMBAU, AGOGÔ, FLAUTA | Banda da vila: cada instrumento toca o som da sua letra, e juntos tocam a música das letras | Colecionador + Domínio de sons |
@@ -325,7 +328,7 @@ Itens de coleção podem vir **pela lojinha** ou **por domínio** (ex.: a FIGURI
 
 | Período (rel. 38 §4.6) | Regiões típicas (rel. 37) | Pequeno (P) | Médio (M) | Grande/meta (G) | Itens ★ meta | Exemplos do catálogo |
 |---|---|---|---|---|---|---|
-| S1 (meses 1–6) | R0–R2b | 2–5 | 6–12 | 15–25 | nenhum | FIVELA 4, SAIA 6, MALA 5, SOFÁ 22 |
+| S1 (meses 1–6) | R0–R2b | 2–5 | 6–12 | 15–25 | nenhum | SAIA 6, MALA 5, SOFÁ 22 |
 | S2 (meses 7–12) | R3–R4 | 3–8 | 10–20 | 30–50 | 1 por região | PIPA 5, BONÉ 8, TAPETE 12, FONTE 30, PONTE 38 |
 | S3 (meses 13–18) | R5–R7 | 5–10 | 15–30 | 36–90 | 1–2 por região | CAPELO 10, CAPIVARA 20, FORNO 24, SANFONA 36 ★, CORETO 45 ★ |
 | S4 (meses 19–24) | R8–R10 | 5–15 | 20–40 | 80–150 | 2 por região | FLAUTA 18, VITRINE 30, TEATRO 90 ★, ESTAÇÃO DE TREM 120 (projeto) |
@@ -415,5 +418,5 @@ Playwright/Chromium, viewport 1280×800, `deviceScaleFactor: 2` (telas em 2560×
 1. Passar **todos os nomes** pelo filtro de decodificabilidade do rel. 25 e ajustar a coluna "Entra na loja".
 2. Validar com crianças (piloto F1/F2, rel. 27) se os cartões de propósito aumentam a escolha de vila/presente/coleção sem aumentar o tempo de tela.
 3. Revisão jurídica do ECA Digital (art. 20, loot boxes; publicidade infantil) para as telas e o painel do adulto.
-4. Consultoria de representatividade para os itens de cabelo e cultura (turbante, lenço, miçanga), com famílias e educadores negros e indígenas.
+4. Consultoria de representatividade para os itens de cabelo e cultura (turbante, lenço, touca, pente garfo), com famílias e educadores negros e indígenas.
 5. Integrar o projeto coletivo da **turma** (modo escola) ao painel do professor, sem ranking entre turmas.
