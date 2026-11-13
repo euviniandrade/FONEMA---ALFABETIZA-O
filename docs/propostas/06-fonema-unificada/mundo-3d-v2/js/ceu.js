@@ -5,12 +5,12 @@ import { blobGeo, lerp, rng, M, mergeGeos } from './kit.js';
 // Paletas de luz por hora (0 = dia, 1 = entardecer). Cores quentes, nunca "noite assustadora".
 export const HORAS = [
   { // dia
-    topo: '#5FA8E6', meio: '#A9D6F2', horiz: '#FCE9C8', sol: '#FFF1D2', solI: 2.9, hemiC: '#CFE7FF', hemiS: '#E9C79A', hemiI: 0.85,
-    nevoa: '#D9ECF2', nevoaD: 0.0042, solPos: [70, 95, 45], exp: 1.0, glow: '#FFF6DE', nuvem: '#FFFFFF', nuvemS: '#C9D9EA',
+    topo: '#5FA8E6', meio: '#A9D6F2', horiz: '#FCE9C8', sol: '#FFF1D2', solI: 3.3, hemiC: '#CFE7FF', hemiS: '#E9C79A', hemiI: 0.55,
+    nevoa: '#CFE6F2', nevoaD: 0.0019, solPos: [70, 95, 45], exp: 1.0, glow: '#FFF6DE', nuvem: '#FFFFFF', nuvemS: '#C9D9EA',
   },
   { // entardecer
-    topo: '#4C5FA8', meio: '#E48D7A', horiz: '#FFC37A', sol: '#FFB46A', solI: 2.6, hemiC: '#B9B4E6', hemiS: '#F2A66B', hemiI: 0.7,
-    nevoa: '#F2B98C', nevoaD: 0.0052, solPos: [-95, 26, -60], exp: 1.02, glow: '#FFC78A', nuvem: '#FFE0C4', nuvemS: '#C98AA0',
+    topo: '#4C5FA8', meio: '#E48D7A', horiz: '#FFC37A', sol: '#FFB46A', solI: 2.6, hemiC: '#B9B4E6', hemiS: '#F2A66B', hemiI: 0.5,
+    nevoa: '#F0B48E', nevoaD: 0.0026, solPos: [-95, 26, -60], exp: 1.02, glow: '#FFC78A', nuvem: '#FFE0C4', nuvemS: '#C98AA0',
   },
 ];
 
@@ -68,7 +68,7 @@ export function criarCeu(scene) {
     const chao = new THREE.Mesh(new THREE.CircleGeometry(40, 24).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: new THREE.Color('#9BC277').multiplyScalar(0.7) }));
     chao.position.y = -2; sc.add(chao);
     const rt = pm.fromScene(sc, 0.04);
-    scene.environment = rt.texture; scene.environmentIntensity = 0.55;
+    scene.environment = rt.texture; scene.environmentIntensity = 0.38;
     pm.dispose();
     return rt;
   }

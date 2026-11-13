@@ -27,7 +27,7 @@ export function criarArvores(U, q) {
   const folha = addRim(addWind(new THREE.MeshStandardMaterial({ roughness: 0.82, color: '#fff' }), U, 0.022, 2.0), '#FFF0B8', 0.32, 2.4);
   const tronco = new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.9 });
   const trunkGeo = new THREE.CylinderGeometry(0.28, 0.42, 1, 9).translate(0, 0.5, 0);
-  const copas = [0, 1, 2].map((i) => new Instancias(canopyGeo(10 + i * 3, 5 + i, q === 'baixo' ? 1 : 2), folha));
+  const copas = [0, 1, 2].map((i) => new Instancias(canopyGeo(10 + i * 3, 5 + i, 1), folha));
   const troncos = new Instancias(trunkGeo, tronco);
   const r = rng(77);
   return {

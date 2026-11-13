@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>FONEMA · Mundo 3D v2 · Vila das Letras</title>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }</script>
+<style>
+  @font-face { font-family: Fredoka; src: url(fonts/fredoka-latin-600-normal.woff2) format('woff2'); font-weight: 600; }
+  @font-face { font-family: Fredoka; src: url(fonts/fredoka-latin-700-normal.woff2) format('woff2'); font-weight: 700; }
+  @font-face { font-family: Andika; src: url(fonts/andika-latin-700-normal.woff2) format('woff2'); font-weight: 700; }
+  :root { --tinta: #2E4374; --papel: #FFF8EC; --sol: #F2B33D; --terracota: #C8643B; --sombra: 0 6px 0 rgba(46,67,116,.18), 0 10px 26px rgba(40,30,60,.22); }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #BFE3F2; font-family: Fredoka, Andika, system-ui, sans-serif; color: var(--tinta); user-select: none; }
+  #palco { position: fixed; inset: 0; }
+  .hud { position: fixed; z-index: 5; pointer-events: none; }
+  .hud > * { pointer-events: auto; }
+  .bt { border: 0; cursor: pointer; font: 700 20px Fredoka, sans-serif; color: var(--tinta); background: var(--papel); border-radius: 26px; box-shadow: var(--sombra);
+        min-width: 72px; min-height: 72px; padding: 10px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: transform .12s; }
+  .bt:active { transform: translateY(3px) scale(.97); }
+  .bt .ic { font-size: 32px; line-height: 1; }
+  .bt.sol { background: var(--sol); }
+  .bt.redondo { border-radius: 50%; width: 76px; height: 76px; padding: 0; }
+  .bt.on { outline: 5px solid var(--sol); }
+  #lugar { top: max(18px, env(safe-area-inset-top)); left: 18px; display: flex; align-items: center; gap: 14px; background: var(--papel); padding: 10px 24px 10px 12px; border-radius: 40px; box-shadow: var(--sombra); font-size: 28px; font-weight: 700; transition: opacity .3s; }
+  #lugar .ic { width: 60px; height: 60px; border-radius: 50%; background: #FFE9B5; display: grid; place-items: center; font-size: 34px; }
+  #topo { top: max(18px, env(safe-area-inset-top)); right: 18px; display: flex; gap: 12px; }
+  #nav { right: 18px; bottom: max(18px, env(safe-area-inset-bottom)); display: grid; grid-template-columns: repeat(3, 76px); grid-template-rows: repeat(3, 76px); gap: 10px; }
+  #nav .vazio { visibility: hidden; }
+  #baixo { left: 50%; transform: translateX(-50%); bottom: max(18px, env(safe-area-inset-bottom)); display: flex; gap: 14px; }
+  #mapa { left: 18px; bottom: max(18px, env(safe-area-inset-bottom)); width: 210px; height: 210px; border-radius: 34px; overflow: hidden; box-shadow: var(--sombra); border: 6px solid var(--papel); background: #8BC46A; }
+  #mapa canvas { width: 100%; height: 100%; display: block; }
+  #folha { position: fixed; inset: auto 0 0 0; z-index: 8; background: var(--papel); border-radius: 36px 36px 0 0; box-shadow: 0 -10px 40px rgba(40,30,60,.3); padding: 22px 22px max(22px, env(safe-area-inset-bottom)); transform: translateY(110%); transition: transform .35s cubic-bezier(.2,.9,.3,1.2); }
+  #folha.aberta { transform: none; }
+  #folha h2 { margin: 0 0 14px 8px; font-size: 28px; }
+  #folha .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+  #folha .grade .bt { flex-direction: column; min-height: 118px; font-size: 19px; }
+  #folha .grade .bt .ic { font-size: 44px; }
+  #cartao { position: fixed; z-index: 9; left: 50%; top: 50%; transform: translate(-50%, -40%) scale(.9); opacity: 0; pointer-events: none; transition: all .3s cubic-bezier(.2,.9,.3,1.3);
+            background: var(--papel); border-radius: 40px; box-shadow: 0 20px 60px rgba(40,30,60,.4); padding: 28px 34px; text-align: center; min-width: 340px; }
+  #cartao.aberto { opacity: 1; transform: translate(-50%, -50%); pointer-events: auto; }
+  #cartao .letra { width: 110px; height: 110px; margin: -80px auto 10px; border-radius: 50%; background: #FFF; border: 8px solid var(--sol); display: grid; place-items: center; font: 700 60px Andika, sans-serif; box-shadow: var(--sombra); }
+  #cartao h3 { margin: 6px 0 4px; font-size: 30px; }
+  #cartao p { margin: 0 0 18px; font-size: 18px; opacity: .75; }
+  #cartao .acoes { display: flex; gap: 14px; justify-content: center; }
+  #toast { position: fixed; z-index: 9; left: 50%; top: 110px; transform: translateX(-50%); background: var(--tinta); color: #fff; padding: 14px 24px; border-radius: 30px; font-size: 22px; opacity: 0; transition: opacity .3s; pointer-events: none; }
+  #carga { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; background: radial-gradient(circle at 50% 40%, #FFF3D6, #F7D9A0); transition: opacity .6s; }
+  #carga .caixa { text-align: center; }
+  #carga .logo { font: 700 64px Fredoka, sans-serif; letter-spacing: 2px; color: var(--tinta); }
+  #carga .logo span { color: var(--sol); }
+  #carga .barra { width: 260px; height: 18px; border-radius: 10px; background: #fff; margin: 18px auto; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,.1); }
+  #carga .barra i { display: block; height: 100%; width: 30%; background: var(--sol); border-radius: 10px; animation: vai 1.4s ease-in-out infinite; }
+  @keyframes vai { 0% { margin-left: -30% } 100% { margin-left: 100% } }
+  #semgl { position: fixed; inset: 0; z-index: 30; display: none; background: center/cover no-repeat url(capturas/01-vila-aerea.png) #BFE3F2; }
+  #semgl .painel { position: absolute; left: 50%; bottom: 30px; transform: translateX(-50%); background: var(--papel); border-radius: 30px; padding: 20px 26px; box-shadow: var(--sombra); max-width: 92vw; text-align: center; }
+  #semgl .painel div { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 12px; }
+  body.sem-hud .hud, body.sem-hud #toast { display: none !important; }
+  @media (max-width: 760px) { #mapa { width: 140px; height: 140px; } #nav { grid-template-columns: repeat(3, 62px); grid-template-rows: repeat(3, 62px); } .bt.redondo { width: 62px; height: 62px; } #lugar { font-size: 22px; } #baixo .rot { display: none; } }
+</style>
+</head>
+<body>
+<div id="palco"></div>
+
+<div id="lugar" class="hud"><div class="ic" id="lugarIc">🎪</div><div id="lugarNome">Vila das Letras</div></div>
+<div id="topo" class="hud">
+  <button class="bt" id="btCena" title="Ver o mapa das ilhas"><span class="ic">🗺️</span><span class="rot">Ilhas</span></button>
+  <button class="bt" id="btPasseio" title="Passeio guiado"><span class="ic">🎬</span><span class="rot">Passeio</span></button>
+  <button class="bt redondo" id="btHora" title="Dia / entardecer"><span class="ic">☀️</span></button>
+</div>
+<div id="mapa" class="hud" title="Toque no mapa para voar até lá"><canvas width="420" height="420"></canvas></div>
+<div id="baixo" class="hud">
+  <button class="bt sol" id="btPraca"><span class="ic">🏠</span><span class="rot">Voltar para a praça</span></button>
+  <button class="bt" id="btIr"><span class="ic">🧭</span><span class="rot">Ir para…</span></button>
+</div>
+<div id="nav" class="hud">
+  <button class="bt redondo" data-a="girarE" title="Girar"><span class="ic">↺</span></button>
+  <button class="bt redondo" data-a="subir" title="Voar para cima"><span class="ic">⬆️</span></button>
+  <button class="bt redondo" data-a="girarD" title="Girar"><span class="ic">↻</span></button>
+  <button class="bt redondo" data-a="esq" title="Para o lado"><span class="ic">⬅️</span></button>
+  <button class="bt redondo" data-a="mais" title="Chegar perto"><span class="ic">🔍</span></button>
+  <button class="bt redondo" data-a="dir" title="Para o lado"><span class="ic">➡️</span></button>
+  <button class="bt redondo" data-a="menos" title="Afastar"><span class="ic">🔭</span></button>
+  <button class="bt redondo" data-a="descer" title="Descer"><span class="ic">⬇️</span></button>
+  <button class="bt redondo" data-a="frente" title="Ir para a frente"><span class="ic">🚶</span></button>
+</div>
+<div id="folha"><h2>Para onde vamos?</h2><div class="grade" id="grade"></div></div>
+<div id="cartao"><div class="letra" id="cLetra">S</div><h3 id="cNome">—</h3><p id="cDesc">Missão da vila</p><div class="acoes"><button class="bt" id="cFechar"><span class="ic">✖️</span></button><button class="bt sol" id="cEntrar"><span class="ic">▶️</span>Vamos!</button></div></div>
+<div id="toast"></div>
+<div id="carga"><div class="caixa"><div class="logo">FONE<span>MA</span></div><div class="barra"><i></i></div><div>Preparando a Vila das Letras…</div></div></div>
+<div id="semgl"><div class="painel"><b>Este aparelho não mostra o mundo 3D.</b><br>Tudo bem! Escolha a missão aqui:<div id="semglMissoes"></div></div></div>
+
+<script type="module">
+import { criarMundo, temWebGL, FASES_R0 } from './js/mundo.js';
+
+const P = new URLSearchParams(location.search);
+const EMBED = window.parent !== window;
+const ORIGEM = P.get('origem') || '*';
+if (P.get('hud') === '0') document.body.classList.add('sem-hud');
+const $ = (s) => document.querySelector(s);
+const avisar = (tipo, detalhe) => { if (EMBED) window.parent.postMessage({ tipo, detalhe }, ORIGEM); };
+let toastT = 0;
+const toast = (txt) => { const t = $('#toast'); t.textContent = txt; t.style.opacity = 1; clearTimeout(toastT); toastT = setTimeout(() => (t.style.opacity = 0), 2200); };
+
+const feitas = (P.get('feitas') || 'R0-F01,R0-F02').split(',').filter(Boolean);
+const opts = {
+  cena: P.get('cena') || 'vila', regiaoAtual: P.get('regiao') || 'R0', faseAtual: P.get('fase') || 'R0-F03', fasesFeitas: feitas,
+  qualidade: P.get('q') || 'auto', hora: Number(P.get('hora') || 0), captura: P.has('captura'), vista: P.get('vista'), tiltShift: P.get('tilt') === '1',
+  aoEntrarMissao: (d) => { toast(`▶️ ${d.nome}`); },
+};
+
+if (!temWebGL()) {
+  $('#carga').style.display = 'none'; $('#semgl').style.display = 'block';
+  for (const f of FASES_R0) { const b = document.createElement('button'); b.className = 'bt'; b.textContent = f.nome; b.onclick = () => { const det = { id: f.id, nome: f.nome, regiao: 'R0' }; window.dispatchEvent(new CustomEvent('fonema:missao', { detail: det })); avisar('fonema:missao', det); }; $('#semglMissoes').appendChild(b); }
+  avisar('fonema:pronto', { semWebGL: true });
+} else {
+  // repassa os eventos do mundo para o app que embute (iframe → postMessage)
+  for (const ev of ['fonema:pronto', 'fonema:lugar', 'fonema:missao', 'fonema:regiao', 'fonema:portal', 'fonema:cena', 'fonema:bloqueada', 'fonema:qualidade']) window.addEventListener(ev, (e) => avisar(ev, e.detail));
+  const mundo = await criarMundo($('#palco'), opts);
+  window.FONEMA_MUNDO = mundo;
+  $('#carga').style.opacity = 0; setTimeout(() => $('#carga').remove(), 700);
+
+  // ----- lugar atual -----
+  window.addEventListener('fonema:lugar', (e) => { $('#lugarIc').textContent = e.detail.icone; $('#lugarNome').textContent = e.detail.nome; });
+  window.addEventListener('fonema:cena', (e) => { const ilhas = e.detail.cena === 'arquipelago'; $('#btCena').innerHTML = ilhas ? '<span class="ic">🏡</span><span class="rot">Vila</span>' : '<span class="ic">🗺️</span><span class="rot">Ilhas</span>'; if (ilhas) { $('#lugarIc').textContent = '🗺️'; $('#lugarNome').textContent = 'Arquipélago das Letras'; } desenharMapa(true); });
+  window.addEventListener('fonema:regiao', (e) => { const d = e.detail; $('#lugarIc').textContent = d.estado === 'bloqueada' ? '🔒' : '🏝️'; $('#lugarNome').textContent = d.nome; if (d.estado === 'bloqueada') toast('🔒 Ainda trancada. Continue lendo para abrir!'); });
+  window.addEventListener('fonema:bloqueada', () => toast('🔒 Essa missão abre depois. Uma de cada vez!'));
+
+  // ----- botões -----
+  $('#btPraca').onclick = () => mundo.irPara('praca');
+  $('#btCena').onclick = () => mundo.cena === 'vila' ? mundo.trocarCena('arquipelago') : mundo.trocarCena('vila');
+  let passeio = false;
+  $('#btPasseio').onclick = () => { passeio = !passeio; mundo.passeio(passeio); $('#btPasseio').classList.toggle('on', passeio); };
+  window.addEventListener('fonema:passeio', (e) => { passeio = e.detail.ativo; $('#btPasseio').classList.toggle('on', passeio); });
+  let tarde = opts.hora > 0.5;
+  $('#btHora').onclick = () => { tarde = !tarde; let h = mundo.hora; const alvo = tarde ? 1 : 0; const t0 = performance.now(); const passo = () => { const k = Math.min(1, (performance.now() - t0) / 2500); mundo.definirHora(h + (alvo - h) * k); if (k < 1) requestAnimationFrame(passo); }; passo(); $('#btHora .ic').textContent = tarde ? '🌇' : '☀️'; };
+  const giro = (dir) => mundo.orbitar(dir * 0.7);
+  const acoes = { subir: () => mundo.voar(+1), descer: () => mundo.voar(-1), esq: () => mundo.deslizar(-1, 0), dir: () => mundo.deslizar(1, 0), frente: () => mundo.deslizar(0, 1), mais: () => mundo.zoom(0.6), menos: () => mundo.zoom(1.6), girarE: () => giro(-1), girarD: () => giro(1) };
+  document.querySelectorAll('#nav [data-a]').forEach((b) => (b.onclick = () => acoes[b.dataset.a]()));
+  window.addEventListener('keydown', (e) => { const k = e.key.toLowerCase(); if (k === 'q' || k === 'pageup') mundo.voar(1); if (k === 'e' || k === 'pagedown') mundo.voar(-1); if (k === 'a') mundo.deslizar(-1, 0); if (k === 'd') mundo.deslizar(1, 0); if (k === 'w') mundo.deslizar(0, 1); if (k === 's') mundo.deslizar(0, -1); if (k === 'h') document.body.classList.toggle('sem-hud'); if (k === 'escape') fecharTudo(); });
+
+  // ----- "Ir para…" -----
+  const grade = $('#grade');
+  for (const p of mundo.POIS) { const b = document.createElement('button'); b.className = 'bt'; b.innerHTML = `<span class="ic">${p.icone}</span>${p.nome}`; b.onclick = () => { mundo.irPara(p.id); fecharTudo(); }; grade.appendChild(b); }
+  { const b = document.createElement('button'); b.className = 'bt sol'; b.innerHTML = '<span class="ic">🗺️</span>Mapa das ilhas'; b.onclick = () => { mundo.trocarCena('arquipelago'); fecharTudo(); }; grade.appendChild(b); }
+  $('#btIr').onclick = () => $('#folha').classList.toggle('aberta');
+  function fecharTudo() { $('#folha').classList.remove('aberta'); $('#cartao').classList.remove('aberto'); }
+
+  // ----- cartão do portal de missão -----
+  let portal = null;
+  window.addEventListener('fonema:portal', (e) => {
+    portal = e.detail; const f = FASES_R0.find((x) => x.id === portal.id);
+    $('#cLetra').textContent = portal.estado === 'bloqueada' ? '🔒' : f.letra; $('#cNome').textContent = portal.nome;
+    $('#cDesc').textContent = portal.estado === 'bloqueada' ? 'Abre depois das missões anteriores' : portal.estado === 'feita' ? 'Missão feita ⭐ Quer brincar de novo?' : 'Missão de hoje!';
+    $('#cEntrar').style.display = portal.estado === 'bloqueada' ? 'none' : '';
+    $('#cartao').classList.add('aberto');
+  });
+  $('#cFechar').onclick = fecharTudo;
+  $('#cEntrar').onclick = () => { if (portal) mundo.entrarMissao(portal.id); fecharTudo(); };
+
+  // ----- mini-mapa -----
+  const cv = $('#mapa canvas'), g = cv.getContext('2d'); let fundo = null, meta = null;
+  function desenharMapa(novo) { if (novo || !fundo) { meta = mundo.miniMapa(); fundo = new Image(); fundo.src = meta.url; } }
+  desenharMapa(true);
+  const W = cv.width, mapXY = (x, z) => [((x - meta.cx) / meta.ext * 0.5 + 0.5) * W, ((z - meta.cz) / meta.ext * 0.5 + 0.5) * W];
+  (function loop() {
+    requestAnimationFrame(loop);
+    if (!fundo || !fundo.complete) return;
+    g.drawImage(fundo, 0, 0, W, W);
+    const e = mundo.estado();
+    if (mundo.cena === 'vila') {
+      for (const f of FASES_R0) { const [x, y] = mapXY(f.pos[0], f.pos[2]), st = mundo.estadoFases[f.id]; g.fillStyle = st === 'atual' ? '#F2B33D' : st === 'feita' ? '#7BC97F' : '#A3A6B8'; g.strokeStyle = '#fff'; g.lineWidth = 5; g.beginPath(); g.arc(x, y, 12, 0, 7); g.fill(); g.stroke(); }
+    }
+    const [ax, ay] = mapXY(e.alvo[0], e.alvo[2]), [cx, cy] = mapXY(e.cam[0], e.cam[2]);
+    const ang = Math.atan2(ay - cy, ax - cx);
+    g.save(); g.translate(ax, ay); g.rotate(ang); g.fillStyle = 'rgba(255,248,236,.35)'; g.beginPath(); g.moveTo(0, 0); g.lineTo(-90, -55); g.lineTo(-90, 55); g.closePath(); g.fill(); g.restore();
+    g.fillStyle = '#C8643B'; g.strokeStyle = '#fff'; g.lineWidth = 6; g.beginPath(); g.arc(ax, ay, 14, 0, 7); g.fill(); g.stroke();
+  })();
+  cv.addEventListener('click', (ev) => {
+    const r = cv.getBoundingClientRect(), u = (ev.clientX - r.left) / r.width, v = (ev.clientY - r.top) / r.height;
+    const x = meta.cx + (u - 0.5) * 2 * meta.ext, z = meta.cz + (v - 0.5) * 2 * meta.ext;
+    mundo.focar(x, z);
+  });
+
+  // ----- ponte iframe ⇄ app (postMessage) -----
+  window.addEventListener('message', (ev) => {
+    const m = ev.data; if (!m || m.tipo !== 'fonema:comando') return;
+    const a = m.args || [];
+    const fn = { irPara: () => mundo.irPara(...a), passeio: () => mundo.passeio(...a), voar: () => mundo.voar(...a), trocarCena: () => mundo.trocarCena(...a), definirHora: () => mundo.definirHora(...a), entrarMissao: () => mundo.entrarMissao(...a), abrirPortal: () => mundo.abrirPortalPorId(...a), hud: () => document.body.classList.toggle('sem-hud', a[0] === false) }[m.acao];
+    if (fn) fn();
+  });
+}
+</script>
+</body>
+</html>

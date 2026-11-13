@@ -60,11 +60,11 @@ async function jogarSessao(page, capturar = {}) {
     const cena = (await page.locator('[data-cena]').getAttribute('data-cena').catch(() => null)) ?? '';
     const tirar = async (chave) => { if (capturar[chave] && !vistos.has(chave)) { vistos.add(chave); await cap(page, capturar[chave]); } };
 
-    if (await page.getByTestId('comecar-sessao').isVisible().catch(() => false)) { await tirar('acolhida'); await page.getByTestId('comecar-sessao').click(); continue; }
+    if (await page.getByTestId('comecar-sessao').isVisible().catch(() => false)) { await tirar('acolhida'); await page.getByTestId('comecar-sessao').click({ timeout: 3000 }).catch(() => {}); continue; }
     const minhaVez = page.getByTestId('minha-vez');
     if (await minhaVez.isVisible().catch(() => false)) {
       await tirar('assiste');
-      if (await minhaVez.isEnabled()) await minhaVez.click();
+      if (await minhaVez.isEnabled({ timeout: 500 }).catch(() => false)) await minhaVez.click({ timeout: 3000 }).catch(() => {});
       else await page.waitForTimeout(80);
       continue;
     }
@@ -72,43 +72,46 @@ async function jogarSessao(page, capturar = {}) {
     if (await fiz.isVisible().catch(() => false)) {
       await page.waitForTimeout(200);
       await tirar('espelho');
-      if (await fiz.isEnabled()) await fiz.click();
+      if (await fiz.isEnabled({ timeout: 500 }).catch(() => false)) await fiz.click({ timeout: 3000 }).catch(() => {});
       else await page.waitForTimeout(80);
       continue;
     }
     const lamp = page.locator('[data-silabas]');
     if (await lamp.isVisible().catch(() => false)) {
       await tirar('palmas');
-      const s = Number(await lamp.getAttribute('data-silabas'));
+      const s = Number(await lamp.getAttribute('data-silabas', { timeout: 500 }).catch(() => 0));
+      if (!s) continue;
       const palma = page.getByTestId('palma');
-      if (!(await palma.isEnabled())) { await page.waitForTimeout(60); continue; }
-      for (let k = 0; k < s; k++) await palma.click();
-      await page.getByTestId('pronto-palmas').click();
+      if (!(await palma.isEnabled({ timeout: 500 }).catch(() => false))) { await page.waitForTimeout(60); continue; }
+      for (let k = 0; k < s; k++) await palma.click({ timeout: 3000 }).catch(() => {});
+      await page.getByTestId('pronto-palmas').click({ timeout: 3000 }).catch(() => {});
       await page.waitForTimeout(120);
       continue;
     }
     const esp = page.getByTestId('espacos').first();
-    if (await esp.isVisible().catch(() => false) && (await esp.getAttribute('data-alvo'))) {
+    if (await esp.isVisible().catch(() => false) && (await esp.getAttribute('data-alvo', { timeout: 500 }).catch(() => null))) {
       await tirar('montar');
-      const alvo = (await esp.getAttribute('data-alvo')).split('|');
+      const alvo = (await esp.getAttribute('data-alvo', { timeout: 500 }).catch(() => null)).split('|');
       const ja = await page.locator('.espaco.cheio').count();
       if (ja >= alvo.length) { await page.waitForTimeout(80); continue; }
       const t = alvo[ja];
-      await page.locator(`.peca[data-peca="${t}"]:not(.usada)`).first().click();
+      await page.locator(`.peca[data-peca="${t}"]:not(.usada)`).first().click({ timeout: 3000 }).catch(() => {});
       continue;
     }
     const ditado = page.locator('[data-palavra]');
     if (await ditado.isVisible().catch(() => false)) {
-      if (await page.getByTestId('seguir-ditado').isVisible().catch(() => false)) { await page.getByTestId('seguir-ditado').click(); continue; }
-      const p = await ditado.getAttribute('data-palavra');
-      for (const l of p) await page.locator(`.teclado .peca[data-peca="${l}"]`).click();
+      if (await page.getByTestId('seguir-ditado').isVisible().catch(() => false)) { await page.getByTestId('seguir-ditado').click({ timeout: 3000 }).catch(() => {}); continue; }
+      const p = await ditado.getAttribute('data-palavra', { timeout: 500 }).catch(() => null);
+      if (!p) continue;
+      for (const l of p) await page.locator(`.teclado .peca[data-peca="${l}"]`).click({ timeout: 3000 }).catch(() => {});
       await tirar('ditado');
-      await page.getByTestId('conferir-ditado').click();
+      await page.getByTestId('conferir-ditado').click({ timeout: 3000 }).catch(() => {});
       continue;
     }
     const tracei = page.getByTestId('tracei');
     if (await tracei.isVisible().catch(() => false)) {
-      const box = await page.locator('.areia canvas').boundingBox();
+      const box = await page.locator('.areia canvas').boundingBox({ timeout: 500 }).catch(() => null);
+      if (!box) continue;
       for (let y = 0.1; y < 0.95; y += 0.05) {
         await page.mouse.move(box.x + box.width * 0.2, box.y + box.height * y);
         await page.mouse.down();
@@ -116,22 +119,22 @@ async function jogarSessao(page, capturar = {}) {
         await page.mouse.up();
       }
       await tirar('tracar');
-      if (await tracei.isEnabled()) await tracei.click();
+      if (await tracei.isEnabled({ timeout: 500 }).catch(() => false)) await tracei.click({ timeout: 3000 }).catch(() => {});
       continue;
     }
     const euFalei = page.getByTestId('eu-falei');
     if (await euFalei.isVisible().catch(() => false)) {
       await tirar('falar');
-      if (await euFalei.isEnabled()) await euFalei.click();
+      if (await euFalei.isEnabled({ timeout: 500 }).catch(() => false)) await euFalei.click({ timeout: 3000 }).catch(() => {});
       await page.waitForTimeout(80);
       continue;
     }
     const pausa = page.getByTestId('pausa-pronto');
-    if (await pausa.isVisible().catch(() => false)) { await tirar('pausa'); await pausa.click(); continue; }
+    if (await pausa.isVisible().catch(() => false)) { await tirar('pausa'); await pausa.click({ timeout: 3000 }).catch(() => {}); continue; }
     const correta = page.locator('button.opcao[data-correta="1"]').first();
     if (await correta.isVisible().catch(() => false)) {
       await tirar(cena.includes('C4') ? 'escolher' : 'escolher2');
-      await correta.click();
+      await correta.click({ timeout: 3000 }).catch(() => {});
       await page.waitForTimeout(150);
       continue;
     }
@@ -197,6 +200,7 @@ async function main() {
   await page.goto(BASE + '#/adulto/professor');
   await passarPorteira(page);
   await page.getByTestId('professor').waitFor();
+  await page.locator('[data-demo="pendente"]').first().waitFor({ timeout: 5000 }).catch(() => {});
   ok(await page.locator('[data-demo="pendente"]').count() === 1, 'demonstração na fila do professor');
   await cap(page, 'professor-fila');
   await page.getByTestId('aprendeu').click();
@@ -207,6 +211,7 @@ async function main() {
   await page.goto(BASE + '#/adulto');
   await page.getByTestId('painel-Mariana').click();
   await page.getByTestId('painel-familia').waitFor();
+  await page.getByText('Meu Nome').first().waitFor({ timeout: 5000 }).catch(() => {});
   const painel = await page.getByTestId('painel-familia').innerText();
   ok(/Nível 0 de 10/.test(painel), 'termômetro 0 de 10 no ponto de partida');
   ok(/Meu Nome/.test(painel), 'conquista aparece no painel');
