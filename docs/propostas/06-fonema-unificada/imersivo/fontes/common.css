@@ -1,0 +1,23 @@
+@font-face{font-family:Andika;src:url(fonts/andika-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:Andika;src:url(fonts/andika-latin-700-normal.woff2) format('woff2');font-weight:700}
+@font-face{font-family:Andika;src:url(fonts/andika-latin-ext-400-normal.woff2) format('woff2');font-weight:400;unicode-range:U+0100-024F}
+@font-face{font-family:Fredoka;src:url(fonts/fredoka-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:Fredoka;src:url(fonts/fredoka-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:Fredoka;src:url(fonts/fredoka-latin-700-normal.woff2) format('woff2');font-weight:700}
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-hyperlegible-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:Atkinson;src:url(fonts/atkinson-hyperlegible-latin-700-normal.woff2) format('woff2');font-weight:700}
+:root{
+ --tinta:#3B2A20;--areia:#FFF4E2;--papel:#FFFBF4;--terracota:#A9472A;--terracota-clara:#F3C7A8;
+ --sol:#F2B33D;--sol-claro:#FCE3A6;--folha:#2F6B43;--folha-clara:#8CC084;--mar:#1F6E82;--ceu:#BFE3EC;
+ --ipe:#B23C62;--barro:#7A4B2E;--lilas:#6B5BA8;--cinza:#6E5D52;--linha:#E8D9C4;
+ --pele-sofia:#B97A52;--cabelo:#3A2418;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Andika,sans-serif;color:var(--tinta);-webkit-font-smoothing:antialiased}
+.titulo{font-family:Fredoka,sans-serif}
+.adulto{font-family:Atkinson,sans-serif}
+/* textura de papel suave */
+.papel-tex{background-color:var(--areia);background-image:
+ radial-gradient(rgba(122,75,46,.05) 1px,transparent 1.2px),
+ radial-gradient(rgba(122,75,46,.035) 1px,transparent 1.2px);
+ background-size:14px 14px,23px 23px;background-position:0 0,7px 11px}

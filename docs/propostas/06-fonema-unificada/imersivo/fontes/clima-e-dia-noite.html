@@ -1,0 +1,104 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="common.css">
+<script type="importmap">{"imports":{"three":"../../mundo-3d/vendor/three.module.js"}}</script>
+<style>
+html,body{width:1280px;height:800px;overflow:hidden}
+body{padding:22px 34px 0}
+.top{display:flex;align-items:flex-end;justify-content:space-between;height:70px}
+.tag{display:inline-block;font:600 13px Fredoka;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--mar);padding:4px 11px;border-radius:99px;margin-bottom:6px}
+h1{font:700 31px/1.05 Fredoka;color:var(--tinta)}
+.sub{font:400 15px/1.35 Atkinson;color:var(--cinza);max-width:430px;text-align:right}
+.grade{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:var(--papel);border-radius:18px;overflow:hidden;box-shadow:0 2px 0 var(--linha),0 10px 24px rgba(59,42,32,.08);position:relative}
+.card canvas{display:block;width:599px;height:240px}
+.hora{position:absolute;left:14px;top:12px;font:600 15px Fredoka;color:var(--tinta);background:rgba(255,251,244,.92);padding:5px 12px 5px 9px;border-radius:99px;display:flex;gap:7px;align-items:center}
+.hora.esc{background:rgba(25,30,58,.78);color:#E9E4FF}
+.hora svg{width:20px;height:20px}
+.leg{display:flex;gap:16px;padding:9px 16px 10px;align-items:flex-start;font:400 13.5px/1.32 Atkinson;color:var(--tinta)}
+.leg b{font-weight:700}
+.leg .c1{flex:1.05}.leg .c2{flex:1;color:var(--cinza)}
+.rodape{margin-top:13px;display:flex;gap:10px}
+.regra{flex:1;background:#fff;border:1.5px solid var(--linha);border-radius:12px;padding:8px 12px;font:400 12.5px/1.3 Atkinson;color:var(--tinta);display:flex;gap:9px;align-items:center}
+.regra i{font-style:normal;flex:none;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font:700 14px Fredoka;color:#fff}
+.calmo{position:absolute;right:14px;top:12px;font:600 12px Atkinson;background:rgba(47,107,67,.92);color:#fff;padding:5px 10px;border-radius:99px}
+</style></head><body class="papel-tex">
+<div class="top"><div><span class="tag">4D · tempo e clima</span><h1>A mesma ilha da vila em 4 momentos</h1></div>
+<div class="sub">O tempo do mundo passa devagar <b>entre</b> as atividades e nunca durante a decodificação. Quando a lição 2D abre, o mundo congela e esmaece.</div></div>
+<div class="grade" id="grade"></div>
+<div class="rodape">
+ <div class="regra"><i style="background:var(--mar)">⏱</i><span><b>Transições lentas:</b> a luz muda em 20–40 s; nada de cortes, raios ou trovões.</span></div>
+ <div class="regra"><i style="background:var(--folha)">◐</i><span><b>Modo calmo:</b> céu fixo de manhã, sem chuva e sem partículas; a água fica parada.</span></div>
+ <div class="regra"><i style="background:var(--lilas)">☾</i><span><b>Noite = modo dormir (R7):</b> sem lição nova; só ritual de 2–3 min e “Tchau, Sofia!”.</span></div>
+ <div class="regra"><i style="background:var(--terracota)">▣</i><span><b>Aparelho fraco:</b> as 4 cenas viram imagens pré-renderizadas (modo leve).</span></div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import {criaIlha,criaAgua,rnd} from './ilha.js';
+window.__pronto=false;
+const W=599,H=240;
+const ren=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
+ren.setPixelRatio(2);ren.setSize(W,H);ren.shadowMap.enabled=true;ren.shadowMap.type=THREE.PCFSoftShadowMap;
+ren.outputColorSpace=THREE.SRGBColorSpace;ren.toneMapping=THREE.ACESFilmicToneMapping;
+const scene=new THREE.Scene();
+const ilha=criaIlha();scene.add(ilha.grupo);
+const agua=criaAgua();scene.add(agua);
+const cam=new THREE.PerspectiveCamera(27,W/H,.1,300);cam.position.set(15.5,5.6,16);cam.lookAt(-.4,1.5,0);
+const hemi=new THREE.HemisphereLight('#ffffff','#7a6a50',1);scene.add(hemi);
+const sol=new THREE.DirectionalLight('#fff',2.5);sol.castShadow=true;sol.shadow.mapSize.set(2048,2048);
+Object.assign(sol.shadow.camera,{left:-9,right:9,top:9,bottom:-9,near:1,far:60});scene.add(sol);scene.add(sol.target);
+// nuvens
+const nuvens=new THREE.Group();scene.add(nuvens);
+const nMat=new THREE.MeshStandardMaterial({color:'#fff',flatShading:true,roughness:1});
+const nuvem=(x,y,z,s)=>{const g=new THREE.Group();[[0,0,0,1],[.9,-.1,.1,.75],[-.9,-.15,0,.7],[.3,.35,0,.7]].forEach(([a,b,c,r])=>{const m=new THREE.Mesh(new THREE.IcosahedronGeometry(r*s,0),nMat);m.position.set(a*s,b*s,c*s);m.scale.y=.7;g.add(m);});g.position.set(x,y,z);nuvens.add(g);};
+nuvem(-9,5.2,-10,1.2);nuvem(3,6.2,-16,1.5);nuvem(-16,4.6,-2,1.1);nuvem(9,5.4,-12,.9);
+
+function ceu(c0,c1,c2,extra){const cv=document.createElement('canvas');cv.width=1200;cv.height=524;const x=cv.getContext('2d');
+  const g=x.createLinearGradient(0,0,0,524);g.addColorStop(0,c0);g.addColorStop(.62,c1);g.addColorStop(1,c2);x.fillStyle=g;x.fillRect(0,0,1200,524);
+  extra&&extra(x);const t=new THREE.CanvasTexture(cv);t.colorSpace=THREE.SRGBColorSpace;return t;}
+
+const momentos=[
+ {nome:'Manhã · sol',icone:'sol',fundo:ceu('#8FD0E8','#CDEBF2','#F4F1DE',x=>{const g=x.createRadialGradient(1010,90,10,1010,90,150);g.addColorStop(0,'rgba(255,246,200,1)');g.addColorStop(.25,'rgba(255,236,170,.75)');g.addColorStop(1,'rgba(255,236,170,0)');x.fillStyle=g;x.fillRect(800,0,400,300);x.fillStyle='#FFF6D2';x.beginPath();x.arc(1010,90,34,0,7);x.fill();}),
+  sol:['#FFF3DA',2.9,[8,12,6]],hemi:['#E8F6FF','#8D7B5A',1.1],agua:'#4FA3B5',nuvem:'#FFFFFF',nuvVis:true,fog:['#DCEFF0',40,110],jan:0,amp:.05,t:1.2,
+  o:'Luz quente e sombras curtas. É o “estado padrão” e o do <b>modo calmo</b>.',r:'Abre a sessão. A Sofia aparece com voz clara, sem música sob a tarefa.'},
+ {nome:'Tarde · chuva leve',icone:'chuva',fundo:ceu('#8396A6','#AEBBC4','#C9D0CF'),sol:['#E6EEF2',1.1,[4,12,8]],hemi:['#C9D6E0','#5B5F55',1.25],agua:'#5E8E98',nuvem:'#B9C3CB',nuvVis:true,fog:['#AEBBC4',30,90],jan:.35,amp:.08,t:2.6,chuva:true,
+  o:'Chuva fina em <b>traços lentos</b>, som de chuva baixo (≤ −24 dB abaixo da voz).',r:'Clima por bioma (Pantanal: cheia e seca). Vira missão de leitura: <b>CHUVA</b>, <b>NUVEM</b>.'},
+ {nome:'Pôr do sol · vento',icone:'vento',fundo:ceu('#6E7FB8','#F0A97A','#FCD9A6',x=>{const g=x.createRadialGradient(140,380,10,140,380,260);g.addColorStop(0,'rgba(255,214,140,1)');g.addColorStop(.2,'rgba(255,190,120,.7)');g.addColorStop(1,'rgba(255,190,120,0)');x.fillStyle=g;x.fillRect(0,100,500,424);x.fillStyle='#FFE2A8';x.beginPath();x.arc(140,380,40,0,7);x.fill();}),
+  sol:['#FFB27A',2.6,[-6,5,12]],hemi:['#FFD3B0','#6A4A5A',1.2],agua:'#9C8FB8',nuvem:'#F6C3A6',nuvVis:true,fog:['#F0A97A',36,100],jan:.55,amp:.11,t:4.1,vento:true,
+  o:'Vento <b>estilizado</b>: bandeira, copas e barquinho balançam; linhas de vento suaves.',r:'Áudio espacial: o vento passa da esquerda para a direita, sempre baixo.'},
+ {nome:'Noite · modo dormir',icone:'lua',esc:true,fundo:ceu('#141A3A','#2A3466','#3D4A78',x=>{const r=rnd(11);for(let i=0;i<120;i++){x.fillStyle=`rgba(255,255,240,${.35+r()*.6})`;x.beginPath();x.arc(r()*1200,r()*330,r()*1.6+.4,0,7);x.fill();}
+   const g=x.createRadialGradient(1020,95,8,1020,95,120);g.addColorStop(0,'rgba(240,236,255,.9)');g.addColorStop(1,'rgba(240,236,255,0)');x.fillStyle=g;x.fillRect(880,0,300,240);x.fillStyle='#F4F0FF';x.beginPath();x.arc(1020,95,30,0,7);x.fill();x.fillStyle='#1A2148';x.beginPath();x.arc(1034,86,26,0,7);x.fill();}),
+  sol:['#B8C6FF',1.5,[8,12,6]],hemi:['#7F8FD0','#2A2F4A',1.15],agua:'#2C4470',nuvem:'#5A6491',nuvVis:false,fog:['#2A3466',36,100],jan:2.4,amp:.03,t:6,
+  o:'Luz da lua azulada, janelas acesas, estrelas paradas (sem piscar).',r:'Depois do horário de dormir o app <b>não abre lição</b>: a Sofia já está de pijama.'},
+];
+const icones={sol:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#F2B33D"/><g stroke="#F2B33D" stroke-width="2" stroke-linecap="round"><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></g></svg>',
+ chuva:'<svg viewBox="0 0 24 24"><path d="M7 15a4 4 0 1 1 1-7.9A5 5 0 0 1 18 9a3 3 0 0 1 0 6Z" fill="#8396A6"/><path d="M9 18l-1 3M13 18l-1 3M17 18l-1 3" stroke="#1F6E82" stroke-width="2" stroke-linecap="round"/></svg>',
+ vento:'<svg viewBox="0 0 24 24" fill="none" stroke="#A9472A" stroke-width="2.2" stroke-linecap="round"><path d="M3 9h11a3 3 0 1 0-3-3M3 14h15a3 3 0 1 1-3 3M3 19h7"/></svg>',
+ lua:'<svg viewBox="0 0 24 24"><path d="M15 3a9 9 0 1 0 6 13A7 7 0 0 1 15 3Z" fill="#E9E4FF"/></svg>'};
+const grade=document.getElementById('grade');
+for(const m of momentos){
+  scene.background=m.fundo;
+  sol.color.set(m.sol[0]);sol.intensity=m.sol[1];sol.position.set(...m.sol[2]);
+  hemi.color.set(m.hemi[0]);hemi.groundColor.set(m.hemi[1]);hemi.intensity=m.hemi[2];
+  agua.material.color.set(m.agua);agua.userData.anima(m.t,m.amp);
+  nMat.color.set(m.nuvem);nuvens.visible=m.nuvVis;
+  scene.fog=m.fog?new THREE.Fog(...m.fog):null;
+  ilha.janelas.forEach(j=>{j.material.emissiveIntensity=m.jan;});
+  // vento: árvores inclinadas, bandeira ondulando, barco inclinado
+  const lean=m.vento?.09:m.chuva?.03:0;
+  ilha.arvores.forEach((a,i)=>{a.rotation.z=-lean*(1+.3*Math.sin(i));});
+  const p=ilha.bandGeo.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i)+.275;p.setZ(i,(m.vento?.09:.025)*Math.sin(x*11+m.t*3)*x*2);}p.needsUpdate=true;
+  ilha.barco.rotation.z=m.vento?.12:0;
+  ren.render(scene,cam);
+  const card=document.createElement('div');card.className='card';
+  card.innerHTML=`<canvas width="${W*2}" height="${H*2}"></canvas><div class="hora ${m.esc?'esc':''}">${icones[m.icone]}${m.nome}</div>${m.nome.startsWith('Manhã')?'<div class="calmo">também é o modo calmo</div>':''}<div class="leg"><div class="c1">${m.o}</div><div class="c2">${m.r}</div></div>`;
+  grade.appendChild(card);
+  const cx=card.querySelector('canvas').getContext('2d');cx.drawImage(ren.domElement,0,0);
+  const r=rnd(3);
+  if(m.chuva){cx.strokeStyle='rgba(235,245,255,.55)';cx.lineWidth=2.2;cx.lineCap='round';
+    for(let i=0;i<170;i++){const x=r()*1260-30,y=r()*560-30,l=18+r()*16;cx.beginPath();cx.moveTo(x,y);cx.lineTo(x-l*.28,y+l);cx.stroke();}
+    cx.strokeStyle='rgba(255,255,255,.4)';cx.lineWidth=1.5;for(let i=0;i<22;i++){const x=r()*1198,y=330+r()*140;cx.beginPath();cx.ellipse(x,y,10+r()*8,3+r()*2,0,0,7);cx.stroke();}}
+  if(m.vento){cx.strokeStyle='rgba(255,250,240,.75)';cx.lineWidth=3.2;cx.lineCap='round';
+    [[60,150,1],[240,95,.8],[720,170,1.1],[860,70,.7],[520,300,.9]].forEach(([x,y,s])=>{cx.beginPath();cx.moveTo(x,y);cx.bezierCurveTo(x+60*s,y-18*s,x+120*s,y+14*s,x+190*s,y-4*s);cx.quadraticCurveTo(x+222*s,y-12*s,x+210*s,y-30*s);cx.quadraticCurveTo(x+196*s,y-40*s,x+184*s,y-26*s);cx.stroke();});}
+}
+window.__pronto=true;
+</script></body></html>

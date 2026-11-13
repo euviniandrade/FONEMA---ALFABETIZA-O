@@ -1,0 +1,165 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Cena determinística "palavra vira objeto": window.render(t) desenha o instante t (s). Usada no vídeo e no storyboard. -->
+<link rel="stylesheet" href="common.css">
+<script src="chars.js"></script>
+<script type="importmap">{"imports":{"three":"../../mundo-3d/vendor/three.module.js"}}</script>
+<style>
+html,body{width:1280px;height:720px;overflow:hidden}
+body{position:relative;background:linear-gradient(#FFF7EA 0,#FFF1DC 560px,#F1D9B8 600px,#EBCFAA 720px)}
+.chao{position:absolute;left:0;right:0;top:600px;height:2px;background:#E2C49C}
+.chip{position:absolute;left:28px;top:24px;font:600 15px Fredoka;color:var(--mar);background:#fff;padding:7px 14px;border-radius:99px;box-shadow:0 2px 0 var(--linha)}
+.chip b{color:var(--tinta)}
+#card{position:absolute;left:360px;top:170px;width:560px;height:220px;background:var(--papel);border-radius:28px;box-shadow:0 3px 0 var(--linha),0 18px 34px rgba(59,42,32,.10)}
+.pill{position:absolute;top:196px;height:168px;border-radius:24px;opacity:0}
+#pBO{background:#FCE3A6}#pLA{background:#D3ECF2}
+.letra{position:absolute;top:178px;font:700 150px/200px Andika;color:var(--tinta);width:110px;text-align:center;transform-origin:50% 60%}
+.arco{position:absolute;top:378px;height:30px;opacity:0}
+.onda{position:absolute;border-radius:50%;border:4px solid;opacity:0;pointer-events:none}
+#rotulo{position:absolute;left:0;right:0;top:92px;text-align:center;font:700 64px Andika;letter-spacing:.06em;color:var(--tinta);opacity:0}
+#rotulo span.s1{color:#A9472A}#rotulo span.s2{color:#1F6E82}
+#gl{position:absolute;left:0;top:0;width:1280px;height:720px}
+#sombra{position:absolute;border-radius:50%;background:radial-gradient(rgba(70,40,20,.38),rgba(70,40,20,0) 70%);opacity:0}
+#sofiaEl{position:absolute;left:34px;top:450px;width:150px;height:196px}
+#balao{position:absolute;left:182px;top:452px;background:#fff;border-radius:18px;padding:10px 16px;font:700 22px Andika;color:var(--tinta);box-shadow:0 2px 0 var(--linha);white-space:nowrap}
+#balao:before{content:"";position:absolute;left:-12px;top:20px;border:8px solid transparent;border-right:12px solid #fff}
+#balao small{display:block;font:400 12px Atkinson;color:var(--cinza);letter-spacing:.02em}
+#hap{position:absolute;right:28px;top:22px;width:290px;background:#fff;border-radius:18px;padding:12px 14px;display:flex;gap:12px;align-items:center;box-shadow:0 2px 0 var(--linha)}
+#hap .tx{font:400 12.5px/1.3 Atkinson;color:var(--cinza)}#hap .tx b{display:block;font:700 15px Fredoka;color:var(--tinta)}
+#fone{position:relative;width:46px;height:70px;flex:none}
+#fone .corpo{position:absolute;left:8px;top:4px;width:30px;height:60px;border-radius:7px;border:3.5px solid var(--tinta);background:#FFFBF4}
+#fone .vib{position:absolute;top:18px;width:8px;height:32px;border:3px solid var(--terracota);border-radius:50%;opacity:0}
+#trilha{position:absolute;left:300px;right:28px;top:628px;height:76px;background:rgba(255,251,244,.92);border-radius:16px;box-shadow:0 2px 0 rgba(122,75,46,.12)}
+.lin{position:absolute;left:14px;font:600 12px Atkinson;color:var(--cinza);text-transform:uppercase;letter-spacing:.06em}
+.seg{position:absolute;height:16px;border-radius:5px;font:700 11px/16px Andika;color:#fff;text-align:center}
+.pul{position:absolute;width:10px;height:22px;border-radius:3px;background:var(--terracota);transform:translateX(-5px)}
+#cab{position:absolute;top:6px;bottom:6px;width:2px;background:var(--tinta)}
+.brilho{position:absolute;width:26px;height:26px;opacity:0}
+</style></head><body>
+<div class="chao"></div>
+<div class="chip">FONEMA · <b>ler a palavra</b></div>
+<div id="hap"><div id="fone"><div class="vib" style="left:-4px"></div><div class="corpo"></div><div class="vib" style="left:42px"></div></div>
+ <div class="tx"><b>Háptico: 1 sílaba = 1 pulso</b><span id="haptx">40 ms · intensidade 35%</span></div></div>
+<div id="rotulo"><span class="s1">BO</span><span class="s2">LA</span></div>
+<div id="card"></div>
+<div class="pill" id="pBO"></div><div class="pill" id="pLA"></div>
+<div class="onda" id="oBO" style="border-color:#E39B1B"></div><div class="onda" id="oLA" style="border-color:#1F6E82"></div>
+<span class="letra" id="L0">B</span><span class="letra" id="L1">O</span><span class="letra" id="L2">L</span><span class="letra" id="L3">A</span>
+<svg class="arco" id="aBO" viewBox="0 0 200 30" preserveAspectRatio="none"><path d="M8,4 Q100,40 192,4" stroke="#E39B1B" stroke-width="6" fill="none" stroke-linecap="round"/></svg>
+<svg class="arco" id="aLA" viewBox="0 0 200 30" preserveAspectRatio="none"><path d="M8,4 Q100,40 192,4" stroke="#1F6E82" stroke-width="6" fill="none" stroke-linecap="round"/></svg>
+<div id="sombra"></div>
+<canvas id="gl"></canvas>
+<svg id="sofiaEl" viewBox="0 0 200 262"><use href="#sofia"/></svg>
+<div id="balao"><small>Sofia</small><span id="fala">Vamos ler juntos?</span></div>
+<div id="trilha">
+ <div class="lin" style="top:12px">voz</div><div class="lin" style="top:44px">vibração</div>
+ <div id="segs"></div><div id="cab"></div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+window.__pronto=false;
+const T={bo:1.2,la:3.4,junta:5.6,morfo:7.0,cai:8.0,fim:13};
+const DUR=13;
+// ---------- posições das letras ----------
+const xs=[400,505,655,760];// letra (left) — BO | LA com espaço entre sílabas
+const Ls=[0,1,2,3].map(i=>document.getElementById('L'+i));
+Ls.forEach((l,i)=>l.style.left=xs[i]+'px');
+const pill=(id,x0,x1)=>{const p=document.getElementById(id);p.style.left=x0+'px';p.style.width=(x1-x0)+'px';return p;};
+const pBO=pill('pBO',392,623),pLA=pill('pLA',647,878);
+const arco=(id,x0,x1)=>{const a=document.getElementById(id);a.style.left=x0+'px';a.style.width=(x1-x0)+'px';return a;};
+const aBO=arco('aBO',408,607),aLA=arco('aLA',663,862);
+const oBO=document.getElementById('oBO'),oLA=document.getElementById('oLA');
+// ---------- trilha ----------
+const tr=document.getElementById('trilha');const TX0=90,TX1=952-28-300+300-14; // largura útil
+const tw=(952-14)-TX0;const px=t=>TX0+t/DUR*(tw);
+const segs=document.getElementById('segs');
+const addSeg=(t0,t1,txt,cor,top)=>{const d=document.createElement('div');d.className='seg';d.style.cssText=`left:${px(t0)}px;width:${px(t1)-px(t0)}px;top:${top}px;background:${cor}`;d.textContent=txt;segs.appendChild(d);};
+addSeg(T.bo,T.bo+.9,'BO','#E39B1B',12);addSeg(T.la,T.la+.9,'LA','#1F6E82',12);addSeg(T.junta,T.junta+1,'BOLA','#6B5BA8',12);addSeg(11.6,12.8,'você leu!','#2F6B43',12);
+[T.bo,T.la].forEach(t=>{const p=document.createElement('div');p.className='pul';p.style.cssText=`left:${px(t)}px;top:42px`;segs.appendChild(p);});
+const nota=document.createElement('div');nota.style.cssText=`position:absolute;left:${px(T.junta)}px;top:46px;font:400 11.5px Atkinson;color:#6E5D52`;nota.textContent='palavra inteira e celebração: sem vibração';segs.appendChild(nota);
+const cab=document.getElementById('cab');
+// ---------- 3D ----------
+const cv=document.getElementById('gl');
+const ren=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true,preserveDrawingBuffer:true});
+ren.setPixelRatio(window.devicePixelRatio);ren.setSize(1280,720,false);ren.outputColorSpace=THREE.SRGBColorSpace;
+const scene=new THREE.Scene();
+const cam=new THREE.OrthographicCamera(-640,640,360,-360,1,3000);cam.position.set(0,0,1000);
+scene.add(new THREE.HemisphereLight('#FFF6E6','#B98A60',1.6));
+const dl=new THREE.DirectionalLight('#fff',2.6);dl.position.set(-400,600,700);scene.add(dl);
+// textura de gomos (bola de praia nas cores da paleta)
+const tc=document.createElement('canvas');tc.width=1024;tc.height=512;const g=tc.getContext('2d');
+const cores=['#A9472A','#FFFBF4','#F2B33D','#FFFBF4','#1F6E82','#FFFBF4'];
+cores.forEach((c,i)=>{g.fillStyle=c;g.fillRect(i*1024/6,0,1024/6+1,512);});
+g.fillStyle='#FFFBF4';g.fillRect(0,0,1024,40);g.fillRect(0,472,1024,40);
+const tex=new THREE.CanvasTexture(tc);tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=4;
+const R=74;
+const bola=new THREE.Mesh(new THREE.SphereGeometry(R,64,40),new THREE.MeshStandardMaterial({map:tex,roughness:.45,metalness:0}));
+const piv=new THREE.Group();piv.add(bola);scene.add(piv);
+const sombra=document.getElementById('sombra');
+// física determinística
+const CHAO=600,X0=640,Y0=290,G=2900,E=.62,VX=95;
+function fisica(t){// t desde a queda
+  let y=Y0,v=0,x=X0,vx=VX,dt=1/1000,ultImp=-9,imp=0,s=0,parado=false;
+  for(;s<t;s+=dt){if(parado)break;v+=G*dt;y+=v*dt;x+=vx*dt;
+    if(y>CHAO-R){y=CHAO-R;imp=Math.min(1,v/1500);v=-v*E;vx*=.8;ultImp=s;if(Math.abs(v)<120){v=0;parado=true;}}}
+  if(parado){/* rola um pouco e para */}
+  return {x,y,dIm:t-ultImp,imp,parado};
+}
+// ---------- utilitários ----------
+const cl=(a,b,v)=>Math.max(a,Math.min(b,v));const ease=u=>u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+const fase=(t,a,b)=>cl(0,1,(t-a)/(b-a));
+const bump=(t,a,d)=>{const u=(t-a)/d;return u<0||u>1?0:Math.sin(Math.PI*u);};
+const fala=document.getElementById('fala'),rot=document.getElementById('rotulo'),vibs=[...document.querySelectorAll('#fone .vib')],haptx=document.getElementById('haptx'),hap=document.getElementById('hap');
+const brilhos=[];for(let i=0;i<9;i++){const b=document.createElementNS('http://www.w3.org/2000/svg','svg');b.setAttribute('viewBox','0 0 26 26');b.classList.add('brilho');b.innerHTML=`<path d="M13 1 L15.5 10.5 L25 13 L15.5 15.5 L13 25 L10.5 15.5 L1 13 L10.5 10.5Z" fill="${['#F2B33D','#B23C62','#1F6E82'][i%3]}"/>`;document.body.appendChild(b);brilhos.push(b);}
+function onda(el,cx,cy,u){if(u<=0||u>=1){el.style.opacity=0;return;}const r=135+u*120;el.style.cssText+=`;left:${cx-r}px;top:${cy-r*.62}px;width:${2*r}px;height:${2*r*.62*1}px;opacity:${(1-u)*.8}`;}
+window.render=function(t){
+  // fala da Sofia (legenda sempre visível = acessível para surdos)
+  fala.textContent=t<T.bo?'Vamos ler juntos?':t<T.la?'BO…':t<T.junta?'…LA':t<T.morfo?'BOLA!':t<11.5?'Olha a bola!':'Você leu BOLA!';
+  // destaque de sílabas
+  const hBO=t>=T.bo&&t<T.junta+1.2, hLA=t>=T.la&&t<T.junta+1.2;
+  const kBO=bump(t,T.bo,.5),kLA=bump(t,T.la,.5),kJ=bump(t,T.junta,.7);
+  pBO.style.opacity=t<T.morfo?(hBO?1:0)*(1-fase(t,T.morfo-.4,T.morfo)):0;pLA.style.opacity=t<T.morfo?(hLA?1:0)*(1-fase(t,T.morfo-.4,T.morfo)):0;
+  pBO.style.transform=`scale(${1+.05*kBO+.04*kJ})`;pLA.style.transform=`scale(${1+.05*kLA+.04*kJ})`;
+  aBO.style.opacity=hBO?Math.min(1,(t-T.bo)*4)*(1-fase(t,T.morfo-.4,T.morfo)):0;aLA.style.opacity=hLA?Math.min(1,(t-T.la)*4)*(1-fase(t,T.morfo-.4,T.morfo)):0;
+  onda(oBO,507,280,(t-T.bo)/.6);onda(oLA,762,280,(t-T.la)/.6);
+  // haptic indicador
+  const vib=Math.max(bump(t,T.bo,.22),bump(t,T.la,.22));
+  vibs.forEach((v,i)=>{v.style.opacity=vib;v.style.transform=`translateX(${(i?1:-1)*vib*4}px)`;});
+  document.querySelector('#fone .corpo').style.transform=`translateX(${Math.sin(t*90)*vib*2}px)`;
+  hap.style.boxShadow=vib>0?`0 2px 0 var(--linha),0 0 0 ${3+vib*3}px rgba(169,71,42,${.35*vib})`:'0 2px 0 var(--linha)';
+  haptx.textContent=t>=T.bo&&t<T.bo+.6?'pulso 1 · BO · 40 ms':t>=T.la&&t<T.la+.6?'pulso 2 · LA · 40 ms':'40 ms · intensidade 35%';
+  // letras: cor da sílaba + morfose em bola
+  const jn=ease(fase(t,T.junta,T.junta+.35))*12;
+  [pBO,aBO].forEach(e=>e.style.translate=jn+'px 0');[pLA,aLA].forEach(e=>e.style.translate=(-jn)+'px 0');
+  const m=ease(fase(t,T.morfo,T.morfo+.9));
+  Ls.forEach((l,i)=>{const sil=i<2?'BO':'LA';const on=sil==='BO'?hBO:hLA;const k=(sil==='BO'?kBO:kLA)+kJ*.6;
+    l.style.color=on?(sil==='BO'?'#A9472A':'#1F6E82'):'#3B2A20';
+    const dx=(X0-(xs[i]+55))*m,dy=(Y0-280)*m;
+    l.style.transform=`translate(${dx+(i<2?jn:-jn)}px,${dy-k*10}px) scale(${(1+k*.08)*(1-m*.75)}) rotate(${m*(i-1.5)*40}deg)`;
+    l.style.opacity=1-fase(t,T.morfo+.4,T.morfo+.95);});
+  document.getElementById('card').style.opacity=1-fase(t,T.morfo,T.morfo+.6);
+  document.getElementById('card').style.transform=`scale(${1-.1*fase(t,T.morfo,T.morfo+.6)})`;
+  // rótulo superior volta com a palavra (palavra ↔ objeto juntos)
+  rot.style.opacity=fase(t,T.cai+.6,T.cai+1.2);
+  // bola
+  const ap=ease(fase(t,T.morfo+.35,T.cai));
+  let x=X0,y=Y0,sx=1,sy=1,rotZ=0;
+  if(t>=T.cai){const f=fisica(t-T.cai);x=f.x;y=f.y;const sq=f.dIm<.09?Math.sin(f.dIm/.09*Math.PI)*f.imp:0;sy=1-.24*sq;sx=1+.16*sq;rotZ=-(x-X0)/R;}
+  const esc=t<T.cai?(.15+.85*ap)*(1+.06*Math.sin(t*14)*(1-ap)):1;
+  piv.visible=t>=T.morfo+.35;
+  piv.position.set(x-640,360-(y+R*(1-sy))+0,0);
+  piv.scale.set(esc*sx,esc*sy,esc*sx);
+  bola.rotation.set(.35,t*.6,rotZ);
+  // sombra (mais nítida perto do chão)
+  const h=CHAO-(y+R);const sw=(150-Math.min(h,300)*.22)*esc*sx;
+  sombra.style.cssText=`left:${x-sw/2}px;top:${CHAO-10}px;width:${sw}px;height:${20}px;opacity:${piv.visible?(.95-Math.min(h,300)/420)*ap:0}`;
+  // celebração curta (≤ 1 s) só no fim
+  const c=fase(t,11.6,12.6);
+  brilhos.forEach((b,i)=>{const a=i/9*Math.PI*2+.3;const d=95+c*70;b.style.left=(x+Math.cos(a)*d-13)+'px';b.style.top=(y-10+Math.sin(a)*d*.75-13)+'px';b.style.opacity=c>0&&c<1?Math.sin(Math.PI*c):0;b.style.transform=`scale(${.6+c*.6}) rotate(${c*90}deg)`;});
+  cab.style.left=px(t)+'px';
+  ren.render(scene,cam);
+};
+const q=new URLSearchParams(location.search);
+await document.fonts.ready;
+window.render(+(q.get('t')||0));
+window.__pronto=true;
+</script></body></html>

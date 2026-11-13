@@ -1,0 +1,50 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="common.css">
+<style>
+body{height:1640px;background:#FFF4E2}
+.top{padding:26px 40px 10px;display:flex;align-items:flex-end;gap:20px}
+h1{font-family:Fredoka;font-weight:700;font-size:38px;color:#3B2A20}
+.sub{font-family:Atkinson;font-size:14px;color:#6E5D52;max-width:560px;line-height:1.35}
+.leg{display:flex;gap:8px;flex-wrap:wrap;padding:6px 40px 14px}
+.chip{font-family:Fredoka;font-weight:600;font-size:13px;padding:4px 12px;border-radius:99px;color:#fff;display:flex;align-items:center;gap:6px}
+.grid{display:grid;grid-template-columns:repeat(8,1fr);gap:12px;padding:0 40px}
+.it{position:relative;height:206px;border-radius:20px;background:#FFFBF4;box-shadow:0 2px 0 #EAD8BE,0 10px 20px -10px rgba(122,75,46,.45);overflow:hidden;border:2px solid #F3E4CC}
+.it .st{position:absolute;inset:0 0 70px 0;background:radial-gradient(ellipse at 50% 60%,#fff 0%,#FFF1D8 55%,#F8E2BE 100%)}
+.it>svg{position:absolute;left:50%;top:6px;width:128px;height:128px;transform:translateX(-50%);filter:drop-shadow(0 3px 2px rgba(80,40,10,.12))}
+.it .nm{position:absolute;left:0;right:0;top:136px;text-align:center;font-family:Fredoka;font-weight:700;font-size:15px;letter-spacing:.5px;line-height:1.05;padding:0 6px}
+.it .ft{position:absolute;left:8px;right:8px;bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.it .pp{font-family:Atkinson;font-size:10px;color:#6E5D52;line-height:1.1;max-width:80px}
+.it .bar{position:absolute;left:0;top:0;bottom:0;width:6px}
+.it .tag{position:absolute;right:6px;top:6px;font-family:Fredoka;font-weight:600;font-size:10px;padding:2px 7px;border-radius:99px;color:#fff}
+.gratis{background:#2F6B43;color:#fff;font-family:Fredoka;font-weight:700;font-size:11px;padding:3px 9px;border-radius:99px}
+.foot{position:absolute;left:40px;right:40px;bottom:22px;display:flex;gap:14px}
+.foot .card{flex:1;padding:12px 16px;font-family:Atkinson;font-size:13px;line-height:1.35}
+.foot b{font-family:Fredoka;font-size:15px}
+</style></head><body class="papel-tex">
+<div class="top"><div><div class="t" style="font-size:14px;color:#A9472A;font-weight:600;letter-spacing:2px">FONEMA · LOJINHA DA VILA</div><h1>Catálogo ilustrado — 48 itens com propósito</h1></div>
+<div class="sub">Cada item mostra o nome (palavra decodificável da fase), o preço fixo e o <b>porquê</b>: coleção, necessidade da vila, festa, presente ou bichinho. Itens de identidade são <b>grátis para sempre</b>.</div></div>
+<div class="leg" id="leg"></div>
+<div class="grid" id="grid"></div>
+<div class="foot">
+ <div class="card"><b>Sem sorte, sem pressa.</b> Todo item tem preço e aparência à vista. Nada de baú, roleta ou "só hoje". Os itens de festa voltam todo ano.</div>
+ <div class="card"><b>Sem vantagem.</b> Nenhum item facilita, acelera ou pula a leitura. Comprar é ler a etiqueta e decidir.</div>
+ <div class="card"><b>Raro = mais domínio ou mais paciência.</b> Itens com selo ★ pedem um som dominado ou uma meta do cofrinho, com a regra escrita no item.</div>
+ <div class="card"><b>Identidade não se compra.</b> Óculos, aparelho auditivo, cadeira de rodas, tons de pele e cabelos: grátis. Só os enfeites (cores, adesivos) custam moedas.</div>
+</div>
+<script src="base.js"></script>
+<script>
+const CAT={roupa:['Roupas','#B23C62'],acessorio:['Cabelo e acessórios','#E8792E'],gratis:['Identidade · grátis','#2F6B43'],casa:['Casa','#7A4B2E'],vila:['Vila','#A9472A'],bicho:['Bichinhos','#4F8A3A'],instrumento:['Instrumentos','#6B5BA8'],figurinha:['Figurinhas que falam','#1F6E82'],evento:['Festas do ano','#D9483B']};
+const D={bone:[8,'Quintal · Coleção Roupas do Dia'],bota:[10,'Litoral · dia de chuva'],saia:[6,'Quintal · combina c/ FIVELA'],vestido:[28,'Festa Junina · coleção'],chapeu:[34,'Sertão · coleção ★'],mochila:[14,'Emblema Curioso'],capa:[40,'★ meta do cofrinho'],
+lenco:[9,'Coleção Cabelos do Brasil'],tiara:[16,'Cerrado · presente p/ Dona Ema'],fivela:[4,'Quintal'],micanga:[6,'Coleção Cabelos do Brasil'],oculos:[0,'armação colorida: 3'],aparelho:[0,'capinha estampada: 4'],cadeira:[0,'raios coloridos: 5'],
+sofa:[22,'Casa · sala'],estante:[18,'Leitura · guarda livros lidos'],rede:[15,'Sertão · varanda'],tapete:[12,'Casa · quarto'],vaso:[7,'Mata Atlântica'],quadro:[10,'Mostra a vila desenhada'],
+forno:[24,'Vila precisa: PADARIA'],fonte:[30,'Vila: praça'],horta:[20,'Vila precisa: comida'],coreto:[45,'Vila: música ★'],ponte:[38,'Vila: liga regiões'],moinho:[42,'Pampa: farinha p/ padaria'],banca:[26,'Leitura · biblioteca'],
+arara:[18,'Amazônia · bichinho'],tucano:[18,'Mata Atlântica'],capivara:[20,'Pantanal · coleção'],jabuti:[14,'Caatinga · coleção'],mico:[22,'Mata Atlântica · coleção'],lobo:[26,'Cerrado · coleção ★'],sapo:[5,'Quintal · lagoa'],
+pandeiro:[16,'Toca o som /p/'],sanfona:[36,'Sertão · toca /s/ ★'],tambor:[14,'Toca o som /t/'],viola:[30,'Toca o som /v/'],chocalho:[8,'Toca o som /ch/'],
+fig_ipe:[3,'Coleção Cerrado'],fig_onca:[3,'Coleção Pantanal'],fig_caju:[3,'Coleção Sertão'],
+bandeirinha:[6,'Festa Junina'],fogueira:[12,'Festa Junina · de papel'],sombrinha:[15,'Carnaval · frevo'],mascara:[10,'Carnaval'],pipa:[5,'Dia das Crianças'],piao:[4,'Dia das Crianças']};
+const order=['roupa','acessorio','gratis','casa','vila','bicho','instrumento','figurinha','evento'];
+document.getElementById('leg').innerHTML=order.map(k=>`<span class="chip" style="background:${CAT[k][1]}">${CAT[k][0]}</span>`).join('')+`<span class="chip" style="background:#3B2A20">★ = exige domínio ou meta do cofrinho</span>`;
+const keys=order.flatMap(k=>Object.values(ITENS).filter(i=>i.cat===k).map(i=>i.k));
+document.getElementById('grid').innerHTML=keys.map(k=>{const it=ITENS[k],[p,pp]=D[k],[cn,cc]=CAT[it.cat];
+ const price=p===0?`<span class="gratis">GRÁTIS</span>`:`<span class="preco" style="font-size:16px">${coin(20)}${p}</span>`;
+ return `<div class="it"><div class="st"></div><div class="bar" style="background:${cc}"></div>${item(k)}<div class="nm">${it.nome}</div><div class="ft"><span class="pp">${pp}</span>${price}</div></div>`}).join('');
+</script></body></html>
