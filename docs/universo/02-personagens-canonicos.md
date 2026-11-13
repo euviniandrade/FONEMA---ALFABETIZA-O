@@ -1,6 +1,6 @@
 # 02 · Personagens canônicos
 
-> **Fontes:** [D006](../decisoes/006-academia-uniforme-elenco-voz.md), [D007](../decisoes/007-dupla-sofia-e-tales.md), [D008](../decisoes/008-avatar-3d-da-crianca.md), [D011](../decisoes/011-academia-pintura-vozes.md), [D012](../decisoes/012-valores-cristaos.md), [D013](../decisoes/013-cadastro-nome-falado.md); [Personagens 3D](../propostas/06-fonema-unificada/personagens-3d/README.md), [Série Sofia e Tales](../propostas/06-fonema-unificada/serie-sofia-e-tales/README.md), [Personagens v2](../propostas/06-fonema-unificada/personagens-v2/README.md), [Personagens v1](../propostas/06-fonema-unificada/personagens/README.md), [Esporte, respeito e ambiente](../propostas/06-fonema-unificada/esporte-respeito-ambiente/README.md), [Avatar 3D](../propostas/06-fonema-unificada/avatar-3d/README.md), [Voz](../propostas/06-fonema-unificada/voz/README.md), [Lojinha](../propostas/06-fonema-unificada/lojinha-emblemas/README.md).
+> **Fontes:** [D006](../decisoes/006-academia-uniforme-elenco-voz.md), [D007](../decisoes/007-dupla-sofia-e-tales.md), [D008](../decisoes/008-avatar-3d-da-crianca.md), [D011](../decisoes/011-academia-pintura-vozes.md), [D012](../decisoes/012-valores-cristaos.md), [D013](../decisoes/013-cadastro-nome-falado.md), [D019](../decisoes/019-progressao-vilao-familia.md); [Personagens 3D](../propostas/06-fonema-unificada/personagens-3d/README.md), [Série Sofia e Tales](../propostas/06-fonema-unificada/serie-sofia-e-tales/README.md), [Personagens v2](../propostas/06-fonema-unificada/personagens-v2/README.md), [Personagens v1](../propostas/06-fonema-unificada/personagens/README.md), [Esporte, respeito e ambiente](../propostas/06-fonema-unificada/esporte-respeito-ambiente/README.md), [Avatar 3D](../propostas/06-fonema-unificada/avatar-3d/README.md), [Voz](../propostas/06-fonema-unificada/voz/README.md), [Lojinha](../propostas/06-fonema-unificada/lojinha-emblemas/README.md).
 >
 > **Regra:** o que está aqui é **fixo**. Para mudar, só com nova decisão do dono. Itens com 🟡 estão em aberto (ver §7).
 
@@ -119,6 +119,20 @@ Fonte: [personagens v2 §5](../propostas/06-fonema-unificada/personagens-v2/READ
 | Tatu-bola | **Bolota** | Ver §2.3 | erros planejados |
 
 Animais que aparecem nas regiões como "contadores" (sem ficha ainda): **lobo-guará** (Cerrado, conta "A NOITE DO LOBO"), **tucano** (Mata, deixa bilhetes), **tuiuiú** (Pantanal), **asa-branca** (Sertão). Fonte: jornada e lojinha. Lembrete D012: bichos falam como personagens de fábula, nunca como espíritos ou entidades.
+
+### 4.1 Zum-Zum, o besouro barulhento (vilão leve, D019)
+| Campo | Ficha canônica |
+|---|---|
+| **Nome** | Zum-Zum (ZUM-ZUM). Tratado no masculino ("o Zum-Zum"). Nome **provisório**: alternativas guardadas para o dono, Pisca-Pisca (vaga-lume) ou Ventania Embaralha (vento), [D019](../decisoes/019-progressao-vilao-familia.md) §2 |
+| **Espécie** | Besouro simpático, do tamanho da mão da Sofia; voa com asinhas transparentes que zunem |
+| **Aparência fixa** | Corpo redondo e liso; cabeça grande com olhos expressivos de desenho animado; antenas curtas. **2–3 cores harmoniosas:** carapaça **verde-musgo** com faixa **amarelo-ipê**, asas transparentes levemente azuladas. **Sem arco-íris** (D009), sem brilho metálico, **sem adornos** (nada de chapéu, laço, colar ou óculos de enfeite) |
+| **Personalidade** | Agitado, curioso e engraçado; quer ver tudo ao mesmo tempo e por isso se distrai e distrai os outros. **Não é mau**: nunca mente, nunca machuca, nunca assusta |
+| **Bordão** | **"Zzzum! Olha ali!"** · depois que vira amigo: "Zzz… tô prestando atenção!" |
+| **Papel pedagógico** | Representa a **distração (N1, atenção)**: voa zunindo, embaralha letras e chama a atenção para outro lado. A criança o vence **prestando atenção**: ouvindo bem o som, olhando a boca da Sofia e terminando a tarefa. No fim de cada região ele aprende algo e **vira amigo**: lição de **perdão e segunda chance**, sem medo e sem violência. O nome treina o som **/z/** (R4-F02) |
+| **Regras de cena** | Aparece antes e entre os itens da missão, nunca durante a decodificação, a fala da dupla ou a tela de lição. Zumbido curto e suave, sem susto; no modo calmo, aparece parado ([jogo completo, README §6.1](../propostas/06-fonema-unificada/jogo-completo/README.md) e [05](../propostas/06-fonema-unificada/jogo-completo/05-imersao-e-ritmo.md)) |
+| **Voz** | 🟡 A definir. Perfil: voz pequena e rápida, com "zzz" no começo das frases; nunca grave ou assustadora |
+| **Relações** | No começo, "atrapalha" a turma; depois de cada região, ajuda: carrega letras, avisa a hora do trem, escreve dicas no jornal da vila. Na formatura (R10) lê uma página: "Aprendi a prestar atenção com você!" |
+| **Arte** | 🟡 Folha-modelo a criar no estilo 3D da dupla (D007), com o bloco de estilo do §6.1 |
 
 ---
 
