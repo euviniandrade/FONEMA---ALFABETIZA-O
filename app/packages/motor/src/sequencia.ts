@@ -53,16 +53,19 @@ export function fasesConcluidas(p: Progresso): Set<string> {
 export function concluirFase(p: Progresso, faseId: string, agora: number, opts: { expressa?: boolean } = {}): Progresso {
   const i = indiceFase(faseId);
   for (let k = 0; k < i; k++) {
-    if (p.fases[FASES[k].id]?.estado !== 'concluida') {
+    // D026: fases liberadas pelo nível inicial não travam a sequência (continuam abertas para revisão)
+    if (p.fases[FASES[k].id]?.estado !== 'concluida' && !p.fases[FASES[k].id]?.liberada) {
       throw new Error(`Sem pular fases: ${FASES[k].id} ainda não foi concluída.`);
     }
   }
   if (p.fases[faseId]?.estado === 'bloqueada') throw new Error(`Fase bloqueada: ${faseId}`);
-  const fases = { ...p.fases, [faseId]: { ...p.fases[faseId], estado: 'concluida' as const, concluidaEm: agora, expressa: !!opts.expressa } };
+  const fases = { ...p.fases, [faseId]: { ...p.fases[faseId], estado: 'concluida' as const, concluidaEm: agora, expressa: !!opts.expressa, liberada: false } };
   const prox = proximaFase(faseId);
   if (prox && fases[prox].estado === 'bloqueada') fases[prox] = { ...fases[prox], estado: 'aberta', abertaEm: agora };
   const termometro = Math.max(p.termometro, FASE_POR_ID[faseId].termometro ?? 0);
-  return { ...p, fases, faseAtual: prox ?? faseId, termometro };
+  // a fase atual é a primeira ainda por fazer DEPOIS do ponto de partida (revisar uma fase liberada não faz a jornada voltar)
+  const pendente = FASES.find((f) => fases[f.id].estado !== 'concluida' && !fases[f.id].liberada);
+  return { ...p, fases, faseAtual: pendente?.id ?? prox ?? faseId, termometro };
 }
 
 /** Regiões totalmente concluídas. */

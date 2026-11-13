@@ -8,6 +8,7 @@ export * from './nivel.ts';
 export * from './termometro.ts';
 export * from './sequencia.ts';
 export * from './trilha-expressa.ts';
+export * from './nivel-inicial.ts';
 export * from './resolver.ts';
 export * from './sessao.ts';
 export * from './conquistas.ts';

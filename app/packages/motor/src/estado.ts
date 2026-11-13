@@ -26,6 +26,9 @@ export interface EstadoHabilidade {
   revisao?: { indice: number; proxima: number; retencaoOk?: boolean };
 }
 
+/** D026: nível inicial escolhido pelo adulto no cadastro (dá para mudar na área da família). */
+export type NivelInicial = 'zero' | 'letras-e-sons' | 'le-palavras';
+
 export type EstadoFase = 'bloqueada' | 'aberta' | 'concluida';
 
 export interface ProgressoFase {
@@ -35,6 +38,11 @@ export interface ProgressoFase {
   concluidaEm?: number;
   /** Trilha Expressa (D021): fase feita como prova-relâmpago. */
   expressa?: boolean;
+  /**
+   * D026: fase LIBERADA pelo nível inicial escolhido pelo adulto — aberta para visitar e revisar, com os selos
+   * ainda por conquistar. Não conta como concluída nem como dominada.
+   */
+  liberada?: boolean;
   /** Último resultado do chefe (0–1). */
   chefe?: { leitura: number; escrita?: number; passou: boolean; em: number };
 }
@@ -50,6 +58,8 @@ export interface ConquistaGanha {
 export interface Progresso {
   criancaId: string;
   versao: 1;
+  /** D026: de onde a criança começou (escolha do adulto). Ausente = do zero. */
+  nivelInicial?: NivelInicial;
   faseAtual: string;
   fases: Record<string, ProgressoFase>;
   habilidades: Record<string, EstadoHabilidade>;
