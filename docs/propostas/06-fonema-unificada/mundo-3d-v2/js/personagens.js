@@ -87,8 +87,8 @@ export function criarZumZum() {
   g.scale.setScalar(1.25);
   g.userData.tick = (t, centro) => {
     const a = t * 0.45;
-    const p = new THREE.Vector3(centro.x + Math.sin(a) * 9 + Math.sin(a * 3.1) * 1.4, centro.y + 4.2 + Math.sin(a * 2.3) * 1.1 + Math.sin(t * 23) * 0.04, centro.z + Math.sin(a * 2) * 6);
-    const ahead = new THREE.Vector3(centro.x + Math.sin(a + 0.05) * 9 + Math.sin((a + 0.05) * 3.1) * 1.4, p.y, centro.z + Math.sin((a + 0.05) * 2) * 6);
+    const p = new THREE.Vector3(centro.x + Math.sin(a) * 8 + Math.sin(a * 3.1) * 1.2, centro.y + 3.6 + Math.sin(a * 2.3) * 0.9 + Math.sin(t * 23) * 0.04, centro.z + Math.sin(a * 2) * 5);
+    const ahead = new THREE.Vector3(centro.x + Math.sin(a + 0.05) * 8 + Math.sin((a + 0.05) * 3.1) * 1.2, p.y, centro.z + Math.sin((a + 0.05) * 2) * 5);
     g.position.copy(p); g.lookAt(ahead);
     inner.rotation.z = Math.sin(t * 2.0) * 0.25;
     const f = Math.sin(t * 60) * 0.5; a1.rotation.z = 0.3 + f; a2.rotation.z = -0.3 - f;

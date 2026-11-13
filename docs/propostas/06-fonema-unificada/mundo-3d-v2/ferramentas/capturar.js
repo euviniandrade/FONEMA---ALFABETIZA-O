@@ -13,7 +13,7 @@ const DPR = Number(opt.dpr || 2), QUAL = opt.q || 'alto';
 // [arquivo, vista, tempo, extras de URL, hud]
 const CENAS = [
   ['01-vila-aerea', 'aerea', 4.0, '', 0],
-  ['02-praca-nivel-dos-olhos', 'praca', 2.0, '', 0],
+  ['02-praca-nivel-dos-olhos', 'praca', 7.3, '', 0],
   ['03-escola-portao', 'escola', 3.0, '', 0],
   ['04-rio-e-cais', 'rio', 5.0, '', 0],
   ['05-campinho', 'campinho', 3.5, '', 0],

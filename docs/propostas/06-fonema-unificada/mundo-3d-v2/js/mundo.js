@@ -45,14 +45,14 @@ export function qualidadeAuto() {
 // ---------- vistas prontas (capturas, botões e vídeo) ----------
 export const VISTAS = {
   aerea: { cena: 'vila', cam: [64, 58, 92], alvo: [3, 0, 2] },
-  praca: { cena: 'vila', cam: [1.2, 1.75, 19.5], alvo: [0.5, 3.4, 1] },
-  escola: { cena: 'vila', cam: [7.5, 3.2, -7], alvo: [0, 5.2, -29] },
+  praca: { cena: 'vila', cam: [-0.6, 1.75, 20.5], alvo: [0.8, 3.3, 1] },
+  escola: { cena: 'vila', cam: [1.0, 2.2, -12.4], alvo: [-0.4, 5.6, -29] },
   rio: { cena: 'vila', cam: [29, 3.0, 24], alvo: [45, 1.2, 5] },
-  campinho: { cena: 'vila', cam: [-31, 8.5, 42], alvo: [-27, 0.8, 21] },
-  entardecer: { cena: 'vila', cam: [17, 9.5, 15], alvo: [-6, 3.5, -7], hora: 1 },
+  campinho: { cena: 'vila', cam: [-28, 13, 41], alvo: [-27.5, 0.5, 19] },
+  entardecer: { cena: 'vila', cam: [20, 14.5, 18], alvo: [-5, 3, -8], hora: 1 },
   rua: { cena: 'vila', cam: [6, 4.2, 62], alvo: [0, 2.6, 30] },
-  horta: { cena: 'vila', cam: [33, 9, 34], alvo: [23, 1, 19] },
-  arquipelago: { cena: 'arquipelago', cam: [70, 210, 250], alvo: [18, 0, -46] },
+  horta: { cena: 'vila', cam: [19.5, 9.5, 33.5], alvo: [23, 0.5, 18] },
+  arquipelago: { cena: 'arquipelago', cam: [62, 150, 205], alvo: [22, 0, -48] },
   voo: { cena: 'arquipelago', cam: [34, 42, 128], alvo: [0, 2, 66] },
 };
 
@@ -81,7 +81,9 @@ export async function criarMundo(container, opts = {}) {
   const ceu = criarCeu(scene);
   ceu.sun.shadow.mapSize.set(Q.sombra || 512, Q.sombra || 512);
   ceu.sun.shadow.camera.layers.enable(1);
-  let hora = o.hora; ceu.aplicar(hora, renderer);
+  let hora = o.hora, nevoaMul = 1;
+  const _aplicar = ceu.aplicar; ceu.aplicar = (h, r) => { _aplicar(h, r); scene.fog.density *= nevoaMul; };
+  ceu.aplicar(hora, renderer);
   ceu.ambiente(renderer, scene);
   const nuvens = criarNuvens(scene, Q.nuvens, 430, [55, 110]);
 
@@ -113,6 +115,7 @@ export async function criarMundo(container, opts = {}) {
     const c = await obter(nome);
     if (C) scene.remove(C.grupo);
     C = c; cenaAtual = nome; scene.add(C.grupo);
+    nevoaMul = nome === 'vila' ? 1 : 0.32; ceu.aplicar(hora, renderer);
     C.grupo.traverse((m) => { if (m.isSprite || m.isPoints || m.userData.camada1) m.layers.set(1); });
     const L = LIMITES[nome];
     controls.minDistance = L.min; controls.maxDistance = L.max; controls.maxPolarAngle = L.polar;
@@ -403,7 +406,7 @@ export async function criarMundo(container, opts = {}) {
         if (cenaAtual !== 'vila') await trocarCena('vila');
         const tv = t - 6.5;
         if (tv < 3.5) { const k = easeInOut(tv / 3.5), s = tourAt(0); camera.position.copy(new THREE.Vector3(80, 110, 150).lerp(s.cam, k)); controls.target.copy(new THREE.Vector3(0, 0, 0).lerp(s.alvo, k)); fadeV = 1 - smooth(clamp(tv / 0.7, 0, 1)); }
-        else { const s = tourAt((tv - 3.5) * 1.55); camera.position.copy(s.cam); controls.target.copy(s.alvo); }
+        else { const s = tourAt((tv - 3.5) * 2.2); camera.position.copy(s.cam); controls.target.copy(s.alvo); }
       }
       camera.lookAt(controls.target);
       atualizar(t, 1 / 30); render();

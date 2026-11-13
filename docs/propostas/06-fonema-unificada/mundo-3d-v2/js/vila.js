@@ -34,7 +34,7 @@ export const POIS = [
   { id: 'padaria', nome: 'Padaria', icone: '🥖', alvo: [24, 3, -6], cam: [9, 5.5, 5] },
   { id: 'casa', nome: 'Casa da Sofia', icone: '🏡', alvo: [-12, 2.5, 21], cam: [4, 6, 30] },
   { id: 'rua', nome: 'Rua das Casas', icone: '🏘️', alvo: [0, 2.5, 34], cam: [7, 4.2, 60] },
-  { id: 'horta', nome: 'Horta', icone: '🥕', alvo: [23, 1, 19], cam: [33, 9, 34] },
+  { id: 'horta', nome: 'Horta', icone: '🥕', alvo: [23, 1, 19], cam: [19.5, 9.5, 33.5] },
   { id: 'campinho', nome: 'Campinho', icone: '⚽', alvo: [-29, 1, 21], cam: [-12, 10, 38] },
   { id: 'cais', nome: 'Rio e Cais', icone: '⛵', alvo: [44, 0.5, 8], cam: [30, 5, 24] },
   { id: 'ponte', nome: 'Ponte', icone: '🌉', alvo: [46, 2, -45], cam: [28, 8, -26] },
@@ -48,7 +48,7 @@ export const FASES_R0 = [
   { id: 'R0-F03', nome: 'Palmas das sílabas', letra: '👏', pos: [-9, 0, 4] },
   { id: 'R0-F04', nome: 'O primeiro som', letra: 'S', pos: [15.5, 0, 14] },
   { id: 'R0-F05', nome: 'Juntar sons', letra: 'M', pos: [-20, 0, 29] },
-  { id: 'R0-F06', nome: 'Festa das Rimas', letra: '🏆', pos: [5.5, 0, 9.5] },
+  { id: 'R0-F06', nome: 'Festa das Rimas', letra: '🏆', pos: [7.5, 0, 9.0] },
 ];
 
 // ---------- chão pintado (caminhos, praça em pedra portuguesa, campinho, sombras de contato) ----------
@@ -280,7 +280,7 @@ export async function criarVila({ U, q, renderer, estados = {} }) {
   ipe(ctx, -9.5, 0.55, -6, 0.95, 3); ipe(ctx, 9.5, 0.55, -6, 0.9, 7); ipe(ctx, -9.5, 0.55, 9, 0.85, 11); ipe(ctx, 9.5, 0.55, 9, 0.92, 5);
   ipe(ctx, 30, altura(30, 30), 30, 1.1, 13); ipe(ctx, -36, altura(-36, -14), -14, 1.2, 17); ipe(ctx, 16, altura(16, 60), 60, 1.1, 19);
   ipe(ctx, -40, altura(-40, 40), 40, 1.05, 23, '#E58AA6', '#F2B2C6'); // ipê-rosa ao longe (2 tons)
-  for (const [x, z, s] of [[38, 16, 1], [36, -2, 1.1], [35.5, 25, 0.9], [-16, 36, 0.95], [16, -32, 1.05], [-14, -32, 1.0]]) coqueiro(ctx, x, altura(x, z), z, s, x * 3 + z);
+  for (const [x, z, s] of [[33, 10, 1], [36, -2, 1.1], [35.5, 25, 0.9], [-16, 36, 0.95], [16, -32, 1.05], [-14, -32, 1.0]]) coqueiro(ctx, x, altura(x, z), z, s, x * 3 + z);
   for (const [x, z] of [[-26, 25], [-12, 45], [15, 30], [27, 30], [-30, -26], [13, -38]]) bananeira(ctx, x, altura(x, z), z, 1, x + z * 7);
   const arv = criarArvores(U, q);
   const livre = (x, z) => {
@@ -355,7 +355,7 @@ export async function criarVila({ U, q, renderer, estados = {} }) {
   const dupla = await criarSprite('dupla.png', 1.95, { fase: 0 }); dupla.position.set(-1.6, 0.05, 14.2); grupo.add(dupla);
   const sofia = await criarSprite('sofia.png', 1.8, { fase: 1.3 }); sofia.position.set(-2.6, 0.05, -18.2); grupo.add(sofia);
   const tales = await criarSprite('tales.png', 1.85, { fase: 2.1 }); tales.position.set(-24.2, 0.05, 22.6); grupo.add(tales);
-  const bolota = criarBolota(); bolota.position.set(0.9, 0.05, 14.6); bolota.rotation.y = -2.0; grupo.add(bolota);
+  const bolota = criarBolota(); bolota.position.set(0.9, 0.05, 14.6); bolota.rotation.y = -2.5; grupo.add(bolota);
   const zum = criarZumZum(); grupo.add(zum);
   const bichos = criarBichinhos(grupo, { passaros: q === 'baixo' ? 4 : 10, borboletas: q === 'baixo' ? 5 : 14, centros: [new THREE.Vector3(-9.5, 0.6, -6), new THREE.Vector3(9.5, 0.6, 9), new THREE.Vector3(22, 0.6, 19), new THREE.Vector3(-21, 0.4, 22), new THREE.Vector3(-9.5, 0.6, 9)] });
 
@@ -371,7 +371,7 @@ export async function criarVila({ U, q, renderer, estados = {} }) {
   const pontuais = [];
   if (q === 'alto') for (const p of [postes[1], postes[3], postes[5], postes[7]]) { const l = new THREE.PointLight('#FFC27A', 0, 16, 1.6); l.position.copy(p); grupo.add(l); pontuais.push(l); }
 
-  const centroZum = new THREE.Vector3(0, 0, 1);
+  const centroZum = new THREE.Vector3(0, 0, 6);
   const tint = new THREE.Color();
   return {
     grupo, POIS, portais, rio, altura,

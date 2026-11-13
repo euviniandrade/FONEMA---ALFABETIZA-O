@@ -95,7 +95,7 @@ export function criarMar({ U, ilhas = [], tam = 2400 }) {
   const arr = []; for (let i = 0; i < 16; i++) { const il = ilhas[i]; arr.push(il ? new THREE.Vector4(il.x, il.z, il.r, 1) : new THREE.Vector4(0, 0, 0, 0)); }
   const mat = new THREE.ShaderMaterial({
     fog: true,
-    uniforms: { ...THREE.UniformsUtils.clone(THREE.UniformsLib.fog), uTime: U.time, uIlhas: { value: arr }, uRaso: { value: new THREE.Color('#6FE0D2') }, uFundo: { value: new THREE.Color('#2A86B8') }, uLonge: { value: new THREE.Color('#3E9CC8') }, uSol: { value: new THREE.Vector3(0.5, 0.7, 0.3) } },
+    uniforms: { ...THREE.UniformsUtils.clone(THREE.UniformsLib.fog), uTime: U.time, uIlhas: { value: arr }, uRaso: { value: new THREE.Color('#5ED8CB') }, uFundo: { value: new THREE.Color('#1E78AE') }, uLonge: { value: new THREE.Color('#2B86BC') }, uSol: { value: new THREE.Vector3(0.5, 0.7, 0.3) } },
     vertexShader: `uniform float uTime; varying vec3 vW; #include <fog_pars_vertex>
       void main(){ vec4 wp = modelMatrix * vec4(position,1.0);
         wp.y += sin(wp.x*0.05 + uTime*0.8)*0.25 + cos(wp.z*0.06 + uTime*0.6)*0.25;

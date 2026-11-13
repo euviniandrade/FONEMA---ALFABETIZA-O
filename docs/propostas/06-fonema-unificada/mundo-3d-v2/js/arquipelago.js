@@ -211,14 +211,14 @@ export async function criarArquipelago({ U, q, regiaoAtual = 'R0' }) {
   REGIOES.forEach((R, i) => {
     const estado = i < iAtual ? 'feita' : i === iAtual ? 'atual' : 'bloqueada';
     R.estado = estado;
-    const lab = rotulo(R.nome, { icone: estado === 'bloqueada' ? '🔒' : estado === 'feita' ? '⭐' : R.icone, escala: 2.0, cor: estado === 'bloqueada' ? '#6B7088' : '#2E4374' });
-    lab.position.set(R.x, R.id === 'R2' ? 30 : 17, R.z); grupo.add(lab); rotulos.push(lab);
+    const lab = rotulo(R.nome, { icone: estado === 'bloqueada' ? '🔒' : estado === 'feita' ? '⭐' : R.icone, escala: 3.4, cor: estado === 'bloqueada' ? '#6B7088' : '#2E4374' });
+    lab.position.set(R.x, R.id === 'R2' ? 34 : 22, R.z); grupo.add(lab); rotulos.push(lab);
     const hit = new THREE.Mesh(new THREE.CylinderGeometry(R.r, R.r, 30, 16), new THREE.MeshBasicMaterial({ visible: false })); hit.position.set(R.x, 10, R.z); hit.userData.regiao = { ...R, estado }; grupo.add(hit); hits.push(hit);
     if (estado === 'bloqueada') {
       const nv = [];
-      for (let k = 0; k < 7; k++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: nevoaTex, transparent: true, depthWrite: false, opacity: 0.62, color: '#F4F7FA', fog: false })); const a = k / 7 * Math.PI * 2; s.position.set(R.x + Math.cos(a) * R.r * 0.45, 5 + (k % 3) * 2.2, R.z + Math.sin(a) * R.r * 0.45); s.scale.set(R.r * 1.6, R.r * 0.9, 1); grupo.add(s); nv.push(s); }
-      const cad = new THREE.Sprite(new THREE.SpriteMaterial({ map: cadeadoTex, toneMapped: false, fog: false, alphaTest: 0.05 })); cad.scale.set(7, 7, 1); cad.position.set(R.x, 11, R.z); grupo.add(cad);
-      anim.push((t) => { nv.forEach((s, k) => { s.position.y = 5 + (k % 3) * 2.2 + Math.sin(t * 0.4 + k) * 0.6; s.material.rotation = t * 0.03 * (k % 2 ? 1 : -1); }); cad.position.y = 11 + Math.sin(t * 1.2 + i) * 0.4; });
+      for (let k = 0; k < 7; k++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: nevoaTex, transparent: true, depthWrite: false, opacity: 0.5, color: '#F4F7FA', fog: false })); const a = k / 7 * Math.PI * 2; s.position.set(R.x + Math.cos(a) * R.r * 0.45, 5 + (k % 3) * 2.2, R.z + Math.sin(a) * R.r * 0.45); s.scale.set(R.r * 1.25, R.r * 0.7, 1); grupo.add(s); nv.push(s); }
+      const cad = new THREE.Sprite(new THREE.SpriteMaterial({ map: cadeadoTex, toneMapped: false, fog: false, alphaTest: 0.05 })); cad.scale.set(10, 10, 1); cad.position.set(R.x, 12, R.z); grupo.add(cad);
+      anim.push((t) => { nv.forEach((s, k) => { s.position.y = 5 + (k % 3) * 2.2 + Math.sin(t * 0.4 + k) * 0.6; s.material.rotation = t * 0.03 * (k % 2 ? 1 : -1); }); cad.position.y = 12 + Math.sin(t * 1.2 + i) * 0.4; });
     } else if (estado === 'atual') {
       const anelM = new THREE.Mesh(new THREE.TorusGeometry(R.r * 1.12, 0.7, 12, 96), new THREE.MeshStandardMaterial({ color: '#FFD66B', emissive: '#FFC94A', emissiveIntensity: 2.2 })); anelM.rotation.x = Math.PI / 2; anelM.position.set(R.x, 0.4, R.z); grupo.add(anelM);
       const beam = new THREE.Mesh(new THREE.CylinderGeometry(3, 6, 60, 24, 1, true), new THREE.MeshBasicMaterial({ color: '#FFE9A8', transparent: true, opacity: 0.16, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, fog: false })); beam.position.set(R.x, 30, R.z); grupo.add(beam);
