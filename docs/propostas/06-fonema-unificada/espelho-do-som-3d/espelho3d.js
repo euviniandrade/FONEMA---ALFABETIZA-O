@@ -152,7 +152,7 @@ function texBolinha() {
 const CAMS = {
   frente: { pos: V3(0, 0.02, 5.4), alvo: V3(0, -0.12, 0), fov: 30 },
   lado: { pos: V3(15.2, -0.6, -2.3), alvo: V3(0, -0.75, -2.3), fov: 32 },
-  dentro: { pos: V3(1.3, 0.62, -1.75), alvo: V3(-0.5, 0.55, -2.05), fov: 70 },
+  dentro: { pos: V3(0.05, 1.04, -3.05), alvo: V3(0, 0.25, -0.5), fov: 74 },
   corpo: { pos: V3(31, -5.6, -2.8), alvo: V3(0, -5.6, -2.8), fov: 32 }
 };
 // quanto cada camada aparece em cada modo
@@ -205,7 +205,7 @@ export function criar(container, opts = {}) {
     laringe: fisico(0xf3a0b0, { roughness: 0.5, clearcoat: 0.5 }),
     prega: fisico(0xfff0f3, { roughness: 0.35, clearcoat: 0.8 }),
     pulmao: fisico(0xf59aac, { roughness: 0.5, clearcoat: 0.5, transparent: true, opacity: 0.92, sheen: 0.6, sheenColor: new THREE.Color(0xffe0e6) }),
-    onda: new THREE.MeshBasicMaterial({ color: 0xffd04a, transparent: true, opacity: 0.9, depthWrite: false }),
+    onda: new THREE.MeshBasicMaterial({ color: 0xffd860, transparent: true, opacity: 0.9, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false }),
     alvo: new THREE.MeshBasicMaterial({ color: 0xffe08a, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }),
     pick: new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false, colorWrite: false })
   };
@@ -342,8 +342,8 @@ export function criar(container, opts = {}) {
     if (!CAMS[m]) return;
     const fim = CAMS[m], ini = { pos: cam.position.clone(), alvo: ctl.target.clone(), fov: cam.fov };
     let via = null;
-    if (m === 'dentro' && modoAtual !== 'dentro') via = [V3(0.0, 0.1, 3.2), V3(0.0, 0.05, 0.9), V3(0.35, 0.3, -0.5)];
-    if (modoAtual === 'dentro' && m !== 'dentro') via = [V3(0.35, 0.3, -0.5), V3(0.0, 0.05, 1.2)];
+    if (m === 'dentro' && modoAtual !== 'dentro') via = [V3(0.0, 0.1, 3.4), V3(0.0, 0.1, 1.1), V3(0.0, 0.55, -0.7), V3(0.03, 0.95, -1.9)];
+    if (modoAtual === 'dentro' && m !== 'dentro') via = [V3(0.03, 0.95, -1.9), V3(0.0, 0.55, -0.7), V3(0.0, 0.1, 1.4)];
     camVoo = { ini, fim, via, t0: tempo, dur: instantaneo ? 0.0001 : (via ? 3.0 : 1.5) };
     modoAtual = m;
     ctl.minDistance = m === 'dentro' ? 0.2 : 0.6;
@@ -495,7 +495,6 @@ export function criar(container, opts = {}) {
     grupos.tubos.visible = vis.tubos > 0.02; tuboNariz.uniforms.opac.value = vis.tubos * 0.8; tuboGarg.uniforms.opac.value = vis.tubos * 0.7;
     grupos.corpo.visible = vis.corpo > 0.02; torso.uniforms.opac.value = vis.corpo * 0.6; M.pulmao.opacity = vis.corpo * 0.92;
     { const v = Math.max(vis.rosto, vis.cavidade); M.ceu.opacity = v; M.ceu.transparent = v < 0.999; M.ceu.depthWrite = v > 0.9; M.ceu.visible = v > 0.05; }
-    corte.constant = THREE.MathUtils.lerp(9, 0.42, vis.dentro || 0);
     olhos.visible = vis.casca > 0.3 || modoAtual === 'frente';
     olhos.children.forEach((o) => { o.visible = tmp.copy(cam.position).sub(ctl.target).normalize().x * o.userData.s > -0.5; });
     // dentes do lado de perto da câmera somem quando a câmera está de lado (para ver a língua)
@@ -576,7 +575,7 @@ export function criar(container, opts = {}) {
     // voz: pregas vibram e as ondinhas douradas saem da garganta
     const voz = o.voz * THREE.MathUtils.smoothstep(o._k, 0.5, 1), vf = lento ? 6 : 16;
     pregas.forEach((m) => { m.position.x = m.userData.s * (0.17 - 0.05 * voz * (0.5 + 0.5 * Math.sin(tempo * vf * Math.PI * 2))); });
-    ondas.forEach(({ m, i }) => { const ph = (tempo * (lento ? 0.4 : 1.1) + i / 3) % 1; m.scale.setScalar(0.65 + ph * 1.1); m.material.opacity = voz * (1 - ph) * 0.95; m.visible = voz > 0.02; });
+    ondas.forEach(({ m, i }) => { const ph = (tempo * (lento ? 0.4 : 1.1) + i / 3) % 1; m.scale.setScalar(0.65 + ph * 1.1); m.material.opacity = voz * Math.min(1, (1 - ph) * 1.6); m.visible = voz > 0.02; });
     pulmoes.forEach((p, i) => { p.scale.set(1.25, 2.1, 1.1).multiplyScalar(1 + 0.05 * Math.sin(tempo * 1.6)); });
     atualizaAr(o, ptsL, dt);
     // marcador do exercício
