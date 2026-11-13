@@ -25,3 +25,4 @@ Na produção final, cada peça (cabelo, roupa, utensílio) é um **modelo 3D se
 - `roupas-a.png`: a camiseta listrada colorida virou camiseta azul-clara lisa.
 - `utensilios-a.png`: a pipa ficou azul-clara e branca e o xilofone ficou de madeira com moldura marinho. Os itens repetidos viraram caixa de ferramentas, bola de basquete e bússola.
 - `utensilios-b.png` e `roupas-b.png` ainda podem ter pipa ou xilofone multicoloridos e **não devem ser usados** até serem revisados.
+  - *Revisão da qualidade (13/11/2026): `roupas-b.png` está **ok** (sem arco-íris nem adornos). `utensilios-b.png` **viola a D009**: xilofone com teclas arco-íris e pipa multicolorida; refazer (lista em `docs/QUALIDADE.md`).*
