@@ -92,6 +92,7 @@ async function missao(page, prefixo, { mic, errarFigura, errarLetra }) {
   if (mic) await foto(page, prefixo + '11-falar-ouvi');
   await page.click('#bTerminar');
   await pausa(900);
+  await page.locator('.proximo').scrollIntoViewIfNeeded(); // mostra o álbum e o próximo objetivo (D019)
   await foto(page, prefixo + '12-celebracao-selo');
   const tCel = await texto(page);
   ok(/Próximo objetivo:\s*faltam\s*2 desafios/.test(tCel) && /Caçador de Sílabas/.test(tCel), 'álbum mostra o próximo objetivo e o caminho para Caçador de Sílabas (D019)');
