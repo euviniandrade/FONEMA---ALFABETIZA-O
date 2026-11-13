@@ -5,6 +5,7 @@ import { asset } from '../servicos/ambiente.ts';
 import { NOMES_PERSONAGEM, falar, textoTela } from '../util.ts';
 import { useApp } from '../contexto.tsx';
 import { navegar } from '../rotas.ts';
+import { Icone, Logo } from './ui.tsx';
 import { IcContraste, IcMovimento, IcSom, IcVoltar } from './icones.tsx';
 
 const BUSTO: Partial<Record<Personagem, string>> = { sofia: 'dupla/sofia-busto-alegre.webp', tales: 'dupla/tales-busto-alegre.webp' };
@@ -16,9 +17,10 @@ export function Rosto({ quem, humor = 'alegre', tamanho = 84 }: { quem: Personag
   if (src || BUSTO[quem]) {
     return <img className="rosto" style={{ width: tamanho, height: tamanho }} src={src ?? asset(BUSTO[quem]!)} alt={NOMES_PERSONAGEM[quem]} onError={(e) => ((e.target as HTMLImageElement).src = asset(BUSTO[quem]!))} />;
   }
+  if (quem === 'bolota') return <img className="rosto rosto-bicho" style={{ width: tamanho, height: tamanho }} src={asset('figuras/tatu.webp')} alt="Bolota" />;
   return (
     <span className="rosto rosto-letra" style={{ width: tamanho, height: tamanho, background: COR[quem] ?? '#284A86', fontSize: tamanho * 0.42 }} aria-label={NOMES_PERSONAGEM[quem]}>
-      {quem === 'bolota' ? '🦔' : NOMES_PERSONAGEM[quem]?.[0]}
+      {NOMES_PERSONAGEM[quem]?.[0]}
     </span>
   );
 }
@@ -43,7 +45,7 @@ export function Balao({ fala, crianca, auto = false, humor, extras, destaque = f
 export function BotaoOuvir({ onClick, rotulo = 'Ouvir' }: { onClick: () => void; rotulo?: string }) {
   return (
     <button className="ouvir" onClick={onClick} aria-label={rotulo} title={rotulo}>
-      <IcSom tamanho={32} color="#fff" />
+      <Icone nome="som" />
     </button>
   );
 }
@@ -51,45 +53,59 @@ export function BotaoOuvir({ onClick, rotulo = 'Ouvir' }: { onClick: () => void;
 export function Moedinhas({ valor, id }: { valor: number; id?: string }) {
   return (
     <div className="moedas" id={id} aria-live="polite" data-testid="moedinhas">
-      <img src={asset('recompensas/moeda.webp')} alt="" />
+      <img src={asset('recompensas/cofrinho-tatu.webp')} alt="" />
       <b>{valor}</b>
       <span className="sr">moedinhas</span>
     </div>
   );
 }
 
-/** Logotipo: selo azul-marinho com o F e o ponto amarelo-ipê + palavra FONEMA em Fredoka. */
-export function Logo({ subtitulo, grande = false }: { subtitulo?: string; grande?: boolean }) {
+/** Ajustes de acessibilidade num só botão do HUD (voz, alto contraste, reduzir movimento). */
+export function Ajustes() {
+  const { prefs, setPrefs } = useApp();
+  const [aberto, setAberto] = useState(false);
+  const itens: [keyof typeof prefs, string, string, string][] = [
+    ['vozLigada', 'som', 'Voz e sons', 'A Sofia e o Tales falam tudo'],
+    ['contraste', 'contraste', 'Alto contraste', 'Cores mais fortes para ler'],
+    ['menosMovimento', 'tartaruga', 'Menos movimento', 'Sem animações rápidas']
+  ];
   return (
-    <div className={`marca ${grande ? 'marca-grande' : ''}`} aria-label="FONEMA">
-      <svg viewBox="0 0 64 64" aria-hidden="true">
-        <defs><linearGradient id="lgF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#2C4F93" /><stop offset="1" stopColor="#1B3160" /></linearGradient></defs>
-        <rect x="3" y="5" width="58" height="58" rx="18" fill="#0F1F45" opacity=".25" />
-        <rect x="3" y="2" width="58" height="58" rx="18" fill="url(#lgF)" />
-        <rect x="9" y="7" width="46" height="16" rx="8" fill="#fff" opacity=".12" />
-        <path d="M21 46V17h21v7H29v5.5h11v7H29V46z" fill="#fff" />
-        <circle cx="46" cy="42" r="5.5" fill="#F4B73C" stroke="#fff" strokeWidth="2" />
-      </svg>
-      <div><b>FONEMA</b>{subtitulo ? <small>{subtitulo}</small> : null}</div>
+    <div className="ajustes">
+      <button className="hud-btn" aria-expanded={aberto} aria-haspopup="true" aria-label="Ajustes: voz, contraste e movimento" onClick={() => setAberto(!aberto)}><Icone nome="engrenagem" /></button>
+      {aberto ? (
+        <>
+          <button className="ajustes-veu" aria-label="Fechar ajustes" onClick={() => setAberto(false)} />
+          <div className="ajustes-painel vidro" role="group" aria-label="Ajustes de acessibilidade">
+            {itens.map(([k, ic, t, d]) => (
+              <button key={k} className="ajuste" role="switch" aria-checked={prefs[k]} onClick={() => setPrefs({ [k]: !prefs[k] })}>
+                <Icone nome={ic} />
+                <span><b>{t}</b><small>{d}</small></span>
+                <i className="chave" aria-hidden="true" />
+              </button>
+            ))}
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }
 
+/** HUD do topo (estilo jogo): voltar, marca, avatar, miolo livre, moedinhas no cofrinho-tatu e ajustes. */
 export function Topo({ crianca, moedinhas, voltar, titulo, children }: { crianca?: Crianca; moedinhas?: number; voltar?: string; titulo?: string; children?: ReactNode }) {
-  const { prefs, setPrefs } = useApp();
   return (
     <header className="topo">
-      {voltar !== undefined ? (
-        <button className="btn-ic" onClick={() => navegar(voltar)} aria-label="Voltar"><IcVoltar /><small>Voltar</small></button>
-      ) : null}
-      <Logo subtitulo={titulo ?? 'plataforma de alfabetização'} />
-      {crianca ? <AvatarMini crianca={crianca} /> : null}
+      <div className="topo-esq">
+        {voltar !== undefined ? (
+          <button className="hud-btn" onClick={() => navegar(voltar)} aria-label="Voltar"><Icone nome="voltar" /></button>
+        ) : null}
+        {crianca ? <div className="hud-perfil"><AvatarMini crianca={crianca} tamanho={52} /><div><b>{crianca.nome}</b>{titulo ? <small>{titulo}</small> : null}</div></div> : (
+          <div className="hud-marca"><Logo tamanho="p" />{titulo ? <small>{titulo}</small> : null}</div>
+        )}
+      </div>
       <div className="topo-meio">{children}</div>
-      {moedinhas !== undefined ? <Moedinhas valor={moedinhas} id="cofre-topo" /> : null}
-      <div className="ajustes" role="group" aria-label="Ajustes de acessibilidade">
-        <button className="btn-ic" aria-pressed={prefs.vozLigada} onClick={() => setPrefs({ vozLigada: !prefs.vozLigada })} title="Voz ligada ou desligada"><IcSom ligado={prefs.vozLigada} /><small>Voz</small></button>
-        <button className="btn-ic" aria-pressed={prefs.contraste} onClick={() => setPrefs({ contraste: !prefs.contraste })} title="Alto contraste"><IcContraste /><small>Contraste</small></button>
-        <button className="btn-ic" aria-pressed={prefs.menosMovimento} onClick={() => setPrefs({ menosMovimento: !prefs.menosMovimento })} title="Menos movimento"><IcMovimento /><small>Calmo</small></button>
+      <div className="topo-dir">
+        {moedinhas !== undefined ? <Moedinhas valor={moedinhas} id="cofre-topo" /> : null}
+        <Ajustes />
       </div>
     </header>
   );
@@ -127,5 +143,5 @@ export function Brilho({ ativo }: { ativo: boolean }) {
 }
 
 export function Carregando() {
-  return <div className="carregando" role="status">Carregando…</div>;
+  return <div className="carregando" role="status"><span className="carregando-bola" aria-hidden="true" /><span className="sr">Carregando…</span></div>;
 }
