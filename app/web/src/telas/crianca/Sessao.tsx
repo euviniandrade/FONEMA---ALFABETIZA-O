@@ -30,7 +30,7 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
   const [assistiu, setAssistiu] = useState(false);
   const [relatorio, setRelatorio] = useState<RelatorioSessao>();
   const [progFinal, setProgFinal] = useState<Progresso>();
-  const prog = useRef<Progresso>();
+  const prog = useRef<Progresso | undefined>(undefined);
   const tentativas = useRef<Tentativa[]>([]);
   const atividades = useRef(0);
   const fase = FASE_POR_ID[faseId];
@@ -73,7 +73,6 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
     prog.current = aplicarAtividade(prog.current!, { sessao: sessao.id, cena, tentativas: res.tentativas, tentouDeNovo: res.tentouDeNovo, extras: res.extras }, config, agora);
     tentativas.current.push(...res.tentativas.filter(() => cena.contaDominio || cena.tipo === 'C1'));
     if (cena.contaDominio) atividades.current++;
-    else if (cena.atividade?.tipo !== 'pausa' && res.tentativas.length) atividades.current += 0;
     await repo.salvarProgresso(prog.current);
     await repo.registrarEvento({
       id: novoId('ev'), criancaId, em: agora, tipo: 'atividade', faseId, cena: cena.id, habilidade: cena.atividade?.habilidade,
