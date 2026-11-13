@@ -142,16 +142,18 @@ function quintal() {
   hs.forEach(([x, w, h, c, rf]) => s.add('mid', house(x, 500, w, h, { wall: c, roof: rf, roofH: 34 })));
   s.add('mid', `<path d="M590,500 H1300" stroke="#B89A6E" stroke-width="4"/>`);
   // mangueira grande (esquerda)
-  s.add('mid', tree(250, 560, { h: 190, w: 22, crown: [300, 190], cols: ['#2E6A36', '#3F8A44', '#77B85A', '#B8DE88'], seed: 7, lobes: 5, n: 26, lx: -.6, ly: -.8 }));
+  s.add('mid', tree(230, 560, { h: 180, w: 20, crown: [250, 160], cols: ['#2E6A36', '#3F8A44', '#77B85A', '#B8DE88'], seed: 7, lobes: 5, n: 26, lx: -.6, ly: -.8 }));
   [[150, 400], [210, 440], [330, 420], [380, 460], [260, 470]].forEach(([x, y]) => s.add('mid', `<path d="M${x},${y - 10} v6" stroke="#3A5A2A" stroke-width="1.5"/><ellipse cx="${x}" cy="${y}" rx="7" ry="9" fill="#F2A33A"/><ellipse cx="${x - 2}" cy="${y - 3}" rx="2.5" ry="3.5" fill="#FFD27A"/><ellipse cx="${x + 2}" cy="${y + 3}" rx="4" ry="5" fill="#E2483D" opacity=".35"/>`));
   // quintal: gramado
   const g1 = ridge(13, 560, 10, { fr: [1, 2.2], wt: [1, .4] });
-  s.add('near', `<path d="${g1.d}" fill="${s.lin([[0, '#8CC46A'], [1, '#5E9A44']])}"/>`);
+  s.add('near', `<path d="${g1.d}" fill="${s.lin([[0, '#9CD070'], [.5, '#7CB85A'], [1, '#4E8A3A']])}"/>`);
+  s.add('near', `<path d="M560,${H + 10} Q600,700 610,640 Q616,600 600,572 L650,572 Q664,600 670,640 Q690,720 760,${H + 10}Z" fill="#D9BE8A"/>${[[606, 590, 18], [622, 618, 22], [612, 652, 26], [632, 690, 30], [622, 736, 34], [660, 780, 38]].map(([x, y, w]) => `<ellipse cx="${x}" cy="${y}" rx="${w}" ry="${w * .32}" fill="#C9AE7E"/><ellipse cx="${x - w * .15}" cy="${y - w * .08}" rx="${w * .6}" ry="${w * .16}" fill="#E8D4A8"/>`).join('')}`);
+  s.add('near', flowers(81, 40, 0, 540, 568, 590, ['#E26D5A', '#F2C94C', '#FFFFFF', '#E89ACB'], 4) + flowers(82, 40, 700, 1050, 568, 590, ['#E26D5A', '#F2C94C', '#FFFFFF', '#B98AD8'], 4));
   s.add('near', L.castShadow(s, 300, 566, 360, 26, 0, .25, '#1E3A18'));
-  s.add('near', fence(-10, 560, 566, 54, '#9A6A40', 36) + fence(560, 1290, 566, 54, '#9A6A40', 36));
+  s.add('near', fence(-10, 560, 566, 54, '#9A6A40', 36) + fence(668, 1290, 566, 54, '#9A6A40', 36) + `<path d="M556,566 V500 M672,566 V500" stroke="#7A4A2A" stroke-width="10"/><path d="M550,500 Q614,470 678,500" stroke="#7A4A2A" stroke-width="7" fill="none"/>` + canopy(560, 500, 26, 16, ['#3E7A30', '#5EA040', '#9CD070'], 88, { n: 6 }) + flowers(89, 8, 540, 590, 488, 512, ['#E2483D', '#F2C94C'], 3.4));
   s.add('near', varal(640, 1010, 470, 3) + `<path d="M640,470 V566 M1010,470 V566" stroke="#7A5A3A" stroke-width="5"/>`);
   // gato no muro
-  s.add('near', `<rect x="1060" y="510" width="200" height="56" fill="#E8D8B8"/><rect x="1056" y="504" width="208" height="10" rx="3" fill="#C9B48E"/>${Array.from({ length: 6 }, (_, i) => `<path d="M${1060 + i * 34},514 v52" stroke="#D6C29E" stroke-width="2"/>`).join('')}`);
+  s.add('near', `<rect x="1060" y="510" width="230" height="58" fill="${s.lin([[0, '#F0E2C4'], [1, '#D2BC94']])}"/><rect x="1054" y="502" width="240" height="12" rx="3" fill="#B5541E"/><rect x="1054" y="512" width="240" height="4" fill="#7A3A18" opacity=".4"/>${Array.from({ length: 7 }, (_, i) => `<path d="M${1060 + i * 34},516 v52" stroke="#C9B08A" stroke-width="1.5"/>`).join('')}<path d="M1060,540 h230" stroke="#C9B08A" stroke-width="1.5"/>`);
   s.add('near', L.gato(1150, 506, 1.1, true));
   s.hotspot('near', 1150, 470, 40, 'gato');
   // horta
@@ -190,18 +192,18 @@ function ilha() {
   s.add('sky', L.fragata(380, 250, .5) + birdV(470, 220, .9, '#4A5A70'));
   // mar
   const hz = 430;
-  s.add('far', `<rect x="0" y="${hz}" width="${W}" height="${H - hz}" fill="${s.lin([[0, '#5CC4D8'], [.4, '#2FA6C2'], [1, '#1E86A8']])}"/>`);
-  s.add('far', `<rect x="0" y="${hz}" width="${W}" height="6" fill="#BFEAF0" opacity=".7"/>`);
+  s.add('far', `<rect x="0" y="${hz}" width="${W}" height="${H - hz}" fill="${s.lin([[0, '#2A86B8'], [.3, '#2FA2C4'], [.65, '#45C2CC'], [1, '#7EDCD4']])}"/>`);
+  s.add('far', `<rect x="0" y="${hz}" width="${W}" height="10" fill="#CFEFF4" opacity=".6" filter="${s.blur(3)}"/>`);
   // ilhotas distantes
   s.add('far', `<path d="M60,${hz} Q90,${hz - 24} 130,${hz - 20} Q170,${hz - 26} 200,${hz}Z" fill="${mix('#4E8A6A', '#BFE4EC', .6)}"/><path d="M980,${hz} Q1020,${hz - 40} 1070,${hz - 30} Q1120,${hz - 18} 1150,${hz}Z" fill="${mix('#4E8A6A', '#BFE4EC', .55)}"/>`);
   s.add('far', shimmer(21, 120, 0, W, hz + 8, 600, '#FFFFFF', .55, 1080, 30));
   // ilha principal (mid)
-  const isl = `M330,${hz + 70} Q380,${hz - 30} 520,${hz - 64} Q640,${hz - 96} 760,${hz - 60} Q900,${hz - 20} 960,${hz + 70}Z`;
+  const isl = `M330,${hz + 70} Q360,${hz + 10} 430,${hz - 10} Q480,${hz - 50} 560,${hz - 56} Q620,${hz - 110} 700,${hz - 92} Q760,${hz - 70} 800,${hz - 30} Q880,${hz - 20} 920,${hz + 20} Q950,${hz + 50} 960,${hz + 70}Z`;
   s.add('mid', `<path d="M300,${hz + 76} Q640,${hz + 40} 990,${hz + 76} Q640,${hz + 92} 300,${hz + 76}Z" fill="#E8F8F4" opacity=".8"/>`);
   s.add('mid', `<path d="${isl}" fill="${s.lin([[0, '#5E9E54'], [1, '#3E7A3E']])}"/><path d="M330,${hz + 70} Q480,${hz + 34} 640,${hz + 40} Q820,${hz + 36} 960,${hz + 70}Z" fill="#F2DDB0"/>`);
   s.add('mid', rock(430, hz + 50, 60, 70, ['#7A6E62', '#9C9084', '#C9BEB0'], 4) + rock(880, hz + 56, 44, 50, ['#7A6E62', '#9C9084', '#C9BEB0'], 6));
   [[520, hz + 40, 150, -30, 1], [580, hz + 46, 180, 20, 2], [700, hz + 40, 200, 40, 3], [770, hz + 46, 150, -20, 4], [640, hz + 44, 120, 10, 5]].forEach(([x, y, h, lean, sd]) => s.add('mid', `<g transform="translate(${x},${y}) scale(.62) translate(${-x},${-y})">${palm(x, y, { h, lean, seed: sd, len: 110 })}</g>`));
-  s.add('mid', canopy(480, hz - 10, 70, 40, ['#2E6A3A', '#4C8A48', '#86C06A'], 41, { n: 14 }) + canopy(820, hz - 6, 80, 40, ['#2E6A3A', '#4C8A48', '#86C06A'], 42, { n: 14 }));
+  s.add('mid', canopy(470, hz + 4, 60, 34, ['#2E6A3A', '#4C8A48', '#86C06A', '#C8E8A0'], 41, { lx: .5, ly: -.8 }) + canopy(840, hz + 2, 70, 34, ['#2E6A3A', '#4C8A48', '#86C06A', '#C8E8A0'], 42, { lx: .5, ly: -.8 }) + canopy(660, hz - 70, 70, 34, ['#2E6A3A', '#4C8A48', '#86C06A', '#C8E8A0'], 43, { lx: .5, ly: -.8 }));
   // faixa de mar mais próxima e onda quebrando
   s.add('mid', `<path d="M0,580 Q320,560 640,575 Q960,590 1280,566 L1280,610 L0,610Z" fill="#3FB6C8" opacity=".55"/>`);
   // praia (near)
@@ -210,9 +212,15 @@ function ilha() {
   s.add('near', `<path d="M-20,628 Q200,588 460,606 Q760,628 1000,598 Q1160,578 1300,588" stroke="#FFFFFF" stroke-width="5" fill="none" opacity=".85" stroke-linecap="round"/>`);
   s.add('near', `<path d="${beach}" fill="${s.lin([[0, '#F4E0B4'], [.4, '#EED2A0'], [1, '#E2BE84']])}"/><path d="M-20,650 Q200,612 460,630 Q760,652 1000,622 Q1160,602 1300,612 L1300,628 Q1160,618 1000,640 Q760,668 460,646 Q200,630 -20,666Z" fill="#D9B880" opacity=".55"/>`);
   s.add('near', particles(30, 140, 0, W, 650, 800, '#C9A46A', 1.4, .5));
+  s.add('near', `<path d="M-20,660 Q200,622 460,640 Q760,662 1000,632 Q1160,612 1300,622" stroke="#C9A06A" stroke-width="14" fill="none" opacity=".25" filter="${s.blur(4)}"/>`);
+  let vine = `<path d="M760,800 Q820,740 900,760 Q980,780 1060,740 Q1140,700 1300,730" stroke="#4E8A3A" stroke-width="3" fill="none"/>`; const rvv = rng(77);
+  for (let i = 0; i < 26; i++) { const t = i / 26, x = 760 + t * 540, y = 760 - Math.sin(t * 6) * 18 + rvv() * 20 + (t > .5 ? -10 : 10); vine += `<path d="M${f(x)},${f(y)} q-10,-12 0,-18 q10,6 0,18z" fill="${i % 2 ? '#5E9A44' : '#4A8A38'}"/>`; if (i % 3 === 0) vine += `<circle cx="${f(x + 8)}" cy="${f(y - 6)}" r="7" fill="#C86AB8"/><circle cx="${f(x + 8)}" cy="${f(y - 6)}" r="2.5" fill="#FBE0F0"/>`; }
+  s.add('near', vine);
+  s.add('near', [[260, 760], [820, 690], [520, 670], [960, 740]].map(([x, y], i) => `<path transform="translate(${x},${y}) rotate(${i * 40})" d="M-8,4 Q0,-10 8,4Z" fill="${['#F8E6D6', '#F2C6B0', '#FFF4E6', '#E8D0C0'][i]}"/>`).join(''));
+  s.add('near', Array.from({ length: 8 }, (_, i) => `<ellipse cx="${400 + i * 34 + (i % 2) * 8}" cy="${792 - i * 14 + (i % 2) * 6}" rx="5" ry="3" fill="#C9A06A" opacity=".5"/>`).join(''));
   // onda (direita, quebrando na pedra)
   s.add('near', rock(1180, 640, 110, 80, ['#6E665E', '#8E857A', '#BDB2A2'], 9));
-  s.add('near', `<path d="M1040,612 Q1080,560 1130,566 Q1160,572 1150,600 Q1130,584 1110,596 Q1100,614 1070,618Z" fill="#E8FAF8"/><path d="M1060,600 Q1090,574 1124,578" stroke="#7ED6E0" stroke-width="5" fill="none"/>${particles(31, 30, 1060, 1180, 540, 600, '#FFFFFF', 2.4, .8)}`);
+  s.add('near', `<g filter="${s.blur(1.2)}">${[[1080, 590, 34], [1110, 572, 30], [1136, 566, 26], [1100, 604, 28], [1060, 606, 22], [1150, 586, 22]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#FFFFFF" opacity=".85"/>`).join('')}</g><g>${[[1090, 586, 18], [1118, 570, 16], [1066, 600, 12]].map(([x, y, r]) => `<circle cx="${x - 4}" cy="${y - 4}" r="${r}" fill="#FFFFFF"/>`).join('')}</g><path d="M1020,622 Q1060,600 1100,612 Q1080,620 1040,628Z" fill="#BFF0EE"/>${particles(31, 50, 1040, 1190, 520, 600, '#FFFFFF', 2.6, .9)}`);
   s.hotspot('near', 1110, 584, 46, 'onda');
   // ave (atobá) sobre a pedra
   s.add('near', `<g transform="translate(1200,566)"><path d="M-14,0 Q-18,-26 0,-30 Q14,-28 14,-6 Q8,4 -14,0Z" fill="#6E5A48"/><path d="M-6,-6 Q4,-2 12,-8 L12,-2 Q0,4 -8,0Z" fill="#F7F3EA"/><circle cx="4" cy="-34" r="9" fill="#6E5A48"/><path d="M10,-36 L26,-32 L10,-30Z" fill="#E8D070"/><circle cx="6" cy="-36" r="1.5" fill="#111"/><path d="M-4,0 l-2,6 M4,0 l2,6" stroke="#E8D070" stroke-width="3"/></g>`);
@@ -229,7 +237,7 @@ function ilha() {
   [[120, 620], [170, 632], [210, 612]].forEach(([x, y]) => s.add('near', Array.from({ length: 8 }, (_, i) => `<circle cx="${x + (i % 3) * 7 - 7}" cy="${y + Math.floor(i / 3) * 7}" r="4.2" fill="${i % 2 ? '#7A3A6A' : '#9A4A86'}"/>`).join('')));
   s.hotspot('near', 170, 626, 44, 'uva');
   s.add('near', L.caranguejo(900, 700, 1.1));
-  s.add('fg', `<g filter="${s.blur(2)}">${palm(1300, 820, { h: 520, lean: -90, seed: 9, len: 220, w: 16, col: ['#1F5A30', '#2E7A3E', '#5EA060'] })}</g>`);
+  s.add('fg', `<g filter="${s.blur(1)}">${palm(1330, 820, { h: 560, lean: -110, seed: 9, len: 240, w: 18, col: ['#1A4A28', '#245E32', '#3A7A44'], trunk: ['#5A4030', '#7A5A40'] })}</g>`);
   s.add('fg', `<g filter="${s.blur(2.5)}">${grass(71, 30, -20, 160, 780, 810, ['#8AA05A', '#6E8A44'], 40, 80, .1, 3)}</g>`);
   finish(s, { vignette: '#1A3A4A', vo: .2, warm: '#FFE8A0', warmO: .08 });
   return s;

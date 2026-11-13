@@ -35,7 +35,8 @@ class Scene {
     let body = '';
     LAYERS.forEach(l => { const vis = !only || only.includes(l); body += `<g id="layer-${l}" style="${vis ? '' : 'display:none'}">${this.L[l].join('\n')}</g>`; });
     if (fx && !only) body += `<g id="layer-fx">${this.fx.join('\n')}</g>`;
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs>${this.d.join('')}</defs>${body}</svg>`;
+    const cb = Array.from({ length: 30 }, (_, i) => `<filter id="cb${i}" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="${i / 2}"/></filter>`).join('');
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs>${cb}${this.d.join('')}</defs>${body}</svg>`;
   }
 }
 
@@ -95,19 +96,22 @@ function mesa(x0, x1, top, base, seed) {
 // copa volumétrica: 3 passes (sombra · meio-tom · luz) com direção da luz (lx,ly)
 function canopy(cx, cy, rx, ry, cols, seed, { n = 30, lx = -.55, ly = -.8, smin = .26, smax = .42, spec = true } = {}) {
   const r = rng(seed); const pts = [];
-  const base = Math.min(Math.min(rx, ry) * 1.25, 26 + Math.min(rx, ry) * .35);
-  n = Math.max(n, Math.round(rx * ry / (base * base * .55)));
-  for (let i = 0; i < n; i++) { const t = r() * Math.PI * 2, d = Math.sqrt(r()) * .86; pts.push([cx + Math.cos(t) * rx * d, cy + Math.sin(t) * ry * d, base * (smin + r() * (smax - smin))]); }
+  const base = Math.min(Math.min(rx, ry) * .55, 14 + Math.min(rx, ry) * .3);
+  const per = Math.max(7, Math.round(Math.PI * (rx + ry) / (base * 1.15)));
+  for (let i = 0; i < per; i++) { const t = (i + r() * .5) / per * Math.PI * 2, d = .78 + r() * .1; pts.push([cx + Math.cos(t) * rx * d, cy + Math.sin(t) * ry * d, base * (.75 + r() * .45)]); }
+  const nin = Math.max(4, Math.round(rx * ry / (base * base * 1.6)));
+  for (let i = 0; i < nin; i++) { const t = r() * Math.PI * 2, d = Math.sqrt(r()) * .62; pts.push([cx + Math.cos(t) * rx * d, cy + Math.sin(t) * ry * d, base * (.8 + r() * .5)]); }
   pts.sort((a, b) => a[1] - b[1]);
-  let a = '', b = '', c = '', d2 = '';
+  let a = `<ellipse cx="${f(cx)}" cy="${f(cy)}" rx="${f(rx * .8)}" ry="${f(ry * .8)}"/>`, b = `<ellipse cx="${f(cx + lx * rx * .08)}" cy="${f(cy + ly * ry * .1)}" rx="${f(rx * .68)}" ry="${f(ry * .64)}"/>`, c = '', d2 = '';
   pts.forEach(([x, y, s]) => {
-    a += `<circle cx="${f(x)}" cy="${f(y + s * .1)}" r="${f(s)}"/>`;
-    b += `<circle cx="${f(x + lx * s * .2)}" cy="${f(y + ly * s * .2)}" r="${f(s * .8)}"/>`;
+    a += `<circle cx="${f(x)}" cy="${f(y + s * .08)}" r="${f(s)}"/>`;
     const dot = ((x - cx) / rx) * lx + ((y - cy) / ry) * ly;
-    if (dot > -.05) c += `<circle cx="${f(x + lx * s * .42)}" cy="${f(y + ly * s * .42)}" r="${f(s * .46)}"/>`;
-    if (spec && dot > .35) d2 += `<circle cx="${f(x + lx * s * .55)}" cy="${f(y + ly * s * .55)}" r="${f(s * .18)}"/>`;
+    if (dot > -.45) b += `<circle cx="${f(x + lx * s * .18)}" cy="${f(y + ly * s * .18)}" r="${f(s * .82)}"/>`;
+    if (dot > .05) c += `<circle cx="${f(x + lx * s * .36)}" cy="${f(y + ly * s * .36)}" r="${f(s * .5)}"/>`;
+    if (spec && dot > .4) d2 += `<circle cx="${f(x + lx * s * .5)}" cy="${f(y + ly * s * .5)}" r="${f(s * .2)}"/>`;
   });
-  return `<g fill="${cols[0]}">${a}</g><g fill="${cols[1]}">${b}</g><g fill="${cols[2]}" opacity=".8">${c}</g>${cols[3] ? `<g fill="${cols[3]}" opacity=".45">${d2}</g>` : ''}`;
+  const bl = Math.max(1.2, base * .12);
+  return `<g fill="${cols[0]}">${a}</g><g fill="${cols[1]}">${b}</g><g fill="${cols[2]}" opacity=".75" filter="url(#cb${Math.round(bl * 2)})">${c}</g>${cols[3] ? `<g fill="${cols[3]}" opacity=".4" filter="url(#cb${Math.round(bl * 2)})">${d2}</g>` : ''}`;
 }
 function trunkPath(x, y, h, w, lean = 0, top = .35) {
   return `M${f(x - w)},${y} C${f(x - w * .7)},${f(y - h * .45)} ${f(x + lean - w * top * 1.6)},${f(y - h * .75)} ${f(x + lean - w * top)},${f(y - h)} L${f(x + lean + w * top)},${f(y - h)} C${f(x + lean + w * top * 1.6)},${f(y - h * .7)} ${f(x + w * .7)},${f(y - h * .45)} ${f(x + w)},${y}Z`;

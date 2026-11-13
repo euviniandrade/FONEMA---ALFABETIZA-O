@@ -217,3 +217,35 @@ function sofiaPoses() {
 module.exports['sofia-uniforme-folha-modelo'] = sofiaFolha;
 module.exports['sofia-uniforme-expressoes'] = sofiaExpr;
 module.exports['sofia-uniforme-poses'] = sofiaPoses;
+
+// =========================== ANIMAIS ===========================
+const AN = require('./animais');
+const B2 = require('./bolota');
+const FAUNA = [
+  ['caramelo', 'Paçoca', 'cachorro caramelo', 'Acompanha a carteira Carla nas entregas. Leal e animado.', '/p/ PAÇOCA · AU-AU', .78, 0],
+  ['gatinha', 'Nina', 'gatinha tigrada', 'Mora na biblioteca da Jaci e dorme no colo de quem lê.', '/n/ NINA · MIAU', .9, 0],
+  ['papagaio', 'Loro', 'papagaio-verdadeiro', 'Repete os sons: é o jogo do eco ("fala comigo: mmm!").', '/l/ LORO · LÁ-LÁ', .82, 0],
+  ['jabuti', 'Dona Lenta', 'jabuti-piranga', 'Ensina a falar devagar e esticar o som: sssapo.', '/ʒ/ JABUTI · DEVAGAR', .9, -40],
+  ['capivara', 'Capi', 'capivara', 'Guardiã do lago. Respira fundo com a criança antes da lição.', '/k/ CAPI · CALMA', .76, -40],
+  ['mico', 'Faísca', 'mico-leão-dourado', 'Rápido nas rimas e nos trava-línguas da Mata Atlântica.', '/f/ FAÍSCA · FOLHA', .86, 0],
+  ['galinha', 'Dona Cocó', 'galinha caipira', 'Bate as asas em cada sílaba: co-có-ri-có!', '/g/ GALINHA · sílabas', .96, 0],
+  ['burrinho', 'Fubá', 'burrinho', 'Carrega os livros da biblioteca itinerante pela vila.', '/b/ BURRO · LIVROS', .64, -60],
+];
+function animaisPage() {
+  const W = 1840, H = 1300;
+  let g = header(W, 'Animais da vila · 8 amigos + Bolota', 'Cada animal tem nome, personalidade e uma função nas lições · sem coleiras enfeitadas nem roupinhas');
+  const cw = 422, ch = 520;
+  FAUNA.forEach(([k, nome, esp, desc, sons, sc, dx], i) => {
+    const c = i % 4, r = Math.floor(i / 4), x = 60 + c * (cw + 18), y = 150 + r * (ch + 22), id = 'an' + i;
+    g += `<g transform="translate(${x},${y})"><rect width="${cw}" height="${ch}" rx="30" fill="#fff" stroke="${P.line}" stroke-opacity=".1" stroke-width="2"/>
+      <defs><clipPath id="${id}"><rect width="${cw}" height="340" rx="30"/></clipPath></defs><g clip-path="url(#${id})"><rect width="${cw}" height="340" fill="${[P.mint, P.peach, P.sky, '#F3EEDC'][i % 4]}"/><ellipse cx="${cw / 2}" cy="330" rx="260" ry="50" fill="#fff" opacity=".45"/>
+      <g transform="translate(${cw / 2 + dx},316) scale(${sc})">${AN.ANIMAIS[k]()}</g></g>
+      <text x="26" y="384" font-family="Fredoka" font-weight="700" font-size="28" fill="${P.ink}">${nome}</text>
+      <text x="${cw - 26}" y="384" text-anchor="end" font-family="Andika" font-weight="700" font-size="16" fill="${P.mango}">${esp}</text>
+      ${wrap(desc, 46).map((t, j) => `<text x="26" y="${416 + j * 23}" font-size="16.5" fill="${P.slate}">${t}</text>`).join('')}
+      <g transform="translate(26,${ch - 54})"><rect width="${cw - 52}" height="36" rx="18" fill="${P.sky}"/><text x="${(cw - 52) / 2}" y="24" text-anchor="middle" font-family="Andika" font-weight="700" font-size="16" fill="${P.cons}">${sons}</text></g></g>`;
+  });
+  g += `<text x="60" y="${H - 26}" font-size="16" fill="${P.slate}">Bolota (tatu-bola) continua o parceiro principal da criança: o único que erra de propósito. Os animais nunca competem com a letra na tela e aparecem em cenas, histórias e reforços de fim de bloco.</text>`;
+  return svgPage(W, H, g);
+}
+module.exports['animais-da-vila'] = animaisPage;
