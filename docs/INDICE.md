@@ -163,3 +163,12 @@ Cada pasta 01–05 também tem `arquitetura.md`, `design.md`, `esqueleto.md` e `
 |---|---|
 | [tools/bibliografia/](../tools/bibliografia/) | `coletar.py` e `exportar.py`: coleta e exportação da bibliografia (dados em `data/`, fora do Git) |
 | [tools/qualidade/](../tools/qualidade/) | `verificar_links.py`, `verificar_arquivos.py`, `verificar_termos.py` (ver [QUALIDADE.md](QUALIDADE.md) §2) |
+
+## 8. Revisão geral (`revisao/`)
+| Documento | O que é |
+|---|---|
+| [revisao/README.md](revisao/README.md) | Sumário executivo da revisão geral: notas por dimensão, 10 forças, 10 lacunas |
+| [01 · Achados detalhados](revisao/01-achados-detalhados.md) | Por dimensão: o que está bom, o que falta e o que melhorar, com evidência |
+| [02 · Recomendações priorizadas](revisao/02-recomendacoes-priorizadas.md) | Tabela R-01 a R-29 com impacto, esforço, onde aplicar e prioridade P0–P2 |
+| [03 · Checklist da ciência da leitura](revisao/03-checklist-ciencia-da-leitura.md) | Checklist marcável: pilares, sequência do PB, N1–N12, avaliação, triagem, inclusão, ética |
+| [04 · Perguntas para o dono](revisao/04-perguntas-para-o-dono.md) | As 10 decisões que dependem do dono |
