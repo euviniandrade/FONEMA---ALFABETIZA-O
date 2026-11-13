@@ -50,3 +50,12 @@ O dono pediu vozes "lúdicas, infantis de desenho" para os dois. Esta rodada usa
 | `M-tales-desenho-gentil-1/2.mp3` | Tales | Calorosa, simpática, melhor amigo |
 
 Um quarto estilo da Sofia ("esperta, nasalada") foi **bloqueado pelo filtro de segurança** do ElevenLabs e não foi insistido. As vozes ainda não foram salvas na conta; os IDs temporários ficam fora do repositório. As amostras E/F/G da rodada 2 continuam valendo como opção.
+
+## Escolha do Tales
+O dono escolheu **`K-tales-desenho-moleque-1`**. A voz foi salva na conta com o nome **"Tales — FONEMA"**.
+
+## Rodada 4: Sofia mais natural (pasta `rodada-4-sofia-natural/`)
+O dono achou as vozes H e J "forçadas, pouco naturais". Esta rodada pede uma voz de menina de desenho **espontânea, de conversa, sem exagero**, como a do Tales escolhido. O texto quase não usa marcações de emoção e a geração foi mais contida (guidance 3). São 3 estilos, com 3 tomadas cada:
+- **N:** natural e sorridente;
+- **O:** doce e tranquila;
+- **P:** esperta e levemente rouquinha.
