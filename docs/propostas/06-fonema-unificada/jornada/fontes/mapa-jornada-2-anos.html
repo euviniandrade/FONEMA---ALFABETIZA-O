@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Mapa da jornada de 2 anos</title>
+<link rel="stylesheet" href="comum.css">
+<style>
+  .leg { display: grid; grid-template-columns: repeat(6, auto); gap: 4px 14px; font-size: 11px; color: var(--tinta2); }
+  .leg span { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+  svg.trilha { position: absolute; left: 0; top: 0; }
+  .card { position: absolute; width: 246px; height: 196px; background: #fff; border-radius: 16px;
+          box-shadow: 0 6px 16px rgba(60,40,10,.13), 0 1px 0 rgba(0,0,0,.04); overflow: hidden; border: 1px solid rgba(0,0,0,.05); }
+  .card .cab { height: 36px; display: flex; align-items: center; gap: 7px; padding: 0 10px; color: #fff; }
+  .card .rid { font-family: 'Fredoka'; font-weight: 700; font-size: 12px; background: rgba(255,255,255,.25); border-radius: 7px; padding: 1px 6px; }
+  .card .nm { font-family: 'Fredoka'; font-weight: 600; font-size: 15px; line-height: 1; }
+  .card .sb { font-size: 10.5px; opacity: .92; line-height: 1; margin-top: 2px; }
+  .card .corpo { padding: 6px 10px 0 10px; }
+  .linha1 { display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; color: var(--tinta2); }
+  .niv { display: inline-flex; align-items: center; gap: 4px; font-family: 'Fredoka'; font-weight: 600; font-size: 12px; color: var(--tinta); background: #F4EEE2; border-radius: 999px; padding: 1px 8px 1px 4px; }
+  .sons { font-family: 'Fredoka'; font-weight: 700; color: var(--tinta); margin-top: 3px; line-height: 1.1; white-space: nowrap; }
+  .tema { font-size: 11px; font-style: italic; color: var(--tinta2); line-height: 1.22; margin-top: 3px; }
+  .chefe { font-size: 10.5px; color: var(--tinta); margin-top: 3px; line-height: 1.2; }
+  .chefe b { color: #8A5A12; }
+  .pr { display: flex; gap: 4px; margin-top: 4px; align-items: center; }
+  .pr .t { font-size: 9.5px; color: var(--suave); margin-left: 2px; }
+  .gancho { position: absolute; left: 0; right: 0; bottom: 0; height: 38px; padding: 4px 10px 0 30px; font-size: 10.5px; line-height: 1.22; color: var(--tinta); }
+  .gancho svg { position: absolute; left: 9px; top: 9px; }
+  .fita { position: absolute; right: 8px; top: 139px; line-height:1.1; text-align:center; border-radius:7px !important; background: #1F2A44; color: #FFE7B3; font-size: 9.5px; font-weight: 700; padding: 2px 8px 2px 10px; border-radius: 8px 0 0 8px; }
+  .ano { position: absolute; left: 56px; font-family: 'Fredoka'; font-weight: 600; font-size: 13px; color: var(--tinta); display: flex; align-items: center; gap: 8px; }
+  .ano i { font-style: normal; font-family: 'Andika'; font-weight: 400; font-size: 11.5px; color: var(--tinta2); }
+  .ano .tag { background: var(--tinta); color: #fff; border-radius: 6px; padding: 1px 7px; font-size: 11px; letter-spacing: .5px; }
+  .termo { position: absolute; left: 1212px; top: 92px; width: 52px; height: 660px; }
+  .termo .lab { position: absolute; left: 0; width: 52px; text-align: center; font-size: 9.5px; color: var(--tinta2); line-height: 1.1; }
+</style></head>
+<body>
+<div class="topo">
+  <div>
+    <h1 style="font-size:23px">A jornada conectada<br><b>11 regiões · ~104 semanas · uma trilha só</b></h1>
+  </div>
+  <div class="leg" id="leg"></div>
+</div>
+<svg class="trilha" width="1280" height="800" id="trilha"></svg>
+<div id="cards"></div>
+<div class="ano" style="top:293px"><span class="tag">ANO 1</span> “Seres vivos e seus lugares” <i>R0 → R6 · fecha com o chefe do Ano 1 na Caatinga</i></div>
+<div class="ano" style="top:519px"><span class="tag" style="background:#17703F">ANO 2</span> “Pessoas, culturas e como as coisas funcionam” <i>R7 → R10 · os biomas voltam como lugares de gente (espiral, rel. 39)</i></div>
+<div class="termo" id="termo"></div>
+<div class="rodape"><span>Fontes: doc. mestre §4.2–4.5 · rels. 02, 37, 39 · D001/003/004. Avança por domínio, nunca por tempo; semanas indicativas (5–6 anos, ~5×/semana). <span style="font-family:DejaVu Sans">◐</span> parte das evidências do nível · <span style="font-family:DejaVu Sans">●</span> nível completo.</span><span class="marca">FONEMA · JORNADA</span></div>
+<script src="dados.js"></script><script src="comum.js"></script>
+<script>
+const curtos = {N1:'Atenção',N2:'Engajamento ativo',N3:'Retorno do erro',N4:'Consolidação/sono',N5:'Espaçamento',N6:'Recuperação',N7:'Intercalação',N8:'Multissensorial',N9:'Mapeamento ortogr.',N10:'Curiosidade',N11:'Carga cognitiva',N12:'Emoção segura'};
+document.getElementById('leg').innerHTML = PRINC.map(p => `<span>${icone(p.id,15)}${curtos[p.id]}</span>`).join('');
+const W = 246, H = 196, xs = [56, 342, 628, 914], ys = [92, 318, 544];
+const pos = [];
+REG.forEach((r, i) => { const row = Math.floor(i / 4), k = i % 4; const col = row === 1 ? 3 - k : k; pos.push([xs[col], ys[row]]); });
+// trilha
+const cy = ys.map(y => y + H / 2);
+const d = `M 18 ${cy[0]} L 1160 ${cy[0]} C 1206 ${cy[0]} 1206 ${cy[1]} 1160 ${cy[1]} L 56 ${cy[1]} C 8 ${cy[1]} 8 ${cy[2]} 56 ${cy[2]} L 1196 ${cy[2]}`;
+document.getElementById('trilha').innerHTML = `
+  <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#F2C98F"/><stop offset="1" stop-color="#E8B26E"/></linearGradient></defs>
+  <path d="${d}" fill="none" stroke="rgba(120,80,20,.12)" stroke-width="26" stroke-linecap="round" transform="translate(0 4)"/>
+  <path d="${d}" fill="none" stroke="url(#g)" stroke-width="22" stroke-linecap="round"/>
+  <path d="${d}" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/>
+  <g transform="translate(14 ${cy[0]-26})"><text x="0" y="0" font-family="Fredoka" font-weight="600" font-size="11" fill="#8A5A12">início</text></g>`;
+const sym = t => t.replace(/([◐●])/g,'<span style="font-family:DejaVu Sans,sans-serif;font-size:10px">$1</span>');
+const nivelIcon = `<svg width="12" height="16" viewBox="0 0 12 16"><rect x="4" y="1" width="4" height="10" rx="2" fill="#fff" stroke="#C23B6C" stroke-width="1.2"/><circle cx="6" cy="12.5" r="3" fill="#C23B6C"/><rect x="5" y="6" width="2" height="6" fill="#C23B6C"/></svg>`;
+const flecha = c => `<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="${c}"/><path d="M4 7h5.5M7.5 4.5 10 7l-2.5 2.5" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>`;
+document.getElementById('cards').innerHTML = REG.map((r, i) => {
+  const [x, y] = pos[i];
+  const fs = r.sons.length > 30 ? 12.5 : r.sons.length > 24 ? 14 : r.sons.length > 18 ? 16 : 18;
+  return `<div class="card" style="left:${x}px;top:${y}px">
+    <div class="cab" style="background:linear-gradient(90deg, ${r.cor}, ${r.cor}dd)"><span class="rid">${r.id}</span>
+      <div><div class="nm">${r.nome}</div><div class="sb">${r.sub}</div></div></div>
+    ${r.gratis ? '<div class="fita">fim da parte gratuita · “ponte em obras”</div>' : ''}
+    <div class="corpo">
+      <div class="linha1"><span>semanas ${r.sem} · etapa ${r.etapa}</span><span class="niv">${nivelIcon}${sym(r.nivel[0])} → ${sym(r.nivel[1])}</span></div>
+      <div class="sons" style="font-size:${fs}px">${r.sons}</div>
+      <div class="tema">“${r.tema}”</div>
+      <div class="chefe"><b>Chefe/projeto:</b> ${r.chefe}</div>
+      <div class="pr">${r.enf.map(e => icone(e, 17)).join('')}<span class="t">${r.enf.join(' ')}</span></div>
+    </div>
+    <div class="gancho" style="background:${r.cor}1f">${flecha(r.cor)}${i < REG.length - 1 ? '<b>Gancho:</b> ' : ''}${r.gancho}</div>
+  </div>`;
+}).join('');
+// termômetro
+let t = `<div class="lab" style="top:-2px;font-family:Fredoka;font-weight:600;font-size:10px;color:#1F2A44">Termô-<br>metro<br>da Leitura</div>
+<svg width="52" height="640" style="position:absolute;top:34px;left:0">
+  <defs><linearGradient id="tg" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F2A65A"/><stop offset=".5" stop-color="#2E9E5B"/><stop offset="1" stop-color="#C23B6C"/></linearGradient></defs>
+  <rect x="18" y="4" width="16" height="586" rx="8" fill="#fff" stroke="#D8CCB6" stroke-width="1.5"/>
+  <rect x="21" y="7" width="10" height="583" rx="5" fill="url(#tg)"/>
+  <circle cx="26" cy="606" r="17" fill="#F2A65A" stroke="#fff" stroke-width="3"/>
+  <text x="26" y="611" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="13" fill="#fff">0</text>`;
+for (let n = 1; n <= 10; n++) { const y = 590 - n * 57.5; t += `<line x1="34" x2="40" y1="${y}" y2="${y}" stroke="#7A8399"/><text x="43" y="${y + 4}" font-family="Fredoka" font-weight="600" font-size="11" fill="#1F2A44">${n}</text>`; }
+t += `</svg><div class="lab" style="top:680px;display:none"></div>`;
+document.getElementById('termo').innerHTML = t;
+</script>
+</body></html>

@@ -1,0 +1,26 @@
+@font-face { font-family: 'Andika'; src: url('fonts/andika-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'Andika'; src: url('fonts/andika-latin-700-normal.woff2') format('woff2'); font-weight: 700; }
+@font-face { font-family: 'Fredoka'; src: url('fonts/fredoka-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+@font-face { font-family: 'Fredoka'; src: url('fonts/fredoka-latin-600-normal.woff2') format('woff2'); font-weight: 600; }
+@font-face { font-family: 'Fredoka'; src: url('fonts/fredoka-latin-700-normal.woff2') format('woff2'); font-weight: 700; }
+
+:root {
+  --tinta: #1F2A44; --tinta2: #4A5470; --suave: #7A8399;
+  --papel: #FBF6EC; --papel2: #F3EBDC; --linha: #E2D7C3;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1280px; height: 800px; overflow: hidden; }
+body {
+  font-family: 'Andika', sans-serif; color: var(--tinta);
+  background: radial-gradient(1200px 700px at 20% 0%, #FFFDF7 0%, var(--papel) 55%, var(--papel2) 100%);
+  -webkit-font-smoothing: antialiased; position: relative;
+}
+h1, h2, h3, .fred { font-family: 'Fredoka', sans-serif; font-weight: 600; letter-spacing: .1px; }
+.topo { position: absolute; left: 32px; right: 32px; top: 20px; display: flex; align-items: flex-end; justify-content: space-between; }
+.topo h1 { font-size: 27px; line-height: 1.05; color: var(--tinta); }
+.topo h1 b { font-weight: 700; color: #C8642B; }
+.topo .sub { font-size: 12.5px; color: var(--tinta2); margin-top: 4px; }
+.marca { white-space: nowrap; font-family: 'Fredoka'; font-weight: 700; font-size: 13px; color: #fff; background: var(--tinta); border-radius: 8px; padding: 4px 10px; letter-spacing: 1px; }
+.rodape { position: absolute; left: 32px; right: 32px; bottom: 12px; font-size: 10.5px; color: var(--suave); display: flex; justify-content: space-between; }
+.ico { display: inline-block; vertical-align: middle; flex: none; }
+.chip { display: inline-flex; align-items: center; gap: 4px; border-radius: 999px; padding: 1px 8px; font-size: 11px; font-weight: 700; }

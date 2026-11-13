@@ -24,3 +24,16 @@ As vozes desenhadas (A e B) ainda **não foram salvas** na conta. Os IDs tempor�
 1. Salvar a voz escolhida na conta e fixar os ajustes (estabilidade, estilo, velocidade ~0,9 para crianças).
 2. Narrar os 3 vídeos de amostra com a voz escolhida.
 3. Criar o script do projeto que gera todas as falas a partir dos roteiros, com marcação de tempo para sincronizar a boca da Sofia (o ElevenLabs devolve o tempo de cada caractere).
+
+## Rodada 2: estilo desenho animado (pasta `opcoes-desenho/`)
+O dono não aprovou a 1ª rodada ("tem que ser mais desenho animado, lúdico, divertido e 100% pedagógico"). Esta rodada usa o modelo **Eleven v3** (o mais expressivo, com marcações de emoção como risadinha, curiosidade e comemoração) e vozes **desenhadas como dubladora de animação** brasileira:
+
+| Arquivo | Estilo |
+|---|---|
+| `E-desenho-alegre-1/2.mp3` | Protagonista de animação: aguda, brilhante, energética, sorridente |
+| `F-desenho-aventureira-1/2.mp3` | Heroína aventureira: curiosa, surpresa, risadinhas naturais |
+| `G-desenho-doce-1/2.mp3` | Doce e engraçada: fofa, cantada, encorajadora |
+
+A biblioteca pública do ElevenLabs não tem voz "cartoon" com sotaque brasileiro (as que existem são americanas ou latinas). Por isso as vozes foram criadas do zero.
+
+**Verificação por transcrição automática (Scribe):** as marcações de emoção viraram atuação (risada), não texto falado. O "mmmm" saiu como "Hum", o que **confirma que os fonemas isolados precisam ser gravados por fonoaudióloga**.

@@ -125,7 +125,7 @@ function thumb(letter, bg, fg, o = {}) {
   return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${defs()}
     <rect width="${w}" height="${h}" fill="${bg}"/>
     <circle cx="${w * 0.78}" cy="${h * 1.05}" r="${h * 0.62}" fill="#fff" opacity=".35"/>
-    <text x="${w * 0.27}" y="${h * 0.74}" text-anchor="middle" font-family="Andika" font-weight="700" font-size="${h * 0.6}" fill="${fg}">${letter}</text>
+    <text x="${w * 0.36}" y="${h * 0.8}" text-anchor="middle" font-family="Andika" font-weight="700" font-size="${h * 0.5}" fill="${fg}">${letter}</text>
     ${mini}</svg>`;
 }
 
