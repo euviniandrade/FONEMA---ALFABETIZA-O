@@ -95,7 +95,9 @@ function mesa(x0, x1, top, base, seed) {
 // copa volumétrica: 3 passes (sombra · meio-tom · luz) com direção da luz (lx,ly)
 function canopy(cx, cy, rx, ry, cols, seed, { n = 30, lx = -.55, ly = -.8, smin = .26, smax = .42, spec = true } = {}) {
   const r = rng(seed); const pts = [];
-  for (let i = 0; i < n; i++) { const t = r() * Math.PI * 2, d = Math.sqrt(r()) * .82; pts.push([cx + Math.cos(t) * rx * d, cy + Math.sin(t) * ry * d, Math.min(rx, ry) * (smin + r() * (smax - smin)) * 1.25]); }
+  const base = Math.min(Math.min(rx, ry) * 1.25, 26 + Math.min(rx, ry) * .35);
+  n = Math.max(n, Math.round(rx * ry / (base * base * .55)));
+  for (let i = 0; i < n; i++) { const t = r() * Math.PI * 2, d = Math.sqrt(r()) * .86; pts.push([cx + Math.cos(t) * rx * d, cy + Math.sin(t) * ry * d, base * (smin + r() * (smax - smin))]); }
   pts.sort((a, b) => a[1] - b[1]);
   let a = '', b = '', c = '', d2 = '';
   pts.forEach(([x, y, s]) => {

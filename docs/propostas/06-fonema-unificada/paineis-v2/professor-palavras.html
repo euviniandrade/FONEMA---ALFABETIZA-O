@@ -42,7 +42,7 @@ html[data-tema="escuro"]{--e0:#231B0E;--e1:#3A2A10;--e2:#5A3D12;--e3:#865A18;--e
 html[data-tema="escuro"] .av span{color:#0C131B}
 .av span:first-child{margin-left:0}
 .l2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-#logo{height:150px}
+#logo{height:178px}
 .ps{display:grid;gap:5px;margin-top:6px}
 .ps div{display:grid;grid-template-columns:66px 70px 1fr 56px;gap:8px;align-items:center;font-size:12.5px}
 .ps .barra-h i{background:var(--g4)}
@@ -65,7 +65,7 @@ html[data-tema="escuro"] .av span{color:#0C131B}
       <div class="cartao c"><h2>Mapa de sons da turma <small>% de leituras com erro em cada som · nº de crianças com dificuldade</small></h2>
         <div id="mapa"></div>
         <div class="esc" id="esc"></div></div>
-      <div class="cartao c"><h2>Trocas entre pares surdo/sonoro <small>o que a criança leu no lugar do som certo · ocorrências</small></h2><div id="troca"></div></div>
+      <div class="cartao c"><h2>Trocas entre pares surdo/sonoro <small>o que a criança leu no lugar do som certo · ocorrências</small></h2><div style="display:grid;grid-template-columns:1fr 168px;gap:10px;align-items:center"><div id="troca"></div><div style="font-size:12px;color:var(--tinta-2);line-height:1.4"><b style="font-size:20px;color:var(--tinta)" class="num">32 de 46</b><br>trocas vão do som surdo para o sonoro (P→B, T→D, F→V).<br><br>A criança ainda não controla a vibração da garganta: use a <b>mão no pescoço</b> do Espelho do Som.</div></div></div>
     </div>
     <div class="col">
       <div class="cartao c"><h2>Palavras com mais erro na turma <small>ordenadas pela % de erro · palavras, nunca crianças</small></h2>
@@ -94,13 +94,12 @@ document.getElementById('esc').innerHTML='<span style="margin-right:8px">% de er
 // ===== matriz de trocas =====
 const T=D.TROCAS,dd=[];T.m.forEach((row,y)=>row.forEach((v,x)=>dd.push([x,y,v])));
 const gt=F.registrar(echarts.init(document.getElementById('troca'),null,{renderer:'svg'}));
-gt.setOption({...F.base(),grid:{left:66,right:168,top:22,bottom:4},
+gt.setOption({...F.base(),grid:{left:58,right:4,top:22,bottom:4},
  tooltip:F.tooltip({formatter:p=>`alvo <b>${T.alvo[p.value[1]]}</b> lido como <b>${T.lido[p.value[0]]}</b>: ${p.value[2]} vezes`}),
  xAxis:{type:'category',data:T.lido.map(x=>'leu '+x),position:'top',axisTick:{show:false},axisLine:{show:false},axisLabel:{color:c('--tinta-2'),fontSize:11.5,fontWeight:'bold'}},
  yAxis:{type:'category',data:T.alvo.map(x=>'som '+x),inverse:true,axisTick:{show:false},axisLine:{show:false},axisLabel:{color:c('--tinta'),fontSize:12,fontWeight:'bold'}},
  visualMap:{show:false,min:0,max:17,inRange:{color:[E(0),E(2),E(4),E(6)]}},
- series:[{type:'heatmap',data:dd.map(([x,y,v])=>({value:[x,y,v],itemStyle:x===y?{color:c('--fundo-2')}:{} ,label:{show:x!==y&&v>0,color:v>=9?(F.escuro?'#1A1205':'#fff'):c('--tinta'),fontWeight:'bold',fontSize:12.5}})),itemStyle:{borderColor:c('--cartao'),borderWidth:3,borderRadius:5},label:{show:true,formatter:p=>p.value[2]||''}}],
- graphic:[{type:'text',right:4,top:34,style:{text:'{b|32 de 46} trocas vão do\nsom surdo para o sonoro\n(P→B, T→D, F→V).\n\nA criança não “vibra”\na garganta no som certo:\nusar a mão no pescoço.',rich:{b:{font:'bold 14px Atkinson',fill:c('--tinta')}},fill:c('--tinta-2'),font:'12px Atkinson',lineHeight:16}}]});
+ series:[{type:'heatmap',data:dd.map(([x,y,v])=>({value:[x,y,v],itemStyle:x===y?{color:c('--fundo-2')}:{} ,label:{show:x!==y&&v>0,color:v>=9?(F.escuro?'#1A1205':'#fff'):c('--tinta'),fontWeight:'bold',fontSize:12.5}})),itemStyle:{borderColor:c('--cartao'),borderWidth:3,borderRadius:5},label:{show:true,formatter:p=>p.value[2]||''}}]});
 // ===== palavras =====
 const ini=n=>n.split(' ').map(x=>x[0]).join('');
 const quem={carro:['Iris N.','Lara M.','Sara D.','Joana B.','Maya T.','Gael V.','Théo A.'],pato:['Luan K.','Yasmin E.','Otto G.','Rui O.','Enzo P.'],prato:['Davi R.','Nina F.','Caio L.','Théo A.','Bia S.','Luan K.'],terra:['Iris N.','Lara M.','Sara D.','Joana B.','Otto G.'],bruxa:['Nina F.','Davi R.','Caio L.','Pedro H.'],faca:['Rui O.','Pedro H.','Luan K.','Enzo P.'],mesa:['Maya T.','Iris N.','Sara D.','Yasmin E.'],barro:['Lara M.','Iris N.','Sara D.','Gael V.'],tatu:['Pedro H.','Luan K.','Otto G.'],campo:['Enzo P.','Rui O.','Yasmin E.'],pipa:['Luan K.','Yasmin E.','Otto G.'],bloco:['Bia S.','Caio L.','Nina F.']};

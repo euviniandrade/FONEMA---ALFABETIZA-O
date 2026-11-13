@@ -84,8 +84,8 @@
   const SONS=[
     ['P/B','pato · bola',24,6,'troca'],['T/D','tatu · dado',15,3,'troca'],['F/V','faca · vela',18,4,'troca'],['C/G','casa · gato',6,1,'troca'],
     ['RR','carro · terra',41,8,'r'],['R-','rato · rua',22,4,'r'],['-R-','caro · fera',8,2,'r'],['S/SS','sapo · passa',12,3,'s'],
-    ['S=Z','mesa · casa',19,4,'s'],['C/Ç','cebola · poço',11,2,'s'],['LH','palha · filho',9,2,'dig'],['NH','ninho · banho',7,2,'dig'],
-    ['CH','chuva · bicho',4,1,'dig'],['QU/GU','queijo · guia',10,2,'dig'],['AM/AN','campo · manta',13,3,'nas'],['ÃO/ÕE','pão · limões',5,1,'nas'],
+    ['S=Z','mesa · casa',19,4,'s'],['C/Ç','poço · caça',11,2,'s'],['LH','palha · filho',9,2,'dig'],['NH','ninho · unha',7,2,'dig'],
+    ['CH','chuva · bicho',4,1,'dig'],['QU/GU','queijo · guia',10,2,'dig'],['AM/AN','campo · lã',13,3,'nas'],['ÃO/ÕE','pão · limões',5,1,'nas'],
     ['PR','prato · prego',28,6,'enc'],['BR','bruxa · braço',25,5,'enc'],['TR','trem · trigo',21,4,'enc'],['BL/CL','bloco · clube',16,3,'enc']]
     .map(([s,ex,pct,crc,fam])=>({s,ex,pct,crc,fam}));
   // matriz de trocas (lido no lugar do alvo), ocorrências
