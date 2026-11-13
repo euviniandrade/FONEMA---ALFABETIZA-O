@@ -154,7 +154,7 @@
 - Pesquisa: a consciência fonológica de crianças chinesas pequenas prediz a leitura de caracteres, mas a consciência **morfológica** pesa muito [63]. Uma meta-análise de 2026 confirma que consciência fonológica e conhecimento de pinyin se correlacionam com leitura e escrita em chinês [64]. A escrita inventada em pinyin distingue crianças com e sem dificuldade de leitura [65].
 
 **Regulação: "dupla redução" (2021) e apps educativos (2019)**
-- Em julho de 2021, a política "dupla redução" (menos dever de casa e menos tutoria extraescolar) proibiu a tutoria acadêmica com fins lucrativos para o ensino obrigatório. As empresas que ensinam disciplinas do currículo ficaram proibidas de ter lucro, captar capital ou abrir capital [56][57]. As ações das grandes empresas de tutoria caíram mais de 90%, e houve fechamento em massa de centros (relatos de imprensa e consultorias) [56][57].
+- Em julho de 2021, a política "dupla redução" (menos dever de casa e menos tutoria extraescolar) proibiu a tutoria acadêmica com fins lucrativos para o ensino obrigatório. As empresas que ensinam disciplinas do currículo ficaram proibidas de ter lucro, captar capital ou abrir capital [56][57]. As ações das grandes empresas de tutoria caíram mais de 90%, e houve fechamento em massa de centros (relatos de imprensa e consultorias) [56][57]. Análise econômica posterior discute o custo da proibição para o setor e o emprego [58].
 - Antes disso, em 2019, o Ministério da Educação publicou as "Opiniões" sobre apps educativos móveis (Jiao Ji Han [2019] nº 55): cadastro obrigatório de fornecedores e apps, **limites de tempo de uso para apps voltados a menores**, deveres de proteção de dados, e seleção dos apps pelas escolas ouvindo pais, alunos e professores [60][61].
 - Contexto acadêmico sobre a regulação da tutoria antes de 2021: Zhang (2019) [59].
 
@@ -188,15 +188,15 @@
 
 ### 2.9 Indonésia (VERIFICADO)
 
-- O bahasa Indonesia tem ortografia latina muito transparente. O programa INOVASI (cooperação Austrália–Indonésia, encerrado em dez/2023) usou uma versão simplificada do EGRA para medir leitura nos primeiros anos [79][80][82].
-- **Dados do próprio programa (não independentes):** em Bulungan (Kalimantan do Norte), a proporção de crianças do 1º ao 3º ano que passavam num teste básico de reconhecimento de letras e palavras subiu de 57% para 94% em cerca de um ano e meio. O governo local financiou a expansão para 146 escolas e 506 professores em 2019 [79]. Outro gargalo identificado foi a **falta de livros adequados ao nível**, sobretudo em línguas locais [80].
+- O bahasa Indonesia tem ortografia latina muito transparente. O programa INOVASI (cooperação Austrália–Indonésia, encerrado em dez/2023) usou uma versão simplificada do EGRA para medir leitura nos primeiros anos [79][82].
+- **Dados do próprio programa (não independentes):** em Bulungan (Kalimantan do Norte), a proporção de crianças do 1º ao 3º ano que passavam num teste básico de reconhecimento de letras e palavras subiu de 57% para 94% em cerca de um ano e meio. O governo local financiou a expansão para 146 escolas e 506 professores em 2019 [79]. Em outra apresentação do programa, 87% das crianças do piloto passaram no mesmo teste no 2º ano [83]. Outro gargalo identificado foi a **falta de livros adequados ao nível**, sobretudo em línguas locais [80].
 - O guia do UNICEF para professores sobre literacia nos anos iniciais, alinhado ao Kurikulum Merdeka, incorpora a ferramenta EGRA do INOVASI [82]. Os indicadores do programa estão no quadro de resultados do DFAT [81].
 
 **O que aproveitar (Indonésia):** (1) avaliação simples estilo EGRA na mão do professor, com dados usados pelo governo local, é o caminho para escala; (2) **oferta de livros decodificáveis/nivelados** é gargalo também em países de renda média. O gerador de textos decodificáveis do FONEMA responde a esse problema no Brasil.
 
 ### 2.10 Israel (VERIFICADO)
 
-- **Ensino inicial:** o PIRLS 2016 descreve que a leitura começa no 1º ano com abordagem de correspondência fonema-grafema [88]. A leitura inicial usa o hebraico **com sinais vocálicos (nikud)**, que é transparente. A partir do 2º–3º ano a criança passa gradualmente para a escrita sem vogais [87].
+- **Ensino inicial:** o PIRLS 2016 descreve que a leitura começa no 1º ano com abordagem de correspondência fonema-grafema [88]. A leitura inicial usa o hebraico **com sinais vocálicos (nikud)**, que é transparente. Por volta do 3º ano a criança passa gradualmente para a escrita sem vogais [109].
 - **David L. Share:**
   - **Hipótese do autoensino** (1995): cada decodificação bem-sucedida de uma palavra nova é uma oportunidade de aprender sua forma ortográfica. A decodificação é a "condição sine qua non" da aquisição da leitura [84].
   - **Crítica ao anglocentrismo** (2008): o inglês é uma ortografia "atípica" (muito opaca), e conclusões tiradas só do inglês (ex.: peso da consciência fonêmica, unidades grandes) não se transferem automaticamente para ortografias transparentes [85].
@@ -213,8 +213,8 @@
 
 **Emirados — programa Iqra (Ras Al Khaimah)**
 - Currículo complementar baseado em ciência cognitiva (desenvolvido com Helen Abadzi e a Fundação Al Qasimi), para KG1 a 1º ano: percepção rápida das letras, automatização e fluência [94][95].
-- Resultados iniciais de 2020: melhora da fluência em árabe [94]. A J-PAL fez um RCT em 2024–25 com 83 turmas de 26 escolas (41 turmas Iqra). Os resultados relatados indicam ganhos em identificação de letras, leitura de palavras e fluência; o tamanho do efeito não foi confirmado nesta rodada [95].
-- Política nacional: o Ministério exige pelo menos 40 min/dia de árabe nas escolas privadas (300 min/semana até 2027–28), ensino na educação infantil por professores qualificados e inspeções a partir de 2026–27 [96].
+- Resultados iniciais de 2020: melhora da fluência em árabe; o componente de "realce perceptual" das letras foi descrito para o 1º ano [94][100]. A J-PAL fez um RCT em 2024–25 com 83 turmas de 26 escolas (41 turmas Iqra). Os resultados relatados indicam ganhos em identificação de letras, leitura de palavras e fluência; o tamanho do efeito não foi confirmado nesta rodada [95].
+- Política nacional: desde jun/2025 o Ministério exige, na **educação infantil (KG) das escolas privadas**, 200 min/semana de árabe (cerca de 40 min/dia), subindo para 300 min/semana até 2027–28, com professores qualificados de educação infantil e inspeções a partir de 2026–27 [96].
 
 **Jordânia — RAMP (USAID/UK Aid)**
 - O RAMP (Early Grade Reading and Mathematics Initiative, do KG ao 3º ano, 7 anos) produziu **livros decodificáveis nivelados em árabe**. O estudo sobre esses livros mostrou melhora significativa em leitores iniciantes do 1º ano e na leitura oral de alunos com dificuldade do 3º ano. No 2º ano os resultados foram menos claros [97].

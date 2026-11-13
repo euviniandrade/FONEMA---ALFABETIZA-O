@@ -675,7 +675,7 @@ Legenda:
 | F01 | Contas, papéis e vínculos | Responsável, criança (perfil sem e-mail), professor, escola. RLS por papel. Vários perfis por aparelho (até 40 em tablet de turma) | [doc 03 §7, §9; doc 24 §3.8] | M | Modelo de dados multi-escola mal desenhado |
 | F02 | Consentimento parental e porteira adulta | Consentimento LGPD art. 14 em linguagem simples, granular (microfone/câmera/pesquisa). Porteira = segurar 3 s + tarefa escrita sorteada | [doc 05 §6, §8; doc 24 §3.5] | M | ⚖️ ECA Digital + Decreto 12.880/2026 e verificação de idade: parecer jurídico obrigatório |
 | F03 | Login por figuras + QR | Grade de avatares, senha de 3 figuras (ordem configurável), QR da turma e QR individual para casa | [doc 24 §3.4] | M | Troca de perfis em aparelho compartilhado |
-| F04 | Currículo fônico em dados | "Language pack" JSON: etapas 0–10, CGF, sílabas, palavras, pseudopalavras, tags BNCC canônicas + aliases estaduais | [doc 02 §5.5, §8; doc 03 §7.1] | M | Sequência sem validação de pedagoga/fono |
+| F04 | Currículo fônico em dados | "Language pack" JSON: etapas 0–10, CGF, sílabas, palavras, pseudopalavras, tags BNCC canônicas + aliases estaduais | [doc 02 §5.5, §7.1; doc 03 §7.1] | M | Sequência sem validação de pedagoga/fono |
 | F05 | Missão de boas-vindas (diagnóstico) | 3 sessões de 4–6 min, roteamento multiestágio. Define fase de entrada, priors e bandeiras | [doc 20 §3.3] | G | Itens sem calibração inicial; ASR no item oral |
 | F06 | Mundo/trilha (W2) | Mapa linear por regiões de sons, 2–3 escolhas por dia, ponte do desafio | [doc 24 §3.3; doc 04 #28; doc 08 P6] | M | Arte cara |
 | F07 | Sessão estruturada e ritual | Aquecimento → revisões → novos → contraste → fechamento → ritual de despedida. Limite diário configurável | [doc 07 §3.2C; doc 08 §3.6; doc 09 §3.3] | M | — |
@@ -824,7 +824,7 @@ A sequência de conteúdo segue a ordem de ensino do doc 02, em 11 etapas (0–1
 | 12 | **Traço Mágico** (d04#7) | Ver o traçado animado → traçar com guia → traçar livre → reconhecer entre distratores; a Sofia diz o **som** enquanto a criança traça | grafia + CGF; EF01LP11 | 🔊 | TEA: setas e ordem sempre iguais · TDAH: 1 letra por rodada · DIS: letras espelhadas com âncora ("barriga pra frente"), traçado em partes aceito [doc 24 §3.2; doc 10 §3.4] |
 | 13 | **É Letra ou Não É?** | Separar letras de números, símbolos e desenhos | EF01LP04 | 🔊 | TEA: regra explícita · TDAH: rápido e curto · DIS: aceita para 4–5 anos |
 | 14 | **Barriga pra Frente** | Escolher qual b/d/p/q está "virado certo" e completar a palavra-âncora (b de BOLA) | discriminação de orientação; EF01LP07 | 🔊 | TEA: regra visual fixa · TDAH: 3 itens · DIS: introduzir **b** e só semanas depois **d** [doc 06 §3A, item 5] |
-| 15 | **Nome ou Som?** | Dois botões, "nome da letra" (bê) e "som da letra" (/b/); a Sofia pergunta "o nome começa com o som?" | princípio acrofônico; EF01LP10, EF02LP06 | 🔊 | TEA: distinção nome/som sempre com os mesmos ícones [doc 02 §8, item 13] · TDAH: curto · DIS: ênfase no som |
+| 15 | **Nome ou Som?** | Dois botões, "nome da letra" (bê) e "som da letra" (/b/); a Sofia pergunta "o nome começa com o som?" | princípio acrofônico; EF01LP10, EF02LP06 | 🔊 | TEA: distinção nome/som sempre com os mesmos ícones [doc 02 §7.3, item 13] · TDAH: curto · DIS: ênfase no som |
 
 ### Fase 3 — Sílabas (síntese e decodificação silábica)
 
@@ -1176,3 +1176,119 @@ Quando TEA e TDAH estão ativos juntos, a **previsibilidade vence a novidade** [
   - ⚖️ busca no INPI (classes 9, 41, 28) para "Sofia" [doc 04 §5.4; doc 23 §3.1].
 
 ---
+## 7. Diferenciais inovadores e o "momento uau" de cada perfil
+
+### 7.1 O que não encontramos em pt-BR
+
+Base: benchmark do [doc 04 §2, §6]. "Não encontrado" ≠ "não existe": é preciso revalidar antes de usar em material comercial.
+
+| # | Diferencial | Por que é pioneiro em pt-BR | Evidência / viabilidade |
+|---|---|---|---|
+| D1 | **Fônica sistemática do zero ao texto, com acabamento de estúdio** | Quem tem evidência no Brasil (GraphoGame, Escribo) tem visual modesto. Quem tem escala (Elefante Letrado, Árvore) é biblioteca para quem já lê | [doc 04 §1, §6] |
+| D2 | **"Eu leio, a Sofia escuta"**: leitura em voz alta avaliada por reconhecimento de fala **infantil** pt-BR, com política de não punir na dúvida | Ello e Amira fazem em inglês; não achamos equivalente brasileiro para o zero até o texto | [doc 04 §6, item 2; doc 22; doc 03 §10] |
+| D3 | **Boquinha em três camadas:** vídeo humano por **fonema** + vista lateral do invisível (língua, vibração, nariz) + espelho local, e no V2 a dica por câmera só para os sons visíveis | Une a evidência de articulação + letra (Boyer & Ehri) com privacidade by design | [doc 10 §3.1–3.2; doc 03 §5, §10] |
+| D4 | **Bolota, o aprendiz que a criança ensina**, com erros planejados no nível exato da criança | Efeito protegido aplicado aos pares mínimos do PB (p/b, t/d, f/v, b/d) | [doc 23 §3.7] |
+| D5 | **Linter aberto de decodificabilidade em português** + biblioteca de livrinhos decodificáveis | Não encontramos biblioteca decodificável pt-BR em escala; o validador de grafemas do PB (x, s, r, nasais, dígrafos) é ativo técnico | [doc 25 §3.1; doc 21 §3.4] |
+| D6 | **Painel acionável alinhado à BNCC e ao ICA:** mapa de calor + grupos para amanhã + atividade de sala + risco com dose + "no caminho do 743" (como estimativa) | Os painéis de mercado são em inglês e não traduzem para psicogênese, BNCC e Saeb | [doc 20 §3.8; doc 02 §3.3] |
+| D7 | **Motor de memória explícito** (Leitner + estabilidade + revisão indireta hierárquica + Jardim que nunca morre) | Repetição espaçada visível e ética para crianças pequenas | [doc 07 §3.2] |
+| D8 | **Perfil sensorial completo + modos sem rótulo** (calmo, previsível, foco curto, reforço) | A acessibilidade cognitiva (COGA/DUA 3.0) vira configuração, não promessa terapêutica | [doc 05 §2; doc 12 §3] |
+| D9 | **Ética como marca:** sem anúncios, sem loot box, sem streak, ritual de fim, métricas éticas publicadas | Cerca de 80% dos apps para 3–5 anos têm design manipulativo; alinhado ao ECA Digital | [doc 04 §4; doc 08 §3.7] |
+| D10 | **Offline e aparelho fraco como requisito**, com aparelho compartilhado de turma (até 40 perfis) | Acesso real em escola pública | [doc 24 §3.8; doc 14 §3.6] |
+| D11 | **Evidência aberta:** publicar a acurácia do ASR infantil pt-BR e fazer estudo de efeito pré-registrado | O setor tem pouca evidência independente | [doc 21 §3.8; doc 04 §6, item 7] |
+
+### 7.2 O "momento uau" por perfil
+
+| Perfil | Momento uau | Quando acontece | Como desenhar | Base |
+|---|---|---|---|---|
+| **Criança (4–5)** | O Bolota troca "BATO" por "PATO", ela corrige e o Bolota aprende: **"eu ensinei!"** | 1ª semana na fase letra-som | Erro planejado engraçado e gentil; caderninho registra; Sofia elogia a estratégia | [doc 23 §3.7] |
+| **Criança (6–8)** | Ela lê a frase **em voz alta** e a cena ganha vida enquanto as palavras acendem com a voz dela: **"o app me ouviu ler!"** | 1º livrinho com o "Eu leio" | Destaque seguindo a voz; a palavra lida vira ação (P1: a leitura é a recompensa) | [doc 25 §3.2; doc 08 P1] |
+| **Criança (todas)** | A figurinha nova **fala** o som que ela acabou de dominar, e o mapa acende | fim da sessão | Ritual curto e específico, sem confete exagerado | [doc 08 §3.6] |
+| **Responsável** | No domingo, recebe: "Esta semana a Ana aprendeu LH e NH" + (opcional) um áudio de 10 s **dela lendo**, guardado só no aparelho da família e com consentimento específico + uma brincadeira de 5 min no mercado | 1º relatório semanal | 1 tela, linguagem simples, botão "fizemos!" | [doc 20 §3.8; doc 14 §3.5] |
+| **Responsável (criança com dificuldade)** | Recebe um sinal **cuidadoso e acionável** ("não é diagnóstico; o que fazer agora"), com dose sugerida, e não um rótulo | após semanas de dados persistentes | Texto padronizado + Lei 14.254/2021 + orientação de profissional | [doc 05 §7; doc 11 §3.1] |
+| **Professor** | Abre o painel na segunda-feira e vê **3 grupos prontos com uma atividade de 10 min para cada**: "quem precisa da mesma aula amanhã" | 1ª semana após o diagnóstico | Mapa de calor + grupos sugeridos e editáveis + fila de escuta curta | [doc 20 §3.8; doc 21 §3.6] |
+| **Professor** | Pede "uma história com a festa junina da nossa escola, só com os sons que a turma já sabe" e recebe um rascunho validado para aprovar | V2 | Pipeline LLM → linter → revisão humana | [doc 21 §3.4, §3.6] |
+| **Coordenação/escola** | Vê em 1 tela a migração de níveis entre o benchmark de início e o de meio do ano, por turma | 2º benchmark | Barras 100% + tabela "subiu/manteve/desceu" | [doc 20 §3.3] |
+| **Secretaria/rede** | Exporta um relatório no formato do ICA mostrando a fração "no caminho do 743" por escola, com dose e uso ao lado, sabendo onde investir formação | fim do 1º semestre | Painel agregado, n mínimo, rodapé "estimativa" | [doc 02 §3.3; doc 20 §3.8] |
+| **Editorial/pesquisa** | O linter reprova "CACHORRO" num livrinho da F2 e sugere uma troca; depois, os dados mostram a acurácia real daquele texto | todo dia | W12 + A3 | [doc 25 §3.1] |
+
+---
+
+## 8. Riscos, pendências e decisões em aberto
+
+| Tema | Risco / pendência | Ação |
+|---|---|---|
+| ⚖️ Legal | LGPD art. 14/11, ECA Digital + Decreto 12.880/2026, voz e imagem de criança, sinal de risco como dado de saúde, limiar de n mínimo nos agregados | Parecer jurídico antes do piloto [doc 05 §8–9] |
+| Marca | "Sofia" × "Princesinha Sofia"/Disney; apps "Sofia" existentes | Busca no INPI; marca composta [doc 04 §1, §5.4] |
+| ASR infantil | Falso "errado"; sotaques; falta de corpus pt-BR infantil aberto | Beta com não pontuação na dúvida; coleta consentida de 20–50 h; acordo ≥ 90% com juízes [doc 03 §8; doc 20 §3.9; doc 22 §3.3] |
+| Normas | PCPM, latências e pontos de corte sem norma brasileira | Tratar como hipótese; recalibrar com a coorte-piloto (≥ 500 por série) [doc 20 §3.7] |
+| Escala FONEMA × Saeb | Interpretação indevida como nota oficial | Rodapé fixo; ancoragem só via TRI com itens de ligação [doc 20 §3.8] |
+| Arte e paleta | Paleta e personagens propostos sem teste | Teste com crianças (Fun Toolkit adaptado) e revisão de diversidade [doc 24 §3.9; doc 23 §3.1] |
+| Licenças | Victory Native XL sem SPDX na API; Rhubarb "Other"; editor Rive pago; Spine exige licença | Conferir antes de adotar [doc 03 §2, §6] |
+| Câmera | Benefício sem evidência; privacidade | Fora do MVP; espelho local na V1; análise só no V2 com A/B [doc 10 §3.2; doc 05 §6.6] |
+| Sobrecarga do professor | Painel com informação demais | Começar com 5 visualizações (P1, P2, P3, P7, P12) e testar com 5 professoras [doc 24 §3.9] |
+| Dependência de tela | "Vício positivo" mal interpretado | Métricas éticas (A5) como OKR do produto [doc 08 §3.7] |
+
+---
+
+## 9. Referências
+
+### 9.1 Documentos internos (base deste catálogo)
+
+| Doc | Tema | Seções mais usadas |
+|---|---|---|
+| 02 | BNCC, fonética do PB, ICA/Saeb | §2 (habilidades), §3.3 (743), §5.5 (sequência), §7 (implicações) |
+| 03 | Tecnologia, GitHub, stack | §2 (engines), §5 (câmera), §6 (lip-sync), §7, §9 (arquitetura), §10 (boquinha) |
+| 04 | Mercado, 32 mecânicas, engajamento ético, arte | §2, §3, §4, §5, §6 |
+| 05 | Inclusão, acessibilidade, legal | §2.4 (perfil sensorial), §4 (matriz), §6.6, §7 (triagem), §8 |
+| 06 | Cérebro leitor | §3 (regras de design) |
+| 07 | Memória e algoritmo | §3.1, §3.2 (Agendador v0), §3.3 |
+| 08 | Dopamina e recompensas | §3.1–3.7 |
+| 09 | Atenção e carga cognitiva | §3.1–3.4 |
+| 10 | Fala multissensorial | §3.1–3.6 |
+| 11 | Dislexia | §3.1–3.4 |
+| 12 | TEA e TDAH | §3.1–3.3 |
+| 13 | Emoção, erro e falas da Sofia | §3.1–3.6 |
+| 14 | Desenvolvimento e música | §3.1–3.6 |
+| 20 | Avaliação adaptativa e relatórios | §3.1–3.9 |
+| 21 | IA na educação infantil | §3.1–3.8 |
+| 22 | ASR infantil | §3 |
+| 23 | Agente pedagógico Sofia | §3 (bíblia da personagem) |
+| 24 | UX/UI para crianças | §3.1–3.9 |
+| 25 | Decodificáveis, fluência e escrita | §3.1–3.4 |
+
+### 9.2 Fontes externas consultadas nesta rodada
+
+**Busca web** (painéis de alfabetização; usadas só como benchmark de padrão de interface):
+- 95 Percent Group — 95 Literacy Intervention System: https://www.95percentgroup.com/?p=26956
+- Amplify Boost (Trouble Spots): https://amplify.com/program-highlights/boost/
+- GraphoGame — "See inside the literacy learning process": https://group.graphogame.com/?p=1450
+- Renaissance Star Early Literacy (ajuda): https://star-help.zendesk.com/hc/en-us/articles/11761508617243
+- McGraw Hill Wonders Data Dashboard: https://www.mheducation.com/prek-12/support/knowledge/wonders-data-dashboard-overview
+- Blankestijn, J. A. (2021). Dissertação de mestrado, Univ. de Groningen, sobre painéis de professor em tutores inteligentes: https://fse.studenttheses.ub.rug.nl/26434/1/mHMC_2021_BlankestijnJA.pdf
+
+**GitHub** (API de busca, 13/11/2026; ⭐ aproximadas):
+
+| Repositório | ⭐ | Licença |
+|---|---|---|
+| apache/echarts | 67,7k | Apache-2.0 |
+| recharts/recharts | 27,7k | MIT |
+| airbnb/visx | 21,1k | MIT |
+| tremorlabs/tremor-npm | 16,5k | Apache-2.0 |
+| plouc/nivo | 14,1k | MIT |
+| observablehq/plot | 5,4k | ISC |
+| chart-kit/react-native-chart-kit | 3,1k | MIT |
+| margelo/react-native-graph | 2,6k | MIT |
+| kevinsqi/react-calendar-heatmap | 1,3k | MIT |
+| FormidableLabs/victory-native-xl | 1,2k | sem SPDX na API |
+| wuba/react-native-echarts | 1k | Apache-2.0 |
+| storybookjs/storybook | 91,5k | MIT |
+| radix-ui/primitives | 19,5k | MIT |
+| style-dictionary/style-dictionary | 4,9k | Apache-2.0 |
+| tokens-studio/sd-transforms | 251 | MIT |
+| googlefonts/atkinson-hyperlegible | 326 | OFL-1.1 |
+| googlefonts/lexend | 322 | OFL-1.1 |
+| silnrsi/font-andika | 86 | OFL-1.1 |
+
+Projetos de alfabetização open source já listados no [doc 03 §7.1]: FeedTheMonsterJS (MIT), Litera (MIT), Alfabetizando (GPL-3.0), buzzphonics (MIT).
+
+**Contraste de cores:** cálculo próprio com a fórmula de luminância relativa do WCAG 2.x (script local); os valores estão em §6.2.
