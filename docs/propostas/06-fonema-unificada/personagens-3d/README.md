@@ -29,3 +29,6 @@ Modelo `gemini-3-pro-image` com a opção 1 como referência, para manter os per
 | `07-jogo-cooperativo-ponte.png` | Dupla monta a ponte de sílabas | Engajamento ativo e cooperação (rel. 30) |
 
 O **close da boca** (criança fazendo "mmm") foi **bloqueado pelo filtro de segurança** do gerador. Não insistimos. O zoom da boca continua nas pranchas ilustradas com corte lateral (`personagens-v2/boca-zoom-*.png`), que são mais didáticas.
+
+## Correção (Decisão 009: sem arco-íris)
+`05-aventura-barco-mata-atlantica.png` foi refeita: barco de madeira natural com faixa marinho e vela branca com faixa azul-clara (custo ≈2.436 créditos por imagem, 2 variações; `-alt` é a segunda).

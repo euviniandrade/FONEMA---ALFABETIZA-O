@@ -20,3 +20,8 @@
 
 ## Como vira produto
 Na produção final, cada peça (cabelo, roupa, utensílio) é um **modelo 3D separado** (glTF) num personagem-base com encaixe. Essas pranchas são a direção de arte para a equipe 3D. O criador de avatar mostra o personagem girando em 3D no app.
+
+## Correção (Decisão 009: sem arco-íris)
+- `roupas-a.png`: a camiseta listrada colorida virou camiseta azul-clara lisa.
+- `utensilios-a.png`: a pipa ficou azul-clara e branca e o xilofone ficou de madeira com moldura marinho. Os itens repetidos viraram caixa de ferramentas, bola de basquete e bússola.
+- `utensilios-b.png` e `roupas-b.png` ainda podem ter pipa ou xilofone multicoloridos e **não devem ser usados** até serem revisados.
