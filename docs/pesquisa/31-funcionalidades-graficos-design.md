@@ -539,3 +539,125 @@ Evidência:
 ```
 
 ---
+## 3. Gráficos e visualizações de dados
+
+### 3.1 Princípios de visualização do FONEMA
+
+1. **Cada gráfico responde a uma pergunta e leva a uma ação.** Dashboard "acionável" é princípio do doc 20 [doc 20 §2.7, §3.8]. Um gráfico que não muda nenhuma decisão do adulto não entra.
+2. **Criança comparada consigo mesma.** Nos relatórios para família não há comparação com outras crianças [doc 20 §3.8; doc 13 §3.2]. No painel do professor, a comparação com a coorte aparece só como **faixa de referência de fundo**, nunca como ranking.
+3. **Precisão antes de velocidade.** Toda visualização de fluência mostra a precisão junto, porque precisão < 90% indica problema de decodificação e não de velocidade [doc 20 §3.7]. Em português, a dislexia aparece mais como lentidão [doc 11 §3.2].
+4. **Incerteza visível.** As métricas que dependem do reconhecimento de fala trazem um selo de confiança. Itens com ASR incerto ficam **fora do cálculo** [doc 20 §3.1, item 5; doc 22 §3.5].
+5. **Persistência antes de alerta.** Nenhum "sinal de atenção" aparece com base em um dia ou uma semana. Ele exige várias semanas **com dose adequada** [doc 11 §3.2; doc 05 §7]. Por isso a **dose** (minutos de prática fônica) aparece ao lado de todo indicador de risco.
+6. **Linguagem de "caminho", não de nota.** A escala FONEMA (0–1000, provisória) e os níveis 1–6 **não equivalem numericamente** ao Saeb até haver itens de ligação [doc 20 §3.8].
+7. **Acessível e daltônico-seguro.** Cor + forma + textura + rótulo. Escala sequencial de um só matiz no mapa de calor. Contraste ≥ 3:1 em marcas gráficas e ≥ 4,5:1 em texto [doc 24 §3.7]. Toda visualização tem tabela equivalente (botão "ver como tabela") para leitores de tela.
+8. **Privacidade nos agregados.** Nos painéis de rede, grupos com n < 10 são agregados ou suprimidos. É uma decisão de produto (minimização) alinhada ao espírito da LGPD art. 14 [doc 05 §6]. ⚖️ Confirmar o limiar com o jurídico.
+
+**O que o mercado faz (busca web desta rodada; a eficácia desses layouts não foi avaliada):**
+- O **95 Literacy Intervention System** oferece aos gestores um mapa de calor de aquisição de habilidades, filtrável por escola, série e data ([95 Percent Group](https://www.95percentgroup.com/?p=26956)).
+- O **Amplify Boost** tem a visão "Trouble Spots" por habilidade e/ou por aluno, com círculos coloridos de domínio ([Amplify Boost](https://amplify.com/program-highlights/boost/)).
+- O painel do **GraphoGame** agrupa alunos automaticamente por progresso e sinaliza erros que podem indicar dificuldade precoce ([GraphoGame](https://group.graphogame.com/?p=1450)).
+- O **Renaissance Star Early Literacy** mostra o domínio por domínio de habilidades ([Renaissance](https://star-help.zendesk.com/hc/en-us/articles/11761508617243)).
+- Uma dissertação da Univ. de Groningen sobre painéis de professor em tutores inteligentes concluiu que os professores preferem "instantâneos" a explorar dados sozinhos. Conclui também que o painel deve apoiar a decisão e a interação professor-aluno ([Blankestijn 2021](https://fse.studenttheses.ub.rug.nl/26434/1/mHMC_2021_BlankestijnJA.pdf)).
+
+Lição: o padrão de mercado é a grade colorida habilidade × aluno e o agrupamento automático. O FONEMA deve acrescentar a **ação sugerida por grupo** e o **contexto de dose**, que o mercado não destaca.
+
+### 3.2 Bibliotecas sugeridas (dados do GitHub em 13/11/2026)
+
+| Biblioteca | ⭐ | Licença | Plataforma | Uso no FONEMA |
+|---|---|---|---|---|
+| [apache/echarts](https://github.com/apache/echarts) | ~67,7k | Apache-2.0 | web (canvas/SVG) | **Mapa de calor grande** (24–35 alunos × 70 habilidades), zoom, tooltip, exportar imagem. Boa performance com muitas células. |
+| [wuba/react-native-echarts](https://github.com/wuba/react-native-echarts) | ~1k | Apache-2.0 | app (RN, Skia/SVG) | Mesmas opções do ECharts no app (professor em tablet). |
+| [recharts/recharts](https://github.com/recharts/recharts) | ~27,7k | MIT | web (React/SVG) | Linhas e barras simples nos portais do responsável e do professor (fluência, dose, curva de domínio). Fácil de estilizar com tokens. |
+| [plouc/nivo](https://github.com/plouc/nivo) | ~14,1k | MIT | web (React; SVG/canvas) | Alternativa com `HeatMap`, `Bump`, `Calendar` prontos. Bom para os relatórios em PDF (renderização no servidor). |
+| [airbnb/visx](https://github.com/airbnb/visx) | ~21,1k | MIT | web (primitivas D3) | Visualizações sob medida (ex.: "ponte de níveis", dot plot de decodificação × compreensão). |
+| [observablehq/plot](https://github.com/observablehq/plot) | ~5,4k | ISC | web | Exploração interna (time de dados/pesquisa, calibração de itens). Não precisa ir ao usuário final. |
+| [tremorlabs/tremor-npm](https://github.com/tremorlabs/tremor-npm) | ~16,5k | Apache-2.0 | web | Cartões de KPI e layout do painel da rede (opcional; sobre Recharts). |
+| [FormidableLabs/victory-native-xl](https://github.com/FormidableLabs/victory-native-xl) | ~1,2k | **sem SPDX na API — conferir** | app (Skia + Reanimated) | Gráficos performáticos no app do responsável. Antes de adotar, confirmar a licença no repositório. |
+| [margelo/react-native-graph](https://github.com/margelo/react-native-graph) | ~2,6k | MIT | app (Skia) | Linha animada simples (fluência no celular do responsável). |
+| [chart-kit/react-native-chart-kit](https://github.com/chart-kit/react-native-chart-kit) | ~3,1k | MIT | app | Inclui um "contribution graph" (calendário). Opção leve para "dias de leitura". |
+| [kevinsqi/react-calendar-heatmap](https://github.com/kevinsqi/react-calendar-heatmap) | ~1,3k | MIT | web | Calendário de dias de prática (portal web). Cuidado: **não** transformar em streak. |
+| **Rive** / **Lottie** / **React Native Skia** | ver [doc 03 §2] | MIT / Apache | app e web | **Visuais da criança** (trilha, jardim, álbum). Não são gráficos: são ilustrações animadas dirigidas por dados. |
+
+**Recomendação:**
+- **Web (portais):** ECharts para o mapa de calor e as grades grandes, e Recharts para linhas e barras do dia a dia. Os dois leem os mesmos tokens de cor do design system (§6).
+- **App:** react-native-echarts no professor e Skia (react-native-graph ou Victory Native XL, depois de conferir a licença) no responsável.
+- **Criança:** Rive (state machines dirigidas por dados) e Lottie [doc 03 §2, §9].
+- **PDF:** renderização no servidor (Nivo ou ECharts SSR → SVG → PDF).
+
+### 3.3 Fichas dos gráficos
+
+Legenda das colunas: **Pergunta** = a dúvida do usuário que o gráfico resolve. **Cuidados** = riscos de interpretação.
+
+#### 3.3.1 Para a criança: progresso não numérico
+
+| ID | Visual | Dados | Pergunta que responde | Cuidados | Implementação |
+|---|---|---|---|---|---|
+| C1 | **Trilha/mapa que se colore** (W2) | habilidades dominadas por região; atividade do dia; próxima ponte | "Onde estou? O que vem agora?" | Nós futuros visíveis e sem cadeado. Sem contagem de "% completo". Nunca "descolorir" o que já foi conquistado, mesmo se a habilidade voltar a "em consolidação" [doc 20 §3.5] | Rive/Skia; estado vem do modelo do aluno |
+| C2 | **Jardim da Revisão** | itens com revisão vencida (R = exp(−t/S)) [doc 07 §3.2]; regas feitas | "Tem alguma plantinha precisando de mim?" | Plantas **murcham levemente, nunca morrem** [doc 04 #29]. Máximo de 3–5 plantas "com sede" visíveis (sem dívida desmotivadora: nunca "120 revisões atrasadas") [doc 07 §3.2C]. No modo TEA, avisar antes das mudanças | Rive com input numérico "sede" 0–1 por planta |
+| C3 | **Álbum de figurinhas que falam** (W7) | sons dominados (nível ≥ 5) | "Quantos sons eu já sei?" | Figurinha = domínio, não tempo de uso. Sem raridade nem sorteio [doc 08 §3.5; ECA Digital, doc 04 §4.2] | Grade fixa por região; áudio ao tocar |
+| C4 | **Caderninho do Bolota** | correções que a criança fez (pares mínimos ensinados) | "O que eu ensinei?" | Erros do Bolota sempre dentro do que a criança já domina [doc 23 §3.7] | Lista ilustrada com áudio |
+| C5 | **Barra da sessão** (● ● ◐ ○) | atividades feitas/restantes na sessão | "Falta muito?" | Sem relógio. Previsibilidade (TEA) e meta curta visível (TDAH) [doc 12 §3.1–3.2] | Componente simples |
+| C6 | **"Potinho de palavras que eu sei ler"** | palavras lidas com fluência | "Eu já leio!" | Mostrar palavras (tocáveis, com áudio), e não um número. Para 7–8 anos, opcional "você já leu 3 livrinhos" | Lista/pote animado |
+| C7 | **Tabela de sons** (modo TEA) | grafemas por estado | "Quais regras já sei?" | Visual sistemático, de baixa saturação, para quem gosta de sistemas [doc 12 §3.1] | Grade estática |
+
+#### 3.3.2 Para o responsável: progresso semanal simples e sem ansiedade
+
+| ID | Tipo | Dados | Pergunta | Cuidados | Biblioteca |
+|---|---|---|---|---|---|
+| R1 | **Chips "aprendeu / praticando"** | habilidades que mudaram de estado na semana | "O que meu filho aprendeu esta semana?" | Linguagem simples ("o som do LH"), sem jargão. No máximo 3 chips por estado [doc 20 §3.8] | componente UI |
+| R2 | **7 pontos da semana** ("dias de leitura") | dias com sessão concluída | "Ele está praticando com regularidade?" | **Não é streak:** não zera, não envia alerta de perda, não usa a palavra "sequência" [doc 04 §4.3; doc 08 §3.5] | componente UI / chart-kit |
+| R3 | **Barra de sons "na memória de longo prazo"** | nº de CGF com nível ≥ 5, em relação ao total do currículo da fase | "Está consolidando?" | Explicar que errar na revisão é normal [doc 07 §3.3]. Não mostrar o percentual da turma | Recharts/Skia |
+| R4 | **Linha de fluência pessoal** (PCPM) + precisão | PCPM por semana; precisão %; faixa provisória da série como fundo | "Ele está lendo mais rápido?" | Só a partir das fases de frase/texto [doc 06 §3C]. As metas são **hipóteses provisórias** [doc 20 §3.7]. Esconder quando o ASR está em beta ou com baixa confiança. Nunca cronômetro para a criança | Recharts / react-native-graph |
+| R5 | **Tempo de prática fônica acumulado** | minutos/semana (barra) | "Estamos dando a dose certa?" | Mostrar **meta de dose** (ex.: 10–15 min/dia, 5×/semana) [doc 11 §3.4], e não "mais é melhor". Não premiar tempo de tela [doc 08 §3.7] | Recharts |
+| R6 | **Cartão "sinal de atenção"** (raro) | indicadores persistentes (CF, RAN, taxa de aprendizagem) | "Devo procurar ajuda?" | Texto padronizado, não diagnóstico, com ação concreta e Lei 14.254/2021 [doc 05 §7]. Consentimento para dado sensível. Nunca usar para vender plano [doc 05 §7] | texto, sem gráfico |
+
+#### 3.3.3 Para o professor
+
+| ID | Tipo | Dados | Pergunta | Cuidados | Biblioteca |
+|---|---|---|---|---|---|
+| P1 | **Mapa de calor aluno × habilidade** (W9) | estado por nó do mapa de habilidades (~70 nós em 7 domínios [doc 20 §3.2]): não iniciado / adquirindo / consolidando / dominado / automatizado; marcadores ⚑ (sanguessuga) e ⧗ (lento) | "Onde a turma está? Quem está travado em quê?" | (a) Escala sequencial de 1 matiz + ícones. (b) Colunas agrupadas por domínio e recolhíveis (por padrão, só as da fase atual). (c) "Dominado" segue o critério de 4 condições [doc 20 §3.5], explicado em tooltip. (d) Linhas ordenadas por grupo, nunca por "nota". (e) Células com ASR incerto ganham hachura | ECharts (`heatmap` + `visualMap` por peças) |
+| P2 | **Grupos automáticos** (3–5) | clusterização pela "franja externa" do grafo (próxima habilidade a ensinar) | "Quem precisa da mesma aula amanhã?" | É sugestão e o professor arrasta para mudar [doc 21 §3.6]. Grupos de 2–8 alunos. Mostrar o **motivo** do agrupamento e uma atividade de sala sugerida | lista UI + algoritmo |
+| P3 | **Curva de domínio** (individual e da turma) | nº acumulado de habilidades dominadas × semanas; faixa interquartil da coorte FONEMA como fundo | "O ritmo de aprendizagem está bom?" | É o melhor sinal de RTI (resposta à intervenção) [doc 11 §3.2]. Normalizar por **semanas com dose adequada**, e não por semanas de calendário. A faixa só aparece com coorte ≥ 30 | Recharts (linha + área) |
+| P4 | **Curva de aprendizagem por habilidade** | taxa de erro × nº de oportunidades, por habilidade (curva clássica de tutores inteligentes) | "Esta habilidade está sendo aprendida ou o item está ruim?" | Uso avançado/editorial. Uma curva plana pode indicar item mal calibrado, e não aluno com dificuldade | Recharts / Plot |
+| P5 | **Fluência ao longo do tempo** | PCPM (texto equivalente calibrado), precisão %, sílabas corretas/min [doc 20 §3.7] | "Ele lê mais rápido e com precisão?" | Duas linhas com eixos separados, ou precisão como cor do ponto. Faixa-meta **provisória** e editável pela rede. Só textos equivalentes. Marcar pontos de ASR em beta | Recharts (ComposedChart) |
+| P6 | **Faixas de risco** (3) | no alvo / atenção / intervenção intensiva, a partir de PCPM, precisão, ritmo de domínio, RAN [doc 20 §3.8] | "Quem precisa de intervenção intensiva?" | Formas distintas (● ◆ ▲) + texto. Sempre exibir o **motivo** e a **dose**. Linguagem "não é diagnóstico" [doc 05 §7]. Pontos de corte a validar com dados brasileiros [doc 11 §3.2] | lista + badge |
+| P7 | **Erros por categoria** | troca surda/sonora, regra contextual, omissão de coda/CCV, espelhamento, leitura logográfica (acerta palavras, erra pseudopalavras) [doc 20 §3.8; doc 25 §3.4] | "Que tipo de erro predomina?" | Barras horizontais ordenadas. Trocas surda/sonora são comuns no início e só preocupam se persistirem [doc 11 §3.2] | Recharts (BarChart) |
+| P8 | **Decodificação × compreensão** (dispersão) | eixo X = precisão de decodificação; eixo Y = compreensão literal; um ponto por aluno | "Alguém decodifica bem e não entende (perfil hiperléxico)? Ou entende e não decodifica?" | Alerta de perfil hiperléxico (TEA) [doc 12 §3.1]. Quadrantes rotulados em linguagem de ação. Sem nomes por padrão na projeção em sala | visx / ECharts |
+| P9 | **Hipótese de escrita** (barra empilhada) | pré-silábica / silábica / silábico-alfabética / alfabética [doc 20 §3.3] | "Em que hipótese de escrita está a turma?" | Tradução para a linguagem escolar brasileira, a partir do ditado. Mostrar a palavra escrita de exemplo | Recharts |
+| P10 | **Pseudopalavras × palavras reais** | acerto em cada tipo, por aluno | "Ele decodifica ou memoriza?" | Diferença grande = rota logográfica [doc 20 §3.3] | barras pareadas |
+| P11 | **Fila de escuta** | leituras com ASR incerto ou discordante (com consentimento) | "Quais leituras preciso ouvir?" | Amostragem limitada (ex.: ≤ 10/semana). A correção do professor vira dado de melhoria [doc 21 §3.6] | lista + player |
+| P12 | **Dose e uso** | min/semana por aluno; sessões concluídas pelo ritual × abandonadas | "Quem não está praticando o suficiente?" | Separar "não pratica" de "pratica e não avança" antes de qualquer alerta | Recharts |
+
+#### 3.3.4 Para a escola e a secretaria (gestor)
+
+| ID | Tipo | Dados | Pergunta | Cuidados | Biblioteca |
+|---|---|---|---|---|---|
+| G1 | **Barras 100% por nível FONEMA (1–6)**, uma por turma ou escola | distribuição por nível no benchmark trimestral [doc 20 §3.3, §3.8] | "Como estão as turmas/escolas?" | Níveis 5–6 = "no caminho do padrão Saeb 743". Rodapé fixo: "estimativa interna, não é nota Saeb nem ICA". Suprimir n < 10 | ECharts / Nivo |
+| G2 | **Indicador "no caminho do 743"** (KPI + linha de tendência por trimestre) | % no nível ≥ 5 no fim do 2º ano; projeção para o 1º ano | "Vamos chegar à meta do Compromisso?" | O ICA oficial usa avaliações estaduais equalizadas ao Saeb [doc 02 §3.3]. A ancoragem por TRI só vale depois de itens de ligação [doc 20 §3.8]. Contexto: ICA nacional de 56% (2023), 59,2% (2024) e 66% (2025) e meta de 80% em 2030 [doc 02; doc 04 §1] | Tremor/Recharts |
+| G3 | **Mapa de calor escola × habilidade-núcleo** | % de alunos com domínio por habilidade | "Que conteúdo a rede precisa reforçar na formação?" | Agregado, sem nominal. Útil para formação de professores | ECharts |
+| G4 | **Funil de benchmark** (início → meio → fim) | migração entre níveis (Sankey ou barras deslizantes) | "As crianças estão subindo de nível?" | O Sankey é difícil para leigos: oferecer a versão em tabela de "subiu/manteve/desceu" | ECharts Sankey |
+| G5 | **Uso e dose por escola** | % de alunos com dose ≥ meta; aparelhos offline sincronizando | "O programa está sendo implementado?" | A fidelidade de implementação explica resultado. Separar o problema de **acesso** (aparelho, rede) do pedagógico | Recharts |
+| G6 | **Equidade** (opcional) | níveis por região/rede/sexo; taxa de falso erro do ASR por região | "Há viés?" | Auditoria de viés/DIF [doc 20 §3.9; doc 21 §3.5]. Visível para a gestão de dados, com cautela na interpretação | Plot / ECharts |
+
+#### 3.3.5 Admin, editorial e pesquisa (interno)
+
+| ID | Gráfico | Para quê |
+|---|---|---|
+| A1 | Distribuição de dificuldade dos itens (Elo d_i) por habilidade; deriva trimestral | Recalibração [doc 20 §3.4, §3.9] |
+| A2 | Acurácia do ASR × juízes humanos, por idade, região e tipo de item; taxa de "falso errado" | Liberar itens só com ≥ 90% de acordo [doc 20 §3.9]; equidade [doc 21 §3.5] |
+| A3 | Linter: % decodificável e acurácia mediana real por história | Ciclo editorial [doc 25 §3.1] |
+| A4 | Retenção em 30 dias por braço de A/B (v0 × FSRS etc.) | Métrica principal do agendador [doc 07 §3.2E] |
+| A5 | **Métricas éticas:** % de sessões encerradas pelo ritual × abandonadas; retorno voluntário; tempo médio dentro do alvo (não "mais é melhor") | [doc 08 §3.7] |
+| A6 | Taxa de aquisição individual (retidos no dia seguinte / novos) | Ajuste do nº de itens novos [doc 07 §3.2C] |
+
+### 3.4 Anti-padrões de visualização (não fazer)
+
+- Ranking da turma, "aluno destaque", pódio ou cor vermelha associada a nomes.
+- Velocímetro/gauge de "nível de leitura" para a família. Ele induz ansiedade e falsa precisão.
+- Mostrar "nota 743" ou "nota Saeb" individual.
+- Gráfico de "minutos de tela" como sucesso.
+- Percentis de crianças pequenas sem norma brasileira validada [doc 20 §3.7; doc 11 §3.2].
+- Calendário de streak com dias "quebrados" em vermelho.
+- Alertas push de desempenho para a criança (só para o adulto, opcional) [doc 04 §4.3].
+
+---
