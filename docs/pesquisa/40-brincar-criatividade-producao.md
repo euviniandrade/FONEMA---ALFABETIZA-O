@@ -376,7 +376,7 @@ Legenda:
 | 57 | Lillard, A., Else-Quest, N. (2006). Evaluating Montessori education. *Science*. (referência de contraste: ambiente preparado + escolha da criança) | 10.1126/science.1132362 | [V] |
 | 58 | Kafai, Y. B., Burke, Q. (2014). *Connected Code: Why children need to learn programming*. MIT Press. (programar como forma de expressão/autoria) | 10.7551/mitpress/9992.001.0001 | [V] |
 
-**Contagem:** 58 referências. **[V] completas: 49.** Parciais (só título ou existência conferidos, ou conteúdo não conferido): 7 (23, 27, 35, 38, 51, 53, 54). **[NV]: 2** (50 e 55), mais a 39, verificada apenas por fonte secundária.
+**Contagem:** 58 referências. **[V] completas: 48.** Parciais (só título ou existência conferidos, ou conteúdo não conferido): 7 (23, 27, 35, 38, 51, 53, 54). **[NV]: 3** (39, verificada só por fonte secundária; 50; 55).
 
 **Fontes web usadas nesta rodada:**
 - [UNICEF Innocenti — Guidance on AI and children](https://www.unicef.org/innocenti/reports/policy-guidance-ai-children)
