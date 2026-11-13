@@ -9,3 +9,4 @@ app/web/public/espelho/
 app/web/public/mundo3d/
 app/web/dev-dist/
 app/web/test-results/
+.pub/
