@@ -5,7 +5,7 @@ import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { AvatarGrande, Balao, Carregando, Topo } from '../../componentes/basicos.tsx';
 import { BarraObjetivo, Selo } from '../../componentes/recompensas.tsx';
-import { asset } from '../../servicos/ambiente.ts';
+import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
 import { falar, falarVarias, textoTela } from '../../util.ts';
 
 function nivelDe(p: Progresso) {
@@ -46,7 +46,7 @@ export function Vila({ criancaId }: { criancaId: string }) {
   const [mundo3d, setMundo3d] = useState(false);
 
   useEffect(() => {
-    fetch('./mundo3d/index.html', { cache: 'no-store' }).then((r) => setMundo3d(r.ok && (r.headers.get('content-type') ?? '').includes('html'))).catch(() => undefined);
+    mundo3dDisponivel().then(setMundo3d);
   }, []);
 
   // recado do professor (retorno do "Mostra pro professor")

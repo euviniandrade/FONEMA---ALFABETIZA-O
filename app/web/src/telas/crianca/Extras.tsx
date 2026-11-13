@@ -6,7 +6,7 @@ import { navegar } from '../../rotas.ts';
 import { AvatarGrande, Balao, Carregando, Topo } from '../../componentes/basicos.tsx';
 import { Cofrinho, Selo } from '../../componentes/recompensas.tsx';
 import { EspelhoFrente, EspelhoLado, type ApiEspelho } from '../../componentes/EspelhoDoSom.tsx';
-import { asset } from '../../servicos/ambiente.ts';
+import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
 import { gravar, temGravacao } from '../../servicos/microfone.ts';
 import { voz } from '../../servicos/voz.ts';
@@ -327,7 +327,7 @@ export function Mundo3D({ criancaId }: { criancaId: string }) {
   const [ok, setOk] = useState<boolean | null>(null);
   const ref = useRef<HTMLIFrameElement>(null);
   useEffect(() => {
-    fetch('./mundo3d/index.html', { cache: 'no-store' }).then((r) => setOk(r.ok && (r.headers.get('content-type') ?? '').includes('html'))).catch(() => setOk(false));
+    mundo3dDisponivel().then(setOk);
   }, []);
   useEffect(() => {
     const f = (e: MessageEvent) => {
