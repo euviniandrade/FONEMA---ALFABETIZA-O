@@ -251,7 +251,8 @@ function cerrado() {
     <linearGradient id="campo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D7BC6A"/><stop offset="1" stop-color="#C49B4A"/></linearGradient>
     <linearGradient id="trilha" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D08A5E"/><stop offset="1" stop-color="#B5683E"/></linearGradient>
     <radialGradient id="vign3" cx=".5" cy=".45" r=".8"><stop offset=".6" stop-color="#4A2A12" stop-opacity="0"/><stop offset="1" stop-color="#4A2A12" stop-opacity=".22"/></radialGradient></defs>`;
-  g += `<rect width="1280" height="800" fill="url(#skyC)"/><rect width="1280" height="800" fill="url(#sunC)"/>${cloud(240, 110, .8, .8)}${cloud(640, 70, .6, .7)}`;
+  g += `<rect width="1280" height="800" fill="url(#skyC)"/><rect width="1280" height="800" fill="url(#sunC)"/><circle cx="1050" cy="300" r="46" fill="#FFF6D8" opacity=".9"/>${cloud(240, 110, .8, .8)}${cloud(640, 70, .6, .7)}${cloud(980, 150, .7, .75)}${cloud(1180, 60, .5, .7)}
+    <path d="M760,190 q14,-12 28,0 q14,-12 28,0" fill="none" stroke="#4A3A5A" stroke-width="3" stroke-linecap="round"/><path d="M820,230 q9,-8 18,0 q9,-8 18,0" fill="none" stroke="#4A3A5A" stroke-width="2.4" stroke-linecap="round"/>`;
   // chapadas
   g += `<path d="M0,330 L80,330 L110,300 L360,296 L392,330 L520,334 L560,310 L760,306 L800,336 L1280,330 V420 H0Z" fill="#B7A6C8"/><path d="M110,300 L360,296 L366,308 L116,312Z" fill="#CDBEDC"/>`;
   g += `<path d="M0,360 Q160,340 300,356 L640,350 L700,320 L1000,316 L1050,350 Q1180,346 1280,356 V440 H0Z" fill="#9C8FB6"/><path d="M700,320 L1000,316 L1006,330 L706,334Z" fill="#B7A6C8"/>`;
@@ -266,7 +267,7 @@ function cerrado() {
   g += `<ellipse cx="830" cy="548" rx="60" ry="7" fill="#000" opacity=".12"/>` + lobo(820, 548, .52);
   g += grassTufts(7, 30, 760, 900, 534, 554, ['#B08C3E', '#E0C878'], 10, 20);
   // cupinzeiros
-  g += cupim(150, 540, .9) + cupim(860, 520, .6) + cupim(1190, 600, 1.1);
+  g += cupim(150, 540, .9) + cupim(990, 528, .55) + cupim(1190, 600, 1.1);
   // ipê roxo
   g += ipe(1090, 620, 170, 150, ['#8E4380', '#C36BB0', '#EAB2DC'], 14, '#4E3524', '#7A3570');
   // ipê amarelo
@@ -278,6 +279,7 @@ function cerrado() {
   const r = rng(31);
   for (let i = 0; i < 40; i++) { const x = r() * 1280, y = 620 + r() * 170; if (x > 420 && x < 760 && y > 600) continue; g += `<circle cx="${f(x)}" cy="${f(y)}" r="${f(3 + r() * 3)}" fill="${['#F6F0FF', '#C36BB0', P.ipe, '#fff'][i % 4]}"/>`; }
   g += `<g transform="translate(90,760)"><path d="M0,0 Q-6,-60 4,-120" stroke="#3A2A20" stroke-width="10" fill="none"/>${[-120, -100, -80].map(y => `<path d="M2,${y} l-18,-20 M4,${y} l18,-22 M3,${y} l-4,-26" stroke="#4E7A3E" stroke-width="5" stroke-linecap="round"/>`).join('')}<circle cx="4" cy="-150" r="10" fill="#9B6FC4"/><circle cx="-8" cy="-140" r="8" fill="#B892E0"/></g>`;
+  g += `<g opacity=".95">${grassTufts(41, 26, 1080, 1280, 760, 800, ['#7A5A22', '#9E7A32'], 40, 70)}${grassTufts(43, 18, 300, 420, 770, 800, ['#7A5A22', '#9E7A32'], 30, 56)}</g>`;
   // Sofia exploradora e Bolota
   g += groundShadow(560, 770, 80, 14) + `<g transform="translate(560,${770 - 480}) scale(.48)">${S.sofia({ expr: 'curiosa', turn: 1, letter: 'L', headTilt: 4, armR: { t: [240, 300], hand: 'point', hrot: -40 } })}</g>`;
   g += groundShadow(710, 772, 56, 10) + `<g transform="translate(694,770) scale(.3)">${B.bolota({ eyes: 'wide', mouth: 'o', look: [4, -4], extra: 'q' })}</g>`;
