@@ -10,7 +10,7 @@ function room(s, { b = [190, 70, 1090, 540], wall = '#F2DDB8', side = '#E2C69C',
   s.add('sky', `<path d="M0,0 L${x0},${y0} L${x0},${y1} L0,${H}Z" fill="${s.lin([[0, mix(side, '#3A2218', .18)], [1, side]], 0, 0, 1, 0)}"/><path d="M${W},0 L${x1},${y0} L${x1},${y1} L${W},${H}Z" fill="${s.lin([[0, side], [1, mix(side, '#3A2218', .22)]], 0, 0, 1, 0)}"/>`);
   s.add('sky', `<path d="M0,0 L${W},0 L${x1},${y0} L${x0},${y0}Z" fill="${s.lin([[0, mix(ceil, '#3A2218', .2)], [1, ceil]])}"/>`);
   let fl = `<path d="M${x0},${y1} L${x1},${y1} L${W},${H} L0,${H}Z" fill="${s.lin([[0, floor[0]], [1, floor[1]]])}"/>`;
-  for (let i = 0; i <= planks; i++) { const t = i / planks; fl += `<path d="M${f(x0 + (x1 - x0) * t)},${y1} L${f(-200 + (W + 400) * t)},${H}" stroke="${mix(floor[1], '#000000', .25)}" stroke-width="1.6" opacity=".45"/>`; }
+  for (let i = 0; planks > 0 && i <= planks; i++) { const t = i / planks; fl += `<path d="M${f(x0 + (x1 - x0) * t)},${y1} L${f(-200 + (W + 400) * t)},${H}" stroke="${mix(floor[1], '#000000', .25)}" stroke-width="1.6" opacity=".45"/>`; }
   [.12, .3, .55, .85].forEach(k => { const y = y1 + (H - y1) * k, xl = x0 - x0 * k, xr = x1 + (W - x1) * k; fl += `<path d="M${f(xl)},${f(y)} L${f(xr)},${f(y)}" stroke="${mix(floor[1], '#000000', .2)}" stroke-width="1.2" opacity=".3"/>`; });
   fl += `<path d="M${x0},${y1} L${x1},${y1}" stroke="${base}" stroke-width="8"/><path d="M${x0},${y1} L0,${H}" stroke="${base}" stroke-width="10"/><path d="M${x1},${y1} L${W},${H}" stroke="${base}" stroke-width="10"/>`;
   s.add('far', fl);
