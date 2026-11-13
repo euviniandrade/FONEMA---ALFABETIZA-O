@@ -281,8 +281,8 @@ async function main() {
   await page.goto(BASE + '#/adulto/config');
   await cap(page, 'configuracoes-padroes-mvp');
 
+  if (!process.argv.includes('--sem-jornada')) {
   console.log('9. Jornada inteira R0 → R2a (modo demonstração: domínio em 1 sessão)');
-  {
     const ctx2 = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: 'pt-BR' });
     await ctx2.addInitScript((c) => { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); }, COLETAR);
     const pj = await ctx2.newPage();
