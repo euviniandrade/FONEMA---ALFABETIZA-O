@@ -158,8 +158,8 @@ function quintal() {
   s.hotspot('near', 1150, 470, 40, 'gato');
   // horta
   let horta = '';
-  [[660, 640], [760, 650], [860, 640]].forEach(([x, y], i) => { horta += `<path d="M${x - 46},${y} L${x + 46},${y} L${x + 52},${y + 22} L${x - 52},${y + 22}Z" fill="#7A4A2A"/><path d="M${x - 46},${y} L${x + 46},${y}" stroke="#9A6A40" stroke-width="4"/>`; for (let k = 0; k < 4; k++) horta += canopy(x - 33 + k * 22, y - 6, 12, 9, ['#3E7A30', '#5EA040', '#9CD070'], 300 + i * 9 + k, { n: 6 }); });
-  horta += `<g>${[0, 1, 2].map(i => `<path d="M${652 + i * 18},${632} q-4,-10 0,-14" stroke="#4E8A34" stroke-width="3" fill="none"/><path d="M${648 + i * 18},${640} q4,-10 8,0z" fill="#F28C28"/>`).join('')}</g>`;
+  [[800, 630], [905, 640], [1010, 630]].forEach(([x, y], i) => { horta += `<path d="M${x - 46},${y} L${x + 46},${y} L${x + 52},${y + 22} L${x - 52},${y + 22}Z" fill="#7A4A2A"/><path d="M${x - 46},${y} L${x + 46},${y}" stroke="#9A6A40" stroke-width="4"/>`; for (let k = 0; k < 4; k++) horta += canopy(x - 33 + k * 22, y - 6, 12, 9, ['#3E7A30', '#5EA040', '#9CD070'], 300 + i * 9 + k, { n: 6 }); });
+  horta += `<g>${[0, 1, 2].map(i => `<path d="M${792 + i * 18},${622} q-4,-10 0,-14" stroke="#4E8A34" stroke-width="3" fill="none"/><path d="M${788 + i * 18},${630} q4,-10 8,0z" fill="#F28C28"/>`).join('')}</g>`;
   s.add('near', horta);
   // laguinho com pato e sapo
   const pond = 'M880,720 Q900,680 1010,676 Q1140,672 1170,706 Q1180,742 1050,750 Q900,754 880,720Z';
@@ -247,7 +247,7 @@ function ilha() {
 // 03 · MATA ATLÂNTICA — manhã de neblina, cachoeira (Vale do M-L-F / Trilha do V-S-N)
 // =============================================================================================
 function mata() {
-  const s = new Scene('mata', { layers: true });
+  const s = new Scene('mata');
   sky(s, [[0, '#BFD8D0'], [.4, '#E6EEDA'], [.7, '#F4EED4']]);
   sunGlow(s, 760, 120, 0, '#FFF', '#FFF2C8', 600, .6);
   s.add('sky', `<circle cx="1090" cy="120" r="30" fill="#FFFFFF" opacity=".75"/><circle cx="1080" cy="116" r="30" fill="#E8EEE0" opacity=".9"/>`);
@@ -424,4 +424,310 @@ function pantanal() {
   return s;
 }
 
-module.exports = { '01-quintal-vila': quintal, '02-ilha-das-vogais': ilha, '03-mata-atlantica': mata, '04-pampa': pampa, '05-pantanal': pantanal, '06-cerrado': cerrado };
+
+// =============================================================================================
+// 07 · CAATINGA / SERTÃO — tarde quente, céu profundo (chefe do Ano 1: nasalidade)
+// =============================================================================================
+function caatinga() {
+  const s = new Scene('caatinga');
+  const sunX = 1080, sunY = 170;
+  sky(s, [[0, '#2F6FB0'], [.35, '#6AA6D2'], [.6, '#F2D6A6'], [.7, '#F6C88A']]);
+  sunGlow(s, sunX, sunY, 34, '#FFFBE8', '#FFE2A0', 600, .6);
+  s.add('sky', cloud(s, 300, 180, 200, '#FFFFFF', '#E6CDB8', 61, .7) + L.asaBranca(520, 230, 1.1, false) + L.asaBranca(580, 260, .8, false) + L.asaBranca(470, 270, .7, false));
+  const haze = '#F0C89A';
+  // serras e lajedos (inselbergs)
+  s.add('far', `<path d="M-20,470 Q60,380 140,372 Q220,368 280,430 Q330,470 380,470Z" fill="${mix('#A0705A', haze, .5)}"/><path d="M820,470 Q880,350 980,340 Q1080,336 1130,400 Q1170,450 1240,470Z" fill="${mix('#A0705A', haze, .55)}"/><path d="M880,400 Q960,350 1040,352" stroke="${mix('#E8B890', haze, .2)}" stroke-width="6" fill="none" opacity=".6"/>`);
+  const r1 = ridge(71, 476, 14, { fr: [1, 2.6, 6], wt: [1, .4, .2] });
+  s.add('far', `<path d="${r1.d}" fill="${mix('#8E8A70', haze, .45)}"/>`);
+  for (let x = 0; x < W; x += 30) s.add('far', dryBush(x + (x * 7 % 13), r1.y(x) + 4, .45, 200 + x, mix('#7E7468', haze, .45), x % 90 === 0 ? mix('#7A9A5A', haze, .4) : null));
+  // planície (mid)
+  const r2 = ridge(72, 540, 10, { fr: [1, 2.2], wt: [1, .4] });
+  s.add('mid', `<path d="${r2.d}" fill="${s.lin([[0, '#D8A870'], [1, '#C08A52']])}"/>`);
+  // casa de taipa com alpendre
+  const hx = 470, hy = 560;
+  s.add('mid', L.castShadow(s, hx + 140, hy, 260, 10, 0, .3, '#5A2A14'));
+  s.add('mid', `<rect x="${hx - 120}" y="${hy - 96}" width="240" height="96" fill="${s.lin([[0, '#E8C8A0'], [1, '#C89A6A']])}"/><path d="M${hx - 120},${hy - 96} L${hx - 120},${hy}" stroke="#A8784A" stroke-width="3"/>${Array.from({ length: 10 }, (_, i) => `<path d="M${hx - 110 + i * 24},${hy - 90} l6,10 M${hx - 104 + i * 24},${hy - 40} l-4,12" stroke="#B88A5A" stroke-width="2" opacity=".6"/>`).join('')}
+    <path d="M${hx - 140},${hy - 92} L${hx},${hy - 150} L${hx + 140},${hy - 92}Z" fill="#B0562E"/>${Array.from({ length: 14 }, (_, i) => `<path d="M${hx - 136 + i * 20},${hy - 92 + Math.abs(i - 7) * 0 - (7 - Math.abs(i - 7)) * 8} v${8 + (7 - Math.abs(i - 7)) * 8}" stroke="#8A3E1E" stroke-width="2" opacity=".5"/>`).join('')}
+    <path d="M${hx - 150},${hy - 92} L${hx + 150},${hy - 92}" stroke="#7A3418" stroke-width="5"/>
+    <rect x="${hx - 22}" y="${hy - 62}" width="44" height="62" fill="#3E86A8"/><rect x="${hx - 18}" y="${hy - 58}" width="36" height="58" fill="#4E9CC0"/><path d="M${hx},${hy - 58} v58" stroke="#2E6A8A" stroke-width="2"/>
+    <rect x="${hx - 92}" y="${hy - 70}" width="34" height="30" fill="#3E86A8"/><rect x="${hx + 58}" y="${hy - 70}" width="34" height="30" fill="#3E86A8"/>
+    <path d="M${hx - 160},${hy - 60} L${hx - 120},${hy - 92}" stroke="#6A4A2E" stroke-width="4"/><path d="M${hx - 162},${hy} V${hy - 60}" stroke="#6A4A2E" stroke-width="6"/>`);
+  // cisterna
+  s.add('mid', `<g transform="translate(660,566)"><ellipse cx="0" cy="0" rx="46" ry="10" fill="#9A7A5A" opacity=".5"/><path d="M-44,0 V-40 Q0,-56 44,-40 V0 Q0,10 -44,0Z" fill="#EDE6DA"/><ellipse cx="0" cy="-40" rx="44" ry="10" fill="#D8D0C2"/><path d="M-30,-36 V-4" stroke="#fff" stroke-width="6" opacity=".6"/><path d="M-44,-20 Q0,-8 44,-20" stroke="#4E9CC0" stroke-width="4" fill="none"/></g>`);
+  // juazeiro verde + mandacarus médios
+  s.add('mid', tree(780, 560, { h: 60, w: 9, crown: [120, 56], cols: ['#4A6A34', '#668A40', '#9AB860', '#D8E8A0'], seed: 73, lobes: 3, lx: .4 }));
+  s.add('mid', cactus(940, 556, { h: 150, w: 10, arms: [[.42, -1, 34, 40], [.55, 1, 30, 30]], col: ['#4F7F5A', '#6FA073', '#A4CBA0'] }) + cactus(160, 556, { h: 120, w: 9, arms: [[.5, 1, 28, 30]] }));
+  s.add('mid', dryBush(1060, 556, 1, 81, '#8A8076') + dryBush(1180, 560, .9, 82, '#8A8076') + dryBush(660, 562, .8, 83, '#8A8076') + dryBush(250, 560, 1, 84, '#8A8076') + dryBush(320, 566, .7, 85, '#9A9086'));
+  // jumento à sombra
+  s.add('mid', L.castShadow(s, 830, 586, 100, 5, 0, .3) + L.jumento(830, 588, .8, true));
+  s.hotspot('mid', 830, 540, 46, 'jumento');
+  // alpendre: banco com sanfona e moringa
+  s.add('mid', `<g transform="translate(${hx - 70},${hy})"><rect x="-30" y="-24" width="60" height="6" fill="#7A4A2A"/><path d="M-26,-18 v18 M26,-18 v18" stroke="#5A3420" stroke-width="4"/>
+    <g transform="translate(0,-38)"><rect x="-16" y="-12" width="32" height="26" rx="2" fill="#B0302A"/>${[-10, -4, 2, 8].map(x => `<path d="M${x},-12 v26" stroke="#6A1A16" stroke-width="2"/>`).join('')}<rect x="-20" y="-14" width="6" height="30" fill="#F4ECDC"/><rect x="14" y="-14" width="6" height="30" fill="#2A2A2A"/>${[0, 1, 2, 3].map(i => `<circle cx="17" cy="${-10 + i * 7}" r="1.4" fill="#E8E0D0"/>`).join('')}</g></g>`);
+  s.hotspot('mid', hx - 70, hy - 40, 32, 'sanfona');
+  s.add('mid', `<g transform="translate(${hx + 70},${hy})">${shadowE(0, 0, 18, .3)}<path d="M-14,0 Q-22,-16 -10,-28 L-6,-38 L6,-38 L10,-28 Q22,-16 14,0Z" fill="#B85A34"/><ellipse cx="0" cy="-38" rx="7" ry="2.5" fill="#7A3418"/><path d="M-10,-18 Q0,-14 10,-18" stroke="#E89A6A" stroke-width="2" fill="none"/></g>`);
+  s.hotspot('mid', hx + 70, hy - 20, 30, 'moringa');
+  // chão rachado (near)
+  const r3 = ridge(74, 600, 10, { fr: [1, 2.4], wt: [1, .3] });
+  s.add('near', `<path d="${r3.d}" fill="${s.lin([[0, '#D2A066'], [1, '#A8723E']])}"/>`);
+  { const rc = rng(5); let cr = ''; for (let i = 0; i < 40; i++) { let x = rc() * W, y = 620 + rc() * 170; let d = `M${f(x)},${f(y)}`; for (let k = 0; k < 4; k++) { x += (rc() - .5) * 40; y += (rc() - .3) * 10; d += ` L${f(x)},${f(y)}`; } cr += `<path d="${d}" stroke="#8A5A2E" stroke-width="${f(1 + (y - 600) / 120)}" fill="none" opacity=".45"/>`; } s.add('near', cr); }
+  // mandacaru grande com flor
+  s.add('near', L.castShadow(s, 1000, 760, 220, 8, Math.PI, .3) + cactus(1000, 760, { h: 400, w: 22, arms: [[.36, -1, 70, 120], [.5, 1, 62, 90]], col: ['#3E7050', '#5E9468', '#9CC8A0'] }));
+  s.add('near', `<g transform="translate(1000,356)">${[0, 1, 2, 3, 4, 5, 6, 7].map(i => `<ellipse cx="0" cy="-10" rx="5" ry="12" fill="#FFFDF4" transform="rotate(${i * 45})"/>`).join('')}<circle r="5" fill="#F4E08A"/></g><g transform="translate(1066,520)">${[0, 1, 2, 3, 4, 5].map(i => `<ellipse cx="0" cy="-8" rx="4" ry="9" fill="#FFFDF4" transform="rotate(${i * 60})"/>`).join('')}<circle r="4" fill="#F4E08A"/></g>`);
+  s.hotspot('near', 1000, 420, 56, 'mandacaru');
+  // umbuzeiro com frutos (esquerda)
+  s.add('near', L.castShadow(s, 120, 740, 220, 9, Math.PI, .3) + tree(120, 740, { h: 120, w: 15, crown: [170, 80], cols: ['#5A6A3A', '#748A46', '#A8B866', '#E8E8A8'], seed: 75, lobes: 3, lx: .5, ly: -.8 }));
+  [[60, 600], [100, 616], [150, 606], [190, 590], [120, 580], [40, 620]].forEach(([x, y]) => s.add('near', `<circle cx="${x}" cy="${y}" r="7" fill="#C8C060"/><circle cx="${x - 2}" cy="${y - 2}" r="2.5" fill="#F0E8A0"/>`));
+  s.hotspot('near', 112, 600, 48, 'umbu');
+  // xique-xique, pedras e calango
+  s.add('near', rock(620, 740, 70, 36, ['#8A7060', '#AE927E', '#D8C0A8'], 77) + L.calango(620, 702, .9, true));
+  s.add('near', [[420, 760], [480, 772], [760, 776], [1180, 770]].map(([x, y], i) => `<g transform="translate(${x},${y}) scale(.5)">${cactus(0, 0, { h: 60, w: 10, arms: [[.3, -1, 22, 20], [.4, 1, 20, 16]], col: ['#5A8A60', '#7AAA78', '#B0D0A8'] })}</g>`).join(''));
+  s.add('near', grass(76, 70, 0, W, 620, 790, ['#C8A060', '#A8803E', '#E0C080'], 8, 20));
+  s.add('fg', `<g filter="${s.blur(2.5)}">${dryBush(-10, 820, 2.3, 91, '#5A4A3E')}${dryBush(1290, 830, 2.2, 92, '#5A4A3E')}</g>`);
+  s.add('fg', particles(93, 30, 0, W, 300, 700, '#FFF0C8', 1.6, .4));
+  finish(s, { vignette: '#5A2A10', vo: .3, warm: '#FFA850', warmO: .12 });
+  return s;
+}
+
+// =============================================================================================
+// 08 · AMAZÔNIA — manhã úmida no rio, luz entre as copas (abre o Ano 2)
+// =============================================================================================
+function amazonia() {
+  const s = new Scene('amazonia');
+  const sunX = 860, sunY = 120;
+  sky(s, [[0, '#9CC4C0'], [.35, '#D8E6D0'], [.55, '#F4ECCC']]);
+  sunGlow(s, sunX, sunY, 28, '#FFFBE8', '#FFF0C0', 560, .7);
+  s.add('sky', cloud(s, 300, 110, 220, '#FFFFFF', '#CADAD0', 81, .7) + cloud(s, 1100, 160, 180, '#FFFFFF', '#CADAD0', 82, .6));
+  const fog = '#E4ECDC', hz = 452;
+  // muralhas de floresta em camadas
+  [[372, '#4E7A5A', .6, 1], [404, '#3E6A48', .42, 2], [440, '#2E5A3A', .25, 3]].forEach(([y, c, k, sd]) => {
+    const rr = rng(sd * 11); let g = '';
+    for (let x = -30; x < W + 40; x += 22 + rr() * 14) { const r = 18 + rr() * 22; g += `<circle cx="${f(x)}" cy="${f(y - rr() * 18)}" r="${f(r)}"/>`; }
+    g += `<rect x="-20" y="${y}" width="${W + 40}" height="${hz - y + 10}"/>`;
+    s.add('far', `<g fill="${mix(c, fog, k)}">${g}</g><rect x="0" y="${y - 6}" width="${W}" height="${hz - y + 20}" fill="${s.lin([[0, fog, 0], [1, fog, .55]])}"/>`);
+  });
+  // sumaúma emergente
+  s.add('far', `<path d="M300,${hz} L304,250 L316,250 L320,${hz}Z" fill="${mix('#6A6A5A', fog, .45)}"/>${canopy(310, 236, 120, 34, [mix('#3E6A48', fog, .45), mix('#5A8A5A', fog, .45), mix('#8AB880', fog, .4)], 84)}`);
+  // rio
+  s.add('far', `<path d="M0,${hz} H${W} V${H} H0Z" fill="${s.lin([[0, '#E8E2C4'], [.3, '#B8A878'], [1, '#6A5A3A']])}"/>${shimmer(85, 120, 0, W, hz + 4, 680, '#FFF8E0', .55, sunX, 34)}`);
+  s.add('far', `<rect x="0" y="${hz - 2}" width="${W}" height="40" fill="${fog}" opacity=".5" filter="${s.blur(8)}"/>`);
+  // palafitas (mid)
+  const pid = s.id('pal');
+  let pal = '';
+  [[560, 70, '#E8A040'], [660, 90, '#5AA0B8']].forEach(([x, w, c]) => { pal += `${[0, 1, 2, 3].map(i => `<path d="M${x + i * w / 3},${hz + 60} V${hz + 20}" stroke="#5A4030" stroke-width="4"/>`).join('')}<rect x="${x - 6}" y="${hz + 16}" width="${w + 12}" height="6" fill="#7A5A3E"/><rect x="${x}" y="${hz - 30}" width="${w}" height="46" fill="${c}"/><path d="M${x - 10},${hz - 28} L${x + w / 2},${hz - 56} L${x + w + 10},${hz - 28}Z" fill="#B88A50"/><rect x="${x + w * .4}" y="${hz - 16}" width="14" height="32" fill="#4A3020"/>`; });
+  pal += `<path d="M520,${hz + 40} q60,8 120,0 q-60,14 -120,0z" fill="#6A3A22"/>`;
+  s.add('mid', `<g id="${pid}">${pal}</g>` + reflection(s, pid, hz + 60, `M480,${hz + 60} H800 V${hz + 160} H480Z`, .3, 2));
+  // vitórias-régias
+  { const rv = rng(86); let vr = ''; for (let i = 0; i < 11; i++) { const x = 1020 + rv() * 240, y = 540 + rv() * 50, r = 16 + rv() * 12; vr += `<ellipse cx="${f(x)}" cy="${f(y)}" rx="${f(r)}" ry="${f(r * .3)}" fill="#3E7A3A"/><ellipse cx="${f(x)}" cy="${f(y - 2)}" rx="${f(r * .92)}" ry="${f(r * .26)}" fill="#5E9A4A"/><path d="M${f(x - r)},${f(y)} q${f(r)},${f(r * .3)} ${f(2 * r)},0" stroke="#A8402E" stroke-width="2" fill="none"/>`; if (i % 4 === 1) vr += `<ellipse cx="${f(x)}" cy="${f(y - 6)}" rx="7" ry="5" fill="#FBE8EE"/><ellipse cx="${f(x)}" cy="${f(y - 8)}" rx="4" ry="3" fill="#F2A8C0"/>`; } s.add('mid', vr); }
+  // boto saltando
+  s.add('mid', `<ellipse cx="420" cy="572" rx="70" ry="8" fill="#FFFFFF" opacity=".35"/>` + L.boto(420, 566, .9, false) + particles(87, 18, 350, 500, 540, 580, '#FFFFFF', 2, .8));
+  // margem direita com açaizeiros
+  s.add('mid', `<path d="M980,${hz + 30} Q1100,${hz + 10} 1300,${hz + 20} L1300,${hz + 80} Q1120,${hz + 70} 980,${hz + 40}Z" fill="#3A5A2E"/>`);
+  [[1040, 1], [1090, .9], [1150, 1.1], [1220, 1], [1265, .85]].forEach(([x, k], i) => s.add('mid', `<g transform="translate(${x},${hz + 34}) scale(${.5 * k}) translate(${-x},${-(hz + 34)})">${palm(x, hz + 34, { h: 340, lean: (i % 2 ? 1 : -1) * 20, seed: 90 + i, len: 120, nuts: false, w: 5, col: ['#2E5A30', '#3E7A3A', '#7EB060'], trunk: ['#6A6050', '#8A8070'] })}</g>`));
+  // margem próxima (near)
+  s.add('near', `<path d="M-20,${H + 10} L-20,600 Q160,580 300,610 Q420,640 460,700 Q480,760 520,${H + 10}Z" fill="${s.lin([[0, '#4E6A30'], [1, '#2A3A1A']])}"/>` + grass(181, 120, 0, 470, 610, 790, ['#3E6A2A', '#5A8A3A', '#2E5222', '#7AA850'], 8, 26) + `<g transform="translate(60,780) scale(.7) translate(-60,-780)">${treeFern(60, 780, { h: 6, seed: 182, len: 120, n: 9 })}</g>` + bromelia(420, 760, .9, ['#3F7A3E', '#6FAE55'], '#E2483D'));
+  // cacaueiro com frutos no tronco
+  s.add('near', tree(180, 640, { h: 160, w: 12, crown: [200, 100], cols: ['#2E5A2E', '#3E7A3A', '#6EA858', '#C0E090'], seed: 88, lobes: 3, lx: .5 }));
+  [[170, 590, '#E8A030'], [190, 560, '#C8601E'], [176, 530, '#E8B840']].forEach(([x, y, c]) => s.add('near', `<ellipse cx="${x}" cy="${y}" rx="9" ry="16" fill="${c}"/><path d="M${x - 4},${y - 12} q-2,12 0,24 M${x + 4},${y - 12} q2,12 0,24" stroke="${mix(c, '#000000', .25)}" stroke-width="1.4" fill="none"/><ellipse cx="${x - 3}" cy="${y - 5}" rx="2.5" ry="6" fill="#FFF0B0" opacity=".5"/>`));
+  s.hotspot('near', 180, 560, 46, 'cacau');
+  // ouriço de castanha no chão
+  s.add('near', `<g transform="translate(330,690)">${shadowE(0, 4, 26, .4)}<circle cx="0" cy="-10" r="20" fill="#6A4026"/><circle cx="-5" cy="-15" r="9" fill="#8A5A36"/><path d="M-8,-12 q4,-8 12,-6" stroke="#4A2A16" stroke-width="2" fill="none"/>${[[-30, 0], [26, -2], [12, 6]].map(([a, b]) => `<path transform="translate(${a},${b})" d="M-6,0 Q-6,-10 0,-12 Q6,-10 6,0Z" fill="#7A4A2A"/><path transform="translate(${a},${b})" d="M-3,-2 Q-3,-8 0,-9" stroke="#B88A5A" stroke-width="1.5" fill="none"/>`).join('')}</g>`);
+  s.hotspot('near', 330, 680, 42, 'ouriço');
+  // garça no tronco submerso
+  s.add('near', `<path d="M560,610 L720,594" stroke="#5A4030" stroke-width="10" stroke-linecap="round"/><path d="M640,602 l30,-30 M660,600 l10,-22" stroke="#5A4030" stroke-width="5" stroke-linecap="round"/>` + L.garca(640, 604, 1.05, true));
+  s.hotspot('near', 630, 534, 50, 'garça');
+  // barco de madeira (recreio)
+  const bid = s.id('barco');
+  s.add('near', `<g id="${bid}"><path d="M740,700 L1060,700 Q1080,700 1086,686 L1090,676 L720,676 Q722,694 740,700Z" fill="#2E6A8A"/><path d="M726,680 L1086,680" stroke="#F2F2EA" stroke-width="5"/><path d="M726,690 L1080,690" stroke="#E2483D" stroke-width="3"/><rect x="780" y="620" width="240" height="56" fill="#F4EEE0"/><path d="M760,622 L1040,622 L1030,606 L770,606Z" fill="#4E9CC0"/>${[0, 1, 2, 3, 4].map(i => `<rect x="${794 + i * 44}" y="632" width="28" height="22" rx="3" fill="#6AB0C8"/>`).join('')}<path d="M780,620 V676 M1020,620 V676" stroke="#C8C0B0" stroke-width="3"/></g>`);
+  s.add('near', reflection(s, bid, 700, `M700,700 H1120 V780 H700Z`, .3, 2) + `<path d="M720,702 Q900,712 1090,702" stroke="#FFF6D8" stroke-width="2" opacity=".6" fill="none"/>`);
+  s.hotspot('near', 910, 650, 66, 'barco');
+  // peixe (tambaqui) saltando
+  s.add('near', `<ellipse cx="560" cy="752" rx="40" ry="6" fill="#FFFFFF" opacity=".35"/><g transform="translate(560,724) rotate(-24)">${L.peixe(0, 0, 1.4, false, '#4A5A5A', '#E8A040')}</g>` + particles(89, 14, 520, 600, 730, 760, '#FFFFFF', 2, .8));
+  s.hotspot('near', 560, 724, 40, 'peixe');
+  // araras em voo e tucano
+  s.add('sky', L.araraVoo(660, 230, .8, false, -14) + L.araraVoo(740, 268, .66, false, -8));
+  s.add('near', L.tucano(250, 470, .9, false));
+  // moldura: folhas e cipós
+  s.add('fg', `<g filter="${s.blur(2)}">${bigLeaves(1310, 840, 1.2, 95, ['#14261A', '#1C3424', '#24402C'], -1, 6, 20, 85)}${bigLeaves(-20, -30, 1.3, 96, ['#1A2E1E', '#22402A', '#2E5236'], 1, 7, 110, 200)}${bigLeaves(1300, -30, 1.2, 97, ['#1A2E1E', '#22402A', '#2E5236'], -1, 6, 110, 200)}</g>`);
+  s.add('fg', `<path d="M520,0 Q540,120 500,240 Q490,280 510,320" stroke="#2E3A22" stroke-width="5" fill="none"/><path d="M1000,0 Q980,90 1010,180" stroke="#2E3A22" stroke-width="4" fill="none"/>${[[510, 320], [1010, 180], [500, 240]].map(([x, y]) => `<path d="M${x},${y} q-12,10 -2,24 q12,-8 2,-24z" fill="#3E6A3A"/>`).join('')}`);
+  rays(s, sunX, sunY - 160, [1.2, 1.4, 1.6, 1.85, 2.05], 1000, '#FFF6D0', .26, 'fg', .035);
+  s.add('fg', particles(98, 50, 200, 1200, 150, 650, '#FFF8DA', 1.8, .5));
+  finish(s, { vignette: '#14281A', vo: .32, warm: '#FFE09A', warmO: .08 });
+  return s;
+}
+
+// =============================================================================================
+// 09 · LITORAL E MAR — fim de tarde; corte acima/abaixo d'água (recife)
+// =============================================================================================
+function litoral() {
+  const s = new Scene('litoral');
+  const sunX = 380, sunY = 250, wl = 420;
+  sky(s, [[0, '#4E86C0'], [.25, '#9EC0DA'], [.48, '#F8D6A8'], [.52, '#FAC890']]);
+  sunGlow(s, sunX, sunY, 36, '#FFF8E0', '#FFD08A', 560, .75);
+  s.add('sky', cloud(s, 820, 120, 260, '#FFF6EA', '#E0B8B0', 91, .9) + cloud(s, 160, 110, 180, '#FFF6EA', '#E0B8B0', 92, .8));
+  s.add('sky', `<g transform="translate(640,170)">${L.fragata(0, 0, 1.1)}</g>` + birdV(720, 220, .9, '#3A3040') + birdV(560, 250, .7, '#3A3040'));
+  s.hotspot('sky', 640, 172, 46, 'fragata');
+  // mar (superfície)
+  const hz = 330;
+  s.add('far', `<rect x="0" y="${hz}" width="${W}" height="${wl - hz}" fill="${s.lin([[0, '#5A9AC0'], [1, '#3E8AB0']])}"/>${shimmer(93, 80, 0, W, hz + 3, wl - 6, '#FFF0C8', .7, sunX, 28)}<ellipse cx="${sunX}" cy="${hz + 30}" rx="40" ry="60" fill="#FFF0C8" opacity=".35" filter="${s.blur(10)}"/>`);
+  s.add('far', L.baleiaCauda(200, hz + 22, .7) + `<g transform="translate(560,${hz + 8}) scale(.5)">${jangada(0, 0, '#FFF6E8')}</g><g transform="translate(860,${hz + 16}) scale(.7)">${jangada(0, 0, '#F6E2C8')}</g>`);
+  // praia e vila à direita (mid, acima d'água)
+  s.add('mid', `<path d="M840,${wl} Q960,${wl - 70} 1100,${wl - 86} Q1200,${wl - 96} 1300,${wl - 100} L1300,${wl + 40} L840,${wl + 40}Z" fill="${s.lin([[0, '#F2D8A8'], [1, '#E2BE84']])}"/>`);
+  [[1000, 50, '#E8A040'], [1060, 46, '#4E9CC0'], [1112, 52, '#E26D5A'], [1172, 48, '#F4E6C8'], [1226, 50, '#6FB86A']].forEach(([x, w, c], i) => s.add('mid', house(x, wl - 82 - i * 3, w, 40, { wall: c, roof: '#B5541E', roofH: 18 })));
+  [[960, 160, -30, 1], [1260, 200, -20, 2], [1180, 150, 20, 3]].forEach(([x, h, lean, sd]) => s.add('mid', `<g transform="translate(${x},${wl - 70}) scale(.7) translate(${-x},${-(wl - 70)})">${palm(x, wl - 70, { h, lean, seed: sd + 100, len: 100 })}</g>`));
+  s.add('mid', `<g transform="translate(950,${wl - 40}) rotate(-6)">${jangada(0, 0, '#FFF6E8', true)}</g>`);
+  // salsa-da-praia com flor
+  s.add('mid', `<path d="M1180,${wl - 60} Q1220,${wl - 70} 1280,${wl - 66}" stroke="#4E8A3A" stroke-width="3" fill="none"/>${[1190, 1214, 1240, 1264].map((x, i) => `<path d="M${x},${wl - 64} q-8,-10 0,-14 q8,4 0,14z" fill="#5A9A44"/>${i % 2 ? '' : `<circle cx="${x + 8}" cy="${wl - 70}" r="7" fill="#C86AB8"/><circle cx="${x + 8}" cy="${wl - 70}" r="2.4" fill="#FBE0F0"/>`}`).join('')}`);
+  s.hotspot('mid', 1206, wl - 68, 32, 'flor');
+  // linha d'água
+  s.add('near', `<path d="M0,${wl} H${W} V${H} H0Z" fill="${s.lin([[0, '#5CC4C8'], [.2, '#2E9AB0'], [.6, '#1E6E98'], [1, '#14466E']])}"/>`);
+  s.add('near', `<path d="M0,${wl} H${W}" stroke="#E8FAF8" stroke-width="4" opacity=".9"/><path d="M0,${wl + 6} H${W}" stroke="#A8E8EC" stroke-width="3" opacity=".5"/>`);
+  // cáusticas e raios de luz submarinos
+  { const rc = rng(94); let ca = ''; for (let i = 0; i < 60; i++) { const x = rc() * W, y = wl + 20 + rc() * 120; ca += `<path d="M${f(x)},${f(y)} q10,-6 20,0 q10,6 20,0" stroke="#BFF4F0" stroke-width="1.6" fill="none" opacity="${f(.15 + rc() * .25)}"/>`; } s.add('near', ca); }
+  s.add('near', `<g filter="${s.blur(8)}" style="mix-blend-mode:screen">${[260, 380, 520, 700, 880].map((x, i) => `<path d="M${x},${wl} L${x + 30},${wl} L${x + 120 + i * 10},${H} L${x + 40 + i * 10},${H}Z" fill="#BFF4F0" opacity=".14"/>`).join('')}</g>`);
+  // areia do fundo (sobe para a direita)
+  s.add('near', `<path d="M-20,${H + 10} L-20,730 Q300,700 600,720 Q900,730 1100,640 Q1200,560 1300,${wl + 40} L1300,${H + 10}Z" fill="${s.lin([[0, '#D8C08A'], [1, '#A88A5A']])}"/>`);
+  s.add('near', `<path d="M1100,640 Q1200,560 1300,${wl + 40}" stroke="#F0DCA8" stroke-width="4" opacity=".5" fill="none"/>`);
+  // recife de coral
+  const coral = (x, y, sc, c, c2, sd) => { const r = rng(sd); let g = ''; for (let i = 0; i < 7; i++) { const a = -Math.PI / 2 + (i / 6 - .5) * 1.8, L1 = 40 + r() * 30; const ex = x + Math.cos(a) * L1 * sc, ey = y + Math.sin(a) * L1 * sc; g += `<path d="M${x},${y} Q${f((x + ex) / 2 + (r() - .5) * 20)},${f((y + ey) / 2)} ${f(ex)},${f(ey)}" stroke="${i % 2 ? c : c2}" stroke-width="${f(9 * sc)}" stroke-linecap="round" fill="none"/>`; } return g; };
+  const brain = (x, y, r, c) => `<ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r * .7}" fill="${c}"/>${[0, 1, 2, 3].map(i => `<path d="M${x - r * .8},${y - r * .3 + i * r * .2} q${r * .2},${-r * .15} ${r * .4},0 t${r * .4},0 t${r * .4},0" stroke="${mix(c, '#000000', .25)}" stroke-width="2" fill="none"/>`).join('')}`;
+  const fan = (x, y, h, c) => { let g = ''; for (let i = 0; i < 9; i++) { const a = -Math.PI / 2 + (i / 8 - .5) * 1.4; g += `<path d="M${x},${y} Q${f(x + Math.cos(a) * h * .5)},${f(y + Math.sin(a) * h * .6)} ${f(x + Math.cos(a) * h)},${f(y + Math.sin(a) * h)}" stroke="${c}" stroke-width="2.4" fill="none"/>`; } return g + `<path d="M${x - h * .6},${y - h * .5} Q${x},${y - h * 1.1} ${x + h * .6},${y - h * .5}" stroke="${c}" stroke-width="1.6" fill="none" opacity=".7"/>`; };
+  s.add('near', fan(160, 740, 110, '#B0407A') + coral(260, 750, 1.2, '#F28C5A', '#F2A86A', 1) + brain(360, 748, 40, '#C8A050') + fan(460, 736, 80, '#7A4AA8') + coral(560, 742, 1, '#E26D8A', '#F28CA8', 2) + brain(680, 740, 34, '#8AA060') + coral(780, 728, 1.1, '#F2B33D', '#F8CC6A', 3));
+  // pedra com anêmonas
+  s.add('near', rock(900, 730, 90, 60, ['#4E5A60', '#6A787E', '#8E9EA4'], 95) + [[860, 676], [900, 670], [940, 680]].map(([x, y]) => `${[-3, -1, 1, 3].map(i => `<path d="M${x},${y} q${i * 3},-10 ${i * 5},-16" stroke="#F28CA8" stroke-width="3" stroke-linecap="round" fill="none"/>`).join('')}`).join(''));
+  s.hotspot('near', 900, 700, 56, 'pedra');
+  // estrela-do-mar no fundo
+  s.add('near', `<path transform="translate(640,770)" d="${Array.from({ length: 10 }, (_, i) => { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? 13 : 32; return `${i ? 'L' : 'M'}${f(Math.cos(a) * rr)},${f(Math.sin(a) * rr * .7)}`; }).join(' ')}Z" fill="#F2683A" stroke="#B83A22" stroke-width="2" stroke-linejoin="round"/>`);
+  s.hotspot('near', 640, 766, 44, 'estrela');
+  // peixes, tartaruga
+  s.add('near', L.tartaruga(560, 560, 1.4, false));
+  const school = (x, y, n, c, c2, sd) => { const r = rng(sd); let g = ''; for (let i = 0; i < n; i++) g += L.peixe(x + (r() - .5) * 160, y + (r() - .5) * 70, .45 + r() * .2, true, c, c2); return g; };
+  s.add('near', school(250, 560, 12, '#F2C94C', '#FFF0A0', 7) + school(1000, 600, 9, '#4FA3C7', '#BFE6F4', 8) + L.peixe(820, 520, .9, false, '#E2583A', '#FFB08A'));
+  // prancha boiando na linha d'água
+  s.add('near', `<g transform="translate(700,${wl + 2}) rotate(-3)"><path d="M-90,0 Q-80,-12 0,-12 Q90,-12 100,-2 Q90,10 0,10 Q-80,10 -90,0Z" fill="#F2B33D"/><path d="M-80,-2 Q0,-8 92,-3" stroke="#E2483D" stroke-width="4" fill="none"/><path d="M-90,0 Q-80,10 0,10 Q90,10 100,-2 L100,4 Q90,16 0,16 Q-80,16 -90,6Z" fill="#7A5A3A" opacity=".35"/></g>`);
+  s.hotspot('near', 700, wl - 2, 52, 'prancha');
+  s.add('fg', `<g filter="${s.blur(2.5)}">${fan(-10, 820, 200, '#5A2A5A')}${coral(1270, 820, 3, '#7A3A3A', '#8A4A3A', 9)}</g>`);
+  s.add('fg', particles(99, 60, 0, W, wl + 20, H, '#DFF8F6', 2.2, .5));
+  finish(s, { vignette: '#0E2A3E', vo: .35, warm: '#FFC890', warmO: .06 });
+  return s;
+}
+function jangada(x, y, sail = '#FFF6E8', beach = false) {
+  return `<g transform="translate(${x},${y})"><path d="M-50,0 L50,0 L44,8 L-44,8Z" fill="#8A6A44"/><path d="M-4,0 V-110" stroke="#5A4030" stroke-width="3"/><path d="M-2,-108 Q50,-70 44,-4 L-2,-4Z" fill="${sail}"/><path d="M-2,-108 Q30,-80 26,-4" stroke="#E2C8A0" stroke-width="2" fill="none"/>${beach ? '' : `<path d="M-60,10 Q0,4 60,10" stroke="#FFFFFF" stroke-width="2" opacity=".6" fill="none"/>`}</g>`;
+}
+
+// =============================================================================================
+// 10 · CIDADE DAS LETRAS — hora azul, janelas acesas (quem constrói a cidade?)
+// =============================================================================================
+function cidade() {
+  const s = new Scene('cidade');
+  sky(s, [[0, '#1E2A5A'], [.35, '#4A4A8A'], [.6, '#C87A8A'], [.72, '#F2A870']]);
+  s.add('sky', particles(101, 70, 0, W, 0, 260, '#FFFFFF', 1.2, .9) + `<circle cx="1080" cy="110" r="24" fill="#FFF4D8"/><circle cx="1092" cy="104" r="22" fill="#3E4280"/>`);
+  s.add('sky', cloud(s, 300, 230, 260, '#F2A8A0', '#7A5A8A', 102, .6));
+  // silhueta distante
+  const haze = '#C88A90';
+  { const r = rng(103); let g = ''; let x = -10; while (x < W) { const w = 30 + r() * 50, h = 40 + r() * 110; g += `<rect x="${f(x)}" y="${f(470 - h)}" width="${f(w)}" height="${f(h + 10)}" fill="${mix('#4A3A6A', haze, .45)}"/>`; for (let k = 0; k < 6; k++) if (r() < .5) g += `<rect x="${f(x + 6 + r() * (w - 14))}" y="${f(470 - h + 10 + r() * (h - 20))}" width="4" height="5" fill="#FFD890" opacity=".8"/>`; x += w + 4; } s.add('far', g); }
+  s.add('far', `<rect x="0" y="430" width="${W}" height="60" fill="${haze}" opacity=".4" filter="${s.blur(12)}"/>`);
+  // rua: sobrados coloridos (mid)
+  const by = 560;
+  s.add('mid', `<rect x="0" y="${by}" width="${W}" height="${H - by}" fill="#5A4A5A"/>`);
+  const sob = [[-20, 170, 200, '#E8A040'], [150, 150, 170, '#4E9CC0'], [300, 160, 190, '#E26D5A'], [800, 150, 180, '#6FB86A'], [950, 170, 210, '#F2D8A8'], [1120, 180, 186, '#B56FD0']];
+  sob.forEach(([x, w, h, c]) => {
+    let g = `<rect x="${x}" y="${by - h}" width="${w}" height="${h}" fill="${c}"/><rect x="${x}" y="${by - h}" width="${w}" height="${h}" fill="#2A2050" opacity=".35"/><rect x="${x - 4}" y="${by - h - 12}" width="${w + 8}" height="14" fill="${mix(c, '#000000', .35)}"/><rect x="${x}" y="${by - h / 2 - 4}" width="${w}" height="6" fill="${mix(c, '#000000', .3)}"/>`;
+    for (let row = 0; row < 2; row++) for (let k = 0; k < 3; k++) { const wx = x + 16 + k * (w - 32) / 2.6, wy = by - h + 22 + row * h / 2; g += `<rect x="${f(wx)}" y="${f(wy)}" width="26" height="${f(h / 2 - 50)}" rx="13" fill="${(k + row) % 3 ? '#FFD27A' : '#3A3A6A'}"/>${(k + row) % 3 ? `<rect x="${f(wx - 10)}" y="${f(wy - 10)}" width="46" height="${f(h / 2 - 30)}" fill="#FFC86A" opacity=".12" filter="${s.blur(6)}"/>` : ''}`; }
+    s.add('mid', g);
+  });
+  // torre do relógio
+  const tx = 640;
+  s.add('mid', `<rect x="${tx - 70}" y="${by - 300}" width="140" height="300" fill="#E8D8C0"/><rect x="${tx - 70}" y="${by - 300}" width="140" height="300" fill="#2A2050" opacity=".3"/><path d="M${tx - 84},${by - 300} L${tx},${by - 380} L${tx + 84},${by - 300}Z" fill="#9A3E2A"/><rect x="${tx - 80}" y="${by - 306}" width="160" height="10" fill="#7A6A5A"/>
+    <circle cx="${tx}" cy="${by - 236}" r="46" fill="#FFF4D8"/><circle cx="${tx}" cy="${by - 236}" r="80" fill="#FFE8A0" opacity=".25" filter="${s.blur(12)}"/><circle cx="${tx}" cy="${by - 236}" r="46" fill="none" stroke="#5A4A3A" stroke-width="5"/>${Array.from({ length: 12 }, (_, i) => `<path d="M${f(tx + Math.cos(i * Math.PI / 6) * 38)},${f(by - 236 + Math.sin(i * Math.PI / 6) * 38)} L${f(tx + Math.cos(i * Math.PI / 6) * 42)},${f(by - 236 + Math.sin(i * Math.PI / 6) * 42)}" stroke="#5A4A3A" stroke-width="3"/>`).join('')}<path d="M${tx},${by - 236} L${tx},${by - 266} M${tx},${by - 236} L${tx + 20},${by - 228}" stroke="#2A2A2A" stroke-width="4" stroke-linecap="round"/>
+    <path d="M${tx - 34},${by} V${by - 80} a34,34 0 0 1 68,0 V${by}Z" fill="#5A3A2A"/><rect x="${tx - 50}" y="${by - 160}" width="30" height="50" rx="15" fill="#FFD27A"/><rect x="${tx + 20}" y="${by - 160}" width="30" height="50" rx="15" fill="#FFD27A"/>`);
+  s.hotspot('mid', tx, by - 236, 60, 'relógio');
+  // bonde
+  s.add('mid', `<path d="M0,${by - 150} H${W}" stroke="#2A2A3A" stroke-width="1.5"/><g transform="translate(470,${by + 30})"><rect x="-120" y="-90" width="240" height="84" rx="10" fill="#E8B030"/><rect x="-120" y="-20" width="240" height="14" fill="#B5541E"/>${[0, 1, 2, 3, 4].map(i => `<rect x="${-108 + i * 44}" y="-80" width="34" height="40" rx="4" fill="#FFE8A8"/>`).join('')}<rect x="-126" y="-96" width="252" height="10" rx="4" fill="#9A3E1E"/><path d="M0,-96 L-20,-180" stroke="#2A2A3A" stroke-width="3"/><circle cx="-80" cy="-4" r="11" fill="#2A2A3A"/><circle cx="80" cy="-4" r="11" fill="#2A2A3A"/><circle cx="122" cy="-40" r="7" fill="#FFF4C0"/><circle cx="122" cy="-40" r="30" fill="#FFE8A0" opacity=".25"/></g>`);
+  s.add('mid', `<path d="M0,${by + 46} H${W} M0,${by + 54} H${W}" stroke="#8A7A8A" stroke-width="3" opacity=".7"/>`);
+  [[150, 150, '#E2483D'], [800, 150, '#2F7D4F'], [1120, 180, '#F2C94C']].forEach(([x, w, c]) => { let a = ''; for (let k = 0; k < w; k += 25) a += `<path d="M${x + k},${by - 74} h25 v22 q-12.5,10 -25,0z" fill="${(k / 25) % 2 ? '#FFF6E6' : c}"/>`; s.add('mid', a); });
+  // calçada (near)
+  s.add('near', `<path d="M0,620 H${W} V${H} H0Z" fill="${s.lin([[0, '#8A7A8A'], [1, '#5A4A5A']])}"/>`);
+  { let g = ''; for (let i = 0; i < 26; i++) g += `<path d="M${i * 52 - 20},${H} Q${i * 52},700 ${i * 52 + 20},620" stroke="#B8A8B0" stroke-width="2" opacity=".25" fill="none"/>`; s.add('near', g + `<path d="M0,620 H${W}" stroke="#C8B8C0" stroke-width="6"/>`); }
+  // postes de luz
+  [120, 1180].forEach(x => s.add('near', `<path d="M${x},${H} V480" stroke="#2A2A3A" stroke-width="8"/><path d="M${x - 18},480 h36 l-6,-34 h-24z" fill="#FFF0B8"/><circle cx="${x}" cy="466" r="90" fill="#FFD890" opacity=".22" filter="${s.blur(20)}"/><ellipse cx="${x}" cy="${H - 20}" rx="110" ry="20" fill="#FFD890" opacity=".18"/>`));
+  // horta comunitária (canteiros)
+  let h = '';
+  [[230, 700], [370, 716]].forEach(([x, y], i) => { h += `<rect x="${x - 62}" y="${y - 26}" width="124" height="40" fill="#7A4A2A"/><rect x="${x - 66}" y="${y - 30}" width="132" height="8" fill="#9A6A40"/>`; for (let k = 0; k < 5; k++) h += canopy(x - 48 + k * 24, y - 34, 13, 10, ['#2E6A2E', '#4E8A3A', '#8AC060'], 120 + i * 7 + k, { n: 6 }); });
+  h += `${[0, 1, 2].map(k => `<circle cx="${200 + k * 22}" cy="666" r="6" fill="#E2483D"/>`).join('')}`;
+  s.add('near', h);
+  s.hotspot('near', 300, 680, 70, 'horta');
+  // chaveiro: placa com chave grande
+  s.add('near', `<g transform="translate(900,560)"><path d="M0,-90 V-60" stroke="#2A2A3A" stroke-width="4"/><rect x="-60" y="-60" width="120" height="50" rx="8" fill="#3A3A6A"/><g transform="translate(0,-35)"><circle cx="-30" cy="0" r="14" fill="none" stroke="#F2C94C" stroke-width="6"/><path d="M-16,0 H40 M28,0 v10 M38,0 v8" stroke="#F2C94C" stroke-width="6" stroke-linecap="round"/></g></g>`);
+  s.hotspot('near', 900, 525, 52, 'chave');
+  // caixas da feira
+  s.add('near', [[1010, 740, '#C8904E'], [1074, 744, '#B87E40'], [1040, 690, '#D8A060']].map(([x, y, c]) => `<rect x="${x - 34}" y="${y - 50}" width="68" height="50" fill="${c}"/>${[0, 1, 2].map(k => `<path d="M${x - 34},${y - 40 + k * 16} h68" stroke="${mix(c, '#000000', .3)}" stroke-width="2"/>`).join('')}<path d="M${x - 34},${y - 50} v50 M${x + 34},${y - 50} v50" stroke="${mix(c, '#000000', .35)}" stroke-width="4"/>`).join('') + `${[0, 1, 2, 3].map(k => `<circle cx="${1022 + k * 12}" cy="${636}" r="7" fill="${['#F28C28', '#E2483D', '#F2C94C', '#6FB86A'][k]}"/>`).join('')}`);
+  s.hotspot('near', 1044, 700, 60, 'caixa');
+  // balões de festa
+  s.add('near', `<g>${[[740, 520, '#E2483D'], [770, 500, '#F2C94C'], [800, 524, '#4FA3C7'], [760, 540, '#6FB86A']].map(([x, y, c]) => `<path d="M${x},${y + 24} Q${x + 4},${y + 60} 770,640" stroke="#E8E0D0" stroke-width="1.2" fill="none"/><ellipse cx="${x}" cy="${y}" rx="18" ry="22" fill="${c}"/><ellipse cx="${x - 6}" cy="${y - 8}" rx="5" ry="7" fill="#fff" opacity=".45"/>`).join('')}<path d="M770,640 V700" stroke="#7A6A5A" stroke-width="3"/></g>`);
+  s.hotspot('near', 770, 520, 50, 'balão');
+  s.add('near', L.gato(560, 650, .9, false, '#3A3A3A'));
+  { const cols = ['#E2483D', '#F2C94C', '#4FA3C7', '#6FB86A', '#B56FD0', '#F28C28']; let b = `<path d="M-20,30 Q640,150 1300,30" stroke="#3A2A3A" stroke-width="2" fill="none"/>`; for (let i = 0; i < 30; i++) { const t = (i + .5) / 30, x = -20 + t * 1320, y = (1 - t) * (1 - t) * 30 + 2 * (1 - t) * t * 150 + t * t * 30; b += `<path d="M${f(x - 18)},${f(y)} L${f(x + 18)},${f(y)} L${f(x)},${f(y + 40)}Z" fill="${cols[i % 6]}"/>`; } s.add('fg', `<g filter="${s.blur(1.6)}">${b}</g>`); }
+  s.add('fg', particles(104, 30, 0, W, 300, 700, '#FFE8B0', 1.6, .5));
+  finish(s, { vignette: '#120E2A', vo: .4, warm: '#FFB070', warmO: .08 });
+  return s;
+}
+
+// =============================================================================================
+// 11 · ARQUIPÉLAGO DOS LIVROS — noite estrelada, ilhas de livros (chefe final)
+// =============================================================================================
+function bookStack(x, y, n, seed, w0 = 160) {
+  const r = rng(seed); const cols = ['#C2410C', '#1D4ED8', '#2F7D4F', '#F4B400', '#6D3FC0', '#E26D5A', '#1F7A70']; let g = '', yy = y;
+  for (let i = 0; i < n; i++) { const w = w0 * (1 - i * .06) * (.9 + r() * .15), h = 20 + r() * 12, c = cols[Math.floor(r() * cols.length)], dx = (r() - .5) * 20; g += `<rect x="${f(x - w / 2 + dx)}" y="${f(yy - h)}" width="${f(w)}" height="${f(h)}" rx="3" fill="${c}"/><rect x="${f(x - w / 2 + dx + 6)}" y="${f(yy - h + 4)}" width="${f(w - 12)}" height="${f(h - 8)}" fill="#FFF8E8" opacity=".9"/><rect x="${f(x - w / 2 + dx)}" y="${f(yy - h)}" width="12" height="${f(h)}" fill="${mix(c, '#000000', .2)}"/><path d="M${f(x - w / 2 + dx + 14)},${f(yy - h / 2 - 3)} h${f(w - 22)} M${f(x - w / 2 + dx + 14)},${f(yy - h / 2 + 3)} h${f(w - 22)}" stroke="#D8C8B0" stroke-width="1" opacity=".8"/><rect x="${f(x - w / 2 + dx + 6)}" y="${f(yy - 8)}" width="${f(w - 12)}" height="4" fill="#C8B49A" opacity=".5"/><rect x="${f(x - w / 2 + dx + 2)}" y="${f(yy - h + 6)}" width="4" height="${f(h - 12)}" fill="#F4B400" opacity=".7"/>`; yy -= h; }
+  return { g, top: yy };
+}
+function arquipelago() {
+  const s = new Scene('arquipelago');
+  sky(s, [[0, '#0E1236'], [.4, '#262A6A'], [.62, '#5A4A8A'], [.7, '#8A6A9A']]);
+  // via láctea + estrelas
+  s.add('sky', `<path d="M-50,420 Q400,120 1330,40" stroke="#B8A8E8" stroke-width="120" fill="none" opacity=".12" filter="${s.blur(30)}"/>` + particles(111, 200, 0, W, 0, 460, '#FFFFFF', 1.3, .95) + particles(112, 30, 0, W, 0, 400, '#FFE8B0', 2.2, .9));
+  // constelação em forma de livro aberto
+  const cst = [[860, 150], [910, 130], [960, 150], [1010, 130], [1060, 150], [1060, 210], [1010, 190], [960, 210], [910, 190], [860, 210]];
+  s.add('sky', `<path d="M${cst.map(p => p.join(',')).join(' L')} Z M960,150 L960,210" stroke="#C8D0FF" stroke-width="1.2" fill="none" opacity=".55"/>${cst.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.8" fill="#FFFFFF"/><circle cx="${x}" cy="${y}" r="7" fill="#C8D0FF" opacity=".25"/>`).join('')}`);
+  // lua crescente
+  s.add('sky', `<circle cx="200" cy="130" r="80" fill="#FFF4D8" opacity=".12" filter="${s.blur(16)}"/><circle cx="200" cy="130" r="40" fill="#FFF4D8"/><circle cx="220" cy="118" r="36" fill="#1A1E4E"/>`);
+  // cometa
+  s.add('sky', `<path d="M520,120 L760,60" stroke="url(#none)" stroke-width="0"/><path d="M500,140 Q600,100 760,64" stroke="${s.lin([[0, '#FFFFFF', 0], [1, '#FFF4D0', .9]], 0, 0, 1, 0)}" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="762" cy="64" r="7" fill="#FFFFFF"/><circle cx="762" cy="64" r="20" fill="#FFF4D0" opacity=".35"/>`);
+  s.hotspot('sky', 740, 72, 40, 'cometa');
+  // mar noturno
+  const hz = 500;
+  s.add('far', `<rect x="0" y="${hz}" width="${W}" height="${H - hz}" fill="${s.lin([[0, '#3A3A7A'], [1, '#0E1236']])}"/>${shimmer(113, 100, 0, W, hz + 4, H, '#C8D0FF', .45, 200, 20)}`);
+  // ilhas de livros distantes (flutuando com cachoeiras de letras)
+  [[200, 430, 5, 1, .55], [1080, 400, 6, 2, .6]].forEach(([x, y, n, sd, k]) => { const b = bookStack(x, y, n, sd + 120, 150); s.add('far', `<g opacity=".85" transform="translate(${x},${y}) scale(${k}) translate(${-x},${-y})">${b.g}${canopy(x, b.top - 10, 60, 26, ['#2E5A5A', '#3E7A6A', '#6AA890'], sd + 130)}<path d="M${x - 60},${y} L${x - 40},${y + 40} L${x + 40},${y + 40} L${x + 60},${y}Z" fill="#4A3A5A"/></g>`); });
+  s.add('far', `<g fill="#C8D0FF" opacity=".6" font-family="Andika" font-size="17" font-weight="700">${'aeiou'.split('').map((c, i) => `<text x="${1090 + (i % 2) * 8}" y="${436 + i * 20}" opacity="${1 - i * .15}">${c}</text>`).join('')}</g>`);
+  // ilha principal com farol (mid)
+  const mx = 760, my = 560;
+  const main = bookStack(mx, my, 6, 141, 340);
+  s.add('mid', `<path d="M${mx - 200},${my} Q${mx},${my + 30} ${mx + 200},${my}" fill="#2A2A5A"/>` + main.g);
+  s.add('mid', `<path d="M${mx - 170},${main.top + 4} Q${mx},${main.top - 30} ${mx + 170},${main.top + 4}Z" fill="#3E7A5A"/>` + canopy(mx - 120, main.top - 14, 50, 24, ['#2E5A4A', '#3E7A5A', '#6AA880'], 142) + canopy(mx + 130, main.top - 10, 44, 22, ['#2E5A4A', '#3E7A5A', '#6AA880'], 143));
+  // farol
+  const fy = main.top - 4;
+  s.add('mid', `<path d="M${mx - 26},${fy} L${mx - 16},${fy - 170} L${mx + 16},${fy - 170} L${mx + 26},${fy}Z" fill="#F4ECDC"/>${[0, 1, 2].map(i => `<path d="M${mx - 24 + i * 3},${fy - 30 - i * 50} L${mx + 24 - i * 3},${fy - 30 - i * 50} L${mx + 22 - i * 3},${fy - 54 - i * 50} L${mx - 22 + i * 3},${fy - 54 - i * 50}Z" fill="#C2410C"/>`).join('')}<rect x="${mx - 20}" y="${fy - 200}" width="40" height="30" fill="#FFE8A0"/><path d="M${mx - 26},${fy - 200} L${mx},${fy - 226} L${mx + 26},${fy - 200}Z" fill="#2A2A5A"/><rect x="${mx - 26}" y="${fy - 172}" width="52" height="6" fill="#2A2A5A"/>`);
+  s.add('mid', `<g style="mix-blend-mode:screen" filter="${s.blur(6)}"><path d="M${mx},${fy - 186} L${mx - 620},${fy - 300} L${mx - 620},${fy - 160}Z" fill="${s.lin([[0, '#FFF0B0', .6], [1, '#FFF0B0', 0]], 1, 0, 0, 0)}"/><path d="M${mx},${fy - 186} L${mx + 560},${fy - 250} L${mx + 560},${fy - 140}Z" fill="${s.lin([[0, '#FFF0B0', .45], [1, '#FFF0B0', 0]])}"/></g><circle cx="${mx}" cy="${fy - 186}" r="40" fill="#FFF0B0" opacity=".5" filter="${s.blur(10)}"/>`);
+  s.hotspot('mid', mx, fy - 120, 60, 'farol');
+  // ponte de corda até outra ilha
+  s.add('mid', `<g transform="translate(${mx + 300},${my + 60})"><path d="M-40,0 Q0,14 40,0 L34,-8 L-34,-8Z" fill="#8A5A3A"/><path d="M0,-8 V-50" stroke="#5A4030" stroke-width="2"/><circle cx="0" cy="-54" r="6" fill="#FFD27A"/><circle cx="0" cy="-54" r="22" fill="#FFD27A" opacity=".3"/><path d="M-50,6 Q0,12 50,6" stroke="#C8D0FF" stroke-width="1.5" opacity=".5" fill="none"/></g>`);
+  s.add('far', `<rect x="${mx - 14}" y="${hz + 6}" width="28" height="240" fill="#FFE8A0" opacity=".22" filter="${s.blur(10)}"/><ellipse cx="${mx}" cy="${my + 20}" rx="260" ry="24" fill="#0A0C28" opacity=".45" filter="${s.blur(8)}"/>`);
+  // nuvem baixa, próxima
+  s.add('mid', cloud(s, 380, 380, 200, '#C8C8F0', '#5A5A9A', 144, .9));
+  s.hotspot('mid', 380, 360, 50, 'nuvem');
+  // cais com luneta (near)
+  s.add('near', `<path d="M-20,${H + 10} L-20,640 Q200,620 420,650 L520,700 L520,${H + 10}Z" fill="#2A2050"/>`);
+  { const b = bookStack(200, 700, 3, 151, 420); s.add('near', b.g); }
+  s.add('near', `<g transform="translate(300,610)"><path d="M0,0 L-30,60 M0,0 L30,60 M0,0 L0,62" stroke="#5A4A3A" stroke-width="5"/><g transform="rotate(-30)"><rect x="-60" y="-12" width="100" height="24" rx="6" fill="#B8862E"/><rect x="38" y="-15" width="20" height="30" rx="4" fill="#D8A040"/><rect x="-74" y="-8" width="16" height="16" rx="3" fill="#8A6020"/><path d="M-50,-6 h80" stroke="#F8D88A" stroke-width="3" opacity=".7"/></g></g>`);
+  s.hotspot('near', 300, 590, 54, 'luneta');
+  s.add('near', `<path d="M820,${H + 10} Q860,720 1000,700 Q1160,690 1300,720 L1300,${H + 10}Z" fill="#2A2050"/>`);
+  // livro aberto que brilha
+  s.add('near', `<g transform="translate(1000,720)"><ellipse cx="0" cy="10" rx="140" ry="22" fill="#FFE8A0" opacity=".3" filter="${s.blur(10)}"/><path d="M-110,0 Q-60,-26 0,-8 Q60,-26 110,0 L110,14 Q60,-12 0,6 Q-60,-12 -110,14Z" fill="#FFF8E8"/><path d="M0,-8 V6" stroke="#C8B89A" stroke-width="2"/><path d="M-110,14 Q-60,-12 0,6 Q60,-12 110,14 L110,20 Q60,-4 0,12 Q-60,-4 -110,20Z" fill="#C2410C"/>${[-80, -60, -40, 30, 50, 70].map((x, i) => `<path d="M${x},${-8 + Math.abs(x) * .05} h${i < 3 ? 34 : 30}" stroke="#B8A890" stroke-width="2"/>`).join('')}${particles(152, 30, -80, 80, -120, -10, '#FFF0B0', 2.2, .9)}</g>`);
+  s.hotspot('near', 1000, 690, 66, 'livro');
+  s.add('fg', particles(153, 40, 0, W, 300, 780, '#FFF0B0', 2.4, .7));
+  finish(s, { vignette: '#06081E', vo: .45, grain: .4 });
+  return s;
+}
+
+module.exports = { '01-quintal-vila': quintal, '02-ilha-das-vogais': ilha, '03-mata-atlantica': mata, '04-pampa': pampa, '05-pantanal': pantanal, '06-cerrado': cerrado, '07-caatinga': caatinga, '08-amazonia': amazonia, '09-litoral-e-mar': litoral, '10-cidade-das-letras': cidade, '11-arquipelago-dos-livros': arquipelago };

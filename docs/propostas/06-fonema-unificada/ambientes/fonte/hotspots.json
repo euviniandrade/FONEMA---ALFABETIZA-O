@@ -220,5 +220,375 @@
    "r": 44,
    "word": "jabuti"
   }
+ ],
+ "07-caatinga": [
+  {
+   "l": "mid",
+   "x": 830,
+   "y": 540,
+   "r": 46,
+   "word": "jumento"
+  },
+  {
+   "l": "mid",
+   "x": 400,
+   "y": 520,
+   "r": 32,
+   "word": "sanfona"
+  },
+  {
+   "l": "mid",
+   "x": 540,
+   "y": 540,
+   "r": 30,
+   "word": "moringa"
+  },
+  {
+   "l": "near",
+   "x": 1000,
+   "y": 420,
+   "r": 56,
+   "word": "mandacaru"
+  },
+  {
+   "l": "near",
+   "x": 112,
+   "y": 600,
+   "r": 48,
+   "word": "umbu"
+  }
+ ],
+ "08-amazonia": [
+  {
+   "l": "near",
+   "x": 180,
+   "y": 560,
+   "r": 46,
+   "word": "cacau"
+  },
+  {
+   "l": "near",
+   "x": 330,
+   "y": 680,
+   "r": 42,
+   "word": "ouriço"
+  },
+  {
+   "l": "near",
+   "x": 630,
+   "y": 534,
+   "r": 50,
+   "word": "garça"
+  },
+  {
+   "l": "near",
+   "x": 910,
+   "y": 650,
+   "r": 66,
+   "word": "barco"
+  },
+  {
+   "l": "near",
+   "x": 560,
+   "y": 724,
+   "r": 40,
+   "word": "peixe"
+  }
+ ],
+ "09-litoral-e-mar": [
+  {
+   "l": "sky",
+   "x": 640,
+   "y": 172,
+   "r": 46,
+   "word": "fragata"
+  },
+  {
+   "l": "mid",
+   "x": 1206,
+   "y": 352,
+   "r": 32,
+   "word": "flor"
+  },
+  {
+   "l": "near",
+   "x": 900,
+   "y": 700,
+   "r": 56,
+   "word": "pedra"
+  },
+  {
+   "l": "near",
+   "x": 640,
+   "y": 766,
+   "r": 44,
+   "word": "estrela"
+  },
+  {
+   "l": "near",
+   "x": 700,
+   "y": 418,
+   "r": 52,
+   "word": "prancha"
+  }
+ ],
+ "10-cidade-das-letras": [
+  {
+   "l": "mid",
+   "x": 640,
+   "y": 324,
+   "r": 60,
+   "word": "relógio"
+  },
+  {
+   "l": "near",
+   "x": 300,
+   "y": 680,
+   "r": 70,
+   "word": "horta"
+  },
+  {
+   "l": "near",
+   "x": 900,
+   "y": 525,
+   "r": 52,
+   "word": "chave"
+  },
+  {
+   "l": "near",
+   "x": 1044,
+   "y": 700,
+   "r": 60,
+   "word": "caixa"
+  },
+  {
+   "l": "near",
+   "x": 770,
+   "y": 520,
+   "r": 50,
+   "word": "balão"
+  }
+ ],
+ "11-arquipelago-dos-livros": [
+  {
+   "l": "sky",
+   "x": 740,
+   "y": 72,
+   "r": 40,
+   "word": "cometa"
+  },
+  {
+   "l": "mid",
+   "x": 760,
+   "y": 284.1501767169684,
+   "r": 60,
+   "word": "farol"
+  },
+  {
+   "l": "mid",
+   "x": 380,
+   "y": 360,
+   "r": 50,
+   "word": "nuvem"
+  },
+  {
+   "l": "near",
+   "x": 300,
+   "y": 590,
+   "r": 54,
+   "word": "luneta"
+  },
+  {
+   "l": "near",
+   "x": 1000,
+   "y": 690,
+   "r": 66,
+   "word": "livro"
+  }
+ ],
+ "int-biblioteca": [
+  {
+   "l": "mid",
+   "x": 700,
+   "y": 590,
+   "r": 46,
+   "word": "mesa"
+  },
+  {
+   "l": "mid",
+   "x": 560,
+   "y": 500,
+   "r": 44,
+   "word": "globo"
+  },
+  {
+   "l": "mid",
+   "x": 690,
+   "y": 540,
+   "r": 40,
+   "word": "livro"
+  },
+  {
+   "l": "mid",
+   "x": 778,
+   "y": 546,
+   "r": 30,
+   "word": "lupa"
+  },
+  {
+   "l": "mid",
+   "x": 400,
+   "y": 712,
+   "r": 44,
+   "word": "tapete"
+  }
+ ],
+ "int-padaria": [
+  {
+   "l": "far",
+   "x": 900,
+   "y": 420,
+   "r": 62,
+   "word": "forno"
+  },
+  {
+   "l": "mid",
+   "x": 262,
+   "y": 464,
+   "r": 56,
+   "word": "pão"
+  },
+  {
+   "l": "mid",
+   "x": 450,
+   "y": 456,
+   "r": 52,
+   "word": "bolo"
+  },
+  {
+   "l": "mid",
+   "x": 700,
+   "y": 460,
+   "r": 54,
+   "word": "broa"
+  },
+  {
+   "l": "mid",
+   "x": 566,
+   "y": 466,
+   "r": 40,
+   "word": "café"
+  }
+ ],
+ "int-escola-sala": [
+  {
+   "l": "far",
+   "x": 410,
+   "y": 354,
+   "r": 34,
+   "word": "giz"
+  },
+  {
+   "l": "far",
+   "x": 1010,
+   "y": 236,
+   "r": 52,
+   "word": "mapa"
+  },
+  {
+   "l": "far",
+   "x": 1180,
+   "y": 190,
+   "r": 40,
+   "word": "sino"
+  },
+  {
+   "l": "near",
+   "x": 300,
+   "y": 640,
+   "r": 60,
+   "word": "mesa"
+  },
+  {
+   "l": "near",
+   "x": 960,
+   "y": 604,
+   "r": 38,
+   "word": "cola"
+  }
+ ],
+ "int-oficina-robos": [
+  {
+   "l": "mid",
+   "x": 640,
+   "y": 410,
+   "r": 66,
+   "word": "robô"
+  },
+  {
+   "l": "mid",
+   "x": 330,
+   "y": 450,
+   "r": 36,
+   "word": "mola"
+  },
+  {
+   "l": "mid",
+   "x": 460,
+   "y": 456,
+   "r": 38,
+   "word": "roda"
+  },
+  {
+   "l": "mid",
+   "x": 860,
+   "y": 446,
+   "r": 40,
+   "word": "lata"
+  },
+  {
+   "l": "mid",
+   "x": 1030,
+   "y": 466,
+   "r": 40,
+   "word": "fio"
+  }
+ ],
+ "int-casa-sofia-quarto": [
+  {
+   "l": "far",
+   "x": 900,
+   "y": 170,
+   "r": 40,
+   "word": "lua"
+  },
+  {
+   "l": "far",
+   "x": 330,
+   "y": 190,
+   "r": 56,
+   "word": "pipa"
+  },
+  {
+   "l": "mid",
+   "x": 900,
+   "y": 540,
+   "r": 60,
+   "word": "cama"
+  },
+  {
+   "l": "mid",
+   "x": 780,
+   "y": 440,
+   "r": 38,
+   "word": "sapo"
+  },
+  {
+   "l": "near",
+   "x": 470,
+   "y": 690,
+   "r": 40,
+   "word": "bola"
+  }
  ]
 }

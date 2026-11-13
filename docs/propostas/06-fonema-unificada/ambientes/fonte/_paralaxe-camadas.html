@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8"><style>@font-face{font-family:Andika;src:url(fonts/andika-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:Andika;src:url(fonts/andika-latin-700-normal.woff2) format('woff2');font-weight:700}
+@font-face{font-family:Fredoka;src:url(fonts/fredoka-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:Fredoka;src:url(fonts/fredoka-latin-700-normal.woff2) format('woff2');font-weight:700}
+html,body{margin:0;width:1280px;height:800px;overflow:hidden;font-family:Andika,sans-serif;color:#2B2A4C}
+body{background:radial-gradient(circle at 70% 30%,#3A2A4A,#160E22)}
+h1{font-family:Fredoka;font-weight:700;font-size:26px;margin:0;position:absolute;left:44px;top:22px;color:#FFE8B0}
+.sub{position:absolute;left:44px;top:60px;font-size:14px;color:#E8D8C8}
+.row{position:absolute;left:44px;height:124px;width:600px}
+.n{position:absolute;left:0;top:44px;width:30px;height:30px;border-radius:50%;background:#C2410C;color:#fff;font-family:Fredoka;font-weight:700;text-align:center;line-height:30px}
+.img{position:absolute;left:44px;top:0;width:198px;height:124px;border:2px solid rgba(255,232,176,.6);border-radius:6px;overflow:hidden;background:repeating-conic-gradient(rgba(255,255,255,.08) 0 25%,transparent 0 50%) 0 0/16px 16px;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+.img img{width:198px;height:124px;display:block}
+.txt{position:absolute;left:268px;top:14px;width:330px;color:#E8D8C8;font-size:13px}
+.txt b{display:block;color:#FFC870;font-size:16px;font-family:Fredoka;font-weight:600}
+.bar{margin-top:8px;height:8px;width:240px;background:rgba(255,255,255,.12);border-radius:4px}.bar i{display:block;height:8px;border-radius:4px;background:linear-gradient(90deg,#FFC870,#F28C28)}
+.txt em{font-style:normal;font-size:12px;color:#FFE8B0}
+.final{position:absolute;right:44px;top:112px;width:560px}
+.final img{width:560px;height:350px;border-radius:8px;border:2px solid #FFC870;display:block;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.final p{color:#CFC0D8;font-size:12px;margin:6px 0 0}
+.box{position:absolute;right:44px;top:512px;width:532px;color:#E8D8C8;font-size:13px;line-height:1.5;background:rgba(255,255,255,.06);border:1px solid rgba(255,232,176,.25);border-radius:10px;padding:12px 14px}
+.box b{color:#FFC870}
+</style></head><body><h1>Paralaxe: o Cerrado decomposto em 5 camadas</h1><div class="sub">Cada cenário sai do SVG-fonte em 5 grupos (layer-sky/far/mid/near/fg), exportados como PNG/WebP com transparência ou animados direto em Rive.</div>
+<div class="row" style="top:112px"><div class="n">1</div><div class="img" style="transform:perspective(700px) rotateY(18deg) translateZ(0px)"><img src="camadas/06-cerrado-sky.png"></div><div class="txt"><b>Céu</b><span>gradiente, sol, nuvens, raios de luz</span><div class="bar"><i style="width:6.4%"></i></div><em>velocidade 0,08×</em></div></div><div class="row" style="top:244px"><div class="n">2</div><div class="img" style="transform:perspective(700px) rotateY(18deg) translateZ(14px)"><img src="camadas/06-cerrado-far.png"></div><div class="txt"><b>Fundo</b><span>chapadas e vereda de buritis na névoa</span><div class="bar"><i style="width:20%"></i></div><em>velocidade 0,25×</em></div></div><div class="row" style="top:376px"><div class="n">3</div><div class="img" style="transform:perspective(700px) rotateY(18deg) translateZ(28px)"><img src="camadas/06-cerrado-mid.png"></div><div class="txt"><b>Meio</b><span>planície, ipê, lobo-guará, seriema, cupinzeiros</span><div class="bar"><i style="width:44.00000000000001%"></i></div><em>velocidade 0,55×</em></div></div><div class="row" style="top:508px"><div class="n">4</div><div class="img" style="transform:perspective(700px) rotateY(18deg) translateZ(42px)"><img src="camadas/06-cerrado-near.png"></div><div class="txt"><b>Perto</b><span>pequizeiro, coruja, caju, araras, trilha</span><div class="bar"><i style="width:80%"></i></div><em>velocidade 1×</em></div></div><div class="row" style="top:640px"><div class="n">5</div><div class="img" style="transform:perspective(700px) rotateY(18deg) translateZ(56px)"><img src="camadas/06-cerrado-fg.png"></div><div class="txt"><b>Primeiro plano</b><span>capim alto desfocado, canela-de-ema, partículas</span><div class="bar"><i style="width:100%"></i></div><em>velocidade 1,25×</em></div></div>
+<div class="final"><img src="../06-cerrado.png"><p>Resultado composto (06-cerrado.png) — os 5 planos sobrepostos.</p></div>
+<div class="box"><b>Regra de movimento:</b> deslocamento = arrasto × fator da camada. Giroscópio: ±12 px no céu até ±40 px no primeiro plano, com amortecimento. <b>Respiração:</b> nuvens derivam, capim balança e partículas flutuam em laços de 6–10 s. <b>Modo leve</b> (celular simples): 2 camadas (céu+fundo; meio+perto+frente) e sem partículas. <b>Pontos ✦</b> moram na camada do objeto e acompanham o movimento; o toque abre a palavra (som → sílabas → palavra).</div>
+</body></html>
