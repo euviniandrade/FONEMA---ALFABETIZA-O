@@ -25,6 +25,7 @@
 ## 3. Competição saudável
 O dono quer que eles **possam competir**. Para não prejudicar quem lê mais devagar (pesquisa: rels. 33 e 38), a competição segue estas regras:
 - **Equipes e turma contra um desafio:** a turma inteira contra a "Nuvem Bagunceira", ou "Copa das Letras" entre equipes misturadas pelo professor.
+  - *Atualizado pela [D019](019-progressao-vilao-familia.md) §2: no lugar da "Nuvem Bagunceira", o vilão leve é o **Zum-Zum**, o besouro barulhento.*
 - **Recordes pessoais:** "bati meu próprio recorde".
 - **Torneios esportivos** nos minijogos, com fair play.
 - **Ranking só por esforço e coleção,** como selos e missões feitas na semana. **Nunca** por nível de leitura e nunca expondo quem está com dificuldade.

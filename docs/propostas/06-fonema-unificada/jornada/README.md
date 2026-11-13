@@ -35,7 +35,7 @@ A jornada tem **cinco fios** que atravessam todas as regiões. Cada fio correspo
 | **4. Vontade de voltar** (por que a criança quer seguir) | O **gancho** do fim de cada região (e do fim de cada sessão) abre uma lacuna pequena e fechável. A próxima região é **visível e sem cadeado**: dá para espiar | N10, N12, N2 | rel. 08 (curiosidade, Loewenstein; Gruber), rel. 37 (regiões visíveis), rel. 42 |
 | **5. Adulto e vila** (onde a leitura vira ação) | A vila acumula prédios lidos de todas as regiões. A família recebe a missão da semana do som atual. O professor recebe grupos e o próximo passo | N2, N12 | rels. 26, 30, 37, 38, 40 |
 
-A "Nuvem Bagunceira apagou as letras do mundo; cada palavra lida devolve uma coisa ao mundo" (rel. 37 §3.5, a partir do rel. 31) é a **moldura narrativa** que costura os ganchos. A recompensa principal continua sendo a própria leitura: a palavra lida vira coisa (rel. 08, P1).
+A "Nuvem Bagunceira apagou as letras do mundo; cada palavra lida devolve uma coisa ao mundo" (rel. 37 §3.5, a partir do rel. 31) é a **moldura narrativa** que costura os ganchos. *Atualizado pela [D019](../../../decisoes/019-progressao-vilao-familia.md) §2: o "vilão leve" passa a ser o **Zum-Zum**, besouro barulhento que representa a distração e vira amigo no fim de cada região.* A recompensa principal continua sendo a própria leitura: a palavra lida vira coisa (rel. 08, P1).
 
 ---
 

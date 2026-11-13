@@ -25,7 +25,8 @@ Para criar uma decisão nova, veja [`../CONVENCOES.md`](../CONVENCOES.md) §3.
 | [015](015-video-sempre-com-atividade.md) | Vídeo nunca sozinho, sempre com atividade | 13/11/2026 | Aprovada | Formato "Assiste e Faz": vídeo ≤ 3 min + atividadezinha + registro no painel |
 | [016](016-universo-infantil.md) | Um universo infantil educativo | 13/11/2026 | Aprovada | Série, livros, canais e perfis; a Bíblia do Universo (`docs/universo/`) é o registro canônico |
 | [017](017-roteiro-de-expansao-educativa.md) | Expansão educativa: novas áreas e idiomas | 13/11/2026 | Visão aprovada; detalhes depois | Após a alfabetização: áreas do conhecimento e 2º idioma, em séries; §5 conhecimento de base e educação cívica apartidária |
-| [018](018-professor-familia-selos-online.md) | Professor e família, selos, competição saudável e futuro online | 13/11/2026 | Aprovada (itens legais a verificar) | "Mostra pro professor" com correção em 1 toque; selos infinitos; competição só por esforço; arquitetura pronta para modo online seguro; agente de qualidade (§5) |
+| [018](018-professor-familia-selos-online.md) | Professor e família, selos, competição saudável e futuro online | 13/11/2026 | Aprovada (itens legais a verificar; vilão: D019) | "Mostra pro professor" com correção em 1 toque; selos infinitos; competição só por esforço; arquitetura pronta para modo online seguro; agente de qualidade (§5) |
+| [019](019-progressao-vilao-familia.md) | Fases quase infinitas, títulos, vilão leve Zum-Zum, capoeira e foco das primeiras fases | 13/11/2026 | Aprovada | Uma fase por som com subfases; curva rápida no começo; títulos com recompensas; Zum-Zum (distração) no lugar da Nuvem Bagunceira; capoeira só como esporte; primeiras fases no cotidiano universal |
 
 ## Conflitos entre decisões (e como ficam)
 
@@ -39,6 +40,8 @@ Para criar uma decisão nova, veja [`../CONVENCOES.md`](../CONVENCOES.md) §3.
 | Eventos e temporadas | D001: "datas, cultura brasileira" | **D012**: só celebrações neutras ou cristãs | D001; D002 já tinha nota |
 | Linguagem "jogo" | D001/D002: "jogo", "amigo do jogo" | **D014**: plataforma, jornada, missões, atividades | D002 |
 | Arte | qualquer arte anterior a 13/11/2026 | **D008 + D009 + D012**: checklist de arte obrigatório | ver [`../QUALIDADE.md`](../QUALIDADE.md) |
+| Vilão leve | D018 e rel. 37: "Nuvem Bagunceira" | **D019**: **Zum-Zum**, besouro barulhento (distração) que vira amigo | D018; jornada; esporte |
+| Capoeira | esporte-respeito-ambiente: roda com cantigas e mestre | **D019 §4**: só esporte e expressão corporal, sem cantigas religiosas, rituais ou política | esporte-respeito-ambiente §6 |
 | Nome do recurso de boca | rels. de pesquisa: "Boquinha(s)" | **Espelho do Som** (doc. mestre, D005, D015); "Boquinhas" é marca de terceiro | — (já correto nos documentos) |
 
 Conflitos de **conteúdo** (documentos que ainda contradizem decisões) ficam listados no relatório de [`../QUALIDADE.md`](../QUALIDADE.md).

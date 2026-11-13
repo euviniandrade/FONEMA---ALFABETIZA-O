@@ -118,12 +118,12 @@
 #### 6. Capoeira (praia e roda do Litoral) — R8 (berimbau desde R7)
 | Campo | Conteúdo |
 |---|---|
-| Leitura | **Ginga por sílaba:** o berimbau toca o ritmo e a criança escolhe o movimento cujo nome ouve ou lê (GINGA, AÚ, ROLÊ); cantigas curtas com rimas lidas (CCV em R8: "BRA-ÇO", "TRO-CA") |
+| Leitura | **Ginga por sílaba:** o berimbau toca o ritmo e a criança escolhe o movimento cujo nome ouve ou lê (GINGA, AÚ, ROLÊ); rimas curtas lidas sobre os movimentos (CCV em R8: "BRA-ÇO", "TRO-CA"); *sem cantigas religiosas (D019 §4)* |
 | Lógica | Ritmo como sequência (PC: repetição), contar compassos |
 | Movimento real | Ginga lenta 30 s no lugar; versão sentada com braços |
 | Fair play | Na roda **não se derruba o outro**: joga-se "com" e não "contra"; cumprimentar ao entrar e sair |
 | Adaptação | ♿ ginga de tronco e braços; TEA: berimbau em volume baixo, sem palmas sobrepostas; TDAH: rodas de 1 min |
-| Cultura | Entra com o tema da R8 ("O que o mar traz e leva?", África–Brasil; ERER) e o **mestre de capoeira** da jornada; revisão por especialista em ERER e por capoeirista (jornada §8). Reconhecimento como patrimônio cultural: **[NV]**, conferir registro no IPHAN antes de citar |
+| Cultura | *Atualizado pela [D019](../../../decisoes/019-progressao-vilao-familia.md) §4: capoeira só como **esporte e expressão corporal**, sem cantigas ou elementos religiosos, rituais ou conteúdo político.* Entra com o tema da R8 ("O que o mar traz e leva?", África–Brasil; ERER) e o **mestre de capoeira** da jornada; revisão por especialista em ERER e por capoeirista (jornada §8). Reconhecimento como patrimônio cultural: **[NV]**, conferir registro no IPHAN antes de citar |
 | Desafio e recompensa | BERIMBAU (#103 do catálogo) toca o /b/; **ABADÁ** (novo) para vestir; **não** se vendem cordas ou graduações (são conquistas reais da capoeira) |
 
 #### 7. Atletismo: corrida (trilha da Mata e campo do Pampa) — R2a em diante
@@ -285,7 +285,7 @@
 | **Coruja** | marinho + amarelo-ipê | R5 (C, R) | Arquipélago dos Livros |
 
 **Como é cooperativa.**
-1. **Fase de visitas** (uma por região já liberada): cada partida é uma **dupla de seleções contra a Nuvem Bagunceira**, que apagou as letras do placar (moldura narrativa da jornada §1). As duas seleções devolvem as letras **juntas**.
+1. **Fase de visitas** (uma por região já liberada): cada partida é uma **dupla de seleções contra a Nuvem Bagunceira** *(D019: substituída pelo **Zum-Zum**, besouro barulhento que distrai)*, que apagou as letras do placar (moldura narrativa da jornada §1). As duas seleções devolvem as letras **juntas**.
 2. **Placar de palavras:** o placar final é a palavra reconstruída ("AMIZADE" em R5; "PRAIA" em R8), lida por todos.
 3. **Cartão de fair play** em vez de cartão amarelo: a criança lê e escolhe o gesto certo numa situação do jogo (seção 2.4). Escolher o gesto respeitoso **não paga moedas**; o que conta é a leitura (rel. 33 §4, regra 4).
 4. **Final = Festival da Copa** no campinho: as 8 seleções juntas completam o **Grande Placar da Vila**, uma frase da fase da criança. Todas recebem a **Taça da Amizade** (★ projeto, seção 4). Não há campeão nem eliminado.
