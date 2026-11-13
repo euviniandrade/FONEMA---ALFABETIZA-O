@@ -62,30 +62,100 @@ export class ProvedorNavegador implements ProvedorVoz {
   parar() { if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel(); }
 }
 
+/** Personagens sem voz própria usam a voz da Sofia ou do Tales com outro ritmo (até terem dubladores). */
+export const VOZ_DO_PERSONAGEM: Record<string, { voz: 'sofia' | 'tales'; rate: number }> = {
+  sofia: { voz: 'sofia', rate: 1 }, tales: { voz: 'tales', rate: 1 }, bolota: { voz: 'tales', rate: 0.86 },
+  davi: { voz: 'tales', rate: 1.05 }, 'dona-cida': { voz: 'sofia', rate: 0.9 }, pescadora: { voz: 'sofia', rate: 0.95 },
+  'guarda-parque': { voz: 'tales', rate: 0.9 }, 'zum-zum': { voz: 'tales', rate: 1.12 }
+};
+
+/** Chave de um trecho de fala (sem pontuação solta no começo). Mesma regra do gerador (scripts/gerar-vozes.mjs). */
+export function chaveTrecho(t: string): string {
+  return t.replace(/^[\s,.!?;:…]+/, '').replace(/\s+/g, ' ').trim();
+}
+export function chaveNome(n: string): string {
+  return n.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
+}
+
+/**
+ * Vozes OFICIAIS pré-geradas (ElevenLabs: "Sofia — FONEMA" e "Tales — FONEMA").
+ * A fala é dividida no nome da criança: [trecho] + [clipe do nome] + [trecho]. Se o nome não tem clipe,
+ * toca a variante sem o nome (o nome continua escrito na tela). Só cai no speechSynthesis se faltar um trecho.
+ */
 export class ProvedorPreGerado implements ProvedorVoz {
-  private manifesto: Record<string, string> | null = null;
+  private falas: Record<string, string> | null = null;
+  private nomes: Record<string, string[]> = { sofia: [], tales: [] };
   private atual: HTMLAudioElement | null = null;
+  private geracao = 0;
+  nome = '';
+  pronto: Promise<void>;
   constructor(private reserva: ProvedorVoz) {
-    fetch('./audio/falas/manifesto.json').then((r) => (r.ok ? r.json() : {})).then((m) => (this.manifesto = m)).catch(() => (this.manifesto = {}));
+    this.pronto = Promise.all([
+      fetch('./audio/falas/manifesto.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+      fetch('./audio/nomes/manifesto.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({}))
+    ]).then(([f, n]) => { this.falas = f; this.nomes = { sofia: [], tales: [], ...n }; });
   }
-  falar(texto: string, o: OpcoesFala = {}): Promise<void> {
-    const arq = this.manifesto?.[`${o.quem ?? 'sofia'}|${texto}`];
-    if (!arq || modoTeste()) return this.reserva.falar(texto, o);
-    return new Promise((resolve) => {
-      this.atual = new Audio(`./audio/falas/${arq}`);
-      this.atual.onended = () => resolve();
-      this.atual.onerror = () => this.reserva.falar(texto, o).then(resolve);
-      this.atual.play().catch(() => this.reserva.falar(texto, o).then(resolve));
-    });
+  /** Lista de arquivos para uma fala, ou null se faltar algum trecho. */
+  arquivos(texto: string, quem: string): string[] | null {
+    if (!this.falas) return null;
+    const v = VOZ_DO_PERSONAGEM[quem] ?? VOZ_DO_PERSONAGEM.sofia;
+    const partes = this.nome ? texto.split(this.nome) : [texto];
+    const temNome = this.nome && this.nomes[v.voz]?.includes(chaveNome(this.nome));
+    const out: string[] = [];
+    for (let i = 0; i < partes.length; i++) {
+      if (i > 0 && temNome) out.push(`./audio/nomes/${v.voz}/${chaveNome(this.nome)}.mp3`);
+      const k = chaveTrecho(partes[i]);
+      if (!k) continue;
+      const arq = this.falas[`${v.voz}|${k}`];
+      if (!arq) return null;
+      out.push(`./audio/falas/${arq}`);
+    }
+    return out.length ? out : null;
   }
-  parar() { this.atual?.pause(); this.reserva.parar(); }
+  async falar(texto: string, o: OpcoesFala = {}): Promise<void> {
+    await this.pronto;
+    const quem = o.quem ?? 'sofia';
+    const arqs = this.arquivos(texto, quem);
+    if (!arqs || modoTeste()) return this.reserva.falar(texto, o);
+    const g = ++this.geracao;
+    const rate = (VOZ_DO_PERSONAGEM[quem]?.rate ?? 1) * (o.rate && o.rate < 0.85 ? 0.85 : 1);
+    for (const a of arqs) {
+      if (g !== this.geracao) return;
+      await new Promise<void>((resolve) => {
+        const el = new Audio(a);
+        this.atual = el;
+        el.playbackRate = rate;
+        (el as any).preservesPitch = rate === 1;
+        el.onended = () => resolve();
+        el.onerror = () => resolve();
+        el.play().catch(() => resolve());
+      });
+    }
+  }
+  parar() { this.geracao++; this.atual?.pause(); this.reserva.parar(); }
+}
+
+/** Coleta (só em teste) as falas realmente ditas, para gerar os áudios oficiais (scripts/gerar-vozes.mjs). */
+function coletar(texto: string, quem: Personagem | undefined, nome: string) {
+  try {
+    if (localStorage.getItem('fonema-coletar') !== '1') return;
+    const v = (VOZ_DO_PERSONAGEM[quem ?? 'sofia'] ?? VOZ_DO_PERSONAGEM.sofia).voz;
+    const t = nome ? texto.split(nome).join('[NOME]') : texto;
+    const k = 'fonema-falas';
+    const atual = JSON.parse(localStorage.getItem(k) || '[]') as string[];
+    const item = `${v}|${t}`;
+    if (!atual.includes(item)) { atual.push(item); localStorage.setItem(k, JSON.stringify(atual)); }
+  } catch { /* sem armazenamento */ }
 }
 
 /** Fachada usada pelas telas: liga/desliga e troca de provedor num lugar só. */
 class Voz {
   ligada = true;
   private nav = new ProvedorNavegador();
-  private provedor: ProvedorVoz = new ProvedorPreGerado(this.nav);
+  private pre = new ProvedorPreGerado(this.nav);
+  private provedor: ProvedorVoz = this.pre;
+  /** Nome (na pronúncia escolhida) da criança desta tela, para encaixar o clipe do nome. */
+  definirNome(nome: string) { this.pre.nome = nome; }
   private fila: Promise<void> = Promise.resolve();
   configurar(o: { ligada?: boolean; velocidade?: number; provedor?: 'navegador' | 'pre-gerada' }) {
     if (o.ligada !== undefined) this.ligada = o.ligada;
@@ -95,6 +165,7 @@ class Voz {
   /** Fala agora (interrompe o que estava falando). */
   falar(texto: string, o?: OpcoesFala): Promise<void> {
     this.parar();
+    coletar(texto, o?.quem, this.pre.nome);
     if (!this.ligada) return Promise.resolve();
     this.fila = this.provedor.falar(texto, o);
     return this.fila;
@@ -104,6 +175,7 @@ class Voz {
     this.parar();
     for (let i = 0; i < falas.length; i++) {
       aoMudar?.(i);
+      coletar(falas[i].texto, falas[i].quem, this.pre.nome);
       if (this.ligada) await this.provedor.falar(falas[i].texto, { quem: falas[i].quem });
       else await new Promise((r) => setTimeout(r, modoTeste() ? 10 : 1400));
     }

@@ -83,6 +83,7 @@ export function useCrianca(id: string | undefined) {
       p = progressoInicial(id, Date.now());
       await repo.salvarProgresso(p);
     }
+    if (c) voz.definirNome(c.pronuncia.fala);
     setCrianca(c);
     setProgresso(p);
     setCarregado(true);
