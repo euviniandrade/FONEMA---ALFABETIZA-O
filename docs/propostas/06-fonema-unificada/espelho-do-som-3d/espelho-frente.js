@@ -47,9 +47,11 @@
       <defs>
         <radialGradient id="fLing" cx="50%" cy="30%" r="75%"><stop offset="0" stop-color="#FFA79B"/><stop offset=".45" stop-color="#FB8576"/><stop offset=".85" stop-color="#EE6A60"/><stop offset="1" stop-color="#D9534F"/></radialGradient>
         <linearGradient id="fBaixo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB2A8"/><stop offset=".35" stop-color="#FC9183"/><stop offset="1" stop-color="#F3786C"/></linearGradient>
-        <linearGradient id="fLabC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3A3A0"/><stop offset=".7" stop-color="#EE8E8B"/><stop offset="1" stop-color="#E27C7E"/></linearGradient>
-        <linearGradient id="fLabB" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F3A3A0"/><stop offset=".7" stop-color="#EF9290"/><stop offset="1" stop-color="#E27C7E"/></linearGradient>
-        <clipPath id="fBoca"><ellipse cx="${CX}" cy="${CY}" rx="${IRX}" ry="${IRY}"/></clipPath>
+        <radialGradient id="fLabC" cx="50%" cy="92%" r="75%"><stop offset="0" stop-color="#FBB7B2"/><stop offset=".45" stop-color="#F29C98"/><stop offset="1" stop-color="#DE7B7E"/></radialGradient>
+        <radialGradient id="fLabB" cx="50%" cy="10%" r="75%"><stop offset="0" stop-color="#FCBDB8"/><stop offset=".45" stop-color="#F4A19D"/><stop offset="1" stop-color="#DE7B7E"/></radialGradient>
+        <clipPath id="fBoca"><ellipse class="f-clip" cx="${CX}" cy="${CY}" rx="${IRX}" ry="${IRY}"/></clipPath>
+        <radialGradient id="fCanto"><stop offset="0" stop-color="#B9525E" stop-opacity=".55"/><stop offset="1" stop-color="#B9525E" stop-opacity="0"/></radialGradient>
+        <radialGradient id="fLuz"><stop offset="0" stop-color="#FFF1EE" stop-opacity=".85"/><stop offset="1" stop-color="#FFF1EE" stop-opacity="0"/></radialGradient>
         <filter id="fSombraIn" x="-5%" y="-5%" width="110%" height="110%">
           <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="borda"/>
           <feFlood flood-color="#B8424A" flood-opacity=".7"/><feComposite in2="borda" operator="in" result="s"/>
@@ -69,9 +71,14 @@
         <path class="f-lab-c" fill="url(#fLabC)"/><path class="f-lab-c-borda" fill="none" stroke="#C9606A" stroke-width="5" stroke-linecap="round"/>
         <path class="f-lab-b" fill="url(#fLabB)"/><path class="f-lab-b-borda" fill="none" stroke="#C9606A" stroke-width="5" stroke-linecap="round"/>
         <path class="f-lab-luz" fill="none" stroke="#FFD9D6" stroke-width="10" stroke-linecap="round" opacity=".7" filter="url(#fBorrao)"/>
+        <g class="f-fechada"><path class="f-contato-sombra" fill="none" stroke="#B4505C" stroke-width="22" stroke-linecap="round" opacity=".35" filter="url(#fBorrao)"/>
+          <path class="f-contato" fill="none" stroke="#B4505C" stroke-width="7" stroke-linecap="round"/>
+          <ellipse class="f-canto-e" rx="90" ry="120" fill="url(#fCanto)"/><ellipse class="f-canto-d" rx="90" ry="120" fill="url(#fCanto)"/>
+          <ellipse class="f-luz-c" rx="120" ry="34" fill="url(#fLuz)"/><ellipse class="f-luz-b" rx="130" ry="44" fill="url(#fLuz)"/></g>
       </g>
       <g class="f-setas" filter="url(#fSombra)"><path class="f-seta1" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round" opacity=".85"/><path class="f-seta1b" fill="none" stroke="#F7B92E" stroke-width="12" stroke-linecap="round" marker-end="url(#fPonta)"/>
         <path class="f-seta2" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round" opacity=".85"/><path class="f-seta2b" fill="none" stroke="#F7B92E" stroke-width="12" stroke-linecap="round" marker-end="url(#fPonta)"/></g>
+      <text class="f-nariz-txt" x="${CX + 70}" y="40" font-family="Fredoka,Andika,sans-serif" font-weight="700" font-size="28" fill="#1B3160" stroke="#fff" stroke-width="6" paint-order="stroke">👃 ar pelo nariz</text>
       <g class="f-frase" transform="translate(${CX},716)"><rect rx="26" y="-26" height="52" fill="#FFF3EE" stroke="#F4C9C0" stroke-width="2"/><text text-anchor="middle" y="11" font-family="Fredoka,Andika,sans-serif" font-weight="700" font-size="30" fill="#1B3160"></text></g>
       <circle class="f-marca" r="46" fill="rgba(255,224,138,.65)" opacity="0"/>
       <g class="f-alvos"><ellipse data-zona="lingua" cx="${CX}" cy="430" rx="170" ry="110" fill="transparent"/><ellipse data-zona="dentes" cx="${CX}" cy="175" rx="190" ry="45" fill="transparent"/><ellipse data-zona="labios" cx="${CX}" cy="640" rx="230" ry="35" fill="transparent"/></g>`;
@@ -140,11 +147,21 @@
       $('.f-brilho').setAttribute('opacity', 0.75 - fundo * 0.3);
       // lábios: cortina de cima, de baixo e o anel do biquinho (recortados pela borda da boca)
       const curva = 14;
-      $('.f-lab-c').setAttribute('d', `M${CX - IRX - 10},0 L${CX + IRX + 10},0 L${CX + IRX + 10},${yU - lc} Q${CX},${yU + curva * (1 - fecha)} ${CX - IRX - 10},${yU - lc} Z`);
-      $('.f-lab-c-borda').setAttribute('d', yU > 120 ? `M${CX - IRX},${yU - lc} Q${CX},${yU + curva * (1 - fecha)} ${CX + IRX},${yU - lc}` : '');
-      $('.f-lab-b').setAttribute('d', `M${CX - IRX - 10},768 L${CX + IRX + 10},768 L${CX + IRX + 10},${yL + lb} Q${CX},${yL - curva * (1 - fecha)} ${CX - IRX - 10},${yL + lb} Z`);
-      $('.f-lab-b-borda').setAttribute('d', yL < 600 ? `M${CX - IRX},${yL + lb} Q${CX},${yL - curva * (1 - fecha)} ${CX + IRX},${yL + lb}` : '');
+      $('.f-lab-c').setAttribute('d', `M${CX - IRX - 10},0 L${CX + IRX + 10},0 L${CX + IRX + 10},${yU - lc - 30 * fecha} Q${CX},${yU + curva * (1 - fecha) + 30 * fecha} ${CX - IRX - 10},${yU - lc - 30 * fecha} Z`);
+      $('.f-lab-c-borda').setAttribute('d', yU > 120 && fecha < 0.6 ? `M${CX - IRX},${yU - lc} Q${CX},${yU + curva * (1 - fecha)} ${CX + IRX},${yU - lc}` : '');
+      $('.f-lab-b').setAttribute('d', `M${CX - IRX - 10},768 L${CX + IRX + 10},768 L${CX + IRX + 10},${yL + lb - 30 * fecha} Q${CX},${yL - curva * (1 - fecha) + 30 * fecha} ${CX - IRX - 10},${yL + lb - 30 * fecha} Z`);
+      $('.f-lab-b-borda').setAttribute('d', yL < 600 && fecha < 0.6 ? `M${CX - IRX},${yL + lb} Q${CX},${yL - curva * (1 - fecha)} ${CX + IRX},${yL + lb}` : '');
       $('.f-lab-luz').setAttribute('d', yL < 600 ? `M${CX - 90},${yL + 24} Q${CX},${yL + 2} ${CX + 70},${yL + 22}` : '');
+      { // lábios fechados: linha de contato sorridente, volume e brilho
+        const g = $('.f-fechada'); g.setAttribute('opacity', clamp((fecha - 0.4) / 0.6, 0, 1));
+        const yc = (yU + yL) / 2, smile = `M${CX - IRX},${yc - 30} Q${CX},${yc + 30} ${CX + IRX},${yc - 30}`;
+        $('.f-contato').setAttribute('d', smile); $('.f-contato-sombra').setAttribute('d', `M${CX - 180},${yc - 6} Q${CX},${yc + 60} ${CX + 180},${yc - 6}`);
+        const at = (sel, x, y) => { $(sel).setAttribute('cx', x); $(sel).setAttribute('cy', y); };
+        at('.f-luz-c', CX - 30, yc - 70); at('.f-luz-b', CX - 10, yc + 105); at('.f-canto-e', CX - IRX + 40, yc - 20); at('.f-canto-d', CX + IRX - 40, yc - 20);
+        $('.f-clip').setAttribute('rx', IRX + 18 * fecha); $('.f-clip').setAttribute('ry', IRY + 14 * fecha);
+        $('.f-lab-luz').setAttribute('opacity', 0.7 * (1 - fecha));
+      }
+      $('.f-nariz-txt').setAttribute('opacity', (f.ar === 'nasal' || f.ar === 'oral+nasal') ? 1 : 0);
       const hrx = IRX * (1 - 0.6 * bico), hry = IRY * (1 - 0.5 * bico), hcy = lerp(CY, (yU + yL) / 2, 0.5);
       $('.f-anel').setAttribute('d', bico > 0.03 ? `M${CX - IRX - 20},${CY} a${IRX + 20},${IRY + 20} 0 1,0 ${2 * IRX + 40},0 a${IRX + 20},${IRY + 20} 0 1,0 ${-2 * IRX - 40},0 Z M${CX - hrx},${hcy} a${hrx},${hry} 0 1,0 ${2 * hrx},0 a${hrx},${hry} 0 1,0 ${-2 * hrx},0 Z` : '');
       // seta amarela e frase
@@ -155,10 +172,10 @@
       if (tipo === 'fundo' || tipo === 'garganta') a1 = `M${CX + 150},${yb + 110} Q${CX + 130},${yb - 10} ${CX + 40},${yb - 30}`;
       if (tipo === 'deita') a1 = `M${CX + 120},${yb - 110} Q${CX + 150},${yb - 40} ${CX + 90},${yb - 4}`;
       if (tipo === 'sorri') a1 = `M${CX + 180},${yb + 60} Q${CX + 160},${yb - 10} ${CX + 90},${yb - 6}`;
-      if (tipo === 'labios') { a1 = `M${CX + 260},${CY - 150} Q${CX + 300},${CY - 60} ${CX + 250},${CY - 18}`; a2 = `M${CX + 260},${CY + 150} Q${CX + 300},${CY + 60} ${CX + 250},${CY + 18}`; }
+      if (tipo === 'labios') { a1 = `M${CX + 260},${CY - 150} Q${CX + 300},${CY - 60} ${CX + 250},${CY - 18}`; a2 = f.ar === 'nasal' ? `M${CX - 30},${CY - 120} Q${CX - 80},${CY - 250} ${CX + 20},${30}` : `M${CX + 260},${CY + 150} Q${CX + 300},${CY + 60} ${CX + 250},${CY + 18}`; }
       if (tipo === 'ld') a1 = `M${CX + 270},${yL + 140} Q${CX + 290},${yL + 30} ${CX + 200},${yL - 4}`;
       if (tipo === 'bico') { a1 = `M${CX + 330},${CY} Q${CX + 300},${CY - 40} ${CX + hrx + 20},${CY - 8}`; a2 = `M${CX - 330},${CY} Q${CX - 300},${CY - 40} ${CX - hrx - 20},${CY - 8}`; }
-      if (tipo === 'nariz') a1 = `M${CX + 40},${yU + 60} Q${CX + 160},${-20} ${CX + 40},${-60}`;
+      if (tipo === 'nariz') a1 = `M${CX + 40},${yb - 60} Q${CX - 60},${140} ${CX + 20},${30}`;
       [[s1, s1b, a1], [s2, s2b, a2]].forEach(([w, y, d]) => { w.setAttribute('d', d); y.setAttribute('d', d); });
       const dash = 900, prog = reduz() ? 1 : clamp(((tempo - t0) * (lento ? 0.5 : 1.3)) % 2.4, 0, 1);
       [s1, s1b, s2, s2b].forEach((p) => { p.style.strokeDasharray = dash; p.style.strokeDashoffset = dash * (1 - P.suave(prog)); });

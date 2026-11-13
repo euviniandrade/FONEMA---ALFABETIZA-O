@@ -25,7 +25,7 @@
     tales: { img: 'recortes/raiox-tales-limpo.jpg', x0: 530, y0: 432, k: 36.7, gar: 0.5, vb: [372, 228, 690, 445],
       rot: { nariz: [440, 335], labios: [432, 485], dentes: [432, 412], palato: [610, 312], veu: [800, 368], lingua: [800, 505], garganta: [845, 565] } },
     // "3D fofinho" (D020): Sofia de perfil olhando para a DIREITA, com a janelinha na bochecha
-    lado3d: { img: 'recortes/lado3d-sofia-limpo.jpg', x0: 982, y0: 309, k: 68, gar: 0.5, vb: [430, 70, 830, 535], dir: -1, lar: [512, 572], labEsc: 1.32, labDz: 0.32,
+    lado3d: { img: 'recortes/lado3d-sofia-limpo.jpg', x0: 982, y0: 309, k: 68, gar: 0.5, vb: [300, 0, 1076, 672], dir: -1, lar: [512, 572], labEsc: 1.32, labDz: 0.32,
       semLabios: true, // os lábios da ilustração ficam; a vista de frente mostra o movimento dos lábios
       janela: [[612, 212], [662, 180], [760, 166], [880, 166], [958, 192], [982, 245], [990, 330], [974, 398], [930, 448], [840, 470], [720, 464], [642, 428], [608, 360], [602, 280]],
       rot: { nariz: [1140, 120], labios: [1150, 380], dentes: [1145, 250], palato: [800, 120], veu: [540, 175], lingua: [760, 520], garganta: [610, 640] } }
@@ -97,6 +97,7 @@
           <feFlood flood-color="#A9343F" flood-opacity=".8"/><feComposite in2="borda" operator="in" result="sombra"/>
           <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="sombra"/></feMerge></filter>
         <filter id="eContato" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="${s(1.5)}" stdDeviation="${s(1.6)}" flood-color="#5A1E35" flood-opacity=".45"/></filter>
+        <marker id="eSetaAm" viewBox="0 0 10 10" refX="4" refY="5" markerWidth="3" markerHeight="3" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Q3,5 0,0z" fill="#F7B92E"/></marker>
         <marker id="eSeta" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="2.6" markerHeight="2.6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Q3,5 1,1 z" fill="#E4F9FF" fill-opacity=".85"/></marker>
       </defs>
       <image href="${BASE}${C.img}" x="0" y="0" width="1376" height="768"/>
@@ -125,6 +126,9 @@
         <path class="e-pregas" d="M${s(-18)},0 Q0,${s(-8)} ${s(18)},0 M${s(-18)},0 Q0,${s(8)} ${s(18)},0" stroke="#FFF0F3" stroke-width="${s(4)}" fill="none"/>
         <g class="e-ondas" stroke="#FFD458" stroke-width="${s(5)}" fill="none" stroke-linecap="round" filter="url(#eBrilho)">
         ${[0, 1, 2].map((i) => `<path class="e-onda" style="--i:${i}" d="M${s(40 + i * 20)},${s(-22)} q${s(16)},${s(22)} 0,${s(44)}"/><path class="e-onda" style="--i:${i}" d="M${s(-40 - i * 20)},${s(-22)} q${s(-16)},${s(22)} 0,${s(44)}"/>`).join('')}</g></g>
+      <g class="e-toque"><circle class="e-toque-brilho" r="${s(26)}" fill="url(#eVozBrilho)"/><circle class="e-toque-anel" r="${s(14)}" fill="none" stroke="#FFE38A" stroke-width="${s(3)}"/></g>
+      <path class="e-sobe-b" fill="none" stroke="#fff" stroke-width="${s(13)}" stroke-linecap="round" opacity=".85"/>
+      <path class="e-sobe" fill="none" stroke="#F7B92E" stroke-width="${s(8)}" stroke-linecap="round" marker-end="url(#eSetaAm)"/>
       <circle class="e-marca" r="${s(34)}" fill="rgba(255,224,138,.65)" opacity="0" filter="url(#eBrilho)"/>
       <text class="e-lateral" font-family="Fredoka,sans-serif" font-weight="700" font-size="${s(22)}" fill="#E4F9FF" opacity="0">↕ ar pelos lados</text>
       <g class="e-rotulos">${Object.entries(C.rot).map(([z, [x, y]]) => `<g class="e-rot" data-zona="${z}" transform="translate(${x},${y})"><line/><circle class="e-rot-p" r="${s(3.5)}"/><rect y="${s(-15)}" height="${s(30)}" rx="${s(15)}"/><text text-anchor="middle" y="${s(6)}" font-size="${s(17)}">${ROTULOS[z]}</text></g>`).join('')}</g>
@@ -233,6 +237,19 @@
       const off = -(tempo * (lento ? 25 : 70) * (f.modo === 'fricativa' ? 1.8 : 1) * u * (solta > 0.05 ? 3 : 1));
       $('.e-ar-boca').style.strokeDashoffset = off; $('.e-ar-nariz').style.strokeDashoffset = off;
       const lt = $('.e-lateral'); lt.setAttribute('x', X(-1.6)); lt.setAttribute('y', Y(-1.15)); lt.setAttribute('opacity', ar === 'lateral' ? 1 : 0);
+      { // onde encosta (brilho) e qual parte da língua sobe (seta amarela)
+        const CONT = { alveolo: [-0.78, 0.5, 0], palato: [-1.95, 1.22, 2], veu: [-3.9, 1.18, 3], dentes: [-0.3, -0.05, -1], labios: [0.3, -0.05, -1], garganta: [-4.75, 0.3, 4] };
+        const zc = f.zona === 'palato' && ['x', 'j'].includes(id) ? [-1.25, 0.95, 1] : CONT[f.zona];
+        const ok = zc && k > 0.6, tq = $('.e-toque');
+        tq.setAttribute('opacity', ok ? (0.65 + 0.35 * Math.sin(tempo * 6)).toFixed(2) : 0);
+        if (ok) {
+          const [cx, cy] = scr([zc[0], zc[1]]); tq.setAttribute('transform', `translate(${cx},${cy})`);
+          let d = '';
+          if (zc[2] >= 0 && zc[2] <= 3) { const p = sup[zc[2]], ini = [p[0] - 0.35 * (C.dir || 1) * 0 + 0.0, p[1] - 1.15]; const a = scr(ini), b = scr([p[0], p[1] - 0.12]), cxp = scr([p[0] + 0.45, (ini[1] + p[1]) / 2]);
+            d = `M${a[0]},${a[1]} Q${cxp[0]},${cxp[1]} ${b[0]},${b[1]}`; }
+          $('.e-sobe').setAttribute('d', d); $('.e-sobe-b').setAttribute('d', d);
+        } else { $('.e-sobe').setAttribute('d', ''); $('.e-sobe-b').setAttribute('d', ''); }
+      }
       const mt = tempo - marcaT; $('.e-marca').setAttribute('opacity', mt < 2.2 ? (1 - mt / 2.2) : 0);
       requestAnimationFrame(desenha);
     }
