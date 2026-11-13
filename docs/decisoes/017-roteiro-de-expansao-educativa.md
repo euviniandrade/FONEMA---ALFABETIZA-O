@@ -21,3 +21,19 @@
    - materiais para professor e família;
    - conteúdo para canais.
 4. **Ordem:** primeiro a alfabetização completa (o coração). Depois, as áreas e os idiomas, um de cada vez, com a mesma qualidade, os valores (Decisões 012 e 016) e a revisão legal.
+
+## 5. Conhecimento de base para a vida (complemento do dono, 13/11/2026)
+Ao longo da jornada, e com força nas **últimas fases** (R8–R10), a criança aprende o **significado** das grandes áreas e de como o mundo funciona. É a base para aprender tudo depois. Ler bem depende de conhecer o mundo (vocabulário e conhecimento prévio; ver jornada §3.3, "espiral do conhecimento de mundo").
+- **O que é cada área:** História (o que aconteceu antes de nós), Geografia (lugares, mapas, clima, biomas), Ciências (como a natureza e o corpo funcionam), Português (sons, letras, palavras, regras simples de escrita), Matemática.
+- **Como a vida e o mundo funcionam:**
+  - família, escola, bairro, cidade, estado, país e planeta;
+  - trabalho e profissões, dinheiro e troca;
+  - regras e leis, direitos e deveres;
+  - saúde e cuidados.
+- **Como o país se organiza (educação cívica, sempre apartidária):**
+  - o que são presidente, governador e prefeito;
+  - o que são vereadores, deputados e senadores, o que é votar e para que servem as leis;
+  - símbolos nacionais e o respeito às instituições.
+
+  **Nunca** partidos, políticos reais citados ou opiniões políticas. Segue a BNCC (Ciências Humanas, anos iniciais).
+- **Como ensinar:** por **associação e significado**, nunca decoreba. Cada conceito chega por uma situação da dupla (ex.: a vila escolhe o lugar da nova praça → o que é votar). Depois vêm vocabulário novo para ler, pergunta de compreensão, atividade "Assiste e Faz" e conversa em família.
