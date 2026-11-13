@@ -75,6 +75,14 @@ def so_maior(im, frac=0.06):
     im = im.copy(); im.putalpha(Image.fromarray(a.astype(np.uint8)))
     return im
 
+def limpar_chao(im, faixa=0.10):
+    """remove restos azulados do chão da prancha na faixa de baixo (sombras/reflexos)."""
+    a = np.asarray(im).copy(); h = a.shape[0]; y0 = int(h * (1 - faixa))
+    r, g, b = [a[y0:, :, i].astype(int) for i in range(3)]
+    azul = ((b - r) > 45) & (b > 120) & (g > 70)
+    a[y0:, :, 3] = np.where(azul, 0, a[y0:, :, 3])
+    return Image.fromarray(a)
+
 def salvar(im, nome):
     im.save(os.path.join(OUT, nome)); print('ok', nome, im.size)
 
@@ -93,14 +101,15 @@ for arq, lst in DIV.items():
         c = full.copy()
         for (a0, b0, a1, b1) in (apagar[0] if apagar else []):
             ImageDraw.Draw(c).rectangle((a0, b0, a1, b1), fill=(0, 0, 0, 0))
-        salvar(aparar(so_maior(c.crop((x0, 60, x1, 768)), 0.35)), nome + '.png')
+        salvar(aparar(limpar_chao(aparar(so_maior(c.crop((x0, 60, x1, 768)), 0.35)))), nome + '.png')
 
 # ---------- 2. roupas (mesmo menino, 8 roupas) ----------
 ROUPAS_B = ['uniforme', 'blusao-capuz', 'explorador', 'capa-de-chuva', 'verao-camiseta-verde', 'pijama', 'festa-junina-xadrez', 'esporte']
 full = tirar_fundo(Image.open(os.path.join(AV, 'roupas-b.png')), thr=36)
 xs = [20, 188, 360, 528, 700, 862, 1030, 1198, 1370]
 for i, n in enumerate(ROUPAS_B):
-    salvar(aparar(so_maior(full.crop((xs[i], 70, xs[i+1], 768)))), f'roupa-{i+1:02d}-{n}.png')
+    rec = aparar(so_maior(full.crop((xs[i], 70, xs[i+1], 768)), 0.35))
+    salvar(rec if n == 'pijama' else aparar(limpar_chao(rec)), f'roupa-{i+1:02d}-{n}.png')  # pantufa do pijama é azul-clara
 # roupas-a: a camiseta listrada multicolorida (col. 5) NÃO é recortada (Decisão 009)
 ROUPAS_A = ['uniforme', 'blusao-capuz', 'explorador', 'capa-de-chuva', None, 'pijama', 'festa-junina-xadrez', 'esporte']
 full = tirar_fundo(Image.open(os.path.join(AV, 'roupas-a.png')), thr=22, ceu='claro', ilha=11)
@@ -189,3 +198,13 @@ for i, emo in enumerate(['alegre', 'curioso', 'pensando', 'surpreso', 'joinha', 
     salvar(aparar(o), f'tales-busto-{emo}.png')
 full = tirar_fundo(Image.open(os.path.join(PE, 'dupla-opcao-1.png')), thr=40)
 salvar(aparar(so_maior(full)), 'dupla-sofia-tales-corpo.png')
+
+# ---------- 6. rostos (topo das peças de corpo inteiro, para os cartões do passo 1) ----------
+ROSTOS = [('rosto-01-avatar-exemplo', 'roupa-01-uniforme.png', 0.29), ('rosto-02', 'crianca-b01-crespo-curto.png', 0.29),
+          ('rosto-03', 'crianca-b02-trancas.png', 0.30), ('rosto-04', 'crianca-b03-coque.png', 0.31),
+          ('rosto-05', 'crianca-b04-ruiva-ondulada.png', 0.31), ('rosto-06', 'crianca-b05-chanel-liso.png', 0.29),
+          ('rosto-07', 'crianca-b06-liso-longo-pintura.png', 0.30), ('rosto-08', 'crianca-b07-black-power-alto.png', 0.36),
+          ('rosto-09-oculos-aparelho', 'crianca-08-oculos-aparelho.png', 0.27), ('rosto-10', 'crianca-04-ruiva-ondulada.png', 0.30)]
+for nome, arq, fr in ROSTOS:
+    im = Image.open(os.path.join(OUT, arq))
+    salvar(aparar(so_maior(im.crop((0, 0, im.width, int(im.height * fr))), 0.3), 2), nome + '.png')

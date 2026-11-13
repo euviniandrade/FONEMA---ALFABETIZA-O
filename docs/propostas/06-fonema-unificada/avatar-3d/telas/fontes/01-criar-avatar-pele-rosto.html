@@ -1,0 +1,50 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Passo 1: rosto e pele</title>
+<link rel="stylesheet" href="comum.css"><style>
+.sec{font-family:Fredoka;font-weight:700;font-size:22px;color:var(--marinho);display:flex;align-items:center;gap:12px}
+.grade{display:grid;grid-template-columns:repeat(5,128px);gap:16px 18px;margin-top:12px}
+.op{width:128px;height:132px;border-radius:26px;background:linear-gradient(180deg,#F2F8FE,#DCEDFA);border:3px solid #E1EDF8;position:relative;box-shadow:0 4px 0 #CFE0EF}
+.op .im{position:absolute;inset:0;border-radius:23px;overflow:hidden}
+.op img{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:118px;max-width:124px;object-fit:contain;object-position:bottom}
+.op.sel{border-color:var(--ipe);background:linear-gradient(180deg,#FFF6DA,#FFE6A8);box-shadow:0 4px 0 #E5B54F,0 0 0 5px rgba(244,183,60,.25)}
+.op.mais{display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Fredoka;font-weight:600;font-size:18px;color:var(--marinho2);background:#fff;border-style:dashed;border-color:#B9D2EE}
+.op.mais b{font-size:40px;line-height:1}
+.peles{display:flex;gap:16px;margin-top:12px;align-items:center}
+.pele{width:62px;height:62px;border-radius:50%;border:4px solid #fff;box-shadow:0 0 0 2px #D5E3F0,0 4px 0 #C4D6E8;position:relative}
+.pele.sel{box-shadow:0 0 0 4px var(--ipe),0 4px 0 #C98A12}
+.privacidade{position:absolute;left:22px;right:22px;bottom:18px;background:var(--folha-claro);border:2px solid #A9D7B6;border-radius:18px;padding:10px 16px;display:flex;gap:10px;align-items:center;font-family:Atkinson;font-size:15px;color:#1E5A36}
+</style></head><body>
+<div class="topo">
+  <div class="circ" style="color:var(--marinho)"><span data-ic="voltar" style="display:flex"></span></div>
+  <div class="titulo">Crie seu personagem</div>
+  <div class="passos"><div class="passo agora"><i>1</i>Rosto e pele</div><div class="passo "><i>2</i>Cabelo</div><div class="passo "><i>3</i>Roupa</div><div class="passo "><i>4</i>Pronto!</div></div>
+  <div class="moedas"><span class="moeda"></span>17</div>
+  <div class="audio" style="color:#fff"><span data-ic="som" style="display:flex"></span></div>
+</div><div class="palco">
+  <div class="chip360"><span data-ic="girad" style="display:flex;width:20px;height:20px"></span>Gira 360°</div>
+  <div class="nomeav">LÉO</div>
+  <div class="disco"></div><svg class="girar" viewBox="0 0 400 130">
+  <defs><marker id="pe" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#284A86"/></marker></defs>
+  <path d="M60 70 A150 42 0 0 0 340 70" fill="none" stroke="#284A86" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 12" marker-start="url(#pe)" marker-end="url(#pe)"/>
+</svg><div class="sombra"></div>
+  <img class="avatar" src="../../pecas/roupa-01-uniforme.png">
+  <div class="rot e" style="color:var(--marinho2)"><span data-ic="girae" style="display:flex"></span></div>
+  <div class="rot d" style="color:var(--marinho2)"><span data-ic="girad" style="display:flex"></span></div>
+  <div class="dica"><span data-ic="mao" style="display:inline-flex;width:22px;height:22px;vertical-align:-4px;color:var(--marinho2)"></span> Arraste com o dedo para girar</div>
+</div>
+<div class="painel">
+  <div class="guia" style="left:22px;top:18px">
+  <div class="busto"><img src="../../pecas/sofia-busto-alegre.png"></div><div class="busto tales"><img src="../../pecas/tales-busto-alegre.png"></div>
+  <div class="balao" style="width:560px">Escolha um <b>rosto</b> e a <b>cor da pele</b>. Pode ser parecido com você, ou do jeito que quiser!<span class="mini-som" style="color:var(--azul)"><span data-ic="som" style="display:flex"></span></span></div>
+</div>
+  <div style="position:absolute;left:22px;top:124px;right:22px">
+    <div class="sec">Rosto <span class="selo gratis">Todos grátis</span></div>
+    <div class="grade"><div class="op sel"><div class="im"><img src="../../pecas/rosto-01-avatar-exemplo.png"></div><div class="ok" data-ic="ok"></div></div><div class="op"><div class="im"><img src="../../pecas/rosto-02.png"></div></div><div class="op"><div class="im"><img src="../../pecas/rosto-03.png"></div></div><div class="op"><div class="im"><img src="../../pecas/rosto-04.png"></div></div><div class="op"><div class="im"><img src="../../pecas/rosto-05.png"></div></div><div class="op"><div class="im"><img src="../../pecas/rosto-06.png"></div></div><div class="op"><div class="im"><img src="../../pecas/rosto-07.png"></div></div><div class="op"><div class="im"><img src="../../pecas/rosto-08.png"></div></div><div class="op"><div class="im"><img src="../../pecas/rosto-09-oculos-aparelho.png"></div></div><div class="op mais"><b>+</b>mais rostos</div></div>
+    <div class="sec" style="margin-top:20px">Cor da pele <span class="ad" style="font-weight:400;font-size:15px;color:var(--cinza)">funciona com qualquer rosto</span></div>
+    <div class="peles"><div class="pele" style="background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.45),rgba(255,255,255,0) 45%),#F7D9C4"></div><div class="pele" style="background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.45),rgba(255,255,255,0) 45%),#EFC09A"></div><div class="pele" style="background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.45),rgba(255,255,255,0) 45%),#DDA27A"></div><div class="pele" style="background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.45),rgba(255,255,255,0) 45%),#C68457"></div><div class="pele sel" style="background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.45),rgba(255,255,255,0) 45%),#A86A43"><div class=ok data-ic=ok style=right:-10px;top:-10px;width:30px;height:30px></div></div><div class="pele" style="background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.45),rgba(255,255,255,0) 45%),#8A5132"></div><div class="pele" style="background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.45),rgba(255,255,255,0) 45%),#6B3B22"></div><div class="pele" style="background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.45),rgba(255,255,255,0) 45%),#4E2A18"></div></div>
+  </div>
+</div><div class="rodape">
+  <div class="btn papel" style="width:440px"><span data-ic="voltar" style="display:flex"></span>Voltar</div>
+  <div class="regra" style="flex:1;margin-left:10px"><span data-ic="escudo" style="display:inline-flex;width:22px;height:22px;color:var(--folha)"></span><span><b>Sem foto.</b> O personagem é montado com peças<br>e não mostra o rosto real da criança.</span></div>
+  <div class="btn ipe" style="width:300px">Próximo<span data-ic="seguir" style="display:flex"></span></div>
+</div>
+<script src="icones.js"></script></body></html>

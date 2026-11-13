@@ -1,0 +1,59 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Passo 2: cabelo</title>
+<link rel="stylesheet" href="comum.css"><style>
+.sec{font-family:Fredoka;font-weight:700;font-size:22px;color:var(--marinho);display:flex;align-items:center;gap:12px}
+.grade{display:grid;grid-template-columns:repeat(5,128px);gap:16px 18px;margin-top:12px}
+.op{width:128px;height:132px;border-radius:26px;background:linear-gradient(180deg,#F2F8FE,#DCEDFA);border:3px solid #E1EDF8;position:relative;box-shadow:0 4px 0 #CFE0EF}
+.op .im{position:absolute;inset:0;border-radius:23px;overflow:hidden}
+.op img{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:118px;max-width:124px;object-fit:contain;object-position:bottom}
+.op.sel{border-color:var(--ipe);background:linear-gradient(180deg,#FFF6DA,#FFE6A8);box-shadow:0 4px 0 #E5B54F,0 0 0 5px rgba(244,183,60,.25)}
+.op.mais{display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Fredoka;font-weight:600;font-size:18px;color:var(--marinho2);background:#fff;border-style:dashed;border-color:#B9D2EE}
+.op.mais b{font-size:40px;line-height:1}
+.peles{display:flex;gap:16px;margin-top:12px;align-items:center}
+.pele{width:62px;height:62px;border-radius:50%;border:4px solid #fff;box-shadow:0 0 0 2px #D5E3F0,0 4px 0 #C4D6E8;position:relative}
+.pele.sel{box-shadow:0 0 0 4px var(--ipe),0 4px 0 #C98A12}
+.privacidade{position:absolute;left:22px;right:22px;bottom:18px;background:var(--folha-claro);border:2px solid #A9D7B6;border-radius:18px;padding:10px 16px;display:flex;gap:10px;align-items:center;font-family:Atkinson;font-size:15px;color:#1E5A36}
+
+.filtros{display:flex;gap:8px;margin-top:12px}
+.filtro{height:44px;padding:0 13px;border-radius:999px;background:#fff;border:2px solid var(--linha);font-family:Fredoka;font-weight:600;font-size:18px;color:var(--marinho2);display:flex;align-items:center}
+.filtro.sel{background:var(--marinho);border-color:var(--marinho);color:#fff}
+.grade2{display:grid;grid-template-columns:repeat(6,108px);gap:14px 16px;margin-top:14px}
+.op2{width:106px;height:106px;border-radius:24px;background:linear-gradient(180deg,#F2F8FE,#DCEDFA);border:3px solid #E1EDF8;position:relative;box-shadow:0 4px 0 #CFE0EF}
+.op2 .im{position:absolute;inset:0;border-radius:21px;overflow:hidden}
+.op2 img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);max-height:96px;max-width:98px}
+.op2.sel{border-color:var(--ipe);background:linear-gradient(180deg,#FFF6DA,#FFE6A8);box-shadow:0 4px 0 #E5B54F,0 0 0 5px rgba(244,183,60,.25)}
+.op2 .ok{width:32px;height:32px}
+</style></head><body>
+<div class="topo">
+  <div class="circ" style="color:var(--marinho)"><span data-ic="voltar" style="display:flex"></span></div>
+  <div class="titulo">Crie seu personagem</div>
+  <div class="passos"><div class="passo feito"><i><span data-ic="ok" style="display:flex;width:20px;height:20px"></span></i>Rosto e pele</div><div class="passo agora"><i>2</i>Cabelo</div><div class="passo "><i>3</i>Roupa</div><div class="passo "><i>4</i>Pronto!</div></div>
+  <div class="moedas"><span class="moeda"></span>17</div>
+  <div class="audio" style="color:#fff"><span data-ic="som" style="display:flex"></span></div>
+</div><div class="palco">
+  <div class="chip360"><span data-ic="girad" style="display:flex;width:20px;height:20px"></span>Gira 360°</div>
+  <div class="nomeav">LÉO</div>
+  <div class="disco"></div><svg class="girar" viewBox="0 0 400 130">
+  <defs><marker id="pe" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#284A86"/></marker></defs>
+  <path d="M60 70 A150 42 0 0 0 340 70" fill="none" stroke="#284A86" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 12" marker-start="url(#pe)" marker-end="url(#pe)"/>
+</svg><div class="sombra"></div>
+  <img class="avatar" src="../../pecas/roupa-01-uniforme.png">
+  <div class="rot e" style="color:var(--marinho2)"><span data-ic="girae" style="display:flex"></span></div>
+  <div class="rot d" style="color:var(--marinho2)"><span data-ic="girad" style="display:flex"></span></div>
+  <div class="dica"><span data-ic="mao" style="display:inline-flex;width:22px;height:22px;vertical-align:-4px;color:var(--marinho2)"></span> Arraste com o dedo para girar</div>
+</div>
+<div class="painel">
+  <div class="guia" style="left:22px;top:18px">
+  <div class="busto"><img src="../../pecas/sofia-busto-joinha.png"></div><div class="busto tales"><img src="../../pecas/tales-busto-alegre.png"></div>
+  <div class="balao" style="width:560px">Agora o <b>cabelo</b>! Crespo, cacheado, liso, com tranças... <b>todos são grátis</b>. Pode trocar quando quiser.<span class="mini-som" style="color:var(--azul)"><span data-ic="som" style="display:flex"></span></span></div>
+</div>
+  <div style="position:absolute;left:22px;top:124px;right:22px">
+    <div class="sec">Penteados <span class="selo gratis">Todos grátis, sempre</span><span class="ad" style="font-weight:400;font-size:15px;color:var(--cinza);margin-left:auto">cor do cabelo: depois</span></div>
+    <div class="filtros"><div class="filtro sel">Todos</div><div class="filtro">Crespo</div><div class="filtro">Cacheado</div><div class="filtro">Tranças</div><div class="filtro">Coque</div><div class="filtro">Liso</div><div class="filtro">Curtinho</div></div>
+    <div class="grade2"><div class="op2 sel"><div class="im"><img src="../../pecas/cabelo-a01-crespo-curto-recorte.png"></div><div class="ok" data-ic="ok"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-b02-dois-puffs-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a03-cacheado-longo-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-b04-cacheado-ruivo-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a02-puff-afro-alto-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a04-cacheado-medio-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a05-duas-trancas-ondulado-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a06-nago-curto-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a08-nago-trancinhas-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a09-box-braids-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a10-coque-alto-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-b09-rabo-lateral-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a11-rabo-de-cavalo-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a12-ondulado-ruivo-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a15-chanel-liso-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-b11-liso-longo-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a13-raspado-recorte.png"></div></div><div class="op2"><div class="im"><img src="../../pecas/cabelo-a17-arrepiado-recorte.png"></div></div></div>
+  </div>
+</div><div class="rodape">
+  <div class="btn papel" style="width:440px"><span data-ic="voltar" style="display:flex"></span>Voltar</div>
+  <div class="regra" style="flex:1;margin-left:10px"><span data-ic="coracao" style="display:inline-flex;width:20px;height:20px;color:var(--terracota)"></span><span>Cabelo é <b>identidade</b>: nunca custa moedinha<br>e nunca vem com enfeite ou joia.</span></div>
+  <div class="btn ipe" style="width:300px">Próximo<span data-ic="seguir" style="display:flex"></span></div>
+</div>
+<script src="icones.js"></script></body></html>
