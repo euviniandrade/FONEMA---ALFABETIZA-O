@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>FONEMA · Mapa completo da plataforma</title>
+<style>
+:root{
+  --marinho:#1B2A5A; --marinho2:#2B3F7A; --azul:#4F7FC4; --azul-claro:#DCE8F7; --azul-gelo:#EEF4FB;
+  --branco:#FFFFFF; --madeira:#9C6B3F; --madeira-clara:#EAD7BC; --creme:#FBF7F0;
+  --verde:#3E7B4F; --verde-claro:#D8EBD3; --ipe:#F2B705; --ipe-claro:#FDF1C7;
+  --terracota:#C4603A; --terra-claro:#F6DDD1; --texto:#1F2433; --cinza:#5E6475;
+  --I:"../propostas/06-fonema-unificada/";
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,"DejaVu Sans",sans-serif;background:var(--creme);color:var(--texto);width:1200px;font-size:14px;line-height:1.4}
+.part{padding:0 36px 28px}
+h1{font-size:46px;font-weight:900;letter-spacing:-.5px}
+h2{font-size:24px;font-weight:800;color:var(--marinho);display:flex;align-items:center;gap:12px;margin:0 0 14px}
+h2 .letra{width:40px;height:40px;border-radius:12px;background:var(--marinho);color:var(--ipe);display:inline-flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;flex:none}
+h2 small{font-size:13px;font-weight:500;color:var(--cinza)}
+h3{font-size:15px;font-weight:800;color:var(--marinho);margin-bottom:4px}
+.sec{background:var(--branco);border-radius:22px;padding:22px 24px;margin-top:22px;box-shadow:0 2px 0 rgba(27,42,90,.08),0 8px 24px rgba(27,42,90,.06);border:1px solid #E7E1D6;position:relative}
+.sec::before{content:"";position:absolute;left:-1px;top:24px;bottom:24px;width:6px;border-radius:0 6px 6px 0;background:var(--c,var(--marinho))}
+/* topo */
+.topo{background:linear-gradient(160deg,var(--marinho) 0%,var(--marinho2) 100%);color:#fff;padding:38px 36px 30px;border-radius:0 0 34px 34px;position:relative;overflow:hidden}
+.topo .sub{font-size:18px;color:#C9D7F0;margin-top:6px;max-width:690px}
+.topo .tag{display:inline-block;background:var(--ipe);color:var(--marinho);font-weight:800;padding:4px 12px;border-radius:99px;font-size:12px;letter-spacing:.6px;text-transform:uppercase;margin-bottom:12px}
+.topo img.dupla{position:absolute;right:30px;top:20px;width:330px;height:220px;object-fit:cover;object-position:50% 20%;border-radius:22px;border:4px solid rgba(255,255,255,.25)}
+.nums{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:26px}
+.num{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:10px 12px}
+.num b{display:block;font-size:26px;font-weight:900;color:var(--ipe);line-height:1.05}
+.num span{font-size:12px;color:#DCE6F6}
+.parte-rotulo{margin:26px 0 0;font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--madeira)}
+/* genéricos */
+.grid{display:grid;gap:12px}
+.card{border-radius:16px;padding:12px 14px;background:var(--azul-gelo);border:1px solid #D5E1F1}
+.card p,.card li{font-size:13px;color:#2F3546}
+.card ul{padding-left:16px}
+.thumb{width:100%;height:110px;object-fit:cover;border-radius:12px;display:block;margin-bottom:8px;border:1px solid rgba(0,0,0,.06)}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:700;background:var(--marinho);color:#fff;margin:2px 3px 2px 0}
+.pill.v{background:var(--verde)} .pill.t{background:var(--terracota)} .pill.i{background:var(--ipe);color:var(--marinho)} .pill.m{background:var(--madeira)} .pill.a{background:var(--azul)}
+.seta{font-size:26px;color:var(--madeira);font-weight:900;display:flex;align-items:center;justify-content:center}
+.fluxo{display:flex;align-items:stretch;gap:8px}
+.fluxo>.card{flex:1}
+.nota{font-size:12px;color:var(--cinza);margin-top:10px}
+/* público */
+.idades{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr;gap:0;align-items:stretch}
+.idade{border-radius:18px;padding:14px;text-align:center}
+.idade b{font-size:22px;display:block;font-weight:900}
+.adultos{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+/* regiões */
+.regioes{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:r}
+.reg{background:#fff;border:1px solid #E2DACB;border-radius:16px;overflow:hidden;position:relative}
+.reg img{width:100%;height:96px;object-fit:cover;display:block}
+.reg .c{padding:8px 11px 10px}
+.reg .cod{position:absolute;top:8px;left:8px;background:var(--marinho);color:var(--ipe);font-weight:900;border-radius:10px;padding:3px 9px;font-size:14px}
+.reg .sem{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.92);color:var(--marinho);font-weight:800;border-radius:10px;padding:3px 8px;font-size:11px}
+.reg h3{font-size:14px}
+.reg .sons{font-size:12px;color:#2F3546;min-height:32px}
+.reg .chefe{font-size:11.5px;margin-top:5px;color:var(--terracota);font-weight:700}
+.reg .niv{font-size:11px;color:var(--verde);font-weight:800}
+.reg.ano{border:2px solid var(--ipe)}
+.inicio{display:grid;grid-template-columns:1.1fr 34px 1.1fr 34px 1fr;gap:0;margin-bottom:14px}
+.fim{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-top:14px}
+/* sessão */
+.ciclo{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.cena{border-radius:14px;padding:9px 8px;background:var(--azul-claro);text-align:center;position:relative;min-height:118px}
+.cena b{display:block;font-size:18px;font-weight:900;color:var(--marinho)}
+.cena i{font-style:normal;font-size:12px;font-weight:800;display:block;margin:2px 0 4px;color:var(--marinho)}
+.cena span{font-size:10.5px;color:#3A4152;display:block}
+.cena:not(:last-child)::after{content:"›";position:absolute;right:-7px;top:40%;font-size:20px;color:var(--madeira);font-weight:900}
+.assiste{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}
+.passo{background:var(--ipe-claro);border:1px solid #F0DA8A;border-radius:14px;padding:10px}
+.passo b{color:var(--marinho);font-size:14px}
+.passo span{font-size:12px;display:block;color:#3A4152}
+/* ferramentas etc */
+.g4{grid-template-columns:repeat(4,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:1fr 1fr} .g5{grid-template-columns:repeat(5,1fr)}
+.big{font-size:28px;font-weight:900;color:var(--marinho);line-height:1}
+.big small{font-size:12px;font-weight:600;color:var(--cinza)}
+.titulos{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.titulos span{background:var(--marinho);color:#fff;border-radius:10px;padding:5px 10px;font-size:12px;font-weight:700}
+.titulos em{color:var(--madeira);font-style:normal;font-weight:900}
+.termo{display:grid;grid-template-columns:repeat(11,1fr);gap:4px;margin:8px 0}
+.termo div{border-radius:8px;padding:6px 2px;text-align:center;font-size:10.5px;font-weight:700;color:#fff}
+.termo div b{display:block;font-size:16px}
+.mini{display:flex;gap:8px;margin-top:8px}
+.mini img{flex:1;height:90px;object-fit:cover;border-radius:10px;border:1px solid #ddd;min-width:0}
+.tl{display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative;margin-top:6px}
+.tl::before{content:"";position:absolute;left:4%;right:4%;top:22px;height:6px;border-radius:6px;background:linear-gradient(90deg,var(--verde),var(--azul),var(--marinho))}
+.tl .p{padding:0 6px;text-align:center;position:relative}
+.tl .p .dot{width:44px;height:44px;border-radius:50%;margin:0 auto 8px;background:#fff;border:6px solid var(--marinho);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--marinho);font-size:14px;position:relative;z-index:1}
+.tl .p b{display:block;font-size:13.5px;color:var(--marinho)}
+.tl .p i{display:block;font-style:normal;font-size:11.5px;font-weight:800;color:var(--terracota)}
+.tl .p span{display:block;font-size:11.5px;color:#3A4152;margin-top:3px}
+.rodape{margin:24px 36px 30px;font-size:12px;color:var(--cinza);border-top:2px dashed var(--madeira-clara);padding-top:12px}
+.selo-row{display:flex;gap:6px;margin-top:8px;justify-content:space-between}
+.selo-row img{width:19%;height:auto;object-fit:contain}
+.leg{font-size:11px;color:var(--cinza);margin-top:4px}
+</style>
+</head>
+<body>
+
+<!-- ======================= PARTE 1 ======================= -->
+<div id="parte-1" class="parte">
+<header class="topo">
+  <span class="tag">Mapa completo · 13/11/2026</span>
+  <h1>FONEMA</h1>
+  <div class="sub">Plataforma educativa de alfabetização pelo método fônico, com o universo infantil de <b>Sofia e Tales</b>. Do Maternal à alfabetização plena, com a família, o professor e a escola acompanhando cada passo.</div>
+  <img class="dupla" src="../propostas/06-fonema-unificada/personagens-3d/dupla-opcao-1.png" alt="Sofia e Tales">
+  <div class="nums">
+    <div class="num"><b>11</b><span>regiões (12 áreas, R2 em duas)</span></div>
+    <div class="num"><b>~104</b><span>semanas · cerca de 2 anos</span></div>
+    <div class="num"><b>89</b><span>fases · 233 cenas detalhadas</span></div>
+    <div class="num"><b>~500</b><span>sessões de 10–20 min</span></div>
+    <div class="num"><b>0 → 10</b><span>termômetro da alfabetização</span></div>
+    <div class="num"><b>379</b><span>conquistas fixas + 56 + 88 patentes</span></div>
+  </div>
+</header>
+
+<div class="part">
+<div class="parte-rotulo">Parte 1 de 3 · Quem usa e o caminho da criança</div>
+
+<!-- A -->
+<section class="sec" style="--c:var(--azul)">
+  <h2><span class="letra">A</span>Para quem <small>Decisão 021 §4 · Decisão 014</small></h2>
+  <div class="idades">
+    <div class="idade" style="background:var(--verde-claro)"><b style="color:var(--verde)">Maternal</b>cerca de 2–3 anos<br><span class="pill v">módulo "Primeiros Sons"</span><div class="leg">não se cobra leitura; sempre com um adulto</div></div>
+    <div class="seta">→</div>
+    <div class="idade" style="background:var(--azul-claro)"><b style="color:var(--azul)">Pré</b>4–5 anos<br><span class="pill a">entra em R0 · Quintal</span><div class="leg">consciência fonológica, vogais, primeiras consoantes</div></div>
+    <div class="seta">→</div>
+    <div class="idade" style="background:var(--ipe-claro)"><b style="color:var(--marinho)">1º e 2º ano</b>6–8 anos<br><span class="pill">até R10 · Maestria da Leitura</span><div class="leg">fluência e compreensão (BNCC; referência Criança Alfabetizada)</div></div>
+  </div>
+  <div class="adultos">
+    <div class="card" style="background:var(--terra-claro);border-color:#EBC3B1"><h3>👪 Família</h3><p>Cadastra, fala o nome, vê o termômetro, recebe resumo no WhatsApp, missões de 5 min em casa.</p></div>
+    <div class="card"><h3>🧑‍🏫 Professor</h3><p>Painel da turma, "Mostra pro professor" corrigido em 1 toque, Academia com certificado de 40 h.</p></div>
+    <div class="card" style="background:var(--madeira-clara);border-color:#D9BF9A"><h3>🏫 Gestor da escola</h3><p>Painel da unidade: turmas, avanço no termômetro, quem precisa de apoio.</p></div>
+    <div class="card" style="background:var(--verde-claro);border-color:#B9D8B1"><h3>🏛️ Secretaria</h3><p>Painel da rede só com agregados (n ≥ 10), sem dado individual identificável.</p></div>
+  </div>
+</section>
+
+<!-- B -->
+<section class="sec" style="--c:var(--verde)">
+  <h2><span class="letra">B</span>A jornada da criança <small>jornada/README · jogo-completo/README (tabela-mestre)</small></h2>
+  <div class="inicio">
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/prototipo-jogavel/capturas/02-nome-falado-pronuncia.png"><h3>1 · Cadastro e nome falado</h3><p>O adulto cadastra e grava como se fala o nome; Sofia e Tales chamam a criança pelo nome sempre (D013). Avatar 3D.</p></div>
+    <div class="seta">→</div>
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/prototipo-jogavel/capturas/05-chegada-vila.png"><h3>2 · Sondagem lúdica (5–10 min)</h3><p>Missão com a dupla vê de onde a criança começa. Quem já sabe vai pela <b>Trilha Expressa</b>: provas-relâmpago, fase por fase, sem pular nenhuma (D021).</p></div>
+    <div class="seta">→</div>
+    <div class="card" style="background:var(--ipe-claro);border-color:#F0DA8A"><h3>3 · Regras da jornada</h3><ul><li>Avanço <b>por domínio</b>, nunca por tempo</li><li>Um desafio por vez, sem atalho</li><li>Chefe de região = provinha disfarçada (≥ 85% leitura, ≥ 75% escrita)</li><li>Nada se perde, nada bloqueia o mundo</li><li>Primeira missão usa o som do próprio nome</li></ul></div>
+  </div>
+
+  <div class="regioes">
+    <div class="reg"><img src="../propostas/06-fonema-unificada/ambientes/01-quintal-vila.png"><span class="cod">R0</span><span class="sem">sem. 1–3</span><div class="c"><h3>Quintal</h3><div class="sons">Rima, sílaba, fonema inicial, síntese oral</div><div class="chefe">Chefe: Festa das Rimas</div><div class="niv">Nível 0 → 0 · 6 fases</div></div></div>
+    <div class="reg"><img src="../propostas/06-fonema-unificada/ambientes/02-ilha-das-vogais.png"><span class="cod">R1</span><span class="sem">sem. 3–6</span><div class="c"><h3>Ilha das Vogais</h3><div class="sons">A, E (é/ê), I, O (ó/ô), U</div><div class="chefe">Chefe: O Farol Apagado</div><div class="niv">Nível 0 → 1 · 7 fases</div></div></div>
+    <div class="reg"><img src="../propostas/06-fonema-unificada/ambientes/03-mata-atlantica.png"><span class="cod">R2a</span><span class="sem">sem. 6–10</span><div class="c"><h3>Mata Atlântica · M-L-F</h3><div class="sons">M, L, F + sílabas CV</div><div class="chefe">Chefe: Cachoeira das Sílabas</div><div class="niv">Nível 1 → 2 · 5 fases</div></div></div>
+    <div class="reg"><img src="../propostas/06-fonema-unificada/personagens-3d/05-aventura-barco-mata-atlantica.png"><span class="cod">R2b</span><span class="sem">sem. 10–16</span><div class="c"><h3>Mata Atlântica · V-S-N</h3><div class="sons">V, S, N + CV.CV; F × V</div><div class="chefe">Chefe: Ninho do Tucano</div><div class="niv">Nível 2 → 3 · 6 fases</div></div></div>
+    <div class="reg"><img src="../propostas/06-fonema-unificada/ambientes/04-pampa.png"><span class="cod">R3</span><span class="sem">sem. 16–26</span><div class="c"><h3>Pampa</h3><div class="sons">P, T, B, D; pares P/B, T/D, b/d</div><div class="chefe">Chefe: Ventania que Embaralha</div><div class="niv">Nível 3 → 4 · 10 fases</div></div></div>
+    <div class="reg"><img src="../propostas/06-fonema-unificada/ambientes/05-pantanal.png"><span class="cod">R4</span><span class="sem">sem. 26–36</span><div class="c"><h3>Pantanal</h3><div class="sons">J, Z, CH, X, NH, LH + frases</div><div class="chefe">Chefe: A Cheia</div><div class="niv">Nível 4 → 5 · 8 fases</div></div></div>
+    <div class="reg"><img src="../propostas/06-fonema-unificada/ambientes/06-cerrado.png"><span class="cod">R5</span><span class="sem">sem. 36–48</span><div class="c"><h3>Cerrado</h3><div class="sons">C/QU, G/GU, CE/GE, R/RR, S/SS, Ç</div><div class="chefe">Chefe: Ipê sem Flores</div><div class="niv">Nível 5 → 6 · 7 fases</div></div></div>
+    <div class="reg ano"><img src="../propostas/06-fonema-unificada/ambientes/07-caatinga.png"><span class="cod">R6</span><span class="sem">sem. 48–58</span><div class="c"><h3>Caatinga/Sertão · fecha o Ano 1</h3><div class="sons">Ã, AM/AN, EM/EN, IM, OM, UM; -ÃO × -AM</div><div class="chefe">Chefe: Feira do Cordel</div><div class="niv">Troféu Ano 1 Completo · 8 fases</div></div></div>
+    <div class="reg"><img src="../propostas/06-fonema-unificada/ambientes/08-amazonia.png"><span class="cod">R7</span><span class="sem">sem. 58–70</span><div class="c"><h3>Amazônia</h3><div class="sons">CVC (R, S, L finais), ditongos, átonas finais</div><div class="chefe">Chefe: Rio que Esqueceu as Palavras</div><div class="niv">Nível 5 → 7 · 7 fases</div></div></div>
+    <div class="reg"><img src="../propostas/06-fonema-unificada/ambientes/09-litoral-e-mar.png"><span class="cod">R8</span><span class="sem">sem. 70–82</span><div class="c"><h3>Litoral e Mar</h3><div class="sons">PR, BR, TR, DR, CR, GR, FR, VR; PL, BL, CL, GL, FL</div><div class="chefe">Chefe: Trem dos Encontros</div><div class="niv">Nível ~7 · 7 fases</div></div></div>
+    <div class="reg"><img src="../propostas/06-fonema-unificada/mundo-3d/04-vila-angulo-3-4.png"><span class="cod">R9</span><span class="sem">sem. 82–94</span><div class="c"><h3>Cidade das Letras</h3><div class="sons">H, X, CH × X, J × G, S/Z/X; -OU, -INHO</div><div class="chefe">Chefe: Jornal da Cidade</div><div class="niv">Nível 7 → 8 · 8 fases</div></div></div>
+    <div class="reg ano"><img src="../propostas/06-fonema-unificada/ambientes/11-arquipelago-dos-livros.png"><span class="cod">R10</span><span class="sem">sem. 94–104+</span><div class="c"><h3>Arquipélago dos Livros</h3><div class="sons">Palavras frequentes, fluência, inferência, texto</div><div class="chefe">Chefe final: Festival de Leitura</div><div class="niv">Nível 8 → 9–10 · 10 fases</div></div></div>
+  </div>
+
+  <div class="fim">
+    <div class="card" style="background:var(--marinho);border:none;color:#fff">
+      <h3 style="color:var(--ipe);font-size:18px">🏆 Maestria da Leitura · Alfabetização Plena (nível 10)</h3>
+      <p style="color:#DCE6F6">Total: ~33 fonemas, regras e padrões do português · 89 fases · 233 cenas · 12 chefes · ~500 sessões. Depois: missões procedurais e modo infinito de revisão (a jornada não acaba).</p>
+      <p style="color:#DCE6F6;margin-top:6px"><b style="color:var(--ipe)">Zum-Zum, o besouro barulhento</b>: o vilão leve que representa a distração. Embaralha letras; a criança vence <b>prestando atenção</b>; no fim de cada região ele vira amigo (D019).</p>
+    </div>
+    <div class="card" style="background:var(--verde-claro);border-color:#B9D8B1">
+      <h3 style="color:var(--verde)">Maternal · "Primeiros Sons"</h3>
+      <p>2–3 anos · sessões de 5–10 min, no máximo 1 por dia, sempre com o adulto. Escuta, cantigas, rimas, sons dos bichos, nome próprio, vocabulário, atenção e convivência. Cada sessão termina com uma proposta <b>fora da tela</b>. 12 conquistas próprias. Aos ~4 anos, passa para R0.</p>
+    </div>
+  </div>
+</section>
+</div>
+</div>
+
+<!-- ======================= PARTE 2 ======================= -->
+<div id="parte-2" class="parte">
+<div class="part" style="padding-top:8px">
+<div class="parte-rotulo">Parte 2 de 3 · Como se aprende, o que motiva e quem acompanha</div>
+
+<!-- C -->
+<section class="sec" style="--c:var(--ipe)">
+  <h2><span class="letra">C</span>O ciclo de cada sessão (10–20 min) <small>cena-padrão C0–C9 · neurociência N1–N12</small></h2>
+  <div class="ciclo">
+    <div class="cena"><b>C0</b><i>Acolhida</i><span>"Oi, [NOME]!" Trilha do dia e resposta ao gancho de ontem</span></div>
+    <div class="cena"><b>C1</b><i>Jardim da Revisão</i><span>Palavras de dias anteriores (1·2·4·8·16·32·60 dias)</span></div>
+    <div class="cena" style="background:var(--ipe-claro)"><b>C2</b><i>Eu faço</i><span>Espelho do Som: som, boca, corte lateral, letra</span></div>
+    <div class="cena"><b>C3</b><i>Nós fazemos</i><span>Alfabeto móvel com a dupla; escada de ajuda</span></div>
+    <div class="cena"><b>C4</b><i>Você faz</i><span>Missão: ler faz algo acontecer; ~85% de acerto</span></div>
+    <div class="cena"><b>C5</b><i>Verificação</i><span>Itens fora do formato + pseudopalavra</span></div>
+    <div class="cena" style="background:var(--verde-claro)"><b>C6</b><i>Pausa ativa</i><span>Movimento, esporte-leitura (≤ 60 s)</span></div>
+    <div class="cena"><b>C7</b><i>Slot rotativo</i><span>História, Papo com a Sofia, Criar</span></div>
+    <div class="cena"><b>C8</b><i>Contraste</i><span>Pares confusos; o Bolota erra e a criança ensina</span></div>
+    <div class="cena" style="background:var(--terra-claro)"><b>C9</b><i>Ritual de fim</i><span>Moedinhas em bloco, mapa acende, gancho, "Amanhã a gente lembra!"</span></div>
+  </div>
+  <h3 style="margin-top:16px">Formato "Assiste e Faz" (Decisão 015): nenhum vídeo fica sozinho</h3>
+  <div class="assiste">
+    <div class="passo"><b>1 · Assiste</b><span>Sofia e Tales em diálogo, ≤ 3 min (em geral 40–90 s)</span></div>
+    <div class="passo"><b>2 · Convite</b><span>"Agora é a sua vez, [NOME]!"</span></div>
+    <div class="passo"><b>3 · Faz</b><span>Atividade que treina exatamente o que foi mostrado (1–3 min)</span></div>
+    <div class="passo"><b>4 · Comemora</b><span>Elogio ao processo: "Você fechou os lábios e fez /mmm/!"</span></div>
+    <div class="passo"><b>5 · Registra</b><span>Vai para o painel da família e do professor</span></div>
+  </div>
+  <div class="mini">
+    <img src="../propostas/06-fonema-unificada/prototipo-jogavel/capturas/06-assiste-video.png">
+    <img src="../propostas/06-fonema-unificada/prototipo-jogavel/capturas/07-agora-e-sua-vez.png">
+    <img src="../propostas/06-fonema-unificada/prototipo-jogavel/capturas/10-letras-montando.png">
+    <img src="../propostas/06-fonema-unificada/prototipo-jogavel/capturas/15-despedida.png">
+  </div>
+</section>
+
+<!-- D -->
+<section class="sec" style="--c:var(--azul)">
+  <h2><span class="letra">D</span>Ferramentas de aprendizagem</h2>
+  <div class="grid g4">
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/espelho-do-som-3d/imagens/raio-x-sons-M-L-R-S.png"><h3>Espelho do Som 3D</h3><p>Boca da Sofia em 3D + "raio-x" (lábios, língua, dentes, garganta) para cada som. Prioridade (D020), com dica de boca para cada som. A câmera não avalia a criança no MVP.</p></div>
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/serie-sofia-e-tales/imagens/P1-03-palmas-silabas-portao.png"><h3>Músicas e dancinhas</h3><p>"Hits" curtos da dupla, com gesto que representa o som (boca aberta no A, biquinho no U). Sempre seguidos de atividade; playlist para a família (D024).</p></div>
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/esporte-respeito-ambiente/imagens/fair-play-futebol-a.png"><h3>Esporte, respeito e ambiente</h3><p>Esporte-leitura (a jogada só sai com a palavra lida), fair play, inclusão no recreio, cuidado com a praia e os animais (D010). Capoeira só como esporte.</p></div>
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/serie-sofia-e-tales/imagens/P1-11-horta-comunitaria.png"><h3>Conhecimento de base</h3><p>Ciências, Geografia, História, Português, Matemática e dinheiro, profissões, cidadania apartidária; em espiral, com força em R8–R10 (D017 §5).</p></div>
+  </div>
+  <p class="nota">Mecânicas: tocar · arrastar/montar · falar (reconhecimento no aparelho) · caçar · traçar · ditado · leitura em voz alta · ensinar o Bolota · programar · esporte · mover. Modos de inclusão: Previsível (TEA), Foco curto (TDAH), Leitura com reforço (dislexia), Modo calmo.</p>
+</section>
+
+<!-- E -->
+<section class="sec" style="--c:var(--terracota)">
+  <h2><span class="letra">E</span>Motivação sem sorte e sem perda <small>conquistas/README · lojinha-emblemas · D002, D021–D023</small></h2>
+  <div class="grid" style="grid-template-columns:1.05fr 1.4fr 1fr">
+    <div class="card" style="background:var(--ipe-claro);border-color:#F0DA8A">
+      <h3>🪙 Moedinhas e Lojinha (de brincadeirinha)</h3>
+      <p>Moedinhas em bloco no fim da sessão: atividade 1, domínio 5, região 10; teto de 12/dia. <b>143 itens</b> no catálogo, cada um com um "para que serve". Cofrinho e metas: esperar, juntar, escolher. Nunca dinheiro real, sem sorteio, sem baú-surpresa.</p>
+      <div class="mini"><img src="../propostas/06-fonema-unificada/lojinha-emblemas/tela-cofrinho-meta.png"><img src="../propostas/06-fonema-unificada/avatar-3d/telas/04-lojinha-utensilios.png"></div>
+    </div>
+    <div class="card" style="background:var(--terra-claro);border-color:#EBC3B1">
+      <h3>🏅 Selos, medalhas, troféus e Álbum</h3>
+      <div class="grid g4" style="gap:8px;margin:6px 0">
+        <div><div class="big">379</div><span class="leg">conquistas fixas (12 Maternal, 318 regiões, 49 eventos)</span></div>
+        <div><div class="big">56</div><span class="leg">selos Maestria do Som (estrelas sem fim)</span></div>
+        <div><div class="big">88</div><span class="leg">patentes (11 áreas × 8 degraus)</span></div>
+        <div><div class="big">953</div><span class="leg">degraus nos itens fixos, liberados aos poucos</span></div>
+      </div>
+      <p>7 tipos · 4 níveis <b>bronze → prata → ouro → diamante</b> · 23 medalhas · 13 troféus · 33 selos do professor/família · liberação gradual (128 visíveis, 229 mistério, 22 ocultos). Botões <b>Lojinha</b> e <b>Minhas Conquistas</b> em toda fase.</p>
+      <div class="selo-row">
+        <img src="../propostas/06-fonema-unificada/recompensas-3d/recortes/selo-meu-nome.png">
+        <img src="../propostas/06-fonema-unificada/recompensas-3d/recortes/guardiao-bronze.png">
+        <img src="../propostas/06-fonema-unificada/recompensas-3d/recortes/guardiao-ouro.png">
+        <img src="../propostas/06-fonema-unificada/recompensas-3d/recortes/guardiao-diamante.png">
+        <img src="../propostas/06-fonema-unificada/recompensas-3d/recortes/trofeu-mestre-leitor.png">
+      </div>
+      <div class="leg">Arte 3D de referência (rótulos antigos; os nomes finais são neutros, D022).</div>
+    </div>
+    <div class="card">
+      <h3>🎖️ Títulos e patentes</h3>
+      <p><b>7 títulos</b> da jornada (cada um I-II-III), só ao vencer um chefe:</p>
+      <div class="titulos"><span>Primeiros Sons</span><em>›</em><span>Caça às Sílabas</span><em>›</em><span>Exploração das Palavras</span><em>›</em><span>Leitura da Vila</span><em>›</em><span>Contação de Histórias</span><em>›</em><span>Guarda dos Livros</span><em>›</em><span style="background:var(--ipe);color:var(--marinho)">Maestria da Leitura</span></div>
+      <p style="margin-top:8px"><b>Patentes por área</b>: Aprendiz → Ajudante → Sentinela → Guarda → Guia → Especialista → Líder → Lenda, em Leitura, Escrita, Sons, Natureza, Esporte, Amizade, Dinheiro, Ciências, Cidadania, Artes e Tecnologia. Sem ranking entre crianças.</p>
+    </div>
+  </div>
+</section>
+
+<!-- F -->
+<section class="sec" style="--c:var(--marinho)">
+  <h2><span class="letra">F</span>Acompanhamento <small>D004 · paineis-v2 · whatsapp · D018</small></h2>
+  <h3>Termômetro da alfabetização 0–10 (por critério, nunca por comparação; o nível nunca desce)</h3>
+  <div class="termo">
+    <div style="background:#7FA9D9"><b>0</b>Ponto de partida</div>
+    <div style="background:#6E9BD2"><b>1</b>Sons e vogais</div>
+    <div style="background:#5F8DCA"><b>2</b>Primeiras letras</div>
+    <div style="background:#5180C1"><b>3</b>Juntando sons</div>
+    <div style="background:#4573B6"><b>4</b>Primeiras palavras</div>
+    <div style="background:#3B66A8"><b>5</b>Sílabas complexas</div>
+    <div style="background:#335A99"><b>6</b>Encontros</div>
+    <div style="background:#2C4F8A"><b>7</b>Frases</div>
+    <div style="background:#25447A"><b>8</b>Pequenos textos</div>
+    <div style="background:#1F376A"><b>9</b>Leitura fluente</div>
+    <div style="background:var(--ipe);color:var(--marinho)"><b>10</b>Alfabetização plena</div>
+  </div>
+  <div class="grid g5" style="margin-top:10px">
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/paineis-v2/crianca-aventura.png"><h3>Criança</h3><p>Mapa, missões do dia, próximo objetivo.</p></div>
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/paineis-v2/pais-celular-completo.png" style="object-position:top"><h3>Família</h3><p>Termômetro, o que treinou, como ajudar em casa.</p></div>
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/paineis-v2/professor-turma.png" style="object-position:top"><h3>Professor</h3><p>Turma, palavras com dificuldade, quem precisa de apoio.</p></div>
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/paineis-v2/gestor-unidade.png" style="object-position:top"><h3>Gestor</h3><p>Escola inteira, turmas e evolução.</p></div>
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/paineis-v2/painel-secretaria.png" style="object-position:top"><h3>Secretaria</h3><p>Rede, só agregados com n ≥ 10.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="card" style="background:var(--verde-claro);border-color:#B9D8B1"><div class="fluxo" style="gap:10px"><img src="../propostas/06-fonema-unificada/whatsapp/conversa-familia.png" style="width:150px;height:110px;object-fit:cover;object-position:top;border-radius:10px"><div><h3>WhatsApp oficial</h3><p>Cloud API com modelos aprovados, opt-in por finalidade, no máximo 3 mensagens por semana; cartão de resumo semanal com o nome da criança. Nunca o número pessoal da professora.</p></div></div></div>
+    <div class="card" style="background:var(--terra-claro);border-color:#EBC3B1"><div class="fluxo" style="gap:10px"><img src="../propostas/06-fonema-unificada/prototipo-jogavel/capturas/14-professor-1-toque.png" style="width:150px;height:110px;object-fit:cover;object-position:top;border-radius:10px"><div><h3>"Mostra pro professor"</h3><p>Ao fechar um assunto, a criança manda uma demonstração. O professor corrige em 1 toque: ✓ Aprendeu · ↺ Vamos treinar mais · 🎤 Me explicou certinho. Lote de 10 em ~2 min; sem resposta em 72 h, vale o critério de domínio.</p></div></div></div>
+  </div>
+</section>
+</div>
+</div>
+
+<!-- ======================= PARTE 3 ======================= -->
+<div id="parte-3" class="parte">
+<div class="part" style="padding-top:8px">
+<div class="parte-rotulo">Parte 3 de 3 · Formação, tecnologia, universo e linha do tempo</div>
+
+<!-- G -->
+<section class="sec" style="--c:var(--madeira)">
+  <h2><span class="letra">G</span>Academia FONEMA <small>D006 · D011 · academia/README</small></h2>
+  <div class="grid" style="grid-template-columns:1fr 1fr 1fr 1.1fr">
+    <div class="card" style="background:var(--azul-claro)"><h3>🧒 Crianças</h3><p>Assistir pouco e praticar muito: "Sofia apresenta o som", selos assisti + pratiquei, teto de 1 vídeo + 1 prática por dia.</p></div>
+    <div class="card" style="background:var(--terra-claro);border-color:#EBC3B1"><h3>👪 Famílias</h3><p>Missão da semana ligada ao som da criança; 6 microcursos de 5 min em áudio, vídeo e WhatsApp; versão simples por ícones e voz.</p></div>
+    <div class="card" style="background:var(--madeira-clara);border-color:#D9BF9A"><h3>🧑‍🏫 Professores</h3><p>Trilha de formação continuada de <b>40 h em 9 módulos</b>, microvídeos, plano de aula do dia, comunidade de prática e certificado com carga horária.</p></div>
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/academia/academia-inicio.png" style="height:118px;object-position:top"><p class="leg">Tela de entrada com 3 portas · versão anterior (ainda com o nome antigo; o nome oficial é "Academia").</p></div>
+  </div>
+</section>
+
+<!-- H -->
+<section class="sec" style="--c:var(--azul)">
+  <h2><span class="letra">H</span>Tecnologia e segurança <small>arquitetura-infra/README (resumo)</small></h2>
+  <div class="grid" style="grid-template-columns:repeat(4,1fr) 1.15fr">
+    <div class="card"><h3>📱 App da criança</h3><p>Expo (React Native) para celular, tablet e web. Mundo 3D em Three.js com perfis A/B/C e <b>Modo Leve 2,5D</b> para aparelhos de 2 GB. Lições sempre em 2D. <b>Joga offline.</b></p></div>
+    <div class="card"><h3>🖥️ Painéis e site</h3><p>Next.js com gráficos sóbrios e tabelas acessíveis; estúdio editorial para o conteúdo; porteira parental para áreas de adulto.</p></div>
+    <div class="card"><h3>⚙️ Backend</h3><p>NestJS monólito modular, PostgreSQL com RLS (duas barreiras de autorização), filas e eventos; AWS São Paulo; Keycloak, SSO escolar e gov.br.</p></div>
+    <div class="card"><h3>📊 Dados</h3><p>Eventos próprios pseudonimizados → lake → painéis com agregados. Fala reconhecida <b>no aparelho</b>, áudio descartado. Conteúdo assinado; nada gerado ao vivo para a criança.</p></div>
+    <div class="card" style="background:var(--verde-claro);border-color:#B9D8B1"><h3>🔒 Privacidade (LGPD · ECA Digital)</h3><p>Criança sem e-mail nem senha; nenhum SDK de terceiros na área infantil; dados no Brasil; sem loot box; consentimento do responsável (LGPD art. 14); RIPD e pentest antes do lançamento. ⚖️ validar com advogado.</p></div>
+  </div>
+  <div class="mini">
+    <img src="../propostas/06-fonema-unificada/arquitetura-infra/arquitetura-geral.png" style="height:120px;object-fit:contain;background:#fff">
+    <img src="../propostas/06-fonema-unificada/arquitetura-infra/fluxo-dados-privacidade.png" style="height:120px;object-fit:contain;background:#fff">
+    <img src="../propostas/06-fonema-unificada/arquitetura-infra/offline-sala-de-aula.png" style="height:120px;object-fit:contain;background:#fff">
+  </div>
+  <p class="nota">Custo estimado [EST]: perfil enxuto ≈ R$ 10–15 mil/mês na fase 0; ~R$ 26 mil/mês (1 mil alunos) → ~R$ 100 mil (100 mil) → ~R$ 370 mil (1 milhão), sem WhatsApp.</p>
+</section>
+
+<!-- I -->
+<section class="sec" style="--c:var(--verde)">
+  <h2><span class="letra">I</span>Universo infantil e expansão <small>docs/universo · Decisões 016 e 017</small></h2>
+  <div class="grid" style="grid-template-columns:1.2fr 1fr 1fr">
+    <div class="card"><img class="thumb" src="../propostas/06-fonema-unificada/personagens-v2/elenco-completo-praca.png" style="height:130px"><h3>Sofia, Tales, Bolota e a vila</h3><p>Bíblia do Universo com fichas fixas, mundo e proteção da marca. Missão: educar com qualidade, com valores cristãos sutis nas atitudes.</p></div>
+    <div class="card" style="background:var(--ipe-claro);border-color:#F0DA8A"><h3>Linhas do universo (D016)</h3><ul>
+      <li><b>A</b> · Livros para colorir e de atividades (fase 1)</li>
+      <li><b>B</b> · YouTube "Assiste e Faz", feito para crianças (fase 1)</li>
+      <li><b>C</b> · Perfis dos personagens, falando com a família</li>
+      <li><b>D</b> · WhatsApp dos personagens (via adulto)</li>
+      <li><b>E</b> · Livros de histórias decodificáveis</li>
+      <li><b>F</b> · Série animada (episódios de 5–7 min)</li>
+      <li><b>G</b> · Produtos licenciados educativos</li></ul></div>
+    <div class="card" style="background:var(--verde-claro);border-color:#B9D8B1"><h3>Novas áreas e idiomas (D017)</h3><p>Depois da alfabetização completa, uma série por vez:</p><div style="margin-top:6px">
+      <span class="pill v">1 Matemática e lógica</span><span class="pill v">2 Ciências</span><span class="pill v">3 Pensamento computacional</span><span class="pill v">4 Educação financeira</span><span class="pill v">5 Inteligência emocional</span><span class="pill v">6 Artes e música</span><span class="pill v">7 História e geografia</span><span class="pill a">8 Inglês</span><span class="pill a">9 Espanhol</span><span class="pill m">Mundo das profissões (longo prazo)</span></div></div>
+  </div>
+</section>
+
+<!-- J -->
+<section class="sec" style="--c:var(--ipe)">
+  <h2><span class="letra">J</span>Linha do tempo <small>arquitetura-infra §25 · universo/05 §10 · D001</small></h2>
+  <div class="tl">
+    <div class="p"><div class="dot">F</div><b>Fundação</b><i>antes do beta</i><span>Monorepo, CI, PoCs obrigatórias (3D em 2 GB, 12 bocas, fala no aparelho, app ≤ 40 MB). Protótipo jogável já existe.</span></div>
+    <div class="p"><div class="dot">0</div><b>MVP / Piloto (beta)</b><i>1º sem. 2027</i><span>200–500 famílias, 3–5 turmas. Parte gratuita (~4–8 semanas) + relatório antes/depois. Universo fase 1: 3 cadernos, 10 curtas.</span></div>
+    <div class="p"><div class="dot">1</div><b>Produto</b><i>2º sem. 2027</i><span>Famílias (assinatura só mensal) e escolas privadas; WhatsApp; painéis completos.</span></div>
+    <div class="p"><div class="dot">2</div><b>Municípios</b><i>2027–2028</i><span>gov.br, SSO de redes, tablets em quiosque, painel da secretaria.</span></div>
+    <div class="p"><div class="dot">3</div><b>Avaliação de impacto</b><i>2028</i><span>Estudo randomizado por turma, auditoria externa.</span></div>
+    <div class="p"><div class="dot">4</div><b>Expansão</b><i>2029+</i><span>Escala nas redes; série animada; novas áreas e o inglês com Sofia e Tales.</span></div>
+  </div>
+</section>
+</div>
+<div class="rodape">Fontes: docs/decisoes (001–024), docs/propostas/06-fonema-unificada (jornada, jogo-completo, conquistas, lojinha-emblemas, paineis-v2, whatsapp, academia, arquitetura-infra, esporte-respeito-ambiente, espelho-do-som-3d) e docs/universo. Semanas, contagens e limiares são hipóteses a calibrar no piloto; o avanço é por domínio, nunca por tempo. Imagens: artes e capturas já existentes no repositório.</div>
+</div>
+
+</body>
+</html>
