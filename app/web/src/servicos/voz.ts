@@ -62,6 +62,10 @@ export class ProvedorNavegador implements ProvedorVoz {
   parar() { if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel(); }
 }
 
+/** Falas sem áudio oficial nesta sessão (para o relatório do gerador; veja window.__fonemaFaltando). */
+export const faltando = new Set<string>();
+if (typeof window !== 'undefined') (window as any).__fonemaFaltando = faltando;
+
 /** Personagens sem voz própria usam a voz da Sofia ou do Tales com outro ritmo (até terem dubladores). */
 export const VOZ_DO_PERSONAGEM: Record<string, { voz: 'sofia' | 'tales'; rate: number }> = {
   sofia: { voz: 'sofia', rate: 1 }, tales: { voz: 'tales', rate: 1 }, bolota: { voz: 'tales', rate: 0.86 },
@@ -71,7 +75,7 @@ export const VOZ_DO_PERSONAGEM: Record<string, { voz: 'sofia' | 'tales'; rate: n
 
 /** Chave de um trecho de fala (sem pontuação solta no começo). Mesma regra do gerador (scripts/gerar-vozes.mjs). */
 export function chaveTrecho(t: string): string {
-  return t.replace(/^[\s,.!?;:…]+/, '').replace(/\s+/g, ' ').trim();
+  return t.replace(/^[\s,.!?;:…]+/, '').replace(/\s+/g, ' ').replace(/(\p{L})\1{2,}/gu, '$1$1$1$1').trim();
 }
 export function chaveNome(n: string): string {
   return n.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
@@ -116,7 +120,12 @@ export class ProvedorPreGerado implements ProvedorVoz {
     await this.pronto;
     const quem = o.quem ?? 'sofia';
     const arqs = this.arquivos(texto, quem);
-    if (!arqs || modoTeste()) return this.reserva.falar(texto, o);
+    if (modoTeste()) return this.reserva.falar(texto, o);
+    if (!arqs) {
+      // sem áudio oficial: NUNCA voz robótica para a Sofia/Tales; o texto fica no balão e a tela segue no ritmo da leitura
+      faltando.add(`${(VOZ_DO_PERSONAGEM[quem] ?? VOZ_DO_PERSONAGEM.sofia).voz}|${texto}`);
+      return new Promise((r) => setTimeout(r, Math.min(2500, 400 + texto.length * 35)));
+    }
     const g = ++this.geracao;
     const rate = (VOZ_DO_PERSONAGEM[quem]?.rate ?? 1) * (o.rate && o.rate < 0.85 ? 0.85 : 1);
     for (const a of arqs) {

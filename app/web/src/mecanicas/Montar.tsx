@@ -8,7 +8,7 @@ import { voz } from '../servicos/voz.ts';
 import { ehDeterminista, falar, textoVoz } from '../util.ts';
 import { Progressinho, tentativa, type PropsMecanica } from './comum.tsx';
 
-const SOM_LETRA: Record<string, string> = { A: 'aa', E: 'éé', I: 'ii', O: 'óó', U: 'uu', M: 'mmm', L: 'lll', F: 'fff', S: 'sss', V: 'vvv', N: 'nnn', R: 'rr', P: 'pê', T: 'tê', B: 'bê', D: 'dê', C: 'cê', G: 'gê', J: 'jjj', Z: 'zzz', K: 'cá', H: 'agá', X: 'xxx', Q: 'quê', Y: 'ii', W: 'uu', Ã: 'ãã', É: 'éé', Í: 'ii', Ó: 'óó', Ú: 'uu', Â: 'ââ', Ê: 'êê', Ô: 'ôô', Õ: 'õõ', Ç: 'sss' };
+const SOM_LETRA: Record<string, string> = { A: 'aaa', E: 'ééé', I: 'iii', O: 'óóó', U: 'uuu', M: 'mmm', L: 'lll', F: 'fff', S: 'sss', V: 'vvv', N: 'nnn', R: 'rr', P: 'pê', T: 'tê', B: 'bê', D: 'dê', C: 'cê', G: 'gê', J: 'jjj', Z: 'zzz', K: 'cá', H: 'agá', X: 'xxx', Q: 'quê', Y: 'iii', W: 'uuu', Ã: 'ããã', É: 'ééé', Í: 'iii', Ó: 'óóó', Ú: 'uuu', Â: 'âââ', Ê: 'êêê', Ô: 'ôôô', Õ: 'õõõ', Ç: 'sss' };
 
 /** MONTAR com o alfabeto móvel (ou a tábua de sílabas): tocar a peça certa para encher cada espaço. */
 export function Montar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecanica<AtividadeMontar>) {

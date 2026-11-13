@@ -6,7 +6,7 @@
  * Uso: npx tsx scripts/extrair-falas.ts
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { FASES, FALAS, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, type Fala } from '@fonema/conteudo';
+import { FASES, FALAS, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
 import { concordar, silabas } from '@fonema/motor';
 
 const VOZ: Record<string, 'sofia' | 'tales'> = { sofia: 'sofia', tales: 'tales', bolota: 'tales', davi: 'tales', 'dona-cida': 'sofia', pescadora: 'sofia', 'guarda-parque': 'tales', 'zum-zum': 'tales' };
@@ -51,6 +51,8 @@ Object.values(FALAS.ritual).forEach((t) => add('sofia', t, 'ritual'));
 Object.values(FIGURAS).forEach((w) => add('sofia', w.texto, 'figuras'));
 PALAVRAS_R2A.forEach((w) => add('sofia', w.texto.toLowerCase(), 'palavras'));
 void ITENS_LOJA;
+Object.values(SONS).forEach((x) => { add('sofia', x.esticado, 'sons'); add('tales', x.esticado, 'sons'); });
+['A', 'E', 'I', 'O', 'U', 'M', 'L', 'F', 'S', 'V', 'N'].forEach((l) => add('sofia', l.toLowerCase().repeat(3), 'sons'));
 add('sofia', FALAS.conquista, 'ritual'); add('tales', FALAS.surpresa, 'ritual');
 
 const coletadas = 'web/e2e/falas-coletadas.json';
