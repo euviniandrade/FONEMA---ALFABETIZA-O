@@ -95,6 +95,8 @@ async function missao(page, prefixo, { mic, errarFigura, errarLetra }) {
   await pausa(900);
   await page.locator('.proximo').scrollIntoViewIfNeeded(); // mostra o álbum e o próximo objetivo (D019)
   await foto(page, prefixo + '12-celebracao-selo');
+  const letraSelo = await page.evaluate(() => { const t = document.querySelector('.rc-selo .rc-letra text:last-of-type'); return t ? t.textContent : null; });
+  ok(letraSelo === (await page.evaluate(() => window.FONEMA.estado.nome.charAt(0).toUpperCase())), `selo 3D "Meu Nome" com a letra inicial do nome (${letraSelo})`);
   const tCel = await texto(page);
   ok(/Próximo objetivo:\s*faltam\s*2 desafios/.test(tCel) && /Caça às Sílabas/.test(tCel) && /Primeiros Sons I/.test(tCel), 'álbum mostra o próximo objetivo e o caminho para Caça às Sílabas (D019, D022)');
   await page.click('#bMostra');

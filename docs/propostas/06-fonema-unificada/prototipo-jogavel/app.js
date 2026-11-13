@@ -793,11 +793,11 @@
       if (primeira) {
         let n = E.moedas - MOEDAS_MISSAO;
         const conta = () => { n++; if ($('#cofreNum')) $('#cofreNum').textContent = n; if ($('#tatu')) R.engolir($('#tatu')); $('#moedasNum').textContent = Math.max(n, +$('#moedasNum').textContent || 0); };
-        if (E.prefs.calmo) { $('#cofreNum').textContent = E.moedas; } else setTimeout(() => { if (telaAtual === 'celebra' && $('#tatu')) R.moedasVoam({ de: sel, para: $('#tatu'), n: MOEDAS_MISSAO, aoChegar: conta }); else $('#moedasNum').textContent = E.moedas; }, 1500);
+        if (E.prefs.calmo) { $('#cofreNum').textContent = E.moedas; } else setTimeout(() => { if (telaAtual === 'celebra' && $('#tatu')) R.moedasVoam({ de: sel, para: $('#tatu'), n: MOEDAS_MISSAO, aoChegar: conta }); else $('#moedasNum').textContent = E.moedas; }, 1300);
       }
     } else sp.innerHTML = seloSVG('Meu Nome', E.nome.charAt(0).toUpperCase(), 'bronze');
     atualizaTopo();
-    if (primeira && window.Recompensas && !E.prefs.calmo) $('#moedasNum').textContent = E.moedas - MOEDAS_MISSAO;
+    if (primeira && window.Recompensas && !E.prefs.calmo) setTimeout(() => { if (telaAtual === 'celebra') $('#moedasNum').textContent = E.moedas - MOEDAS_MISSAO; }, 0); // o contador sobe quando as moedinhas chegam
     $('#bMostra').addEventListener('click', () => ir('mostra'));
   };
 

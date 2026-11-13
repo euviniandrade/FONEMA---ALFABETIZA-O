@@ -14,7 +14,7 @@
   'use strict';
   const BASE = ((document.currentScript && document.currentScript.src) || '').replace(/[^/]*$/, '') + 'recortes/';
   const reduzido = () => (global.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) || document.body.classList.contains('calmo');
-  const CORES = ['#F4B73C', '#FFE08A', '#FFFFFF', '#A8D5F2', '#1B3160', '#FFF3C4']; // marca, sem arco-íris (D009)
+  const CORES = ['#F4B73C', '#FFE08A', '#FFFFFF', '#A8D5F2', '#FFF3C4', '#E9A91F']; // marca, sem arco-íris (D009)
   const NIVEIS = { bronze: 'BRONZE', prata: 'PRATA', ouro: 'OURO', diamante: 'DIAMANTE' };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
