@@ -16,13 +16,13 @@ export const REGIOES: Regiao[] = [
   },
   {
     id: 'R1', nome: 'Ilha das Vogais', perguntaGuia: 'Que sons as letras fazem?', cenario: 'ilha',
-    mapa: { x: 61, y: 82 }, fases: FASES_R1.map((f) => f.id), selo: 'Leitura da Ilha', chefe: 'O Farol Apagado',
+    mapa: { x: 62, y: 85 }, fases: FASES_R1.map((f) => f.id), selo: 'Leitura da Ilha', chefe: 'O Farol Apagado',
     zumZumViraAmigo: 'O Zum-Zum descobriu que olhar a boca ajuda a ouvir e ganhou um lugar no barco do Bolota.',
     ganchoProxima: 'A luz do farol chegou à mata, e de lá veio um som comprido: /mmm/.'
   },
   {
     id: 'R2a', nome: 'Mata Atlântica · Vale do M-L-F', perguntaGuia: 'Como as letras viram palavras?', cenario: 'mata',
-    mapa: { x: 72, y: 63 }, fases: FASES_R2A.map((f) => f.id), selo: 'Leitura da Mata', chefe: 'Cachoeira das Sílabas',
+    mapa: { x: 73, y: 66 }, fases: FASES_R2A.map((f) => f.id), selo: 'Leitura da Mata', chefe: 'Cachoeira das Sílabas',
     zumZumViraAmigo: 'O Zum-Zum aprendeu que devagar e até o fim a palavra aparece, e ajudou a carregar as letras do guia.',
     ganchoProxima: 'A ponte do rio está em obras; do outro lado, um tucano espia e chama.'
   }

@@ -274,6 +274,47 @@ async function main() {
   await page.goto(BASE + '#/adulto/config');
   await cap(page, 'configuracoes-padroes-mvp');
 
+  console.log('9. Jornada inteira R0 → R2a (modo demonstração: domínio em 1 sessão)');
+  {
+    const ctx2 = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: 'pt-BR' });
+    await ctx2.addInitScript(() => localStorage.setItem('fonema-teste-rapido', '1'));
+    const pj = await ctx2.newPage();
+    pj.on('pageerror', (e) => erros.push(String(e)));
+    await pj.goto(BASE + '#/adulto/config');
+    await passarPorteira(pj);
+    await pj.getByTestId('modo-demo').click();
+    await pj.waitForFunction(() => document.querySelector('[data-testid=modo-demo]')?.checked);
+    await pj.goto(BASE + '#/adulto/cadastro');
+    await pj.getByTestId('campo-nome').fill('Helena');
+    await pj.locator('[data-genero="n"]').click();
+    ok((await pj.locator('.previa').innerText()).includes('Tudo pronto pra começar, Helena?'), 'gênero neutro: a fala muda de forma ("Tudo pronto pra começar, Helena?")');
+    await pj.getByTestId('cons-responsavel').check();
+    await pj.getByTestId('cadastro-continuar').click();
+    await pj.getByTestId('nome-continuar').click();
+    await pj.getByTestId('salvar-crianca').click();
+    await pj.getByTestId('entregar').click();
+    await pj.getByTestId('avatar-pronto').click();
+    await pj.getByTestId('primeira-missao').waitFor();
+    const idj = pj.url().split('/c/')[1].split('/')[0];
+    const FASES = ['R0-F01', 'R0-F02', 'R0-F03', 'R0-F04', 'R0-F05', 'R0-F06', 'R1-F01', 'R1-F02', 'R1-F03', 'R1-F04', 'R1-F05', 'R1-F06', 'R1-F07', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04', 'R2a-F05'];
+    for (const f of FASES) {
+      let concluiu = false;
+      for (let tentativa = 0; tentativa < 3 && !concluiu; tentativa++) {
+        await pj.goto(BASE + `#/c/${idj}/sessao/${f}`);
+        await jogarSessao(pj, {});
+        await pj.getByTestId('ritual').locator('h1').waitFor();
+        concluiu = /Fase concluída/.test(await pj.getByTestId('ritual').locator('h1').innerText());
+      }
+      ok(concluiu, `fase ${f} jogada e concluída`);
+    }
+    await pj.goto(BASE + `#/adulto/familia/${idj}`);
+    await pj.getByTestId('painel-familia').waitFor();
+    await pj.getByText('Nível 2 de 10').first().waitFor({ timeout: 5000 }).catch(() => {});
+    ok(/Nível 2 de 10/.test(await pj.getByTestId('painel-familia').innerText()), 'termômetro subiu para 2 depois da Cachoeira das Sílabas');
+    ok(/Exploração das Palavras/.test(await pj.getByTestId('painel-familia').innerText()), 'título "Exploração das Palavras" depois do portão');
+    await ctx2.close();
+  }
+
   if (CAPTURAS) {
     const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR' });
     await cel.addInitScript(() => localStorage.setItem('fonema-teste-rapido', '1'));

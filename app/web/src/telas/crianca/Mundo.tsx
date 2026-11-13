@@ -95,12 +95,14 @@ export function Vila({ criancaId }: { criancaId: string }) {
             </button>
           ))}
         </div>
+        <nav className="vila-lista" aria-label="Lugares da vila">
+          {pontos.map((p) => <button key={p.id} className={`btn ${p.destaque ? 'ipe' : ''}`} onClick={() => navegar(p.ir)}>{p.icone} {p.rotulo}</button>)}
+        </nav>
         <aside className="vila-lado">
           <AvatarGrande crianca={crianca} itens={progresso.equipados} />
           <p className="vila-nome t">{crianca.nome}</p>
           {recado ? <Balao fala={recado} crianca={crianca} destaque /> : <Balao fala={progresso.sessoesFeitas ? FALAS.voltou[0] : { quem: 'sofia', texto: 'Oi, [NOME]! Toque na estrela para a missão de hoje.' }} crianca={crianca} />}
           <button className="btn grande ipe" onClick={() => navegar(`c/${criancaId}/fase/${fase.id}`)} data-testid="ir-missao">⭐ Missão de hoje</button>
-          {!mundo3d ? <p className="nota-mic">Mapa 2D. O mundo 3D explorável entra aqui quando estiver pronto.</p> : null}
         </aside>
       </main>
     </div>
@@ -125,9 +127,9 @@ export function Arquipelago({ criancaId }: { criancaId: string }) {
           {REGIOES.map((r) => {
             const e = estadoRegiao(r.id);
             return (
-              <button key={r.id} className={`ponto regiao ${e}`} style={{ left: `${r.mapa.x}%`, top: `${r.mapa.y}%` }} onClick={() => e !== 'bloqueada' && navegar(`c/${criancaId}/regiao/${r.id}`)} aria-disabled={e === 'bloqueada'} data-regiao={r.id}>
+              <button key={r.id} className={`ponto regiao ${e}`} style={{ left: `${r.mapa.x}%`, top: `${r.mapa.y}%` }} onClick={() => e !== 'bloqueada' && navegar(`c/${criancaId}/regiao/${r.id}`)} aria-disabled={e === 'bloqueada'} aria-label={r.nome} data-regiao={r.id}>
                 <span className="ponto-icone" aria-hidden="true">{e === 'concluida' ? '★' : e === 'aberta' ? '▶' : '🔒'}</span>
-                <span className="ponto-rotulo">{r.nome}</span>
+                <span className="ponto-rotulo">{r.nome}</span><span className="sr">{e === 'bloqueada' ? 'Ainda trancada' : e === 'concluida' ? 'Concluída' : 'Aberta'}</span>
               </button>
             );
           })}

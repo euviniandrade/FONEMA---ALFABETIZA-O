@@ -67,7 +67,7 @@ export function Selo({ conquista, ganha, tamanho = 150, girar = false, letra, bl
 export function Cofrinho({ saldo, animar = 0 }: { saldo: number; animar?: number }) {
   return (
     <div className="cofrinho" id="cofrinho" data-testid="cofrinho">
-      <img src={asset('recompensas/cofrinho-tatu.webp')} alt="Cofrinho-tatu" />
+      <img className="cofre" src={asset('recompensas/cofrinho-tatu.webp')} alt="Cofrinho-tatu" />
       <b>{saldo}</b>
       {Array.from({ length: Math.min(animar, 12) }, (_, i) => (
         <img key={i} className="moeda-voando" style={{ animationDelay: `${i * 0.12}s` }} src={asset('recompensas/moeda.webp')} alt="" aria-hidden="true" />

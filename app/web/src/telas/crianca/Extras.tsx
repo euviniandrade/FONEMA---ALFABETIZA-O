@@ -171,7 +171,7 @@ export function ConhecaSeuCorpo({ criancaId }: { criancaId: string }) {
             <div className="corpo-controles">
               <EspelhoFrente fonema={fonema} falando={false} />
               <div className="grade-sons" role="radiogroup" aria-label="Sons">
-                {sons.map((f) => <button key={f} role="radio" aria-checked={fonema === f} className={`peca ${fonema === f ? 'sel' : ''}`} onClick={() => { setFonema(f); voz.falar(SONS[f].esticado, { quem: 'sofia' }); }}>{SONS[f].letra}{f === 'E' ? 'é' : f === 'O' ? 'ó' : ''}</button>)}
+                {sons.map((f) => <button key={f} role="radio" aria-checked={fonema === f} className={`peca ${fonema === f ? 'sel' : ''}`} onClick={() => { setFonema(f); voz.falar(SONS[f].esticado, { quem: 'sofia' }); }}>{f === 'E' ? 'É' : f === 'O' ? 'Ó' : SONS[f].letra}</button>)}
               </div>
               <div className="grade-modos">
                 {config.espelho.conhecaSeuCorpo.map((m) => <button key={m} className={`btn ${modo === m ? 'pri' : ''}`} onClick={() => setModo(m)}>{nomes[m]}</button>)}

@@ -52,7 +52,7 @@ export function EspelhoLado({ fonema, modo = 'lado', rotulos = false, aoPronto }
     return (
       <figure className="espelho-lado espelho-placeholder">
         <img src={asset('fundos/raio-x-partes.webp')} alt="Raio-X de lado da boca: lábios, dentes, língua, céu da boca, nariz e garganta" />
-        <figcaption>Raio-X de lado (imagem provisória)</figcaption>
+        <figcaption>Raio-X de lado</figcaption>
       </figure>
     );
   }
