@@ -32,7 +32,9 @@ O **FONEMA** é uma **plataforma educativa completa de alfabetização pelo mét
 - **[D016](../decisoes/016-universo-infantil.md)** · o FONEMA é a base de um **universo infantil** (desenhos, livros, canais, perfis, WhatsApp); esta bíblia é o registro canônico.
 - **[D017](../decisoes/017-roteiro-de-expansao-educativa.md)** · depois da alfabetização, **novas áreas do conhecimento e novos idiomas**, cada um como uma série; conhecimento de base para a vida e educação cívica apartidária (§5).
 
-Todas as decisões: [`docs/decisoes/`](../decisoes/) (001–017).
+- **[D018](../decisoes/018-professor-familia-selos-online.md)** · professor e família participando (roteiros de 2–5 min, "Mostra pro professor" com correção em 1 toque), selos de conquista infinitos, competição saudável e futuro online (itens legais a verificar).
+
+Todas as decisões: [`docs/decisoes/`](../decisoes/) (001–018).
 
 ## 4. Plataforma × universo
 | | Plataforma FONEMA | Universo (nome a definir, arquivo 07) |
