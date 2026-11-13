@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>FONEMA · Recompensas 3D animadas — selos, moedinhas, cofrinho-tatu, baú e troféu</title>
+<link rel="stylesheet" href="recompensas.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<header class="topo">
+  <h1>Recompensas 3D <small>selos, moedinhas, cofrinho, baú e troféu · em movimento</small></h1>
+  <label class="nome">Nome da criança <input id="iNome" value="Kauã" maxlength="16" autocomplete="off"></label>
+  <button class="btn ouro" id="bTudo">▶ Celebração completa</button>
+  <button class="btn" id="bMudo" aria-pressed="false">🔊 Som</button>
+</header>
+<main class="grade">
+  <section class="cartao c-selo"><h2>Selo “Meu Nome” <small>com a letra do nome</small></h2><div class="cena" id="cenaSelo"></div><button class="btn mini" data-de-novo="selo">↻ de novo</button></section>
+  <section class="cartao c-nivel"><h2>Sobe de nível <small id="nivelTxt">bronze</small></h2><div class="cena" id="cenaNivel"></div><button class="btn mini" data-de-novo="nivel">⬆ subir nível</button></section>
+  <section class="cartao c-moedas"><h2>Moedinhas → cofrinho</h2>
+    <div class="cena" id="cenaMoedas"><img class="pilha" id="pilha" src="recortes/moedas-pilha.png" alt="Pilha de moedinhas">
+      <div class="cofre"><div class="rc-cofrinho" id="tatu"><img src="recortes/cofrinho-tatu.png" alt="Cofrinho-tatu"></div>
+      <span class="rc-contador"><img src="recortes/moeda.png" alt=""><b id="num">20</b></span></div></div>
+    <p class="regra">+10 por missão completa · sempre o mesmo valor, sem sorte (D002)</p><button class="btn mini" data-de-novo="moedas">↻ de novo</button></section>
+  <section class="cartao c-bau"><h2>Baú de livros</h2><div class="cena"><div class="rc-bau rc-fechado" id="bau"><div class="rc-luz"></div><img src="recortes/bau-livros.png" alt="Baú de livros"><div class="rc-fecho"></div></div></div><button class="btn mini" data-de-novo="bau">✨ abrir</button></section>
+  <section class="cartao c-trofeu"><h2>Troféu “Mestre Leitor”</h2><div class="cena"><div class="rc-trofeu" id="trofeu"><div class="rc-raios"></div><div class="rc-gira"><img src="recortes/trofeu-mestre-leitor.png" alt="Troféu Mestre Leitor"></div></div></div><button class="btn mini" data-de-novo="trofeu">↻ de novo</button></section>
+  <section class="cartao c-colecao"><h2>Álbum de Selos <small>arraste o dedo: o selo inclina</small></h2><div class="rc-colecao" id="colecao"></div></section>
+</main>
+<p class="nota">Arte provisória gerada por IA e recortada sem fundo (<code>recortar.py</code>); a versão final será redesenhada por ilustradora. Sons sintetizados só para simular. Respeita “reduzir movimento”.</p>
+<script src="recompensas.js"></script>
+<script src="demo.js"></script>
+</body>
+</html>

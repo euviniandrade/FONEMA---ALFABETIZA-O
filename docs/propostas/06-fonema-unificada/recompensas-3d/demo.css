@@ -1,0 +1,37 @@
+@font-face{font-family:Andika;src:url(../lojinha-emblemas/fontes/fonts/andika-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:Fredoka;src:url(../lojinha-emblemas/fontes/fonts/fredoka-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:Fredoka;src:url(../lojinha-emblemas/fontes/fonts/fredoka-latin-700-normal.woff2) format('woff2');font-weight:700}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:Andika,sans-serif;color:#fff;background:radial-gradient(120% 90% at 50% 20%,#2A4C92,#14275A 55%,#0B1638);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.6;background-image:radial-gradient(1.6px 1.6px at 12% 18%,#fff9 50%,transparent),radial-gradient(1.4px 1.4px at 78% 12%,#fff8 50%,transparent),radial-gradient(2px 2px at 62% 82%,#ffe9a8aa 50%,transparent),radial-gradient(1.4px 1.4px at 30% 70%,#fff7 50%,transparent),radial-gradient(1.8px 1.8px at 88% 55%,#fff8 50%,transparent),radial-gradient(2px 2px at 45% 40%,#ffe9a888 50%,transparent)}
+button{font:inherit;cursor:pointer}
+.topo{display:flex;align-items:center;gap:14px;padding:10px 18px}
+h1{margin:0 auto 0 0;font:700 26px Fredoka,sans-serif;color:#FFE08A}
+h1 small{display:block;font:600 14px Fredoka;color:#A8D5F2}
+.nome{font:600 15px Fredoka;color:#A8D5F2;display:flex;align-items:center;gap:8px}
+.nome input{font:700 20px Fredoka;width:130px;padding:8px 12px;border-radius:14px;border:3px solid #F4C55A;background:#FFF8EA;color:#1B3160}
+.btn{border:0;border-radius:16px;padding:10px 16px;min-height:48px;background:#FFF8EA;color:#1B3160;font:700 16px Fredoka,sans-serif;box-shadow:0 4px 0 #0005}
+.btn.ouro{background:linear-gradient(#FFE08A,#F4B73C);box-shadow:0 4px 0 #C98A12;font-size:18px}
+.btn.mini{position:absolute;right:12px;bottom:10px;min-height:40px;padding:6px 12px;font-size:14px}
+.grade{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:380px 300px;gap:14px;padding:0 18px}
+.cartao{position:relative;border-radius:26px;background:linear-gradient(#ffffff14,#ffffff08);border:2px solid #ffffff22;padding:10px 14px;overflow:hidden}
+.cartao h2{margin:0;font:700 19px Fredoka,sans-serif;color:#FFF3C4}
+.cartao h2 small{font:600 13px Fredoka;color:#A8D5F2;margin-left:6px}
+.cena{position:absolute;inset:42px 10px 46px;display:grid;place-items:center}
+.c-selo{grid-row:span 2}
+.c-selo .cena{inset:50px 10px 60px}
+.c-moedas .cena{display:flex;align-items:flex-end;justify-content:space-between;padding:0 6px}
+.pilha{width:44%;filter:drop-shadow(0 8px 8px #0006)}
+.cofre{width:52%;display:flex;flex-direction:column;align-items:center;gap:6px}
+.cofre .rc-cofrinho{width:100%;filter:drop-shadow(0 8px 8px #0006)}
+.cofre .rc-contador{font-size:30px;padding:4px 14px 4px 6px}.cofre .rc-contador img{width:34px}
+.regra{position:absolute;left:14px;bottom:4px;margin:0;font-size:12px;color:#A8D5F2;max-width:62%}
+.c-bau .rc-bau{width:200px}
+.c-trofeu .rc-trofeu{width:190px}
+.c-colecao .rc-colecao{position:absolute;inset:44px 14px 10px}
+.c-colecao figure{display:grid;place-items:center}
+.c-colecao img{max-height:108px;width:auto;max-width:100%}
+.nota{text-align:center;font-size:12px;color:#A8D5F2;margin:10px 18px}
+.nota code{color:#FFE08A}
+@media (max-width:1000px){.grade{grid-template-columns:1fr;grid-template-rows:none}.cartao{min-height:320px}.c-selo{min-height:480px}}
