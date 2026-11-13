@@ -11,7 +11,7 @@
  * Uso: npx tsx scripts/gerar-vozes.ts --orcamento 18000 [--simular]
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { NOMES_COMUNS } from '@fonema/conteudo';
+import { NOMES_COMUNS, SONS } from '@fonema/conteudo';
 
 const VOZES = { sofia: 'nlRJzw7MAFZF6truVWij', tales: 'HUKUk1tOcZ0szNQgemif' } as const;
 type Voz = keyof typeof VOZES;
@@ -22,7 +22,26 @@ const ORCAMENTO = Number(arg('--orcamento', '18000'));
 const SIMULAR = process.argv.includes('--simular');
 const PUB = 'web/public/audio';
 
-const chaveTrecho = (t: string) => t.replace(/^[\s,.!?;:…]+/, '').replace(/\s+/g, ' ').trim();
+const chaveTrecho = (t: string) => t.replace(/^[\s,.!?;:…]+/, '').replace(/\s+/g, ' ').replace(/(\p{L})\1{2,}/gu, '$1$1$1$1').trim();
+
+/**
+ * Texto que vai para o TTS (a CHAVE continua sendo o texto original):
+ * - som isolado de consoante ("mmmm") sai errado no TTS → "M, de macaco"; vogal esticada → "Aaaaa";
+ * - palavra solta sai cortada → "Mala." com velocidade 0,85.
+ */
+const VOGAIS = 'aeiouáéíóúâêôãõ';
+function paraTTS(k: string): { texto: string; lento: boolean } {
+  let t = k.replace(/(^|[^\p{L}])(\p{L})\2{2,}(\p{L}?)(?=$|[^\p{L}])/gu, (_m, antes: string, l: string) => {
+    const low = l.toLowerCase();
+    if (VOGAIS.includes(low)) return antes + low.toUpperCase() + low.repeat(4);
+    const som = Object.values(SONS).find((x) => x.chave === low || x.letra.toLowerCase() === low);
+    return antes + (som ? `${som.letra}, de ${som.palavras[0][0]}` : l.toUpperCase());
+  });
+  const palavras = t.split(/\s+/).filter(Boolean);
+  const lento = palavras.length <= 2;
+  if (lento) t = t.charAt(0).toUpperCase() + t.slice(1).replace(/[!?]?$/, (m) => m || '.');
+  return { texto: t, lento };
+}
 const chaveNome = (n: string) => n.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
 function hash(t: string) {
   let h = 5381;
@@ -36,12 +55,12 @@ async function creditos(): Promise<{ usados: number; limite: number }> {
   return { usados: d.character_count, limite: d.character_limit };
 }
 
-async function tts(voz: Voz, texto: string, destino: string) {
+async function tts(voz: Voz, texto: string, destino: string, lento = false) {
   for (let t = 0; t < 3; t++) {
     const r = await fetch(`${API}/text-to-speech/${VOZES[voz]}?output_format=mp3_44100_64`, {
       method: 'POST',
       headers: { 'xi-api-key': CHAVE, 'content-type': 'application/json', accept: 'audio/mpeg' },
-      body: JSON.stringify({ text: texto, model_id: 'eleven_multilingual_v2', voice_settings: { stability: 0.5, similarity_boost: 0.8 } })
+      body: JSON.stringify({ text: texto, model_id: 'eleven_multilingual_v2', voice_settings: { stability: 0.5, similarity_boost: 0.8, ...(lento ? { speed: 0.85 } : {}) } })
     });
     if (r.ok) { writeFileSync(destino, Buffer.from(await r.arrayBuffer())); return; }
     const msg = await r.text();
@@ -56,7 +75,7 @@ async function main() {
   mkdirSync(`${PUB}/falas`, { recursive: true });
   const manFalasArq = `${PUB}/falas/manifesto.json`;
   const manFalas: Record<string, string> = existsSync(manFalasArq) ? JSON.parse(readFileSync(manFalasArq, 'utf8')) : {};
-  const tarefas: { voz: Voz; texto: string; destino: string; registrar: () => void }[] = [];
+  const tarefas: { voz: Voz; texto: string; lento: boolean; destino: string; registrar: () => void }[] = [];
 
   for (const f of falas) {
     for (const parte of f.texto.split('[NOME]')) {
@@ -66,7 +85,7 @@ async function main() {
       const arq = `${f.voz}-${hash(chave)}.mp3`;
       if (existsSync(`${PUB}/falas/${arq}`)) { manFalas[chave] = arq; continue; }
       if (tarefas.some((t) => t.destino.endsWith(arq))) continue;
-      tarefas.push({ voz: f.voz, texto: k, destino: `${PUB}/falas/${arq}`, registrar: () => (manFalas[chave] = arq) });
+      tarefas.push({ voz: f.voz, ...paraTTS(k), destino: `${PUB}/falas/${arq}`, registrar: () => (manFalas[chave] = arq) });
     }
   }
   const manNomesArq = `${PUB}/nomes/manifesto.json`;
@@ -78,13 +97,13 @@ async function main() {
       const destino = `${PUB}/nomes/${voz}/${k}.mp3`;
       const registrar = () => { if (!manNomes[voz].includes(k)) manNomes[voz].push(k); };
       if (existsSync(destino)) { registrar(); continue; }
-      tarefas.push({ voz, texto: nome, destino, registrar });
+      tarefas.push({ voz, texto: `${nome}.`, lento: true, destino, registrar });
     }
   }
   const total = tarefas.reduce((s, t) => s + t.texto.length, 0);
   const antes = await creditos();
   console.log(`a gerar: ${tarefas.length} clipes, ${total} caracteres · créditos usados antes: ${antes.usados}/${antes.limite}`);
-  if (SIMULAR) return;
+  if (SIMULAR) { tarefas.slice(0, 400).forEach((t) => console.log(`  ${t.voz} ${t.lento ? '(lento)' : ''} ${t.texto}`)); return; }
   if (antes.limite - antes.usados < Math.min(total, ORCAMENTO)) console.warn('atenção: créditos restantes podem não bastar; o script para ao atingir o limite.');
 
   let gastos = 0;
@@ -96,7 +115,7 @@ async function main() {
       if (!t) return;
       if (gastos + t.texto.length > ORCAMENTO) { console.warn(`orçamento atingido; pulando "${t.texto.slice(0, 30)}"`); continue; }
       gastos += t.texto.length;
-      await tts(t.voz, t.texto, t.destino);
+      await tts(t.voz, t.texto, t.destino, t.lento);
       t.registrar();
       if (++feitos % 25 === 0) {
         console.log(`  ${feitos}/${tarefas.length} (${gastos} caracteres)`);

@@ -387,13 +387,25 @@
   "id": "s-1qah0pu",
   "voz": "sofia",
   "texto": "iii",
-  "origem": "R1-F07-C4c"
+  "origem": "sons"
  },
  {
   "id": "s-1qah2up",
   "voz": "sofia",
   "texto": "les",
   "origem": "R0-F03-C5"
+ },
+ {
+  "id": "s-1qah30n",
+  "voz": "sofia",
+  "texto": "lll",
+  "origem": "sons"
+ },
+ {
+  "id": "s-1qah37y",
+  "voz": "sofia",
+  "texto": "lhá",
+  "origem": "sons"
  },
  {
   "id": "s-1qah38z",
@@ -408,16 +420,58 @@
   "origem": "figuras"
  },
  {
+  "id": "s-1qah3za",
+  "voz": "sofia",
+  "texto": "mmm",
+  "origem": "sons"
+ },
+ {
   "id": "s-1qah46q",
   "voz": "sofia",
   "texto": "mua",
   "origem": "R2a-F02-C8"
  },
  {
+  "id": "s-1qah4qt",
+  "voz": "sofia",
+  "texto": "nnn",
+  "origem": "sons"
+ },
+ {
+  "id": "s-1qah4ss",
+  "voz": "sofia",
+  "texto": "nhá",
+  "origem": "sons"
+ },
+ {
+  "id": "s-1qah5ic",
+  "voz": "sofia",
+  "texto": "ooo",
+  "origem": "sons"
+ },
+ {
   "id": "s-1qah5r1",
   "voz": "sofia",
   "texto": "ovo",
   "origem": "figuras"
+ },
+ {
+  "id": "s-1qah78q",
+  "voz": "sofia",
+  "texto": "aaa",
+  "origem": "sons"
+ },
+ {
+  "id": "s-1qahai6",
+  "voz": "sofia",
+  "texto": "eee",
+  "origem": "sons"
+ },
+ {
+  "id": "s-1qahb9p",
+  "voz": "sofia",
+  "texto": "fff",
+  "origem": "sons"
  },
  {
   "id": "s-1qahbzf",
@@ -436,6 +490,12 @@
   "voz": "sofia",
   "texto": "rua",
   "origem": "figuras"
+ },
+ {
+  "id": "s-1qahltk",
+  "voz": "sofia",
+  "texto": "sss",
+  "origem": "sons"
  },
  {
   "id": "s-1qahm4b",
@@ -459,7 +519,13 @@
   "id": "s-1qahnjy",
   "voz": "sofia",
   "texto": "uuu",
-  "origem": "R1-F07-C4c"
+  "origem": "sons"
+ },
+ {
+  "id": "s-1qahobh",
+  "voz": "sofia",
+  "texto": "vvv",
+  "origem": "sons"
  },
  {
   "id": "s-1qahqix",
@@ -502,6 +568,12 @@
   "voz": "sofia",
   "texto": "Que sorriso! iii!",
   "origem": "R1-F04-C2"
+ },
+ {
+  "id": "s-1rdj39n",
+  "voz": "sofia",
+  "texto": "ẽẽẽẽ",
+  "origem": "sons"
  },
  {
   "id": "s-1rskjwt",
@@ -561,7 +633,13 @@
   "id": "s-1uqg4ej",
   "voz": "sofia",
   "texto": "iiii",
-  "origem": "R2a-F01-C3"
+  "origem": "sons"
+ },
+ {
+  "id": "s-1uqgtjf",
+  "voz": "sofia",
+  "texto": "jjjj",
+  "origem": "sons"
  },
  {
   "id": "s-1uqhz5a",
@@ -585,7 +663,7 @@
   "id": "s-1uqi87f",
   "voz": "sofia",
   "texto": "llll",
-  "origem": "R2a-F03-C3"
+  "origem": "sons"
  },
  {
   "id": "s-1uqiakl",
@@ -645,7 +723,7 @@
   "id": "s-1uqj423",
   "voz": "sofia",
   "texto": "mmmm",
-  "origem": "R2a-F03-C3"
+  "origem": "sons"
  },
  {
   "id": "s-1uqjb00",
@@ -660,10 +738,16 @@
   "origem": "palavras"
  },
  {
+  "id": "s-1uqjt6z",
+  "voz": "sofia",
+  "texto": "nnnn",
+  "origem": "sons"
+ },
+ {
   "id": "s-1uqm3pn",
   "voz": "sofia",
   "texto": "aaaa",
-  "origem": "R2a-F03-C3"
+  "origem": "sons"
  },
  {
   "id": "s-1uqmqiz",
@@ -741,7 +825,7 @@
   "id": "s-1uqpsi3",
   "voz": "sofia",
   "texto": "ffff",
-  "origem": "R2a-F03-C3"
+  "origem": "sons"
  },
  {
   "id": "s-1uqqn3q",
@@ -750,16 +834,40 @@
   "origem": "figuras"
  },
  {
+  "id": "s-1uqr763",
+  "voz": "sofia",
+  "texto": "xxxx",
+  "origem": "sons"
+ },
+ {
+  "id": "s-1uqss5n",
+  "voz": "sofia",
+  "texto": "zzzz",
+  "origem": "sons"
+ },
+ {
   "id": "s-1uqxk01",
   "voz": "sofia",
   "texto": "pato",
   "origem": "figuras"
  },
  {
+  "id": "s-1uqyrdk",
+  "voz": "sofia",
+  "texto": "rrrá",
+  "origem": "sons"
+ },
+ {
   "id": "s-1uqz077",
   "voz": "sofia",
   "texto": "rato",
   "origem": "figuras"
+ },
+ {
+  "id": "s-1uqzgsr",
+  "voz": "sofia",
+  "texto": "ssss",
+  "origem": "sons"
  },
  {
   "id": "s-1uqzlfl",
@@ -795,7 +903,13 @@
   "id": "s-1ur11zf",
   "voz": "sofia",
   "texto": "uuuu",
-  "origem": "R2a-F02-C3"
+  "origem": "sons"
+ },
+ {
+  "id": "s-1ur1r4b",
+  "voz": "sofia",
+  "texto": "vvvv",
+  "origem": "sons"
  },
  {
   "id": "s-1ur1xqo",
@@ -849,13 +963,19 @@
   "id": "s-1ut3mtn",
   "voz": "sofia",
   "texto": "éééé",
-  "origem": "R2a-F01-C3"
+  "origem": "sons"
  },
  {
   "id": "s-1ut4c5n",
   "voz": "sofia",
   "texto": "êêêê",
-  "origem": "R1-F03-C8"
+  "origem": "sons"
+ },
+ {
+  "id": "s-1utb0sr",
+  "voz": "sofia",
+  "texto": "ãããã",
+  "origem": "sons"
  },
  {
   "id": "s-1ute0p1",
@@ -867,13 +987,31 @@
   "id": "s-1utmzez",
   "voz": "sofia",
   "texto": "óóóó",
-  "origem": "R2a-F03-C3"
+  "origem": "sons"
  },
  {
   "id": "s-1uttnnv",
   "voz": "sofia",
   "texto": "ôôôô",
-  "origem": "R1-F07-C4b"
+  "origem": "sons"
+ },
+ {
+  "id": "s-1utuq17",
+  "voz": "sofia",
+  "texto": "õõõõ",
+  "origem": "sons"
+ },
+ {
+  "id": "s-1uvr58r",
+  "voz": "sofia",
+  "texto": "ũũũũ",
+  "origem": "sons"
+ },
+ {
+  "id": "s-1ux691n",
+  "voz": "sofia",
+  "texto": "ĩĩĩĩ",
+  "origem": "sons"
  },
  {
   "id": "s-1uxuuhi",
@@ -1542,6 +1680,12 @@
   "origem": "R0-F03-C6"
  },
  {
+  "id": "s-rpt9n2",
+  "voz": "sofia",
+  "texto": "dá",
+  "origem": "sons"
+ },
+ {
   "id": "s-rpt9om",
   "voz": "sofia",
   "texto": "bo",
@@ -1560,6 +1704,12 @@
   "origem": "R0-F06-C4b"
  },
  {
+  "id": "s-rpt9pp",
+  "voz": "sofia",
+  "texto": "gá",
+  "origem": "sons"
+ },
+ {
   "id": "s-rpt9s2",
   "voz": "sofia",
   "texto": "fo",
@@ -1572,10 +1722,22 @@
   "origem": "R2a-F03-C5"
  },
  {
+  "id": "s-rpt9s8",
+  "voz": "sofia",
+  "texto": "bá",
+  "origem": "sons"
+ },
+ {
   "id": "s-rpt9sc",
   "voz": "sofia",
   "texto": "fa",
   "origem": "R2a-F03-C5"
+ },
+ {
+  "id": "s-rpt9t5",
+  "voz": "sofia",
+  "texto": "cá",
+  "origem": "sons"
  },
  {
   "id": "s-rpt9t9",
@@ -1608,6 +1770,12 @@
   "origem": "R0-F03-C6b"
  },
  {
+  "id": "s-rpta1q",
+  "voz": "sofia",
+  "texto": "tá",
+  "origem": "sons"
+ },
+ {
   "id": "s-rpta32",
   "voz": "sofia",
   "texto": "vó",
@@ -1636,6 +1804,12 @@
   "voz": "sofia",
   "texto": "te",
   "origem": "R0-F03-C6b"
+ },
+ {
+  "id": "s-rpta56",
+  "voz": "sofia",
+  "texto": "pá",
+  "origem": "sons"
  },
  {
   "id": "s-rpta5a",
@@ -2091,25 +2265,49 @@
   "id": "t-1olbj1y",
   "voz": "tales",
   "texto": "óóóó",
-  "origem": "R1-F06-C4"
+  "origem": "sons"
+ },
+ {
+  "id": "t-1oldara",
+  "voz": "tales",
+  "texto": "õõõõ",
+  "origem": "sons"
  },
  {
   "id": "t-1ole03a",
   "voz": "tales",
   "texto": "ôôôô",
-  "origem": "R1-F02-C8"
+  "origem": "sons"
+ },
+ {
+  "id": "t-1olnho6",
+  "voz": "tales",
+  "texto": "ãããã",
+  "origem": "sons"
+ },
+ {
+  "id": "t-1olu6ba",
+  "voz": "tales",
+  "texto": "êêêê",
+  "origem": "sons"
  },
  {
   "id": "t-1om40xi",
   "voz": "tales",
   "texto": "éééé",
-  "origem": "R1-F06-C4"
+  "origem": "sons"
  },
  {
   "id": "t-1oo2wve",
   "voz": "tales",
   "texto": "vovó",
   "origem": "R0-F06-C7"
+ },
+ {
+  "id": "t-1oo2wza",
+  "voz": "tales",
+  "texto": "vvvv",
+  "origem": "sons"
  },
  {
   "id": "t-1oo4w7v",
@@ -2124,16 +2322,34 @@
   "origem": "R0-F06-C4c"
  },
  {
+  "id": "t-1oo57au",
+  "voz": "tales",
+  "texto": "ssss",
+  "origem": "sons"
+ },
+ {
+  "id": "t-1oo5wpx",
+  "voz": "tales",
+  "texto": "rrrá",
+  "origem": "sons"
+ },
+ {
   "id": "t-1oo6sae",
   "voz": "tales",
   "texto": "uuuu",
-  "origem": "R1-F07-C4a"
+  "origem": "sons"
+ },
+ {
+  "id": "t-1oobvxy",
+  "voz": "tales",
+  "texto": "zzzz",
+  "origem": "sons"
  },
  {
   "id": "t-1ooevli",
   "voz": "tales",
   "texto": "ffff",
-  "origem": "R2a-F03-C3"
+  "origem": "sons"
  },
  {
   "id": "t-1oof1va",
@@ -2148,16 +2364,34 @@
   "origem": "R2a-F01-C6"
  },
  {
+  "id": "t-1ooggl2",
+  "voz": "tales",
+  "texto": "xxxx",
+  "origem": "sons"
+ },
+ {
   "id": "t-1ooi46u",
   "voz": "tales",
   "texto": "bola",
   "origem": "R0-F03-C6"
  },
  {
+  "id": "t-1ookuwm",
+  "voz": "tales",
+  "texto": "nnnn",
+  "origem": "sons"
+ },
+ {
   "id": "t-1oolqk6",
   "voz": "tales",
   "texto": "aaaa",
-  "origem": "R1-F07-C4a"
+  "origem": "sons"
+ },
+ {
+  "id": "t-1oonuk6",
+  "voz": "tales",
+  "texto": "jjjj",
+  "origem": "sons"
  },
  {
   "id": "t-1ooojy5",
@@ -2175,7 +2409,7 @@
   "id": "t-1oooq7q",
   "voz": "tales",
   "texto": "mmmm",
-  "origem": "R2a-F01-C3"
+  "origem": "sons"
  },
  {
   "id": "t-1oootef",
@@ -2187,13 +2421,13 @@
   "id": "t-1oopfjq",
   "voz": "tales",
   "texto": "llll",
-  "origem": "R2a-F03-C3"
+  "origem": "sons"
  },
  {
   "id": "t-1oorpva",
   "voz": "tales",
   "texto": "iiii",
-  "origem": "R1-F07-C4a"
+  "origem": "sons"
  },
  {
   "id": "t-1oqrjm",
@@ -2202,10 +2436,28 @@
   "origem": "R1-F02-C4"
  },
  {
+  "id": "t-1osnx2u",
+  "voz": "tales",
+  "texto": "ĩĩĩĩ",
+  "origem": "sons"
+ },
+ {
+  "id": "t-1ou2r3q",
+  "voz": "tales",
+  "texto": "ũũũũ",
+  "origem": "sons"
+ },
+ {
   "id": "t-1p0jf2n",
   "voz": "tales",
   "texto": "O peixe-boi só come bolha de O. Qual letra faz /ôôô/, [NOME]?",
   "origem": "R1-F02-C4"
+ },
+ {
+  "id": "t-1pg7wom",
+  "voz": "tales",
+  "texto": "ẽẽẽẽ",
+  "origem": "sons"
  },
  {
   "id": "t-1q285wy",
@@ -2226,10 +2478,46 @@
   "origem": "R1-F02"
  },
  {
+  "id": "t-1qh5y7b",
+  "voz": "tales",
+  "texto": "pá",
+  "origem": "sons"
+ },
+ {
   "id": "t-1qh5y7j",
   "voz": "tales",
   "texto": "pé",
   "origem": "R0-F03-C4"
+ },
+ {
+  "id": "t-1qh5yar",
+  "voz": "tales",
+  "texto": "tá",
+  "origem": "sons"
+ },
+ {
+  "id": "t-1qh5yc0",
+  "voz": "tales",
+  "texto": "gá",
+  "origem": "sons"
+ },
+ {
+  "id": "t-1qh5yms",
+  "voz": "tales",
+  "texto": "cá",
+  "origem": "sons"
+ },
+ {
+  "id": "t-1qh5ynp",
+  "voz": "tales",
+  "texto": "bá",
+  "origem": "sons"
+ },
+ {
+  "id": "t-1qh5ypf",
+  "voz": "tales",
+  "texto": "dá",
+  "origem": "sons"
  },
  {
   "id": "t-1qshan4",
@@ -2292,10 +2580,22 @@
   "origem": "R1-F01-C6"
  },
  {
+  "id": "t-1u768h",
+  "voz": "tales",
+  "texto": "nhá",
+  "origem": "sons"
+ },
+ {
   "id": "t-1u7b5a",
   "voz": "tales",
   "texto": "lua",
   "origem": "R2a-F01-C6"
+ },
+ {
+  "id": "t-1u7b6b",
+  "voz": "tales",
+  "texto": "lhá",
+  "origem": "sons"
  },
  {
   "id": "t-1uun8i4",

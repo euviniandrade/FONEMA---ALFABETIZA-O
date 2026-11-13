@@ -15,7 +15,9 @@ def recortar(cel: Image.Image, tamanho: int) -> Image.Image:
     rgb = np.asarray(cel.convert('RGB')).astype(np.float32)
     mx, mn = rgb.max(axis=2), rgb.min(axis=2)
     sat = (mx - mn) / np.maximum(mx, 1)
-    fundo = (sat < 0.085) & (mx > 178)          # branco/cinza claro (fundo e sombra suave)
+    # modo padrão: tira o fundo e a sombra; RECORTE=estrito: só o branco puro (figuras brancas ficam inteiras;
+    # a sombra suave fica, para figuras usadas sempre sobre cartão branco)
+    fundo = (sat < 0.03) & (mx > 244) if os.environ.get('RECORTE') == 'estrito' else (sat < 0.085) & (mx > 178)
     m = Image.fromarray((fundo * 255).astype(np.uint8), 'L')
     g = Image.new('L', (m.width + 2, m.height + 2), 255)
     g.paste(m, (1, 1))
@@ -26,7 +28,7 @@ def recortar(cel: Image.Image, tamanho: int) -> Image.Image:
     a = np.asarray(alfa).astype(np.float32) / 255
     # tira a contaminação do branco nas bordas
     aa = np.maximum(a, 0.05)[..., None]
-    cor = np.clip((rgb - (1 - aa) * 246) / aa, 0, 255)
+    cor = np.clip((rgb - (1 - aa) * 250) / aa, 0, 255)
     out = Image.fromarray(np.dstack([cor, a[..., None] * 255]).astype(np.uint8), 'RGBA')
     # mantém só o que importa: caixa do conteúdo
     caixa = Image.fromarray((a > 0.1).astype(np.uint8) * 255).getbbox()
