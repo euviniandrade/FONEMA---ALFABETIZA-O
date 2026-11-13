@@ -1,0 +1,46 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="common.css">
+<style>
+html,body{width:1280px;height:800px;overflow:hidden}
+body{padding:24px 34px 0}
+.top{display:flex;justify-content:space-between;align-items:flex-end}
+.tag{display:inline-block;font:600 13px Fredoka;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--terracota);padding:4px 11px;border-radius:99px;margin-bottom:6px}
+h1{font:700 31px/1.05 Fredoka}
+.sub{font:400 15px/1.35 Atkinson;color:var(--cinza);max-width:470px;text-align:right}
+.grade{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 30px;margin-top:16px}
+.q{position:relative}
+.q img{display:block;width:384px;height:216px;border-radius:14px;box-shadow:0 2px 0 var(--linha),0 8px 20px rgba(59,42,32,.10);background:#fff}
+.n{position:absolute;left:10px;top:10px;font:700 14px Fredoka;background:var(--tinta);color:#fff;border-radius:99px;padding:3px 10px}
+.tm{position:absolute;right:10px;top:10px;font:600 12px Atkinson;background:rgba(255,255,255,.92);color:var(--tinta);border-radius:99px;padding:4px 9px}
+.cap{display:flex;gap:9px;margin-top:8px;font:400 13.5px/1.3 Atkinson;color:var(--tinta)}
+.cap b{font-weight:700}
+.hp{flex:none;height:22px;padding:0 8px;border-radius:7px;font:700 11.5px/22px Atkinson;color:#fff;background:var(--terracota);white-space:nowrap}
+.hp.off{background:#CDBBA8}
+.seta{position:absolute;right:-26px;top:96px;width:22px;height:22px}
+.rod{margin-top:16px;display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:12px}
+.box{background:#fff;border:1.5px solid var(--linha);border-radius:14px;padding:10px 14px;font:400 12.8px/1.36 Atkinson;color:var(--tinta)}
+.box h3{font:600 14.5px Fredoka;margin-bottom:3px;color:var(--mar)}
+.box.calmo h3{color:var(--folha)}
+</style></head><body class="papel-tex">
+<div class="top"><div><span class="tag">4D · palavra vira objeto</span><h1>A criança lê BO-LA e a palavra vira uma bola que quica</h1></div>
+<div class="sub">A animação só começa <b>depois</b> da leitura e mostra o <b>significado</b> da palavra lida: palavra e objeto ficam juntos na tela (contiguidade).</div></div>
+<div class="grade" id="g"></div>
+<div class="rod">
+ <div class="box"><h3>Física simples e previsível</h3>Gravidade fixa, restituição 0,62, achatamento ≤ 24% no impacto; 3–4 quiques e repouso em ~3 s. Motor: Three.js + integrador próprio (sem motor de física pesado). Em aparelho fraco: sprite 2D pré-renderizado, mesmo ritmo.</div>
+ <div class="box"><h3>Banco de “palavras-objeto”</h3>Só substantivos concretos com ação típica: BOLA quica, PATO nada, SAPO pula, BOLHA estoura, FOCA bate palma. Cada objeto tem 1 animação de ≤ 4 s, revisada pela pedagogia.</div>
+ <div class="box calmo"><h3>Modo calmo</h3>A bola aparece com fade de 0,5 s e rola devagar até parar: sem quique, sem achatamento, sem brilhos e sem vibração. A legenda e a voz da Sofia continuam iguais.</div>
+</div>
+<script>
+const Q=[
+ ['t1.3','0,0–1,2 s → 1,2 s','Sofia convida; a criança lê a 1ª sílaba. <b>BO</b> acende, ganha arco e onda.','1 pulso'],
+ ['t3.5','3,4 s','<b>LA</b> acende no instante em que é lida. O aparelho dá o 2º pulso.','1 pulso'],
+ ['t5.8','5,6 s','As sílabas se juntam: <b>BOLA!</b> (fusão). Palavra inteira: sem vibração.','sem pulso'],
+ ['t7.35','7,0–8,0 s','As letras se recolhem no centro e a bola 3D nasce do mesmo ponto.','sem pulso'],
+ ['t8.32','8,0–11 s','A bola cai e quica com física simples; a palavra <b>BOLA</b> volta no alto.','sem pulso'],
+ ['t12','11,6–12,6 s','Celebração curta (1 s, 9 brilhos) e a Sofia fecha: “Você leu BOLA!”.','sem pulso'],
+];
+const g=document.getElementById('g');
+Q.forEach(([f,tm,tx,hp],i)=>{g.insertAdjacentHTML('beforeend',`<div class="q"><img src="tmpq/${f}.png"><span class="n">${i+1}</span><span class="tm">${tm}</span>
+${i%3<2?'<svg class="seta" viewBox="0 0 22 22"><path d="M4 11h13M12 5l6 6-6 6" stroke="#A9472A" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
+<div class="cap"><span class="hp ${hp==='sem pulso'?'off':''}">${hp==='sem pulso'?'— háptico':'◉ '+hp}</span><span>${tx}</span></div></div>`);});
+</script></body></html>
