@@ -8,8 +8,9 @@ Um **mundo de amizade e descoberta**, com **Sofia, Tales e o tatu-bola Bolota**,
 2. **Plataforma educativa completa, não um joguinho** ([D014](../decisoes/014-plataforma-educativa-completa.md)). Jogo, mundo 3D, histórias e esportes são **meios**. O fim é alfabetizar com compreensão. Toda atividade lúdica tem objetivo fonético claro, medida de domínio e retorno para os adultos.
 3. **Assistir pouco, fazer muito** ([D015](../decisoes/015-video-sempre-com-atividade.md)). Vídeo nunca vem sozinho: termina numa atividade curta ("Assiste e Faz"). Isso vale também para o universo fora da plataforma (YouTube, livros, redes): sempre um convite a **fazer** algo com a família.
 4. **Formar crianças inteligentes, não robotizadas** ([D017](../decisoes/017-roteiro-de-expansao-educativa.md)). Compreender, perguntar, investigar e criar, nunca decorar. Depois da alfabetização completa, o universo se abre para outras áreas (matemática e lógica, ciências, pensamento computacional, educação financeira, inteligência emocional, artes e música, história e geografia) e para novos idiomas (inglês primeiro). Ver [05 §9](05-expansao-do-universo.md#9-roteiro-de-expansão-educativa-d017).
-5. **O adulto faz parte.** A família e a escola acompanham, conversam e leem junto. App sozinho rende pouco; criança acompanhada aprende mais (Documento Mestre §1).
-6. **Preparar para a vida.** Ler é a porta. Atrás dela estão o caráter, a convivência, o cuidado com o mundo e a capacidade de fazer boas escolhas.
+5. **Conhecimento de base para a vida** ([D017 §5](../decisoes/017-roteiro-de-expansao-educativa.md)). Ao longo da jornada, e com força nas últimas regiões (R8–R10), a criança entende **o que é cada área** (História, Geografia, Ciências, Português, Matemática), **como a vida e o mundo funcionam** (família, escola, bairro, cidade, estado, país e planeta; trabalho, dinheiro e troca; regras, leis, direitos e deveres; saúde) e **como o país se organiza** (presidente, governador, prefeito, vereadores, deputados, senadores, votar, para que servem as leis, símbolos nacionais e respeito às instituições). Educação cívica **sempre apartidária**: nunca partidos, políticos reais ou opiniões políticas (BNCC, Ciências Humanas). Tudo por **associação e significado**: cada conceito chega por uma situação da dupla (ex.: a vila escolhe o lugar da nova praça → o que é votar), depois vira vocabulário para ler, pergunta de compreensão, "Assiste e Faz" e conversa em família. Ler bem depende de conhecer o mundo.
+6. **O adulto faz parte.** A família e a escola acompanham, conversam e leem junto. App sozinho rende pouco; criança acompanhada aprende mais (Documento Mestre §1).
+7. **Preparar para a vida.** Ler é a porta. Atrás dela estão o caráter, a convivência, o cuidado com o mundo e a capacidade de fazer boas escolhas.
 
 ## 3. Valores (de forma sutil)
 A plataforma segue uma **filosofia cristã** e um **perfil conservador** ([D012](../decisoes/012-valores-cristaos.md), [D016](../decisoes/016-universo-infantil.md)). Os valores aparecem **nas atitudes e nas histórias**, sem sermão: a criança vê Sofia e Tales vivendo o valor e sente vontade de imitar.
@@ -25,6 +26,7 @@ A plataforma segue uma **filosofia cristã** e um **perfil conservador** ([D012]
 | **Responsabilidade** | Cuidar do cachorro Paçoca, guardar o material, cumprir a parte do time |
 | **Educação financeira** | Ganhar com esforço, poupar no cofrinho com meta, esperar, escolher entre necessidade e desejo ([D002](../decisoes/002-economia-virtual-avatar-educacao-financeira.md)) |
 | **Inteligência emocional** | Nomear o que sente, respirar ("cheira a flor, sopra a vela"), pedir ajuda, lidar com o erro sem drama |
+| **Cidadania** | Respeitar regras e instituições, entender direitos e deveres, participar da vida da vila (mutirão, escolha da praça), sempre sem partidarismo (D017 §5) |
 | **Família** | Um adulto acolhedor aparece em casa; o dia da família; ler junto antes de dormir |
 | **Trabalho e esforço** | Os moradores e suas profissões mostram que todo trabalho tem valor; elogio ao **processo**, nunca ao "ser inteligente" |
 
@@ -43,5 +45,6 @@ A plataforma segue uma **filosofia cristã** e um **perfil conservador** ([D012]
 | **Sem estereótipo de gênero ou de grupo**: Sofia também inventa, Tales também lê com calma; profissões sem estereótipo | Série §1.5; personagens v2 §4 |
 | **Sem chat aberto entre crianças, sem conta da criança em rede social** | [D010](../decisoes/010-esporte-respeito-meio-ambiente.md), [D016](../decisoes/016-universo-infantil.md) |
 | **Sem dados da criança em conteúdo público** (nome, voz, foto) | [D013](../decisoes/013-cadastro-nome-falado.md), [D015](../decisoes/015-video-sempre-com-atividade.md) |
+| **Sem política partidária**: nunca partidos, políticos reais ou opiniões políticas; educação cívica só institucional | [D017 §5](../decisoes/017-roteiro-de-expansao-educativa.md) |
 | **Sem neuromitos nem promessas** ("treina o cérebro", "garantido") | [D002](../decisoes/002-economia-virtual-avatar-educacao-financeira.md) §1 |
 | **Sem marcas de terceiros**: "Boquinhas" (marca registrada) nunca; escudos de times, logotipos de escolas só com licença | Documento Mestre §4.7; [D007](../decisoes/007-dupla-sofia-e-tales.md); [D010](../decisoes/010-esporte-respeito-meio-ambiente.md) |
