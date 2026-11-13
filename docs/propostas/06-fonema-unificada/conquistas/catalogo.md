@@ -13,21 +13,21 @@
 
 ## 1. Números do catálogo
 
-- Itens no JSON: **433** (377 fixos + 56 gerados 'Maestria do Som')
-- Degraus (níveis) entregáveis nos itens fixos: **945**
-- Itens fixos da jornada R0–R10 + eventos (sem o Maternal): **365**
+- Itens no JSON: **523** = 379 conquistas fixas + 56 selos gerados 'Maestria do Som' + 88 patentes (11 áreas × 8 degraus, D023)
+- Degraus (níveis) entregáveis nos itens fixos: **953**
+- Itens fixos da jornada R0–R10 + eventos (sem o Maternal): **367**
 - Itens liberáveis pela Trilha Expressa: 146
-- Visibilidade antes de ganhar (fixos): visível 128, mistério 227, oculto 22
+- Visibilidade antes de ganhar (fixos): visível 128, mistério 229, oculto 22
 
 |            tipo | qtd (fixos) |
 |-----------------|-------------|
-|            selo |         287 |
+|            selo |         289 |
 |         medalha |          23 |
 |          trofeu |          13 |
 |          titulo |           7 |
 | emblema_colecao |          14 |
 |  selo_validacao |          33 |
-|           total |         377 |
+|           total |         379 |
 
 ## 2. Região × categoria (itens fixos)
 
@@ -46,44 +46,62 @@
 |     R8 |   · |   2 |   1 |   5 |    1 |   1 |   3 |   1 |    3 |   1 |   1 |  2 |        2 |     · |   3 |   2 |    28 |
 |     R9 |   1 |   · |   5 |   3 |    1 |   1 |   7 |   1 |    6 |   1 |   1 |  2 |        2 |     · |   1 |   2 |    34 |
 |    R10 |   · |   · |   1 |   6 |    3 |   1 |   1 |   2 |    4 |   1 |   1 |  2 |        2 |     1 |   2 |   2 |    29 |
-|     EV |   · |   · |   1 |  15 |    · |   5 |   6 |   2 |    2 |   1 |   2 |  1 |        8 |     1 |   · |   3 |    47 |
-|  total |  35 |   7 |  23 |  58 |   13 |  21 |  38 |  17 |   31 |  13 |  15 | 23 |       33 |    12 |  16 |  22 |   377 |
+|     EV |   · |   · |   1 |  15 |    · |   5 |   6 |   2 |    3 |   2 |   2 |  1 |        8 |     1 |   · |   3 |    49 |
+|  total |  35 |   7 |  23 |  58 |   13 |  21 |  38 |  17 |   32 |  14 |  15 | 23 |       33 |    12 |  16 |  22 |   379 |
 
 Gerados (Maestria do Som) por região: R1 5, R2a 3, R2b 3, R3 4, R4 6, R5 8, R6 7, R7 4, R8 13, R9 3
 
 ## 3. Curva acumulada de liberação (semana da jornada)
 
-Semana 0 = módulo Maternal. Eventos entram na semana mínima em que podem aparecer.
+Semana 0 = módulo Maternal. Eventos entram na semana mínima em que podem aparecer. Conta selos, medalhas, troféus, títulos, coleções, vistos e Maestria do Som (sem as patentes).
 
 | semana até | novos itens | itens acumulados | novos degraus | degraus acumulados |
 |------------|-------------|------------------|---------------|--------------------|
 |          0 |          12 |               12 |            26 |                 26 |
 |          4 |          35 |               47 |           111 |                137 |
 |          8 |          40 |               87 |           108 |                245 |
-|         12 |          34 |              121 |            89 |                334 |
-|         16 |          22 |              143 |            54 |                388 |
-|         20 |          23 |              166 |            55 |                443 |
-|         24 |          11 |              177 |            28 |                471 |
-|         28 |           9 |              186 |            27 |                498 |
-|         32 |          21 |              207 |            68 |                566 |
-|         36 |          12 |              219 |            26 |                592 |
-|         40 |          15 |              234 |            54 |                646 |
-|         44 |          11 |              245 |            34 |                680 |
-|         48 |          11 |              256 |            20 |                700 |
-|         52 |          16 |              272 |            51 |                751 |
-|         56 |          10 |              282 |            25 |                776 |
-|         60 |          12 |              294 |            26 |                802 |
-|         64 |          15 |              309 |            47 |                849 |
-|         68 |           9 |              318 |            22 |                871 |
-|         72 |           5 |              323 |            14 |                885 |
-|         76 |          23 |              346 |            78 |                963 |
-|         80 |          12 |              358 |            27 |                990 |
-|         84 |           8 |              366 |            22 |               1012 |
-|         88 |          17 |              383 |            50 |               1062 |
-|         92 |          15 |              398 |            31 |               1093 |
-|         96 |           7 |              405 |            17 |               1110 |
-|        100 |          11 |              416 |            27 |               1137 |
-|        104 |          17 |              433 |            32 |               1169 |
+|         12 |          35 |              122 |            93 |                338 |
+|         16 |          22 |              144 |            54 |                392 |
+|         20 |          23 |              167 |            55 |                447 |
+|         24 |          12 |              179 |            32 |                479 |
+|         28 |           9 |              188 |            27 |                506 |
+|         32 |          21 |              209 |            68 |                574 |
+|         36 |          12 |              221 |            26 |                600 |
+|         40 |          15 |              236 |            54 |                654 |
+|         44 |          11 |              247 |            34 |                688 |
+|         48 |          11 |              258 |            20 |                708 |
+|         52 |          16 |              274 |            51 |                759 |
+|         56 |          10 |              284 |            25 |                784 |
+|         60 |          12 |              296 |            26 |                810 |
+|         64 |          15 |              311 |            47 |                857 |
+|         68 |           9 |              320 |            22 |                879 |
+|         72 |           5 |              325 |            14 |                893 |
+|         76 |          23 |              348 |            78 |                971 |
+|         80 |          12 |              360 |            27 |                998 |
+|         84 |           8 |              368 |            22 |               1020 |
+|         88 |          17 |              385 |            50 |               1070 |
+|         92 |          15 |              400 |            31 |               1101 |
+|         96 |           7 |              407 |            17 |               1118 |
+|        100 |          11 |              418 |            27 |               1145 |
+|        104 |          17 |              435 |            32 |               1177 |
+
+### Escadas de patentes (D023): degraus de conquistas da área para chegar ao nível I
+
+Cada célula: degraus somados na área para o nível I (semana em que a patente aparece).
+
+|                área | Aprendiz | Ajudante | Sentinela |   Guarda |     Guia | Especialista |     Líder |      Lenda | degraus no catálogo |
+|---------------------|----------|----------|-----------|----------|----------|--------------|-----------|------------|---------------------|
+|             Leitura |   3 (s2) |   9 (s8) |  18 (s18) | 25 (s32) | 34 (s50) |     40 (s68) |  49 (s86) |  69 (s100) |                 151 |
+|             Escrita |   3 (s2) |   6 (s8) |  11 (s18) | 14 (s32) | 18 (s50) |     24 (s68) |  30 (s86) |  44 (s100) |                  96 |
+|                Sons |   3 (s2) |  38 (s8) |  48 (s18) | 72 (s32) | 94 (s50) |    115 (s68) | 145 (s86) | 167 (s100) |                 362 |
+|            Natureza |   3 (s2) |   7 (s8) |  10 (s18) | 13 (s32) | 16 (s50) |     19 (s68) |  22 (s86) |  25 (s100) |                  44 |
+| Esporte e Fair Play |   3 (s2) |   7 (s8) |  12 (s18) | 16 (s32) | 20 (s50) |     25 (s68) |  29 (s86) |  40 (s100) |                  87 |
+|  Amizade e Respeito |   3 (s2) |   8 (s8) |  17 (s18) | 22 (s32) | 26 (s50) |     32 (s68) |  35 (s86) |  42 (s100) |                  91 |
+|            Dinheiro |   3 (s2) |   6 (s8) |   9 (s18) | 12 (s32) | 15 (s50) |     18 (s68) |  21 (s86) |  24 (s100) |                  34 |
+|            Ciências |   3 (s2) |   6 (s8) |   9 (s18) | 12 (s32) | 15 (s50) |     18 (s68) |  21 (s86) |  24 (s100) |                  27 |
+|          Tecnologia |   3 (s2) |   6 (s8) |   9 (s18) | 14 (s32) | 17 (s50) |     22 (s68) |  25 (s86) |  31 (s100) |                  68 |
+|           Cidadania |   3 (s2) |   6 (s8) |   9 (s18) | 12 (s32) | 15 (s50) |     18 (s68) |  21 (s86) |  24 (s100) |                  27 |
+|               Artes |   3 (s2) |   6 (s8) |   9 (s18) | 12 (s32) | 15 (s50) |     18 (s68) |  21 (s86) |  24 (s100) |                  31 |
 
 ### Checagens do script
 
@@ -538,14 +556,16 @@ Cores: azul-marinho e amarelo-ipê (com o tema do evento). Eventos **voltam todo
 | `S-EV-06` | **Semana da Gentileza** | selo | valores e atitudes | 16 | Cumprir 3 gestos de gentileza lidos (1 real, confirmado pelo adulto): 1/3/6/10 edições. | B·P·O·D | giro 3D | coração liso com mãos | mistério |
 | `S-EV-07` | **Semana da Música** | selo | conhecimento de base (D017) | 20 | Ler nomes e tocar instrumentos da banda da vila: 1/3/6/10 edições. | B·P·O·D | giro 3D | notas musicais e flauta | mistério |
 | `S-EV-08` | **Semana do Inventor** | selo | pensamento computacional | 30 | Construir e depurar 1 invenção lendo instruções: 1/3/6/10 edições. | B·P·O·D | giro 3D | engrenagens de madeira | mistério |
-| `S-EV-09` | **Semana Surpresa** | selo | segredo | 16 | Achar a pista escondida da semana e ler a mensagem. | único | revela segredo | envelope lacrado azul-marinho | oculto |
+| `S-EV-09` | **Semana da Cidadania** | selo | conhecimento de base (D017) | 24 | Combinados da turma, votação de brincadeira e direitos e deveres lidos: 1/3/6/10 edições (apartidário). | B·P·O·D | giro 3D | coreto e urna de papel | mistério |
+| `S-EV-10` | **Semana da Feirinha** | selo | financeiro | 12 | Feirinha da vila: ler preços, planejar e poupar: 1/3/6/10 edições. | B·P·O·D | giro 3D | barraca com etiquetas e cofrinho | mistério |
+| `S-EV-11` | **Semana Surpresa** | selo | segredo | 16 | Achar a pista escondida da semana e ler a mensagem. | único | revela segredo | envelope lacrado azul-marinho | oculto |
 
 #### Eventos mensais · mensal · 1a semana de cada mês
 
 | Código | Nome | Tipo | Categoria | Sem. | Como ganhar (critério observável) | Níveis | Animação | Arte 3D (motivo) | Antes de ganhar |
 |---|---|---|---|---|---|---|---|---|---|
-| `S-EV-10` | **Desafio do Mês** | selo | leitura | 5 | Concluir o desafio temático do mês (12 temas): 1/4/8/12 meses (não precisam ser seguidos). | B·P·O·D | giro 3D | calendário de madeira com estrela | visível |
-| `S-EV-11` | **Livro do Mês** | selo | leitura | 8 | Ler o livro do mês e responder 3 perguntas: 1/4/8/12 livros. | B·P·O·D | giro 3D | livro em pé com fita | mistério |
+| `S-EV-12` | **Desafio do Mês** | selo | leitura | 5 | Concluir o desafio temático do mês (12 temas): 1/4/8/12 meses (não precisam ser seguidos). | B·P·O·D | giro 3D | calendário de madeira com estrela | visível |
+| `S-EV-13` | **Livro do Mês** | selo | leitura | 8 | Ler o livro do mês e responder 3 perguntas: 1/4/8/12 livros. | B·P·O·D | giro 3D | livro em pé com fita | mistério |
 | `V-EV-01` | **Leitura em Família** | selo do professor/família | família/professor | 4 | Missão do mês em família confirmada pelo adulto: 1/4/8/12 missões. | B·P·O·D | carimbo + voz | carimbo terracota com casa e livro | visível |
 | `V-EV-02` | **Turma que Lê** | selo do professor/família | família/professor | 6 | O professor valida a meta coletiva do mês da turma (sem ranking individual). | único, repete (×N) | carimbo + voz | carimbo azul-marinho com carteiras | mistério |
 
@@ -553,33 +573,33 @@ Cores: azul-marinho e amarelo-ipê (com o tema do evento). Eventos **voltam todo
 
 | Código | Nome | Tipo | Categoria | Sem. | Como ganhar (critério observável) | Níveis | Animação | Arte 3D (motivo) | Antes de ganhar |
 |---|---|---|---|---|---|---|---|---|---|
-| `S-EV-12` | **Torcida Leitora** | selo | esporte e fair play | 16 | Copa das Letras: completar a 1a partida cooperativa lendo o placar. | único | giro 3D | camisa lisa 2 cores da seleção escolhida | mistério |
-| `S-EV-13` | **Placar de Palavras** | selo | palavra | 16 | Reconstruir 3/6/10 palavras do placar com a dupla de seleções. | B·P·O | giro 3D | placar de madeira com letras | mistério |
-| `S-EV-14` | **Cartão Verde** | selo | esporte e fair play | 16 | Escolher o gesto de fair play no cartão de fair play em 3/6/10 situações. | B·P·O | giro 3D | cartão verde-mata com aperto de mão | mistério |
+| `S-EV-14` | **Torcida Leitora** | selo | esporte e fair play | 16 | Copa das Letras: completar a 1a partida cooperativa lendo o placar. | único | giro 3D | camisa lisa 2 cores da seleção escolhida | mistério |
+| `S-EV-15` | **Placar de Palavras** | selo | palavra | 16 | Reconstruir 3/6/10 palavras do placar com a dupla de seleções. | B·P·O | giro 3D | placar de madeira com letras | mistério |
+| `S-EV-16` | **Cartão Verde** | selo | esporte e fair play | 16 | Escolher o gesto de fair play no cartão de fair play em 3/6/10 situações. | B·P·O | giro 3D | cartão verde-mata com aperto de mão | mistério |
 | `M-EV-02` | **Medalha da Copa das Letras** | medalha | esporte e fair play | 16 | Concluir a fase de visitas da Copa (repete por edição). | único, repete (×N) | medalha com fita | bola e fita marinho e amarelo-ipê | mistério |
 | `T-EV-01` | **Taça da Amizade** | troféu | esporte e fair play | 18 | Final: Festival da Copa: todas as seleções completam o Grande Placar da Vila; todos recebem a mesma taça (sem campeão). | único, repete (×N) | troféu no pedestal | taça lisa original com duas alças em forma de mãos (nunca formato de taça conhecida) | mistério |
 | `V-EV-03` | **Copa no Quintal** | selo do professor/família | família/professor | 16 | Copa no quintal com a família (5 min); adulto confirma. | único | carimbo + voz | carimbo terracota com bola | mistério |
 | `V-EV-04` | **Copa na Quadra** | selo do professor/família | família/professor | 16 | Plano 'Copa na quadra' feito pela turma; professor confirma. | único | carimbo + voz | carimbo azul-marinho com quadra | mistério |
-| `S-EV-15` | **Gol de Letra** | selo | segredo | 20 | Na final, ler a frase escondida no placar antes de todos. | único | revela segredo | bola com letra no centro | oculto |
+| `S-EV-17` | **Gol de Letra** | selo | segredo | 20 | Na final, ler a frase escondida no placar antes de todos. | único | revela segredo | bola com letra no centro | oculto |
 
 #### Feira de Leitura e Colheita · anual · jun–jul
 
 | Código | Nome | Tipo | Categoria | Sem. | Como ganhar (critério observável) | Níveis | Animação | Arte 3D (motivo) | Antes de ganhar |
 |---|---|---|---|---|---|---|---|---|---|
-| `S-EV-16` | **Leitura na Feira** | selo | leitura | 6 | Feira de Leitura: ler 3/6/10 cartazes e histórias das barracas. | B·P·O | giro 3D | barraca de feira com livros | mistério |
-| `S-EV-17` | **Barraca de Palavras** | selo | financeiro | 10 | Montar a barraquinha: ler preços e vender 5 itens de brincadeirinha. | B·P·O | giro 3D | barraca com etiquetas de preço | mistério |
-| `S-EV-18` | **Colheita com Gratidão** | selo | valores e atitudes | 6 | Escolher e ler uma frase de agradecimento pela colheita. | único | giro 3D | cesta com milho e abóbora | mistério |
+| `S-EV-18` | **Leitura na Feira** | selo | leitura | 6 | Feira de Leitura: ler 3/6/10 cartazes e histórias das barracas. | B·P·O | giro 3D | barraca de feira com livros | mistério |
+| `S-EV-19` | **Barraca de Palavras** | selo | financeiro | 10 | Montar a barraquinha: ler preços e vender 5 itens de brincadeirinha. | B·P·O | giro 3D | barraca com etiquetas de preço | mistério |
+| `S-EV-20` | **Colheita com Gratidão** | selo | valores e atitudes | 6 | Escolher e ler uma frase de agradecimento pela colheita. | único | giro 3D | cesta com milho e abóbora | mistério |
 | `M-EV-03` | **Medalha da Feira de Leitura** | medalha | leitura | 6 | Concluir a Feira de Leitura (repete por edição). | único, repete (×N) | medalha com fita | livro aberto e espiga de milho | mistério |
 | `T-EV-02` | **Troféu da Feira de Leitura** | troféu | leitura | 20 | Modo escola: ler um texto para a turma na feira; professor confirma. | único, repete (×N) | troféu no pedestal | troféu com livro e cesta de colheita | mistério |
 | `V-EV-05` | **Feira em Família** | selo do professor/família | família/professor | 6 | Visitar com a família a feira (na tela ou na escola) e ler 3 cartazes juntos. | único | carimbo + voz | carimbo terracota com barraca | mistério |
-| `S-EV-19` | **Barraca Escondida** | selo | segredo | 20 | Achar a barraca escondida da feira e ler o convite. | único | revela segredo | barraca pequena atrás de uma árvore | oculto |
+| `S-EV-21` | **Barraca Escondida** | selo | segredo | 20 | Achar a barraca escondida da feira e ler o convite. | único | revela segredo | barraca pequena atrás de uma árvore | oculto |
 
 #### Festival de Talentos · anual · set–out
 
 | Código | Nome | Tipo | Categoria | Sem. | Como ganhar (critério observável) | Níveis | Animação | Arte 3D (motivo) | Antes de ganhar |
 |---|---|---|---|---|---|---|---|---|---|
-| `S-EV-20` | **Talento no Palco** | selo | leitura | 10 | Festival de Talentos: ler ou declamar um texto curto (gravado só no aparelho). | B·P·O | giro 3D | palco de madeira e microfone | mistério |
-| `S-EV-21` | **Plateia Gentil** | selo | valores e atitudes | 10 | Aplaudir e escolher elogios prontos para 3 colegas. | único | giro 3D | mãos aplaudindo | mistério |
+| `S-EV-22` | **Talento no Palco** | selo | leitura | 10 | Festival de Talentos: ler ou declamar um texto curto (gravado só no aparelho). | B·P·O | giro 3D | palco de madeira e microfone | mistério |
+| `S-EV-23` | **Plateia Gentil** | selo | valores e atitudes | 10 | Aplaudir e escolher elogios prontos para 3 colegas. | único | giro 3D | mãos aplaudindo | mistério |
 | `M-EV-04` | **Medalha do Festival de Talentos** | medalha | leitura | 10 | Participar do Festival de Talentos (repete por edição). | único, repete (×N) | medalha com fita | estrela e cortina no metal | mistério |
 | `T-EV-03` | **Troféu do Festival de Talentos** | troféu | leitura | 20 | A turma apresenta junto (cada um do seu jeito); todos recebem o mesmo troféu. | único, repete (×N) | troféu no pedestal | troféu com cortina e estrela | mistério |
 | `V-EV-06` | **Talento em Casa** | selo do professor/família | família/professor | 10 | Apresentar o talento para a família; adulto confirma. | único | carimbo + voz | carimbo terracota com palco | mistério |
@@ -589,17 +609,17 @@ Cores: azul-marinho e amarelo-ipê (com o tema do evento). Eventos **voltam todo
 | Código | Nome | Tipo | Categoria | Sem. | Como ganhar (critério observável) | Níveis | Animação | Arte 3D (motivo) | Antes de ganhar |
 |---|---|---|---|---|---|---|---|---|---|
 | `V-EV-07` | **Dia da Família** | selo do professor/família | família/professor | 3 | Dia da Família: missão de 5 min com quem mora com a criança; adulto confirma. | único, repete (×N) | carimbo + voz | carimbo terracota com família de mãos dadas | mistério |
-| `S-EV-22` | **Piquenique das Palavras** | selo | leitura | 8 | Ler a lista do piquenique e montar a cesta (5 itens). | único | giro 3D | toalha xadrez azul e branca e cesta | mistério |
+| `S-EV-24` | **Piquenique das Palavras** | selo | leitura | 8 | Ler a lista do piquenique e montar a cesta (5 itens). | único | giro 3D | toalha xadrez azul e branca e cesta | mistério |
 | `T-EV-04` | **Troféu do Mutirão** | troféu | meio ambiente | 30 | Mutirão da Vila: ajudar a construção coletiva lendo a planta; todos recebem o mesmo troféu. | único, repete (×N) | troféu no pedestal | troféu com pa e muda de árvore | mistério |
 
 #### Marcos do ano · anual · volta às aulas, férias, Dia das Crianças
 
 | Código | Nome | Tipo | Categoria | Sem. | Como ganhar (critério observável) | Níveis | Animação | Arte 3D (motivo) | Antes de ganhar |
 |---|---|---|---|---|---|---|---|---|---|
-| `S-EV-23` | **De Volta a Vila** | selo | constância saudável | 20 | Volta às aulas: passar na revisão de boas-vindas do Jardim (nunca cobrança por ter parado). | único, repete (×N) | giro 3D | portão da vila aberto | mistério |
-| `S-EV-24` | **Leitura de Férias** | selo | leitura | 20 | Férias: ler 3/6/10 livros da estante livre com a família. | B·P·O | giro 3D | chapéu de sol e livro | mistério |
-| `S-EV-25` | **Brincadeiras do Dia das Crianças** | selo | esporte e fair play | 20 | Dia das Crianças: completar 3 brincadeiras antigas lendo as regras (pião, peteca, amarelinha). | único, repete (×N) | giro 3D | pião, peteca e giz | mistério |
-| `S-EV-26` | **Um Ano Lendo** | selo | leitura | 52 | Aniversário de leitura: ler para a família o 'Livro do meu ano' (não conta tempo; conta a leitura). | único | giro 3D | bolo simples com livro em cima | mistério |
+| `S-EV-25` | **De Volta a Vila** | selo | constância saudável | 20 | Volta às aulas: passar na revisão de boas-vindas do Jardim (nunca cobrança por ter parado). | único, repete (×N) | giro 3D | portão da vila aberto | mistério |
+| `S-EV-26` | **Leitura de Férias** | selo | leitura | 20 | Férias: ler 3/6/10 livros da estante livre com a família. | B·P·O | giro 3D | chapéu de sol e livro | mistério |
+| `S-EV-27` | **Brincadeiras do Dia das Crianças** | selo | esporte e fair play | 20 | Dia das Crianças: completar 3 brincadeiras antigas lendo as regras (pião, peteca, amarelinha). | único, repete (×N) | giro 3D | pião, peteca e giz | mistério |
+| `S-EV-28` | **Um Ano Lendo** | selo | leitura | 52 | Aniversário de leitura: ler para a família o 'Livro do meu ano' (não conta tempo; conta a leitura). | único | giro 3D | bolo simples com livro em cima | mistério |
 
 #### Formatura da Alfabetização · uma vez (fim da jornada) · fim do Ano 2
 
@@ -607,15 +627,15 @@ Cores: azul-marinho e amarelo-ipê (com o tema do evento). Eventos **voltam todo
 |---|---|---|---|---|---|---|---|---|---|
 | `T-EV-05` | **Troféu da Formatura** | troféu | leitura | 104 | Formatura da alfabetização com a família; vai para o lugar de honra da estante. | único | troféu no pedestal | troféu grande com capelo e livro | mistério |
 | `M-EV-05` | **Medalha da Formatura** | medalha | leitura | 104 | Recebida na cerimônia: desce com a fita e vai para a estante, ao lado do troféu (não fica no pescoço do avatar). | único | medalha com fita | capelo e livro com fita marinho e amarelo-ipê | mistério |
-| `S-EV-27` | **Diploma de Leitura** | selo | leitura | 104 | Ler em voz alta o próprio diploma na formatura. | único | giro 3D | diploma enrolado com laço de fita lisa | mistério |
+| `S-EV-29` | **Diploma de Leitura** | selo | leitura | 104 | Ler em voz alta o próprio diploma na formatura. | único | giro 3D | diploma enrolado com laço de fita lisa | mistério |
 | `V-EV-08` | **Formatura em Família** | selo do professor/família | família/professor | 104 | A família grava (no aparelho) o parabéns da formatura; adulto confirma. | único | carimbo + voz | carimbo terracota com capelo | mistério |
 
 #### Natal (opcional por escola) · anual, só se a escola ativar · dezembro
 
 | Código | Nome | Tipo | Categoria | Sem. | Como ganhar (critério observável) | Níveis | Animação | Arte 3D (motivo) | Antes de ganhar |
 |---|---|---|---|---|---|---|---|---|---|
-| `S-EV-28` | **Cartão de Natal** | selo | valores e atitudes | 14 | Só se a escola ativar: ler e escrever um cartão de gratidão para alguém. | único | giro 3D | cartão com estrela de Natal lisa amarelo-ipê | mistério |
-| `S-EV-29` | **Natal Solidário** | selo | valores e atitudes | 40 | Só se a escola ativar: contribuir com o projeto coletivo de Natal da vila (doação de moedinhas ou missão lida). | único | giro 3D | caixa de doação de madeira com estrela | mistério |
+| `S-EV-30` | **Cartão de Natal** | selo | valores e atitudes | 14 | Só se a escola ativar: ler e escrever um cartão de gratidão para alguém. | único | giro 3D | cartão com estrela de Natal lisa amarelo-ipê | mistério |
+| `S-EV-31` | **Natal Solidário** | selo | valores e atitudes | 40 | Só se a escola ativar: contribuir com o projeto coletivo de Natal da vila (doação de moedinhas ou missão lida). | único | giro 3D | caixa de doação de madeira com estrela | mistério |
 
 ---
 
@@ -642,4 +662,29 @@ Um selo por correspondência grafema-fonema (ou padrão) da sequência fônica. 
 | **Total** | | | **56** (× 4 níveis = 224 degraus, + estrelas sem fim) |
 
 **Estrelas de fase** (também geradas, fora do JSON): cada uma das 89 fases da tabela-mestre dá até 3 estrelas (1: domínio prático; 2: transferência fora do formato; 3: retenção de 7 dias). São 267 estrelas possíveis, mostradas no mapa e na tela Minhas Conquistas da fase; não contam como selo.
+
+
+---
+
+## 6. Escadas de patentes por área (D023)
+
+Oito degraus neutros por área (**Aprendiz → Ajudante → Sentinela → Guarda → Guia → Especialista → Líder → Lenda**), cada um com I, II e III; Lenda ganha estrelas sem fim. A criança sobe somando **degraus de conquistas da área** (cada bronze, prata, ouro, diamante ou conquista única conta 1; cada edição de evento semanal ou mensal da área também conta 1). Cada degrau tem um **portão de domínio**: precisa de pelo menos 1 conquista nova da área ganha numa região indicada, por isso o alto escalão (Líder e Lenda) só chega no fim do Ano 2. Os limiares foram calculados a partir do próprio catálogo: cerca de 40% dos degraus da área já liberados na semana-alvo. Áreas e categorias: Sons = fonema, sílaba e Maestria do Som; Escrita = palavra, ditados e criação; Leitura = leitura e compreensão; Natureza = meio ambiente; Esporte e Fair Play; Amizade e Respeito = valores e emocional; Dinheiro = financeiro; Tecnologia = pensamento computacional e tecnologia; Ciências, Cidadania e Artes = conhecimento de base (D017), separados pelo tema. Família/professor, constância, colecionador, segredos e títulos não entram em escada (contam para o Álbum e os títulos da jornada).
+
+| Área | Aprendiz | Ajudante | Sentinela | Guarda | Guia | Especialista | Líder | Lenda |
+|---|---|---|---|---|---|---|---|---|
+| **Leitura** (`P-LEITURA-1…8`) | 3/5/7 · s2 | 9/12/15 · s8 | 18/20/23 · s18 | 25/28/31 · s32 | 34/36/38 · s50 | 40/43/46 · s68 | 49/54/58 · s86 | 69/73/77 · s100 |
+| **Escrita** (`P-ESCRITA-1…8`) | 3/4/5 · s2 | 6/8/9 · s8 | 11/12/13 · s18 | 14/15/17 · s32 | 18/20/22 · s50 | 24/26/28 · s68 | 30/34/39 · s86 | 44/48/52 · s100 |
+| **Sons** (`P-SONS-1…8`) | 3/15/26 · s2 | 38/41/45 · s8 | 48/56/64 · s18 | 72/79/87 · s32 | 94/101/108 · s50 | 115/125/135 · s68 | 145/152/160 · s86 | 167/171/175 · s100 |
+| **Natureza** (`P-NATUREZA-1…8`) | 3/4/6 · s2 | 7/8/9 · s8 | 10/11/12 · s18 | 13/14/15 · s32 | 16/17/18 · s50 | 19/20/21 · s68 | 22/23/24 · s86 | 25/29/33 · s100 |
+| **Esporte e Fair Play** (`P-ESPORTE-1…8`) | 3/4/6 · s2 | 7/9/10 · s8 | 12/13/15 · s18 | 16/17/19 · s32 | 20/22/23 · s50 | 25/26/28 · s68 | 29/33/36 · s86 | 40/44/48 · s100 |
+| **Amizade e Respeito** (`P-AMIZADE-1…8`) | 3/5/6 · s2 | 8/11/14 · s8 | 17/19/20 · s18 | 22/23/25 · s32 | 26/28/30 · s50 | 32/33/34 · s68 | 35/37/39 · s86 | 42/46/50 · s100 |
+| **Dinheiro** (`P-DINHEIRO-1…8`) | 3/4/5 · s2 | 6/7/8 · s8 | 9/10/11 · s18 | 12/13/14 · s32 | 15/16/17 · s50 | 18/19/20 · s68 | 21/22/23 · s86 | 24/28/32 · s100 |
+| **Ciências** (`P-CIENCIAS-1…8`) | 3/4/5 · s2 | 6/7/8 · s8 | 9/10/11 · s18 | 12/13/14 · s32 | 15/16/17 · s50 | 18/19/20 · s68 | 21/22/23 · s86 | 24/28/32 · s100 |
+| **Tecnologia** (`P-TECNOLOGIA-1…8`) | 3/4/5 · s2 | 6/7/8 · s8 | 9/11/12 · s18 | 14/15/16 · s32 | 17/19/20 · s50 | 22/23/24 · s68 | 25/27/29 · s86 | 31/35/39 · s100 |
+| **Cidadania** (`P-CIDADANIA-1…8`) | 3/4/5 · s2 | 6/7/8 · s8 | 9/10/11 · s18 | 12/13/14 · s32 | 15/16/17 · s50 | 18/19/20 · s68 | 21/22/23 · s86 | 24/28/32 · s100 |
+| **Artes** (`P-ARTES-1…8`) | 3/4/5 · s2 | 6/7/8 · s8 | 9/10/11 · s18 | 12/13/14 · s32 | 15/16/17 · s50 | 18/19/20 · s68 | 21/22/23 · s86 | 24/28/32 · s100 |
+
+Célula = degraus para I / II / III · semana em que a patente aparece no Álbum (Aprendiz e Ajudante visíveis; do Sentinela em diante, mistério com a dica). Portões: Ajudante R1+, Sentinela R2b+, Guarda R3+, Guia R5+, Especialista R7+, Líder R9+, Lenda R10 (ou eventos do Ano 2) com validação do professor ou da família. Exemplo de critério completo (`P-NATUREZA-3`): Somar 10 / 11 / 12 degraus de conquistas da área Natureza (cada bronze, prata, ouro, diamante ou único conta 1) para os degraus I / II / III. Portão de domínio: pelo menos 1 conquista nova da área ganha em R2b ou depois. Cada edição concluída de um evento semanal ou mensal da área também soma 1 degrau, para a escada nunca travar.
+
+**Brasão por degrau** (arte, ver [prompts-arte.md](prompts-arte.md)): Aprendiz madeira clara → Ajudante madeira escura com friso de bronze → Sentinela bronze → Guarda bronze e prata → Guia prata com faixa azul-marinho → Especialista prata e ouro → Líder ouro com relevo → Lenda cristal azul-gelo sobre base de ouro, com estrelas. O símbolo central é o da área (livro, lápis, boca do Espelho do Som, folha e gota, bola e aperto de mão, mãos dadas, cofrinho-tatu, lupa, engrenagem, coreto, nota musical e pincel). Frase: "Parabéns, [NOME]! Agora você é **Sentinela da Natureza II**!"
 

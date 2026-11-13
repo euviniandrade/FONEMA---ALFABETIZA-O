@@ -26,7 +26,8 @@ CATEGORIAS = OrderedDict([
     ("financeiro", "fin"), ("emocional", "emo"), ("computacional", "pc"), ("familia_professor", "fam/prof"),
     ("constancia", "const"), ("colecionador", "col"), ("segredo", "seg"),
 ])
-TIPOS = ["selo", "medalha", "trofeu", "titulo", "emblema_colecao", "selo_validacao"]
+TIPOS = ["selo", "medalha", "trofeu", "titulo", "emblema_colecao", "selo_validacao", "patente"]
+PATENTES = ["Aprendiz", "Ajudante", "Sentinela", "Guarda", "Guia", "Especialista", "Líder", "Lenda"]
 VISIBILIDADE = {"visivel", "misterio", "oculto"}
 CAMPOS = ["id", "nome", "tipo", "categoria", "regiao", "semana_liberacao", "criterio", "niveis",
           "animacao", "descricao_arte", "visivel_antes"]
@@ -57,7 +58,7 @@ def main():
             erros.append(f"{i.get('id')}: faltam {falta}")
         if i.get("tipo") not in TIPOS:
             erros.append(f"{i.get('id')}: tipo inválido {i.get('tipo')}")
-        if i.get("categoria") not in CATEGORIAS:
+        if i.get("categoria") not in CATEGORIAS and i.get("tipo") != "patente":
             erros.append(f"{i.get('id')}: categoria inválida {i.get('categoria')}")
         if i.get("regiao") not in REGIOES:
             erros.append(f"{i.get('id')}: região inválida {i.get('regiao')}")
@@ -65,10 +66,12 @@ def main():
             erros.append(f"{i.get('id')}: visibilidade inválida {i.get('visivel_antes')}")
 
     fixos = [i for i in itens if not i.get("gerado")]
-    gerados = [i for i in itens if i.get("gerado")]
+    gerados = [i for i in itens if i.get("gerado") and i["tipo"] != "patente"]
+    patentes = [i for i in itens if i["tipo"] == "patente"]
 
     print("## 1. Totais\n")
-    print(f"- Itens no JSON: **{len(itens)}** ({len(fixos)} fixos + {len(gerados)} gerados 'Maestria do Som')")
+    print(f"- Itens no JSON: **{len(itens)}** = {len(fixos)} conquistas fixas + {len(gerados)} selos gerados "
+          f"'Maestria do Som' + {len(patentes)} patentes ({len(patentes) // 8} áreas × 8 degraus, D023)")
     degraus = sum(len(i["niveis"]) for i in fixos)
     print(f"- Degraus (níveis) entregáveis nos itens fixos: **{degraus}**")
     print(f"- Itens fixos da jornada R0–R10 + eventos (sem o Maternal): "
@@ -78,7 +81,7 @@ def main():
     print(f"- Visibilidade antes de ganhar (fixos): visível {vis['visivel']}, mistério {vis['misterio']}, "
           f"oculto {vis['oculto']}\n")
     tp = Counter(i["tipo"] for i in fixos)
-    tabela(["tipo", "qtd (fixos)"], [[t, tp[t]] for t in TIPOS] + [["total", len(fixos)]])
+    tabela(["tipo", "qtd (fixos)"], [[t, tp[t]] for t in TIPOS if tp[t]] + [["total", len(fixos)]])
 
     print("\n## 2. Região × categoria (itens fixos)\n")
     cab = ["região"] + list(CATEGORIAS.values()) + ["total"]
@@ -93,7 +96,8 @@ def main():
           ", ".join(f"{r} {n}" for r, n in Counter(i["regiao"] for i in gerados).items()))
 
     print("\n## 3. Curva acumulada de liberação (semana da jornada)\n")
-    print("Semana 0 = módulo Maternal. Eventos entram na semana mínima em que podem aparecer.\n")
+    print("Semana 0 = módulo Maternal. Eventos entram na semana mínima em que podem aparecer. "
+          "Conta selos, medalhas, troféus, títulos, coleções, vistos e Maestria do Som (sem as patentes).\n")
     passo = 1 if semanal else 4
     marcos = [0] + list(range(passo, 105, passo))
     if 104 not in marcos:
@@ -102,12 +106,24 @@ def main():
     for s in marcos:
         lib = [i for i in itens if i["semana_liberacao"] <= s]
         n_i = len(lib)
+        lib = [i for i in lib if i["tipo"] != "patente"]
+        n_i = len(lib)
         n_d = sum(len(i["niveis"]) for i in lib if not i.get("gerado")) + sum(4 for i in lib if i.get("gerado"))
         linhas.append([s, n_i - ant_i, n_i, n_d - ant_d, n_d])
         ant_i, ant_d = n_i, n_d
     tabela(["semana até", "novos itens", "itens acumulados", "novos degraus", "degraus acumulados"], linhas)
 
-    print("\n## 4. Checagens\n")
+    print("\n## 4. Escadas de patentes (D023): degraus de conquistas da área para chegar ao nível I\n")
+    print("Cada célula: degraus somados na área para o nível I (semana em que a patente aparece).\n")
+    areas = list(OrderedDict.fromkeys(p["area"] for p in patentes))
+    linhas = []
+    for a in areas:
+        ps = {p["nome"].split(" ")[0]: p for p in patentes if p["area"] == a}
+        linhas.append([a] + [f"{ps[n]['limiar_degraus'][0]} (s{ps[n]['semana_liberacao']})" for n in PATENTES]
+                      + [ps["Lenda"]["degraus_totais_da_area"]])
+    tabela(["área"] + PATENTES + ["degraus no catálogo"], linhas)
+
+    print("\n## 5. Checagens\n")
     print("- OK: nenhum problema encontrado." if not erros else "\n".join("- " + e for e in erros))
     return 1 if erros else 0
 
