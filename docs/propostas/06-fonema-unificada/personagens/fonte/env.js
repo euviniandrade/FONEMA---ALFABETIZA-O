@@ -116,7 +116,7 @@ function casa() {
     <path d="M470,300 L540,372 M900,300 L830,372" stroke="#C9B49A" stroke-width="3"/>${[0, 1, 2, 3, 4, 5].map(i => `<path d="M470,300 L${540 + i * 3},${372 + i * 4} M900,300 L${830 - i * 3},${372 + i * 4}" stroke="#E6D3B8" stroke-width="1.4"/>`).join('')}
     <path d="M540,370 Q685,520 830,370 L832,396 Q685,560 538,396Z" fill="url(#chita2)" stroke="#145650" stroke-width="2.4"/>
     ${[0, 1, 2, 3].map(i => `<path d="M${548 + i * 4},${390 + i * 8} Q685,${528 + i * 8} ${822 - i * 4},${390 + i * 8}" stroke="${[P.ipe, P.vowel, '#fff', P.ipe][i]}" stroke-width="3" fill="none" opacity=".85"/>`).join('')}
-    ${Array.from({ length: 14 }, (_, i) => { const t = (i + 0.5) / 14, x = 540 + t * 290, y = 396 + Math.sin(t * Math.PI) * 130; return `<path d="M${f(x)},${f(y)} v9" stroke="#F2E2C2" stroke-width="3" stroke-linecap="round"/>`; }).join('')}</g>`;
+    ${Array.from({ length: 14 }, (_, i) => { const t = (i + 0.5) / 14, x = 540 + t * 290, y = 394 + Math.sin(t * Math.PI) * 80; return `<path d="M${f(x)},${f(y)} v9" stroke="#F2E2C2" stroke-width="3" stroke-linecap="round"/>`; }).join('')}</g>`;
   // estante
   g += `<g><rect x="940" y="110" width="290" height="470" rx="8" fill="#9C6A3E"/><rect x="954" y="124" width="262" height="442" fill="#7A4B2E"/>`;
   const r = rng(21); const bc = [P.cons, P.vowel, P.ok, P.ipe, P.focus, '#E26D5A', '#4FA3C7', '#F28C28', '#8CC084'];
