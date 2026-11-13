@@ -223,7 +223,12 @@ export async function criarMundo(container, opts = {}) {
   const ROTEIRO = ['mirante', 'praca', 'escola', 'biblioteca', 'casa', 'campinho', 'rua', 'horta', 'cais', 'ponte', 'padaria', 'praca'];
   const tour = (() => {
     const cams = [], alvos = [];
-    for (const id of ROTEIRO) { const p = POIS.find((x) => x.id === id); cams.push(new THREE.Vector3(...p.cam)); alvos.push(new THREE.Vector3(...p.alvo)); }
+    // entre dois lugares a câmera sobe em arco (passa por cima de telhados e copas, nunca através)
+    ROTEIRO.forEach((id, i) => {
+      const p = POIS.find((x) => x.id === id), c = new THREE.Vector3(...p.cam), a = new THREE.Vector3(...p.alvo);
+      if (i) { const c0 = cams[cams.length - 1], a0 = alvos[alvos.length - 1], m = c0.clone().lerp(c, 0.5); m.y = Math.max(c0.y, c.y) + Math.max(10, c0.distanceTo(c) * 0.3); cams.push(m); alvos.push(a0.clone().lerp(a, 0.5)); }
+      cams.push(c); alvos.push(a);
+    });
     const cc = new THREE.CatmullRomCurve3(cams, false, 'centripetal', 0.5), ca = new THREE.CatmullRomCurve3(alvos, false, 'centripetal', 0.5);
     return { cc, ca, dur: ROTEIRO.length * 5.5 };
   })();
