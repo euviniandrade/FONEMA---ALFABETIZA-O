@@ -13,10 +13,14 @@ export const FASES_R1: Fase[] = [
     cenas: [
       {
         id: 'R1-F01-C2', tipo: 'C2', titulo: 'Espelho do Som: /a/', cenario: 'licao', contaDominio: true,
+        // clipe "A, É, I, Ô, U" (31 s): a dupla canta as vogais; termina na atividade (D015: vídeo nunca sozinho)
+        assiste: { video: 'vogais-clipe', roteiro: [tales('Agora é a sua vez, [NOME]!')] },
         atividade: { tipo: 'espelho', habilidade: 'vogal-a', fonema: 'a', letra: 'A', ancora: { texto: 'abelha', figura: '🐝' }, enunciado: sofia('/aaa/. Boca bem aberta, como um bocejo. Sua vez, [NOME]!'), comemora: sofia('Isso! Você abriu bem a boca: aaa!') }
       },
       {
         id: 'R1-F01-C3', tipo: 'C3', titulo: 'O eco da ilha', cenario: 'ilha', contaDominio: true,
+        // diálogo gravado nas vozes oficiais da Sofia e do Tales (voz/dupla), sobre a cena da praia
+        assiste: { audio: 'dupla-ilha-das-vogais', imagem: 'serie-eco', roteiro: [tales('Agora é a sua vez, [NOME]!')] },
         atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'vogal-a', enunciado: tales('O eco falou! Qual letra, [NOME]?'), itens: [itemLetra('aaaa', 'A', 'O'), itemLetra('aaaa', 'A', 'U'), itemLetra('aaaa', 'A', 'O', 'U'), itemLetra('aaaa', 'A', 'I')], comemora: tales('A letra A faz /aaa/!') }
       },
       {

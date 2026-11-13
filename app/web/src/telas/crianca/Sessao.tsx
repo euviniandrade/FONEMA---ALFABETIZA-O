@@ -131,7 +131,7 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
             <button className="btn enorme ipe brilha" onClick={avancar} data-testid="comecar-sessao"><Icone nome="play" />Vamos!</button>
           </section>
         ) : etapa.cena?.assiste && !assistiu ? (
-          <AssisteEFaz key={etapa.cena.id} roteiro={etapa.cena.assiste.roteiro} imagem={etapa.cena.assiste.imagem} crianca={crianca} onFim={() => setAssistiu(true)} />
+          <AssisteEFaz key={etapa.cena.id} roteiro={etapa.cena.assiste.roteiro} imagem={etapa.cena.assiste.imagem} video={etapa.cena.assiste.video} audio={etapa.cena.assiste.audio} crianca={crianca} onFim={() => setAssistiu(true)} />
         ) : etapa.cena?.atividade ? (
           <section className="cartao atividade" key={etapa.cena.id}>
             <h2 className="titulo-cena t">{etapa.cena.titulo}</h2>

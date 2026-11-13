@@ -174,7 +174,11 @@ export interface Cena {
   /** Chave de imagem de fundo (ver web/src/assets.ts). Lição usa fundo limpo. */
   cenario: string;
   /** "Assiste e Faz" (D015): roteiro curto da dupla antes da atividade. */
-  assiste?: { roteiro: Fala[]; imagem?: string };
+  /**
+   * `video`: clipe em web/public/assets/video/<nome>.mp4 (com capa <nome>.webp) · `audio`: diálogo gravado da dupla em
+   * web/public/assets/audio/<nome>.mp3, tocado sobre a `imagem`. O `roteiro` é falado DEPOIS da mídia.
+   */
+  assiste?: { roteiro: Fala[]; imagem?: string; video?: string; audio?: string };
   atividade?: Atividade;
   /** Conta para o domínio/progresso da fase? */
   contaDominio?: boolean;
