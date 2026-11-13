@@ -77,6 +77,7 @@
   }
   $$('.modos [data-modo]').forEach((b) => b.addEventListener('click', () => modo(b.dataset.modo)));
   $('#bGirar').addEventListener('click', (e) => { const v = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', v); if (v && !vista3d()) modo('frente3d'); esp.girar(v); });
+  $('#bNomes').addEventListener('click', (e) => { const v = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', v); esp.rotulos(v); });
   $('#bLento').addEventListener('click', (e) => { lento = !lento; e.currentTarget.setAttribute('aria-pressed', lento); esp.lento(lento); });
   $('#bMudo').addEventListener('click', (e) => { mudo = !mudo; window.ESPELHO_MUDO = mudo; e.currentTarget.setAttribute('aria-pressed', mudo); e.currentTarget.textContent = mudo ? '🔇 Voz desligada' : '🔊 Voz ligada'; if (mudo) speechSynthesis.cancel(); });
   if (!e3) $$('.modos [data-modo=frente3d],.modos [data-modo=dentro],.modos [data-modo=corpo],#bGirar,.modos .sep').forEach((b) => (b.style.display = 'none'));

@@ -197,9 +197,9 @@
       const junta = 1 - Math.min(1, ab / 0.14), m = (uIn + lIn) / 2; uIn += (m - uIn) * junta; lIn += (m - lIn) * junta;
       let zL = zb; if (o.ld > 0) { lIn += (-0.06 - lIn) * o.ld; zL += (-0.12 - zL) * o.ld; }
       const pr = 1 + o.arr * 0.35;
-      $('.e-labio-c').setAttribute('d', suave([[zb - 0.5, uIn + 0.05], [zb - 0.1, uIn - 0.04], [zb + 0.16 * pr, uIn + 0.06], [zb + 0.24 * pr, uIn + 0.3], [zb + 0.08, uIn + 0.62], [zb - 0.25, uIn + 0.72], [zb - 0.45, uIn + 0.5]].map(scr), true));
-      $('.e-labio-b').setAttribute('d', suave([[zL - 0.5, lIn - 0.05], [zL - 0.1, lIn + 0.04], [zL + 0.18 * pr, lIn - 0.08], [zL + 0.26 * pr, lIn - 0.34], [zL + 0.08, lIn - 0.66], [zL - 0.25, lIn - 0.74], [zL - 0.45, lIn - 0.5]].map(scr), true));
-      const ll = $('.e-labio-luz'); ll.setAttribute('cx', X(zb + 0.12 * pr)); ll.setAttribute('cy', Y(uIn + 0.3)); ll.setAttribute('rx', 0.05 * C.k); ll.setAttribute('ry', 0.13 * C.k);
+      $('.e-labio-c').setAttribute('d', suave([[zb - 0.85, uIn + 0.12], [zb - 0.25, uIn - 0.03], [zb + 0.14 * pr, uIn + 0.04], [zb + 0.25 * pr, uIn + 0.26], [zb + 0.1, uIn + 0.48], [zb - 0.35, uIn + 0.46]].map(scr), true));
+      $('.e-labio-b').setAttribute('d', suave([[zL - 0.85, lIn - 0.14], [zL - 0.25, lIn + 0.03], [zL + 0.16 * pr, lIn - 0.05], [zL + 0.27 * pr, lIn - 0.3], [zL + 0.1, lIn - 0.55], [zL - 0.35, lIn - 0.52]].map(scr), true));
+      const ll = $('.e-labio-luz'); ll.setAttribute('cx', X(zb + 0.12 * pr)); ll.setAttribute('cy', Y(uIn + 0.26)); ll.setAttribute('rx', 0.05 * C.k); ll.setAttribute('ry', 0.1 * C.k);
       // voz e ar
       const lar = [X(-4.9), Y(-4.2)]; $('.e-laringe').setAttribute('transform', `translate(${lar[0]},${lar[1]})`);
       const voz = o.voz > 0.5 && k > 0.5;

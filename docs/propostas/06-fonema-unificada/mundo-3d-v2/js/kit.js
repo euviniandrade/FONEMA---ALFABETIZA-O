@@ -49,7 +49,7 @@ export function F(x, y, z, ry = 0, s = 1) {
 const cache = new Map();
 const memo = (k, f) => { if (!cache.has(k)) cache.set(k, f()); return cache.get(k); };
 /** Caixa de cantos arredondados com dimensões reais (o raio não deforma ao escalar). */
-export const rbox = (w, h, d, r = 0.08, seg = 2) => (Math.max(w, h, d) < 0.8 && (seg = 1), memo(`rb${w.toFixed(3)},${h.toFixed(3)},${d.toFixed(3)},${r},${seg}`, () => new RoundedBoxGeometry(w, h, d, seg, Math.min(r, w / 2 - 1e-3, h / 2 - 1e-3, d / 2 - 1e-3)));
+export const rbox = (w, h, d, r = 0.08, seg = 2) => (Math.max(w, h, d) < 0.8 && (seg = 1), memo(`rb${w.toFixed(3)},${h.toFixed(3)},${d.toFixed(3)},${r},${seg}`, () => new RoundedBoxGeometry(w, h, d, seg, Math.min(r, w / 2 - 1e-3, h / 2 - 1e-3, d / 2 - 1e-3))));
 export const G = {
   cyl: memo('cyl', () => new THREE.CylinderGeometry(0.5, 0.5, 1, 20)),
   cyl10: memo('cyl10', () => new THREE.CylinderGeometry(0.5, 0.5, 1, 10)),

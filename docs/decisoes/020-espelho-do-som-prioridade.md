@@ -16,3 +16,8 @@
      - "Conheça seu corpo".
 3. **Validação:** a tabela de posições de cada fonema e as animações passam por **fonoaudióloga** antes de ir ao produto. Os sons isolados são gravados por fonoaudióloga (voz/README).
 4. **Imagens de IA** servem só como referência de estilo. A boca do produto é um modelo animado e controlável, para garantir a fidelidade.
+
+## Estilo escolhido pelo dono (13/11/2026)
+- **De frente:** estilo **"Boca gigante"** (`espelho-do-som-3d/estilos-opcoes/v3-boca-gigante.png`). Boca grande e fofa, com a Sofia e o Tales ao lado como professores. A **língua é animada e bem dinâmica** (sobe, desce, vai para trás), na posição certa de cada som. Base sem língua: `base-frente-boca-vazia.png`.
+- **De lado:** estilo **"3D fofinho"**, de filme de animação (`v4-3d-pixar-fofo.png`). A Sofia ou o Tales de perfil, com uma janelinha translúcida mostrando a boca por dentro e a língua animada. Base: `base-lado-3d-vazia.png`.
+- O raio-X escuro e técnico sai da lição e pode ficar só em "Conheça seu corpo".
