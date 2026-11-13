@@ -33,6 +33,8 @@ export default defineConfig({
         globIgnores: ['**/mundo3d/**/*.mp4'],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
         navigateFallback: 'index.html',
+        // páginas embutidas por iframe não podem cair no app
+        navigateFallbackDenylist: [/espelho-embed\.html/, /\/mundo3d\//, /\/espelho\//],
         cleanupOutdatedCaches: true
       }
     })

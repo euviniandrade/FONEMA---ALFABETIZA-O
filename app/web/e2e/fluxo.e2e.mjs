@@ -227,8 +227,7 @@ async function main() {
   await page.locator('iframe.mundo3d, [data-testid="vila"]').first().waitFor();
   const id = page.url().split('/c/')[1].split('/')[0];
   if (await page.locator('iframe.mundo3d').count()) {
-    await page.waitForTimeout(CAPTURAS ? 6000 : 500);
-    await cap(page, 'mundo-3d-vila');
+    // a captura do 3D é feita pela própria demo (mundo-3d-v2/capturas); aqui só conferimos a integração
     ok(true, 'mundo 3D da vila embutido como tela principal');
   }
   await page.goto(BASE + `#/c/${id}/vila`);

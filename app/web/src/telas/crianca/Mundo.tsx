@@ -72,13 +72,13 @@ export function Vila({ criancaId }: { criancaId: string }) {
   const fase = FASE_POR_ID[progresso.faseAtual];
   const nivel = nivelDe(progresso);
   const pontos: Ponto[] = [
-    { id: 'missao', x: 47, y: 46, rotulo: `Missão: ${fase.titulo}`, icone: '⭐', ir: `c/${criancaId}/fase/${fase.id}`, destaque: true },
-    { id: 'casa', x: 30, y: 42, rotulo: 'Minha casa', icone: '🏠', ir: `c/${criancaId}/avatar` },
-    { id: 'biblioteca', x: 58, y: 33, rotulo: 'Álbum de Conquistas', icone: '🏅', ir: `c/${criancaId}/album` },
-    { id: 'escola', x: 43, y: 29, rotulo: 'Conheça seu corpo', icone: '👄', ir: `c/${criancaId}/corpo` },
+    { id: 'missao', x: 48, y: 52, rotulo: `Missão: ${fase.titulo}`, icone: '⭐', ir: `c/${criancaId}/fase/${fase.id}`, destaque: true },
+    { id: 'casa', x: 27, y: 44, rotulo: 'Minha casa', icone: '🏠', ir: `c/${criancaId}/avatar` },
+    { id: 'biblioteca', x: 61, y: 29, rotulo: 'Álbum de Conquistas', icone: '🏅', ir: `c/${criancaId}/album` },
+    { id: 'escola', x: 42, y: 25, rotulo: 'Conheça seu corpo', icone: '👄', ir: `c/${criancaId}/corpo` },
     { id: 'cais', x: 82, y: 82, rotulo: 'Mapa das ilhas', icone: '🗺️', ir: `c/${criancaId}/mapa` }
   ];
-  if (config.lojinha.naVila) pontos.push({ id: 'lojinha', x: 68, y: 46, rotulo: 'Lojinha', icone: '🛒', ir: `c/${criancaId}/lojinha` });
+  if (config.lojinha.naVila) pontos.push({ id: 'lojinha', x: 73, y: 49, rotulo: 'Lojinha', icone: '🛒', ir: `c/${criancaId}/lojinha` });
   if (mundo3d) pontos.push({ id: 'mundo3d', x: 16, y: 18, rotulo: 'Explorar em 3D', icone: '🧭', ir: `c/${criancaId}/mundo` });
 
   return (

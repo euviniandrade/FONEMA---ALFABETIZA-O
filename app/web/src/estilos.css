@@ -41,7 +41,8 @@ h1{font-size:clamp(26px,3.2vw,38px)}h2{font-size:clamp(20px,2.3vw,26px);margin:1
 .moedas{display:flex;align-items:center;gap:8px;height:56px;padding:0 18px 0 8px;border-radius:999px;background:#fff;border:2px solid #F0D592;box-shadow:0 3px 0 #E8C66E;font-family:Fredoka;font-weight:700;font-size:24px;flex:none}
 .moedas img{width:40px;height:40px}
 .avatar-mini{border-radius:50%;overflow:hidden;flex:none;display:grid;place-items:end center;border:3px solid #fff;box-shadow:var(--sombra)}
-.avatar-mini img{width:80%;height:auto;transform:translateY(22%)}
+.avatar-mini{place-items:start center}
+.avatar-mini img{width:150%;height:auto;max-width:none;margin-top:6%}
 .trilha{list-style:none;display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center}
 .trilha li{display:flex;align-items:center;gap:6px;height:44px;padding:0 12px 0 4px;border-radius:999px;background:#fff;border:2px solid var(--linha);font-family:Fredoka;font-weight:600;font-size:15px;color:var(--cinza);white-space:nowrap}
 .trilha li i{font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--ceu)}
@@ -164,6 +165,7 @@ input[type=checkbox],input[type=radio]{width:28px;height:28px;flex:none;accent-c
 .ponto.regiao.bloqueada{opacity:.75;cursor:default}
 .vila-lado{display:flex;flex-direction:column;gap:12px;background:rgba(255,255,255,.95);border-radius:28px;padding:16px;box-shadow:var(--sombra);align-self:start}
 .vila-nome{text-align:center;font-size:26px}
+.vila-lado .balao{flex-wrap:wrap}.vila-lado .balao .rosto{width:56px!important;height:56px!important}.vila-lado .balao p{font-size:18px}.vila-lado .balao-texto{min-width:0;flex-basis:60%}
 .avatar-grande{position:relative;border-radius:28px;background:radial-gradient(circle at 50% 70%,var(--cantinho) 0 55%,transparent 56%),linear-gradient(180deg,#E7F4FD,#fff);display:grid;place-items:center;padding:12px;min-height:280px}
 .avatar-grande>img{max-height:300px;width:auto}
 .avatar-itens{position:absolute;right:8px;bottom:8px;display:flex;flex-direction:column;gap:4px}
@@ -354,7 +356,7 @@ input[type=checkbox],input[type=radio]{width:28px;height:28px;flex:none;accent-c
 .gravando{font-family:Fredoka;font-size:24px}.gravando .medidor{margin:10px auto}
 /* mundo 3D */
 .tela-mundo3d{display:flex;flex-direction:column;height:100vh}
-.mundo3d{flex:1;border:0;width:100%}
+.mundo3d{flex:1;border:0;width:100%;min-height:calc(100vh - var(--topo));display:block}
 
 /* ---------------- acessibilidade ---------------- */
 .contraste body,html.contraste body{background:#fff;color:#000}
