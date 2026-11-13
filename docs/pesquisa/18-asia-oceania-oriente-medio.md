@@ -121,21 +121,127 @@
 - Isso permite rodar em celulares Android de baixo custo, sem conexão, e não guardar áudio.
 - **Esta descrição é inferência**, não está documentada nas fontes [6][8].
 
-**Pratham, ASER, TaRL e NIPUN Bharat:** NÃO VERIFICADOS nesta rodada, por falta de cota de buscas. Ver 2.4.
+**ASER, Pratham, TaRL e NIPUN Bharat (VERIFICADO na 2ª rodada)**
 
-### 2.4 Demais países — NÃO VERIFICADO (conhecimento prévio; precisa de nova busca antes de citar)
+*NIPUN Bharat (2021)*
+- Missão nacional lançada pelo Ministério da Educação em 5/7/2021, derivada da NEP 2020. Meta: toda criança com alfabetização e numeracia fundamentais (FLN) até o fim do 3º ano, até 2026–27 [45][46].
+- As diretrizes trazem metas de aprendizagem ("Lakshya Soochi") da pré-escola (Balvatika) até os 9 anos. A execução fica a cargo do Departamento de Educação Escolar, dentro do programa Samagra Shiksha [45][46].
 
-| País | Ponto relevante (a confirmar) | Por que importa ao FONEMA |
-|---|---|---|
-| Índia (TaRL/ASER/NIPUN) | ASER: pesquisa domiciliar com ferramenta simples de níveis (letra, palavra, parágrafo, história). TaRL (Pratham): agrupa as crianças por nível, não por série; tem RCTs com J-PAL (Banerjee et al., *J. Econ. Perspectives*, 2017). NIPUN Bharat (2021): missão para que toda criança tenha alfabetização e numeracia fundamentais até o 3º ano, com meta em 2026–27 | A trilha adaptativa do FONEMA deve organizar a criança por **nível**, não por idade. Os níveis do ASER são um modelo simples de diagnóstico inicial |
-| Singapura | Política bilíngue: inglês como língua de instrução + língua materna (mandarim, malaio, tâmil). Programa STELLAR no primário. Pinyin no ensino do mandarim | Mostra que é possível ensinar letra e som num sistema e caractere em outro em paralelo. Inspiração para módulos de inglês no futuro |
-| China | O pinyin funciona como "fase fônica" de transição para os caracteres, no 1º ano. A política "Shuangjian" (dupla redução, 2021) restringiu tutoria privada com fins lucrativos e afetou fortemente o edtech | Usar o som como andaime para a escrita. **Risco regulatório:** edtech infantil pode ser alvo de regulação. Planejar a conformidade (ECA, LGPD) desde o início |
-| Japão | Hiragana: silabário regular de 46 caracteres básicos, aprendido em geral antes ou no início do 1º ano. Taxas de alfabetização em kana altíssimas | O português tem sílabas regulares (CV). Reforça o valor da **sílaba** como unidade intermediária no pt-BR, sem abandonar o fonema |
-| Coreia do Sul | Hangul: alfabeto em que as letras são agrupadas em blocos silábicos. É aprendido rápido, muitas vezes antes da escola | Prova de que um sistema transparente se aprende em semanas. Visualizar a **montagem da sílaba a partir das letras** (blocos) é uma ótima ideia de interface para jogos de síntese |
-| Israel | Hebraico vocalizado (com sinais vocálicos, *nikud*) nos primeiros anos e transição depois para a escrita sem vogais. David L. Share: hipótese do autoensino (*self-teaching*) e crítica ao "anglocentrismo" na pesquisa de leitura (*Psychological Bulletin*, 2008) | A decodificação é o mecanismo de autoensino. Ortografias transparentes como o pt-BR alcançam a decodificação rápido, então a fluência e o vocabulário logo viram o gargalo |
-| Países árabes | Árabe com vogais curtas marcadas (*harakat*) no início, transição depois. Diglossia (dialeto falado × árabe padrão) dificulta a alfabetização | Paralelo com a variação dialetal do pt-BR: o reconhecimento de fala e o feedback não podem penalizar sotaques regionais |
-| Vietnã | Alto desempenho no PISA apesar de renda média. Escrita latina (quốc ngữ) muito transparente, com ensino fônico sistemático no 1º ano | Ortografia transparente + ensino sistemático = alfabetização rápida no 1º ano |
-| Indonésia | Bahasa Indonesia, com ortografia bastante transparente. Ensino por sílabas tradicional | Mais um exemplo de método silábico-fônico em língua transparente |
+*ASER 2024 (levantamento domiciliar rural, da Pratham/ASER Centre)*
+- Usa uma ferramenta de níveis muito simples: letra, palavra, parágrafo do nível do 1º ano e história do nível do 2º ano. A criança é classificada pelo nível mais alto que alcança.
+- Em 2024, 27,1% das crianças do 3º ano (todas as redes) liam um texto do 2º ano. Eram 20,5% em 2022 (pós-pandemia) e 27,3% em 2018. Nas escolas públicas o índice foi de 23,4%, o maior da série [47][48].
+- Leitura: mesmo com a recuperação, cerca de 3 em cada 4 crianças do 3º ano da rede pública ainda não leem um texto de 2º ano [47][48].
+
+*Teaching at the Right Level (TaRL)*
+- Método da Pratham: avalia as crianças com a ferramenta do ASER, **agrupa por nível de aprendizagem (não por série)** durante parte do dia e ensina com atividades para aquele nível.
+- A J-PAL resume 6 avaliações aleatorizadas em 7 estados indianos, com impactos positivos. Num dos desenhos, com uma hora diária dedicada e mentoria aos professores, o ganho foi de 0,15 desvio-padrão em hindi. **Quando o TaRL foi encaixado no horário regular sem tempo dedicado, não houve impacto.** O reagrupamento por nível é muito barato: US$ 0,29 por 0,1 DP adicional [49].
+- Base acadêmica: Banerjee, Banerji, Berry, Duflo et al. (2017), que descrevem a passagem da "prova de conceito" à política em escala [50], e o RCT clássico de remediação de Banerjee, Cole, Duflo e Linden [51].
+
+**O que aproveitar (Índia):** (1) a **ferramenta de níveis do ASER** é o modelo ideal para o diagnóstico inicial da Sofia: 5 a 10 minutos, oral, classifica a criança em letra / sílaba / palavra / frase / texto; (2) a trilha do FONEMA deve agrupar por nível, como o TaRL, e o painel do professor deve sugerir **grupos por nível** para a aula; (3) a lição do TaRL sobre "tempo dedicado" vale para o FONEMA: recomendar à escola um horário fixo diário (ex.: 15–20 min), não "quando sobrar tempo".
+
+### 2.4 Singapura (VERIFICADO)
+
+- **Inglês — STELLAR.** O programa Strategies for English Language Learning and Reading (STELLAR) do MOE organiza o inglês no primário com Shared Book Approach, Modified Language Experience Approach e "Literacy Centres", além de ensino explícito de itens e estruturas da língua. O princípio declarado é que **o prazer é parte essencial** da leitura e escrita compartilhadas. Desde 2020 roda o STELLAR 2.0, ligado ao currículo de inglês de 2020 [52].
+- **Apoio em camadas:** Learning Support Programme (P1–P2, pequenos grupos, um período por dia, professores treinados), Reading Remediation Programme (P3) e remediação de dislexia (P3–P4) [52] (detalhes vêm de páginas de escolas e do Schoolbag do MOE, não do documento oficial completo).
+- **Língua materna e pinyin.** O novo currículo de Línguas Maternas para o P1, a partir de 2024 ("Joyful Learning, Confident User"), usa mais tecnologia, inclusive **animações que ensinam o Hanyu Pinyin por meio de histórias** [53][54][55].
+
+**O que aproveitar (Singapura):** (1) o modelo em camadas com reforço diário em pequenos grupos já no 1º ano confirma o desenho Tier 1/Tier 2 do FONEMA; (2) **animação narrativa para ensinar correspondências som-símbolo** (como as animações de pinyin) é exatamente o formato de "história da letra" que a Sofia pode usar; (3) o equilíbrio do STELLAR entre fônica explícita e leitura compartilhada prazerosa é um bom contrapeso para não transformar o FONEMA em "só drill".
+
+### 2.5 China (VERIFICADO)
+
+**Pinyin como fase fônica**
+- O pinyin (alfabeto latino para o mandarim) é ensinado no início do 1º ano como andaime fonológico para os caracteres. Na reforma dos livros didáticos unificados (editor-chefe Wen Rumin), a primeira página passou a ter **alguns caracteres simples antes do pinyin**, com o argumento de que a criança pequena aprende bem caracteres simples antes do código [62]. (O ano exato da mudança não foi confirmado.)
+- Pesquisa: a consciência fonológica de crianças chinesas pequenas prediz a leitura de caracteres, mas a consciência **morfológica** pesa muito [63]. Uma meta-análise de 2026 confirma que consciência fonológica e conhecimento de pinyin se correlacionam com leitura e escrita em chinês [64]. A escrita inventada em pinyin distingue crianças com e sem dificuldade de leitura [65].
+
+**Regulação: "dupla redução" (2021) e apps educativos (2019)**
+- Em julho de 2021, a política "dupla redução" (menos dever de casa e menos tutoria extraescolar) proibiu a tutoria acadêmica com fins lucrativos para o ensino obrigatório. As empresas que ensinam disciplinas do currículo ficaram proibidas de ter lucro, captar capital ou abrir capital [56][57]. As ações das grandes empresas de tutoria caíram mais de 90%, e houve fechamento em massa de centros (relatos de imprensa e consultorias) [56][57].
+- Antes disso, em 2019, o Ministério da Educação publicou as "Opiniões" sobre apps educativos móveis (Jiao Ji Han [2019] nº 55): cadastro obrigatório de fornecedores e apps, **limites de tempo de uso para apps voltados a menores**, deveres de proteção de dados, e seleção dos apps pelas escolas ouvindo pais, alunos e professores [60][61].
+- Contexto acadêmico sobre a regulação da tutoria antes de 2021: Zhang (2019) [59].
+
+**Apps de leitura infantil**
+- O mercado chinês tem apps de alfabetização em caracteres muito maduros, como o iHuman/Hongen Shizi (洪恩识字) e o Wukong Shizi (悟空识字). O Hongen, por exemplo, ensina cerca de 1.300 caracteres com jogos e animações, tem um módulo separado de pinyin e um leitor de e-books. Cada caractere passa por 4 etapas: "brincar, reconhecer, praticar, escrever" [66]. (Fonte: blog de resenha de pais; não há dados de eficácia.)
+
+**O que aproveitar (China):** (1) **risco regulatório real**: edtech infantil pode ser redesenhado por decreto. O FONEMA deve se posicionar como complemento alinhado à política pública (PNA, Compromisso Criança Alfabetizada), não como "tutoria paga" concorrente da escola; (2) adotar **voluntariamente** o que a China exigiu em 2019: limite de tempo diário, painel para os pais, minimização de dados (dialoga com ECA Digital/LGPD); (3) o ciclo "brincar → reconhecer → praticar → escrever" é uma boa estrutura para cada unidade letra-som do FONEMA.
+
+### 2.6 Japão (VERIFICADO)
+
+- O hiragana (silabário de 46 símbolos básicos, regular) é em grande parte aprendido **antes** do 1º ano. Num estudo japonês, cerca de 70% ou mais das crianças do último ano da pré-escola liam todos os 71 hiragana ou erravam só um. Cerca de 90% das que estavam atrás alcançaram as demais logo após as férias de verão do 1º ano [68].
+- **Ponto de corte preditivo:** num estudo longitudinal com 291 crianças, nomear **pelo menos 40 dos 45 hiragana básicos** antes do 1º ano foi o melhor ponto de corte para prever a fluência posterior. Crianças abaixo dele tinham risco muito maior de dificuldade de leitura [67].
+- O aprendizado de um silabário também desenvolve consciência fonêmica: crianças japonesas aprendendo hiragana adquirem consciência de fonemas mesmo sem ensino alfabético [69]. Há testes padronizados de leitura de kana (tarefas de leitura de palavras e pseudopalavras, com tempo) usados para triagem de dislexia [70].
+
+**O que aproveitar (Japão):** (1) **um limiar claro de conhecimento letra-som** é um excelente sinal de alerta precoce. O FONEMA pode definir um ponto de corte equivalente (ex.: % das correspondências grafema-fonema básicas do pt-BR) e alertar professor e família; (2) testes curtos e cronometrados de leitura de sílabas e pseudopalavras, no estilo dos testes de kana, servem para a "Checagem Fônica FONEMA"; (3) como o português tem muitas sílabas CV regulares, a sílaba é uma unidade intermediária útil, mas o estudo de Fletcher-Flinn mostra que **a consciência fonêmica ainda deve ser ensinada**.
+
+### 2.7 Coreia do Sul (VERIFICADO)
+
+- **Hangul:** alfabeto em que as letras (consoantes e vogais) são agrupadas em blocos silábicos. Estudos com crianças coreanas do 1º ao 4º ano mostram que consciência fonológica, nomeação rápida e habilidades visuais predizem precisão, fluência e escrita [71]. A consciência fonológica e a morfológica se associam de formas diferentes à leitura de palavras regulares e irregulares [72]. Revisões recentes sobre o ensino do Hangul a crianças coreanas estão no *Handbook on the Korean Language and Literacy* (2025) [75].
+- **Edtech — o caso dos livros didáticos digitais com IA:** o governo lançou livros didáticos digitais com IA em 2025. Em dez/2024 a Assembleia Nacional já havia votado rebaixá-los a "material educativo" (veto presidencial) [73]. Em agosto de 2025 a Assembleia aprovou a lei que tirou deles o status legal de livro didático, eliminando a base de financiamento; a adesão das escolas, que era de cerca de 30–37%, caiu. Editoras falam em cerca de 800 bilhões de wons investidos [74]. (Os números de adesão variam entre as fontes.)
+
+**O que aproveitar (Coreia):** (1) o bloco silábico do Hangul inspira uma interface de jogo em que a criança **monta a sílaba juntando letras** e vê o bloco se formar (síntese visual); (2) o fracasso dos livros digitais com IA é um alerta: **não depender de um único mandato governamental**, provar valor pedagógico antes de escalar, garantir estabilidade técnica e envolver professores. Edtech imposta de cima, com falhas técnicas, perde apoio político rápido.
+
+### 2.8 Vietnã (VERIFICADO)
+
+- **Desempenho:** no PISA 2022, o Vietnã ficou perto da média da OCDE em matemática e abaixo dela em leitura. Ainda assim, 77% dos alunos alcançaram o nível 2 ou mais em leitura (média OCDE: 74%), mas só 1% alcançou o nível 5 ou mais. A OCDE alerta que a comparabilidade de leitura do Vietnã é limitada [77].
+- **Pesquisa:** o vietnamita usa escrita latina transparente (quốc ngữ) com tons marcados por diacríticos. Num estudo longitudinal, habilidades da pré-escola (conhecimento de letras/sons, consciência fonológica, vocabulário) predisseram a fluência e a compreensão no fim do 1º ano [76].
+- **Ensino fônico:** o programa "Tecnologia da Educação" (Công nghệ giáo dục) de Hồ Ngọc Đại, baseado em fonemas e com origem numa escola experimental de Hanói (1978), chegou a ser usado por cerca de metade das crianças do 1º ano, mas sofre críticas e é polêmico [78].
+
+**O que aproveitar (Vietnã):** (1) ortografia latina transparente com diacríticos (como os acentos do português) + ensino sistemático = leitura no 1º ano. O FONEMA deve **ensinar os acentos como parte do código**, não como detalhe; (2) os bons preditores da pré-escola (letras, sons, vocabulário) justificam um **módulo pré-escolar** (4–5 anos).
+
+### 2.9 Indonésia (VERIFICADO)
+
+- O bahasa Indonesia tem ortografia latina muito transparente. O programa INOVASI (cooperação Austrália–Indonésia, encerrado em dez/2023) usou uma versão simplificada do EGRA para medir leitura nos primeiros anos [79][80][82].
+- **Dados do próprio programa (não independentes):** em Bulungan (Kalimantan do Norte), a proporção de crianças do 1º ao 3º ano que passavam num teste básico de reconhecimento de letras e palavras subiu de 57% para 94% em cerca de um ano e meio. O governo local financiou a expansão para 146 escolas e 506 professores em 2019 [79]. Outro gargalo identificado foi a **falta de livros adequados ao nível**, sobretudo em línguas locais [80].
+- O guia do UNICEF para professores sobre literacia nos anos iniciais, alinhado ao Kurikulum Merdeka, incorpora a ferramenta EGRA do INOVASI [82]. Os indicadores do programa estão no quadro de resultados do DFAT [81].
+
+**O que aproveitar (Indonésia):** (1) avaliação simples estilo EGRA na mão do professor, com dados usados pelo governo local, é o caminho para escala; (2) **oferta de livros decodificáveis/nivelados** é gargalo também em países de renda média. O gerador de textos decodificáveis do FONEMA responde a esse problema no Brasil.
+
+### 2.10 Israel (VERIFICADO)
+
+- **Ensino inicial:** o PIRLS 2016 descreve que a leitura começa no 1º ano com abordagem de correspondência fonema-grafema [88]. A leitura inicial usa o hebraico **com sinais vocálicos (nikud)**, que é transparente. A partir do 2º–3º ano a criança passa gradualmente para a escrita sem vogais [87].
+- **David L. Share:**
+  - **Hipótese do autoensino** (1995): cada decodificação bem-sucedida de uma palavra nova é uma oportunidade de aprender sua forma ortográfica. A decodificação é a "condição sine qua non" da aquisição da leitura [84].
+  - **Crítica ao anglocentrismo** (2008): o inglês é uma ortografia "atípica" (muito opaca), e conclusões tiradas só do inglês (ex.: peso da consciência fonêmica, unidades grandes) não se transferem automaticamente para ortografias transparentes [85].
+  - **Modelo tríplex** (com Bar-On, 2017): o desenvolvimento da leitura do hebraico combina decodificação fonológica, morfologia e ortografia [86]. A consciência morfológica já na pré-escola contribui para a leitura nas primeiras etapas, mesmo na escrita transparente vocalizada [87].
+
+**O que aproveitar (Israel):** (1) a transição "escrita com vogais → sem vogais" é análoga a usar no início **pistas extras** (ex.: sílabas destacadas por cor, marcação de dígrafos) e retirá-las aos poucos; (2) o autoensino justifica o foco do FONEMA: **dar decodificação rápida e muita leitura independente**, porque é ela que constrói o léxico ortográfico; (3) a crítica de Share ao anglocentrismo pede cuidado ao importar materiais e métricas do inglês para o pt-BR: em português a decodificação se domina cedo, e logo **fluência, morfologia e vocabulário** viram o gargalo.
+
+### 2.11 Países árabes: Emirados, Jordânia e Arábia Saudita (VERIFICADO)
+
+**Pesquisa sobre o árabe**
+- O árabe é ensinado com as vogais curtas marcadas por diacríticos (harakat), escrita transparente. Mas a escrita vocalizada **não é necessariamente fácil**: os diacríticos aumentam a carga visual [91].
+- **Diglossia:** a criança fala um dialeto e aprende a ler o árabe padrão. A distância linguística entre os dois afeta a consciência fonológica e a leitura inicial [89][90]. O modelo MAWRID descreve o desenvolvimento da leitura de palavras em árabe [92].
+- Estudo com crianças da Arábia Saudita: a competência no **árabe coloquial** é importante para ler o árabe padrão no início ("Speech is golden") [93].
+
+**Emirados — programa Iqra (Ras Al Khaimah)**
+- Currículo complementar baseado em ciência cognitiva (desenvolvido com Helen Abadzi e a Fundação Al Qasimi), para KG1 a 1º ano: percepção rápida das letras, automatização e fluência [94][95].
+- Resultados iniciais de 2020: melhora da fluência em árabe [94]. A J-PAL fez um RCT em 2024–25 com 83 turmas de 26 escolas (41 turmas Iqra). Os resultados relatados indicam ganhos em identificação de letras, leitura de palavras e fluência; o tamanho do efeito não foi confirmado nesta rodada [95].
+- Política nacional: o Ministério exige pelo menos 40 min/dia de árabe nas escolas privadas (300 min/semana até 2027–28), ensino na educação infantil por professores qualificados e inspeções a partir de 2026–27 [96].
+
+**Jordânia — RAMP (USAID/UK Aid)**
+- O RAMP (Early Grade Reading and Mathematics Initiative, do KG ao 3º ano, 7 anos) produziu **livros decodificáveis nivelados em árabe**. O estudo sobre esses livros mostrou melhora significativa em leitores iniciantes do 1º ano e na leitura oral de alunos com dificuldade do 3º ano. No 2º ano os resultados foram menos claros [97].
+- A Queen Rania Foundation testou o "Let's Read Fluently!" como complemento [98].
+
+**Arábia Saudita**
+- O ministério treinou alunos do 4º ano para o PIRLS com testes simulados semanais na plataforma Madrasati (cerca de 400 mil alunos, segundo análise de imprensa). Análise de 2023 aponta como causas do atraso o baixo status dos professores, problemas na aquisição inicial da leitura e escrita em árabe e a distância entre o árabe padrão e o falado em casa [99]. Não foi localizado um programa nacional saudita de leitura inicial nesta rodada.
+
+**O que aproveitar (países árabes):** (1) **variação dialetal**: o reconhecimento de fala da Sofia não pode penalizar pronúncias regionais do pt-BR (ex.: "leite" /lejtʃi/ vs. /lejte/, "r" retroflexo). É o paralelo direto da diglossia; (2) **decodificáveis nivelados** funcionam também em árabe; (3) o Iqra mostra que treinar **velocidade de reconhecimento das letras** (automatização) é um componente próprio, que o FONEMA pode incluir em jogos rápidos de letras.
+
+### 2.12 Turquia (VERIFICADO)
+
+- O turco tem ortografia latina muito transparente. A criança turca alcança a decodificação rapidamente; a consciência fonêmica se desenvolve junto com a alfabetização [101][102]. Mesmo assim, **escrever é mais difícil do que ler** numa ortografia aparentemente simétrica [103]. Num estudo recente, decodificação e fluência explicam a compreensão numa ortografia transparente e morfologicamente complexa [104].
+- **Política:** em 2004–2005 a Turquia abandonou o método global da sentença e adotou o **"Método da Sentença Baseado em Sons" (Ses Temelli Cümle Yöntemi)**, que parte dos sons para sílabas, palavras e frases. O currículo de 2005 o tornou obrigatório (com letra cursiva). Houve dificuldades com formação docente e desencontro com o método usado em casa. Os grupos de sons foram revisados várias vezes; a versão mais recente está no "Modelo Educacional do Século da Turquia" (2024) [105] (fonte única para a revisão de 2024).
+
+**O que aproveitar (Turquia):** (1) é um caso nacional de **troca do método global por um fônico** — paralelo direto com o debate brasileiro (PNA); (2) a ordem de introdução dos sons (por grupos, revista com a experiência) mostra que a sequência do FONEMA deve ser **versionada e revista com dados**; (3) a lacuna leitura × escrita indica que o FONEMA precisa de atividades de **ditado/escrita**, não só de leitura.
+
+### 2.13 Irã (VERIFICADO PARCIALMENTE)
+
+- O persa usa escrita árabe; as vogais curtas são marcadas no início e depois omitidas, o que gera palavras transparentes e opacas. Estudo do 1º ao 4º ano mostrou que as crianças iranianas usam a decodificação no início e vão incorporando o processamento lexical com a escolaridade; a escrita das palavras opacas é a parte mais difícil [106][107].
+- **Lacuna:** não foram encontradas fontes verificáveis sobre a política atual de alfabetização ou sobre edtech infantil no Irã (a busca devolveu só materiais para adultos).
+
+**O que aproveitar (Irã):** confirma o padrão das escritas semíticas: começar com o código completo e transparente, e retirar as pistas aos poucos.
+
+### 2.14 Síntese translinguística
+
+- A teoria do "tamanho do grão psicolinguístico" (Ziegler e Goswami, 2005) explica por que ortografias transparentes (turco, vietnamita, indonésio, hebraico vocalizado, árabe vocalizado, português) permitem decodificação rápida por fonemas, enquanto ortografias opacas (inglês) exigem unidades maiores [108]. Isso reforça a crítica de Share [85]: **o FONEMA não deve copiar o ritmo e a sequência do inglês**; em pt-BR, a decodificação pode ser alcançada no 1º ano, e o investimento seguinte é fluência, compreensão e vocabulário.
 
 ---
 

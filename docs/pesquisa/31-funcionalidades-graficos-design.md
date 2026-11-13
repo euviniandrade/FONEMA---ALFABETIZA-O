@@ -896,3 +896,283 @@ A sequência de conteúdo segue a ordem de ensino do doc 02, em 11 etapas (0–1
 **MVP:** os 14 jogos de F12 cobrem as fases 1 a 6. A escrita (fase 8) entra pela codificação do #21 (Monta-Palavra). A fluência (fase 7) chega na V1, com o Karaokê (F31). O #8 (Boquinha) entra como parte da lição (F11) e o #12 (Traço Mágico) na V1 (F35).
 
 ---
+## 6. Design system inicial — "Quintal"
+
+> Nome provisório. O nome remete a um lugar seguro, brasileiro, de brincar e de aprender, sem apelo de princesa ou tecnologia fria. Este design system cobre a área infantil (app/web em paisagem) e a área adulta (portais e área do responsável).
+
+### 6.1 Princípios (com evidência)
+
+1. **Um foco por tela.** Uma letra, sílaba ou palavra-alvo por vez, centralizada e grande. Fundo calmo [doc 09 §3.1].
+2. **O que é tocável se destaca do fundo.** Fundos claros dessaturados, elementos interativos saturados e com contorno [doc 04 §5.1].
+3. **A Sofia é o menu falado.** Na área infantil, nada de texto de navegação. Todo alvo fala ao ser tocado (o som, não o nome da letra) [doc 24 §3.3].
+4. **Animação só quando ensina:** boca articulando, letras deslizando para fundir, segmentação. Nunca decoração durante a decodificação [doc 09 §3.2].
+5. **Erro é pista, não drama:** sem vermelho, sem X, sem buzina, sem tremor de tela [doc 13 §3.1].
+6. **Previsível nas regras, surpreendente no conteúdo** [doc 08 P3]. Mesmos ícones, posições e gestos em todas as fases, o que economiza memória de trabalho [doc 09 §3.4].
+7. **Ajustável por padrão:** o usuário (adulto) manda nos estímulos. Modos calmo e alto contraste são cidadãos de primeira classe [doc 05 §2.4].
+8. **Leve:** feito para Android de entrada, offline, com pacotes pequenos [doc 24 §3.8].
+9. **Brasileiro e plural, sem estereótipo:** cenários de feira, quintal, praia, mata e bairro; Sofia parda, de cabelo cacheado; elenco diverso [doc 23 §3.1; doc 04 §5.1].
+10. **Ético por design:** nenhum componente de loja, timer de pressão ou streak existe na biblioteca da área infantil. Se não existe no design system, não entra no produto.
+
+### 6.2 Paleta (HEX) e contraste calculado (WCAG 2.x)
+
+Base quente e acolhedora, com fundo creme. As razões abaixo foram **calculadas**. Os pares de texto atingem ≥ 4,5:1 (AA para texto normal). As cores decorativas (marcadas) não devem levar texto.
+
+**Neutros e base**
+
+| Token | HEX | Uso | Contraste medido |
+|---|---|---|---|
+| `color.bg.papel` | `#FFF8EC` | fundo padrão (creme) | — |
+| `color.bg.superficie` | `#FFFFFF` | cartões, peças de letra | — |
+| `color.text.tinta` | `#1F2A44` | texto principal, letras-alvo | 13,5:1 sobre papel; 14,26:1 sobre branco |
+| `color.text.suave` | `#4A5568` | texto secundário (área adulta) | 7,13:1 sobre papel |
+| `color.text.apoio` | `#6B7280` | legenda/rodapé (adulto) | 4,83:1 sobre branco |
+| `color.border.inativo` | `#8A94A6` | **só contorno/decorativo** | 2,90:1 sobre papel (< 3:1: não usar para informação) |
+
+**Cores de marca e ação**
+
+| Token | HEX | Uso | Contraste medido |
+|---|---|---|---|
+| `color.acao.ceu` (primária) | `#1E5FD6` | botões principais, foco, links adultos | branco sobre ela: 5,73:1; ela sobre papel: 5,43:1 |
+| `color.marca.urucum` (Sofia/coral) | `#C4452F` | destaques da marca, camiseta da Sofia | branco sobre ela: 4,95:1; ela sobre papel: 4,69:1 |
+| `color.acerto.mata` | `#1F7A4D` | acerto e "dominado" (sempre com ícone ✔) | branco sobre ela: 5,32:1; ela sobre papel: 5,04:1 |
+| `color.alerta.caju` | `#C2410C` | atenção (área adulta), com ícone ◆ | branco sobre ela: 5,18:1; ela sobre papel: 4,90:1 |
+| `color.acento.jabuticaba` | `#6B3FA0` | itens especiais (ponte/desafio, histórias) | branco sobre ela: 7,38:1 |
+| `color.acento.ipe` | `#F5B700` | **decorativo/fundo de destaque** (estrelas, brilho) | tinta sobre ipê: 7,91:1 ✔; ipê sobre papel: 1,71:1 ✘ (nunca texto amarelo) |
+| `color.acento.urucum.claro` | `#E2553F` | decorativo (ilustração) | 3,55:1 sobre papel: só texto **grande** (≥ 24 px) ou forma |
+
+**Codificação pedagógica (opcional, proposta a validar)** [doc 04 §5.1]
+- `color.letra.vogal` = `#B8322A` (5,64:1 sobre papel; 5,95:1 sobre branco).
+- `color.letra.consoante` = `#1F2A44` (tinta).
+- Sempre **redundante**: vogal também com sublinhado ondulado. Removida aos poucos para não virar muleta.
+
+**Escala do mapa de calor** (1 matiz, segura para daltonismo, com ícone e rótulo)
+
+| Estado | Token | Fundo | Texto na célula | Contraste do texto | Ícone/textura |
+|---|---|---|---|---|---|
+| não iniciado | `heat.0` | `#EEF3FA` | tinta | 12,79:1 | vazio |
+| adquirindo | `heat.1` | `#C6DBF3` | tinta | 10,07:1 | ponto · |
+| consolidando | `heat.2` | `#5B95DD` | tinta | 4,61:1 | hachura ╱ |
+| dominado | `heat.3` | `#2E6BC0` | branco | 5,28:1 | ✔ |
+| automatizado | `heat.4` | `#0B3A75` | branco | 11,19:1 | ✔✔ |
+| precisa de apoio (marcador) | `heat.flag` | contorno `#C2410C` 2 px | — | — | ⚑ |
+
+> As células claras (`heat.0` e `heat.1`) têm baixo contraste com o fundo branco (`#C6DBF3`/branco = 1,42:1). Por isso a grade precisa de **contorno de 1 px `#8A94A6`** entre as células, e os estados são distinguidos também por ícone (WCAG 1.4.11 / 1.4.1).
+
+**Faixas de risco** (sempre com forma)
+- no alvo `#0F766E` ● (branco 5,47:1);
+- atenção `#B45309` ◆ (branco 5,02:1);
+- intervenção intensiva `#9D174D` ▲ (branco 7,88:1).
+
+Não usar o par vermelho/verde.
+
+**Modo calmo** (baixa saturação [doc 12 §3.1]): fundo `#F4F1EA`, texto `#2E3A4F` (10,15:1), primária `#4F6D8A` (branco sobre ela: 5,40:1; ela sobre o fundo: 4,79:1). Sem `ipe` e sem `urucum.claro`. Celebração apenas com forma.
+
+**Modo alto contraste:** fundo `#FFFFFF` com texto `#000000` (21:1), ou fundo `#000000` com destaque/foco `#FFD400` (14,67:1). Contorno de 3 px em todos os alvos.
+
+### 6.3 Tipografia
+
+| Papel | Fonte (livre) | Repositório / licença | Uso |
+|---|---|---|---|
+| **Conteúdo de leitura** (letras, sílabas, palavras, livrinhos) | **Andika** | [silnrsi/font-andika](https://github.com/silnrsi/font-andika) — OFL-1.1, ~86 ⭐, feita para alfabetização | "a" e "g" de um andar; I/l/1 distintos [doc 03 §7.1; doc 24 §3.1] |
+| Alternativa de leitura (configurável) | **Lexend** | [googlefonts/lexend](https://github.com/googlefonts/lexend) — OFL-1.1, ~322 ⭐ | opção no perfil, **sem promessa terapêutica** [doc 05 §5] |
+| Opção estética | **OpenDyslexic** | OFL-1.1 [doc 03 §7.1] | apenas se a família preferir; a evidência de eficácia é discutida [doc 11 §3.3] |
+| **Interface adulta** (portais, relatórios, gráficos) | **Atkinson Hyperlegible** | [googlefonts/atkinson-hyperlegible](https://github.com/googlefonts/atkinson-hyperlegible) — OFL-1.1, ~326 ⭐ | alta legibilidade para adultos com baixa escolaridade ou baixa visão. Conferir algarismos tabulares nas tabelas; se faltarem, usar Andika ou Lexend nos números |
+| Títulos lúdicos (marca) | a definir no branding | — | **nunca** nas letras-alvo |
+
+**Letra bastão primeiro:** a trilha principal começa em **caixa alta**. O par maiúscula/minúscula aparece a partir das sílabas, no "modo descobrir", e a cursiva é um mundo próprio (V2) [doc 04 §5.2; doc 25 §3.4]. A minúscula de imprensa vem logo, porque é a que aparece nos textos.
+
+**Escala (área infantil; sp/px)**
+
+| Token | Tamanho | Altura de linha | Espaçamento entre letras | Uso |
+|---|---|---|---|---|
+| `type.alvo.letra` | 72 | 1,0 | +0,04 em | letra isolada (mín. 48) [doc 24 §3.1] |
+| `type.alvo.silaba` | 64 | 1,0 | +0,06 em | sílaba |
+| `type.alvo.palavra` | 48 | 1,1 | +0,06 em | palavra |
+| `type.frase` | 40 | 1,5 | +0,04 em; palavra +0,3 em | frases |
+| `type.livro` | 32–36 | 1,6 | +0,04 em | livrinhos (≤ 7 palavras por linha) |
+| `type.reforco` (modo) | +15% | 1,8 | +0,12 em; palavra +0,5 em | modo reforço/dislexia: espaçamento importa mais que a fonte [doc 04 §5.2; doc 11 §3.3] |
+| `type.legenda` | 20 | 1,4 | 0 | legendas das falas da Sofia |
+
+**Escala adulta:** 14 (rodapé) · 16 (corpo) · 20 · 24 · 32, com altura de linha 1,5 e alvo de toque de 48 dp.
+
+### 6.4 Grid, tamanhos de toque e layout
+
+Unidade base de **8 dp**. Valores de toque do [doc 24 §3.1]:
+
+| Elemento | Mín. | Recomendado |
+|---|---|---|
+| Botão principal (ouvir, próximo, resposta) | 96 dp | 112–128 dp |
+| Alternativa de resposta | 88 dp | 120 dp+ |
+| Ícone de navegação infantil (topo) | 72 dp | 80 dp |
+| Espaço entre alvos | 16 dp | 24 dp |
+| Área tocável além da arte | +8–12 dp | — |
+| Ímã de encaixe (arrastar) | raio 48 dp | — |
+| Corredor de traçado | 40 dp | — |
+| Faixa inferior sem alvos | 48 dp | 64 dp |
+| Porteira adulta | 48 dp | — |
+
+**Layout da tela infantil (paisagem, rotação travada nas atividades):**
+```
+┌────────────────────────────────────────────────────────────┐
+│ ZONA TOPO 80dp: [👂 ouvir] (esq., fixo)   [🏠/🚪]   [🔒] (dir.)│
+├────────────────────────────────────────────────────────────┤
+│ ZONA SOFIA (≤ 25% da largura)  │  PALCO (alvo único, centro) │
+│ fica parada enquanto a criança │                             │
+│ pensa                          │                             │
+├────────────────────────────────────────────────────────────┤
+│ ZONA DE RESPOSTA: 2–4 alternativas, 88–128 dp, gap 24 dp     │
+├────────────────────────────────────────────────────────────┤
+│ FAIXA MORTA 48–64 dp (apoio da palma)                        │
+└────────────────────────────────────────────────────────────┘
+```
+- Em celular < 5,5": **reduzir o nº de alternativas, nunca o tamanho** [doc 24 §3.1].
+- Margem lateral de 24 dp.
+- Barras fixas não cobrem o foco (WCAG 2.4.11) [doc 05 §2.2].
+
+**Área adulta:** grade de 12 colunas na web (breakpoints 360/768/1024/1440) e 4 colunas no celular. O painel do professor é otimizado para notebook/desktop e tablet em paisagem.
+
+### 6.5 Componentes
+
+**Área infantil** (pacote `packages/ui-kids`)
+
+| Componente | Variantes/estados | Regras |
+|---|---|---|
+| `BotaoOuvir` (👂) | normal, tocando, desativado durante a fala | fixo no canto superior esquerdo; repete a última instrução [doc 24 §3.3] |
+| `BotaoGrande` | primário, secundário, confirmação ✔ / cancelar ✖ | escala 0,95 no toque em < 100 ms; fala ao tocar |
+| `PecaLetra` / `PecaSilaba` | repouso, tocada, arrastando, encaixada, dica (pulsa), desabilitada | som do fonema ao tocar; arrastar ⇄ toque-toque |
+| `AlvoEncaixe` (silhueta, vagão, boca do Bolota) | vazio, realçado (peça próxima), preenchido | ímã ≥ 48 dp |
+| `CartaFigura` | frente, verso, virando | imagem + palavra falada |
+| `TrilhoTraçado` | demonstração, guia, livre, concluído | setas animadas; tolerância; aceita partes |
+| `Microfone` | inativo, ouvindo (onda visível), processando, "não ouvi" | indicador visível de escuta; a criança controla [doc 05 §6.6] |
+| `Sofia` (Rive) | idle, falando (visemas), apontando, ouvindo, pensando, comemorando, bocejo | sem animação de fundo durante a tarefa; nunca triste [doc 23 §3.5] |
+| `Bolota` (Rive) | observando, errando, agradecendo, dormindo | erros dentro do domínio da criança |
+| `PlayerBoquinha` | frontal, lateral, par mínimo, lento | sincronia no nível de quadro [doc 10 §3.1] |
+| `TextoLeitura` | normal, palavra tocada, destaque (palavra/sílaba), lida | destaque sincronizado; sem hotspots [doc 09 §3.4] |
+| `BarraSessao` | ● ◐ ○ | sem relógio |
+| `NoTrilha` | futuro (visível), do dia (brilha), conquistado, ponte | sem cadeado |
+| `Figurinha`, `Planta` | silhueta/conquistada; "com sede"/regada | sem raridade; nunca morre |
+| `TrilhaDaSessao` (TEA) | 4 ícones agora → depois | aviso 10 s antes da transição [doc 12 §3.1] |
+| `ConfirmarSaida` | ✔ verde grande / ✖ grande + fala | evita saída acidental [doc 24 §3.3] |
+
+**Área adulta** (pacote `packages/ui-adult`; na web, sobre [radix-ui/primitives](https://github.com/radix-ui/primitives), ~19,5k ⭐, MIT, para acessibilidade de menus, diálogos e abas)
+- Cartões de resumo, `ChipHabilidade`, `CelulaCalor`, `BadgeRisco` (● ◆ ▲ + texto), `CartaoSinalAtencao` (texto padronizado);
+- `PlayerLeitura` (fila de escuta), `TabelaEquivalente` (alternativa a todo gráfico);
+- `Porteira` (segurar 3 s + tarefa escrita);
+- `SeletorPreset`, `Slider` com rótulos, `Toggle` com texto.
+
+**Ferramentas:**
+- [Storybook](https://github.com/storybookjs/storybook) (~91,5k ⭐, MIT) para documentar e testar os componentes (inclui addon de acessibilidade);
+- [Style Dictionary](https://github.com/style-dictionary/style-dictionary) (~4,9k ⭐, Apache-2.0) para gerar tokens em CSS, TS e RN a partir de um único JSON;
+- [tokens-studio/sd-transforms](https://github.com/tokens-studio/sd-transforms) (MIT) se o design for feito no Figma com Tokens Studio.
+
+Exemplo de token (fonte única):
+```json
+{
+  "color": { "acao": { "ceu": { "value": "#1E5FD6" } },
+             "bg": { "papel": { "value": "#FFF8EC" } } },
+  "touch": { "primario": { "value": "112dp" }, "minimo": { "value": "96dp" } },
+  "motion": { "toque": { "value": "100ms" }, "celebracao": { "value": "1500ms" } },
+  "mode": { "calmo": { "bg": { "value": "#F4F1EA" } } }
+}
+```
+
+### 6.6 Estados de feedback
+
+Base: [doc 24 §3.6; doc 13 §3.6; doc 12 §3.2].
+
+| Estado | Visual | Som | Háptico | Fala (exemplo) |
+|---|---|---|---|---|
+| Toque registrado | botão afunda (0,95) < 100 ms | clique suave | 10–20 ms (desligável) | o alvo diz o som |
+| Acerto fácil | brilho curto (≤ 1,5 s) | som ascendente curto | 1 pulso | "Isso!" / "Leu certinho!" |
+| Acerto difícil | brilho + gesto da Sofia | idem | 1 pulso | "Essa era difícil e você foi devagar!" |
+| Autocorreção | brilho + ✔ | idem | — | "Você percebeu e arrumou sozinho!" |
+| 1º erro | balanço leve da peça (sem X, sem vermelho) | neutro curto (sem buzina) | nenhum | "Quase! Olha a primeira letra de novo." |
+| 2º erro | resposta certa pulsa + boquinha | — | nenhum | "Escuta: GA-TO. Agora você." |
+| 3º erro | muda a estratégia (menos opções) | — | nenhum | "Vamos ler juntos? … Depois a gente treina mais." |
+| ASR incerto | ícone do microfone com "?" | — | nenhum | "Não ouvi direitinho. Fala de novo?" |
+| Inatividade | 5 s: Sofia aponta · 10 s: repete · 20 s: "vamos juntos?" | — | — | tempos configuráveis |
+| Frustração detectada | Sofia oferece pausa | — | — | "Tá cansativo? Vamos fazer uma pausa rapidinha." |
+| Carregando | Sofia faz algo engraçado e leve | — | — | — |
+| Offline | nada na área infantil; nuvem "zzz" na área adulta | — | — | — |
+| Fim da sessão | ritual (W6) | jingle curto | — | recapitulação + curiosidade |
+
+No **modo calmo** e no **TEA**, a celebração fica "discreta" ou "neutra", sem confete. No **TDAH**, o feedback chega em < 300 ms em toda ação [doc 12 §3.2].
+
+### 6.7 Animação e som
+
+**Tokens de movimento** (heurísticas de design a calibrar com telemetria [doc 09 §3.3])
+
+| Token | Valor | Regra |
+|---|---|---|
+| `motion.toque` | ≤ 100 ms | resposta visual imediata |
+| `motion.audio.latencia` | ≤ 300 ms | áudio depois do toque |
+| `motion.celebracao` | ≤ 1,5 s (micro); ≤ 2–3 s (fim de bloco) | sempre **depois** da resposta |
+| `motion.transicao.cena` | ≥ 1 s, suave | sem cortes rápidos [doc 09 §3.2] |
+| `motion.simultaneo.max` | 1 evento animado por vez durante a tarefa | — |
+| `motion.flash` | nenhum (nunca > 3 flashes/s) | WCAG [doc 12 §3.1] |
+| `motion.reduzido` | troca o movimento por fade/sem animação | segue `prefers-reduced-motion` e o toggle próprio |
+| `easing.padrao` | ease-out suave; *squash & stretch* só em personagens | [doc 04 §5.1] |
+
+**Som** (camadas e prioridades):
+- **Voz da Sofia > som-alvo (fonema) > efeito > música.**
+- Instruções 10–15% mais lentas que a fala adulta; velocidade ajustável de 0,75× a 1,25× [doc 23 §3.4; doc 05 §2.4].
+- **Silêncio musical** em toda tarefa de discriminação fonológica e com o microfone aberto (*ducking* automático) [doc 09 §3.2; doc 04 §5.3].
+- Música só em menu, abertura, canções e celebração.
+- Fonemas isolados **gravados por humano**; TTS neural pré-renderizado para frases e histórias [doc 23 §3.4; doc 21 §3.2].
+- Formatos: Opus/AAC mono de 32–48 kbps; sprites de áudio (Howler.js) [doc 24 §3.8; doc 03 §2].
+- Volumes separados: voz, efeitos e música [doc 05 §2.4].
+- Nenhum som súbito ou agudo no modo calmo/TEA [doc 12 §3.1].
+- Banco de 15–30 variações por tipo de fala, contra a repetição robótica [doc 23 §3.4].
+
+### 6.8 Modos
+
+| Modo | Ativação | O que muda |
+|---|---|---|
+| **Padrão** | — | paleta quente, celebração média, música em menus |
+| **Calmo** | 1 toque (W11) | sem música, animação mínima, cores suaves (§6.2), sem confete, ritmo lento [doc 05 §2.4] |
+| **Alto contraste** | perfil visual | preto/branco ou preto/amarelo, contorno de 3 px, sem fundos ilustrados atrás do texto [doc 05 §4, baixa visão] |
+| **Reforço de leitura** (dislexia, sem rótulo) | perfil/sugestão | `type.reforco`, poucas palavras por linha, fundo creme, mais repetições, sem tempo [doc 11 §3.3] |
+| **Foco curto** (TDAH, sem rótulo) | perfil | blocos de 3–5 min, meta curta visível, pausa ativa, feedback < 300 ms [doc 12 §3.2] |
+| **Previsível** (TEA, sem rótulo) | perfil | trilha da sessão, aviso de transição, sem surpresas, Sofia sem rosto (opcional), linguagem literal [doc 12 §3.1] |
+| **Noturno** | horário (opcional) | após ~19h30, só "história para dormir" com adulto ou modo áudio [doc 14 §3.4; doc 07 §3.3] |
+
+Quando TEA e TDAH estão ativos juntos, a **previsibilidade vence a novidade** [doc 12 §3.3].
+
+### 6.9 Iconografia
+
+- **Concretos, consistentes e falados** [doc 24 §3.3]:
+  - 👂 ouvir de novo;
+  - 🏠 casa/mapa;
+  - 🚪 porta com seta (sair);
+  - 🎤 microfone;
+  - ⭐/baú de conquistas (sem loot);
+  - 🌱 jardim;
+  - 📒 álbum;
+  - 🖐 "mão na garganta" (sonoridade);
+  - 👃 nariz (nasal);
+  - 💨 sopro (ar do /p/).
+- **Proibidos na área infantil:** ☰, ⋮, engrenagem, "<" abstrato, X vermelho [doc 24 §3.3].
+- **Gestos articulatórios próprios para o PB** (não copiar as ações do Jolly Phonics, que são do inglês e marca registrada) [doc 10 §3.3].
+- Estilo:
+  - 2D vetorial com textura leve de "feito à mão";
+  - formas arredondadas e contorno irregular;
+  - traço mínimo de 3 px nos ícones da criança;
+  - contraste ≥ 3:1 com o fundo [doc 04 §5.1; doc 24 §3.7].
+- Área adulta: ícone **+ texto** sempre (letramento digital variado) [doc 24 §3.5].
+
+### 6.10 Personagens no design system
+
+- **Sofia:**
+  - menina de ~9–10 anos, parda, cabelo cacheado 3C/4A;
+  - camiseta com a letra da semana;
+  - objeto-assinatura (caderno amarelo/broche);
+  - **sem coroa, tiara ou vestido de princesa** [doc 23 §3.1–3.2; doc 04 §5.4].
+- **Bolota:**
+  - filhote de tatu-bola, menor e mais novo que a criança;
+  - vira bolinha no fim da sessão [doc 23 §3.7; doc 04 §5.4].
+- **Validação obrigatória:**
+  - teste de preferência com crianças de 4–7 anos em 3 regiões;
+  - revisão de diversidade;
+  - ⚖️ busca no INPI (classes 9, 41, 28) para "Sofia" [doc 04 §5.4; doc 23 §3.1].
+
+---
