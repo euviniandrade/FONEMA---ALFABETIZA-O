@@ -644,7 +644,7 @@ Lyrics (Brazilian Portuguese):
 4. **Palavra:** palmas juntas e braços para cima no "MALA!", "LUA!", "FALA!".
 
 **Assiste e Faz**
-- **Alfabeto móvel (ARRASTAR, C3):** arrastar M até A; o som toca contínuo enquanto a letra desliza; depois MA + LA. Primeiras palavras: MALA, LUA, FALA, MEL (com pseudopalavra "MOLA"? não: MOLA é real; pseudo: "FALU").
+- **Alfabeto móvel (ARRASTAR, C3):** arrastar M até A; o som toca contínuo enquanto a letra desliza; depois MA + LA. Primeiras palavras: MALA, LUA, FALA, MEL; pseudopalavra "FALU" (nome de criatura, N9).
 - **Ler a palavra:** a criança lê MALA (MAIÚSCULAS = lida). Registro: síntese CV e palavras decodificadas.
 
 **Notas:** a síntese **contínua** só funciona com consoantes que se esticam (por isso R2a começa com M, L, F). No canto, a consoante entra **na mesma nota** da vogal, ligada (legato). Nunca "mê-a", "lê-a".
@@ -692,7 +692,7 @@ Lyrics (Brazilian Portuguese):
 > **T:** Língua lá no céu da boca, o som vai pro nariz: *(pausa)* nnnnn!
 > É o N da Nina, e vibra, sim!
 >
-> **Final — S+T:** F de faca? Não! F de **figo**! V de **vaca**! S de **sapo**! N de **Nina**! Mão na garganta… *(silêncio)* vibrou? Vibrou!
+> **Final — S+T:** F de **figo**! V de **vaca**! S de **sapo**! N de **Nina**! Mão na garganta… *(silêncio)* vibrou? Vibrou!
 
 **Dancinha (6 movimentos)**
 1. **/f/:** leque na frente da boca.
@@ -703,11 +703,11 @@ Lyrics (Brazilian Portuguese):
 6. **Refrão:** passo para o lado a cada verso, mão na garganta no "faz assim!".
 
 **Assiste e Faz**
-- **F ou V? (TOCAR, R2b-F04):** ouvir FACA? **não** — itens: FIGO × *VIGO* (pseudo), FOCA × VACA… usar a lista da fase; a criança toca F ou V, **com a mão na garganta** se quiser.
+- **F ou V? (TOCAR, R2b-F04):** ouvir FIGO, VACA, FOCA, VELA e a pseudopalavra *VIGO*; a criança toca F ou V, **com a mão na garganta** se quiser.
 - **Fazer o gesto:** ouvir /s/ ou /n/ e fazer o gesto (mão que desliza ou dedo no nariz).
 - Registro: discriminação F × V (critério 4/5, intercalada só após ≥ 2 recuperações isoladas de cada, N7).
 
-**Notas:** a "pegadinha" do final ("F de faca? Não!") existe porque **faca** é objeto cortante: preferimos **figo** (morador Dona Cida). O /n/ isolado é zumbido nasal com a língua no céu da boca, sem vogal. O gesto do /s/ é **original** (não usar a "cobra que serpenteia", que é ação de programa estrangeiro).
+**Notas:** o exemplo do F é **figo** (o fio e o figo da Dona Cida), e não "faca", para evitar objeto cortante. O /n/ isolado é zumbido nasal com a língua no céu da boca, sem vogal. O gesto do /s/ é **original** (não usar a "cobra que serpenteia", que é ação de programa estrangeiro).
 
 **Prompt (ElevenLabs Music)**
 ```
@@ -720,7 +720,6 @@ Lyrics (Brazilian Portuguese):
 [Chorus - all] Mão na garganta, vamos sentir: / vibra ou não vibra? Vamos descobrir! / F não vibra, V vibra, sim! / Mão na garganta, faz assim!
 [Outro - Sofia and Tales] F de figo! V de vaca! S de sapo! N de Nina! / Mão na garganta... (one beat of silence) vibrou? Vibrou!
 ```
-*(Na gravação final, o "F de faca? Não!" sai do prompt da IA para evitar a palavra; ele fica como fala curta do Tales, opcional.)*
 
 ---
 
@@ -827,7 +826,7 @@ Lyrics (Brazilian Portuguese):
 5. **Refrão:** giro de meia volta e mão na garganta no "faz assim!".
 
 **Assiste e Faz**
-- **Pares mínimos (TOCAR):** ouvir POTE/BOTE, PICO/BICO (e na parte 2 TIA/DIA, TELA/DELA) e tocar a figura certa; ≥ 1 pseudopalavra por bloco (ex.: PAFO × BAFO? não: BAFO é real; usar "PULE × BULE"? BULE é real e PULE também: ok como par).
+- **Pares mínimos (TOCAR):** ouvir POTE/BOTE, PICO/BICO (e na parte 2 TIA/DIA, TELA/DELA) e tocar a figura certa; mais o par PULE × BULE e ≥ 1 pseudopalavra por bloco (ex.: "PALU" × "BALU").
 - **Ensinar o Bolota (C8):** o Bolota troca P e B; a criança corrige.
 - Registro: P × B (F06) e T × D (F07); "sanguessugas" vão para a trilha de contraste.
 
@@ -1074,7 +1073,7 @@ Lyrics (Brazilian Portuguese):
 5. **Refrão:** passo de moda de viola (bate o pé no tempo 1).
 
 **Assiste e Faz**
-- **Ler e separar (TOCAR):** CARO × CARRO, MURO × MURRO? (evitar: MURRO = soco) → usar **CARO × CARRO** e **ERA × ERRA**; palavras RATO, ARARA, TERRA.
+- **Ler e separar (TOCAR):** **CARO × CARRO** e **ERA × ERRA**; palavras RATO, ARARA, TERRA.
 - **Completar o verso:** "R forte chega no começo da… ___" (PALAVRA).
 - Registro: regra R/RR; pares intercalados (N7).
 

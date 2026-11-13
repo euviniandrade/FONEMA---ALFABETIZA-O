@@ -1,0 +1,37 @@
+{
+  "name": "fonema-app",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "FONEMA · plataforma de alfabetização pelo método fônico (MVP R0–R2a)",
+  "workspaces": [
+    "packages/conteudo",
+    "packages/motor",
+    "web"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w web",
+    "build": "npm run build -w web",
+    "preview": "npm run preview -w web",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "npm run e2e -w web",
+    "capturas": "npm run capturas -w web",
+    "typecheck": "tsc -p packages/conteudo && tsc -p packages/motor && tsc -p web --noEmit",
+    "lint": "eslint .",
+    "assets": "npm run assets -w web",
+    "verificar": "npm run lint && npm run typecheck && npm test && npm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.14.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.2",
+    "vitest": "^3.2.7"
+  }
+}

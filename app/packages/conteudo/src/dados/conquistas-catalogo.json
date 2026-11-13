@@ -1,0 +1,1144 @@
+[
+  {
+    "id": "TI-R0-01",
+    "nome": "Primeiros Sons",
+    "tipo": "titulo",
+    "categoria": "leitura",
+    "regiao": "R0",
+    "criterio": "Terminar a primeira missão (som do próprio nome). Sub-níveis I-II-III pelos níveis 1–6 da jornada (D019).",
+    "niveis": [
+      "I",
+      "II",
+      "III"
+    ],
+    "visivel_antes": "visivel",
+    "area": null
+  },
+  {
+    "id": "S-R0-01",
+    "nome": "Meu Nome",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R0",
+    "criterio": "Bronze: fazer o som inicial real do próprio nome e tocar a letra real (D019 §3). Prata: achar esse som em 5 palavras ouvidas. Ouro: reconhecer a letra do nome em 3 lugares da vila após 7 dias.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-R0-02",
+    "nome": "Caça às Rimas",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R0",
+    "criterio": "Achar 5 pares que rimam entre figuras faladas (2–3 opções).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-R0-03",
+    "nome": "Bate-Sílaba",
+    "tipo": "selo",
+    "categoria": "silaba",
+    "regiao": "R0",
+    "criterio": "Bater palmas nas sílabas de 8 palavras faladas, em 2 sessões.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-R0-04",
+    "nome": "Primeiro Som",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R0",
+    "criterio": "Dizer ou tocar o som inicial de 6 figuras (som, não nome da letra).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-R0-05",
+    "nome": "Junta-Junta",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R0",
+    "criterio": "Síntese oral: ouvir sons separados e tocar a figura certa, 6 vezes.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Sons"
+  },
+  {
+    "id": "M-R0-01",
+    "nome": "Medalha da Festa das Rimas",
+    "tipo": "medalha",
+    "categoria": "fonema",
+    "regiao": "R0",
+    "criterio": "Vencer o chefe de R0 (Festa das Rimas, oral). Não passou: trilha curta de reforço, nada se perde.",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "TI-R0-02",
+    "nome": "Caça às Sílabas",
+    "tipo": "titulo",
+    "categoria": "leitura",
+    "regiao": "R0",
+    "criterio": "Portão: vencer a Festa das Rimas (R0-F06). I-II-III pelos níveis 7–15.",
+    "niveis": [
+      "I",
+      "II",
+      "III"
+    ],
+    "visivel_antes": "visivel",
+    "area": null
+  },
+  {
+    "id": "S-R0-06",
+    "nome": "Leitura do Quintal",
+    "tipo": "selo",
+    "categoria": "leitura",
+    "regiao": "R0",
+    "criterio": "Bronze: vencer a Festa das Rimas. Prata: completar o Álbum da Minha Família. Ouro: rever as rimas no Jardim da Revisão após 7 dias.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Leitura"
+  },
+  {
+    "id": "S-R0-07",
+    "nome": "Álbum da Minha Família",
+    "tipo": "selo",
+    "categoria": "conhecimento",
+    "regiao": "R0",
+    "criterio": "Montar o álbum com nomes e rimas de quem mora com a criança (fala gravada só no aparelho).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Cidadania"
+  },
+  {
+    "id": "S-R0-08",
+    "nome": "Rosto que Fala",
+    "tipo": "selo",
+    "categoria": "emocional",
+    "regiao": "R0",
+    "criterio": "Nomear 4 emoções (alegre, triste, bravo, medo) no rosto do Bolota.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Amizade e Respeito"
+  },
+  {
+    "id": "S-R0-09",
+    "nome": "Rotina em Ordem",
+    "tipo": "selo",
+    "categoria": "computacional",
+    "regiao": "R0",
+    "criterio": "Ordenar 3 passos da rotina (acordar, escovar, comer) e explicar com a Sofia.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Tecnologia"
+  },
+  {
+    "id": "S-R0-10",
+    "nome": "Cofrinho Novo",
+    "tipo": "selo",
+    "categoria": "financeiro",
+    "regiao": "R0",
+    "criterio": "Guardar as primeiras moedinhas no cofrinho-tatu e escolher uma meta.",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Dinheiro"
+  },
+  {
+    "id": "S-R0-11",
+    "nome": "Cuidado com os Animais",
+    "tipo": "selo",
+    "categoria": "valores",
+    "regiao": "R0",
+    "criterio": "Bronze (R0): dar água e comida ao cachorro e ao gato da vila seguindo ícones. Prata (R4): ajudar no resgate do Pantanal lendo instruções. Ouro: missão de cuidado em casa confirmada pelo adulto.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Amizade e Respeito"
+  },
+  {
+    "id": "S-R0-12",
+    "nome": "Ensinar o Bolota",
+    "tipo": "selo",
+    "categoria": "valores",
+    "regiao": "R0",
+    "criterio": "Ensinar o Bolota quando ele erra, com gentileza, 5 vezes (mecânica ENSINAR).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Amizade e Respeito"
+  },
+  {
+    "id": "S-R0-13",
+    "nome": "Amarelinha das Sílabas",
+    "tipo": "selo",
+    "categoria": "esporte",
+    "regiao": "R0",
+    "criterio": "Pular a amarelinha batendo as sílabas (opção sentada com toque).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Esporte e Fair Play"
+  },
+  {
+    "id": "S-R0-14",
+    "nome": "Quintal Limpo",
+    "tipo": "selo",
+    "categoria": "ambiente",
+    "regiao": "R0",
+    "criterio": "Missão 'lixo no lugar': guardar 6 objetos no lugar certo; ouro com a separação seco/molhado em casa (adulto confirma).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Natureza"
+  },
+  {
+    "id": "S-R0-15",
+    "nome": "Hora de Descansar",
+    "tipo": "selo",
+    "categoria": "constancia",
+    "regiao": "R0",
+    "criterio": "Encerrar a sessão no ritual de fim, sem pedir mais, 3/10/25 vezes ('a tela descansa e eu também').",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": null
+  },
+  {
+    "id": "V-R0-01",
+    "nome": "Mostrei em Casa",
+    "tipo": "selo_validacao",
+    "categoria": "familia_professor",
+    "regiao": "R0",
+    "criterio": "Mostrar a rima do dia para alguém da família; o adulto toca ✓.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "visivel",
+    "area": null
+  },
+  {
+    "id": "C-R0-01",
+    "nome": "Coleção Quintal da Sofia",
+    "tipo": "emblema_colecao",
+    "categoria": "colecionador",
+    "regiao": "R0",
+    "criterio": "Completar as figurinhas do quintal (compradas ou ganhas por domínio).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "visivel",
+    "area": null
+  },
+  {
+    "id": "S-R0-16",
+    "nome": "Rima do Bolota",
+    "tipo": "selo",
+    "categoria": "segredo",
+    "regiao": "R0",
+    "criterio": "Quando o Bolota pede uma rima na vila, inventar uma rima falada (sinal de ASR ou toque).",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "oculto",
+    "area": null
+  },
+  {
+    "id": "S-R1-01",
+    "nome": "Cinco Sinais",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R1",
+    "criterio": "Reconhecer as 5 vogais pelo som (ouvir → tocar a letra) em 2 sessões.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-R1-02",
+    "nome": "Espelho da Ilha",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R1",
+    "criterio": "Imitar a boca da Sofia em 5 vogais no Espelho do Som (fala ou toque).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-R1-03",
+    "nome": "E aberto, E fechado",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R1",
+    "criterio": "Distinguir é e ê em 8 palavras ouvidas.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-R1-04",
+    "nome": "O de Bolinha",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R1",
+    "criterio": "Distinguir ó e ô em 8 palavras ouvidas.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-R1-05",
+    "nome": "Mão na Areia",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R1",
+    "criterio": "Traçar as 5 vogais com o dedo na ordem do traço.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Escrita"
+  },
+  {
+    "id": "S-R1-06",
+    "nome": "Pesca de Vogais",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R1",
+    "criterio": "Achar a vogal inicial em 10 palavras ouvidas no cais.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Sons"
+  },
+  {
+    "id": "M-R1-01",
+    "nome": "Medalha do Farol Aceso",
+    "tipo": "medalha",
+    "categoria": "leitura",
+    "regiao": "R1",
+    "criterio": "Vencer o chefe de R1 (O Farol Apagado), lendo vogais.",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Leitura"
+  },
+  {
+    "id": "S-R1-07",
+    "nome": "Leitura da Ilha",
+    "tipo": "selo",
+    "categoria": "leitura",
+    "regiao": "R1",
+    "criterio": "Bronze: vencer o Farol Apagado. Prata: ler as 5 vogais em 3 placas da ilha. Ouro: rever as vogais após 14 dias.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Leitura"
+  },
+  {
+    "id": "S-R1-08",
+    "nome": "Classifica-Som",
+    "tipo": "selo",
+    "categoria": "computacional",
+    "regiao": "R1",
+    "criterio": "Classificar 8 figuras pelo som inicial em cestos.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Tecnologia"
+  },
+  {
+    "id": "S-R1-09",
+    "nome": "Meta no Cofrinho",
+    "tipo": "selo",
+    "categoria": "financeiro",
+    "regiao": "R1",
+    "criterio": "Escolher um item da lista de desejos e acompanhar a barra do cofrinho até a metade.",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Dinheiro"
+  },
+  {
+    "id": "S-R1-10",
+    "nome": "Errei, e Agora?",
+    "tipo": "selo",
+    "categoria": "emocional",
+    "regiao": "R1",
+    "criterio": "Depois de errar, tentar de novo com a dica da Sofia: 5/15/40 vezes (processo, não acerto).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Amizade e Respeito"
+  },
+  {
+    "id": "S-R1-11",
+    "nome": "Guarda do Meio Ambiente",
+    "tipo": "selo",
+    "categoria": "ambiente",
+    "regiao": "R1",
+    "criterio": "Bronze: 3 missões ambientais de região. Prata: 6. Ouro: 9 missões + 3 ações em casa confirmadas pelo adulto.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Natureza"
+  },
+  {
+    "id": "S-R1-12",
+    "nome": "Praia Limpa",
+    "tipo": "selo",
+    "categoria": "ambiente",
+    "regiao": "R1",
+    "criterio": "Tirar 8 plásticos da areia para a tartaruga voltar; ouro: levar sacola ao passeio (adulto confirma).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Natureza"
+  },
+  {
+    "id": "S-R1-13",
+    "nome": "Cesta das Vogais",
+    "tipo": "selo",
+    "categoria": "esporte",
+    "regiao": "R1",
+    "criterio": "Arremessar na cesta da vogal ouvida, 10 arremessos (sem tempo).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Esporte e Fair Play"
+  },
+  {
+    "id": "S-R1-14",
+    "nome": "Vôlei da Ilha",
+    "tipo": "selo",
+    "categoria": "esporte",
+    "regiao": "R1",
+    "criterio": "Manter a bola no ar com o Tales lendo 10 vogais (cooperativo).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Esporte e Fair Play"
+  },
+  {
+    "id": "S-R1-15",
+    "nome": "Água com Cuidado",
+    "tipo": "selo",
+    "categoria": "esporte",
+    "regiao": "R1",
+    "criterio": "Ouvir 3 regras de segurança na água e escolher a certa em 3 cenas (natação segura).",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Esporte e Fair Play"
+  },
+  {
+    "id": "S-R1-16",
+    "nome": "Amizade com o Peixe-Boi",
+    "tipo": "selo",
+    "categoria": "conhecimento",
+    "regiao": "R1",
+    "criterio": "Assiste e Faz sobre o peixe-boi + 3 perguntas.",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Ciências"
+  },
+  {
+    "id": "S-R1-17",
+    "nome": "Espera a Vez",
+    "tipo": "selo",
+    "categoria": "valores",
+    "regiao": "R1",
+    "criterio": "Esperar a vez e passar a bola ao colega em 3 situações ouvidas.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Amizade e Respeito"
+  },
+  {
+    "id": "S-R1-18",
+    "nome": "Cultivo da Revisão",
+    "tipo": "selo",
+    "categoria": "constancia",
+    "regiao": "R1",
+    "criterio": "Abrir flores no Jardim da Revisão lendo antes de ouvir: 25/60/120/250 flores (revisão espacada, nunca dias seguidos).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "misterio",
+    "area": null
+  },
+  {
+    "id": "V-R1-01",
+    "nome": "Visto do Professor: Vogais",
+    "tipo": "selo_validacao",
+    "categoria": "familia_professor",
+    "regiao": "R1",
+    "criterio": "Mostra pro professor: ler as 5 vogais; professor toca ✓ (sem resposta em 72 h, vale o critério de domínio).",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "visivel",
+    "area": null
+  },
+  {
+    "id": "V-R1-02",
+    "nome": "Vogal no Mercado",
+    "tipo": "selo_validacao",
+    "categoria": "familia_professor",
+    "regiao": "R1",
+    "criterio": "Roteiro de família: caçar vogais no mercado, 5 min; adulto confirma.",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "visivel",
+    "area": null
+  },
+  {
+    "id": "C-R1-01",
+    "nome": "Coleção Ilha das Vogais",
+    "tipo": "emblema_colecao",
+    "categoria": "colecionador",
+    "regiao": "R1",
+    "criterio": "Completar as figurinhas da ilha (peixe-boi, jangada, farol...).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "visivel",
+    "area": null
+  },
+  {
+    "id": "S-R1-19",
+    "nome": "Concha que Canta",
+    "tipo": "selo",
+    "categoria": "segredo",
+    "regiao": "R1",
+    "criterio": "Achar a concha escondida na praia que só abre quando a criança diz a vogal certa.",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "oculto",
+    "area": null
+  },
+  {
+    "id": "S-R2a-01",
+    "nome": "Som Comprido",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R2a",
+    "criterio": "Prolongar /mmm/, /lll/ e /fff/ junto com a Sofia e tocar a letra.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-R2a-02",
+    "nome": "Ouvido Atento",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R2a",
+    "criterio": "Achar /m/, /l/ ou /f/ no começo de 10 palavras ouvidas.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-R2a-03",
+    "nome": "Junta-Som",
+    "tipo": "selo",
+    "categoria": "silaba",
+    "regiao": "R2a",
+    "criterio": "Juntar consoante e vogal em 10 sílabas (MA, LO, FU...) com o alfabeto móvel.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-R2a-04",
+    "nome": "Tábua de Sílabas",
+    "tipo": "selo",
+    "categoria": "silaba",
+    "regiao": "R2a",
+    "criterio": "Montar 8 sílabas na tabua de sílabas.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "M-R2a-01",
+    "nome": "Medalha da Primeira Palavra",
+    "tipo": "medalha",
+    "categoria": "palavra",
+    "regiao": "R2a",
+    "criterio": "Ler sozinho a primeira palavra decodificada (MALA, MEL, LUA ou FALA) e ver a coisa acontecer.",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Escrita"
+  },
+  {
+    "id": "S-R2a-05",
+    "nome": "Palavras da Mata",
+    "tipo": "selo",
+    "categoria": "palavra",
+    "regiao": "R2a",
+    "criterio": "Ler 10/20/40 palavras CV da mata, em 2 dias diferentes.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Escrita"
+  },
+  {
+    "id": "S-R2a-06",
+    "nome": "Palavra que Faz",
+    "tipo": "selo",
+    "categoria": "palavra",
+    "regiao": "R2a",
+    "criterio": "Ler a palavra e ver a coisa acontecer no mundo (LUA acende, MALA abre) 3 vezes.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Escrita"
+  },
+  {
+    "id": "S-R2a-07",
+    "nome": "Ditado da Mata",
+    "tipo": "selo",
+    "categoria": "palavra",
+    "regiao": "R2a",
+    "criterio": "Escrever 5 palavras ditadas com letras móveis ('assim você escreveu / assim os adultos escrevem').",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Escrita"
+  },
+  {
+    "id": "M-R2a-02",
+    "nome": "Medalha da Cachoeira das Sílabas",
+    "tipo": "medalha",
+    "categoria": "leitura",
+    "regiao": "R2a",
+    "criterio": "Vencer o chefe de R2a (Cachoeira das Sílabas).",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Leitura"
+  },
+  {
+    "id": "TI-R2a-01",
+    "nome": "Exploração das Palavras",
+    "tipo": "titulo",
+    "categoria": "leitura",
+    "regiao": "R2a",
+    "criterio": "Portão: vencer a Cachoeira das Sílabas (R2a-F05). I-II-III pelos níveis 16–24.",
+    "niveis": [
+      "I",
+      "II",
+      "III"
+    ],
+    "visivel_antes": "visivel",
+    "area": null
+  },
+  {
+    "id": "S-R2a-08",
+    "nome": "Leitura da Mata",
+    "tipo": "selo",
+    "categoria": "leitura",
+    "regiao": "R2a",
+    "criterio": "Bronze: vencer a Cachoeira (R2a). Prata: vencer o Ninho do Tucano (R2b). Ouro: recontar 2 histórias da mata para a família.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Leitura"
+  },
+  {
+    "id": "S-R2a-09",
+    "nome": "Guia da Mata",
+    "tipo": "selo",
+    "categoria": "compreensao",
+    "regiao": "R2a",
+    "criterio": "Completar o 'Guia da mata para o Bolota': 6 figurinhas, 1 palavra lida cada.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Leitura"
+  },
+  {
+    "id": "S-R2a-10",
+    "nome": "Comandos do Mico",
+    "tipo": "selo",
+    "categoria": "computacional",
+    "regiao": "R2a",
+    "criterio": "Sequência de 3 cartas de comando lidas para o mico chegar à fruta.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Tecnologia"
+  },
+  {
+    "id": "S-R2a-11",
+    "nome": "Pequeno, Médio, Grande",
+    "tipo": "selo",
+    "categoria": "computacional",
+    "regiao": "R2a",
+    "criterio": "Seriar 5 objetos do menor ao maior.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Tecnologia"
+  },
+  {
+    "id": "S-R2a-12",
+    "nome": "Respira com a Sofia",
+    "tipo": "selo",
+    "categoria": "emocional",
+    "regiao": "R2a",
+    "criterio": "Usar o 'respira com a Sofia' quando a mata escurece e nomear o medo.",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Amizade e Respeito"
+  },
+  {
+    "id": "S-R2a-13",
+    "nome": "Muda na Mata",
+    "tipo": "selo",
+    "categoria": "ambiente",
+    "regiao": "R2a",
+    "criterio": "Plantar 5 mudas onde a mata foi cortada; ouro: semente no copo em casa (adulto confirma).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Natureza"
+  },
+  {
+    "id": "S-R2a-14",
+    "nome": "Guarda ou Gasta?",
+    "tipo": "selo",
+    "categoria": "financeiro",
+    "regiao": "R2a",
+    "criterio": "Pensar com a Sofia: 1 figurinha agora ou 2 amanhã, e dizer por que (vale qualquer escolha explicada).",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Dinheiro"
+  },
+  {
+    "id": "S-R2a-15",
+    "nome": "Revezamento da Trilha",
+    "tipo": "selo",
+    "categoria": "esporte",
+    "regiao": "R2a",
+    "criterio": "Corrida de revezamento cooperativa lendo as placas da trilha (opção sentada).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Esporte e Fair Play"
+  },
+  {
+    "id": "S-R2a-16",
+    "nome": "Exploração do Ambiente",
+    "tipo": "selo",
+    "categoria": "conhecimento",
+    "regiao": "R2a",
+    "criterio": "Assiste e Faz: quem mora na mata e do que precisa + 3 perguntas.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Ciências"
+  },
+  {
+    "id": "S-R2a-17",
+    "nome": "Amizade que Inclui",
+    "tipo": "selo",
+    "categoria": "valores",
+    "regiao": "R2a",
+    "criterio": "Chamar o colega sozinho para a brincadeira em 3 situações; ouro: missão real com a família ou turma.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "misterio",
+    "area": "Amizade e Respeito"
+  },
+  {
+    "id": "S-R2a-18",
+    "nome": "Dormiu e Lembrou",
+    "tipo": "selo",
+    "categoria": "constancia",
+    "regiao": "R2a",
+    "criterio": "Passar na checagem de retenção (24 h a 7 dias) de 1/5/10/20 sons.",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante"
+    ],
+    "visivel_antes": "misterio",
+    "area": null
+  },
+  {
+    "id": "V-R2a-01",
+    "nome": "Visto do Professor: Primeira Palavra",
+    "tipo": "selo_validacao",
+    "categoria": "familia_professor",
+    "regiao": "R2a",
+    "criterio": "Mostra pro professor: ler MALA e LUA; professor toca ✓.",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "visivel",
+    "area": null
+  },
+  {
+    "id": "V-R2a-02",
+    "nome": "Leu pra Mim",
+    "tipo": "selo_validacao",
+    "categoria": "familia_professor",
+    "regiao": "R2a",
+    "criterio": "Ler 3 palavras para alguém da família; adulto confirma.",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "visivel",
+    "area": null
+  },
+  {
+    "id": "S-R2a-19",
+    "nome": "Beija-Flor da Trilha",
+    "tipo": "selo",
+    "categoria": "segredo",
+    "regiao": "R2a",
+    "criterio": "Achar as 3 placas escondidas na trilha e ler cada uma.",
+    "niveis": [
+      "unico"
+    ],
+    "visivel_antes": "oculto",
+    "area": null
+  },
+  {
+    "id": "S-SOM-A",
+    "nome": "Maestria do Som A",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R1",
+    "criterio": "Bronze: domínio prático (P>=0,95, >=8 tentativas em >=2 sessões, 4 das 5 últimas certas com >=2 pseudopalavras). Prata: generalização com item novo + transferência fora do formato. Ouro: retenção 24 h–7 d + ler uma história com o som. Diamante: ouro + retenção após 60 dias + validação do professor ou da família. Depois: 1 estrela a cada revisão de longo prazo bem-sucedida (sem fim).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante",
+      "estrelas de revisao sem fim"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-SOM-E-E-E",
+    "nome": "Maestria do Som E (é/ê)",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R1",
+    "criterio": "Bronze: domínio prático (P>=0,95, >=8 tentativas em >=2 sessões, 4 das 5 últimas certas com >=2 pseudopalavras). Prata: generalização com item novo + transferência fora do formato. Ouro: retenção 24 h–7 d + ler uma história com o som. Diamante: ouro + retenção após 60 dias + validação do professor ou da família. Depois: 1 estrela a cada revisão de longo prazo bem-sucedida (sem fim).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante",
+      "estrelas de revisao sem fim"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-SOM-I",
+    "nome": "Maestria do Som I",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R1",
+    "criterio": "Bronze: domínio prático (P>=0,95, >=8 tentativas em >=2 sessões, 4 das 5 últimas certas com >=2 pseudopalavras). Prata: generalização com item novo + transferência fora do formato. Ouro: retenção 24 h–7 d + ler uma história com o som. Diamante: ouro + retenção após 60 dias + validação do professor ou da família. Depois: 1 estrela a cada revisão de longo prazo bem-sucedida (sem fim).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante",
+      "estrelas de revisao sem fim"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-SOM-O-O-O",
+    "nome": "Maestria do Som O (ó/ô)",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R1",
+    "criterio": "Bronze: domínio prático (P>=0,95, >=8 tentativas em >=2 sessões, 4 das 5 últimas certas com >=2 pseudopalavras). Prata: generalização com item novo + transferência fora do formato. Ouro: retenção 24 h–7 d + ler uma história com o som. Diamante: ouro + retenção após 60 dias + validação do professor ou da família. Depois: 1 estrela a cada revisão de longo prazo bem-sucedida (sem fim).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante",
+      "estrelas de revisao sem fim"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-SOM-U",
+    "nome": "Maestria do Som U",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R1",
+    "criterio": "Bronze: domínio prático (P>=0,95, >=8 tentativas em >=2 sessões, 4 das 5 últimas certas com >=2 pseudopalavras). Prata: generalização com item novo + transferência fora do formato. Ouro: retenção 24 h–7 d + ler uma história com o som. Diamante: ouro + retenção após 60 dias + validação do professor ou da família. Depois: 1 estrela a cada revisão de longo prazo bem-sucedida (sem fim).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante",
+      "estrelas de revisao sem fim"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-SOM-M",
+    "nome": "Maestria do Som M",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R2a",
+    "criterio": "Bronze: domínio prático (P>=0,95, >=8 tentativas em >=2 sessões, 4 das 5 últimas certas com >=2 pseudopalavras). Prata: generalização com item novo + transferência fora do formato. Ouro: retenção 24 h–7 d + ler uma história com o som. Diamante: ouro + retenção após 60 dias + validação do professor ou da família. Depois: 1 estrela a cada revisão de longo prazo bem-sucedida (sem fim).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante",
+      "estrelas de revisao sem fim"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-SOM-L",
+    "nome": "Maestria do Som L",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R2a",
+    "criterio": "Bronze: domínio prático (P>=0,95, >=8 tentativas em >=2 sessões, 4 das 5 últimas certas com >=2 pseudopalavras). Prata: generalização com item novo + transferência fora do formato. Ouro: retenção 24 h–7 d + ler uma história com o som. Diamante: ouro + retenção após 60 dias + validação do professor ou da família. Depois: 1 estrela a cada revisão de longo prazo bem-sucedida (sem fim).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante",
+      "estrelas de revisao sem fim"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  },
+  {
+    "id": "S-SOM-F",
+    "nome": "Maestria do Som F",
+    "tipo": "selo",
+    "categoria": "fonema",
+    "regiao": "R2a",
+    "criterio": "Bronze: domínio prático (P>=0,95, >=8 tentativas em >=2 sessões, 4 das 5 últimas certas com >=2 pseudopalavras). Prata: generalização com item novo + transferência fora do formato. Ouro: retenção 24 h–7 d + ler uma história com o som. Diamante: ouro + retenção após 60 dias + validação do professor ou da família. Depois: 1 estrela a cada revisão de longo prazo bem-sucedida (sem fim).",
+    "niveis": [
+      "bronze",
+      "prata",
+      "ouro",
+      "diamante",
+      "estrelas de revisao sem fim"
+    ],
+    "visivel_antes": "visivel",
+    "area": "Sons"
+  }
+]

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>FONEMA · Espelho do Som 3D — a boca de frente, de lado (raio-X) e por dentro</title>
+<!-- Protótipo local. Nada é gravado nem enviado: a câmera (opcional) fica só nesta tela. -->
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }</script>
+<link rel="stylesheet" href="espelho.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<header class="topo">
+  <div class="titulo"><span class="logo" aria-hidden="true">🪞</span><div><b>Espelho do Som</b><small>como a boca faz cada som</small></div></div>
+  <p class="aviso-fono" role="note">⚠️ Posições simplificadas — validar com fonoaudióloga</p>
+  <div class="ajustes">
+    <button class="chip" id="bLento" aria-pressed="false">🐢 Câmera lenta</button>
+    <button class="chip" id="bMudo" aria-pressed="false">🔊 Voz ligada</button>
+  </div>
+</header>
+
+<main class="tela">
+  <section class="palco-area">
+    <div id="palco" class="palco" aria-label="Boca em 3D"></div>
+    <div class="cartaz" aria-live="polite">
+      <div class="letra" id="cLetra">A</div>
+      <div><div class="ipa" id="cIpa">/a/</div><div class="ex" id="cEx">abelha</div></div>
+      <div class="selos"><span class="selo-voz" id="cVoz">🐝 tem voz</span><span class="selo-ar" id="cAr">💨 ar pela boca</span></div>
+    </div>
+    <nav class="modos" aria-label="Como olhar a boca">
+      <button data-modo="frente" class="on">😮 De frente</button>
+      <button data-modo="lado">🩻 Raio-X de lado</button>
+      <button data-modo="dentro">🔍 Dentro da boca</button>
+      <button data-modo="corpo">🫁 Do pulmão à boca</button>
+      <button id="bGirar" aria-pressed="false">🔄 Girar 360°</button>
+    </nav>
+    <button class="ouvir" id="bOuvir" aria-label="Ouvir o som">🔊 Ouvir</button>
+  </section>
+
+  <aside class="lado">
+    <div class="espelho-sofia">
+      <div class="moldura"><img id="sofiaBoca" src="recortes/sofia-boca-A.png" alt="Boca da Sofia de frente"></div>
+      <p id="sofiaLeg">A Sofia faz assim</p>
+    </div>
+    <div class="abas" role="tablist">
+      <button role="tab" data-aba="explorar" class="on">Explorar</button>
+      <button role="tab" data-aba="lingua">Onde está a língua?</button>
+      <button role="tab" data-aba="voz">Tem voz?</button>
+      <button role="tab" data-aba="imite">Imite a Sofia</button>
+      <button role="tab" data-aba="corpo">Meu corpo</button>
+    </div>
+    <div class="painel" id="painel" aria-live="polite"></div>
+  </aside>
+</main>
+
+<footer class="teclado" id="teclado" aria-label="Escolha um som"></footer>
+
+<p class="rodape-nota">Voz sintetizada só para simular · no produto: áudio gravado por fonoaudióloga e vozes oficiais da Sofia e do Tales. Câmera opcional, só neste aparelho.</p>
+
+<script src="fonemas.js"></script>
+<script src="espelho-svg.js"></script>
+<script src="espelho.js"></script>
+<script src="demo.js"></script>
+</body>
+</html>

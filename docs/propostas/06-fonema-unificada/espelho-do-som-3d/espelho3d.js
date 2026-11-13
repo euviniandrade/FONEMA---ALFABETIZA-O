@@ -489,7 +489,7 @@ export function criar(container, opts = {}) {
       corAr[o3] = 0.62 * fade; corAr[o3 + 1] = 0.93 * fade; corAr[o3 + 2] = 1.0 * fade;
     }
     geoAr.attributes.position.needsUpdate = true; geoAr.attributes.color.needsUpdate = true;
-    matAr.size = (f.modo === 'fricativa' ? 0.19 : 0.26) * (modoAtual === 'dentro' ? 0.3 : 1);
+    matAr.size = (f.modo === 'fricativa' ? 0.19 : 0.26) * (modoAtual === 'frente' ? 0.55 : 1); matAr.opacity = modoAtual === 'frente' ? 0.55 : 1;
   }
 
   function aplicaCamadas(dt) {
