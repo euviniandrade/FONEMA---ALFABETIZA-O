@@ -20,6 +20,13 @@ NIVEL = {"A": "A — meta-análise / revisão sistemática", "B": "B — ensaio 
          "C": "C — revisão narrativa", "D": "D — estudo primário"}
 
 
+import re as _re
+
+
+def limpo(t):
+    return _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", t or "")).strip()
+
+
 def link(r):
     if r.get("doi"):
         return "https://doi.org/" + r["doi"]
@@ -48,7 +55,7 @@ def main():
 
     def linha(r):
         return [PAISES[r["pais"]][0], "; ".join(EIXOS[e]["nome"] for e in r["eixos"]), r["evidencia"], r.get("ano", ""),
-                autores_curto(r), r["titulo"], r.get("periodico", ""), r.get("doi", ""), r.get("pmid", ""), link(r),
+                autores_curto(r), limpo(r["titulo"]), limpo(r.get("periodico", "")), r.get("doi", ""), r.get("pmid", ""), link(r),
                 "+".join(r.get("bases", [])), r.get("relevancia", 0)]
 
     # CSV
@@ -57,6 +64,18 @@ def main():
         w.writerow(cols)
         for r in regs:
             w.writerow(linha(r))
+
+    # Base completa validada (todos os aprovados no 1º filtro, sem o corte de 500)
+    import gzip
+    pt = os.path.join(DATA, "validos_todos.jsonl")
+    if os.path.exists(pt):
+        n = 0
+        with gzip.open(os.path.join(OUT, "base_completa_validada.csv.gz"), "wt", newline="", encoding="utf-8") as f:
+            w = csv.writer(f)
+            w.writerow(cols)
+            for l in open(pt):
+                w.writerow(linha(json.loads(l))); n += 1
+        print("base completa:", n)
 
     # XLSX
     wb = Workbook()
@@ -104,7 +123,7 @@ def main():
                     continue
                 f.write(f"## {e['nome']} ({len(sub)})\n\n")
                 for r in sub:
-                    f.write(f"- **[{r['evidencia']}]** {autores_curto(r)} ({r.get('ano','')}). {r['titulo']} "
+                    f.write(f"- **[{r['evidencia']}]** {autores_curto(r)} ({r.get('ano','')}). {limpo(r['titulo'])} "
                             f"*{r.get('periodico','')}*. {link(r)}\n")
                 f.write("\n")
 
@@ -119,7 +138,9 @@ def main():
         f.write(f"**{len(regs)} trabalhos validados** de **{len(por_pais)} países**, sobre método fônico, "
                 "aquisição da leitura e neurociência da aprendizagem.\n\n")
         f.write("Arquivos: [`bibliografia_fonema.xlsx`](bibliografia_fonema.xlsx) (uma aba por país, com filtros e links), "
-                "[`bibliografia_fonema.csv`](bibliografia_fonema.csv) e listas por país em [`paises/`](paises/).\n\n")
+                "[`bibliografia_fonema.csv`](bibliografia_fonema.csv), listas por país em [`paises/`](paises/) e a "
+                "**base completa validada** (todos os aprovados no filtro, sem o corte de 500) em "
+                "[`base_completa_validada.csv.gz`](base_completa_validada.csv.gz).\n\n")
         f.write("## Como foi feito (3 etapas)\n\n"
                 "1. **Coleta** (`tools/bibliografia/coletar.py`): PubMed (filtro pelo país da afiliação dos autores) e "
                 "Crossref (afiliação + consultas em inglês, português e espanhol) em 8 eixos temáticos, por país.\n"

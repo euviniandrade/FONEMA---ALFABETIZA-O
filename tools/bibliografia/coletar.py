@@ -330,6 +330,24 @@ def pais_confirmado(r, cod):
     return any(re.search(r"(^|[^a-z])" + re.escape(p) + r"([^a-z]|$)", texto) for p in pads)
 
 
+PUBLICO_INFANTIL = re.compile(r"\b(child|children|childhood|kid|kids|kindergarten|preschool|pre-school|preschooler|toddler|infant|"
+    r"early years|early childhood|primary school|primary-school|elementary|first grade|second grade|grade 1|grade 2|grades 1|"
+    r"school-age|school age|young learner|young reader|beginning reader|pupil|boys|girls|"
+    r"criança|crianças|infantil|infância|pré-escola|anos iniciais|ensino fundamental|alfabetiza|escolares|"
+    r"niño|niños|niñas|infancia|preescolar|primaria|enfant|enfants|école maternelle)", re.I)
+SO_ADULTOS = re.compile(r"\b(university students|undergraduate|college students|nursing students|medical students|"
+    r"older adults|elderly|employees|workers|public servants|adults with|adult patients|graduate students)\b", re.I)
+
+
+def publico_ok(r):
+    texto = r["titulo"] + " " + r["resumo"]
+    if not PUBLICO_INFANTIL.search(texto):
+        return False
+    if SO_ADULTOS.search(r["titulo"]) and not PUBLICO_INFANTIL.search(r["titulo"]):
+        return False
+    return True
+
+
 def validar(r, eixo, cod):
     if not r["titulo"]:
         return False, "sem título"
@@ -340,6 +358,8 @@ def validar(r, eixo, cod):
     ok, score = relevancia(r, eixo)
     if not ok:
         return False, "fora do tema"
+    if not publico_ok(r):
+        return False, "não é sobre crianças/escola"
     r["relevancia"] = score
     r["evidencia"] = nivel_evidencia(r)
     return True, ""
@@ -389,6 +409,7 @@ def main():
 
     # -------- etapa 2: validação e filtro
     aprovados, rejeitados, stats = [], {}, {}
+    todos_validos = open(os.path.join(DATA, "validos_todos.jsonl"), "w")
     for cod in PAISES:
         import glob
         arquivos = sorted(glob.glob(os.path.join(DATA, "raw", f"{cod}.jsonl")) + glob.glob(os.path.join(DATA, "raw", f"{cod}__*.jsonl")))
@@ -432,11 +453,14 @@ def main():
         escolhidos = escolhidos[:a.max_por_pais]
         escolhidos.sort(key=lambda r: (ordem[r["evidencia"]], -r["relevancia"]))
         aprovados += escolhidos
+        for r in bons:
+            todos_validos.write(json.dumps(r, ensure_ascii=False) + "\n")
         rejeitados[cod] = rej
         stats[cod] = {"validos_unicos": len(bons), "selecionados": len(escolhidos),
                       "rejeitados": sum(rej.values())}
         print(f"[{cod}] válidos únicos {len(bons)} → selecionados {len(escolhidos)}; rejeitados {rej}")
 
+    todos_validos.close()
     with open(os.path.join(DATA, "validado.jsonl"), "w") as f:
         for r in aprovados:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
