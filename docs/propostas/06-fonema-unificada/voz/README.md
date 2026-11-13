@@ -59,3 +59,15 @@ O dono achou as vozes H e J "forçadas, pouco naturais". Esta rodada pede uma vo
 - **N:** natural e sorridente;
 - **O:** doce e tranquila;
 - **P:** esperta e levemente rouquinha.
+
+## Rodada 5: variações da N1 (pasta `rodada-5-sofia-final/`)
+O dono gostou da **N-sofia-natural-sorridente-1**. A N1 foi salva na conta como "Sofia — FONEMA (base N1)". A partir dela saíram 3 variações próximas pelo *remix* do ElevenLabs, com força baixa (0,3) para manter a voz.
+
+| Arquivo | Variação |
+|---|---|
+| `N1-original.mp3` | Original, para comparar |
+| `Q-sofia-n1-mais-doce.mp3` | Um pouco mais doce e calma |
+| `R-sofia-n1-mais-animada.mp3` | Um pouco mais animada e brilhante |
+| `S-sofia-n1-mais-leve.mp3` | Mais leve, risonha e descontraída |
+
+Uma variação "mais menina pequena" foi bloqueada pelo filtro de segurança e não foi insistida.
