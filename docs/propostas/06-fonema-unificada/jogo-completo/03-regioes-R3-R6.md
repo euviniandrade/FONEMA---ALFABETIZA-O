@@ -92,6 +92,14 @@
 
 **Fecha a região:** **Mestre do P, T, B, D**; selos P T B D abrem a **Biblioteca** da vila; **Leitor do Pampa**. **Em casa:** "Diário do tempo" de verdade: 1 palavra por dia num papel na geladeira.
 
+**Professor e família junto (D018) em R3:**
+| Item | Como funciona aqui |
+|---|---|
+| Mostra pro professor | Pontos de demonstração: P, T, B, D e cada par (P/B, T/D, b/d): a criança mostra o som com a mão no pescoço e lê 3 pares. O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do Som P, T, B, D**, **Detetive dos Pares**, **Leitor do Pampa**; valores: **Pede Desculpas** (a torre derrubada), **Amigo que Inclui** (queimada); esporte: **Queimada da Inclusão** |
+| Ensinar junto (roteiro com áudio da dupla) | "Mão na garganta: vibrou ou não?" (3 min, áudio do Tales) |
+| Competição saudável (desligável) | Torneio de queimada com times misturados pelo professor e cumprimento no fim. Nunca ranking por nível de leitura |
+
 ---
 
 ## R4 · Pantanal
@@ -166,6 +174,14 @@
 
 **Fecha a região:** **Mestre do J, Z, CH, X, NH, LH**; **Leitor do Pantanal**; a vila ganha o **viveiro**. **Em casa:** ler uma frase curta escrita pelo adulto e fazer o que ela manda ("PEGA A FOLHA").
 
+**Professor e família junto (D018) em R4:**
+| Item | Como funciona aqui |
+|---|---|
+| Mostra pro professor | Pontos de demonstração: cada dígrafo (CH, NH, LH) e a 1ª frase lida para agir: a criança explica "duas letras, um som". O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do Som J, Z, CH, X, NH, LH**, **Leitor de Frases**, **Leitor do Pantanal**; valores: **Cuidador dos Animais** (resgate), **Guardião do Meio Ambiente** (rio sem lixo); esporte: **Canoagem das Sílabas** |
+| Ensinar junto (roteiro com áudio da dupla) | "Leia a frase e faça": bilhetes de 1 instrução na geladeira (5 min) |
+| Competição saudável (desligável) | Turma contra a Cheia: cada frase lida pela turma salva um bicho no mapa coletivo. Nunca ranking por nível de leitura |
+
 ---
 
 ## R5 · Cerrado
@@ -232,6 +248,14 @@
 | R5-F07-C9 | Ipê florido · os dois + lobo-guará | Momento uau + gancho | O ipê floresce inteiro de amarelo; o lobo-guará fala do sertão | Tales: "Palavras que soam pelo nariz? E se a gente for ver, [NOME]?" | N10 | — | — |
 
 **Fecha a região:** **Mestre do QU, GU, RR, SS, Ç**; **Leitor do Cerrado**; a vila ganha a **horta comunitária, o mercado e o coreto** ★. **Em casa:** ler 3 etiquetas no mercado e comparar 2 preços.
+
+**Professor e família junto (D018) em R5:**
+| Item | Como funciona aqui |
+|---|---|
+| Mostra pro professor | Pontos de demonstração: cada regra de contexto: a criança lê e **explica a regra com as próprias palavras** (o 🎤 "me explicou certinho" tem peso especial aqui). O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre das Regras** (C/QU, G/GU, R/RR, S/SS, Ç), **Explicador** (protégé), **Leitor do Cerrado**; valores: **Amigo que Respeita** (perder a corrida), **Guardião do Meio Ambiente** (fogo no Cerrado); esporte: **Corrida de Saco** |
+| Ensinar junto (roteiro com áudio da dupla) | "Por que CASA tem som de Z?": descobrir juntos com 4 palavras (4 min) |
+| Competição saudável (desligável) | Feira entre equipes: cada equipe monta uma banca lendo etiquetas; vencem todas que completarem a lista. Nunca ranking por nível de leitura |
 
 ---
 
@@ -304,3 +328,11 @@
 | R6-F08-C9 | Coreto à noite · todos | Momento uau + gancho | Noite de cordel no coreto; a xilogravura da criança vira painel; chega a carta do barco-escola | Os dois: "Um rio que parece mar, [NOME]!" | N10 | — | — |
 
 **Fecha o Ano 1:** **Mestre do Ã/AM/EM**; **Leitor do Sertão** (prata) e **Álbum do Ano 1**; a vila ganha a **praça do cordel e a cisterna**; meta de poupança do Ano 1 no cofrinho. **Em casa:** a família ouve o cordel e conta um verso de memória junto com a criança.
+
+**Professor e família junto (D018) em R6:**
+| Item | Como funciona aqui |
+|---|---|
+| Mostra pro professor | Pontos de demonstração: nasais, -ÃO × -AM e a leitura do cordel (gravação ouvida pelo professor, dentro do app). O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do Som Nasal**, **Cordelista**, **Leitor do Sertão**, **Ano 1 Completo**; valores: **Amigo que Inclui** (roteiro 14), **Guardião da Água** (cisterna); esporte: **Pião e Corrida de Saco da feira da colheita** |
+| Ensinar junto (roteiro com áudio da dupla) | "Ler para alguém": como ouvir a criança ler sem corrigir cada palavra (5 min) |
+| Competição saudável (desligável) | Festival de cordel da turma: cada criança lê seu verso; aplauso para todos, sem placar. Nunca ranking por nível de leitura |

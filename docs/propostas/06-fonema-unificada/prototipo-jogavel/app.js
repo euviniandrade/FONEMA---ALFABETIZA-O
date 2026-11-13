@@ -158,7 +158,7 @@
       const atual = { assiste: 0, suaVez: 0, figura: 1, letras: 2, falar: 3, celebra: 4 }[telaAtual];
       tr.innerHTML = ETAPAS.map(([k, ic, nm], i) => `<li class="${i < atual ? 'feito' : i === atual ? 'agora' : ''}" ${i === atual ? 'aria-current="step"' : ''}><i aria-hidden="true">${i < atual ? '✓' : ic}</i><span>${nm}</span></li>`).join('');
     }
-    $('#moedas').hidden = !['vila', 'assiste', 'suaVez', 'figura', 'letras', 'falar', 'celebra', 'despedida'].includes(telaAtual);
+    $('#moedas').hidden = !['vila', 'assiste', 'suaVez', 'figura', 'letras', 'falar', 'celebra', 'mostra', 'despedida'].includes(telaAtual);
     $('#moedasNum').textContent = E.moedas;
   }
 
@@ -695,38 +695,151 @@
 
   /* 7 · CELEBRAÇÃO -------------------------------------------------------- */
   const MOEDAS_MISSAO = 10; // fixo e igual para todos: sem sorte, sem sorteio (Decisão 002)
-  function emblemaSVG() {
-    const ini = esc(E.nome.charAt(0).toUpperCase());
-    return `<svg class="emblema" viewBox="0 0 300 330" role="img" aria-label="Emblema Meu Nome, com a letra ${ini}">
-      <defs><radialGradient id="gm" cx="40%" cy="35%"><stop offset="0" stop-color="#D49A63"/><stop offset="1" stop-color="#8E5A2E"/></radialGradient></defs>
-      <circle cx="150" cy="150" r="136" fill="url(#gm)" stroke="#6E4423" stroke-width="8"/>
-      <circle cx="150" cy="150" r="108" fill="#1B3160" stroke="#A8D5F2" stroke-width="6"/>
-      <path d="M72 96 q20 -26 40 -6 q-24 10 -40 6z M228 96 q-20 -26 -40 -6 q24 10 40 6z" fill="#3E9A63"/>
-      <text x="150" y="190" text-anchor="middle" font-family="Andika,sans-serif" font-weight="700" font-size="120" fill="#fff">${ini}</text>
-      <path d="M40 250 h220 l-16 26 l16 26 h-220 l16 -26z" fill="#F4B73C" stroke="#C98A12" stroke-width="5"/>
-      <text x="150" y="286" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="34" fill="#1C2738">MEU NOME</text>
+  // SELO de conquista (Decisão 018): nível bronze → prata → ouro → diamante. Só com esforço, nunca sorte.
+  const NIVEIS = { bronze: ['#D9A066', '#9A5B2B', 'BRONZE'], prata: ['#E3E9F0', '#8C99A8', 'PRATA'], ouro: ['#FFD067', '#C98A12', 'OURO'] };
+  function seloSVG(titulo, simbolo, nivel = 'bronze', cls = 'emblema') {
+    const [c1, c2, rot] = NIVEIS[nivel];
+    const id = 'g' + Math.random().toString(36).slice(2, 7);
+    return `<svg class="${cls}" viewBox="0 0 300 330" role="img" aria-label="Selo ${esc(titulo)}, nível ${rot.toLowerCase()}">
+      <defs><radialGradient id="${id}" cx="40%" cy="35%"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></radialGradient></defs>
+      <path d="M150 10 l30 22 l37 -2 l12 35 l31 20 l-11 35 l11 35 l-31 20 l-12 35 l-37 -2 l-30 22 l-30 -22 l-37 2 l-12 -35 l-31 -20 l11 -35 l-11 -35 l31 -20 l12 -35 l37 2z" fill="url(#${id})" stroke="${c2}" stroke-width="6"/>
+      <circle cx="150" cy="140" r="92" fill="#1B3160" stroke="#A8D5F2" stroke-width="6"/>
+      <path d="M86 92 q18 -24 36 -6 q-22 9 -36 6z M214 92 q-18 -24 -36 -6 q22 9 36 6z" fill="#3E9A63"/>
+      <text x="150" y="178" text-anchor="middle" font-family="Andika,'Noto Color Emoji',sans-serif" font-weight="700" font-size="${simbolo.length > 2 ? 60 : 100}" fill="#fff">${esc(simbolo)}</text>
+      <path d="M30 250 h240 l-16 26 l16 26 h-240 l16 -26z" fill="#F4B73C" stroke="#C98A12" stroke-width="5"/>
+      <text x="150" y="285" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="${titulo.length > 14 ? 24 : 30}" fill="#1C2738">${esc(titulo.toUpperCase())}</text>
+      <text x="150" y="232" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="20" fill="#fff" letter-spacing="3">${rot}</text>
     </svg>`;
+  }
+  // Álbum de Selos: os conquistados + próximos (sem fim). Nenhum se compra.
+  const ALBUM = [
+    ['meu-nome', 'Selo Meu Nome', () => E.nome.charAt(0).toUpperCase()],
+    ['professor', 'Aprovado pelo Professor', () => '✓'],
+    ['explica', 'Me Explicou Certinho', () => '🎤'],
+    ['som', 'Mestre do Som', () => (M ? M.info.letra : '?')],
+    ['gentil', 'Leitor Gentil', () => '📖'],
+    ['ambiente', 'Guardião do Meio Ambiente', () => '🌱']
+  ];
+  function albumHTML() {
+    return `<div class="album" aria-label="Álbum de Selos">${ALBUM.map(([k, nm, sim]) => {
+      const tem = E.emblemas.includes(k);
+      return `<div class="selo-mini ${tem ? 'tem' : ''}">${tem ? seloSVG(nm.replace('Selo ', ''), sim(), 'bronze', 'mini') : '<span class="vago" aria-hidden="true">?</span>'}<small>${esc(nm)}${tem ? '' : ' · em breve'}</small></div>`;
+    }).join('')}</div>`;
   }
   TELAS.celebra = (t) => {
     const primeira = !E.emblemas.includes('meu-nome');
     if (primeira) { E.moedas += MOEDAS_MISSAO; E.emblemas.push('meu-nome'); }
-    E.resultado = { som: M.som.chave, ipa: M.info.ipa, palavra: M.certa.palavra, erros: M.erros, fala: M.fala, minutos: Math.max(1, Math.round((Date.now() - M.inicio) / 60000)), data: new Date().toISOString().slice(0, 10) };
+    E.resultado = Object.assign(E.resultado || {}, { som: M.som.chave, ipa: M.info.ipa, palavra: M.certa.palavra, erros: M.erros, fala: M.fala, minutos: Math.max(1, Math.round((Date.now() - M.inicio) / 60000)), data: new Date().toISOString().slice(0, 10) });
     salvar();
-    const txt = `Você conseguiu, ${N}! Descobriu o primeiro som do seu nome, achou o ${M.certa.palavra}, montou as letras e falou em voz alta!`;
+    const txt = `Você conseguiu, ${N}! Descobriu o primeiro som do seu nome, achou o ${M.certa.palavra}, montou as letras e falou em voz alta! Ganhou o Selo Meu Nome!`;
     t.innerHTML = `<div class="celebra">
-      <div>${emblemaSVG()}</div>
-      <div style="display:flex;flex-direction:column;gap:18px">
-        <h1>Emblema “Meu Nome”!</h1>
+      <div>${seloSVG('Meu Nome', E.nome.charAt(0).toUpperCase(), 'bronze')}</div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <h1>Selo “Meu Nome” · bronze!</h1>
         <div id="falaC"></div>
         <div class="cartao"><div class="ganho"><span class="moeda" aria-hidden="true"></span>+${MOEDAS_MISSAO} moedinhas</div>
           <p class="regra-moeda">Toda missão completa vale ${MOEDAS_MISSAO} moedinhas. Sempre o mesmo valor, para todo mundo. Sem sorte, sem sorteio.</p></div>
-        <div class="acoes"><button class="btn ipe grande" id="bTchau">Voltar para a vila <span class="ic" aria-hidden="true">→</span></button></div>
+        <div class="cartao"><h3 style="margin-bottom:8px">Meu Álbum de Selos</h3>${albumHTML()}</div>
+        <div class="acoes"><button class="btn ipe grande" id="bMostra">Mostra pro professor <span class="ic" aria-hidden="true">→</span></button></div>
       </div></div>`;
     const fc = $('#falaC'); fc.appendChild(fala(txt, 'sofia', 'joinha'));
     falar(ouv(txt), 'sofia');
     if (primeira && !E.prefs.calmo) chuvaMoedas();
     atualizaTopo();
-    $('#bTchau').addEventListener('click', () => ir('despedida'));
+    $('#bMostra').addEventListener('click', () => ir('mostra'));
+  };
+
+  /* 7b · "MOSTRA PRO PROFESSOR" (Decisão 018): a criança demonstra; o professor corrige em 1 toque */
+  let demoURL = null; // gravação da criança: só na memória da aba
+  TELAS.mostra = (t) => {
+    const txt = `${N}, vamos mostrar para o professor! Toque no microfone e diga o seu nome e o primeiro som dele. Como em ${N}... ${M.certa.palavra}!`;
+    t.innerHTML = `<div class="missao">
+      <div class="sua-vez"><h1>Mostra pro professor!</h1></div>
+      <div id="falaM"></div>
+      <div class="mic-area">
+        <button class="mic" id="bGravaDemo" aria-label="Gravar para o professor">🎤</button>
+        <p class="sub" id="estDemo" aria-live="polite">Neste protótipo, a gravação fica só neste aparelho. No produto, vai apenas para o professor da turma.</p>
+        <div class="acoes" style="justify-content:center">
+          <button class="btn" id="bOuveDemo" disabled><span class="ic" aria-hidden="true">▶</span> Ouvir</button>
+          <button class="btn" id="bAoVivo">Mostrei ao vivo</button>
+          <button class="btn pri grande" id="bEnvia" disabled>Enviar para o professor <span class="ic" aria-hidden="true">→</span></button>
+        </div>
+      </div>
+      <audio id="audDemo" hidden></audio>
+    </div>`;
+    $('#falaM').appendChild(fala(txt, 'tales', 'confiante'));
+    falar(ouv(txt), 'tales');
+    const est = $('#estDemo');
+    $('#bGravaDemo').addEventListener('click', async () => {
+      calar();
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const partes = []; const rec = new MediaRecorder(stream);
+        rec.ondataavailable = (e) => e.data.size && partes.push(e.data);
+        rec.onstop = () => {
+          stream.getTracks().forEach((x) => x.stop());
+          if (demoURL) URL.revokeObjectURL(demoURL);
+          demoURL = URL.createObjectURL(new Blob(partes, { type: rec.mimeType || 'audio/webm' }));
+          $('#audDemo').src = demoURL; $('#bOuveDemo').disabled = false; $('#bEnvia').disabled = false;
+          $('#bGravaDemo').classList.remove('ouvindo');
+          est.textContent = 'Pronto! Ouça, se quiser, e envie para o professor.';
+        };
+        rec.start(); $('#bGravaDemo').classList.add('ouvindo'); est.textContent = 'Gravando… pode falar!';
+        setTimeout(() => rec.state === 'recording' && rec.stop(), 3000 * Math.max(RAPIDO, 0.5));
+      } catch (e) {
+        est.textContent = 'O microfone não está disponível. Mostre ao vivo para o professor e toque em “Mostrei ao vivo”.';
+      }
+    });
+    $('#bOuveDemo').addEventListener('click', () => $('#audDemo').play().catch(() => {}));
+    $('#bEnvia').addEventListener('click', () => { E.resultado = Object.assign(E.resultado || {}, { demo: 'gravada' }); ir('professor'); });
+    $('#bAoVivo').addEventListener('click', () => { E.resultado = Object.assign(E.resultado || {}, { demo: 'ao vivo' }); ir('professor'); });
+  };
+
+  // Visão do professor (no produto: no celular do professor, em fila; aqui simulada no mesmo aparelho)
+  TELAS.professor = (t) => {
+    const r = E.resultado || {};
+    t.innerHTML = `<div class="adulto">
+      <aside class="lado">
+        <span class="selo">Visão do professor</span>
+        <h2>Correção em 1 toque</h2>
+        <p>Fila da turma: 1 de 10 respostas. Sem resposta em 72 h, a plataforma confirma pelo próprio critério de domínio.</p>
+        <img src="${PECAS}${BASES[E.avatar.base][0]}" alt="Avatar da criança" style="width:46%">
+      </aside>
+      <div class="cartao form">
+        <div><h1>${esc(E.nome)} · Missão “Meu Nome”</h1><p class="sub">Demonstração: ${r.demo === 'gravada' ? 'áudio gravado' : 'mostrou ao vivo'} · som inicial ${esc(M.info.ipa)} (${esc(M.certa.palavra)}) · figura ${M.erros.figura ? 'com dica' : 'de primeira'} · letras ${M.erros.letras ? 'com dica' : 'sem ajuda'}</p></div>
+        ${r.demo === 'gravada' && demoURL ? `<div class="grava"><button class="btn" id="bProfOuve"><span class="ic" aria-hidden="true">▶</span> Ouvir ${esc(E.nome)}</button></div><audio id="audProf" src="${demoURL}" hidden></audio>` : ''}
+        <div class="prof-botoes" role="group" aria-label="Correção em um toque">
+          <button class="btn verde grande" data-v="aprendeu">✓ Aprendeu!</button>
+          <button class="btn grande" data-v="treinar">↺ Vamos treinar mais</button>
+          <button class="btn ipe grande" data-v="explicou">🎤 Me explicou certinho</button>
+        </div>
+        <div id="parabens" aria-live="polite"></div>
+      </div>
+    </div>`;
+    const ou = $('#bProfOuve'); ou && ou.addEventListener('click', () => $('#audProf').play().catch(() => {}));
+    let feito = false;
+    $$('.prof-botoes button', t).forEach((b) => b.addEventListener('click', async () => {
+      if (feito) return; feito = true;
+      $$('.prof-botoes button', t).forEach((x) => { x.disabled = x !== b; });
+      const v = b.dataset.v;
+      E.resultado.professor = v;
+      const box = $('#parabens');
+      let txt, selo = null;
+      if (v === 'treinar') {
+        txt = `${N}, o professor quer treinar mais com você. Que bom! Amanhã a gente pratica juntos, sem pressa.`;
+      } else {
+        selo = v === 'aprendeu' ? ['professor', 'Aprovado', '✓'] : ['explica', 'Explicou Certinho', '🎤'];
+        if (!E.emblemas.includes(selo[0])) { E.emblemas.push(selo[0]); E.moedas += 5; }
+        txt = v === 'aprendeu' ? `Parabéns, ${N}! O professor disse que você aprendeu o som do seu nome! Ganhou um selo especial!` : `Parabéns, ${N}! O professor disse que você explicou certinho! Ganhou um selo especial!`;
+      }
+      salvar();
+      box.innerHTML = `<div class="parabens-box">${selo ? seloSVG(selo[1], selo[2], 'bronze', 'mini-g') : ''}<div style="flex:1"></div></div>`;
+      $('.parabens-box > div', box).appendChild(fala(txt, 'sofia', v === 'treinar' ? 'confiante' : 'joinha'));
+      if (selo) $('.parabens-box > div', box).insertAdjacentHTML('beforeend', '<p class="regra-moeda" style="margin-top:8px">+5 moedinhas pela validação do professor (valor fixo).</p>');
+      box.insertAdjacentHTML('beforeend', '<div class="acoes" style="margin-top:12px"><button class="btn ipe grande" id="bDesp">Voltar para a vila →</button></div>');
+      $('#bDesp').addEventListener('click', () => ir('despedida'));
+      await falar(ouv(txt), 'sofia');
+    }));
   };
   function chuvaMoedas() {
     const box = document.createElement('div'); box.className = 'chuva-moedas';
@@ -767,11 +880,11 @@
     const Art = G(`O ${E.nome}`, `A ${E.nome}`, E.nome);
     const dele = G('do nome dele', 'do nome dela', 'do próprio nome');
     const pal = r.palavra.toUpperCase();
-    const msg = `📚 FONEMA · ${E.nome} hoje\n\nHoje ${art} fez a primeira missão: descobriu que ${G('o nome dele', 'o nome dela', 'o próprio nome')} começa com o som ${r.ipa}, igual a ${pal}. Montou as letras ${letrasNome().join('-')} e falou o som em voz alta. Ganhou o emblema “Meu Nome” 🎖️\n\n🏠 Em casa (2 min): brinquem de “Eu vejo uma coisa que começa com ${r.ipa}…”. Elogie o esforço: “Você tentou e conseguiu!”\n\n⏱️ Tempo de tela hoje: ${r.minutos} min.`;
+    const msg = `📚 FONEMA · ${E.nome} hoje\n\nHoje ${art} fez a primeira missão: descobriu que ${G('o nome dele', 'o nome dela', 'o próprio nome')} começa com o som ${r.ipa}, igual a ${pal}. Montou as letras ${letrasNome().join('-')} e falou o som em voz alta. Ganhou o Selo “Meu Nome” (bronze) 🏅${E.resultado && E.resultado.professor === 'aprendeu' ? ' e o professor confirmou: aprendeu! ✓' : E.resultado && E.resultado.professor === 'explicou' ? ' e o professor disse que explicou certinho! 🎤' : ''}\n\n🏠 Em casa (2 min): brinquem de “Eu vejo uma coisa que começa com ${r.ipa}…”. Elogie o esforço: “Você tentou e conseguiu!”\n\n⏱️ Tempo de tela hoje: ${r.minutos} min.`;
     const statusFig = r.erros.figura === 0 ? ['ok', 'Acertou de primeira'] : ['rev', `A revisar (${r.erros.figura} tentativa${r.erros.figura > 1 ? 's' : ''} com dica)`];
     const statusLet = r.erros.letras === 0 ? ['ok', 'Montou sem ajuda'] : ['rev', `Com ajuda (${r.erros.letras} dica${r.erros.letras > 1 ? 's' : ''})`];
     const statusFala = r.fala && r.fala.ouviu ? ['ok', 'Falou (microfone ouviu)'] : ['novo', 'Tentou (registro “eu falei”)'];
-    const geral = r.erros.figura === 0 && r.erros.letras <= 1 ? ['ok', 'Em domínio · confirmar amanhã'] : ['rev', 'A revisar · volta amanhã no Jardim da Revisão'];
+    const geral = r.professor === 'treinar' ? ['rev', 'A revisar · professor pediu mais treino'] : (r.erros.figura === 0 && r.erros.letras <= 1) || r.professor ? ['ok', 'Em domínio · confirmar amanhã'] : ['rev', 'A revisar · volta amanhã no Jardim da Revisão'];
     t.innerHTML = `<div class="paineis">
       <div>
         <h2 style="margin-bottom:10px">O que a família recebe</h2>
@@ -798,6 +911,7 @@
             <tr><td>Som inicial do próprio nome (${esc(r.ipa)}, letra ${esc(ini)})</td><td><span class="status ${statusFig[0]}">${statusFig[1]}</span></td></tr>
             <tr><td>Letras do nome na ordem</td><td><span class="status ${statusLet[0]}">${statusLet[1]}</span></td></tr>
             <tr><td>Produção oral do som</td><td><span class="status ${statusFala[0]}">${statusFala[1]}</span></td></tr>
+            <tr><td>Mostra pro professor (validação em 1 toque)</td><td><span class="status ${r.professor === 'treinar' ? 'rev' : r.professor ? 'ok' : 'novo'}">${r.professor === 'aprendeu' ? '✓ Aprendeu!' : r.professor === 'explicou' ? '🎤 Me explicou certinho' : r.professor === 'treinar' ? '↺ Vamos treinar mais' : 'Aguardando (72 h)'}</span></td></tr>
             <tr><th>Situação</th><th><span class="status ${geral[0]}">${geral[1]}</span></th></tr>
           </tbody></table>
         </div>
@@ -816,6 +930,7 @@
     if (tudo) try { localStorage.removeItem(CHAVE); } catch (e) { /* */ }
     Object.assign(E, { nome: '', genero: null, responsavel: false, consentNome: false, consentAudio: false, fonetica: null, foneticaFala: null, avatar: { base: 0, cantinho: 'mata' }, moedas: 0, emblemas: [], resultado: null, prefs });
     if (gravacaoURL) URL.revokeObjectURL(gravacaoURL); gravacaoURL = null;
+    if (demoURL) URL.revokeObjectURL(demoURL); demoURL = null;
     salvar(); ir('cadastro');
   }
 

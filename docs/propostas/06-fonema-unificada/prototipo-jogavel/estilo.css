@@ -348,3 +348,16 @@ body.calmo *,body.calmo *::before,body.calmo *::after{animation:none!important;t
   .video .letreiro{font-size:40px}
   h1{font-size:28px}
 }
+
+/* selos (Decisão 018) */
+.album{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.selo-mini{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.selo-mini svg.mini{width:72px;height:80px}
+.selo-mini .vago{width:64px;height:72px;border-radius:18px;border:3px dashed #C7D9EA;display:grid;place-items:center;font-family:Fredoka;font-size:28px;color:#B4C6D8}
+.selo-mini small{font-family:Atkinson;font-size:12px;color:var(--cinza);line-height:1.15}
+.selo-mini.tem small{color:var(--marinho);font-weight:700}
+.prof-botoes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.prof-botoes .btn{font-size:21px;padding:0 14px}
+.parabens-box{display:flex;gap:16px;align-items:center;background:var(--creme);border:3px solid #F0DFC0;border-radius:24px;padding:14px}
+svg.mini-g{width:150px;height:165px;flex:none;animation:surge .8s cubic-bezier(.2,1.4,.4,1) both}
+@media (max-width:900px){.prof-botoes{grid-template-columns:1fr}.album{grid-template-columns:repeat(3,1fr)}.parabens-box{flex-direction:column}}

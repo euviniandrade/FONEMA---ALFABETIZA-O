@@ -72,6 +72,14 @@
 
 **Fecha a região:** **Mestre do CVC, Mestre dos Ditongos**; **Leitor da Amazônia**; a vila ganha o **barco-escola** e o observatório de bichos. **Em casa:** ler juntos o rótulo de uma garrafa de água e conversar "de onde vem a água da nossa casa?".
 
+**Professor e família junto (D018) em R7:**
+| Item | Como funciona aqui |
+|---|---|
+| Mostra pro professor | Pontos de demonstração: CVC, ditongos, o texto do ciclo da água (reconto com as próprias palavras). O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre da Sílaba de 3 Letras**, **Mestre dos Ditongos**, **Cientista da Água**, **Leitor da Amazônia**; valores: **Guardião do Rio**, **Amigo que Respeita** (outros modos de vida); esporte: **Futebol de Várzea** |
+| Ensinar junto (roteiro com áudio da dupla) | "De onde vem a água da nossa casa?" com o texto do app (5 min) |
+| Competição saudável (desligável) | Turma contra o Rio que Esqueceu: meta coletiva de palavras devolvidas. Nunca ranking por nível de leitura |
+
 ---
 
 ## R8 · Litoral e Mar
@@ -140,6 +148,14 @@
 | R8-F07-C9 | Trem · os dois | Gancho | O trem parte e chega a uma cidade cheia de placas em obras | Tales: "Quem vai ler essas instruções, [NOME]?" | N10 | — | — |
 
 **Fecha a região:** **Mestre dos Encontros**; **Leitor do Litoral**; a vila ganha a **estação de trem** ★ projeto e o **teatro** ★ meta. **Em casa:** achar o Brasil num mapa ou globo (no celular do adulto) e ler 1 placa da rua juntos.
+
+**Professor e família junto (D018) em R8:**
+| Item | Como funciona aqui |
+|---|---|
+| Mostra pro professor | Pontos de demonstração: cada grupo de encontros (PR…, PL…), "onde a gente mora" (mapa) e a pontuação (ler pergunta com voz de pergunta). O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre dos Encontros**, **Geógrafo da Vila**, **Leitor com Entonação**, **Leitor do Litoral**; valores: **Guardião do Mangue**, **Amigo que Divide o Crédito**; esporte: **Vôlei Sem Deixar Cair**, **Revezamento das Palavras** |
+| Ensinar junto (roteiro com áudio da dupla) | "Não corrija a fala, elogie a leitura": encontros consonantais em casa (3 min) |
+| Competição saudável (desligável) | Vôlei da turma: recorde coletivo de toques; recorde pessoal de leitura repetida. Nunca ranking por nível de leitura |
 
 ---
 
@@ -213,6 +229,14 @@
 | R9-F08-C9 | Observatório · os dois | Gancho | A estrela-mapa aponta o arquipélago | Sofia: "O que o céu conta, [NOME]?" | N10 | — | — |
 
 **Fecha a região:** **Mestre do H, do X, das famílias de palavras**; **Criador** (prata); a vila ganha o **jornal**, a **ponte** e o **observatório** ★. **Em casa:** ler uma notícia curta para criança (ou a manchete do jornal da vila no app) e conversar "o que é uma regra da nossa casa e para que ela serve?".
+
+**Professor e família junto (D018) em R9:**
+| Item | Como funciona aqui |
+|---|---|
+| Mostra pro professor | Pontos de demonstração: grafias (H, X, J × G), notícia de 2 frases e "o que faz o prefeito e o vereador" (explicação oral). O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do H e do X**, **Revisor**, **Matemático do Mercadinho**, **Cidadão da Vila** (votar), **Criador**; valores: **Respeita a Votação**, **Guardião da Reciclagem**; esporte: **Xadrez das Letras**, **Goalball e Bocha** |
+| Ensinar junto (roteiro com áudio da dupla) | "Qual é uma regra da nossa casa e para que serve?" (3 min, apartidário) |
+| Competição saudável (desligável) | Jornal da turma: cada criança escreve uma notícia; a turma vota a capa (ensina votar, sem perdedor). Nunca ranking por nível de leitura |
 
 ---
 
@@ -296,3 +320,11 @@
 | R10-F10-C7 | Editora · escritora | Autoria contínua | Escrever novos livrinhos para a vila | Escritora: "A vila quer mais histórias suas" | N2 | — | — |
 
 **Fecha a jornada:** **Leitor** (ouro), **Criador** (ouro: publicar no livro da vila), capa dourada do Leitor (item de domínio); a vila ganha a **editora**. **Em casa:** ritual de passagem em família: ler juntos o "Livro da minha jornada" e escolher o próximo livro de papel.
+
+**Professor e família junto (D018) em R10:**
+| Item | Como funciona aqui |
+|---|---|
+| Mostra pro professor | Pontos de demonstração: fluência (leitura repetida), inferência, texto próprio e o Livro da Jornada. O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Leitor Fluente**, **Previsor de Histórias**, **Historiador da Família**, **Astrônomo**, **Cidadão do Brasil**, **Autor**, **Alfabetizado(a)**; valores: **Gratidão**, **Leitor Gentil** (lê para o Bolota e para a família); esporte: **Festival com jogos de todas as regiões** |
+| Ensinar junto (roteiro com áudio da dupla) | "Ritual de passagem": como ouvir o Livro da Jornada e celebrar o processo, sem nota (5 min) |
+| Competição saudável (desligável) | Festival de Leitura da turma: cada criança lê uma página do seu livro; recordes só pessoais. Nunca ranking por nível de leitura |
