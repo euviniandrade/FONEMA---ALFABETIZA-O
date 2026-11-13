@@ -20,3 +20,9 @@
 .esp-svg.com-voz.lento .e-onda{animation-duration:2.6s}
 @keyframes eOnda{0%{opacity:0;transform:scale(.7)}30%{opacity:1}100%{opacity:0;transform:scale(1.25)}}
 @media (prefers-reduced-motion:reduce){.esp-svg.com-voz .e-onda{animation:none;opacity:.9}}
+.esp-svg .e-rot{cursor:pointer}
+.esp-svg .e-rot rect{fill:#FFF6DC;stroke:#F4C55A;stroke-width:3}
+.esp-svg .e-rot text{fill:#1B3160;font-family:Fredoka,Andika,sans-serif;font-weight:700}
+.esp-svg .e-rot line{stroke:#F4D58A;stroke-width:2.5;stroke-linecap:round}
+.esp-svg.sem-rotulos .e-rotulos{display:none}
+.esp-svg .e-ar-boca,.esp-svg .e-ar-nariz{transition:opacity .35s}
