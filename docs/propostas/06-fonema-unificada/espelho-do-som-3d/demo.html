@@ -22,13 +22,22 @@
 
 <main class="tela">
   <section class="palco-area">
-    <div id="palco" class="palco" aria-label="Boca em 3D"></div>
+    <div id="vFrente" class="palco vista frente-ilustrada on" aria-label="Boca de frente, bem de perto">
+      <figure class="retrato"><img id="fRosto" alt="Rosto de frente"><figcaption id="fNome">Sofia</figcaption></figure>
+      <div class="lupa-liga" aria-hidden="true"></div>
+      <figure class="lupa"><img id="fBoca" alt="A boca de perto"></figure>
+    </div>
+    <div id="vRaiox" class="palco vista" aria-label="Raio-X de lado"></div>
+    <div id="palco" class="palco vista" aria-label="Boca em 3D"></div>
+    <div class="quem" role="group" aria-label="Personagem"><button data-p="sofia" class="on">Sofia</button><button data-p="tales">Tales</button></div>
     <nav class="modos" aria-label="Como olhar a boca">
       <button data-modo="frente" class="on">😮 De frente</button>
-      <button data-modo="lado">🩻 Raio-X de lado</button>
+      <button data-modo="lado">🩻 Raio-X</button>
+      <span class="sep">3D:</span>
+      <button data-modo="frente3d">👄 Boca 3D</button>
       <button data-modo="dentro">🔍 Dentro da boca</button>
-      <button data-modo="corpo">🫁 Do pulmão à boca</button>
-      <button id="bGirar" aria-pressed="false">🔄 Girar 360°</button>
+      <button data-modo="corpo">🫁 Pulmão → boca</button>
+      <button id="bGirar" aria-pressed="false">🔄 360°</button>
     </nav>
   </section>
 
@@ -40,7 +49,6 @@
       <div class="selos"><span class="selo-voz" id="cVoz">🐝 tem voz</span><span class="selo-ar" id="cAr">💨 ar pela boca</span></div>
     </div>
       <div class="espelho-sofia">
-        <div class="moldura"><img id="sofiaBoca" src="recortes/sofia-boca-A.png" alt="Boca da Sofia de frente"></div>
         <p id="sofiaLeg">A Sofia faz assim</p>
         <button class="ouvir" id="bOuvir" aria-label="Ouvir o som">🔊 Ouvir</button>
       </div>

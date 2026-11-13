@@ -122,8 +122,9 @@
       const jaw = o.jaw + (f.modo === 'plosiva' ? 2.5 * solta : 0);
       // língua: superfície de cima + corpo para dentro
       const sup = lin.map((p) => { const g = P.giraMand(p, jaw); return [p[0] + (g[0] - p[0]) * o.tj, p[1] + (g[1] - p[1]) * o.tj]; });
-      sup.push(P.giraMand([-4.35, -2.15], jaw * 0.5));
-      const D = [0.4, 0.8, 1.25, 1.5, 1.2, 0.75, 0.4], baixo = [];
+      sup[5] = [sup[5][0] + 0.1, Math.max(sup[5][1], -1.25)];
+      sup.push(P.giraMand([-4.05, -1.75], jaw * 0.5));
+      const D = [0.42, 0.85, 1.25, 1.45, 1.1, 0.7, 0.35], baixo = [];
       for (let i = sup.length - 1; i >= 0; i--) {
         const a = sup[Math.max(0, i - 1)], b = sup[Math.min(sup.length - 1, i + 1)], tz = b[0] - a[0], ty = b[1] - a[1], L = Math.hypot(tz, ty) || 1;
         baixo.push([sup[i][0] - (ty / L) * D[i], sup[i][1] + (tz / L) * D[i]]);
@@ -149,19 +150,19 @@
       $$('.e-lb').forEach((r, i) => { const [z, w, h, pt] = LATERAIS[i], p = P.giraMand([z, pt - 0.1], jaw); r.setAttribute('x', X(p[0]) - (w * C.k) / 2); r.setAttribute('y', Y(p[1])); r.setAttribute('width', w * C.k * 0.92); r.setAttribute('height', h * C.k * 0.9); r.setAttribute('transform', `rotate(${jaw} ${X(p[0])} ${Y(p[1])})`); });
       // lábios
       const ab = o.ab + (['p', 'b'].includes(id) ? 0.42 * solta : 0), zb = 0.22 + o.arr * 0.4;
-      let yU = 0.05 + ab * 0.3 + 0.22, yL = P.giraMand([0.15, -0.06], jaw)[1] - ab * 0.22 - 0.25;
-      const junta = 1 - Math.min(1, ab / 0.14), m = (yU - 0.22 + yL + 0.25) / 2; yU += (m + 0.22 - yU) * junta; yL += (m - 0.25 - yL) * junta;
-      let zL = zb; if (o.ld > 0) { yL += (-0.3 - yL) * o.ld; zL += (-0.08 - zL) * o.ld; }
+      let yU = 0.05 + ab * 0.3 + 0.28, yL = P.giraMand([0.15, -0.06], jaw)[1] - ab * 0.22 - 0.31;
+      const junta = 1 - Math.min(1, ab / 0.14), m = (yU - 0.28 + yL + 0.31) / 2; yU += (m + 0.28 - yU) * junta; yL += (m - 0.31 - yL) * junta;
+      let zL = zb; if (o.ld > 0) { yL += (-0.36 - yL) * o.ld; zL += (-0.1 - zL) * o.ld; }
       const lc = $('.e-labio-c'), lb = $('.e-labio-b');
-      lc.setAttribute('cx', X(zb)); lc.setAttribute('cy', Y(yU)); lc.setAttribute('rx', (0.26 + o.arr * 0.1) * C.k); lc.setAttribute('ry', 0.24 * C.k);
-      lb.setAttribute('cx', X(zL)); lb.setAttribute('cy', Y(yL)); lb.setAttribute('rx', (0.28 + o.arr * 0.1) * C.k); lb.setAttribute('ry', 0.27 * C.k);
+      lc.setAttribute('cx', X(zb)); lc.setAttribute('cy', Y(yU)); lc.setAttribute('rx', (0.3 + o.arr * 0.12) * C.k); lc.setAttribute('ry', 0.3 * C.k);
+      lb.setAttribute('cx', X(zL)); lb.setAttribute('cy', Y(yL)); lb.setAttribute('rx', (0.32 + o.arr * 0.12) * C.k); lb.setAttribute('ry', 0.33 * C.k);
       // voz e ar
       const lar = [X(-4.9), Y(-4.2)]; $('.e-laringe').setAttribute('transform', `translate(${lar[0]},${lar[1]})`);
       const voz = o.voz > 0.5 && k > 0.5;
       svg.classList.toggle('com-voz', voz); svg.classList.toggle('lento', lento);
       $('.e-pregas').setAttribute('transform', voz && !rz ? `scale(1,${(0.4 + 0.6 * Math.abs(Math.sin(tempo * (lento ? 12 : 30)))).toFixed(2)})` : 'scale(1,.15)');
       const ar = k > 0.6 ? f.ar : 'nenhum', meio = (i) => [sup[i][0], (sup[i][1] + Math.max(P.ceuY(sup[i][0]), sup[i][1] + 0.05)) / 2 + 0.05];
-      const yb = (yU - 0.22 + yL + 0.25) / 2;
+      const yb = (yU - 0.28 + yL + 0.31) / 2;
       const boca = ['oral', 'oral+nasal', 'lateral'].includes(ar) && !(f.modo === 'plosiva' && solta < 0.05);
       const nariz = ar === 'nasal' || ar === 'oral+nasal';
       $('.e-ar-boca').setAttribute('d', suave([[-4.85, -1.2], [-4.82, 0.4], meio(3), meio(2), meio(1), [-0.3, yb], [0.9, yb], [2.0, yb - 0.2]].map(scr)));
