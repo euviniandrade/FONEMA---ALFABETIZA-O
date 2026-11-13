@@ -4,7 +4,8 @@ import { aplicarAtividade, fecharSessao, montarSessao, podeEntrar, type Progress
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Carregando, Topo } from '../../componentes/basicos.tsx';
-import { asset } from '../../servicos/ambiente.ts';
+import { Fundo, Icone } from '../../componentes/ui.tsx';
+import { cenaDe } from './Mundo.tsx';
 import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
 import { AssisteEFaz } from '../../mecanicas/AssisteEFaz.tsx';
@@ -108,12 +109,12 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
 
   return (
     <div className={`tela-sessao ${limpo ? 'fundo-limpo' : ''}`} data-etapa={etapa.tipo} data-cena={etapa.cena?.id}>
-      {!limpo ? <img className="cenario" src={asset(`fundos/${cenario === 'farol' || cenario === 'campinho' ? (cenario === 'farol' ? 'ilha' : 'praca') : cenario}.webp`)} alt="" /> : null}
-      <Topo crianca={crianca} titulo={`${fase.id} · ${fase.titulo}`}>
-        <ol className="trilha" aria-label="Trilha do dia">
+      {!limpo ? <Fundo cena={cenaDe(cenario)} desfoque={16} tom="calmo" /> : null}
+      <Topo crianca={crianca} voltar={`c/${criancaId}/vila`} titulo={fase.titulo}>
+        <ol className="trilha vidro" aria-label="Trilha do dia">
           {cenas.map((e, k) => (
-            <li key={e.cena!.id} className={k < posCena ? 'feito' : k === posCena && etapa.tipo === 'cena' ? 'agora' : ''} title={e.cena!.titulo}>
-              <i>{k < posCena ? '✓' : k + 1}</i><span>{NOME_CENA[e.cena!.tipo] ?? e.cena!.tipo}</span>
+            <li key={e.cena!.id} className={k < posCena ? 'feito' : k === posCena && etapa.tipo === 'cena' ? 'agora' : ''} title={e.cena!.titulo} aria-current={k === posCena && etapa.tipo === 'cena' ? 'step' : undefined}>
+              <i>{k < posCena ? <Icone nome="check" /> : k + 1}</i><span>{NOME_CENA[e.cena!.tipo] ?? e.cena!.tipo}</span>
             </li>
           ))}
         </ol>
@@ -121,18 +122,18 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
       <main className="palco" id="palco">
         {etapa.tipo === 'acolhida' ? (
           <section className="cartao acolhida">
-            {sessao.expressa ? <p className="etiqueta-expressa">⚡ Trilha Expressa: você já sabe muita coisa! Vamos em ritmo rápido.</p> : null}
+            {sessao.expressa ? <p className="etiqueta"><Icone nome="raio" />Trilha Expressa: você já sabe muita coisa! Vamos em ritmo rápido.</p> : null}
             <h1 className="t">{fase.titulo}</h1>
             <Balao fala={fase.acolhida} crianca={crianca} auto destaque />
             <ol className="trilha-dia">
-              {cenas.map((e) => <li key={e.cena!.id}><b>{NOME_CENA[e.cena!.tipo]}</b> {e.cena!.titulo}</li>)}
+              {cenas.map((e, k) => <li key={e.cena!.id}><i>{k + 1}</i><span><b>{NOME_CENA[e.cena!.tipo]}</b> {e.cena!.titulo}</span></li>)}
             </ol>
-            <button className="btn grande ipe" onClick={avancar} data-testid="comecar-sessao">Vamos! →</button>
+            <button className="btn enorme ipe brilha" onClick={avancar} data-testid="comecar-sessao"><Icone nome="play" />Vamos!</button>
           </section>
         ) : etapa.cena?.assiste && !assistiu ? (
           <AssisteEFaz key={etapa.cena.id} roteiro={etapa.cena.assiste.roteiro} imagem={etapa.cena.assiste.imagem} crianca={crianca} onFim={() => setAssistiu(true)} />
         ) : etapa.cena?.atividade ? (
-          <section className="cartao atividade">
+          <section className="cartao atividade" key={etapa.cena.id}>
             <h2 className="titulo-cena t">{etapa.cena.titulo}</h2>
             {renderAtividade(etapa.cena.atividade)}
           </section>

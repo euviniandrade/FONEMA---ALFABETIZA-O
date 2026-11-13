@@ -47,16 +47,38 @@ async function cap(page, nome) {
   if (!CAPTURAS) return;
   await page.waitForTimeout(350);
   n++;
-  await page.screenshot({ path: `${DIR_CAP}/${String(n).padStart(2, '0')}-${nome}.png` });
+  await page.screenshot({ path: `${DIR_CAP}/v2-${String(n).padStart(2, '0')}-${nome}.png` });
 }
 
+/** Portão do adulto (sem cálculo): segurar o botão até o anel completar. */
 async function passarPorteira(page) {
-  const conta = page.getByTestId('conta');
-  if (await conta.count()) {
-    const [a, b] = (await conta.innerText()).split('×').map((x) => Number(x.trim()));
-    await page.getByTestId('resposta-porteira').fill(String(a * b));
-    await page.getByTestId('entrar-adulto').click();
-  }
+  const botao = page.getByTestId('segurar-adulto');
+  await Promise.race([botao.waitFor({ timeout: 2500 }).catch(() => {}), page.waitForTimeout(600)]);
+  if (!(await botao.count())) return;
+  await botao.dispatchEvent('pointerdown', { pointerId: 1, isPrimary: true });
+  await page.getByTestId('portao-adulto').waitFor({ state: 'detached', timeout: 5000 });
+}
+
+/** Cadastro em passos: nome → como falar → gênero → de onde começa → autorização. */
+async function cadastrar(page, nome, genero, { previa, capturas = false, nivel } = {}) {
+  await page.getByTestId('campo-nome').fill(nome);
+  if (capturas) await cap(page, 'cadastro-1-nome');
+  await page.getByTestId('cadastro-continuar').click();
+  if (capturas) { await page.locator('[data-pronuncia="1-sofia"]').click(); await cap(page, 'cadastro-2-como-falar'); }
+  await page.getByTestId('nome-continuar').click();
+  await page.locator(`[data-genero="${genero}"]`).click();
+  if (previa) ok((await page.locator('.previa').innerText()).includes(previa), `prévia da concordância: "${previa}"`);
+  if (capturas) await cap(page, 'cadastro-3-genero');
+  await page.getByTestId('genero-continuar').click();
+  ok(await page.locator('[data-nivel="zero"][aria-pressed="true"]').count() === 1, '"Do zero" vem pré-selecionado como nível inicial (D026)');
+  if (nivel) await page.locator(`[data-nivel="${nivel}"]`).click();
+  if (capturas) await cap(page, 'cadastro-4-de-onde-comeca');
+  await page.getByTestId('nivel-continuar').click();
+  await page.getByTestId('cons-responsavel').check();
+  if (capturas) await cap(page, 'cadastro-5-autorizacao');
+  await page.getByTestId('salvar-crianca').click();
+  if (capturas) await cap(page, 'cadastro-entrega');
+  await page.getByTestId('entregar').click();
 }
 
 /** Resolve qualquer etapa da sessão até o ritual de fim (sempre pela resposta certa). */
@@ -65,7 +87,7 @@ async function jogarSessao(page, capturar = {}) {
   for (let passo = 0; passo < 400; passo++) {
     if (await page.getByTestId('ritual').count()) return;
     const cena = (await page.locator('[data-cena]').getAttribute('data-cena').catch(() => null)) ?? '';
-    const tirar = async (chave) => { if (capturar[chave] && !vistos.has(chave)) { vistos.add(chave); await cap(page, capturar[chave]); } };
+    const tirar = async (chave) => { if (capturar[chave] && !vistos.has(chave)) { vistos.add(chave); await (capturar.tirarCom ?? cap)(page, capturar[chave]); } };
 
     if (await page.getByTestId('comecar-sessao').isVisible().catch(() => false)) { await tirar('acolhida'); await page.getByTestId('comecar-sessao').click({ timeout: 3000 }).catch(() => {}); continue; }
     const minhaVez = page.getByTestId('minha-vez');
@@ -163,20 +185,15 @@ async function main() {
 
   console.log('1. Cadastro pelo adulto');
   await page.goto(BASE);
-  await cap(page, 'inicio');
-  await page.getByTestId('area-adulto').click();
+  await page.getByTestId('jogar').waitFor();
+  if (CAPTURAS) await page.waitForTimeout(2200); // a entrada tem animação (logo cai, botão sobe)
+  await cap(page, 'entrada');
+  await page.getByTestId('jogar').click();
+  await page.getByTestId('segurar-adulto').waitFor();
+  ok(!(await page.getByTestId('conta').count()) && !/[×x]\s*\d/.test(await page.getByTestId('portao-adulto').innerText()), 'portão do adulto sem conta de matemática (segurar por 3 segundos)');
+  await cap(page, 'portao-adulto');
   await passarPorteira(page);
-  await page.getByTestId('campo-nome').fill('Mariana Souza');
-  await page.locator('[data-genero="f"]').click();
-  await page.getByTestId('cons-responsavel').check();
-  ok((await page.locator('.previa').innerText()).includes('pronta, Mariana'), 'prévia da concordância: "pronta, Mariana"');
-  await cap(page, 'cadastro-adulto');
-  await page.getByTestId('cadastro-continuar').click();
-  await page.locator('[data-pronuncia="1-sofia"]').click();
-  await cap(page, 'nome-falado-pronuncia');
-  await page.getByTestId('nome-continuar').click();
-  await page.getByTestId('salvar-crianca').click();
-  await page.getByTestId('entregar').click();
+  await cadastrar(page, 'Mariana Souza', 'f', { previa: 'pronta, Mariana', capturas: true });
 
   console.log('2. Avatar e chegada');
   await page.locator('[data-base="crianca-02-trancas"]').click();
@@ -292,14 +309,7 @@ async function main() {
     await pj.getByTestId('modo-demo').click();
     await pj.waitForFunction(() => document.querySelector('[data-testid=modo-demo]')?.checked);
     await pj.goto(BASE + '#/adulto/cadastro');
-    await pj.getByTestId('campo-nome').fill('Helena');
-    await pj.locator('[data-genero="n"]').click();
-    ok((await pj.locator('.previa').innerText()).includes('Tudo pronto pra começar, Helena?'), 'gênero neutro: a fala muda de forma ("Tudo pronto pra começar, Helena?")');
-    await pj.getByTestId('cons-responsavel').check();
-    await pj.getByTestId('cadastro-continuar').click();
-    await pj.getByTestId('nome-continuar').click();
-    await pj.getByTestId('salvar-crianca').click();
-    await pj.getByTestId('entregar').click();
+    await cadastrar(pj, 'Helena', 'n', { previa: 'Tudo pronto pra começar, Helena?' });
     await pj.getByTestId('avatar-pronto').click();
     await pj.getByTestId('primeira-missao').waitFor();
     const idj = pj.url().split('/c/')[1].split('/')[0];
@@ -320,6 +330,23 @@ async function main() {
     ok(/Nível 2 de 10/.test(await pj.getByTestId('painel-familia').innerText()), 'termômetro subiu para 2 depois da Cachoeira das Sílabas');
     ok(/Exploração das Palavras/.test(await pj.getByTestId('painel-familia').innerText()), 'título "Exploração das Palavras" depois do portão');
     await guardarFalas(pj);
+
+    console.log('10. Nível inicial escolhido pelo adulto (D026)');
+    await pj.goto(BASE + '#/adulto/cadastro');
+    await cadastrar(pj, 'Davi', 'm', { nivel: 'letras-e-sons' });
+    await pj.getByTestId('avatar-pronto').click();
+    await pj.getByTestId('primeira-missao').click();
+    await pj.waitForFunction(() => location.hash.includes('/sessao/'));
+    ok(pj.url().includes('/sessao/R2a-F01'), '"já conhece as letras e os sons" começa em juntar sons e sílabas (R2a-F01)');
+    const idd = pj.url().split('/c/')[1].split('/')[0];
+    await pj.goto(BASE + `#/c/${idd}/regiao/R0`);
+    await pj.locator('.fase-no.liberada').first().waitFor();
+    ok(await pj.locator('.fase-no.liberada').count() === 6 && !(await pj.locator('.fase-no.concluida').count()), 'fases anteriores ficam abertas para revisar, sem contar como concluídas');
+    await pj.goto(BASE + `#/adulto/familia/${idd}`);
+    await pj.getByTestId('mudar-nivel').click();
+    await pj.locator('[data-nivel="zero"]').check();
+    await pj.getByTestId('mudar-nivel').waitFor();
+    ok(/Do zero/.test(await pj.getByTestId('nivel-inicial').innerText()), 'o adulto muda o nível inicial na área da família');
     await ctx2.close();
   }
 
@@ -330,26 +357,51 @@ async function main() {
     // o celular tem o próprio banco: cadastro rápido
     await p2.goto(BASE + '#/adulto/cadastro');
     await passarPorteira(p2);
-    await p2.getByTestId('campo-nome').fill('Kauã');
-    await p2.locator('[data-genero="m"]').click();
-    await p2.getByTestId('cons-responsavel').check();
-    await p2.getByTestId('cadastro-continuar').click();
-    await p2.getByTestId('nome-continuar').click();
-    await p2.getByTestId('salvar-crianca').click();
-    await p2.getByTestId('entregar').click();
+    await cadastrar(p2, 'Kauã', 'm');
+    const capCel = async (nome, espera = 400) => { await p2.waitForTimeout(espera); await p2.screenshot({ path: `${DIR_CAP}/v2-celular-${nome}.png`, fullPage: false }); };
+    await capCel('04-avatar');
     await p2.getByTestId('avatar-pronto').click();
+    await p2.getByTestId('primeira-missao').waitFor();
+    await capCel('05-chegada');
+    const idc = p2.url().split('/c/')[1].split('/')[0];
     await p2.getByTestId('primeira-missao').click();
+    await p2.getByTestId('comecar-sessao').waitFor();
+    await capCel('06-sessao-acolhida');
     await p2.getByTestId('comecar-sessao').click();
+    await p2.getByTestId('minha-vez').waitFor();
+    await capCel('07-assiste-e-faz');
     await p2.getByTestId('minha-vez').click();
-    await p2.waitForTimeout(300);
-    await p2.screenshot({ path: `${DIR_CAP}/celular-01-palmas.png`, fullPage: false });
-    await jogarSessao(p2, {});
-    await p2.waitForTimeout(800);
-    await p2.screenshot({ path: `${DIR_CAP}/celular-02-ritual.png`, fullPage: true });
+    await capCel('08-palmas');
+    await jogarSessao(p2, { espelho: '09-espelho-do-som', escolher: '10-escolher', pausa: '10b-pausa', montar: '11-montar', tirarCom: (_, nome) => capCel(nome, 250) });
+    await p2.getByTestId('selo-novo').first().waitFor({ timeout: 15000 });
+    await capCel('12-ritual', 1500);
     await p2.getByTestId('voltar-vila').click();
     await p2.getByTestId('vila').waitFor();
-    await p2.waitForTimeout(300);
-    await p2.screenshot({ path: `${DIR_CAP}/celular-03-vila.png`, fullPage: true });
+    await capCel('13-vila', 1200);
+    for (const [rota, nome] of [['album', '14-album'], ['lojinha', '15-lojinha'], ['mapa', '16-arquipelago'], ['regiao/R0', '17-regiao'], ['fase/R0-F02', '18-entrada-da-fase']]) {
+      await p2.goto(BASE + `#/c/${idc}/${rota}`);
+      await capCel(nome, 900);
+    }
+    await p2.goto(BASE + `#/adulto/familia/${idc}`);
+    await p2.getByTestId('painel-familia').waitFor();
+    await capCel('19-painel-familia', 700);
+    await p2.goto(BASE + '#/adulto');
+    await capCel('20-area-do-adulto', 700);
+    await p2.goto(BASE + '#/');
+    await p2.getByTestId('jogar').waitFor();
+    await capCel('01-entrada', 2400);
+    await p2.evaluate(() => sessionStorage.clear());
+    await p2.getByTestId('area-adulto').click();
+    await p2.getByTestId('segurar-adulto').waitFor();
+    await capCel('02-portao-adulto', 600);
+    await passarPorteira(p2);
+    await p2.goto(BASE + '#/adulto/cadastro');
+    await p2.getByTestId('campo-nome').fill('Bia');
+    await p2.getByTestId('cadastro-continuar').click();
+    await p2.getByTestId('nome-continuar').click();
+    await p2.locator('[data-genero="f"]').click();
+    await p2.getByTestId('genero-continuar').click();
+    await capCel('03-cadastro-de-onde-comeca', 500);
     await cel.close();
   }
 

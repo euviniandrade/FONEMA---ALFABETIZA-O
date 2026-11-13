@@ -1,3 +1,4 @@
+import { Figura, Icone } from '../componentes/ui.tsx';
 import { useEffect, useRef, useState } from 'react';
 import type { AtividadePausa } from '@fonema/conteudo';
 import { Balao } from '../componentes/basicos.tsx';
@@ -41,13 +42,13 @@ export function Pausa({ atividade, crianca, onFim }: PropsMecanica<AtividadePaus
     <div className="mec mec-pausa">
       <Balao fala={atividade.enunciado} crianca={crianca} />
       <div className={`pausa-palco ${atividade.sequencia.length ? '' : 'respira'}`}>
-        {atividade.sequencia.length ? <div className="pausa-palavra" aria-live="polite">{atual ? `🔊 ${atual.falar}` : '…'}</div> : <div className="respira-bola" aria-hidden="true" />}
-        <div className="pausa-estrelas" aria-label={`${estrelas} estrelas`}>{'⭐'.repeat(estrelas)}</div>
+        {atividade.sequencia.length ? <div className="pausa-palavra" aria-live="polite">{atual ? <><Icone nome="som" />{atual.falar}</> : '…'}</div> : <div className="respira-bola" aria-hidden="true" />}
+        <div className="pausa-estrelas" aria-label={`${estrelas} estrelas`}>{Array.from({ length: Math.min(estrelas, 12) }, (_, i) => <Icone key={i} nome="estrela" />)}</div>
       </div>
       <div className="linha-botoes">
-        {atividade.sequencia.length ? <button className="btn grande ipe" onClick={mexer}>🤸 {atividade.acao}!</button> : null}
+        {atividade.sequencia.length ? <button className="btn grande ipe" onClick={mexer}><Figura className="" palavra="ginga" />{atividade.acao}!</button> : null}
         <button className="btn grande verde" onClick={() => { vivo.current = false; voz.parar(); onFim({ tentativas: [], tentouDeNovo: 0 }); }} data-testid="pausa-pronto">
-          {fim ? 'Pronto! Vamos continuar →' : 'Pular a pausa →'}
+          {fim ? 'Pronto! Vamos continuar' : 'Pular a pausa'}<Icone nome="seta" />
         </button>
       </div>
       <p className="nota-mic">Pode fazer sentadinho também: é só tocar no botão.</p>

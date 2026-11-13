@@ -9,6 +9,11 @@ import { Album, ConhecaSeuCorpo, Lojinha, MostraProfessor, Mundo3D, Sondagem } f
 /** Rotas (hash): #/ · #/adulto/... · #/c/:id/... */
 export function App() {
   const r = useRota();
+  // transição de página: cada rota entra com fade/slide (desligada em "menos movimento" pelo CSS)
+  return <div className="pagina" key={r.join('/')}>{tela(r)}</div>;
+}
+
+function tela(r: string[]) {
   if (r[0] === 'adulto') {
     const [, sub, id] = r;
     return (

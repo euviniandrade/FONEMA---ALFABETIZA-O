@@ -1,3 +1,4 @@
+import { Figura, Icone } from '../componentes/ui.tsx';
 import { useEffect, useRef, useState } from 'react';
 import { FALAS, type AtividadePalmas } from '@fonema/conteudo';
 import { infoNome, silabasPara } from '@fonema/motor';
@@ -74,7 +75,7 @@ export function Palmas({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
       <Balao fala={atividade.enunciado} crianca={crianca} />
       <Progressinho atual={i} total={atividade.palavras.length} />
       <div className="palmas-palavra">
-        <button className="btn ouvir-texto" onClick={() => voz.falar(falaPalavra, { quem: 'tales' })}>🔊 <span>{ehNome ? crianca.nome : palavra}</span></button>
+        <button className="btn ouvir-texto" onClick={() => voz.falar(falaPalavra, { quem: 'tales' })} aria-label={`Ouvir: ${ehNome ? crianca.nome : palavra}`}><Icone nome="som" /><span>{ehNome ? crianca.nome : palavra}</span></button>
       </div>
       <div className={`lampadas ${estilo === 'amarelinha' ? 'amarelinha' : ''}`} data-silabas={sil.length} aria-live="polite" aria-label={`${palmas} palmas`}>
         {Array.from({ length: nLuz }, (_, k) => (
@@ -85,12 +86,12 @@ export function Palmas({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
       </div>
       <div className="palmas-acoes">
         <button className="btn grande ipe botao-palma" onClick={bater} disabled={ok} data-testid="palma">
-          {estilo === 'amarelinha' ? '🦶 Pular' : estilo === 'capoeira' ? '👏 Palma na ginga' : '👏 Palma'}
+          <Figura className="" palavra={estilo === 'amarelinha' ? 'pé' : estilo === 'capoeira' ? 'ginga' : 'mão'} />{estilo === 'amarelinha' ? 'Pular' : estilo === 'capoeira' ? 'Palma na ginga' : 'Palma'}
         </button>
-        <button className="btn grande verde" onClick={pronto} disabled={ok || palmas === 0} data-testid="pronto-palmas">Pronto!</button>
-        <button className="btn" onClick={() => setPalmas(0)} disabled={ok || palmas === 0}>↺ De novo</button>
+        <button className="btn grande verde" onClick={pronto} disabled={ok || palmas === 0} data-testid="pronto-palmas"><Icone nome="check" />Pronto!</button>
+        <button className="btn" onClick={() => setPalmas(0)} disabled={ok || palmas === 0}><Icone nome="repetir" />De novo</button>
       </div>
-      {erros > 0 && !ok ? <p className="aviso-acolhe">{FALAS.erroJunto.replace('[NOME]', crianca.nome)}</p> : null}
+      {erros > 0 && !ok ? <p className="aviso-acolhe"><Icone nome="dica" /><span>{FALAS.erroJunto.replace('[NOME]', crianca.nome)}</span></p> : null}
     </div>
   );
 }

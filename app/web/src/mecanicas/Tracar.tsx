@@ -1,3 +1,4 @@
+import { Icone } from '../componentes/ui.tsx';
 import { useEffect, useRef, useState } from 'react';
 import type { AtividadeTracar } from '@fonema/conteudo';
 import { Balao, Brilho } from '../componentes/basicos.tsx';
@@ -92,8 +93,8 @@ export function Tracar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
         {ok ? <Brilho ativo /> : null}
       </div>
       <div className="linha-botoes">
-        <button className="btn" onClick={() => { const c = canvas.current!; c.getContext('2d')!.clearRect(0, 0, c.width, c.height); tocados.current = new Set(); setCobertura(0); }}>↺ Apagar</button>
-        <button className="btn grande verde" onClick={terminar} disabled={ok || cobertura < 0.35} data-testid="tracei">✋ Pronto, desenhei!</button>
+        <button className="btn" onClick={() => { const c = canvas.current!; c.getContext('2d')!.clearRect(0, 0, c.width, c.height); tocados.current = new Set(); setCobertura(0); }}><Icone nome="repetir" />Apagar</button>
+        <button className="btn grande verde" onClick={terminar} disabled={ok || cobertura < 0.35} data-testid="tracei"><Icone nome="check" />Pronto, desenhei!</button>
       </div>
       <p className="nota-mic">Desenhe por cima da letra. {cobertura < 0.35 ? 'Continue o traço…' : 'Muito bem! Pode tocar em "Pronto".'}</p>
     </div>

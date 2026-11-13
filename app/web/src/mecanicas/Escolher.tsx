@@ -1,3 +1,4 @@
+import { Figura, Icone } from '../componentes/ui.tsx';
 import { useEffect, useRef, useState } from 'react';
 import { FALAS, type AtividadeEscolher, type Opcao } from '@fonema/conteudo';
 import { Balao, Brilho, BotaoOuvir } from '../componentes/basicos.tsx';
@@ -100,14 +101,14 @@ export function Escolher({ atividade, crianca, sessao, cenaId, revisao, onFim }:
               data-opcao={o.id}
               data-correta={o.id === item.correta ? '1' : undefined}
             >
-              {o.letra ? <span className="letra">{o.letra}</span> : <span className="fig" aria-hidden="true">{o.figura}</span>}
+              {o.letra ? <span className="letra">{o.letra}</span> : <Figura emoji={o.figura} palavra={o.id} />}
               {mostrarRotulo(o) && !o.letra ? <span className="rot">{o.rotulo}</span> : null}
               {certa ? <Brilho ativo /> : null}
             </button>
           );
         })}
       </div>
-      {aviso ? <p className="aviso-acolhe" role="status">{aviso.replace('[NOME]', crianca.nome)}</p> : null}
+      {aviso ? <p className="aviso-acolhe" role="status"><Icone nome="dica" /><span>{aviso.replace('[NOME]', crianca.nome)}</span></p> : null}
     </div>
   );
 }

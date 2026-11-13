@@ -1,3 +1,4 @@
+import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { useEffect, useMemo, useState } from 'react';
 import { CONQUISTA_POR_ID, FASE_POR_ID, FALAS, type Fase } from '@fonema/conteudo';
 import { calcularNivel, fasesConcluidas, infoNome, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
@@ -57,10 +58,13 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
   const idade = new Date().getFullYear() - crianca.anoNascimento;
   return (
     <div className="tela-ritual" data-testid="ritual">
-      <img className="cenario" src={asset('fundos/vila-entardecer.webp')} alt="" />
+      <Fundo cena="arte/hero-paisagem" desfoque={10} tom="claro" />
+      {relatorio.conquistasNovas.length || relatorio.faseConcluida ? <div className="confete" aria-hidden="true">{Array.from({ length: 26 }, (_, i) => <i key={i} style={{ left: `${(i * 41 + 7) % 100}%`, animationDuration: `${3.5 + (i % 5) * 0.7}s`, animationDelay: `${(i % 9) * 0.25}s` }} />)}</div> : null}
       <Topo crianca={crianca} moedinhas={saldoAntes + (passo >= 1 ? relatorio.moedinhas : 0)} titulo="Fim da missão de hoje" />
       <main className="palco ritual">
         <section className="cartao ritual-cartao">
+          <div className="ritual-raios" aria-hidden="true" />
+          {relatorio.faseConcluida ? <img className="ritual-trofeu" src={asset('figuras/estrela.webp')} alt="" /> : null}
           <h1 className="t">{relatorio.faseConcluida ? `Fase concluída: ${fase.titulo}!` : 'Missão de hoje feita!'}</h1>
           <Balao fala={{ quem: 'sofia', texto: FALAS.ritual.recap }} crianca={crianca} />
           <p className="ritual-desafios">Hoje: <b>{relatorio.atividades}</b> desafios feitos</p>
@@ -84,7 +88,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
                 <div className="surpresas">
                   {relatorio.surpresas.map((s) => (
                     <div key={s.id} className="surpresa" data-testid="surpresa">
-                      {s.imagem ? <img src={asset(s.imagem)} alt="" /> : <span aria-hidden="true">🏡</span>}
+                      <img src={asset(s.imagem ?? 'arte/icones/casa.webp')} alt="" />
                       <p><small>Surpresa!</small> {s.nome}</p>
                     </div>
                   ))}
@@ -94,20 +98,20 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
           </div>
           {relatorio.chefe ? (
             <p className={`ritual-chefe ${relatorio.chefe.passou ? 'ok' : ''}`}>
-              {relatorio.chefe.passou ? `Você venceu! (${Math.round(relatorio.chefe.leitura * 100)}% de acertos)` : 'Quase! Vamos treinar mais um pouquinho; o desafio continua lá, e nada se perde.'}
+              <Icone nome={relatorio.chefe.passou ? 'estrela' : 'coracao'} />{relatorio.chefe.passou ? `Você venceu! (${Math.round(relatorio.chefe.leitura * 100)}% de acertos)` : 'Quase! Vamos treinar mais um pouquinho; o desafio continua lá, e nada se perde.'}
             </p>
           ) : null}
-          {expressa && relatorio.expressa ? <p className="ritual-chefe">{relatorio.expressa.passou ? '⚡ Trilha Expressa: fase feita em ritmo rápido!' : 'Essa a gente vai fazer com calma, juntos!'}</p> : null}
+          {expressa && relatorio.expressa ? <p className="ritual-chefe"><Icone nome="raio" />{relatorio.expressa.passou ? 'Trilha Expressa: fase feita em ritmo rápido!' : 'Essa a gente vai fazer com calma, juntos!'}</p> : null}
           {relatorio.termometroDepois > relatorio.termometroAntes ? <div className="ritual-termo"><p>O termômetro da leitura subiu!</p><Termometro valor={relatorio.termometroDepois} comNumero={false} /></div> : null}
           {relatorio.tituloNovo ? <p className="titulo-novo">Título novo: <b>{relatorio.tituloNovo}</b></p> : null}
           <BarraObjetivo nivel={nivel} objetivo={config.recompensas.modo === 'surpresa' ? proxima?.objetivo : undefined} />
           {passo >= 3 ? <Balao fala={relatorio.faseConcluida ? fase.gancho : { quem: 'sofia', texto: FALAS.ritual.amanha }} crianca={crianca} humor="curiosa" /> : null}
           <div className="linha-botoes ritual-botoes">
-            {fase.demonstracao ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/mostra/${fase.id}`)} data-testid="mostra-professor">🎤 Mostra pro professor</button> : null}
-            <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/album`)}>🏅 Álbum</button>
-            {config.lojinha.noFimDaSessao ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/lojinha`)} data-testid="ir-lojinha">🛒 Lojinha</button> : null}
-            {progresso.sessoesFeitas === 1 && idade >= 6 && !progresso.expressa.sondagemEm ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/sondagem`)}>🪧 Missão das Placas</button> : null}
-            <button className="btn grande ipe" onClick={() => navegar(`c/${crianca.id}/vila`)} data-testid="voltar-vila">🏡 {textoTela('Tchau! Voltar para a vila', crianca)}</button>
+            {fase.demonstracao ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/mostra/${fase.id}`)} data-testid="mostra-professor"><Icone nome="chapeu" />Mostra pro professor</button> : null}
+            <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/album`)}><Icone nome="album" />Álbum</button>
+            {config.lojinha.noFimDaSessao ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/lojinha`)} data-testid="ir-lojinha"><Icone nome="lojinha" />Lojinha</button> : null}
+            {progresso.sessoesFeitas === 1 && idade >= 6 && !progresso.expressa.sondagemEm ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/sondagem`)}><Icone nome="placa" />Missão das Placas</button> : null}
+            <button className="btn grande ipe" onClick={() => navegar(`c/${crianca.id}/vila`)} data-testid="voltar-vila"><Icone nome="casa" />{textoTela('Tchau! Voltar para a vila', crianca)}</button>
           </div>
         </section>
       </main>

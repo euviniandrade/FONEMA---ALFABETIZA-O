@@ -1,3 +1,4 @@
+import { Figura, Icone } from '../componentes/ui.tsx';
 import { useEffect, useRef, useState } from 'react';
 import { FALAS, type AtividadeFalar } from '@fonema/conteudo';
 import { Balao, Brilho } from '../componentes/basicos.tsx';
@@ -66,17 +67,17 @@ export function Falar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
       <Balao fala={atividade.enunciado} crianca={crianca} />
       <Progressinho atual={i} total={atividade.itens.length} />
       <div className={`cartao-leitura ${item.pseudo ? 'pseudo' : ''}`}>
-        {item.figura ? <span className="fig" aria-hidden="true">{item.figura}</span> : null}
+        {item.figura ? <Figura emoji={item.figura} palavra={item.falar} /> : null}
         <span className="palavra-grande" data-testid="palavra-falar">{item.texto}</span>
         {item.pseudo ? <small>nome de bichinho da mata</small> : null}
         {ok ? <Brilho ativo /> : null}
       </div>
       <div className="linha-botoes">
-        {temReconhecimento() ? <button className={`btn grande ${ouvindo ? 'ouvindo' : ''}`} onClick={microfone} disabled={ouvindo || ok}>🎤 Falar no microfone</button> : null}
-        <button className="btn grande verde" onClick={concluir} disabled={ok} data-testid="eu-falei">✋ Eu falei!</button>
-        <button className="btn" onClick={ajuda} disabled={ok}>💡 Me ajuda</button>
+        {temReconhecimento() ? <button className={`btn grande ${ouvindo ? 'ouvindo' : ''}`} onClick={microfone} disabled={ouvindo || ok}><Icone nome="microfone" />Falar no microfone</button> : null}
+        <button className="btn grande verde" onClick={concluir} disabled={ok} data-testid="eu-falei"><Icone nome="check" />Eu falei!</button>
+        <button className="btn" onClick={ajuda} disabled={ok}><Icone nome="dica" />Me ajuda</button>
       </div>
-      {msg ? <p className="aviso-acolhe" role="status">{msg}</p> : null}
+      {msg ? <p className="aviso-acolhe" role="status"><Icone nome="microfone" /><span>{msg}</span></p> : null}
       <p className="nota-mic">O microfone é opcional e escuta só no aparelho. Nenhum áudio é enviado.</p>
     </div>
   );

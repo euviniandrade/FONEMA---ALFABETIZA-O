@@ -3,7 +3,8 @@ import { CONQUISTAS, FASE_POR_ID, ITENS_LOJA, REGIOES, SONS, SURPRESAS, type Ite
 import { aplicarSondagem, comprar, infoNome, podeComprar, podeEntrar } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
-import { AvatarGrande, Balao, Carregando, Topo } from '../../componentes/basicos.tsx';
+import { AvatarGrande, Balao, BotaoOuvir, Carregando, Topo } from '../../componentes/basicos.tsx';
+import { Figura, Fundo, Icone } from '../../componentes/ui.tsx';
 import { Cofrinho, Selo } from '../../componentes/recompensas.tsx';
 import { EspelhoFrente, EspelhoLado, type ApiEspelho } from '../../componentes/EspelhoDoSom.tsx';
 import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
@@ -39,6 +40,7 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
 
   return (
     <div className="tela-lojinha" data-testid="lojinha">
+      <Fundo cena="feira" desfoque={14} tom="calmo" />
       <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/vila`} titulo="Lojinha da vila" />
       <main className="palco">
         <section className="cartao">
@@ -68,8 +70,8 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
                   <img src={asset(i.imagem)} alt="" />
                   <b>{i.nome}</b>
                   <span className="preco"><img src={asset('recompensas/moeda.webp')} alt="" />{i.preco}</span>
-                  {tem ? <span className="ja-tem">Na mochila ✓</span> : pode ? (
-                    <button className="btn verde" onClick={() => setConfirmar(i)}>Trocar</button>
+                  {tem ? <span className="ja-tem"><Icone nome="check" />Na mochila</span> : pode ? (
+                    <button className="btn verde" onClick={() => setConfirmar(i)}><Icone nome="check" />Trocar</button>
                   ) : (
                     <>
                       <div className="barrinha"><i style={{ width: `${Math.min(100, (progresso.moedinhas.saldo / i.preco) * 100)}%` }} /></div>
@@ -92,7 +94,7 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
             <p className="nota-mic">Depois da troca, sobram {progresso.moedinhas.saldo - confirmar.preco} moedinhas.</p>
             <div className="linha-botoes">
               <button className="btn grande" onClick={() => setConfirmar(null)}>Esperar e juntar</button>
-              <button className="btn grande verde" onClick={() => comprarItem(confirmar)} data-testid="confirmar-troca">Trocar agora</button>
+              <button className="btn grande verde" onClick={() => comprarItem(confirmar)} data-testid="confirmar-troca"><Icone nome="check" />Trocar agora</button>
             </div>
           </div>
         </div>
@@ -109,6 +111,7 @@ export function Album({ criancaId }: { criancaId: string }) {
   const ganhas = Object.keys(progresso.conquistas).length;
   return (
     <div className="tela-album" data-testid="album">
+      <Fundo cena="biblioteca" desfoque={14} tom="calmo" />
       <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/vila`} titulo="Álbum de Conquistas" />
       <main className="palco">
         <section className="cartao">
@@ -116,7 +119,8 @@ export function Album({ criancaId }: { criancaId: string }) {
             <AvatarGrande crianca={crianca} itens={progresso.equipados} />
             <div>
               <h1 className="t">Álbum de {crianca.nome}</h1>
-              <p>{ganhas} conquistas. Cada uma conta uma coisa que você aprendeu.</p>
+              <p className="album-contagem"><img src={asset('figuras/estrela.webp')} alt="" />{ganhas} {ganhas === 1 ? 'conquista' : 'conquistas'}</p>
+              <p>Cada uma conta uma coisa que você aprendeu.</p>
               {progresso.itens.length ? <div className="mochila"><b>Mochila:</b>{progresso.itens.map((i) => <img key={i} src={asset(`itens/${i}.webp`)} alt={i} title={i} />)}</div> : null}
               {progresso.areas.length ? <p className="nota-mic">Lugares novos na vila: {SURPRESAS.filter((s) => progresso.areas.includes(s.id)).map((s) => s.nome).join(' · ')}</p> : null}
             </div>
@@ -159,7 +163,7 @@ export function ConhecaSeuCorpo({ criancaId }: { criancaId: string }) {
   const nomes: Record<string, string> = { frente: 'De frente', lado: 'Raio-X de lado', dentro: 'Dentro da boca', corpo: 'Do pulmão à boca' };
   const s = SONS[fonema];
   return (
-    <div className="tela-corpo">
+    <div className="tela-corpo fundo-limpo">
       <Topo crianca={crianca} voltar={`c/${criancaId}/vila`} titulo="Conheça seu corpo" />
       <main className="palco">
         <section className="cartao corpo-cartao">
@@ -175,9 +179,9 @@ export function ConhecaSeuCorpo({ criancaId }: { criancaId: string }) {
               </div>
               <div className="grade-modos">
                 {config.espelho.conhecaSeuCorpo.map((m) => <button key={m} className={`btn ${modo === m ? 'pri' : ''}`} onClick={() => setModo(m)}>{nomes[m]}</button>)}
-                <button className={`btn ${girar ? 'pri' : ''}`} onClick={() => { setGirar(!girar); api.current?.girar?.(!girar); }}>⟳ Girar 360°</button>
+                <button className={`btn ${girar ? 'pri' : ''}`} onClick={() => { setGirar(!girar); api.current?.girar?.(!girar); }}><Icone nome="repetir" />Girar 360°</button>
               </div>
-              <p className="dica-boca">👄 {s.dica}</p>
+              <p className="dica-boca"><Icone nome="boca" /><span>{s.dica}</span></p>
             </div>
           </div>
         </section>
@@ -207,15 +211,17 @@ export function MostraProfessor({ criancaId, faseId }: { criancaId: string; fase
   };
   return (
     <div className="tela-mostra">
+      <Fundo cena="praca" desfoque={14} tom="calmo" />
       <Topo crianca={crianca} voltar={`c/${criancaId}/vila`} titulo="Mostra pro professor" />
       <main className="palco">
         <section className="cartao mostra-cartao">
-          <h1 className="t">🎤 Mostra pro professor</h1>
+          <div className="mostra-arte" aria-hidden="true"><Icone nome="chapeu" /></div>
+          <h1 className="t">Mostra pro professor</h1>
           <p className="objetivo">{fase.demonstracao.descricao}</p>
           {estado === 'enviado' ? (
             <>
-              <p className="enviado" data-testid="demonstracao-enviada">✓ Enviado para o professor (ou para a família, no uso em casa).</p>
-              <button className="btn grande ipe" onClick={() => navegar(`c/${criancaId}/vila`)}>🏡 Voltar para a vila</button>
+              <p className="enviado" data-testid="demonstracao-enviada"><Icone nome="check" />Enviado para o professor (ou para a família, no uso em casa).</p>
+              <button className="btn grande ipe" onClick={() => navegar(`c/${criancaId}/vila`)}><Icone nome="casa" />Voltar para a vila</button>
             </>
           ) : estado === 'gravando' ? (
             <div className="gravando"><p>Gravando… fala agora!</p><div className="medidor"><i style={{ width: `${nivel * 100}%` }} /></div></div>
@@ -225,9 +231,9 @@ export function MostraProfessor({ criancaId, faseId }: { criancaId: string; fase
                 <button className="btn grande" onClick={async () => {
                   setEstado('gravando');
                   try { const b = await gravar(4000, setNivel); await enviar('gravacao', b); } catch { setEstado('escolher'); }
-                }}>🎙️ Gravar (4 s)</button>
+                }}><Icone nome="gravar" />Gravar (4 s)</button>
               ) : null}
-              <button className="btn grande verde" onClick={() => enviar('ao-vivo')} data-testid="mostrei-ao-vivo">👀 Mostrei ao vivo</button>
+              <button className="btn grande verde" onClick={() => enviar('ao-vivo')} data-testid="mostrei-ao-vivo"><Icone nome="olho" />Mostrei ao vivo</button>
             </div>
           )}
           <p className="nota-mic">O áudio fica só neste aparelho e serve só para o professor ouvir.</p>
@@ -240,16 +246,16 @@ export function MostraProfessor({ criancaId, faseId }: { criancaId: string; fase
 
 /** Sondagem lúdica "Missão das Placas da Vila" (D021 §3): para em 2 erros seguidos do mesmo degrau, termina no acerto. */
 const PLACAS: { degrau: number; pergunta: string; ouvir?: string; mostrar?: string; opcoes: { id: string; rot: string }[]; certa: string }[] = [
-  { degrau: 1, pergunta: 'O que rima com GATO?', ouvir: 'gato', opcoes: [{ id: 'pato', rot: '🦆' }, { id: 'bola', rot: '⚽' }], certa: 'pato' },
-  { degrau: 1, pergunta: 'Quantas palmas tem BOLOTA?', ouvir: 'bo-lo-ta', opcoes: [{ id: '2', rot: '👏👏' }, { id: '3', rot: '👏👏👏' }], certa: '3' },
-  { degrau: 2, pergunta: 'Qual começa com /mmm/?', ouvir: 'mmmm', opcoes: [{ id: 'mala', rot: '🧳' }, { id: 'sol', rot: '☀️' }], certa: 'mala' },
-  { degrau: 2, pergunta: 'Qual começa com /sss/?', ouvir: 'ssss', opcoes: [{ id: 'sapo', rot: '🐸' }, { id: 'lua', rot: '🌙' }], certa: 'sapo' },
+  { degrau: 1, pergunta: 'O que rima com GATO?', ouvir: 'gato', opcoes: [{ id: 'pato', rot: 'pato' }, { id: 'bola', rot: 'bola' }], certa: 'pato' },
+  { degrau: 1, pergunta: 'Quantas palmas tem BOLOTA?', ouvir: 'bo-lo-ta', opcoes: [{ id: '2', rot: 'mão mão' }, { id: '3', rot: 'mão mão mão' }], certa: '3' },
+  { degrau: 2, pergunta: 'Qual começa com /mmm/?', ouvir: 'mmmm', opcoes: [{ id: 'mala', rot: 'mala' }, { id: 'sol', rot: 'sol' }], certa: 'mala' },
+  { degrau: 2, pergunta: 'Qual começa com /sss/?', ouvir: 'ssss', opcoes: [{ id: 'sapo', rot: 'sapo' }, { id: 'lua', rot: 'lua' }], certa: 'sapo' },
   { degrau: 3, pergunta: 'Qual letra faz /aaa/?', ouvir: 'aaaa', opcoes: [{ id: 'A', rot: 'A' }, { id: 'O', rot: 'O' }, { id: 'U', rot: 'U' }], certa: 'A' },
   { degrau: 3, pergunta: 'Qual letra faz /iii/?', ouvir: 'iiii', opcoes: [{ id: 'E', rot: 'E' }, { id: 'I', rot: 'I' }, { id: 'A', rot: 'A' }], certa: 'I' },
   { degrau: 4, pergunta: 'Qual letra faz /fff/?', ouvir: 'ffff', opcoes: [{ id: 'F', rot: 'F' }, { id: 'M', rot: 'M' }, { id: 'L', rot: 'L' }], certa: 'F' },
   { degrau: 4, pergunta: 'Qual letra faz /lll/?', ouvir: 'llll', opcoes: [{ id: 'M', rot: 'M' }, { id: 'L', rot: 'L' }, { id: 'S', rot: 'S' }], certa: 'L' },
-  { degrau: 5, pergunta: 'Lê a placa: qual é a figura?', mostrar: 'MALA', opcoes: [{ id: 'mala', rot: '🧳' }, { id: 'lua', rot: '🌙' }], certa: 'mala' },
-  { degrau: 5, pergunta: 'Lê a placa: qual é a figura?', mostrar: 'LUA', opcoes: [{ id: 'mala', rot: '🧳' }, { id: 'lua', rot: '🌙' }], certa: 'lua' }
+  { degrau: 5, pergunta: 'Lê a placa: qual é a figura?', mostrar: 'MALA', opcoes: [{ id: 'mala', rot: 'mala' }, { id: 'lua', rot: 'lua' }], certa: 'mala' },
+  { degrau: 5, pergunta: 'Lê a placa: qual é a figura?', mostrar: 'LUA', opcoes: [{ id: 'mala', rot: 'mala' }, { id: 'lua', rot: 'lua' }], certa: 'lua' }
 ];
 
 export function Sondagem({ criancaId }: { criancaId: string }) {
@@ -291,23 +297,23 @@ export function Sondagem({ criancaId }: { criancaId: string }) {
   };
   return (
     <div className="tela-sondagem">
-      <img className="cenario" src={asset('fundos/vila.webp')} alt="" />
+      <Fundo cena="praca" desfoque={14} tom="calmo" />
       <Topo crianca={crianca} voltar={`c/${criancaId}/vila`} titulo="Missão das Placas da Vila" />
       <main className="palco">
-        <section className="cartao">
+        <section className="cartao sondagem-cartao">
           {fim ? (
             <>
-              <h1 className="t">Placas no lugar! 🪧</h1>
+              <h1 className="t">Placas no lugar!</h1>
               <p>Obrigado pela ajuda. A jornada começa do começo para todo mundo; quem já sabe passa mais rápido.</p>
-              <button className="btn grande ipe" onClick={() => navegar(`c/${criancaId}/vila`)}>🏡 Voltar para a vila</button>
+              <div className="linha-botoes" style={{ justifyContent: 'center' }}><button className="btn grande ipe" onClick={() => navegar(`c/${criancaId}/vila`)}><Icone nome="casa" />Voltar para a vila</button></div>
             </>
           ) : (
             <>
-              <h1 className="t">Placa {k + 1}</h1>
+              <h2 className="titulo-cena t"><Icone nome="placa" />Placa {k + 1} de {PLACAS.length}</h2>
               <p className="objetivo">{p.pergunta}</p>
-              {p.mostrar ? <div className="palavra-grande">{p.mostrar}</div> : null}
+              {p.mostrar ? <div className="pergunta"><div className="palavra-grande">{p.mostrar}</div></div> : p.ouvir ? <div className="pergunta"><BotaoOuvir onClick={() => voz.falar(p.ouvir!, { quem: 'sofia' })} rotulo="Ouvir de novo" /></div> : null}
               <div className="opcoes">
-                {p.opcoes.map((o) => <button key={o.id} className={`opcao ${o.rot.length === 1 ? 'opcao-letra' : ''}`} onClick={() => responder(o.id)}>{o.rot.length === 1 ? <span className="letra">{o.rot}</span> : <span className="fig">{o.rot}</span>}</button>)}
+                {p.opcoes.map((o) => <button key={o.id} className={`opcao ${o.rot.length === 1 ? 'opcao-letra' : ''}`} onClick={() => responder(o.id)}>{o.rot.length === 1 ? <span className="letra">{o.rot}</span> : o.rot.includes(' ') ? <span className="fig-grupo">{o.rot.split(' ').map((w, n) => <Figura key={n} palavra={w} />)}</span> : <Figura palavra={o.rot} />}</button>)}
               </div>
             </>
           )}
@@ -353,9 +359,8 @@ export function Mundo3D({ criancaId }: { criancaId: string }) {
   const feitas = Object.entries(progresso.fases).filter(([, f]) => f.estado === 'concluida').map(([k]) => k).join(',');
   return (
     <div className="tela-mundo3d">
-      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} titulo="Vila da Sofia · 3D">
-        <button className="btn" onClick={() => navegar(`c/${criancaId}/vila`)}>🗺️ Mapa 2D</button>
-        <button className="btn ipe" onClick={() => navegar(`c/${criancaId}/fase/${progresso.faseAtual}`)}>⭐ Missão</button>
+      <Topo crianca={crianca} voltar={`c/${criancaId}/vila`} titulo="Passeio pela vila em 3D">
+        <button className="btn ipe" onClick={() => navegar(`c/${criancaId}/fase/${progresso.faseAtual}`)}><Icone nome="play" />Missão</button>
       </Topo>
       <iframe ref={ref} className="mundo3d" src={`./mundo3d/index.html?cena=vila&regiao=${regiao}&fase=${progresso.faseAtual}&feitas=${feitas}`} title="Mundo 3D da Vila" allow="autoplay; fullscreen" />
       <p className="sr">{textoTela('Explore a vila, [NOME]!', crianca)}</p>

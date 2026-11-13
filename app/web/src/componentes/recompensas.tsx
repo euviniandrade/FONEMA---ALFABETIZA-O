@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import type { Conquista } from '@fonema/conteudo';
 import type { ConquistaGanha, InfoNivel } from '@fonema/motor';
 import { asset } from '../servicos/ambiente.ts';
+import { caminhoFigura } from './ui.tsx';
 
 const METAL: Record<string, [string, string, string]> = {
   bronze: ['#F2C7A0', '#C9814A', '#8A4F24'],
@@ -50,7 +51,7 @@ export function Selo({ conquista, ganha, tamanho = 150, girar = false, letra, bl
           ) : ehTexto ? (
             <text x="100" y="124" textAnchor="middle" fontSize={motivo.length > 1 ? 54 : 70} fontFamily="Fredoka" fontWeight="700" fill={bloqueado ? '#EEF2F6' : '#FFD067'} stroke="#7A4F00" strokeWidth={bloqueado ? 0 : 2}>{motivo}</text>
           ) : (
-            <text x="100" y="122" textAnchor="middle" fontSize="60" opacity={bloqueado ? 0.45 : 1}>{motivo}</text>
+            <image href={caminhoFigura(motivo) ?? asset('figuras/estrela.webp')} x="54" y="54" width="92" height="92" opacity={bloqueado ? 0.5 : 1} style={bloqueado ? { filter: 'grayscale(1)' } : undefined} />
           )}
           {!bloqueado ? <rect className="selo-brilho" x="-120" y="0" width="80" height="200" fill={`url(#b${id})`} clipPath={`url(#c${id})`} transform="skewX(-18)" /> : null}
         </g>

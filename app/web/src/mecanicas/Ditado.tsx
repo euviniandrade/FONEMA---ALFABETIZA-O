@@ -1,3 +1,4 @@
+import { Icone } from '../componentes/ui.tsx';
 import { useEffect, useRef, useState } from 'react';
 import type { AtividadeDitado } from '@fonema/conteudo';
 import { Balao, BotaoOuvir } from '../componentes/basicos.tsx';
@@ -52,15 +53,15 @@ export function Ditado({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
             {atividade.letras.map((l) => <button key={l} className="peca" onClick={() => { efeitos.toque(); setEscrito((e) => [...e, l]); }} data-peca={l}>{l}</button>)}
           </div>
           <div className="linha-botoes">
-            <button className="btn" onClick={() => setEscrito((e) => e.slice(0, -1))} disabled={!escrito.length}>⌫ Apagar</button>
-            <button className="btn grande verde" onClick={conferir} disabled={!escrito.length} data-testid="conferir-ditado">Pronto!</button>
+            <button className="btn" onClick={() => setEscrito((e) => e.slice(0, -1))} disabled={!escrito.length}><Icone nome="apagar" />Apagar</button>
+            <button className="btn grande verde" onClick={conferir} disabled={!escrito.length} data-testid="conferir-ditado"><Icone nome="check" />Pronto!</button>
           </div>
         </>
       ) : (
         <div className="comparar">
           <div><small>Assim você escreveu</small><b>{escrito.join('')}</b></div>
           <div><small>Assim os adultos escrevem</small><b>{palavra}</b></div>
-          <button className="btn grande ipe" onClick={seguir} data-testid="seguir-ditado">Continuar →</button>
+          <button className="btn grande ipe" onClick={seguir} data-testid="seguir-ditado">Continuar<Icone nome="seta" /></button>
         </div>
       )}
     </div>

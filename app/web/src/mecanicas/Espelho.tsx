@@ -1,3 +1,4 @@
+import { Figura, Icone } from '../componentes/ui.tsx';
 import { useEffect, useRef, useState } from 'react';
 import { som, type AtividadeEspelho } from '@fonema/conteudo';
 import { infoNome } from '@fonema/motor';
@@ -65,17 +66,17 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
           <div className={`letra-surge ${letra ? 'visivel' : ''}`} aria-live="polite" data-testid="letra-espelho">
             {ehNome && nome.mudo ? <><span className="muda">{letrasTela.slice(0, nome.mudo)}</span>{letrasTela.slice(nome.mudo)}</> : letrasTela}
           </div>
-          <div className="ancora"><span aria-hidden="true">{atividade.ancora.figura}</span> {atividade.ancora.texto}</div>
+          <div className="ancora"><Figura emoji={atividade.ancora.figura} palavra={ehNome ? undefined : atividade.ancora.texto} /> {atividade.ancora.texto}</div>
           <p className="ipa">som {s.ipa}</p>
         </div>
         <EspelhoLado fonema={atividade.fonema} aoPronto={(a) => (api.current = a)} />
       </div>
-      <p className="dica-boca">👄 {s.dica}</p>
+      <p className="dica-boca"><Icone nome="boca" /><span>{s.dica}</span></p>
       <div className="linha-botoes">
-        <button className="btn" onClick={() => mostrar()}>🔊 Ouvir o som</button>
-        <button className="btn" onClick={() => mostrar(true)}>🐢 Bem devagar</button>
-        {fase !== 'mostra' ? <button className="btn" onClick={async () => { setDica(true); await voz.falar(s.correcao, { quem: 'sofia' }); }}>💡 Dica de boca</button> : null}
-        <button className="btn grande verde" onClick={fiz} disabled={fase !== 'vez'} data-testid="fiz-o-som">✋ Eu fiz o som!</button>
+        <button className="btn" onClick={() => mostrar()}><Icone nome="som" />Ouvir o som</button>
+        <button className="btn" onClick={() => mostrar(true)}><Icone nome="tartaruga" />Bem devagar</button>
+        {fase !== 'mostra' ? <button className="btn" onClick={async () => { setDica(true); await voz.falar(s.correcao, { quem: 'sofia' }); }}><Icone nome="dica" />Dica de boca</button> : null}
+        <button className="btn grande verde" onClick={fiz} disabled={fase !== 'vez'} data-testid="fiz-o-som"><Icone nome="check" />Eu fiz o som!</button>
       </div>
       {fase === 'feito' ? <Brilho ativo /> : null}
     </div>

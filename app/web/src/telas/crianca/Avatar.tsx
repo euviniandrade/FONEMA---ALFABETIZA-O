@@ -1,3 +1,4 @@
+import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { useState } from 'react';
 import { FALAS } from '@fonema/conteudo';
 import { useCrianca } from '../../contexto.tsx';
@@ -26,6 +27,7 @@ export function Avatar({ criancaId }: { criancaId: string }) {
   const escolher = async (base: string) => { efeitos.toque(); await salvarCrianca({ ...crianca, avatar: { ...crianca.avatar, base } }); };
   return (
     <div className="tela-avatar">
+      <Fundo cena="quintal" desfoque={14} tom="calmo" />
       <Topo crianca={crianca} voltar={primeiraVez ? undefined : `c/${criancaId}/vila`} titulo="Meu personagem" />
       <main className="palco">
         <section className="cartao avatar-cartao">
@@ -34,8 +36,8 @@ export function Avatar({ criancaId }: { criancaId: string }) {
             <AvatarGrande crianca={crianca} itens={progresso.equipados} />
             <div>
               <div className="abas" role="tablist">
-                <button role="tab" aria-selected={passo === 1} className={`btn ${passo === 1 ? 'pri' : ''}`} onClick={() => setPasso(1)}>1 · Jeito</button>
-                <button role="tab" aria-selected={passo === 2} className={`btn ${passo === 2 ? 'pri' : ''}`} onClick={() => setPasso(2)}>2 · Cantinho</button>
+                <button role="tab" aria-selected={passo === 1} className={`btn ${passo === 1 ? 'pri' : ''}`} onClick={() => setPasso(1)}><Icone nome="pessoa" />Meu jeito</button>
+                <button role="tab" aria-selected={passo === 2} className={`btn ${passo === 2 ? 'pri' : ''}`} onClick={() => setPasso(2)}><Icone nome="casa" />Meu cantinho</button>
               </div>
               {passo === 1 ? (
                 <div className="grade-avatar" role="radiogroup" aria-label="Escolha o jeito do seu personagem">
@@ -55,13 +57,13 @@ export function Avatar({ criancaId }: { criancaId: string }) {
               <p className="nota-mic">Óculos, aparelho auditivo e cadeira de rodas são sempre grátis. Sem foto, sem joias.</p>
             </div>
           </div>
-          <button
-            className="btn grande ipe"
+          <div className="linha-botoes" style={{ justifyContent: 'flex-end' }}><button
+            className="btn enorme ipe brilha"
             data-testid="avatar-pronto"
             onClick={async () => { await falar(FALAS.avatarPronto, crianca); navegar(primeiraVez ? `c/${criancaId}/chegada` : `c/${criancaId}/vila`); }}
           >
-            Pronto! →
-          </button>
+            <Icone nome="check" />Pronto!
+          </button></div>
         </section>
       </main>
     </div>

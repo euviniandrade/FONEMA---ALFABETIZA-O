@@ -113,7 +113,7 @@ export function Inicio() {
         ) : null}
         <div className="splash-jogar">
           <button
-            className="btn ipe enorme brilha pulsa"
+            className="btn ipe enorme brilha pulsa-luz"
             data-testid="jogar"
             onClick={() => (temCriancas && sel ? entrar(sel) : navegar('adulto/cadastro'))}
           >

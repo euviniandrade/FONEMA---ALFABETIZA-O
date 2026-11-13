@@ -92,7 +92,12 @@ export function Logo({ tamanho = 'g', subtitulo = false, animar = false }: { tam
   return (
     <div className={`logo logo-${tamanho} ${animar ? 'logo-anima' : ''}`} role="img" aria-label="FONEMA — Aventura da leitura com Sofia e Tales">
       <div className="logo-letras" aria-hidden="true">
-        {[...'FONEMA'].map((l, i) => <span key={i} data-l={l} style={{ ['--i' as string]: i }}>{l}</span>)}
+        {/* três camadas da palavra inteira (contorno marinho, contorno branco, miolo amarelo): uma letra nunca cobre a vizinha */}
+        {(['fundo', 'meio', 'frente'] as const).map((camada) => (
+          <div key={camada} className={`logo-camada logo-${camada}`}>
+            {[...'FONEMA'].map((l, i) => <span key={i} style={{ ['--i' as string]: i }}>{l}</span>)}
+          </div>
+        ))}
       </div>
       {subtitulo ? <div className="logo-faixa" aria-hidden="true">Aventura da leitura com Sofia e Tales</div> : null}
     </div>
@@ -167,7 +172,7 @@ export function BotaoSegurar({ ms = 3000, aoCompletar, rotulo = 'Segure para ent
       className={`segurar ${p > 0 ? 'segurando' : ''}`}
       data-testid={testId}
       aria-label={`${rotulo}: mantenha pressionado por ${Math.round(ms / 1000)} segundos`}
-      onPointerDown={(e) => { e.currentTarget.setPointerCapture?.(e.pointerId); comecar(); }}
+      onPointerDown={(e) => { try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* ponteiro sintético */ } comecar(); }}
       onPointerUp={parar}
       onPointerCancel={parar}
       onContextMenu={(e) => e.preventDefault()}
@@ -267,7 +272,7 @@ export function MapaNavegavel({ imagem, proporcao, marcadores, foco = { x: 50, y
     }
     const dx = e.clientX - g.x, dy = e.clientY - g.y;
     if (!g.moveu && Math.hypot(dx, dy) < 7) return;
-    if (!g.moveu) caixa.current?.setPointerCapture?.(e.pointerId);
+    if (!g.moveu) { try { caixa.current?.setPointerCapture(e.pointerId); } catch { /* ok */ } }
     g.moveu = true;
     setV(limitar(g.vx + dx, g.vy + dy, g.z));
   };

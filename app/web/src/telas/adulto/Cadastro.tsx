@@ -208,7 +208,7 @@ export function Cadastro() {
             {passo === 'nivel' ? (
               <div className="passo-corpo" key="nivel">
                 <h1 className="t">De onde {nomeBonito} começa?</h1>
-                <p className="passo-sub">Dá para mudar depois, na área da família. As fases anteriores ficam abertas para revisar.</p>
+                <p className="passo-sub">Dá para mudar depois, na área da família.</p>
                 <div className="escolhas" role="group" aria-label="Nível inicial">
                   {NIVEIS_INICIAIS.map((n) => (
                     <button key={n.id} className="escolha" aria-pressed={nivel === n.id} onClick={() => setNivel(n.id)} data-nivel={n.id}>

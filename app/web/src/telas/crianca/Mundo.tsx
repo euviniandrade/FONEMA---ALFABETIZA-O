@@ -43,12 +43,12 @@ export function Chegada({ criancaId }: { criancaId: string }) {
 
 /** Onde cada lugar fica na arte do mapa da vila (em % da imagem). */
 const LUGAR = {
-  missao: { x: 51.2, y: 43 },
-  casa: { x: 25.5, y: 51 },
-  album: { x: 79.5, y: 19 },
-  corpo: { x: 36, y: 17.5 },
-  lojinha: { x: 65.5, y: 16 },
-  cais: { x: 20.5, y: 78 },
+  missao: { x: 51.2, y: 42 },
+  casa: { x: 25.5, y: 60 },
+  album: { x: 80.5, y: 36 },
+  corpo: { x: 36, y: 33 },
+  lojinha: { x: 66, y: 30 },
+  cais: { x: 21, y: 84 },
   proxima1: { x: 79, y: 60 },
   proxima2: { x: 44.5, y: 68 },
   dupla: { x: 61, y: 70 }
@@ -172,8 +172,8 @@ export function Vila({ criancaId }: { criancaId: string }) {
 }
 
 /** Onde cada região fica na arte do arquipélago (em % da imagem) e as ilhas futuras (com névoa e cadeado). */
-const ILHA: Record<string, { x: number; y: number }> = { R0: { x: 17, y: 20 }, R1: { x: 39, y: 13 }, R2a: { x: 59, y: 14 } };
-const ILHAS_FUTURAS = [{ x: 76, y: 40 }, { x: 46.5, y: 47 }, { x: 16, y: 62 }, { x: 37, y: 80 }, { x: 62.5, y: 72 }, { x: 87.5, y: 66 }, { x: 88.5, y: 15 }];
+const ILHA: Record<string, { x: number; y: number }> = { R0: { x: 17, y: 36 }, R1: { x: 39, y: 30 }, R2a: { x: 59, y: 33 } };
+const ILHAS_FUTURAS = [{ x: 76, y: 47 }, { x: 46.5, y: 54 }, { x: 16, y: 70 }, { x: 37, y: 88 }, { x: 62.5, y: 80 }, { x: 87.5, y: 74 }, { x: 88.5, y: 27 }];
 
 /** Mapa do arquipélago: regiões abertas por domínio; as ilhas futuras aparecem com névoa e cadeado. */
 export function Arquipelago({ criancaId }: { criancaId: string }) {
@@ -287,12 +287,11 @@ export function EntradaFase({ criancaId, faseId }: { criancaId: string; faseId: 
   const { crianca, progresso } = useCrianca(criancaId);
   const fase = FASE_POR_ID[faseId];
   const letra = useMemo(() => (crianca ? infoNome(crianca.nome, crianca.pronuncia.grafia).letras : 'A'), [crianca]);
-  useEffect(() => { if (crianca && fase) falar({ quem: 'sofia', texto: `${fase.titulo}. ${fase.objetivo}.` }, crianca); }, [crianca, fase]);
-  if (!crianca || !progresso || !fase) return <Carregando />;
-  if (!podeEntrar(progresso, faseId)) {
-    navegar(`c/${criancaId}/vila`);
-    return null;
-  }
+  useEffect(() => { if (crianca && fase && progresso && podeEntrar(progresso, faseId)) falar({ quem: 'sofia', texto: `${fase.titulo}. ${fase.objetivo}.` }, crianca); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [crianca, fase]);
+  const trancada = !!progresso && !!fase && !podeEntrar(progresso, faseId);
+  useEffect(() => { if (trancada) navegar(`c/${criancaId}/vila`); }, [trancada, criancaId]);
+  if (!crianca || !progresso || !fase || trancada) return <Carregando />;
   const concluida = progresso.fases[faseId]?.estado === 'concluida';
   const expressa = faseEmExpressa(progresso, faseId);
   const conquistas = fase.conquistas.map((id) => CONQUISTA_POR_ID[id]).filter((c) => c && c.visivel_antes !== 'oculto');

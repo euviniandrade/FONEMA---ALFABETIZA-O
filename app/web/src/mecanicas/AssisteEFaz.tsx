@@ -1,3 +1,4 @@
+import { Icone } from '../componentes/ui.tsx';
 import { useEffect, useRef, useState } from 'react';
 import type { Fala } from '@fonema/conteudo';
 import type { Crianca } from '@fonema/motor';
@@ -34,16 +35,16 @@ export function AssisteEFaz({ roteiro, imagem, crianca, onFim }: { roteiro: Fala
     <div className="assiste">
       <div className="video" role="region" aria-label="Vídeo: Assiste e Faz">
         <img className="video-fundo" src={asset(`fundos/${imagem ?? 'dupla-praca'}.webp`)} alt="" />
-        <span className="selo-assiste">▶ Assiste e Faz</span>
-        <div className="video-legenda" aria-live="polite">
+        <span className="selo-assiste"><Icone nome="tocar" />Assiste e Faz</span>
+        <div className="video-legenda vidro" aria-live="polite">
           {fala ? <><Rosto quem={fala.quem} tamanho={72} /><p><b>{NOMES_PERSONAGEM[fala.quem]}:</b> {textoTela(fala.texto, crianca)}</p></> : null}
         </div>
         <div className="video-barra"><i style={{ width: `${((i + 1) / roteiro.length) * 100}%` }} /></div>
       </div>
       <div className="linha-botoes">
-        <button className="btn" onClick={tocar}>↺ Ver de novo</button>
+        <button className="btn vidro" onClick={tocar}><Icone nome="repetir" />Ver de novo</button>
         <button className="btn grande ipe" onClick={() => { voz.parar(); onFim(); }} data-testid="minha-vez" disabled={!acabou && i < roteiro.length - 1}>
-          {textoTela('Agora é a minha vez!', crianca)} →
+          {textoTela('Agora é a minha vez!', crianca)}<Icone nome="seta" />
         </button>
       </div>
     </div>
