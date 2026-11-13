@@ -128,7 +128,7 @@ function mouthBig(k) {
     // lábio de baixo dobrado para dentro, por baixo dos dentes de cima
     g += `<path data-layer="labioInf" d="M${-W - 9},3 C${-W * 0.5},2 ${W * 0.5},2 ${W + 9},3 C${W * 0.74},38 ${-W * 0.74},38 ${-W - 9},3Z" fill="url(#bLipLo)" stroke="${P.line}" stroke-width="3.2" stroke-linejoin="round"/>`;
     g += `<g>${teethRow(W * 0.86, top - 14, 8, true).replace(/<path d="M[^"]*" stroke="#fff"[^>]*>/g, '')}</g>`.replace(/<g>/, `<g clip-path="url(#${id}t)">`);
-    g += `<defs><clipPath id="${id}t"><rect x="${-W}" y="${top - 4}" width="${2 * W}" height="${12 - top}"/></clipPath></defs>`;
+    g += `<defs><clipPath id="${id}t"><path d="M${-W + 4},2 C${f(-W * 0.55)},${top} ${f(W * 0.55)},${top} ${W - 4},2 C${f(W * 0.6)},30 ${f(-W * 0.6)},30 ${-W + 4},2Z"/></clipPath></defs>`;
     g += `<ellipse cx="-10" cy="22" rx="30" ry="4.5" fill="${K.lipHi}" opacity=".7"/><path d="M${-W * 0.62},10 Q0,4 ${W * 0.62},10" stroke="${K.lipSh}" stroke-width="2" fill="none" opacity=".5"/>`;
     g += `<path data-layer="labioSup" d="${upperLip(W, top, 0)}" fill="url(#bLipUp)" stroke="${P.line}" stroke-width="3.4" stroke-linejoin="round"/>`;
   } else {

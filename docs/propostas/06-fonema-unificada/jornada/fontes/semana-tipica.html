@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Semana típica</title>
+<link rel="stylesheet" href="comum.css">
+<style>
+  .dia { position: absolute; top: 92px; height: 30px; width: 144px; border-radius: 10px 10px 0 0; color: #fff; font-family: 'Fredoka'; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .dia small { font-family: 'Andika'; font-weight: 400; font-size: 10px; opacity: .9; }
+  .col { position: absolute; top: 122px; width: 144px; height: 640px; border-radius: 0 0 12px 12px; }
+  .lane { position: absolute; left: 32px; width: 1216px; border-top: 1px dashed #DCCFB8; }
+  .lab { position: absolute; left: 32px; width: 160px; font-family: 'Fredoka'; font-weight: 600; font-size: 13px; line-height: 1.1; display: flex; gap: 7px; align-items: flex-start; }
+  .lab small { display: block; font-family: 'Andika'; font-weight: 400; font-size: 10px; color: var(--tinta2); margin-top: 2px; }
+  .c { position: absolute; width: 136px; font-size: 10.4px; line-height: 1.25; color: var(--tinta); background: #fff; border-radius: 9px; padding: 5px 7px; box-shadow: 0 2px 5px rgba(60,40,10,.08); }
+  .c b { color: #1F2A44; }
+  .c .i { float: right; margin: 0 0 2px 3px; }
+  .vazio { background: transparent; box-shadow: none; color: var(--suave); font-style: italic; }
+</style></head>
+<body>
+<div class="topo">
+  <div>
+    <h1>Uma <b>semana típica</b>: como os dias se encadeiam</h1>
+    <div class="sub">5 sessões (seg–sex), 2–4 sons novos no começo de cada região, revisão que volta em intervalos crescentes, transferência na vila e o adulto no circuito.</div>
+  </div>
+  <span class="marca">FONEMA · JORNADA</span>
+</div>
+<div id="g"></div>
+<div class="rodape"><span>Exemplo em R2b (sons V e S); vale para qualquer região. Fontes: doc. mestre §4.3–4.5 e §4.14 · rels. 07 (agendador, ritmo), 13, 14, 20, 26 (READY4K: 3 mensagens/semana), 35, 37, 39, 41, 42. Frequência-alvo de 5 dias = proposta de síntese a validar.</span></div>
+<script src="dados.js"></script><script src="comum.js"></script>
+<script>
+const D = [['Seg','dia 1','#2A6F97'],['Ter','dia 2','#2A6F97'],['Qua','dia 3','#2A6F97'],['Qui','dia 4','#2A6F97'],['Sex','dia 5','#2A6F97'],['Sáb','sem sessão nova','#9A8F7A'],['Dom','sem sessão nova','#9A8F7A']];
+const X0 = 204, CW = 150;
+const L = [
+  ['N8', 'Som novo', 'lição da Sofia', 128, 62],
+  ['N5', 'Revisão espaçada', 'o mesmo item volta', 196, 84],
+  ['N10', 'Slot rotativo', '1 por sessão', 286, 74],
+  ['N2', 'Transferência na vila', 'ler para fazer', 366, 74],
+  ['N12', 'Ritual · moedas · emblemas', 'só no fim, em bloco', 446, 80],
+  ['N11', 'Família e escola', 'adulto no circuito', 532, 92],
+  ['N4', 'Noite', 'sono e consolidação', 630, 126],
+];
+let h = '';
+D.forEach((d, i) => { const x = X0 + i * CW; h += `<div class="dia" style="left:${x}px;background:${d[2]}">${d[0]} <small>${d[1]}</small></div><div class="col" style="left:${x}px;background:${i < 5 ? 'rgba(42,111,151,.06)' : 'rgba(154,143,122,.08)'}"></div>`; });
+L.forEach(l => { h += `<div class="lane" style="top:${l[3] - 3}px"></div><div class="lab" style="top:${l[3] + 4}px">${icone(l[0], 22)}<div>${l[1]}<small>${l[2]}</small></div></div>`; });
+const cel = (lane, dia, txt, ic, cls = '') => { const l = L[lane]; const x = X0 + dia * CW + 4; h += `<div class="c ${cls}" style="left:${x}px;top:${l[3] + 3}px;min-height:${l[4] - 8}px">${ic ? `<span class="i">${ic.split(' ').map(p => icone(p, 15)).join('')}</span>` : ''}${txt}</div>`; };
+// Som novo
+cel(0, 0, '<b>Som V</b>: Espelho do Som (garganta vibra), VELA, VOVÓ', 'N8 N9');
+cel(0, 1, '<b>Som S</b> (inicial): língua escondida, SOFÁ, SALA', 'N8 N1');
+cel(0, 2, 'Sem som novo: <b>síntese</b> V/S com vogais e M L F', 'N2');
+cel(0, 3, '<b>Contraste F × V</b> (já firmes) e pseudopalavras', 'N7 N9');
+cel(0, 4, '<b>Desafio da Sofia</b>: provinha de letra (~2–3 min, 10 itens)', 'N12 N6');
+cel(0, 5, 'Nada novo. Taxa de sons sobe só se ≥ 85% retidos no dia seguinte', '', 'vazio');
+cel(0, 6, 'Estante livre opcional (sem moedas: sentinela E8)', '', 'vazio');
+// Slot
+cel(2, 0, '<b>Hora da História</b> (camada A, tema da mata); pré-ensino de 3 palavras', 'N10');
+cel(2, 1, '<b>Criar</b>: escrita inventada da legenda de um bicho', 'N9');
+cel(2, 2, '<b>Missão transversal</b> (≤ 1): cartas de comando com palavras lidas', 'N2');
+cel(2, 3, '<b>Papo com a Sofia</b>: “Conta de novo!” (reconto)', 'N6');
+cel(2, 4, '<b>Hora da História</b> (camada B: decodificável do tema)', 'N10');
+cel(2, 5, 'Leitura dialógica em família (CROWD, vídeo PEER de 1 min)', '', 'vazio');
+cel(2, 6, '—', '', 'vazio');
+// Vila
+cel(3, 0, 'Bilhete de um morador pede ajuda (lido com sons conhecidos)', 'N10');
+cel(3, 1, 'Placa nova da vila com palavra da fase', 'N9');
+cel(3, 2, 'Etiqueta da lojinha: “leia para conhecer” (nunca obrigatório)', 'N9');
+cel(3, 3, 'A criança <b>escreve</b> um bilhete de resposta', 'N6');
+cel(3, 4, '<b>Projeto da semana</b>: ler a “planta” e construir (selos)', 'N2');
+cel(3, 5, 'Tempo livre na vila, se o adulto ligou (sem moedas)', '', 'vazio');
+cel(3, 6, '—', '', 'vazio');
+// Ritual
+for (let i = 0; i < 4; i++) cel(4, i, ['Recap + moedinhas em bloco + <b>gancho</b>: “quem deixou pegadas?”','Recap + moedinhas + gancho: “a cobra sibila: sss”','Recap + moedinhas + gancho: “o bilhete tem uma palavra nova”','Recap + moedinhas + gancho: “sexta tem desafio e festa”'][i], 'N12 N10');
+cel(4, 4, 'Marcos <b>depois do fato</b>: selo do som da semana passada que passou na retenção', 'N12');
+cel(4, 5, 'Nada a ganhar no fim de semana. <b>Álbum de Dias de Leitura</b> só cresce', '', 'vazio');
+cel(4, 6, 'Faltar não tira nada (sem streak)', '', 'vazio');
+// Família e escola
+cel(5, 0, 'WhatsApp/app: <b>fato</b> (áudio ≤ 60 s) sobre o som V', 'N11');
+cel(5, 1, 'Professor: 3–5 grupos sugeridos e atividade de amanhã', '');
+cel(5, 2, '<b>Dica</b>: missão de 5 min sem tela (“ache coisas com /v/”)', 'N2');
+cel(5, 3, 'Professor: alerta só por persistência (travado 3 sessões)', '');
+cel(5, 4, '<b>Reforço</b> + relatório da semana (1 tela, áudio): “Nível 3 de 10”', 'N12');
+cel(5, 5, 'Missão em família offline; “Ouça seu filho ler” (com consentimento)', '', 'vazio');
+cel(5, 6, 'Conversa sobre o cofrinho (painel dos pais)', '', 'vazio');
+// Noite
+for (let i = 0; i < 7; i++) {
+  const x = X0 + i * CW + 4, y = L[6][3] + 4;
+  h += `<div class="c" style="left:${x}px;top:${y}px;height:${L[6][4] - 22}px;background:linear-gradient(180deg,#3C3466,#241F44);color:#E9E4FF">
+    <svg width="26" height="26" viewBox="0 0 24 24" style="float:right"><path d="M19 14.5A7.5 7.5 0 1 1 9.5 5a6 6 0 0 0 9.5 9.5z" fill="#FFE7A3"/></svg>
+    ${i < 5 ? '<b style="color:#fff">Sono</b> consolida os sons e palavras do dia. Nada novo 1 h antes de dormir; só história em áudio.' : '<b style="color:#fff">Descanso</b>. O agendador espera: revisões vencidas voltam na segunda, sem aviso de atraso.'}</div>`;
+}
+document.getElementById('g').innerHTML = h;
+// faixa de revisão espaçada (SVG por cima da linha 2)
+const yR = L[1][3], cx = i => X0 + i * CW + 72;
+const item = (cor, nome, dias, dy, nota, velho) => {
+  let s = '';
+  for (let k = 0; k < dias.length - 1; k++) {
+    const a = cx(dias[k]), b = cx(dias[k + 1]);
+    s += `<path d="M ${a} ${yR + dy} Q ${(a + b) / 2} ${yR + dy - 18} ${b} ${yR + dy}" fill="none" stroke="${cor}" stroke-width="2" stroke-dasharray="4 3"/>`;
+  }
+  dias.forEach((d, k) => { s += `<circle cx="${cx(d)}" cy="${yR + dy}" r="8.5" fill="${k === 0 && !velho ? '#fff' : cor}" stroke="${cor}" stroke-width="2.4"/><text x="${cx(d)}" y="${yR + dy + 3.6}" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="10" fill="${k === 0 && !velho ? cor : '#fff'}">${nome}</text>`; });
+  s += `<text x="${cx(dias[dias.length - 1]) + 14}" y="${yR + dy + 4}" font-family="Andika" font-size="10.5" fill="${cor}">${nota}</text>`;
+  return s;
+};
+const svg = `<svg style="position:absolute;left:0;top:0" width="1280" height="800">
+  ${item('#2E9E5B', 'V', [0, 1, 3], 22, '+1 d · +2 d → próxima: +4 d (seg)')}
+  ${item('#C8642B', 'S', [1, 2, 4], 46, '+1 d · +2 d → +4 d (ter)')}
+  ${item('#7B4FB8', 'F', [0, 4], 70, 'som da semana passada (nível 2 → 4 d): checagem de retenção 24 h–7 d', true)}
+</svg>`;
+document.getElementById('g').insertAdjacentHTML('beforeend', svg);
+</script>
+</body></html>

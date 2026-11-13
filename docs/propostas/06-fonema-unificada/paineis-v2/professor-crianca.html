@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FONEMA Professora · Iris N. (detalhe, dados fictícios)</title>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="v2.css">
+<script src="comum.js"></script>
+<script src="dados-escola.js"></script>
+<script src="vendor/echarts.min.js"></script>
+<style>
+body{font-size:13px}
+.migalha{font-size:12px;color:var(--tinta-3);display:flex;gap:6px;align-items:center}
+.migalha a{color:var(--acao);font-weight:700;text-decoration:none}
+.id{display:flex;align-items:center;gap:14px}
+.foto{width:50px;height:50px;border-radius:50%;background:linear-gradient(145deg,#FFC94A,#F28C28);display:grid;place-items:center;font-weight:700;font-size:20px;color:#2B2340;box-shadow:inset 0 -3px 0 rgba(0,0,0,.08)}
+.nv{display:grid;gap:4px;width:400px}
+.nv .t{display:flex;align-items:baseline;gap:8px;font-size:12px;color:var(--tinta-3);white-space:nowrap}
+.nv .t b{font-size:19px;color:var(--tinta);letter-spacing:-.01em}
+.nv .t .falta{margin-left:auto;font-weight:700;color:var(--lousa);background:var(--info-fundo);padding:2px 9px;border-radius:999px;font-size:12px}
+.escada{display:grid;grid-template-columns:repeat(11,1fr);gap:3px}
+.escada i{height:10px;border-radius:3px;background:var(--fundo-2);border:1px solid var(--linha)}
+.escada i.f{background:var(--n7);border-color:transparent}.escada i.a{background:var(--n10);border-color:transparent;box-shadow:0 0 0 2px var(--cartao),0 0 0 3.5px var(--n10)}
+.escada i.m{border:1.5px dashed var(--estimativa);background:var(--estimativa-fundo)}
+.escala{display:grid;grid-template-columns:repeat(11,1fr);font-size:10px;color:var(--tinta-3);text-align:center}
+.l{display:grid;grid-template-columns:372px minmax(0,1fr) 340px;gap:12px;height:620px}
+.col{display:grid;gap:12px;align-content:start;min-width:0}
+#traj{height:150px}
+.hab{display:grid;gap:7px;margin-top:6px}
+.dom{display:grid;grid-template-columns:80px 1fr;gap:8px;align-items:start}
+.dom>span{font-size:11px;font-weight:700;color:var(--tinta-3);padding-top:4px;text-transform:uppercase;letter-spacing:.04em}
+.dom div{display:flex;flex-wrap:wrap;gap:4px}
+.hb{font-size:11.5px;font-weight:700;padding:3px 7px;border-radius:6px;display:inline-flex;align-items:center;gap:5px}
+.hb.e4{background:var(--n9);color:#fff}.hb.e3{background:var(--n7);color:#fff}.hb.e2{background:var(--n4);color:#0C2A33}.hb.e1{background:var(--n1);color:#0C2A33}.hb.e0{background:transparent;border:1px dashed var(--linha-forte);color:var(--tinta-3)}
+html[data-tema="escuro"] .hb.e4,html[data-tema="escuro"] .hb.e3{color:#0C131B}
+html[data-tema="escuro"] .hb.e2,html[data-tema="escuro"] .hb.e1{color:#E8EEF4}
+.hb.alvo{outline:2px solid var(--aviso);outline-offset:1px}
+.hb em{font-style:normal;font-weight:400;font-size:10.5px;opacity:.9}
+.leg{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--tinta-3);margin-top:8px}
+.leg span{display:inline-flex;gap:4px;align-items:center}.leg i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.pp td{font-size:12.5px;padding:4px 5px;white-space:nowrap}.pp th{font-size:10.5px;padding:4px 5px;text-transform:uppercase;letter-spacing:.04em}
+.pp .alvo{font-weight:700;font-size:13.5px}.pp .lido{color:var(--aviso);font-weight:700}
+.pp .tp{color:var(--tinta-2);font-size:12px}
+.pp .er{display:flex;align-items:center;gap:6px}
+.pp .er span{display:flex;gap:2px}.pp .er span i{width:7px;height:12px;border-radius:2px;background:var(--linha)}.pp .er span i.x{background:var(--aviso)}
+.tend{font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.tend.melhorando{background:var(--ok-fundo);color:var(--ok)}.tend.estável{background:var(--fundo-2);color:var(--tinta-2)}.tend.novo{background:var(--info-fundo);color:var(--info)}.tend.resolvido{background:var(--ok-fundo);color:var(--ok)}
+.tent{display:grid;margin-top:4px}
+.tt{display:grid;grid-template-columns:44px 20px 1fr auto 26px;gap:8px;align-items:center;padding:4px 0;border-bottom:1px solid var(--linha);font-size:12.5px}
+.tt:last-child{border:0}
+.tt .h{color:var(--tinta-3);font-size:11.5px}
+.tt .r{width:18px;height:18px;border-radius:50%;display:grid;place-items:center}.tt .r svg{width:11px;height:11px}
+.tt .r.ok{background:var(--ok-fundo);color:var(--ok)}.tt .r.no{background:var(--aviso-fundo);color:var(--aviso)}.tt .r.inc{background:var(--info-fundo);color:var(--info)}
+.tt .lat{font-size:11.5px;color:var(--tinta-3);font-variant-numeric:tabular-nums}
+.tt .play{width:24px;height:24px;border-radius:50%;border:1px solid var(--linha);display:grid;place-items:center;color:var(--acao)}
+.pseudo{font-size:10px;font-weight:700;color:var(--g4);border:1px solid currentColor;border-radius:4px;padding:0 4px;margin-left:5px}
+#rr{height:112px}
+.sug{background:linear-gradient(160deg,var(--info-fundo),var(--cartao) 70%);border-color:color-mix(in srgb,var(--acao) 35%,var(--linha))}
+.sug h3{font-size:13.5px;margin-top:8px}
+.sug p{font-size:12.5px;color:var(--tinta-2);margin-top:3px;line-height:1.38}
+.passo{display:grid;grid-template-columns:22px 1fr;gap:8px;margin-top:7px;font-size:12.5px;align-items:start}
+.passo i{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:var(--acao);color:var(--acao-tinta);font-style:normal;font-weight:700;font-size:11.5px}
+.acts{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.obs{margin-top:8px;border:1px dashed var(--linha-forte);border-radius:9px;padding:8px 10px;font-size:12px;color:var(--tinta-3);min-height:44px}
+.dias{display:flex;gap:6px;margin-top:6px;align-items:center}.dias div{display:grid;justify-items:center;gap:3px;font-size:10.5px;color:var(--tinta-3)}.dias span{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;border:1.5px dashed var(--linha-forte);font-size:11px;font-weight:700}.dias span.f{border:0;background:var(--n7);color:#fff}.dias .tot{margin-left:auto;text-align:right;font-size:12px;color:var(--tinta-2)}.dias .tot b{font-size:18px;color:var(--tinta);display:block}
+.rod{display:flex;gap:18px;font-size:11px;color:var(--tinta-3);margin-top:8px}.rod span{display:flex;gap:6px;align-items:center}.rod svg{width:12px;height:12px}
+</style>
+</head>
+<body>
+<header class="topo c">
+  <div class="marca"><i>F</i>FONEMA Professora</div>
+  <nav class="nav"><a>Minha turma</a><a class="ativo">Crianças</a><a>Palavras e sons</a><a>Grupos</a><a>Plano de aula</a><a>Famílias</a><a>Academia</a></nav>
+  <div class="usuario"><div><b>Prof.ª Helena Duarte (fictícia)</b>2º B · EM Jardim das Flores</div><div class="avatar">HD</div></div>
+</header>
+<main class="pagina c">
+  <div class="cab c" style="align-items:flex-end">
+    <div class="id"><div class="foto">I</div><div><div class="migalha"><a>Minha turma 2º B</a>›<span>Iris N.</span></div><h1 style="display:flex;align-items:center;gap:10px">Iris N. <span class="tag-g" style="--gc:var(--g2);font-size:12px;padding:2px 7px">G2 · R forte e R fraco</span></h1><div class="sub">7 anos · no FONEMA desde fev/2026 · dose <b>61 min/sem</b></div></div></div>
+    <div class="nv"><div class="t"><b class="num">Nível 6 de 10</b><span>Encontros e casos especiais</span><span class="falta">faltam 4</span></div>
+      <div class="escada" id="escada"></div><div class="escala"></div></div>
+    <div class="filtros"><button class="botao"><svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/></svg>Ouvir leituras</button><button class="botao"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v11H8l-4 4z"/></svg>Família</button><button class="botao prim">+ Plano de amanhã</button></div>
+  </div>
+  <section class="l">
+    <div class="col">
+      <div class="cartao c"><h2>Trajetória <small>nível por mês · só ela com ela mesma</small></h2><div id="traj"></div></div>
+      <div class="cartao c"><h2>Mapa de habilidades da Iris <small>estado atual</small></h2><div class="hab" id="hab"></div><div class="leg" id="leg"></div></div>
+      <div class="cartao c"><h2>Prática desta semana <small>faixa-alvo 45–60 min</small></h2><div class="dias" id="dias"></div></div>
+    </div>
+    <div class="col">
+      <div class="cartao c"><h2>Palavras-problema <small>últimas 2 semanas · o que ela leu no lugar</small></h2>
+        <table class="pp"><thead><tr><th>Palavra</th><th>Leu</th><th>Tipo de erro</th><th>Erros</th><th></th></tr></thead><tbody id="pp"></tbody></table></div>
+      <div class="cartao c"><h2>Últimas tentativas <small>hoje, 09:39–09:42 · com áudio para você ouvir</small></h2><div class="tent" id="tent"></div></div>
+    </div>
+    <div class="col">
+      <div class="cartao c"><h2>Acerto em RR por semana <small>4 últimas semanas</small></h2><div id="rr"></div></div>
+      <div class="cartao c sug"><h2>Sugestão de intervenção <small>gerada pelo FONEMA · você decide</small></h2>
+        <p>Iris lê o <b>RR como R brando</b> (carro → “caro”) também em pseudopalavras (carri → “cari”): é regra contextual, não memória visual. O acerto em RR subiu de 30% para 58% em 4 semanas; falta consolidar.</p>
+        <h3>Atividade de amanhã (G2 · 10 min)</h3>
+        <div class="passo"><i>1</i><span><b>Pares mínimos</b> caro/carro, muro/murro, fera/ferra: ela lê e mostra a figura.</span></div>
+        <div class="passo"><i>2</i><span><b>Gesto do R forte</b> no Espelho do Som (vista lateral da língua).</span></div>
+        <div class="passo"><i>3</i><span>No tablet: missão <b>“Ponte do R forte”</b> na Caatinga.</span></div>
+        <div class="acts"><button class="botao prim">Adicionar ao plano</button><button class="botao">Missão para a família</button></div>
+        <div class="obs">Sua observação (opcional): discordar do sistema também é dado.</div></div>
+    </div>
+  </section>
+  <div class="rod"><span id="cad"></span><span>Sem comparação com colegas, percentil ou ranking.</span><span>Leituras com voz incerta ficam fora do cálculo até você ouvir.</span><span>A família vê o resumo desta tela em linguagem simples.</span></div>
+</main>
+<script>
+const F=FONEMA,c=F.css,D=FONEMA_DADOS,I=D.IRIS;
+document.getElementById('cad').innerHTML=F.ic.cadeado;
+document.getElementById('escada').innerHTML=Array.from({length:11},(_,i)=>`<i class="${i<I.nivel?'f':i===I.nivel?'a':i===10?'m':''}"></i>`).join('');
+document.querySelector('.escala').innerHTML=Array.from({length:11},(_,i)=>`<span style="${i===I.nivel||i===10?'font-weight:700;color:var(--tinta)':''}">${i}</span>`).join('');
+const dm=[12,14,0,16,19,0,0];
+document.getElementById('dias').innerHTML=['seg','ter','qua','qui','sex','sáb','dom'].map((d,i)=>`<div><span class="${I.dias[i]?'f':''}">${I.dias[i]?dm[i]:''}</span>${d}</div>`).join('')+`<div class="tot"><b class="num">61 min</b>4 de 5 dias<br><small style="color:var(--tinta-3)">minutos por dia</small></div>`;
+// trajetória
+const gt=F.registrar(echarts.init(document.getElementById('traj'),null,{renderer:'svg'}));
+gt.setOption({...F.base(),grid:{left:26,right:14,top:16,bottom:22},
+ tooltip:F.tooltip({trigger:'axis',formatter:p=>`${p[0].name}: nível <b>${p[0].value}</b>`}),
+ xAxis:{type:'category',data:I.meses,boundaryGap:false,axisTick:{show:false},axisLine:{lineStyle:{color:c('--linha-forte')}},axisLabel:{color:c('--tinta-3'),fontSize:11}},
+ yAxis:{type:'value',min:0,max:10,interval:2,axisLabel:{color:c('--tinta-3'),fontSize:11},splitLine:{lineStyle:{color:c('--linha')}}},
+ series:[{type:'line',step:'end',data:I.traj,symbol:'none',lineStyle:{width:3,color:c('--n8')},areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:c('--n6')+'55'},{offset:1,color:c('--n6')+'05'}])},
+  markPoint:{symbol:'circle',symbolSize:8,itemStyle:{color:c('--cartao'),borderColor:c('--n10'),borderWidth:2},label:{show:false},data:[{coord:['abr',3]},{coord:['jun',4]},{coord:['ago',5]},{coord:['out',6]}]},
+  markLine:{silent:true,symbol:'none',lineStyle:{color:c('--estimativa'),type:'dashed',width:1.3},label:{formatter:'nível 10',position:'insideStartTop',color:c('--tinta-2'),fontSize:11},data:[{yAxis:10}]}},
+  {type:'scatter',data:[[9,6]],symbolSize:11,itemStyle:{color:c('--n10'),borderColor:c('--cartao'),borderWidth:2},label:{show:true,position:'top',formatter:'hoje: 6',color:c('--tinta'),fontWeight:'bold',fontSize:11.5,offset:[-14,0]}}]});
+// habilidades
+const H=[['Letra-som',[['vogais',4],['M L F',4],['V S N',4],['P T',4],['B D',4],['J Z',3]]],
+ ['Sílabas',[['CV',4],['CVC (-s -r -l)',3],['AM/AN',3],['ÃO ÕE',3]]],
+ ['Encontros',[['PR BR TR',3],['BL CL FL',3],['GR CR',2]]],
+ ['Contextuais',[['CH LH NH',3],['RR',2,'62%',1],['R inicial',2,'70%',1],['S = Z',1,'48%',1],['SS',2],['QU GU',0],['C Ç',0]]],
+ ['Leitura',[['pseudopalavras',3],['frases',3],['textos curtos',1]]]];
+const EST=['não iniciada','adquirindo','consolidando','dominada','automatizada'];
+document.getElementById('hab').innerHTML=H.map(([d,l])=>`<div class="dom"><span>${d}</span><div>${l.map(([n,e,p,a])=>`<span class="hb e${e} ${a?'alvo':''}">${n}${p?` <em>${p}</em>`:''}</span>`).join('')}</div></div>`).join('');
+document.getElementById('leg').innerHTML=[4,3,2,1,0].map(e=>`<span><i class="hb e${e}" style="padding:0"></i>${EST[e]}</span>`).join('')+'<span><i style="outline:2px solid var(--aviso);background:transparent"></i>foco · P(domínio)</span>';
+// palavras-problema
+document.getElementById('pp').innerHTML=I.problema.map(([w,l,t,e,n,td])=>`<tr><td class="alvo">${w}${t.startsWith('pseudo')?'<span class="pseudo">pseudo</span>':''}</td><td class="lido">“${l}”</td><td class="tp">${t.replace('pseudopalavra · ','')}</td><td><div class="er"><span>${Array.from({length:n},(_,i)=>`<i class="${i<e?'x':''}"></i>`).join('')}</span><b class="num">${e}/${n}</b></div></td><td><span class="tend ${td}">${td}</span></td></tr>`).join('');
+// tentativas
+const ok=F.ic.ok,no='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
+document.getElementById('tent').innerHTML=I.tentativas.slice(0,9).map(([h,w,ps,r,l,lat])=>`<div class="tt"><span class="h">${h}</span><span class="r ${r===1?'ok':r===0?'no':'inc'}">${r===1?ok:r===0?no:'<b style="font-size:11px">?</b>'}</span><span><b>${w}</b>${ps?'<span class="pseudo">pseudo</span>':''}${r===0?` <span style="color:var(--tinta-3)">leu</span> <b class="lido" style="color:var(--aviso)">“${l}”</b>`:r===null?' <span style="color:var(--info);font-size:11.5px">voz incerta · fora do cálculo</span>':''}</span><span class="lat">${lat.toFixed(1).replace('.',',')} s</span><span class="play"><svg width="10" height="10" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span></div>`).join('');
+// RR por semana
+const gr=F.registrar(echarts.init(document.getElementById('rr'),null,{renderer:'svg'}));
+gr.setOption({...F.base(),grid:{left:6,right:6,top:20,bottom:20},
+ xAxis:{type:'category',data:['sem 36','sem 37','sem 38','sem 39'],axisTick:{show:false},axisLine:{lineStyle:{color:c('--linha-forte')}},axisLabel:{color:c('--tinta-3'),fontSize:11}},
+ yAxis:{type:'value',max:112,show:false},
+ series:[{type:'bar',data:I.rr.map((v,i)=>({value:v,itemStyle:{color:i===3?c('--n9'):c('--n5'),borderRadius:[4,4,0,0]}})),barWidth:'46%',label:{show:true,position:'top',formatter:'{c}%',color:c('--tinta'),fontWeight:'bold',fontSize:12},
+  markLine:{silent:true,symbol:'none',lineStyle:{color:c('--ok'),type:'dashed'},label:{formatter:'domínio ≥ 80%',position:'insideStartTop',color:c('--ok'),fontSize:10.5,fontWeight:'bold'},data:[{yAxis:80}]}}]});
+</script>
+</body>
+</html>

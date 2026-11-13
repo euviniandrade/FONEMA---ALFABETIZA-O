@@ -198,7 +198,7 @@ T['academia-aula'] = () => {
   const body = `
   <div class="top" style="background:linear-gradient(180deg,#E6EDFB,#FFF8EC)">${logo('Roda dos Professores · Módulo 2 · Consciência fonológica', 40)}
     <div style="flex:1"></div>
-    <div class="row" style="gap:10px;font-size:13px;font-weight:700;color:${C.slate}">aula 4 de 7 <div class="bar" style="width:140px"><i style="width:52%;background:${C.blue}"></i></div></div>
+    <div class="row" style="gap:10px;font-size:13px;font-weight:700;color:${C.slate}">aula 4 de 8 <div class="bar" style="width:140px"><i style="width:52%;background:${C.blue}"></i></div></div>
     <span class="pill" style="background:#fff;border:1px solid rgba(43,42,76,.12);color:${C.ink};padding:8px 14px">${ic('arrow', 15, C.ink)} Próxima aula</span>
   </div>
 
@@ -206,17 +206,17 @@ T['academia-aula'] = () => {
     <div style="width:820px;height:461px;border-radius:22px;overflow:hidden;position:relative;background:linear-gradient(135deg,#FFF6DE,#FDE8D7);box-shadow:0 18px 34px -20px rgba(43,42,76,.6)">
       <svg class="abs" style="left:0;top:0" width="820" height="461">${defs()}
         <circle cx="660" cy="520" r="300" fill="#fff" opacity=".45"/>
-        <g transform="translate(40,72)"><rect x="-8" y="-8" width="316" height="336" rx="26" fill="#fff" opacity=".9"/>${corte('v')}</g>
-        <text x="380" y="118" font-family="Fredoka" font-weight="600" font-size="20" fill="${C.slate}">Por dentro do /v/</text>
+        <g transform="translate(44,74) scale(.84)"><rect x="-8" y="-8" width="316" height="336" rx="26" fill="#fff" opacity=".9"/>${corte('v')}</g>
+        <text x="380" y="100" font-family="Fredoka" font-weight="600" font-size="20" fill="${C.slate}">Por dentro do /v/</text>
         <g font-family="Atkinson" font-size="17" fill="${C.ink}">
-          <circle cx="388" cy="160" r="6" fill="${C.coral}"/><text x="404" y="166">dentes de cima no lábio de baixo</text>
-          <circle cx="388" cy="196" r="6" fill="#2F6FE0"/><text x="404" y="202">o ar passa apertado pela boca</text>
-          <circle cx="388" cy="232" r="6" fill="${C.ipe}"/><text x="404" y="238">a garganta vibra (no /f/, não)</text>
+          <circle cx="388" cy="140" r="6" fill="${C.coral}"/><text x="404" y="146">dentes de cima no lábio de baixo</text>
+          <circle cx="388" cy="174" r="6" fill="#2F6FE0"/><text x="404" y="180">o ar passa apertado pela boca</text>
+          <circle cx="388" cy="208" r="6" fill="${C.ipe}"/><text x="404" y="214">a garganta vibra (no /f/, não)</text>
         </g>
-        <rect x="380" y="270" width="236" height="64" rx="16" fill="#fff"/>
-        <text x="398" y="311" font-family="Andika" font-weight="700" font-size="30" fill="${C.green}">vvvvv</text><text x="498" y="311" font-family="Atkinson" font-weight="700" font-size="18" fill="${C.green}">certo</text>
-        <rect x="380" y="342" width="236" height="44" rx="14" fill="#fff" opacity=".7"/>
-        <text x="398" y="371" font-family="Andika" font-weight="700" font-size="22" fill="${C.coral}" text-decoration="line-through">vê</text><text x="440" y="371" font-family="Atkinson" font-size="15" fill="${C.coral}">vogal extra: evite</text>
+        <rect x="380" y="236" width="236" height="56" rx="16" fill="#fff"/>
+        <text x="398" y="274" font-family="Andika" font-weight="700" font-size="30" fill="${C.green}">vvvvv</text><text x="498" y="274" font-family="Atkinson" font-weight="700" font-size="18" fill="${C.green}">certo</text>
+        <rect x="380" y="300" width="236" height="40" rx="14" fill="#fff" opacity=".75"/>
+        <text x="398" y="327" font-family="Andika" font-weight="700" font-size="22" fill="${C.coral}" text-decoration="line-through">vê</text><text x="440" y="327" font-family="Atkinson" font-size="15" fill="${C.coral}">vogal extra: evite</text>
       </svg>
       <div class="abs" style="left:636px;top:84px">${sofiaSvg({ expr: { eyes: 'open', mouth: 'v7', b: [-4, 0, -4, 0], blush: .8 }, armR: { t: [120, 330], hand: 'open', bend: 'in', hrot: 120 } }, 190, 300)}</div>
       <div class="abs row" style="left:24px;top:20px;gap:8px"><span class="pill" style="background:${C.navy};color:#fff">MICROVÍDEO · 2:40</span><span class="pill" style="background:rgba(255,255,255,.85);color:${C.ink}">Como modelar o som /v/ sem vogal extra</span></div>
@@ -235,6 +235,10 @@ T['academia-aula'] = () => {
     <div class="row" style="gap:14px;margin-top:12px">
       <div class="card" style="flex:1;padding:12px 16px;border-radius:16px;font-size:13px;line-height:1.45"><b>Por que funciona.</b> Ver a boca enquanto ouve o som ajuda a criança a perceber o fonema (fala audiovisual). Retorno do erro na hora, sem castigo. <span style="color:${C.purple};font-weight:700">Pilares 1 e 3</span></div>
       <div class="card row" style="width:250px;padding:12px 14px;border-radius:16px;gap:10px">${ic('doc', 22, C.navy)}<div style="font-size:12.5px;line-height:1.35"><b>Transcrição e referências</b><br><span style="color:${C.slate}">revisado por fonoaudióloga</span></div></div>
+    </div>
+    <div class="row" style="gap:14px;margin-top:12px;padding:12px 16px;border-radius:16px;background:#F3EEFC">
+      <span class="pill" style="background:${C.purple};color:#fff;flex:none">MITO OU FATO?</span>
+      <div style="font-size:13px;line-height:1.4">“Cada criança aprende por um estilo: visual, auditivo ou cinestésico.” <b style="color:${C.coral}">Mito.</b> Todas se beneficiam de ouvir o som, ver a boca e traçar a letra.</div>
     </div>
   </div>
 
@@ -297,15 +301,16 @@ T['academia-certificado'] = () => {
       <div style="font-size:16.5px;line-height:1.55;margin-top:14px;color:${C.ink}">concluiu a trilha <b>“Alfabetizar pelo som: da ciência à sala de aula”</b>, na modalidade a distância<br>com prática acompanhada em sala, de 03/08/2026 a 13/11/2026, com carga horária total de</div>
       <div class="row" style="justify-content:center;gap:14px;margin-top:10px"><div class="fr" style="font-weight:700;font-size:44px;color:${C.navy};line-height:1">40 horas</div><div style="text-align:left;font-size:12.5px;color:${C.slate};line-height:1.35">24 h de estudo a distância<br>12 h de prática em sala registrada<br>4 h de comunidade de prática</div></div>
     </div>
-    <div class="abs" style="left:80px;top:470px;width:560px;font-size:11.5px;color:${C.slate};line-height:1.55;columns:2;column-gap:22px">
+    <div class="abs" style="left:80px;top:448px;width:560px;font-size:11.5px;color:${C.slate};line-height:1.55;columns:2;column-gap:22px">
       ${MODS2.map(([t, h], i) => `<div class="row" style="justify-content:space-between;gap:8px"><span>M${i + 1} · ${t}</span><b style="color:${C.ink}">${h} h</b></div>`).join('')}
     </div>
-    <div class="abs" style="left:690px;top:446px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#FFD85A,${C.ipe} 60%,#D98E00);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px #FFF1C2,0 0 0 8px #E2C77A">
+    <div class="abs" style="left:690px;top:430px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#FFD85A,${C.ipe} 60%,#D98E00);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px #FFF1C2,0 0 0 8px #E2C77A">
       <div style="text-align:center;color:#5A3D00;font-weight:700;font-size:11px;line-height:1.2">${ic('medal', 30, '#5A3D00')}<br>40 h</div></div>
-    <div class="abs" style="left:820px;top:440px;width:150px;text-align:center"><div style="display:inline-block;padding:8px;background:#fff;border:1px solid #E2D8C6;border-radius:8px">${qrSvg}</div><div style="font-size:10.5px;color:${C.slate};margin-top:4px;line-height:1.3">Código: RS-2026-7Q4K-81F2<br>verificar.rodadasofia.com.br</div></div>
-    <div class="abs row" style="left:80px;top:600px;width:880px;gap:60px;justify-content:center">
-      ${['Coordenação pedagógica · FONEMA', 'Instituição certificadora parceira (a definir)', 'Secretaria Municipal de Educação (se houver termo)'].map(t => `<div style="width:240px;text-align:center"><svg width="180" height="26"><path d="M10,18 C40,0 60,26 90,10 S150,4 170,16" fill="none" stroke="${C.navy}" stroke-width="1.6" opacity=".55"/></svg><div style="height:1.5px;background:${C.ink};opacity:.4"></div><div style="font-size:11.5px;color:${C.slate};margin-top:5px;line-height:1.3">${t}</div></div>`).join('')}
+    <div class="abs" style="left:820px;top:420px;width:150px;text-align:center"><div style="display:inline-block;padding:8px;background:#fff;border:1px solid #E2D8C6;border-radius:8px">${qrSvg}</div><div style="font-size:10.5px;color:${C.slate};margin-top:4px;line-height:1.3">Código: RS-2026-7Q4K-81F2<br>página pública de verificação</div></div>
+    <div class="abs row" style="left:80px;top:574px;width:880px;gap:60px;justify-content:center">
+      ${['Coordenação pedagógica · FONEMA', 'Instituição certificadora parceira (a definir)', 'Secretaria Municipal (se houver termo)'].map(t => `<div style="width:240px;text-align:center"><svg width="180" height="26"><path d="M10,18 C40,0 60,26 90,10 S150,4 170,16" fill="none" stroke="${C.navy}" stroke-width="1.6" opacity=".55"/></svg><div style="height:1.5px;background:${C.ink};opacity:.4"></div><div style="font-size:11.5px;color:${C.slate};margin-top:5px;line-height:1.3">${t}</div></div>`).join('')}
     </div>
+    <div class="abs" style="left:80px;top:640px;width:880px;text-align:center;font-size:10.5px;color:#8A7444">Modelo ilustrativo de proposta. O reconhecimento das horas para progressão na carreira depende da instituição certificadora parceira e da rede de ensino.</div>
   </div>`;
   return page(body);
 };

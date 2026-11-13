@@ -274,7 +274,7 @@ function torsoFront(o) {
   g += `<rect x="${-128 - turn * 14}" y="408" width="${256}" height="200" rx="34" fill="url(#gPack)" stroke="${P.line}" stroke-width="3.6"/>`;
   // bermuda do uniforme (azul-marinho, faixa lateral Manga)
   g += `<path d="${SH}" fill="url(#gShorts)" stroke="${P.line}" stroke-width="3.6" stroke-linejoin="round"/>
-    <path d="M-104,640 L-106,712 M104,640 L106,712" stroke="${P.shirt}" stroke-width="7" opacity=".95"/>
+    <path d="M-98,636 L-101,708 M98,636 L101,708" stroke="${P.shirt}" stroke-width="7"/>
     <path d="M-106,700 L-10,708 M10,708 L106,700" stroke="${P.shortsHi}" stroke-width="6" opacity=".55"/>
     <path d="M${2 + turn * 10},620 L${2 + turn * 10},668" stroke="${P.shortsSh}" stroke-width="2.6"/>
     <path d="M-80,616 q16,22 40,22 M80,616 q-16,22 -40,22" fill="none" stroke="${P.shortsSh}" stroke-width="2.4" opacity=".7"/>`;

@@ -89,7 +89,7 @@
     ['PR','prato · prego',28,6,'enc'],['BR','bruxa · braço',25,5,'enc'],['TR','trem · trigo',21,4,'enc'],['BL/CL','bloco · clube',16,3,'enc']]
     .map(([s,ex,pct,crc,fam])=>({s,ex,pct,crc,fam}));
   // matriz de trocas (lido no lugar do alvo), ocorrências
-  const TROCAS={alvo:['P','B','T','D','F','V'],lido:['P','B','T','D','F','V'],m:[[0,17,1,0,0,0],[6,0,0,1,0,0],[1,0,0,8,0,0],[0,1,3,0,0,0],[0,0,0,0,0,7],[0,0,0,0,2,0]]};
+  const TROCAS={alvo:['P','B','T','D','F','V'],lido:['P','B','T','D','F','V'],m:[[0,17,0,0,0,0],[6,0,0,1,0,0],[1,0,0,8,0,0],[0,1,3,0,0,0],[0,0,0,0,0,7],[0,0,0,0,2,0]]};
 
   // ===== Iris N. (2º B) — a mesma criança nos painéis da criança, da professora e da família =====
   const IRIS={nome:'Iris',completo:'Iris N.',turma:'2º B',nivel:6,faltam:4,regiao:6,grupo:'G2',
@@ -100,9 +100,9 @@
     leu:['prato','trem','blusa','flor','chuva','palha','ninho','limão','cravo','braço','garrafa','rato','burro','planta'],
     leuTotal:38,
     problema:[ // alvo, leitura, tipo, erros, tentativas, tendência
-      ['carro','caro','RR lido como R brando',4,6,'melhorando'],['terra','tera','RR lido como R brando',3,5,'estável'],
-      ['mesa','messa','S entre vogais com som de S',3,6,'estável'],['barro','baro','RR lido como R brando',2,4,'melhorando'],
-      ['casa','cassa','S entre vogais com som de S',2,5,'melhorando'],['carri','cari','pseudopalavra · RR',2,3,'novo'],
+      ['carro','caro','RR → R brando',4,6,'melhorando'],['terra','tera','RR → R brando',3,5,'estável'],
+      ['mesa','messa','S entre vogais → som de S',3,6,'estável'],['barro','baro','RR → R brando',2,4,'melhorando'],
+      ['casa','cassa','S entre vogais → som de S',2,5,'melhorando'],['carri','cari','pseudopalavra · RR → R brando',2,3,'novo'],
       ['pafo','bafo','pseudopalavra · troca P/B',1,3,'resolvido']],
     tentativas:[ // hora, item, pseudo?, ok (1/0/null=voz incerta), lido, latência s
       ['09:42','carro',0,0,'caro',2.8],['09:42','rato',0,1,'',1.6],['09:41','terra',0,0,'tera',3.0],['09:41','garrafa',0,1,'',3.1],

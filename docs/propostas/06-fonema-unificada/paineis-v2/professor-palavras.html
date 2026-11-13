@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FONEMA Professora · Palavras e sons com mais erro · 2º B (dados fictícios)</title>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="v2.css">
+<script src="comum.js"></script>
+<script src="dados-escola.js"></script>
+<script src="vendor/echarts.min.js"></script>
+<style>
+body{font-size:13px}
+:root{--e0:#FFF7E8;--e1:#FDE7BF;--e2:#F9CF87;--e3:#EFAE4F;--e4:#D9862A;--e5:#A85E12;--e6:#7A3F06}
+html[data-tema="escuro"]{--e0:#231B0E;--e1:#3A2A10;--e2:#5A3D12;--e3:#865A18;--e4:#B97E26;--e5:#E0A445;--e6:#F6CE85}
+.l{display:grid;grid-template-columns:600px minmax(0,1fr);gap:12px;height:640px}
+.col{display:grid;gap:12px;align-content:start;min-width:0}
+.fam{display:grid;grid-template-columns:96px 1fr;gap:8px;align-items:center;margin-top:6px}
+.fam>span{font-size:10.5px;font-weight:700;color:var(--tinta-3);text-transform:uppercase;letter-spacing:.05em;line-height:1.2}
+.fam>div{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.tile{border-radius:9px;padding:5px 8px;display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:0 6px;border:1px solid rgba(0,0,0,.04)}
+.tile b{font-size:16px;letter-spacing:-.01em}
+.tile .p{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.tile .ex{grid-column:1/-1;font-size:11px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .cr{grid-column:1/-1;font-size:10.5px;font-weight:700;opacity:.85}
+.tile.vazio{visibility:hidden}
+.esc{display:flex;align-items:center;gap:0;font-size:11px;color:var(--tinta-3);margin-top:9px}
+.esc i{width:34px;height:9px;display:block}
+.esc i:first-of-type{border-radius:3px 0 0 3px}.esc i:last-of-type{border-radius:0 3px 3px 0}
+#troca{height:184px}
+.pw{display:grid;margin-top:4px}
+.r{display:grid;grid-template-columns:18px 104px 84px minmax(0,1fr) 64px 150px;gap:10px;align-items:center;padding:3px 0;border-bottom:1px solid var(--linha)}
+.r:last-child{border:0}
+.r .k{font-size:11.5px;color:var(--tinta-3);font-weight:700;text-align:right}
+.r .wd{font-size:15px;font-weight:700}
+.r .li{font-size:12.5px;color:var(--tinta-3)}.r .li b{color:var(--aviso)}
+.r .bar{display:grid;grid-template-columns:1fr 44px;gap:8px;align-items:center}
+.r .bar .barra-h{height:9px}.r .bar .barra-h i{background:var(--e4)}
+.r .bar span{font-size:12.5px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.r .n{font-size:11.5px;color:var(--tinta-3);font-variant-numeric:tabular-nums}
+.av{display:flex}.av span{width:21px;height:21px;border-radius:50%;margin-left:-3px;display:grid;place-items:center;font-size:9px;font-weight:700;color:#fff;border:2px solid var(--cartao);background:var(--gc)}
+html[data-tema="escuro"] .av span{color:#0C131B}
+.av span:first-child{margin-left:0}
+.l2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#logo{height:150px}
+.ps{display:grid;gap:5px;margin-top:6px}
+.ps div{display:grid;grid-template-columns:66px 70px 1fr 56px;gap:8px;align-items:center;font-size:12.5px}
+.ps .barra-h i{background:var(--g4)}
+.rod{display:flex;gap:18px;font-size:11px;color:var(--tinta-3);margin-top:8px}.rod span{display:flex;gap:6px;align-items:center}.rod svg{width:12px;height:12px}
+</style>
+</head>
+<body>
+<header class="topo c">
+  <div class="marca"><i>F</i>FONEMA Professora</div>
+  <nav class="nav"><a>Minha turma</a><a>Crianças</a><a class="ativo">Palavras e sons</a><a>Grupos</a><a>Plano de aula</a><a>Famílias</a><a>Academia</a></nav>
+  <div class="usuario"><div><b>Prof.ª Helena Duarte (fictícia)</b>2º B · EM Jardim das Flores</div><div class="avatar">HD</div></div>
+</header>
+<main class="pagina c">
+  <div class="cab c">
+    <div><h1>Palavras e sons com mais erro · 2º B</h1><div class="sub">últimas 2 semanas · 1.284 leituras de 24 crianças · leituras com voz incerta ficam fora</div></div>
+    <div class="filtros"><span class="chip">Período <b>2 semanas</b></span><span class="chip">Grupos <b>todos</b></span><span class="chip">Tipo <b>palavras + pseudopalavras</b></span><button class="botao prim">Gerar atividade de pares mínimos</button></div>
+  </div>
+  <section class="l">
+    <div class="col">
+      <div class="cartao c"><h2>Mapa de sons da turma <small>% de leituras com erro em cada som · nº de crianças com dificuldade</small></h2>
+        <div id="mapa"></div>
+        <div class="esc" id="esc"></div></div>
+      <div class="cartao c"><h2>Trocas entre pares surdo/sonoro <small>o que a criança leu no lugar do som certo · ocorrências</small></h2><div id="troca"></div></div>
+    </div>
+    <div class="col">
+      <div class="cartao c"><h2>Palavras com mais erro na turma <small>ordenadas pela % de erro · palavras, nunca crianças</small></h2>
+        <div class="r" style="padding:4px 0 3px"><span></span><span class="secao-t">Palavra</span><span class="secao-t">Leram</span><span class="secao-t">% de erro</span><span class="secao-t">Erros</span><span class="secao-t">Quem · cor do grupo</span></div>
+        <div class="pw" id="pw"></div></div>
+      <div class="l2">
+        <div class="cartao c"><h2>Palavras reais × pseudopalavras <small>% de acerto</small></h2><div id="logo"></div></div>
+        <div class="cartao c"><h2>Pseudopalavras com mais erro</h2><div class="ps" id="ps"></div></div>
+      </div>
+    </div>
+  </section>
+  <div class="rod"><span id="cad"></span><span>Pseudopalavras revelam se a criança decodifica ou lê “de memória”.</span><span>Clique num som ou numa palavra para ver as tentativas e gerar uma atividade.</span></div>
+</main>
+<script>
+const F=FONEMA,c=F.css,D=FONEMA_DADOS;
+document.getElementById('cad').innerHTML=F.ic.cadeado;
+const GC=['var(--g1)','var(--g2)','var(--g3)','var(--g4)'];
+const E=k=>c('--e'+k);
+const nivel=p=>p>=40?6:p>=25?5:p>=18?4:p>=12?3:p>=8?2:p>=4?1:0;
+const tinta=k=>F.escuro?(k>=4?'#1A1205':'#F4E9D6'):(k>=4?'#FFFFFF':'#3A2608');
+// ===== mapa de sons =====
+const FAM=[['troca','Surda / sonora'],['r','R forte e fraco'],['s','S, SS, Ç'],['dig','Dígrafos'],['nas','Nasais'],['enc','Encontros']];
+document.getElementById('mapa').innerHTML=FAM.map(([f,n])=>{const L=D.SONS.filter(x=>x.fam===f);while(L.length<4)L.push(null);
+  return `<div class="fam"><span>${n}</span><div>${L.map(x=>{if(!x)return '<div class="tile vazio"></div>';const k=nivel(x.pct);return `<div class="tile" style="background:${E(k)};color:${tinta(k)}"><b>${x.s}</b><span class="p">${x.pct}%</span><span class="ex">${x.ex} · <b style="font-size:11px">${x.crc} cr.</b></span></div>`}).join('')}</div></div>`}).join('');
+document.getElementById('esc').innerHTML='<span style="margin-right:8px">% de erro</span>'+[0,1,2,3,4,5,6].map(k=>`<i style="background:${E(k)}"></i>`).join('')+'<span style="margin-left:8px">0 → 40%+ · faixas: 4, 8, 12, 18, 25, 40</span>';
+// ===== matriz de trocas =====
+const T=D.TROCAS,dd=[];T.m.forEach((row,y)=>row.forEach((v,x)=>dd.push([x,y,v])));
+const gt=F.registrar(echarts.init(document.getElementById('troca'),null,{renderer:'svg'}));
+gt.setOption({...F.base(),grid:{left:66,right:168,top:22,bottom:4},
+ tooltip:F.tooltip({formatter:p=>`alvo <b>${T.alvo[p.value[1]]}</b> lido como <b>${T.lido[p.value[0]]}</b>: ${p.value[2]} vezes`}),
+ xAxis:{type:'category',data:T.lido.map(x=>'leu '+x),position:'top',axisTick:{show:false},axisLine:{show:false},axisLabel:{color:c('--tinta-2'),fontSize:11.5,fontWeight:'bold'}},
+ yAxis:{type:'category',data:T.alvo.map(x=>'som '+x),inverse:true,axisTick:{show:false},axisLine:{show:false},axisLabel:{color:c('--tinta'),fontSize:12,fontWeight:'bold'}},
+ visualMap:{show:false,min:0,max:17,inRange:{color:[E(0),E(2),E(4),E(6)]}},
+ series:[{type:'heatmap',data:dd.map(([x,y,v])=>({value:[x,y,v],itemStyle:x===y?{color:c('--fundo-2')}:{} ,label:{show:x!==y&&v>0,color:v>=9?(F.escuro?'#1A1205':'#fff'):c('--tinta'),fontWeight:'bold',fontSize:12.5}})),itemStyle:{borderColor:c('--cartao'),borderWidth:3,borderRadius:5},label:{show:true,formatter:p=>p.value[2]||''}}],
+ graphic:[{type:'text',right:4,top:34,style:{text:'{b|32 de 46} trocas vão do\nsom surdo para o sonoro\n(P→B, T→D, F→V).\n\nA criança não “vibra”\na garganta no som certo:\nusar a mão no pescoço.',rich:{b:{font:'bold 14px Atkinson',fill:c('--tinta')}},fill:c('--tinta-2'),font:'12px Atkinson',lineHeight:16}}]});
+// ===== palavras =====
+const ini=n=>n.split(' ').map(x=>x[0]).join('');
+const quem={carro:['Iris N.','Lara M.','Sara D.','Joana B.','Maya T.','Gael V.','Théo A.'],pato:['Luan K.','Yasmin E.','Otto G.','Rui O.','Enzo P.'],prato:['Davi R.','Nina F.','Caio L.','Théo A.','Bia S.','Luan K.'],terra:['Iris N.','Lara M.','Sara D.','Joana B.','Otto G.'],bruxa:['Nina F.','Davi R.','Caio L.','Pedro H.'],faca:['Rui O.','Pedro H.','Luan K.','Enzo P.'],mesa:['Maya T.','Iris N.','Sara D.','Yasmin E.'],barro:['Lara M.','Iris N.','Sara D.','Gael V.'],tatu:['Pedro H.','Luan K.','Otto G.'],campo:['Enzo P.','Rui O.','Yasmin E.'],pipa:['Luan K.','Yasmin E.','Otto G.'],bloco:['Bia S.','Caio L.','Nina F.']};
+const gOf=n=>D.AL.find(a=>a.n===n).g;
+const P=[...D.PALAVRAS].sort((a,b)=>b.pct-a.pct).slice(0,10);
+document.getElementById('pw').innerHTML=P.map((p,i)=>`<div class="r"><span class="k">${i+1}</span><span class="wd">${p.w} <span class="som" style="vertical-align:2px">${p.som}</span></span><span class="li">“<b>${p.lido}</b>”</span><span class="bar"><span class="barra-h"><i style="width:${p.pct*2}%"></i></span><span>${p.pct}%</span></span><span class="n">${p.e} de ${p.t}</span><span class="av">${quem[p.w].map(n=>`<span style="--gc:${GC[gOf(n)]}" title="${n}">${ini(n)}</span>`).join('')}</span></div>`).join('');
+// ===== reais × pseudo por grupo =====
+const gl=F.registrar(echarts.init(document.getElementById('logo'),null,{renderer:'svg'}));
+const reais=[78,84,90,97],pseudo=[61,66,79,93];
+gl.setOption({...F.base(),grid:{left:30,right:8,top:30,bottom:18},legend:{top:0,left:0,itemWidth:10,itemHeight:10,textStyle:{color:c('--tinta-2'),fontSize:11}},
+ tooltip:F.tooltip({trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:v=>v+'%'}),
+ xAxis:{type:'category',data:['G1','G2','G3','G4'],axisTick:{show:false},axisLine:{lineStyle:{color:c('--linha-forte')}},axisLabel:{color:c('--tinta'),fontWeight:'bold',fontSize:11.5}},
+ yAxis:{type:'value',min:0,max:100,interval:50,axisLabel:{color:c('--tinta-3'),fontSize:10.5},splitLine:{lineStyle:{color:c('--linha')}}},
+ series:[{name:'palavras reais',type:'bar',data:reais,itemStyle:{color:c('--n8'),borderRadius:[3,3,0,0]},barGap:'12%',label:{show:true,position:'top',fontSize:10.5,fontWeight:'bold',color:c('--tinta')}},
+  {name:'pseudopalavras',type:'bar',data:pseudo,itemStyle:{color:c('--g4'),borderRadius:[3,3,0,0]},label:{show:true,position:'top',fontSize:10.5,fontWeight:'bold',color:c('--tinta')}}]});
+document.getElementById('ps').innerHTML=D.PSEUDO.map(p=>`<div><b style="font-size:14px">“${p.w}”</b><span style="color:var(--tinta-3)">→ “<b style="color:var(--aviso)">${p.lido}</b>”</span><span class="barra-h"><i style="width:${p.pct*2}%"></i></span><span style="text-align:right;font-weight:700" class="num">${p.e}/${p.t}</span></div>`).join('')+`<div style="display:block;font-size:11.5px;color:var(--tinta-3);margin-top:2px">Reais ≫ pseudo = leitura “de memória”.</div>`;
+</script>
+</body>
+</html>
