@@ -87,10 +87,10 @@
 #### R3-F10 · Chefe: Ventania que Embaralha (sessões 29–31)
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
-| R3-F10-C4 | Campo com ventania · todos | Provinha de fase R3 (pares mínimos, pseudopalavras, ditado) | O vento embaralha as placas; ler para devolver cada uma ao lugar | Tales: "Errei. Bora de novo! E você, [NOME], vai devagar e dá certo" | N6, N7 | ≥ 85% / ≥ 75% → **nível 4**. Não passou: reforço curto | Vento só no cenário, sem pressão de tempo |
+| R3-F10-C4 | Campo com ventania · todos | Provinha de fase R3 (pares mínimos, pseudopalavras, ditado) | O Zum-Zum pega carona na ventania e embaralha as placas; ler para devolver cada uma ao lugar. A criança vence **ouvindo o par com atenção** (P ou B? mão na garganta) antes de tocar | Tales: "Errei. Bora de novo! E você, [NOME], vai devagar e dá certo" | N6, N7 | ≥ 85% / ≥ 75% → **nível 4**. Não passou: reforço curto | Vento só no cenário, sem pressão de tempo |
 | R3-F10-C9 | Moinho · os dois + morador | Gancho | Nuvens viajam para o norte | Sofia: "Para onde vai essa chuva, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** **Mestre do P, T, B, D**; selos P T B D abrem a **Biblioteca** da vila; **Leitor do Pampa**. **Em casa:** "Diário do tempo" de verdade: 1 palavra por dia num papel na geladeira.
+**Fecha a região:** **Mestre do P, T, B, D**; selos P T B D abrem a **Biblioteca** da vila; **Leitor do Pampa**; título **Leitor da Vila I** ([07](07-progressao-niveis-e-titulos.md)). **Zum-Zum vira amigo:** ele ajuda a reconstruir a torre de blocos e aprende, como a dupla, a pedir desculpas e reparar. **Em casa:** "Diário do tempo" de verdade: 1 palavra por dia num papel na geladeira.
 
 **Professor e família junto (D018) em R3:**
 | Item | Como funciona aqui |
@@ -131,7 +131,7 @@
 #### R4-F02 · Z (sessões 4–5)
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
-| R4-F02-C2 | Fundo limpo · Tales | /z/ = Z | Assiste e Faz: "igual ao S, mas vibra, como abelha" → falar | Tales: "/zzz/, a abelha. Sua vez, [NOME]!" | N8 | Erro: "dentinhos quase fechados e a garganta vibra" | — |
+| R4-F02-C2 | Fundo limpo · Tales | /z/ = Z | Assiste e Faz: "igual ao S, mas vibra, como abelha" → falar. No fim do vídeo, o Zum-Zum (já amigo) aparece fazendo "zzz" e a letra Z surge no nome dele: ZUM-ZUM | Tales: "/zzz/, o som do Zum-Zum. Sua vez, [NOME]!" | N8 | Erro: "dentinhos quase fechados e a garganta vibra" | — |
 | R4-F02-C8 | Viveiro · os dois | Contraste S × Z (ZONA × SONO) | TOCAR depois de ler | Sofia: "Abelha ou cobrinha, [NOME]?" | N7 | 4/5 | — |
 
 #### R4-F03 · CH: duas letras, um som (sessões 6–8)
@@ -169,10 +169,10 @@
 #### R4-F08 · Chefe: A Cheia + projeto "Mapa da cheia" (sessões 21–24)
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
-| R4-F08-C4 | Pantanal subindo · todos | Provinha de fase R4 (dígrafos + frases) | Ler instruções para levar cada bicho ao lugar seguro; cada bicho salvo vai para o mapa | Veterinária: "Esse bilhete diz para onde vai a capivara. Lê, [NOME]" | N6, N2 | ≥ 85% / ≥ 75% | Modo calmo: água parada |
+| R4-F08-C4 | Pantanal subindo · todos | Provinha de fase R4 (dígrafos + frases) | Ler instruções para levar cada bicho ao lugar seguro; cada bicho salvo vai para o mapa. O Zum-Zum zune "olha ali!" entre os bilhetes; a criança vence **lendo o bilhete inteiro antes de agir** | Veterinária: "Esse bilhete diz para onde vai a capivara. Lê, [NOME]" | N6, N2 | ≥ 85% / ≥ 75% | Modo calmo: água parada |
 | R4-F08-C9 | Mapa da cheia · os dois | Momento uau + gancho | Os bichos salvos visitam a vila; a capivara conta do ipê na seca | Sofia: "Um ipê que floresce na seca? Por quê, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** **Mestre do J, Z, CH, X, NH, LH**; **Leitor do Pantanal**; a vila ganha o **viveiro**. **Em casa:** ler uma frase curta escrita pelo adulto e fazer o que ela manda ("PEGA A FOLHA").
+**Fecha a região:** **Mestre do J, Z, CH, X, NH, LH**; **Leitor do Pantanal**; **Zum-Zum vira amigo** (ajuda a guiar o tuiuiú lendo junto: "primeiro leio, depois faço"); a vila ganha o **viveiro**. **Em casa:** ler uma frase curta escrita pelo adulto e fazer o que ela manda ("PEGA A FOLHA").
 
 **Professor e família junto (D018) em R4:**
 | Item | Como funciona aqui |
@@ -244,10 +244,10 @@
 #### R5-F07 · Chefe: Ipê sem Flores + projeto "Horta da vila" (sessões 21–24)
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
-| R5-F07-C4 | Ipê no alto da chapada · todos | Provinha de fase R5 (regras de contexto) | Cada regra lida e explicada "acorda" um galho do ipê | Sofia: "Um galho para cada regra, [NOME]" | N6, N9 | ≥ 85% / ≥ 75% | — |
+| R5-F07-C4 | Ipê no alto da chapada · todos | Provinha de fase R5 (regras de contexto) | Cada regra lida e explicada "acorda" um galho do ipê. O Zum-Zum troca as regras de galho; a criança vence **explicando a regra em voz alta** antes de escolher | Sofia: "Um galho para cada regra, [NOME]" | N6, N9 | ≥ 85% / ≥ 75% | — |
 | R5-F07-C9 | Ipê florido · os dois + lobo-guará | Momento uau + gancho | O ipê floresce inteiro de amarelo; o lobo-guará fala do sertão | Tales: "Palavras que soam pelo nariz? E se a gente for ver, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** **Mestre do QU, GU, RR, SS, Ç**; **Leitor do Cerrado**; a vila ganha a **horta comunitária, o mercado e o coreto** ★. **Em casa:** ler 3 etiquetas no mercado e comparar 2 preços.
+**Fecha a região:** **Mestre do QU, GU, RR, SS, Ç**; **Leitor do Cerrado**; **Zum-Zum vira amigo** (pousa no ipê florido e ouve o lobo-guará até o fim da história); a vila ganha a **horta comunitária, o mercado e o coreto** ★. **Em casa:** ler 3 etiquetas no mercado e comparar 2 preços.
 
 **Professor e família junto (D018) em R5:**
 | Item | Como funciona aqui |
@@ -323,11 +323,11 @@
 #### R6-F08 · Chefe do Ano 1: Feira do Cordel + projeto "Meu cordel" (sessões 24–27)
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
-| R6-F08-C4 | Palco da feira · todos | Provinha de fase R6 + benchmark do Ano 1 | Ler o próprio cordel (4 versos) e recontar uma história | Sofia: "Respira comigo: cheira a flor, sopra a vela. Agora, [NOME]" | N12, N6 | ≥ 85% / ≥ 75% + retenção | Sem plateia barulhenta; aplauso opcional |
+| R6-F08-C4 | Palco da feira · todos | Provinha de fase R6 + benchmark do Ano 1 | Ler o próprio cordel (4 versos) e recontar uma história. O Zum-Zum zune na plateia; a criança respira, olha o verso e **termina a leitura**; ele fica quietinho para ouvir | Sofia: "Respira comigo: cheira a flor, sopra a vela. Agora, [NOME]" | N12, N6 | ≥ 85% / ≥ 75% + retenção | Sem plateia barulhenta; aplauso opcional |
 | R6-F08-C7 | Sala de casa (mundo real) · família | Público real | A criança lê o cordel para a família; o adulto confirma com 1 toque | Tales: "Lê pra alguém da sua casa, [NOME]!" | N12 | Confirmação do adulto | — |
 | R6-F08-C9 | Coreto à noite · todos | Momento uau + gancho | Noite de cordel no coreto; a xilogravura da criança vira painel; chega a carta do barco-escola | Os dois: "Um rio que parece mar, [NOME]!" | N10 | — | — |
 
-**Fecha o Ano 1:** **Mestre do Ã/AM/EM**; **Leitor do Sertão** (prata) e **Álbum do Ano 1**; a vila ganha a **praça do cordel e a cisterna**; meta de poupança do Ano 1 no cofrinho. **Em casa:** a família ouve o cordel e conta um verso de memória junto com a criança.
+**Fecha o Ano 1:** **Mestre do Ã/AM/EM**; título **Contador de Histórias I** ([07](07-progressao-niveis-e-titulos.md)); **Zum-Zum vira amigo** e pede para ler um verso do cordel da criança; **Leitor do Sertão** (prata) e **Álbum do Ano 1**; a vila ganha a **praça do cordel e a cisterna**; meta de poupança do Ano 1 no cofrinho. **Em casa:** a família ouve o cordel e conta um verso de memória junto com a criança.
 
 **Professor e família junto (D018) em R6:**
 | Item | Como funciona aqui |

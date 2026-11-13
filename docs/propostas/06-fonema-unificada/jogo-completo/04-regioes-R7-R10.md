@@ -66,11 +66,11 @@
 #### R7-F07 · Chefe: Rio que Esqueceu as Palavras + projeto "Livro do rio" (sessões 21–24)
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
-| R7-F07-C4 | Rio de palavras (as palavras boiam e somem) · todos | Provinha de fase R7 (CVC, ditongos, texto curto com compreensão) | Ler cada trecho devolve as palavras à margem | Sofia: "O rio lembra quando você lê, [NOME]" | N6 | ≥ 85% / ≥ 75% + compreensão literal | — |
+| R7-F07-C4 | Rio de palavras (as palavras boiam e somem) · todos | Provinha de fase R7 (CVC, ditongos, texto curto com compreensão) | Ler cada trecho devolve as palavras à margem. O Zum-Zum zune sobre a água e espalha as palavras; a criança vence **lendo o trecho inteiro** antes de responder | Sofia: "O rio lembra quando você lê, [NOME]" | N6 | ≥ 85% / ≥ 75% + compreensão literal | — |
 | R7-F07-C7 | Barco-escola · professora indígena | Projeto: página do "Livro do rio" com 1 palavra de língua indígena validada por consultor | Montar frases e ilustrar | Professora: "Cada povo tem palavras para o rio" | N9 | — | — |
 | R7-F07-C9 | Foz do rio · os dois | Momento uau + gancho | O barco chega ao mar ao pôr do sol | Tales: "O mar! E do outro lado, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** **Mestre do CVC, Mestre dos Ditongos**; **Leitor da Amazônia**; a vila ganha o **barco-escola** e o observatório de bichos. **Em casa:** ler juntos o rótulo de uma garrafa de água e conversar "de onde vem a água da nossa casa?".
+**Fecha a região:** **Mestre do CVC, Mestre dos Ditongos**; **Leitor da Amazônia**; **Zum-Zum vira amigo** (aprende que o rio "lembra" quando a gente presta atenção); a vila ganha o **barco-escola** e o observatório de bichos. **Em casa:** ler juntos o rótulo de uma garrafa de água e conversar "de onde vem a água da nossa casa?".
 
 **Professor e família junto (D018) em R7:**
 | Item | Como funciona aqui |
@@ -114,6 +114,7 @@
 |---|---|---|---|---|---|---|---|
 | R8-F02-C4 | Mercado de frutas · pescadora | FRUTA, GRAMA, CRAVO, PALAVRA | Ler a lista e montar a cesta | Pescadora: "O que diz a lista, [NOME]?" | N2 | 85% | — |
 | R8-F02-C6 | Praia · todos | Palavras com encontros lidas a cada toque | ESPORTE: Vôlei Sem Deixar Cair (série, jogo 24) | Tales: "Hoje 8 toques, ontem 6. Do time todo, [NOME]!" | N12 | — | Bola lenta (TEA) |
+| R8-F02-C6b | Areia da praia · Davi, os dois | Ler comandos com encontros (capoeira como esporte) | ESPORTE · Capoeira na areia: a criança lê a carta (BRAÇO PRA FRENTE, GIRA DEVAGAR, PLANTA O PÉ, PRONTO!) e o avatar faz o movimento de ginga, esquiva ou equilíbrio; **palmas no ritmo das sílabas**; roda de respeito com cumprimento no começo e no fim | Davi: "Primeiro lê, depois ginga. Na roda, a gente joga junto, [NOME]!" | N2, N11 | 85% das cartas lidas | Sem cantigas, rituais ou berimbau com canto; abadá branco liso. Opção sentada (braços). TDAH: 4 cartas por roda |
 
 #### R8-F03 · PL, BL, CL, GL, FL (sessões 8–11)
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
@@ -143,17 +144,17 @@
 #### R8-F07 · Chefe: Trem dos Encontros + projeto "Festa da vila" (sessões 21–24)
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
-| R8-F07-C4 | Estação inaugurada · todos | Provinha de fase R8 (CCV, frases, ditado, 1 texto) | Ler a frase de cada vagão para o trem partir | Os dois: "Junto fica mais fácil. Vai, [NOME]!" | N6 | ≥ 85% / ≥ 75% → nível 6 ● e 7 | — |
+| R8-F07-C4 | Estação inaugurada · todos | Provinha de fase R8 (CCV, frases, ditado, 1 texto) | Ler a frase de cada vagão para o trem partir. O Zum-Zum troca os vagões de lugar; a criança vence **conferindo a frase até o ponto final** | Os dois: "Junto fica mais fácil. Vai, [NOME]!" | N6 | ≥ 85% / ≥ 75% → nível 6 ● e 7 | — |
 | R8-F07-C7 | Praça · Davi e a banda | Projeto coletivo | Ler os nomes dos instrumentos e montar a banda da vila | Davi: "Cada instrumento tem um nome. Lê e escolhe, [NOME]" | N9 | — | — |
 | R8-F07-C9 | Trem · os dois | Gancho | O trem parte e chega a uma cidade cheia de placas em obras | Tales: "Quem vai ler essas instruções, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** **Mestre dos Encontros**; **Leitor do Litoral**; a vila ganha a **estação de trem** ★ projeto e o **teatro** ★ meta. **Em casa:** achar o Brasil num mapa ou globo (no celular do adulto) e ler 1 placa da rua juntos.
+**Fecha a região:** **Mestre dos Encontros**; **Leitor do Litoral**; título **Guardião dos Livros I** ([07](07-progressao-niveis-e-titulos.md)); **Zum-Zum vira amigo** (vira o "fiscal da plataforma": zune só para avisar que o trem vai sair); a vila ganha a **estação de trem** ★ projeto e o **teatro** ★ meta. **Em casa:** achar o Brasil num mapa ou globo (no celular do adulto) e ler 1 placa da rua juntos.
 
 **Professor e família junto (D018) em R8:**
 | Item | Como funciona aqui |
 |---|---|
 | Mostra pro professor | Pontos de demonstração: cada grupo de encontros (PR…, PL…), "onde a gente mora" (mapa) e a pontuação (ler pergunta com voz de pergunta). O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
-| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre dos Encontros**, **Geógrafo da Vila**, **Leitor com Entonação**, **Leitor do Litoral**; valores: **Guardião do Mangue**, **Amigo que Divide o Crédito**; esporte: **Vôlei Sem Deixar Cair**, **Revezamento das Palavras** |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre dos Encontros**, **Geógrafo da Vila**, **Leitor com Entonação**, **Leitor do Litoral**; valores: **Guardião do Mangue**, **Amigo que Divide o Crédito**; esporte: **Vôlei Sem Deixar Cair**, **Revezamento das Palavras**, **Ginga na Areia** (capoeira como esporte) |
 | Ensinar junto (roteiro com áudio da dupla) | "Não corrija a fala, elogie a leitura": encontros consonantais em casa (3 min) |
 | Competição saudável (desligável) | Vôlei da turma: recorde coletivo de toques; recorde pessoal de leitura repetida. Nunca ranking por nível de leitura |
 
@@ -224,11 +225,11 @@
 #### R9-F08 · Chefe: Jornal da Cidade + projeto "Ponte da vila" (sessões 22–25)
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
-| R9-F08-C4 | Redação do jornal · todos | Provinha de fase R9 (grafias, texto com compreensão literal ≥ 70%) | Ler as notícias da semana e responder às perguntas do editor | Carla: "A cidade quer saber. Lê a notícia, [NOME]" | N6 | ≥ 85% / ≥ 75% + texto → **nível 8** | — |
+| R9-F08-C4 | Redação do jornal · todos | Provinha de fase R9 (grafias, texto com compreensão literal ≥ 70%) | Ler as notícias da semana e responder às perguntas do editor. O Zum-Zum embaralha as letras da manchete; a criança vence **relendo com calma** e corrigindo | Carla: "A cidade quer saber. Lê a notícia, [NOME]" | N6 | ≥ 85% / ≥ 75% + texto → **nível 8** | — |
 | R9-F08-C7 | Redação · os dois | Produção: notícia de 2 frases | Jornal da Vila em Dupla (série, jogo 18); pergunta "posso publicar?" | Tales: "Manchete sua, [NOME]!" | N9 | — | Dislexia: a criança dita, a Sofia escreve |
 | R9-F08-C9 | Observatório · os dois | Gancho | A estrela-mapa aponta o arquipélago | Sofia: "O que o céu conta, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** **Mestre do H, do X, das famílias de palavras**; **Criador** (prata); a vila ganha o **jornal**, a **ponte** e o **observatório** ★. **Em casa:** ler uma notícia curta para criança (ou a manchete do jornal da vila no app) e conversar "o que é uma regra da nossa casa e para que ela serve?".
+**Fecha a região:** **Mestre do H, do X, das famílias de palavras**; **Criador** (prata); **Zum-Zum vira amigo** (ganha uma coluna no jornal: "Dica do Zum-Zum: termine antes de olhar para o lado"); a vila ganha o **jornal**, a **ponte** e o **observatório** ★. **Em casa:** ler uma notícia curta para criança (ou a manchete do jornal da vila no app) e conversar "o que é uma regra da nossa casa e para que ela serve?".
 
 **Professor e família junto (D018) em R9:**
 | Item | Como funciona aqui |
@@ -309,7 +310,7 @@
 #### R10-F09 · Chefe final: Festival de Leitura (sessões 29–32)
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
-| R10-F09-C4 | Arquipélago todo iluminado · todos os moradores | Benchmark final (nível 9 e 10) | Cada ilha pede um texto: ler, recontar, inferir, escrever | Sofia: "Esta é a última ilha, [NOME]. Vai com calma" | N6, N12 | Critérios dos níveis 9 e 10. Não passou: reforço curto; o festival continua aberto | Sem cronômetro |
+| R10-F09-C4 | Arquipélago todo iluminado · todos os moradores | Benchmark final (nível 9 e 10) | Cada ilha pede um texto: ler, recontar, inferir, escrever. O Zum-Zum, já amigo, não distrai mais: zune baixinho só para mostrar a próxima ilha | Sofia: "Esta é a última ilha, [NOME]. Vai com calma" | N6, N12 | Critérios dos níveis 9 e 10. Não passou: reforço curto; o festival continua aberto | Sem cronômetro |
 | R10-F09-C7 | Sala de casa · família | Público real | A criança lê o "Livro da minha jornada" para a família | Os dois: "Lê pra sua família, [NOME]!" | N12 | Confirmação do adulto | — |
 | R10-F09-C9 | Biblioteca da vila · todos | Momento uau: formatura da alfabetização | O livro da criança entra na estante da vila; cada morador lê uma página; diploma sem nota | Os dois: "[NOME], você aprendeu a ler. Foi você, letra por letra!" | N12 | — | Modo calmo: sem partículas |
 
@@ -319,7 +320,7 @@
 | R10-F10-C1 | Todo o mapa · os dois (andaime reduzido) | Manutenção (agendador nível 7) | Modo infinito de revisão com fim de capítulo; temporadas que voltam todo ano; estante livre | Tales: "Qual ilha hoje, [NOME]?" | N5, N4 | Retenção | — |
 | R10-F10-C7 | Editora · escritora | Autoria contínua | Escrever novos livrinhos para a vila | Escritora: "A vila quer mais histórias suas" | N2 | — | — |
 
-**Fecha a jornada:** **Leitor** (ouro), **Criador** (ouro: publicar no livro da vila), capa dourada do Leitor (item de domínio); a vila ganha a **editora**. **Em casa:** ritual de passagem em família: ler juntos o "Livro da minha jornada" e escolher o próximo livro de papel.
+**Fecha a jornada:** **Leitor** (ouro), **Criador** (ouro: publicar no livro da vila), capa dourada do Leitor (item de domínio); título **Mestre Leitor I**, que depois segue com estrelas sem fim ([07](07-progressao-niveis-e-titulos.md)); o Zum-Zum lê uma página na formatura: "Aprendi a prestar atenção com você, [NOME]!"; a vila ganha a **editora**. **Em casa:** ritual de passagem em família: ler juntos o "Livro da minha jornada" e escolher o próximo livro de papel.
 
 **Professor e família junto (D018) em R10:**
 | Item | Como funciona aqui |

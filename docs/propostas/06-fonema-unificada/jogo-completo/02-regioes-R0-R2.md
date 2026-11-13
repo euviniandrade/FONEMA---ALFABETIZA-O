@@ -3,6 +3,15 @@
 > Leia antes o [README](README.md): ele define a notação (`[NOME]`, `{o/a/neutro}`), a cena-padrão C0–C9, as mecânicas, o catálogo de dicas de boca e os ajustes-padrão de TEA, TDAH e dislexia. Aqui cada tabela traz **só as cenas próprias da fase** e, na coluna "Ajustes", **só o que muda** em relação ao padrão.
 > Palavras em MAIÚSCULAS são lidas pela criança. *(ouvida)* = palavra só falada pela dupla. Toda palavra lida passa pelo linter de decodificabilidade (rel. 25) antes da produção.
 
+> **Foco das primeiras fases (Decisão 019 §5): cotidiano universal, nada que divida opiniões.** Em R0–R2 as histórias ficam em temas que acolhem toda criança:
+> - **família** com pai e mãe (a família da Sofia e a do Tales; no "Álbum da minha família" a criança escolhe as figuras de quem mora com ela, sem pergunta invasiva);
+> - **amigos e colegas**, **escola** e **dia a dia** (quintal, praça, correio, biblioteca, hora do lanche);
+> - **esportes**: amarelinha, corrida, futebol, vôlei, basquete, handebol, natação (braçada no lugar, na pausa ativa), atletismo e **capoeira como esporte** (ginga, equilíbrio, palmas, roda de respeito; sem cantigas, rituais ou política). Os esportes que não têm cena própria entram nas pausas ativas (C6) em rodízio;
+> - **natureza e cuidado com os animais** (Paçoca, Nina, tartaruga, mico, tucano);
+> - **selos e conquistas**, com o título **Aprendiz dos Sons** e depois **Caçador de Sílabas** ([07](07-progressao-niveis-e-titulos.md)).
+>
+> Temas sensíveis (política, religião além dos valores da D012, conflitos, perdas, medos) ficam fora. O vilão leve é o **Zum-Zum, o besouro barulhento** ([README §6.1](README.md)): ele só distrai, nunca assusta, e no fim de cada região vira amigo.
+
 ---
 
 ## R0 · Quintal da Sofia / Vila do Bolota
@@ -13,7 +22,7 @@
 | Pergunta-guia | "Quem sou eu e quem vive comigo?" |
 | Cenários | Quintal da casa da criança (vizinha da casa da Sofia), casa da Sofia, praça da vila, campinho, calçada da amarelinha |
 | Elenco | Sofia, Tales, Bolota (aparece no fim do dia 1), Paçoca (cachorro caramelo), Nina (gata da biblioteca), Dona Cida (parlendas), Davi (pandeiro das sílabas) |
-| Moldura | A **Nuvem Bagunceira** passou pela vila e apagou as letras das placas. Em R0 a criança ainda não lê: ela "acorda os ouvidos" e prepara a vila para as letras voltarem |
+| Moldura | O **Zum-Zum, o besouro barulhento**, passou zunindo pela vila, embaralhou as letras das placas e tirou a atenção de todo mundo ("Zzzum! Olha ali!"). Em R0 a criança ainda não lê: ela "acorda os ouvidos", aprende a **prestar atenção** e prepara a vila para as letras voltarem ao lugar |
 | Gancho → R1 | Uma garrafa chega à beira do quintal com um mapa e **5 sinais** desenhados (as vogais). O barco do Bolota está pronto |
 
 ### Como a aprendizagem é medida e acompanhada em R0
@@ -49,6 +58,7 @@
 | R0-F03-C2 | Praça · Davi, Sofia, Tales | Segmentação silábica | Assiste e Faz: Davi marca PI-PO-CA no pandeiro (40 s) → a criança bate | Tales: "Agora é a sua vez, [NOME]! Uma palma para cada pedacinho" | N8 | — | — |
 | R0-F03-C4 | Varal de lâmpadas · os dois | Contar sílabas (1–4) | Palmas em Dupla (série, jogo 1): cada palma acende uma lâmpada | Sofia: "Quantas palmas tem BO-LO-TA, [NOME]? Eu me perdi!" | N2, N6 | 4/5 em 2 sessões. Erro: Sofia bate junto na 1ª vez, só observa na 2ª | TDAH: pular a cada sílaba |
 | R0-F03-C6 | Calçada · os dois | Sílabas com o corpo | ESPORTE (amarelinha): 1 casa por sílaba | Os dois: "Pula com a gente, [NOME]! JA-NE-LA!" | N11, N1 | — | Opção sentada (toque) sempre |
+| R0-F03-C6b | Praça · Davi, Sofia, Tales | Sílabas no ritmo do corpo (capoeira como esporte) | ESPORTE · Roda de respeito: cumprimento antes e depois; a ginga marca o ritmo e a criança bate **uma palma por sílaba** de GIN-GA, ES-QUI-VA, BO-LA, PE-TE-CA *(ouvidas)*; equilíbrio num pé só no fim | Davi: "Na roda a gente joga junto, ninguém bate em ninguém. Uma palma por pedacinho, [NOME]: GIN-GA!" | N8, N11 | — | Sem cantiga nem berimbau com canto: só palmas e pandeiro. Opção sentada (balanço do tronco). TEA: palmas por toque |
 | R0-F03-C5 | Porta da escola · Tales | Transferência: sílabas de nomes | TOCAR: quantas palmas em SO-FI-A, TA-LES, e no nome da criança | Tales: "E o seu nome, [NOME]? Bate pra mim!" | N9 | 1 acerto fora do formato | — |
 
 **Fecha a fase:** a praça ganha o varal de lâmpadas. **Em casa:** bater palmas nos nomes das pessoas da família no jantar.
@@ -76,19 +86,19 @@
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
 | R0-F06-C1 | Praça enfeitada (toldos azul-marinho e branco) · todos | Revisão de R0 (aquecimento em êxito) | TOCAR: sons-relâmpago | Tales: "Hoje é a Festa das Rimas, [NOME]! Aquece com a gente" | N12, N6 | — | TEA: aviso das 4 etapas da festa |
-| R0-F06-C4 | Palco do coreto · todos | Rima, sílaba, som inicial, síntese (provinha disfarçada, oral) | 4 estações: varal de rimas, lâmpadas, caça ao som, fala de tatu | Sofia: "Cada estação acende uma lanterna. Vamos, [NOME]?" | N6, N4 | ≥ 85% no conjunto. Não passou: trilha curta de reforço; nada se perde | Sem plateia barulhenta |
+| R0-F06-C4 | Palco do coreto · todos | Rima, sílaba, som inicial, síntese (provinha disfarçada, oral) | 4 estações: varal de rimas, lâmpadas, caça ao som, fala de tatu. **Entre** as estações, o Zum-Zum zune e chama para o outro lado; a criança vence **ouvindo bem** e terminando cada estação antes de olhar | Sofia: "Cada estação acende uma lanterna. Vamos, [NOME]?" | N6, N4 | ≥ 85% no conjunto. Não passou: trilha curta de reforço; nada se perde | Sem plateia barulhenta |
 | R0-F06-C7 | Mesa da praça · Sofia | Sílabas e som inicial de palavras da família | Álbum: escolher figuras (MAMÃE, PAPAI, VOVÓ, irmão…), bater as sílabas | Sofia: "Quem mora com você, [NOME]? Bate as palmas do nome" | N9 | — | Nada é gravado; a pergunta pessoal vai para a família |
 | R0-F06-C9 | Beira do quintal · os dois + Bolota | Gancho → R1 | A garrafa chega com o mapa de 5 sinais | Tales: "Cinco sinais! E se forem letras, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** emblema **Leitor do Quintal** (prata ao vencer a festa); a vila ganha o varal de lâmpadas e o cais. **Em casa:** ver o "Álbum da minha família" juntos (vai ao painel da família).
+**Fecha a região:** emblema **Leitor do Quintal** (prata ao vencer a festa); título **Caçador de Sílabas I** ([07](07-progressao-niveis-e-titulos.md)); a vila ganha o varal de lâmpadas e o cais. **Zum-Zum vira amigo:** ele ouve a festa inteira quietinho, aprende que "quem escuta até o fim descobre a rima", pede desculpas pela bagunça e ajuda a pendurar as lâmpadas. A Sofia: "Todo mundo merece outra chance, né, [NOME]?" **Em casa:** ver o "Álbum da minha família" juntos (vai ao painel da família).
 
 **Professor e família junto (D018) em R0:**
 | Item | Como funciona aqui |
 |---|---|
 | Mostra pro professor | Pontos de demonstração: fim de F02 (rima), F03 (sílabas do nome) e F04 (som inicial): a criança bate as palmas do próprio nome e fala o primeiro som. O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
-| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do Som Inicial**, **Ouvido Atento** (rimas), **Palmas Certeiras**; valores: **Cuidador dos Animais** (Paçoca e Nina), **Guardião do Meio Ambiente** (lixo no lugar); esporte: **Amarelinha das Sílabas** |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do Som Inicial**, **Ouvido Atento** (rimas), **Palmas Certeiras**; valores: **Cuidador dos Animais** (Paçoca e Nina), **Guardião do Meio Ambiente** (lixo no lugar); esporte: **Amarelinha das Sílabas**, **Roda de Respeito** (capoeira como esporte) |
 | Ensinar junto (roteiro com áudio da dupla) | "Como fazer o som com a criança": /mmm/, /sss/, /fff/ esticados, sem dizer o nome da letra (3 min, com áudio da Sofia) |
-| Competição saudável (desligável) | Turma contra a Nuvem Bagunceira: cada rima achada pela turma devolve uma lâmpada ao varal da praça (meta coletiva). Nunca ranking por nível de leitura |
+| Competição saudável (desligável) | Turma contra o Zum-Zum: cada rima achada pela turma devolve uma lâmpada que ele apagou no varal da praça (meta coletiva). Nunca ranking por nível de leitura |
 
 ---
 
@@ -144,7 +154,7 @@
 |---|---|---|---|---|---|---|---|
 | R1-F04-C2 | Fundo limpo · Sofia | /i/ = I | Assiste e Faz: Espelho (lábios esticados) → falar | Sofia: "/iii/, um sorriso grande. Sua vez, [NOME]!" | N8 | Erro: "estica o sorriso" | — |
 | R1-F04-C4 | Ilha · os dois | I ↔ /i/ | TRAÇAR: traçar o I na areia com o dedo (ordem do traço) | Tales: "Desenha o I e fala o som, [NOME]!" | N8, N2 | Traço aceito + som | Dislexia: traçado com guia |
-| R1-F04-C5 | Placas da praia · Sofia | Transferência: vogal inicial em placa | TOCAR: placas apagadas pela Nuvem; a criança põe a vogal (ILHA, OVO, UVA *ouvidas*) | Sofia: "A Nuvem apagou a placa. Qual som começa ILHA, [NOME]?" | N9 | 1 acerto fora do formato | — |
+| R1-F04-C5 | Placas da praia · Sofia | Transferência: vogal inicial em placa | TOCAR: placas embaralhadas pelo Zum-Zum; a criança põe a vogal certa (ILHA, OVO, UVA *ouvidas*) | Sofia: "O Zum-Zum embaralhou a placa. Escuta bem: qual som começa ILHA, [NOME]?" | N9 | 1 acerto fora do formato | — |
 
 **Em casa:** missão "praia limpa" de faz-de-conta: guardar os brinquedos que começam com /i/ e /a/.
 
@@ -168,10 +178,10 @@
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
 | R1-F07-C1 | Cais ao entardecer · todos | Revisão das vogais (retenção 24 h–7 d) | Jardim da Revisão em forma de conchas | Sofia: "Lembra das conchas, [NOME]? Vamos ver" | N4, N5 | — | — |
-| R1-F07-C4 | Escada do farol (4 andares) · os dois | Provinha de letra das vogais (10 itens, ouvir/tocar e ver/falar) | Cada andar = 2–3 vogais; o farol acende andar por andar | Tales: "Mais um andar, [NOME]! Você vai devagar e dá certo" | N6, N12 | ≥ 8/10. Não passou: reforço curto na praia; o farol fica meio aceso, sem perda | Sem cronômetro |
+| R1-F07-C4 | Escada do farol (4 andares) · os dois | Provinha de letra das vogais (10 itens, ouvir/tocar e ver/falar) | Cada andar = 2–3 vogais; o farol acende andar por andar. O Zum-Zum zune na janela do farol; a criança vence **olhando a boca da Sofia** antes de responder | Tales: "Mais um andar, [NOME]! Você vai devagar e dá certo" | N6, N12 | ≥ 8/10. Não passou: reforço curto na praia; o farol fica meio aceso, sem perda | Sem cronômetro |
 | R1-F07-C9 | Topo do farol · os dois | Momento uau + gancho | A luz varre o mar e chega à mata; ouve-se /mmm/ | Sofia: "Você acendeu o farol, [NOME]. Ouviu? /mmm/…" | N10 | — | Modo calmo: luz sem varredura |
 
-**Fecha a região:** emblemas **Mestre do A … Mestre do U** (bronze → prata) e **Leitor da Ilha** (prata). Termômetro sobe para 1. A vila ganha o barco e o cais. **Em casa:** "Caça às vogais" no rótulo de um alimento (o adulto aponta, a criança faz o som).
+**Fecha a região:** emblemas **Mestre do A … Mestre do U** (bronze → prata) e **Leitor da Ilha** (prata). Termômetro sobe para 1. A vila ganha o barco e o cais. **Zum-Zum vira amigo:** ele tenta fazer as vogais olhando a boca da criança e descobre que "olhar a boca ajuda a ouvir"; ganha um lugar no barco do Bolota. **Em casa:** "Caça às vogais" no rótulo de um alimento (o adulto aponta, a criança faz o som).
 
 **Professor e família junto (D018) em R1:**
 | Item | Como funciona aqui |
@@ -240,11 +250,11 @@
 #### R2a-F05 · Chefe: Cachoeira das Sílabas + projeto "Guia da mata para o Bolota" (sessões 14–16)
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
-| R2a-F05-C4 | Cachoeira · os dois | Provinha de fase R2a (palavras + pseudopalavras + 4 de escrita) | Pedras da cachoeira = sílabas; ler para atravessar; ditado de 4 palavras com letras móveis | Sofia: "Uma pedra de cada vez, [NOME]" | N6, N4 | ≥ 85% leitura e ≥ 75% escrita. Não passou: reforço curto; a cachoeira continua lá | Sem cronômetro |
+| R2a-F05-C4 | Cachoeira · os dois | Provinha de fase R2a (palavras + pseudopalavras + 4 de escrita) | Pedras da cachoeira = sílabas; ler para atravessar; ditado de 4 palavras com letras móveis. O Zum-Zum embaralha as letras das pedras; a criança vence lendo **letra por letra até o fim** | Sofia: "Uma pedra de cada vez, [NOME]" | N6, N4 | ≥ 85% leitura e ≥ 75% escrita. Não passou: reforço curto; a cachoeira continua lá | Sem cronômetro |
 | R2a-F05-C7 | Trilha · Bolota | Projeto: figurinhas que falam | Criar o guia: escolher bichos e ler 1 palavra de cada figurinha | Bolota: "Agora eu sei a mata!" | N9, N2 | — | — |
 | R2a-F05-C9 | Ponte em obras · todos | Gancho (fim da parte gratuita) | A ponte em obras, sem cadeado; o tucano espia do outro lado | Tales: "Tem alguém chamando lá do outro lado, [NOME]!" | N10 | — | Sem oferta de compra à criança |
 
-**Fecha a região:** **Mestre do M, L, F**; **Leitor da Mata** (bronze); a vila ganha a horta e a **Árvore das Palavras**. Relatório antes/depois **só para o adulto**. Sem assinatura, a criança continua com revisão, vila e estante de R0–R2a. **Em casa:** ler o Guia da mata para alguém da família.
+**Fecha a região:** **Mestre do M, L, F**; **Leitor da Mata** (bronze); título **Explorador das Palavras I** ([07](07-progressao-niveis-e-titulos.md)); **Zum-Zum vira amigo** (aprende que "devagar e até o fim, a palavra aparece" e ajuda a carregar as letras do guia); a vila ganha a horta e a **Árvore das Palavras**. Relatório antes/depois **só para o adulto**. Sem assinatura, a criança continua com revisão, vila e estante de R0–R2a. **Em casa:** ler o Guia da mata para alguém da família.
 
 **Professor e família junto (D018) em R2a:**
 | Item | Como funciona aqui |
@@ -315,10 +325,10 @@
 | ID | Cenário · quem | Alvo | Mecânica | Fala-chave | N | Domínio · se errar | Ajustes |
 |---|---|---|---|---|---|---|---|
 | R2b-F06-C1 | Pé da árvore · os dois | Revisão R2a–R2b (retenção) | Jardim da Revisão em folhas | Tales: "Lembra dessas, [NOME]?" | N4, N5 | — | — |
-| R2b-F06-C4 | Galhos até o ninho · os dois + tucano | Provinha de fase R2b (10 palavras + 10 pseudopalavras + 4 escrita) | Cada galho = 1 grupo; o tucano chega mais perto a cada galho | Sofia: "Um galho de cada vez, [NOME]" | N6, N12 | ≥ 85% leitura e ≥ 75% escrita → **nível 3** | Sem cronômetro |
+| R2b-F06-C4 | Galhos até o ninho · os dois + tucano | Provinha de fase R2b (10 palavras + 10 pseudopalavras + 4 escrita) | Cada galho = 1 grupo; o tucano chega mais perto a cada galho. O Zum-Zum troca bilhetes de galho; a criança vence **terminando um galho antes de olhar o próximo** | Sofia: "Um galho de cada vez, [NOME]" | N6, N12 | ≥ 85% leitura e ≥ 75% escrita → **nível 3** | Sem cronômetro |
 | R2b-F06-C9 | Ninho · todos | Gancho | O bilhete do sul chega no bico do tucano | Tales: "O vento trocou o P e o T? Por quê, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** **Mestre do V, S, N**; **Leitor da Mata** (prata); a vila ganha o **correio**; termômetro **3**. **Em casa:** deixar um bilhete de 2 palavras para a criança achar e ler, só com letras já aprendidas (ex.: "SOFÁ NOVO", "NINA VIVA").
+**Fecha a região:** **Mestre do V, S, N**; **Leitor da Mata** (prata); **Zum-Zum vira amigo** (entrega o bilhete do sul no lugar certo: "uma coisa de cada vez"); a vila ganha o **correio**; termômetro **3**. **Em casa:** deixar um bilhete de 2 palavras para a criança achar e ler, só com letras já aprendidas (ex.: "SOFÁ NOVO", "NINA VIVA").
 
 **Professor e família junto (D018) em R2b:**
 | Item | Como funciona aqui |

@@ -69,3 +69,5 @@ Regras: voz da Sofia e do Tales a 0 dB de referência; efeito de acerto −12 dB
 4. **Modo calmo** (um botão): sem música, sem partículas, céu fixo, animações curtas.
 5. **Aviso de fim em 2 etapas** e **sem botão continuar**; janela noturna bloqueada.
 6. **Aparelho simples:** modo leve com imagens pré-renderizadas e o mesmo valor pedagógico.
+7. **Zum-Zum, o vilão leve da distração** ([README §6.1](README.md), D019): aparece só na cena de missão, **antes e entre** os itens; nunca na tela de lição, durante a decodificação ou enquanto a dupla fala. O zumbido é curto e suave (≤ 1 s, −24 dB, sem susto); ele embaralha letras com animação lenta, e a criança vence prestando atenção. No modo calmo e no Previsível, ele aparece parado e é anunciado antes.
+8. **Comemoração de nível e de título** ([07](07-progressao-niveis-e-titulos.md)): só no ritual de fim ou na vila, nunca no meio da tarefa; nível comum = 2–3 s; título novo = 5–10 s com a dupla, sem tela cheia de partículas.
