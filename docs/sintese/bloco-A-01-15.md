@@ -221,7 +221,7 @@
 - **Pseudopalavras** ("tafo", "lume") como treino e diagnóstico de transferência.
 - **Separar pares espelhados no tempo** (b e d, p e q nunca na mesma lição/semana; consolidar b antes de d; depois contrastar explicitamente); jogos "qual está virada certo?"; traçado com setas de direção.
 - Ponte fala ↔ escrita nas duas direções (ouvir → escolher letra; ver → falar com ASR).
-- **Boquinha + letra + som juntos na mesma tela**; modelo GraphoGame (som → letra, poucas alternativas, adaptativo).
+- **Boca (Espelho do Som) + letra + som juntos na mesma tela**; modelo GraphoGame (som → letra, poucas alternativas, adaptativo).
 - Feedback **específico ao grafema** (qual letra/som falhou), não só "errado"; trocas b/d não punidas como erro grave.
 - Relatórios celebram **domínio de correspondências**, não só palavras por minuto.
 - Trilha adulta/EJA viável (mesmo núcleo, outra estética).
@@ -251,7 +251,7 @@
 
 **(b) Regras de design/produto**
 - **Toda atividade é recuperação** (a criança tenta antes de ouvir), exceto a 1ª apresentação modelada pela Sofia com a boquinha.
-- **Feedback corretivo imediato em todo erro** (som correto + vídeo da boquinha + nova tentativa); após acerto, feedback breve.
+- **Feedback corretivo imediato em todo erro** (som correto + vídeo da boca no Espelho do Som + nova tentativa); após acerto, feedback breve.
 - **Taxa de sucesso-alvo 80–90%**; formato de teste **produtivo** (falar) com feedback, não só tocar opções.
 - **Revisão sempre no dia seguinte**; sugerir aos pais sessão curta no fim da tarde/noite e revisão na manhã seguinte; "história da Sofia" de 3–5 min com as palavras do dia em **modo só-áudio** antes de dormir.
 - Intercalar pares confusos (b/d, p/q, m/n, f/v, t/d, ca/ga, pa/ba, lh/nh, -ão/-am) só após ≥ 2 recuperações isoladas bem-sucedidas de cada item; novo item primeiro em bloco curto.
@@ -380,7 +380,7 @@
 - Sequência pedagógica: ouvir o som → ver a boca → sentir na própria boca (espelho + mão) → ver a letra surgir → escolher a letra → escrever dizendo o som → usar em segmentação/síntese com letras. Princípios fixos: **sempre com letras** e **sempre congruente**.
 
 **(c) Números operacionais**
-- Clipe da boquinha: **3–5 s** (som isolado prolongado se contínuo /fff/ /sss/ /mmm/ /vvv/ → em sílaba e palavra → letra aparece no momento do som).
+- Clipe da boca (Espelho do Som): **3–5 s** (som isolado prolongado se contínuo /fff/ /sss/ /mmm/ /vvv/ → em sílaba e palavra → letra aparece no momento do som).
 - Inventário: ~19 consoantes + 7 vogais orais + nasais (cf. rel. 02).
 - Tolerância de sincronia audiovisual: "dezenas de milissegundos" (aproximada).
 
@@ -552,7 +552,7 @@
 1. **Fônica sistemática e explícita como núcleo, nunca sozinha** (01, 02, 05, 06, 10, 11, 15): grafema-fonema explícito + consciência fonêmica **com letras** + leitura com sentido, vocabulário e compreensão (fios superiores da Corda; Reading First mostrou zero em compreensão).
 2. **Unidade de ensino = fonema, não sílaba nem palavra inteira** (06, 07, 10): foco grafema-fonema recruta a rede esquerda e generaliza; em PB, mapeamento fonêmico > silábico (Sargiani et al., 2018). A sílaba organiza a **progressão de complexidade** (CV → V → CVC → CCV; rel. 02), não a unidade de mapeamento.
 3. **Pseudopalavras para treinar e medir decodificação real** (01, 02, 06, 11; Decisão 003).
-4. **Boquinha + som + letra congruentes e sincronizados**, um vídeo **por fonema**, pessoa real + vista lateral + ícones de vozeamento/nasalidade; o vídeo termina na letra (01, 02, 03, 06, 10).
+4. **Boca (Espelho do Som) + som + letra congruentes e sincronizados**, um vídeo **por fonema**, pessoa real + vista lateral + ícones de vozeamento/nasalidade; o vídeo termina na letra (01, 02, 03, 06, 10).
 5. **Fonemas isolados gravados por humano** (fonoaudióloga/locutora); TTS neural para o resto, pré-gerado e versionado (02, 03, 04).
 6. **Prática distribuída + recuperação + feedback corretivo imediato** (07, 13, 15); revisão no dia seguinte; superaprender numa sessão não substitui revisões.
 7. **Telas limpas, um foco por vez, animação só quando ensina, sem música em tarefas fonológicas, celebração depois da resposta** (04, 09, 12, 15).

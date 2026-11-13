@@ -1,5 +1,7 @@
 # Proposta 2 — "Arquipélago 3D"
 
+> **📦 Proposta histórica.** Esta proposta foi uma das 5 opções de 13/11/2026. A [Decisão 005](../../decisoes/005-proposta-unificada.md) juntou o melhor das cinco na **[proposta 06 (FONEMA Unificada)](../06-fonema-unificada/README.md)**, que é a que vale. Decisões posteriores também mudaram pontos daqui: dupla Sofia e Tales em 3D (D007), sem adornos (D008), sem arco-íris (D009), Academia (D011), **sem festa junina, carnaval ou folclore como entidade (D012)** e linguagem de **plataforma**, não "jogo" (D014). Ver o [índice de decisões](../../decisoes/README.md).
+
 > **Em uma frase:** o FONEMA como um jogo de mundo aberto de verdade. É um arquipélago 3D low-poly, colorido e explorável. Cada ilha é uma região/bioma da jornada de 2 anos, e a criança navega entre elas de barco ou de balão, com avatar 3D e vila 3D construível. As lições continuam em **camadas 2D limpas** por cima do mundo, para não perder a clareza pedagógica.
 
 | | |
@@ -54,7 +56,7 @@ O mapa é o do Documento Mestre (§4.2). Nomes e biomas finais dependem do dono 
 | Pampa | R3 — P, T → B, D | cata-ventos, dia e noite | veleiro |
 | Pantanal | R4 — J, Z, X/CH, NH, LH + frases | a água sobe e desce (cheia/seca animadas) | veleiro |
 | Cerrado | R5 — C/QU, G/GU, R/RR, S/SS, Ç | ipês, fogo e rebrota | balão |
-| Caatinga/Sertão — **chefe do Ano 1** | R6 — nasalidade | cordel, xilogravura; festa junina sazonal | balão |
+| Caatinga/Sertão — **chefe do Ano 1** | R6 — nasalidade | cordel, xilogravura; feira da colheita sazonal (D012) | balão |
 | Amazônia (abre o Ano 2) | R7 — CVC + ditongos | rios e povos da floresta | balão + canoa |
 | Litoral e Mar | R8 — CCV | o Atlântico que liga África e Brasil | hidroavião de brinquedo |
 | Cidade das Letras | R9 — S/Z/X, CH/X, J/G, H, -ão, -inho | oficina STEAM: a ponte da vila | hidroavião |

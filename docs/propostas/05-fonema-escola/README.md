@@ -1,5 +1,7 @@
 # Proposta 5 — FONEMA Escola
 
+> **📦 Proposta histórica.** Esta proposta foi uma das 5 opções de 13/11/2026. A [Decisão 005](../../decisoes/005-proposta-unificada.md) juntou o melhor das cinco na **[proposta 06 (FONEMA Unificada)](../06-fonema-unificada/README.md)**, que é a que vale. Decisões posteriores também mudaram pontos daqui: dupla Sofia e Tales em 3D (D007), sem adornos (D008), sem arco-íris (D009), Academia (D011), **sem festa junina, carnaval ou folclore como entidade (D012)** e linguagem de **plataforma**, não "jogo" (D014). Ver o [índice de decisões](../../decisoes/README.md).
+
 > **Escola e rede pública primeiro, com o app da família junto.** O mesmo mundo lúdico da Sofia e do Bolota para a criança, mas o produto nasce pensado para a sala de aula real (tablets compartilhados, internet ruim, 25 crianças, uma professora) e para quem compra em escala no Brasil: a secretaria municipal.
 
 Documentos desta proposta:
@@ -66,7 +68,7 @@ O mapa é o do Documento Mestre (11 regiões, R0 Quintal → R10 Arquipélago do
 | **1º ano, out–dez** | R5 Cerrado, R6 Caatinga — chefe do Ano 1 (5 completo) | provinhas de passagem; modo projetor para revisão | **marco do 1º ano**: % nos níveis ≥ 5 |
 | **2º ano, fev–jun** | R7 Amazônia, R8 Litoral e Mar (6→7) | frases e pequenos textos; leitura dialógica | relatório ao Conselho Municipal |
 | **2º ano, ago–nov** | R9 Cidade das Letras, R10 Arquipélago dos Livros (8→10) | fluência, compreensão, produção de texto | **% no nível 10** e **estimativa de referência Saeb 743** (sempre rotulada como estimativa) antes da avaliação oficial |
-| **sempre** | modo infinito de revisão, temporadas (festa junina, carnaval), Vila do Bolota | — | — |
+| **sempre** | modo infinito de revisão, temporadas (feira da colheita, Copa das Letras; D012), Vila do Bolota | — | — |
 
 O avanço é **por domínio**, nunca por tempo. Crianças que chegam ao 2º ano ainda no nível 2 continuam de onde estão; o painel da secretaria mostra a **distribuição**, não uma média que esconde quem ficou para trás. O nível **nunca desce visivelmente** para a criança.
 

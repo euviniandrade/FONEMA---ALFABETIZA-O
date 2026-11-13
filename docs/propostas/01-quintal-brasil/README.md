@@ -1,5 +1,7 @@
 # Proposta 1 — "Quintal Brasil" (caminho equilibrado)
 
+> **📦 Proposta histórica.** Esta proposta foi uma das 5 opções de 13/11/2026. A [Decisão 005](../../decisoes/005-proposta-unificada.md) juntou o melhor das cinco na **[proposta 06 (FONEMA Unificada)](../06-fonema-unificada/README.md)**, que é a que vale. Decisões posteriores também mudaram pontos daqui: dupla Sofia e Tales em 3D (D007), sem adornos (D008), sem arco-íris (D009), Academia (D011), **sem festa junina, carnaval ou folclore como entidade (D012)** e linguagem de **plataforma**, não "jogo" (D014). Ver o [índice de decisões](../../decisoes/README.md).
+
 > **Uma frase:** um livro ilustrado brasileiro que vira mundo. A criança atravessa 11 biomas com a Sofia e o Bolota, lendo de verdade para fazer o mundo acontecer, num app e numa web calmos e feitos à mão, construídos com uma stack madura, barata de operar e que respeita a privacidade.
 
 | | |
@@ -78,7 +80,7 @@ O mapa segue a **proposta única de 11 regiões** do documento mestre (§4.2), u
 - **Vila do Bolota**: construir e decorar com escolhas simples ("a horta gosta de ficar perto da água").
 - **Colecionáveis que ensinam**: álbum de figurinhas que falam, livros na estante (por domínio, nunca por moeda).
 - **Desafio-chefe** por região (provinha disfarçada; falhar não tira nada; nova chance sempre).
-- **Temporadas** como festas na vila (Carnaval, Festa Junina, Folclore, Dia das Crianças); itens voltam todo ano.
+- **Temporadas** como festas na vila (Dia das Crianças e outras); itens voltam todo ano. *Atualizado pela D012: no lugar de Carnaval, Festa Junina e Folclore, entram Feira de Leitura e Colheita, Dia da Família, Copa das Letras e formatura.*
 - **Regiões antigas viram revisão espaçada**: os moradores continuam pedindo ajuda com palavras daquele bloco.
 - **Seis competências por dentro da leitura**: cartas de comando para o Bolota (pensamento computacional), enigmas de classificar sons (lógica), bilhete triste de um morador (emoções), "como o app me ouve" (tecnologia), cofrinho (finanças).
 

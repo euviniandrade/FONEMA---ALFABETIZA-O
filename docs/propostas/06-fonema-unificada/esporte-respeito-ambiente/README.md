@@ -446,7 +446,7 @@ Formato de cada missão: cena curta → a criança **lê** 2–3 opções (cart�
 
 > Observação para o time de conteúdo: as palavras da coluna "Vira leitura" são **exemplos**; várias foram marcadas como "ouvidas" porque ainda não são decodificáveis na região. Todas passam pelo filtro do rel. 25 antes de entrar.
 
-### 3.3 Ligações com o resto do jogo
+### 3.3 Ligações com o resto da plataforma
 
 - **Vila:** cada missão ambiental cumprida muda algo visível (a praia fica limpa, o ipê floresce, a cisterna enche), como a regra "a palavra lida devolve uma coisa ao mundo" (jornada §1).
 - **Educação financeira:** necessidade × desejo (garrafa reaproveitável antes de enfeite), bens comuns (R7), doar ao projeto coletivo da horta (D002).
@@ -570,7 +570,7 @@ Formato de cada missão: cena curta → a criança **lê** 2–3 opções (cart�
 
 ### 7.1 Internas
 - **Decisões:** [001](../../../decisoes/001-jornada-e-modelo-de-precos.md), [002](../../../decisoes/002-economia-virtual-avatar-educacao-financeira.md), [003](../../../decisoes/003-formacao-integral-e-aprendizagem-profunda.md), [004](../../../decisoes/004-termometro-alfabetizacao-e-proxima-fase.md), [006](../../../decisoes/006-academia-uniforme-elenco-voz.md), [007](../../../decisoes/007-dupla-sofia-e-tales.md), [008](../../../decisoes/008-avatar-3d-da-crianca.md), [009](../../../decisoes/009-paleta-sem-arco-iris.md), [010](../../../decisoes/010-esporte-respeito-meio-ambiente.md).
-- **Proposta 06:** [jornada](../jornada/README.md) (§1, §3, §4, §6.4–6.5, §8), [lojinha e emblemas](../lojinha-emblemas/README.md) (§2–§6), [avatar 3D](../avatar-3d/README.md), [mundo 3D](../mundo-3d/README.md), [Roda da Sofia](../academia/README.md).
+- **Proposta 06:** [jornada](../jornada/README.md) (§1, §3, §4, §6.4–6.5, §8), [lojinha e emblemas](../lojinha-emblemas/README.md) (§2–§6), [avatar 3D](../avatar-3d/README.md), [mundo 3D](../mundo-3d/README.md), [Academia](../academia/README.md).
 - **Relatórios** (`docs/pesquisa/`): 05 (inclusão, acessibilidade e legal), 08 (dopamina e recompensa), 12 (TEA e TDAH), 13 (emoção e erro), 15 (neuromitos), 25 (decodificáveis), 30 (aprendizagem em jogos), 33 (socioemocional), 34 (lógica e educação financeira), 35 (aprendizagem profunda), 37 (mundo aberto), 38 (economia), 39 (currículo integrado), 42 (jogo, telas e sono).
 
 ### 7.2 Fontes legais consultadas nesta sessão (busca na web, modo padrão)

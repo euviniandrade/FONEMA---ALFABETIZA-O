@@ -109,7 +109,7 @@ Para gerar tudo de novo: `node fonte/render.js` e depois `node fonte/extras.js`.
 - **Sons ambientes:** murmúrio de praça (cama), sino do bonde, tique-taque e badalada do relógio, ferramentas na oficina e pombos.
 - **Ligação com a próxima:** do alto da torre se vê o farol do Arquipélago dos Livros. A badalada final abre a ponte para o desafio último.
 
-### 11 · Arquipélago dos Livros (R10 · etapa 10 · chefe final e pós-jogo)
+### 11 · Arquipélago dos Livros (R10 · etapa 10 · desafio final e pós-jornada)
 - **Etapa fônica:** fluência, palavras frequentes ("que", "não", "muito", "também", "homem"), textos.
 - **Pontos ✦:** **farol**, **cometa**, **nuvem**, **luneta** e **livro**. Os textos curtos lidos aqui completam o "Livro da minha jornada".
 - **Elementos:** ilhas de livros empilhados com árvores, farol com dois fachos de luz, constelação em forma de livro aberto, lua crescente, cometa, "cascata" de vogais caindo de uma ilha (memória da R1) e barquinho com lanterna.

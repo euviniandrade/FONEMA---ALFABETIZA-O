@@ -141,7 +141,7 @@ Cada ficha junta: sons, nível, tema, metas das 5 transversais (rel. 39, matriz 
 | Transversais | **Emo** ler o bilhete triste de um morador e ajudar (rel. 37) · **PC** cartas de comando com palavras V/S/N · **Fin** primeira meta do cofrinho concluída |
 | Ambientes e elenco | Trilha, ninho do tucano, correio da vila |
 | Academia | (a) /v/, /s/, /n/ + **par mínimo f/v**; (e) missões semanais; (f) "como modelar o /s/ sem vogal" |
-| Lojinha | SAIA, LUVA, FIVELA, SOFÁ, VELA; coleção **Mata Atlântica** (recompensa: ingresso grátis da Trilha do Tucano) |
+| Lojinha | SAIA, LUVA, MALA, SOFÁ, VELA; coleção **Mata Atlântica** (recompensa: ingresso grátis da Trilha do Tucano) |
 | Chefe / projeto | Ninho do Tucano (provinha de fase R2b: passa para o nível 3) |
 | Gancho → R3 | [proposta da jornada] Um bilhete voa do sul: "o vento trocou o **P** e o **T** de lugar!" |
 | Neurociência | **N6** recuperação com feedback; **N7** primeira intercalação F × V; **N9** pseudopalavras ("nomes de criaturas"); **N3** feedback específico ao traço (mão na garganta: vibra!) |
@@ -180,7 +180,7 @@ Cada ficha junta: sons, nível, tema, metas das 5 transversais (rel. 39, matriz 
 | Transversais | **PC** algoritmo de plantio com depuração ("o que faltou?") · **Lóg** dedução ("se não tem água, então…") e pistas lidas · **Emo** paciência: a planta demora · **Tec** "a máquina não sabe tudo: o app pode errar" · **Fin** comparar preços (duas lojinhas); plantar para vender na feira (rels. 37, 39) |
 | Ambientes e elenco | Chapada, vereda, cupinzeiros (`ambiente-bioma-cerrado.png`); lobo-guará, jabuti, seriema, tamanduá; Dona Ema (gosta de flores de ipê); agricultora [proposta da jornada] |
 | Academia | (b) regrinhas **R/RR, R entre vogais, C/QU, G/GU, S/SS, S com som de Z, Ç**; (a) **pares k/g e ɾ/ʁ** |
-| Lojinha | TIARA DE IPÊ, LOBO-GUARÁ ★ (pede o /g/ dominado), CAPA DE LEITOR ★ (meta do cofrinho), CORETO ★, HORTA, POÇO, VIOLA, AGOGÔ, FIGURINHA PEQUI; coleção **Cerrado** (recompensa: o ipê floresce e o Lobo-guará conta "A NOITE DO LOBO") |
+| Lojinha | MUDA DE IPÊ, LOBO-GUARÁ ★ (pede o /g/ dominado), CAPA DE LEITOR ★ (meta do cofrinho), CORETO ★, HORTA, POÇO, VIOLA, AGOGÔ, FIGURINHA PEQUI; coleção **Cerrado** (recompensa: o ipê floresce e o Lobo-guará conta "A NOITE DO LOBO") |
 | Chefe / projeto | Ipê sem Flores (ler regras contextuais para "acordar" o ipê) [proposta da jornada, a partir do rel. 37] · "Horta da vila" |
 | Gancho → R6 | [proposta da jornada] O lobo-guará fala de um **sertão** onde as palavras soam pelo nariz: mandacaru, chão, canção |
 | Neurociência | **N7** R × RR, S × SS intercalados; **N3** padrão de erro alimenta o próximo item; "sanguessugas" → contraste; **N9** descoberta guiada: ver casos → achar o padrão → a Sofia nomeia a regra (rel. 35); **N10** "por que o S faz som de Z aqui?" |
@@ -237,7 +237,7 @@ Cada ficha junta: sons, nível, tema, metas das 5 transversais (rel. 39, matriz 
 | Gancho → R10 | [proposta da jornada] No observatório, uma **estrela-mapa** aponta o Arquipélago dos Livros: "o que o céu e o tempo contam?" |
 | Neurociência | **N9** mapeamento + morfologia (rel. 35); **N7** S/Z/X intercalados; **N3** erros esperados e explicados ("por que se escreve com X?"); **N10** descoberta guiada da origem das palavras |
 
-#### R10 · Arquipélago dos Livros — chefe final e pós-jogo — semanas 94–104+ · nível 8 → 9–10
+#### R10 · Arquipélago dos Livros — desafio final e pós-jornada — semanas 94–104+ · nível 8 → 9–10
 | Campo | Conteúdo |
 |---|---|
 | Sons | Fluência, palavras de alta frequência ("que", "não", "muito", "também", "homem", por mapeamento, não por memória visual), textos curtos; ortografia morfológica em revisão |

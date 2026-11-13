@@ -1,5 +1,7 @@
 # Proposta 3 — VILA LEITORA (estratégia e construção)
 
+> **📦 Proposta histórica.** Esta proposta foi uma das 5 opções de 13/11/2026. A [Decisão 005](../../decisoes/005-proposta-unificada.md) juntou o melhor das cinco na **[proposta 06 (FONEMA Unificada)](../06-fonema-unificada/README.md)**, que é a que vale. Decisões posteriores também mudaram pontos daqui: dupla Sofia e Tales em 3D (D007), sem adornos (D008), sem arco-íris (D009), Academia (D011), **sem festa junina, carnaval ou folclore como entidade (D012)** e linguagem de **plataforma**, não "jogo" (D014). Ver o [índice de decisões](../../decisoes/README.md).
+
 > **Em uma frase:** a criança constrói e administra a própria vila **lendo**. Cada prédio nasce de um som dominado, cada expedição a um bioma brasileiro traz materiais, e a vila inteira vira o retrato visível da jornada de 2 anos até a alfabetização plena.
 
 | Item | Escolha desta proposta |

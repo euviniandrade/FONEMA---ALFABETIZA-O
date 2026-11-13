@@ -1,5 +1,7 @@
 # Proposta 4 — EXPEDIÇÃO SOFIA
 
+> **📦 Proposta histórica.** Esta proposta foi uma das 5 opções de 13/11/2026. A [Decisão 005](../../decisoes/005-proposta-unificada.md) juntou o melhor das cinco na **[proposta 06 (FONEMA Unificada)](../06-fonema-unificada/README.md)**, que é a que vale. Decisões posteriores também mudaram pontos daqui: dupla Sofia e Tales em 3D (D007), sem adornos (D008), sem arco-íris (D009), Academia (D011), **sem festa junina, carnaval ou folclore como entidade (D012)** e linguagem de **plataforma**, não "jogo" (D014). Ver o [índice de decisões](../../decisoes/README.md).
+
 > **Em uma frase:** a jornada de 2 anos vira uma **série animada interativa em 11 temporadas**, uma por região do mapa. Em cada episódio de 10–15 min, a criança **destrava a história lendo**. A pilha técnica é a mais enxuta e barata das cinco: uma **PWA web-first** (Next.js + PixiJS + Rive) empacotada para as lojas com **Capacitor**, offline-first e com backend gerenciado.
 
 | Item | Resumo |
@@ -78,7 +80,7 @@ A jornada usa exatamente o **mapa único de 11 regiões** do Documento Mestre (�
 | T9 | **Litoral e Mar** (8) | CCV (pr, br, tr… pl, bl…) | "O que o mar traz e leva?" (África–Brasil) | 22 | "O navio-biblioteca" |
 | T10 | **Cidade das Letras** (9) | S/Z/X, CH/X, J/G, H; -ou, -ão, -inho | "Quem faz a cidade funcionar?" (a ponte da vila) | 22 | "A ponte" |
 | T11 | **Arquipélago dos Livros** (10) — **chefe final** | fluência, textos | "O que o céu e o tempo contam?" | 20 + pós-jogo | **"O livro da minha jornada"** (ritual com a família) |
-| | **Total** | | | **≈ 200 episódios principais** | + Curtas infinitas + **eventos sazonais** (festa junina, carnaval, Dia das Crianças) que voltam todo ano |
+| | **Total** | | | **≈ 200 episódios principais** | + Curtas infinitas + **eventos sazonais** (feira da colheita, Dia das Crianças, Copa das Letras; D012) que voltam todo ano |
 
 **O que torna a série "quase infinita" sem perder eficácia** (D001):
 1. **Curtas procedurais**: 3–10 min, geradas do banco de palavras validadas, com semente determinística, linter de decodificabilidade e fim definido (60% alvo, 30% revisão, 10% transferência).

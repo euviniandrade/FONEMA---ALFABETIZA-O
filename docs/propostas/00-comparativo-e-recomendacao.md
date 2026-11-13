@@ -1,5 +1,7 @@
 # FONEMA — 5 propostas para escolher
 
+> **📦 Documento histórico.** A escolha entre as 5 propostas foi substituída pela [Decisão 005](../decisoes/005-proposta-unificada.md): vale a **[proposta 06 (FONEMA Unificada)](06-fonema-unificada/README.md)**. Ver também o [índice de decisões](../decisoes/README.md).
+
 **Data:** 13/11/2026 · Base: 43 relatórios de pesquisa, bibliografia validada (16.847 trabalhos selecionados, 56 países), [documento mestre](../sintese/00-documento-mestre.md) e as [decisões 001–004](../decisoes/).
 
 Todas as propostas cumprem o mesmo núcleo inegociável:

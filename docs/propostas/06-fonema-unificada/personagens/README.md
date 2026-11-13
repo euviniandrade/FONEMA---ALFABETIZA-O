@@ -1,5 +1,8 @@
 # FONEMA · Personagens e ambientes (proposta unificada)
 
+> **⚠️ Versão histórica (v1).** Esta Sofia usa fivela de flor, pulseira de miçangas e brincos, que a [Decisão 006](../../../decisoes/006-academia-uniforme-elenco-voz.md) e a [Decisão 008](../../../decisoes/008-avatar-3d-da-crianca.md) proibiram. A referência atual é a dupla **Sofia e Tales em 3D** ([D007](../../../decisoes/007-dupla-sofia-e-tales.md), [`../personagens-3d/`](../personagens-3d/README.md)) e a ficha canônica da [Bíblia do Universo](../../../universo/02-personagens-canonicos.md). As PNGs desta pasta com a Sofia não devem ir para o produto (lista em `docs/QUALIDADE.md`).
+
+
 Esta pasta traz a **bíblia visual atualizada** da Sofia, do Bolota e do elenco da vila, com 3 ambientes ilustrados e a nova tela do **Espelho do Som**. Ela atende ao requisito 1 da [Decisão 005](../../../decisoes/005-proposta-unificada.md), "Personagens e ambiente melhores", e continua os documentos [23](../../../pesquisa/23-agente-pedagogico-sofia.md) (bíblia da Sofia), [28](../../../pesquisa/28-arte-animacao-audio.md) (arte, animação e áudio) e [10](../../../pesquisa/10-neuro-fala-multissensorial.md) (fala audiovisual).
 
 > **O que é isto.** É **arte de referência** vetorial, feita em SVG à mão (código em `fonte/`) e renderizada em PNG pelo Playwright com escala 2×. Ela fixa proporções, paleta, personalidade, regras de uso e camadas de animação. **Não é a arte final.** A versão de produção será redesenhada por ilustradora profissional e animada em Rive (§5).

@@ -32,7 +32,7 @@ Atenção geral (validação 16–25): a Etapa 2 confirmou que a **referência e
 6. **Modelos de instrumento reaproveitáveis:** PROLEC-R (9 índices principais, 10 secundários; tarefas com letras, palavras, pseudopalavras, frases, textos) e RtI das Canárias (Jiménez/ULL; piloto 2016 com 5–7 anos). Nível C.
 
 ### (b) Regras de design/produto
-- Progressão sílaba → unidades intrassilábicas → fonema, **mas com fonema e letra-som desde cedo** e "boquinha" fonêmica em todas as unidades.
+- Progressão sílaba → unidades intrassilábicas → fonema, **mas com fonema e letra-som desde cedo** e apoio articulatório da boca (nosso **Espelho do Som**) em todas as unidades.
 - Incluir atividades de **sílaba tônica** (ex.: "sábia/sabia/sabiá") e leitura com entonação na fase de fluência.
 - Calcular **PCPM automática** pelo reconhecimento de fala (padrão EGRA).
 - Painel por processos (modelo PROLEC-R): letras, decodificação de palavras e **pseudopalavras**, palavras frequentes, frases, textos.
@@ -425,7 +425,7 @@ Atenção geral (validação 16–25): a Etapa 2 confirmou que a **referência e
 7. **A escrita reforça a leitura:** escrita inventada com feedback de grafia um pouco mais avançada > treino só fonológico; no jardim, prediz leitura e escrita no 1º ano (Ouellette & Sénéchal, 2008, 2017); escrever melhora a leitura (Graham & Hebert). **Escrever à mão > digitar** para reconhecer letras (Longcamp et al., 2005; James & Engelhardt, 2012; Kiefer et al., 2015); ensinar caligrafia melhora legibilidade e textos (Santangelo & Graham, 2016). Nível A/B.
 
 ### (b) Regras de design/produto
-- **Dois tipos de texto:** decodificáveis (a criança lê; controlados, curtos, com repetição das CGF novas) e **textos ricos para escuta** (a voz lê; vocabulário de camada 2, conjuntos temáticos como "animais do cerrado" e "festas juninas", com versões decodificáveis curtas para o vocabulário reaparecer).
+- **Dois tipos de texto:** decodificáveis (a criança lê; controlados, curtos, com repetição das CGF novas) e **textos ricos para escuta** (a voz lê; vocabulário de camada 2, conjuntos temáticos como "animais do cerrado" e "festas juninas" *(atualizado pela D012: "feira da colheita")*, com versões decodificáveis curtas para o vocabulário reaparecer).
 - **Regras contextuais e reduções vocálicas do PB são conteúdo ensinado** (e/o átonos finais [i]/[u], "de" [dʒi], nasalização, r/s posicionais).
 - **Não transpor sight words do inglês:** no PB, o conjunto "irregular" é pequeno ("que", "não", "muito", "também", "homem"), ensinado por mapeamento (ler a parte regular e marcar a parte ainda não ensinada), sem memorização visual pura.
 - **Progressão F1–F5** (proposta a validar): F1 vogais + m p b t l v (V, CV) → F2 + d f n s j c g (CVCV) → F3 + vogal átona final, r intervocálico, til → F4 + dígrafos e codas → F5 + CCV, regras de c/ç/s/ss/z/x, h, acentos (textos de 80–150 palavras).

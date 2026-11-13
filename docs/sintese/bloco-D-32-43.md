@@ -25,7 +25,7 @@
 - **Usar a leitura para ensinar computação**, não o inverso: o comando é uma **palavra decodificável do nível atual** (PULA, SOBE), com áudio de apoio retirado aos poucos. Medir PC como PC e leitura como leitura; **não vender** "programação melhora a leitura".
 - Ordem: **corpo/cartas → tela**; enquadramento "parquinho, não cercadinho" (Bers); o erro é "bug" (ponte com lidar com o erro, rel. 33).
 - Um mesmo "kit de cartas" serve aos 2 anos, com profundidade crescente (fases F0–F3: setas/ícones → palavra CV → laço/evento/condicional com frases → procedimentos, escrita do próprio programa, dados e codificação).
-- 20 mecânicas (o título da seção diz 18, mas a lista tem 20), entre elas: cartas de comando decodificáveis, "Bug do Bolota", depurar a palavra (PA-TO/PA-LO), receita do Bolota, storyboard, padrões sonoros, laço mágico, porta do SE, classificador da lojinha, feitiço com nome, código secreto, Bebras da semana, oficina de criação, "Como o app me ouve?", desplugado em família.
+- 20 mecânicas (o título da seção diz 18, mas a lista tem 20), entre elas: cartas de comando decodificáveis, "Bug do Bolota", depurar a palavra (PA-TO/PA-LO), receita do Bolota, storyboard, padrões sonoros, laço mágico, porta do SE, classificador da lojinha, feitiço com nome, código secreto, Bebras da semana, oficina de criação, "Como o app me ouve?", desplugado em família. *(Atualizado pela D012: "laço mágico" e "feitiço com nome" serão renomeados sem magia, ex.: "laço das letras" e "senha com nome".)*
 - **Telemetria dupla**: separar erro de **decodificação** (leu ROLA como PULA) de erro de **lógica** (leu certo, ordem errada), registrando o uso do botão "ouvir a carta".
 - Sofia (menina) programando contra estereótipo de gênero, que aparece aos 5–7 anos (Sullivan & Bers, 2016).
 
@@ -277,7 +277,7 @@
 - Escrita inventada com letras móveis/teclado de sons; a Sofia mostra "assim os adultos escrevem" e elogia os sons captados; **sem vermelho**. **Compor ≠ transcrever**: aos 4–5 anos a criança dita e a Sofia é escriba.
 - A vila = canto de faz-de-conta com objetos de letramento (cardápio, placa, receita, correio); a Sofia e o Bolota "entram no papel"; **a Sofia sugere, não interrompe** o brincar livre.
 - **IA como parceira de diálogo, não autora**: pergunta "e depois?", oferece **3 opções decodificáveis**; sem geração livre de imagens no MVP; voz e imagem **no aparelho**; compartilhar exige ação do responsável; sem feed, curtidas ou comparação.
-- 21 mecânicas de criação (Estúdio de Histórias Decodificáveis, Escrita Inventada com a Sofia, Gibi da Vila, Carta para o Amigo, Palco de Fantoches, Ditado para a Sofia, Mercadinho, Placas da Vila, Receita Maluca, Fábrica de Rimas, Palavras Inventadas Mágicas, E Depois?, Diário, Álbum de Legendas, Convite, Programe a História, Ateliê Livre, Playworld, Teatro de Sombras, Ensinar o Bolota a Escrever, Biblioteca de Autores).
+- 21 mecânicas de criação (Estúdio de Histórias Decodificáveis, Escrita Inventada com a Sofia, Gibi da Vila, Carta para o Amigo, Palco de Fantoches, Ditado para a Sofia, Mercadinho, Placas da Vila, Receita Maluca, Fábrica de Rimas, Palavras Inventadas Mágicas *(D012: renomear sem magia, ex.: "Palavras Inventadas Malucas")*, E Depois?, Diário, Álbum de Legendas, Convite, Programe a História, Ateliê Livre, Playworld, Teatro de Sombras, Ensinar o Bolota a Escrever, Biblioteca de Autores).
 - Criatividade medida **por processo** (variedade, revisões por iniciativa própria), **nunca por nota**.
 
 **(c) Números operacionais**

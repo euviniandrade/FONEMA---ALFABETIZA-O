@@ -751,7 +751,7 @@ Critérios usados: "adquirido" = ≥ 75% das crianças; "dominado" = ≥ 90%. As
 | F08 | Motor v0 (Leitner + estabilidade, Elo por habilidade, gate de domínio com 4 critérios) | G |
 | F09 | Sofia roteirizada (Rive, TTS neural + visemas, 15–30 variações) | G |
 | F10 | Inventário de fonemas gravado por humano | M |
-| F11 | Vídeos da boquinha (frontal + lateral + letra) | M |
+| F11 | Vídeos do Espelho do Som (frontal + lateral + letra) | M |
 | F12 | 14 jogos-núcleo | G |
 | F13 | Escada de ajuda e feedback (5/10/20 s; prompt → recast → leitura conjunta) | M |
 | F14 | Recompensas intrínsecas (trilha, álbum, "palavras que eu sei") | M |
@@ -838,8 +838,8 @@ Critérios usados: "adquirido" = ≥ 75% das crianças; "dominado" = ≥ 90%. As
 | 32 | Livrinho Decodificável Interativo | 6 Textos | decodificação em contexto, sem hotspots |
 
 - Os 14 jogos cobrem as fases 1 a 6.
-- O #8 (Boquinha no Espelho) entra como parte da lição (F11).
-- O #12 (Traço Mágico) e a fluência (Karaokê, #35) chegam na V1.
+- O #8 (Espelho do Som) entra como parte da lição (F11).
+- O #12 (Traço Mágico; *D012: renomear sem magia, ex.: "Traço Certeiro"*) e a fluência (Karaokê, #35) chegam na V1.
 - Regras globais de todos os jogos:
   - sem tempo-limite;
   - arrastar ⇄ toque-toque;

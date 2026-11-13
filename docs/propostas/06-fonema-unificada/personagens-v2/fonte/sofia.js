@@ -1,4 +1,4 @@
-// SOFIA — personagem-guia do FONEMA (~9–10 anos, parda, cabelo cacheado 3C/4A, fivela de flor de ipê, mochila de exploradora)
+// SOFIA — personagem-guia do FONEMA (v2: uniforme escolar, SEM fivela, pulseira ou outros adornos — D006/D008; o código antigo do adorno fica desligado)
 // Coordenadas: x centrado em 0, pés em y≈1000. Cabeça ~ 1/3 da altura (proporção de animação infantil).
 const { P, U, limb, ik, uid, f, rng } = require('./core');
 const { mouthExpr } = require('./mouth');

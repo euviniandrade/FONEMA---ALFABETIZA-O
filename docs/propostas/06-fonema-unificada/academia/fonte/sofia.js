@@ -1,5 +1,5 @@
 // VERSÃO ACADEMIA (Decisão 006): Sofia de UNIFORME ESCOLAR e SEM joias/adornos (sem brincos, fivela, pulseira, miçangas, mochila).
-// SOFIA — personagem-guia do FONEMA (~9–10 anos, parda, cabelo cacheado 3C/4A, fivela de flor de ipê, mochila de exploradora)
+// SOFIA — base herdada da v1 (a fivela só aparece com o.clip === true, nunca usado nesta pasta)
 // Coordenadas: x centrado em 0, pés em y≈1000. Cabeça ~ 1/3 da altura (proporção de animação infantil).
 const { P, U, limb, ik, uid, f, rng } = require('./core');
 const { mouthExpr } = require('./mouth');
