@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>FONEMA — plataforma de alfabetização · protótipo da primeira missão</title>
+<!-- Protótipo local: nenhum dado sai deste aparelho. Sem servidor, sem análise, sem cookies de terceiros. -->
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<a class="pular" href="#palco">Pular para o conteúdo</a>
+
+<header class="topo" role="banner">
+  <div class="marca" aria-label="FONEMA, plataforma de alfabetização">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="#1B3160"/><path d="M15 33V15h14v4h-9.5v3.6H28v4h-8.5V33z" fill="#fff"/><circle cx="34" cy="31" r="4" fill="#F4B73C"/></svg>
+    <div><b>FONEMA</b><small>plataforma de alfabetização</small></div>
+  </div>
+  <ol class="trilha" id="trilha" aria-label="Etapas da missão" hidden></ol>
+  <div class="moedas" id="moedas" aria-live="polite" hidden><span class="moeda" aria-hidden="true"></span><b id="moedasNum">0</b><span class="sr">moedinhas</span></div>
+  <div class="ajustes" role="group" aria-label="Ajustes de acessibilidade">
+    <button class="btn-ic" id="bSom" aria-pressed="true" title="Voz ligada ou desligada"><span aria-hidden="true">🔊</span><small>Voz</small></button>
+    <button class="btn-ic" id="bContraste" aria-pressed="false" title="Alto contraste"><span aria-hidden="true">◐</span><small>Contraste</small></button>
+    <button class="btn-ic" id="bMov" aria-pressed="false" title="Reduzir movimento"><span aria-hidden="true">🐢</span><small>Menos movimento</small></button>
+  </div>
+</header>
+
+<main id="palco" tabindex="-1"></main>
+
+<div class="aviso-local" role="note">Protótipo local · nada é enviado a servidor · <button id="bApagar" class="link">apagar dados</button></div>
+
+<script src="regras-som.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
