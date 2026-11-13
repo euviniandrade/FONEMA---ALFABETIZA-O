@@ -39,6 +39,8 @@
 @keyframes rcSombra{0%,100%{transform:scaleX(1);opacity:.9}50%{transform:scaleX(.85);opacity:.6}}
 @keyframes rcNivelEntra{from{transform:translateX(-50%) scale(0)}to{transform:translateX(-50%) scale(1)}}
 
+.rc-selo.rc-sem-mascara .rc-shine{-webkit-mask:radial-gradient(ellipse 46% 46% at 50% 48%,#000 72%,transparent 74%);mask:radial-gradient(ellipse 46% 46% at 50% 48%,#000 72%,transparent 74%)}
+
 /* moedinha que voa e cofrinho-tatu */
 .rc-moeda-voa{position:fixed;left:0;top:0;width:54px;height:54px;z-index:60;pointer-events:none;will-change:transform;filter:drop-shadow(0 4px 4px #0004)}
 .rc-cofrinho{position:relative;display:inline-block;transform-origin:50% 90%}

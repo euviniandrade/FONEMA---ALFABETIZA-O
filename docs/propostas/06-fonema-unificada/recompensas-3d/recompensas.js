@@ -37,6 +37,7 @@
   function selo({ arte = 'selo-meu-nome', letra = null, nivel = 'bronze', tamanho = 320, rotulo = null, mostrarNivel = true } = {}) {
     const el = document.createElement('div');
     el.className = `rc-selo nivel-${nivel}`;
+    if (!/^https?:$/.test(location.protocol)) el.classList.add('rc-sem-mascara'); // em file:// o navegador bloqueia máscara com imagem
     el.style.setProperty('--tam', tamanho + 'px');
     el.setAttribute('role', 'img');
     el.setAttribute('aria-label', rotulo || `Selo ${arte.replace(/-/g, ' ')}${letra ? ', letra ' + letra : ''}, nível ${nivel}`);
