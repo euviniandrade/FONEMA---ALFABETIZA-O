@@ -7,11 +7,41 @@
   const P = window.FonemasPT, F = P.F;
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const q = new URLSearchParams(location.search);
-  const esp = await EspelhoSom.criar($('#palco'), { fonema: q.get('f') || 'a', modo: q.get('m') || 'frente', capturas: q.has('cap'), forcar2D: q.has('2d') });
-  let atual = q.get('f') || 'a', mudo = q.has('mudo'), lento = false, aba = 'explorar';
+  // três vistas sincronizadas: rosto ilustrado de frente (zoom na boca), raio-X híbrido (Sofia/Tales) e 3D (opcional)
+  const rx = EspelhoSVG.criar($('#vRaiox'), { fonema: q.get('f') || 'a', personagem: q.get('p') || 'sofia' });
+  $('#vRaiox').classList.add('esp-palco');
+  let e3 = null;
+  if (!q.has('2d')) { try { e3 = await EspelhoSom.criar($('#palco'), { fonema: q.get('f') || 'a', modo: 'frente', capturas: q.has('cap') }); if (e3.tipo !== '3d') { e3.destruir(); e3 = null; } } catch (e) { e3 = null; } }
+  let atual = q.get('f') || 'a', mudo = q.has('mudo'), lento = false, aba = 'explorar', vista = 'frente', pers = q.get('p') || 'sofia';
+  const vista3d = () => ['frente3d', 'dentro', 'corpo'].includes(vista);
+  const esp = { // fachada: as duas vistas mexem juntas
+    fonema: (id, o) => { rx.fonema(id, o); if (e3) e3.fonema(id, o); },
+    lento: (v) => { rx.lento(v); if (e3) e3.lento(v); },
+    destacar: (z, ok) => { (vista3d() && e3 ? e3 : rx).destacar(z, ok); },
+    rotulos: (v) => { rx.rotulos(v); if (e3) e3.rotulos(v); },
+    girar: (v) => { if (e3) e3.girar(v); },
+    onToque: (cb) => { rx.onToque(cb); if (e3) e3.onToque(cb); },
+    pose: (a, b, f) => { rx.pose(a, b, f); if (e3) e3.pose(a, b, f); }
+  };
   window.ESPELHO_MUDO = mudo;
   const falar = (t, o) => (mudo ? Promise.resolve() : P.falar(t, Object.assign({ lento }, o)));
   const espera = (ms) => new Promise((r) => setTimeout(r, ms * (lento ? 2.2 : 1)));
+
+  /* ---------- rostos ilustrados de frente (poucas bocas prontas: escolhe a mais parecida) ---------- */
+  const ROSTO = {
+    sofia: { M: 'p b m', A: 'a a~ E k g rr', O: 'O o o~', S: 's z i i~ t d n nh lh', F: 'f v', L: 'l', CH: 'x j u u~', E: 'e e~ r' },
+    tales: { M: 'p b m', O: 'x j', U: 'u u~ o o~ O', I: 'i i~ s z t d n l f v nh lh', E: 'e e~ E r', A: 'a a~ k g rr' }
+  };
+  const EXATO = { sofia: 'p b m a o s z f v l x j e', tales: 'p b m u i a' };
+  const rostoDe = (p, id) => { for (const [k, ids] of Object.entries(ROSTO[p])) if (ids.split(' ').includes(id)) return k; return 'A'; };
+  function poeRosto() {
+    const k = rostoDe(pers, atual), nome = pers === 'sofia' ? 'Sofia' : 'Tales';
+    const boca = $('#fBoca'), src = `recortes/boca-${pers}-${k}.jpg`;
+    $('#fRosto').src = `recortes/rosto-${pers}-${k}.jpg`; $('#fNome').textContent = nome;
+    if (!boca.src.endsWith(src)) { boca.src = src; boca.classList.remove('troca'); void boca.offsetWidth; boca.classList.add('troca'); }
+    const ex = EXATO[pers].split(' ').includes(atual);
+    $('#sofiaLeg').innerHTML = ex ? `${nome} faz assim <small>a boca de frente, bem de perto</small>` : `Parecido com a boca ${pers === 'sofia' ? 'da Sofia' : 'do Tales'} <small>o raio-X mostra a língua certinha</small>`;
+  }
 
   /* ---------- teclado de sons ---------- */
   $('#teclado').innerHTML = P.GRUPOS.map(([nome, ids]) => `<div class="grupo"><small>${nome}</small><div>${ids.map((id) =>
@@ -27,21 +57,29 @@
     $('#cLetra').textContent = f.letra; $('#cIpa').textContent = `/${f.ipa}/`; $('#cEx').textContent = 'como em ' + f.ex;
     $('#cVoz').textContent = f.voz ? '🐝 tem voz (vibra)' : '🤫 sem voz (só ar)'; $('#cVoz').classList.toggle('sim', f.voz);
     $('#cAr').textContent = (f.modo === 'plosiva' ? '💥 ' : '') + AR[f.ar];
-    const [quadro, exato] = f.boca, img = $('#sofiaBoca');
-    if (!img.src.endsWith(`sofia-boca-${quadro}.png`)) { img.src = `recortes/sofia-boca-${quadro}.png`; img.classList.remove('zoom'); void img.offsetWidth; img.classList.add('zoom'); }
-    $('#sofiaLeg').innerHTML = exato ? `A Sofia faz assim <small>boca de frente: “${quadro}”</small>` : `Parecido com a Sofia <small>por enquanto só temos M, A, O e S; o 3D mostra o certo</small>`;
+    poeRosto();
     if (aba === 'explorar') painelExplorar();
   }
   function ouvir() { const f = F[atual]; return falar(`${f.fala}... ${f.ex.replace(/\(.*\)/, '')}`); }
   $('#bOuvir').addEventListener('click', ouvir);
+  $$('.quem button').forEach((b) => b.addEventListener('click', () => trocaPers(b.dataset.p)));
+  function trocaPers(p) { pers = p; $$('.quem button').forEach((x) => x.classList.toggle('on', x.dataset.p === p)); rx.personagem(p); rx.fonema(atual, { instantaneo: true }); poeRosto(); }
 
-  /* ---------- modos de câmera ---------- */
-  function modo(m) { esp.modo(m); $$('.modos [data-modo]').forEach((b) => b.classList.toggle('on', b.dataset.modo === m)); }
+  /* ---------- vistas ---------- */
+  function modo(m) {
+    if (!e3 && ['frente3d', 'dentro', 'corpo'].includes(m)) m = 'lado';
+    vista = m;
+    $('#vFrente').classList.toggle('on', m === 'frente'); $('#vRaiox').classList.toggle('on', m === 'lado');
+    $('#palco').classList.toggle('on', vista3d());
+    if (e3 && vista3d()) e3.modo(m === 'frente3d' ? 'frente' : m);
+    $$('.modos [data-modo]').forEach((b) => b.classList.toggle('on', b.dataset.modo === m));
+    $('.quem').style.display = ['frente', 'lado'].includes(m) ? '' : 'none';
+  }
   $$('.modos [data-modo]').forEach((b) => b.addEventListener('click', () => modo(b.dataset.modo)));
-  $('#bGirar').addEventListener('click', (e) => { const v = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', v); esp.girar(v); });
+  $('#bGirar').addEventListener('click', (e) => { const v = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', v); if (v && !vista3d()) modo('frente3d'); esp.girar(v); });
   $('#bLento').addEventListener('click', (e) => { lento = !lento; e.currentTarget.setAttribute('aria-pressed', lento); esp.lento(lento); });
   $('#bMudo').addEventListener('click', (e) => { mudo = !mudo; window.ESPELHO_MUDO = mudo; e.currentTarget.setAttribute('aria-pressed', mudo); e.currentTarget.textContent = mudo ? '🔇 Voz desligada' : '🔊 Voz ligada'; if (mudo) speechSynthesis.cancel(); });
-  if (esp.tipo !== '3d') $('.modos').innerHTML = '<span class="chip">Raio-X 2D (abra por um servidor para ver em 3D)</span>';
+  if (!e3) $$('.modos [data-modo=frente3d],.modos [data-modo=dentro],.modos [data-modo=corpo],#bGirar,.modos .sep').forEach((b) => (b.style.display = 'none'));
 
   /* ---------- abas ---------- */
   $$('.abas button').forEach((b) => b.addEventListener('click', () => abrirAba(b.dataset.aba)));
@@ -127,12 +165,12 @@
 
   /* ---------- 3. Imite a Sofia (espelho com câmera OPCIONAL, só local) ---------- */
   let fluxo = null, iI = 0;
-  const IMITE = [['m', 'M'], ['a', 'A'], ['o', 'O'], ['s', 'S']];
+  const IMITE = ['m', 'a', 'o', 's', 'f', 'l', 'x', 'e'];
   function paraCamera() { if (fluxo) { fluxo.getTracks().forEach((t) => t.stop()); fluxo = null; } }
   function exImite() {
-    const [id, quadro] = IMITE[iI % IMITE.length]; modo('frente'); selecionar(id);
-    $('#painel').innerHTML = `<h3>Imite a Sofia!</h3><p>Faça a boca do <b style="font-size:22px">${F[id].letra}</b> como a Sofia.</p>
-      <div class="camera"><figure><div class="mold"><img src="recortes/sofia-boca-${quadro}.png" alt="Boca da Sofia"></div>Sofia</figure>
+    const id = IMITE[iI % IMITE.length]; modo('frente'); selecionar(id); const quadro = rostoDe(pers, id), nomeP = pers === 'sofia' ? 'Sofia' : 'Tales';
+    $('#painel').innerHTML = `<h3>Imite ${pers === 'sofia' ? 'a Sofia' : 'o Tales'}!</h3><p>Faça a boca do <b style="font-size:22px">${F[id].letra}</b> como a Sofia.</p>
+      <div class="camera"><figure><div class="mold"><img src="recortes/boca-${pers}-${quadro}.jpg" alt="Boca de frente"></div>${nomeP}</figure>
       <figure><div class="mold" id="moldCam">${fluxo ? '' : '<span>seu espelho</span>'}</div>Você</figure></div>
       <button class="btn-grande" id="bCam">${fluxo ? '📷 Desligar meu espelho' : '📷 Ligar meu espelho (câmera)'}</button>
       <button class="btn-grande" id="bFiz">Fiz! →</button>
@@ -164,7 +202,7 @@
     baixo: ['Língua deitadinha', 'Nas vogais abertas, como o A, a língua fica deitada lá embaixo.']
   };
   function exCorpo() {
-    modo('corpo'); selecionar('a');
+    modo(e3 ? 'corpo' : 'lado'); selecionar('a');
     const ordem = ['labios', 'dentes', 'lingua', 'palato', 'nariz', 'pulmoes', 'pregas', 'veu'];
     $('#painel').innerHTML = `<h3>Conheça seu corpo</h3><p>Toque numa parte no desenho ou aqui:</p>
       <div class="partes">${ordem.map((k) => `<button data-p="${k}">${PARTES[k][0]}</button>`).join('')}</div>
@@ -181,5 +219,6 @@
   selecionar(atual, { instantaneo: true });
   abrirAba(q.get('aba') || 'explorar');
   if (q.get('m')) modo(q.get('m'));
-  window.DEMO = { esp, selecionar, abrirAba, modo, sequencia };
+  if (q.get('p')) trocaPers(q.get('p'));
+  window.DEMO = { esp, rx, e3, selecionar, abrirAba, modo, trocaPers, sequencia };
 })();

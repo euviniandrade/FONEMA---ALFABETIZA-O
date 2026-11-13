@@ -68,12 +68,15 @@ x0 = int(d.width * 0.535)
 t = np.asarray(d.crop((x0, 0, d.width, d.height))).astype(np.float32)
 rgb = t[:, :, :3]
 hair = (rgb.mean(axis=2) < 95) & (rgb[:, :, 0] > rgb[:, :, 2] + 8)  # castanho escuro (cabelo da Sofia)
-hair[:, 60:] = False
+hair[:, 60:] = False; hair[:int(rgb.shape[0] * 0.17)] = False
 a = t[:, :, 3]; a[hair] = 0
 H = t.shape[0]; R, G, B = rgb[:, :, 0], rgb[:, :, 1], rgb[:, :, 2]
-keep = ((R < 90) & (B > R + 25) & (rgb.mean(axis=2) < 125)) | ((R > 150) & (R > B + 30)) | (rgb.min(axis=2) > 200)
-zona = np.zeros_like(keep); zona[int(H * 0.12):int(H * 0.45), :70] = True
+keep = ((R < 90) & (B > R + 25) & (rgb.mean(axis=2) < 125)) | ((R > 150) & (R > B + 30)) | (rgb.min(axis=2) > 200) | ((R > 120) & (R > B + 25) & (G > B + 10))
+zona = np.zeros_like(keep); zona[int(H * 0.17):int(H * 0.45), :70] = True
 a[zona & ~keep] = 0
+pele = (R > 150) & (R > B + 30)
+for (ya, yb, xb) in ((0.18, 0.27, 45), (0.37, 0.46, 32)):
+    z = np.zeros_like(keep); z[int(H * ya):int(H * yb), :xb] = True; a[z & ~pele] = 0
 t[:, :, 3] = a
 ti = Image.fromarray(t.clip(0, 255).astype(np.uint8), 'RGBA')
 ti = ti.crop(ti.getbbox()); ti.save(os.path.join(OUT, 'tales.png'), optimize=True); print('tales', ti.size)

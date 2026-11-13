@@ -4,3 +4,8 @@ __pycache__/
 .env.*
 node_modules/
 dist/
+# app FONEMA: cópias geradas no dev/build a partir de docs/ (scripts/sincronizar-espelho.mjs)
+app/web/public/espelho/
+app/web/public/mundo3d/
+app/web/dev-dist/
+app/web/test-results/
