@@ -36,6 +36,12 @@
   "origem": "R2a-F01-C2"
  },
  {
+  "id": "s-149xfaz",
+  "voz": "sofia",
+  "texto": "Que escolha boa! Já está na sua mochila.",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-14efwa7",
   "voz": "sofia",
   "texto": "A placa voltou para o lugar!",
@@ -52,6 +58,12 @@
   "voz": "sofia",
   "texto": "Quem mora com você, [NOME]? Bate as palmas do nome.",
   "origem": "R0-F06-C7"
+ },
+ {
+  "id": "s-155uhk4",
+  "voz": "sofia",
+  "texto": "[NOME]",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-15ak9x9",
@@ -108,10 +120,16 @@
   "origem": "R0-F05-C3"
  },
  {
+  "id": "s-17yebzm",
+  "voz": "sofia",
+  "texto": "Enche o peito de ar…",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-18fdyii",
   "voz": "sofia",
   "texto": "Tchau, [NOME]! A tela vai descansar e você também.",
-  "origem": "ritual"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-18fngks",
@@ -180,6 +198,12 @@
   "origem": "R2a-F02-C3"
  },
  {
+  "id": "s-1djl32l",
+  "voz": "sofia",
+  "texto": "Gato… qual rima com gato?",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-1dp689r",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Sente o ventinho? /fff/…",
@@ -201,7 +225,7 @@
   "id": "s-1ewan5d",
   "voz": "sofia",
   "texto": "Esta é a sua letra, [NOME]. E este é o som dela! Foi você que descobriu.",
-  "origem": "R0-F01-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1fszss8",
@@ -210,16 +234,22 @@
   "origem": "R0-F04-C3"
  },
  {
+  "id": "s-1fxrmyn",
+  "voz": "sofia",
+  "texto": "Enche o peito de ar… e solta devagar. Estica os braços bem alto, [NOME]!",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-1gniec9",
   "voz": "sofia",
   "texto": "Uma palma para cada pedacinho do nome.",
-  "origem": "R0-F01-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1hs1iuo",
   "voz": "sofia",
   "texto": "As moedinhas vão para o cofrinho-tatu!",
-  "origem": "ritual"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1ia5gbr",
@@ -243,7 +273,7 @@
   "id": "s-1ipkbwn",
   "voz": "sofia",
   "texto": "Você está pronta para a primeira missão? É sobre o seu nome!",
-  "origem": "chegada"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1iueel2",
@@ -261,7 +291,13 @@
   "id": "s-1jzaxhx",
   "voz": "sofia",
   "texto": "Agora é a sua vez, [NOME]!",
-  "origem": "geral"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1k6uvwq",
+  "voz": "sofia",
+  "texto": "Solta devagar…",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1l8st3w",
@@ -273,7 +309,7 @@
   "id": "s-1lb8np7",
   "voz": "sofia",
   "texto": "Isso! Você fez o som do seu nome!",
-  "origem": "R0-F01-C2b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1mbnwmv",
@@ -303,7 +339,7 @@
   "id": "s-1n5lozv",
   "voz": "sofia",
   "texto": "Amanhã a gente lembra!",
-  "origem": "ritual"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1n5twnr",
@@ -334,6 +370,24 @@
   "voz": "sofia",
   "texto": "Isso! Você abriu bem a boca: aaa!",
   "origem": "R1-F01-C2"
+ },
+ {
+  "id": "s-1ooec8a",
+  "voz": "sofia",
+  "texto": "O que rima com rua?",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1oofgts",
+  "voz": "sofia",
+  "texto": "O que rima com pão?",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1ooyr8o",
+  "voz": "sofia",
+  "texto": "O que rima com mel?",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1owymw4",
@@ -597,7 +651,7 @@
   "id": "s-1tzsjgn",
   "voz": "sofia",
   "texto": "Parabéns, [NOME]! O professor viu que você aprendeu!",
-  "origem": "professorAprendeu"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1u78zhe",
@@ -723,7 +777,7 @@
   "id": "s-1uqj423",
   "voz": "sofia",
   "texto": "mmmm",
-  "origem": "sons"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqjb00",
@@ -1023,7 +1077,7 @@
   "id": "s-1uyiqy0",
   "voz": "sofia",
   "texto": "Escuta: GATO… PATO. Terminam igual: g-ATO, p-ATO!",
-  "origem": "R0-F02-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1vptk7v",
@@ -1041,7 +1095,7 @@
   "id": "s-1w149q0",
   "voz": "sofia",
   "texto": "Oi, [NOME]! A Dona Cida sabe umas palavras que terminam igualzinho. Vamos ouvir?",
-  "origem": "R0-F02"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1w4nk82",
@@ -1119,7 +1173,7 @@
   "id": "s-559ma2",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje a gente vai descobrir um segredo do seu nome.",
-  "origem": "R0-F01"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-57b18j",
@@ -1132,6 +1186,12 @@
   "voz": "sofia",
   "texto": "O Zum-Zum embaralhou a placa. Escuta bem: qual som começa a palavra, [NOME]?",
   "origem": "R1-F04-C5"
+ },
+ {
+  "id": "s-5xs6if",
+  "voz": "sofia",
+  "texto": "Aqui você vê por dentro como o som é feito: lábios, dentes, língua, céu da boca, nariz e garganta. Escolha um som!",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-5xzhdr",
@@ -1170,6 +1230,12 @@
   "origem": "R2a-F01-C4"
  },
  {
+  "id": "s-8rt1vp",
+  "voz": "sofia",
+  "texto": "[NOME]!",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-9a09w5",
   "voz": "sofia",
   "texto": "Ficou a sua cara! Tudo pronto pra começar?",
@@ -1179,7 +1245,7 @@
   "id": "s-9jci8e",
   "voz": "sofia",
   "texto": "Terminam igual! Você achou a rima!",
-  "origem": "R0-F02-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-9p2wlb",
@@ -1197,7 +1263,7 @@
   "id": "s-abhhy1",
   "voz": "sofia",
   "texto": "Palmas das sílabas. Separar palavras em pedacinhos (sílabas) com palmas.",
-  "origem": "R0-F03"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-b1gma7",
@@ -1233,7 +1299,7 @@
   "id": "s-cbs8us",
   "voz": "sofia",
   "texto": "Hoje você trabalhou com muita atenção, [NOME].",
-  "origem": "ritual"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-cgiann",
@@ -1245,13 +1311,13 @@
   "id": "s-csqcky",
   "voz": "sofia",
   "texto": "MÃO… PÃO. Também terminam igual!",
-  "origem": "R0-F02-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-cszbig",
   "voz": "sofia",
   "texto": "[NOME] começa com este som. Olha a minha boca. Agora é a sua vez, [NOME]!",
-  "origem": "R0-F01-C2b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-cy7ik",
@@ -1290,10 +1356,22 @@
   "origem": "R1-F07"
  },
  {
+  "id": "s-dvw91j",
+  "voz": "sofia",
+  "texto": "O que rima com foca?",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-dxb033",
   "voz": "sofia",
   "texto": "Começa igual a você!",
-  "origem": "R0-F01-C4"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-dzu2mh",
+  "voz": "sofia",
+  "texto": "O que rima com leão?",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-ecxytk",
@@ -1311,7 +1389,7 @@
   "id": "s-ep2nm3",
   "voz": "sofia",
   "texto": "GATO e PATO terminam igual!",
-  "origem": "R0-F02-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-erf71s",
@@ -1347,7 +1425,7 @@
   "id": "s-fc5dt7",
   "voz": "sofia",
   "texto": "Você escutou o final das palavras!",
-  "origem": "R0-F02-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-fk1ezn",
@@ -1401,7 +1479,7 @@
   "id": "s-h71jsf",
   "voz": "sofia",
   "texto": "Olha que lindo! Você ganhou uma conquista nova, [NOME]!",
-  "origem": "ritual"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-h8p4wq",
@@ -1419,7 +1497,7 @@
   "id": "s-hpd68o",
   "voz": "sofia",
   "texto": "A placa da sua porta está vazia. Monta o seu nome, letra por letra, [NOME]!",
-  "origem": "R0-F01-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-iaa9ia",
@@ -1473,7 +1551,7 @@
   "id": "s-lz4afl",
   "voz": "sofia",
   "texto": "Ficou a sua cara! Você está pronta?",
-  "origem": "avatar"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-m1g4l",
@@ -1491,7 +1569,7 @@
   "id": "s-m2l5a1",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Que bom que você voltou, curiosa!",
-  "origem": "voltou"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-mkjlaw",
@@ -1557,7 +1635,7 @@
   "id": "s-otn16y",
   "voz": "sofia",
   "texto": "Quando termina igual, a gente diz que RIMA.",
-  "origem": "R0-F02-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-pkvgiy",
@@ -1842,6 +1920,12 @@
   "origem": "R1-F01"
  },
  {
+  "id": "s-tn1n52",
+  "voz": "sofia",
+  "texto": "Pronto! Seu professor vai ver e responder. Que orgulho de você, [NOME]!",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-tq3a2r",
   "voz": "sofia",
   "texto": "A lua apareceu no lago!",
@@ -1887,13 +1971,13 @@
   "id": "s-x276k7",
   "voz": "sofia",
   "texto": "Rimas do quintal. Perceber palavras que terminam igual (rimas).",
-  "origem": "R0-F02"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-x6xmfk",
   "voz": "sofia",
   "texto": "Ajuda a gente a pendurar no varal, [NOME]: o que rima?",
-  "origem": "R0-F02-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-xiiarc",
@@ -1953,7 +2037,7 @@
   "id": "s-zz715h",
   "voz": "sofia",
   "texto": "Qual rima com GATO, [NOME]?",
-  "origem": "R0-F02-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-106uhle",
@@ -1986,10 +2070,22 @@
   "origem": "R1-F03-C2"
  },
  {
+  "id": "t-12fyyit",
+  "voz": "tales",
+  "texto": "Sapo… lua",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "t-12xmad5",
   "voz": "tales",
   "texto": "o Paçoca quer o pei… xe",
   "origem": "R0-F05-C4"
+ },
+ {
+  "id": "t-12ypa9r",
+  "voz": "tales",
+  "texto": "Caneca… boneca",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-13lfqkc",
@@ -2002,6 +2098,12 @@
   "voz": "tales",
   "texto": "Falar duas palavras que rimam (GATO e PATO).",
   "origem": "R0-F02"
+ },
+ {
+  "id": "t-1474ajd",
+  "voz": "tales",
+  "texto": "[NOME]",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-148clcu",
@@ -2028,6 +2130,12 @@
   "origem": "R0-F05-C4"
  },
  {
+  "id": "t-16g88uo",
+  "voz": "tales",
+  "texto": "Gato… qual rima com gato?",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "t-16htdle",
   "voz": "tales",
   "texto": "É ou ê? Repara no meu sorriso. Sua vez, [NOME]!",
@@ -2037,7 +2145,7 @@
   "id": "t-17gcuyh",
   "voz": "tales",
   "texto": "Bate uma palma para cada pedacinho do seu nome, [NOME]!",
-  "origem": "R0-F01-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-18elgxy",
@@ -2050,6 +2158,12 @@
   "voz": "tales",
   "texto": "Oi, [NOME]! Hoje a língua sobe e fica lá em cima.",
   "origem": "R2a-F02"
+ },
+ {
+  "id": "t-19cv506",
+  "voz": "tales",
+  "texto": "Vamos mostrar pro professor, [NOME]?",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1a7pp7p",
@@ -2073,7 +2187,7 @@
   "id": "t-1b75gv5",
   "voz": "tales",
   "texto": "A letra do seu nome acendeu na placa da casa!",
-  "origem": "R0-F01"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1bcvhyd",
@@ -2085,7 +2199,7 @@
   "id": "t-1bwchjg",
   "voz": "tales",
   "texto": "E eu sou o Tales. TA… LES! Duas palmas!",
-  "origem": "R0-F01-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1byec6l",
@@ -2218,6 +2332,12 @@
   "voz": "tales",
   "texto": "Mais um anel do farol acendeu!",
   "origem": "R1-F06-C4"
+ },
+ {
+  "id": "t-1mo3es0",
+  "voz": "tales",
+  "texto": "Bola… qual rima com bola?",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1ms9oq1",
@@ -2373,7 +2493,7 @@
   "id": "t-1ooi46u",
   "voz": "tales",
   "texto": "bola",
-  "origem": "R0-F03-C6"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1ookuwm",
@@ -2454,6 +2574,12 @@
   "origem": "R1-F02-C4"
  },
  {
+  "id": "t-1p2djhh",
+  "voz": "tales",
+  "texto": "Aqui você troca as moedinhas que ganhou aprendendo. Pode esperar e juntar para algo maior!",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "t-1pg7wom",
   "voz": "tales",
   "texto": "ẽẽẽẽ",
@@ -2463,13 +2589,13 @@
   "id": "t-1q285wy",
   "voz": "tales",
   "texto": "Rima ou não rima, [NOME]?",
-  "origem": "R0-F02-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1qa0dmd",
   "voz": "tales",
   "texto": "Isso! Cada palma acendeu uma lâmpada!",
-  "origem": "R0-F01-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1qdh25w",
@@ -2524,6 +2650,12 @@
   "voz": "tales",
   "texto": "bola… casa",
   "origem": "R0-F02-C3"
+ },
+ {
+  "id": "t-1rhvgay",
+  "voz": "tales",
+  "texto": "Janela… panela",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1rzys5z",
@@ -2661,13 +2793,13 @@
   "id": "t-35m31w",
   "voz": "tales",
   "texto": "Pula quando ouvir o som do seu nome, [NOME]!",
-  "origem": "R0-F01-C6"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-36phpk",
   "voz": "tales",
   "texto": "Agora é a sua vez, [NOME]!",
-  "origem": "R0-F05-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-3mtpwb",
@@ -2685,7 +2817,7 @@
   "id": "t-4t32hm",
   "voz": "tales",
   "texto": "Escolhe do seu jeito, [NOME]!",
-  "origem": "avatar"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-5ei8eg",
@@ -2739,7 +2871,7 @@
   "id": "t-98g7pm",
   "voz": "tales",
   "texto": "Ops! Eu disse que BOLA rima com MESA. Me ensina, [NOME]? Qual rima com BOLA?",
-  "origem": "R0-F02-C8"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-a34kgc",
@@ -2757,7 +2889,7 @@
   "id": "t-bq6179",
   "voz": "tales",
   "texto": "Pega a lupa! O que mais começa com o som do seu nome, [NOME]?",
-  "origem": "R0-F01-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-bueh2m",
@@ -2841,7 +2973,7 @@
   "id": "t-exx60h",
   "voz": "tales",
   "texto": "Olha só o que chegou para você, [NOME]!",
-  "origem": "ritual"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-fo8l8w",
@@ -2895,7 +3027,13 @@
   "id": "t-hzkoxc",
   "voz": "tales",
   "texto": "Ahh, agora eu entendi! Obrigado, [NOME]!",
-  "origem": "R0-F02-C8"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-iv3ocw",
+  "voz": "tales",
+  "texto": "Janela… qual rima com janela?",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-iy7x8n",
@@ -2922,6 +3060,12 @@
   "origem": "R0-F04-C8"
  },
  {
+  "id": "t-l91e0d",
+  "voz": "tales",
+  "texto": "Mão… pão",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "t-m07mcw",
   "voz": "tales",
   "texto": "janela… qual rima com janela?",
@@ -2931,7 +3075,7 @@
   "id": "t-m1yrpt",
   "voz": "tales",
   "texto": "E eu sou o Tales! Seja bem-vinda na Vila das Letras, [NOME]!",
-  "origem": "chegada"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-m4j3vf",
@@ -2961,7 +3105,7 @@
   "id": "t-nh4xb5",
   "voz": "tales",
   "texto": "Agora é a sua vez, [NOME]! Quantas palmas tem o seu nome?",
-  "origem": "R0-F01-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-nhro9y",
@@ -3009,7 +3153,13 @@
   "id": "t-s420wk",
   "voz": "tales",
   "texto": "macaco",
-  "origem": "R2a-F01-C6"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-s5tfcw",
+  "voz": "tales",
+  "texto": "Bola… casa",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-smg651",
@@ -3027,7 +3177,7 @@
   "id": "t-t1a9u3",
   "voz": "tales",
   "texto": "Bater as palmas do próprio nome e falar o primeiro som.",
-  "origem": "R0-F01"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-t59sgr",
@@ -3087,7 +3237,7 @@
   "id": "t-yhd9b7",
   "voz": "tales",
   "texto": "Ouviu isso, [NOME]? Alguma coisa rolou no arbusto… Amanhã a gente descobre quem é!",
-  "origem": "R0-F01"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-ym257j",

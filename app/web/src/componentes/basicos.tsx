@@ -6,7 +6,6 @@ import { NOMES_PERSONAGEM, falar, textoTela } from '../util.ts';
 import { useApp } from '../contexto.tsx';
 import { navegar } from '../rotas.ts';
 import { Icone, Logo } from './ui.tsx';
-import { IcContraste, IcMovimento, IcSom, IcVoltar } from './icones.tsx';
 
 const BUSTO: Partial<Record<Personagem, string>> = { sofia: 'dupla/sofia-busto-alegre.webp', tales: 'dupla/tales-busto-alegre.webp' };
 const COR: Record<string, string> = { bolota: '#A06A3B', 'dona-cida': '#B5512E', davi: '#2E7A4C', 'guarda-parque': '#1F5A37', pescadora: '#3D7CC4', 'zum-zum': '#6B7A2E' };

@@ -1,5 +1,15 @@
 {
   "extends": "../tsconfig.base.json",
-  "compilerOptions": { "types": ["vite/client", "vite-plugin-pwa/client"] },
-  "include": ["src"]
+  "compilerOptions": {
+    "types": [
+      "vite/client",
+      "vite-plugin-pwa/client"
+    ]
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "src/**/*.test.ts"
+  ]
 }

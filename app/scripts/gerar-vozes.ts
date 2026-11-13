@@ -22,7 +22,7 @@ const ORCAMENTO = Number(arg('--orcamento', '18000'));
 const SIMULAR = process.argv.includes('--simular');
 const PUB = 'web/public/audio';
 
-const chaveTrecho = (t: string) => t.replace(/^[\s,.!?;:…]+/, '').replace(/\s+/g, ' ').replace(/(\p{L})\1{2,}/gu, '$1$1$1$1').trim();
+const chaveTrecho = (t: string) => t.replace(/^[\s,.!?;:…]+/, '').replace(/\s+/g, ' ').replace(/(\p{L})\1{2,}/giu, '$1$1$1$1').trim();
 
 /**
  * Texto que vai para o TTS (a CHAVE continua sendo o texto original):
@@ -31,16 +31,16 @@ const chaveTrecho = (t: string) => t.replace(/^[\s,.!?;:…]+/, '').replace(/\s+
  */
 const VOGAIS = 'aeiouáéíóúâêôãõ';
 /** "sss… ooo… lll" (síntese de fonemas): o TTS não faz; fica para a gravação da fonoaudióloga. */
-const ehSequenciaDeSons = (k: string) => { const ts = k.split(/[\s…,.!?-]+/).filter(Boolean); return ts.length > 1 && ts.every((t) => /^(\p{L})\1{2,}$/u.test(t)); };
+const ehSequenciaDeSons = (k: string) => { const ts = k.split(/[\s…,.!?-]+/).filter(Boolean); return ts.length > 1 && ts.every((t) => /^(\p{L})\1{2,}$/iu.test(t)); };
 function paraTTS(k: string): { texto: string; lento: boolean } | null {
   if (ehSequenciaDeSons(k)) return null;
-  let t = k.replace(/(^|[^\p{L}])(\p{L})\2{2,}(\p{L}?)(?=$|[^\p{L}])/gu, (_m, antes: string, l: string) => {
+  let t = k.replace(/(^|[^\p{L}])(\p{L})\2{2,}(\p{L}?)(?=$|[^\p{L}])/giu, (_m, antes: string, l: string) => {
     const low = l.toLowerCase();
     if (VOGAIS.includes(low)) return antes + low.toUpperCase() + low.repeat(4);
     const som = Object.values(SONS).find((x) => x.chave === low || x.letra.toLowerCase() === low);
     return antes + (som ? `${som.letra}, de ${som.palavras[0][0]}` : l.toUpperCase());
   });
-  t = t.replace(/\//g, '');
+  t = t.replace(/\//g, '').replace(/\b\p{Lu}{2,}\b/gu, (w) => w.toLowerCase());
   const palavras = t.split(/\s+/).filter(Boolean);
   const lento = palavras.length <= 2;
   if (lento) t = t.charAt(0).toUpperCase() + t.slice(1).replace(/[.,!?…]?$/, (m) => m || '.');
@@ -89,7 +89,8 @@ async function main() {
       if (!k) continue;
       const chave = `${f.voz}|${k}`;
       const arq = `${f.voz}-${hash(chave)}.mp3`;
-      if (existsSync(`${PUB}/falas/${arq}`)) { manFalas[chave] = arq; continue; }
+      const refazer = process.argv.includes('--refazer-maiusculas') && /\b\p{Lu}{2,3}\b/u.test(k);
+      if (!refazer && existsSync(`${PUB}/falas/${arq}`)) { manFalas[chave] = arq; continue; }
       if (tarefas.some((t) => t.destino.endsWith(arq))) continue;
       const tts = paraTTS(k);
       if (!tts) { semAudio.add(k); continue; }

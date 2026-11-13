@@ -75,7 +75,7 @@ export const VOZ_DO_PERSONAGEM: Record<string, { voz: 'sofia' | 'tales'; rate: n
 
 /** Chave de um trecho de fala (sem pontuação solta no começo). Mesma regra do gerador (scripts/gerar-vozes.mjs). */
 export function chaveTrecho(t: string): string {
-  return t.replace(/^[\s,.!?;:…]+/, '').replace(/\s+/g, ' ').replace(/(\p{L})\1{2,}/gu, '$1$1$1$1').trim();
+  return t.replace(/^[\s,.!?;:…]+/, '').replace(/\s+/g, ' ').replace(/(\p{L})\1{2,}/giu, '$1$1$1$1').trim();
 }
 export function chaveNome(n: string): string {
   return n.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
@@ -121,7 +121,7 @@ export class ProvedorPreGerado implements ProvedorVoz {
     const quem = o.quem ?? 'sofia';
     const arqs = this.arquivos(texto, quem);
     if (modoTeste()) return this.reserva.falar(texto, o);
-    if (!arqs && /^[\s…,.!?-]*((\p{L})\2{2,}[\s…,.!?-]*)+$/u.test(texto)) {
+    if (!arqs && /^[\s…,.!?-]*((\p{L})\2{2,}[\s…,.!?-]*)+$/iu.test(texto)) {
       // sequência de sons isolados ("sss… ooo… lll"): ainda sem gravação da fonoaudióloga → voz do aparelho como último recurso
       return this.reserva.falar(texto, o);
     }
@@ -182,6 +182,14 @@ class Voz {
     if (!this.ligada) return Promise.resolve();
     this.fila = this.provedor.falar(texto, o);
     return this.fila;
+  }
+  /**
+   * Simulação de PRONÚNCIA no cadastro do adulto (variações de tônica/ritmo de um nome qualquer):
+   * única situação em que a voz do aparelho é usada de propósito. No produto, vira 3 versões geradas no ElevenLabs.
+   */
+  simularPronuncia(texto: string, o?: OpcoesFala): Promise<void> {
+    this.parar();
+    return this.ligada ? this.nav.falar(texto, o) : Promise.resolve();
   }
   /** Fala uma sequência de falas, uma depois da outra. */
   async sequencia(falas: { texto: string; quem?: Personagem }[], aoMudar?: (i: number) => void): Promise<void> {
