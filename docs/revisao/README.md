@@ -1,13 +1,13 @@
 # Revisão geral do FONEMA (macro → micro)
 
-> **O que é.** Uma leitura crítica de toda a base: pesquisa (rels. 01–43 e validações), bibliografia (16.847 refs, 56 países), síntese (documento mestre e blocos A–D), decisões 001–022, produto (proposta 06: jornada, jogo completo 01–08, painéis v2, WhatsApp, Academia, arquitetura, Espelho do Som, universo). Data: 13/11/2026. Revisor: agente revisor geral.
+> **O que é.** Uma leitura crítica de toda a base: pesquisa (rels. 01–43 e validações), bibliografia (16.847 refs, 56 países), síntese (documento mestre e blocos A–D), decisões 001–024, produto (proposta 06: jornada, jogo completo 01–08, painéis v2, WhatsApp, Academia, arquitetura, Espelho do Som, universo). Data: 13/11/2026. Revisor: agente revisor geral.
 > **Regra.** Este relatório **não muda decisões nem documentos de produto**. Ele aponta o que está bom, o que falta e o que melhorar, com evidência. As poucas correções factuais feitas estão listadas no fim desta página.
 >
 > Arquivos: [01 · Achados detalhados](01-achados-detalhados.md) · [02 · Recomendações priorizadas](02-recomendacoes-priorizadas.md) · [03 · Checklist da ciência da leitura](03-checklist-ciencia-da-leitura.md) · [04 · Perguntas para o dono](04-perguntas-para-o-dono.md)
 
 ## Veredito em 4 linhas
 1. A **base científica e a síntese estão acima do padrão** de qualquer edtech de alfabetização que conhecemos em pt-BR: princípios com nível de evidência, critério de domínio em 4 condições, ASR que "nunca é juiz", privacidade por arquitetura e adulto no circuito.
-2. O **problema não é falta de pesquisa**, é **deriva**: as decisões de gamificação mais recentes (D018, D019, D021, D022) reintroduzem padrões que a própria pesquisa do projeto proíbe ("se fizer X ganha Y", ranking, coleção infinita), e o roteiro cena a cena ficou **forte no código e fraco em linguagem e compreensão**.
+2. O **problema não é falta de pesquisa**, é **deriva**: as decisões de gamificação mais recentes (D018, D019, D021, D022, D023) reintroduzem padrões que a própria pesquisa do projeto proíbe ("se fizer X ganha Y", ranking, coleção infinita), e o roteiro cena a cena ficou **forte no código e fraco em linguagem e compreensão**.
 3. A **avaliação** está bem desenhada no papel, mas o produto não tem **marco fixo de rastreio** (início/meio/fim de ano, checagem fônica), e o termômetro 0–10 tem níveis fora de ordem.
 4. O **escopo cresceu muito mais rápido que a validação**: nenhuma das PoCs obrigatórias (fala no aparelho, Espelho do Som, app ≤ 40 MB) nem o parecer jurídico P0 estão feitos, enquanto mundo 3D, série, Academia, Maternal, universo e modo online avançam.
 
@@ -44,7 +44,7 @@
 10. **Encaixe no sistema brasileiro**: lições de Sobral/PAIC, CPSI, offline-first, Android de 2 GB, WhatsApp só com adultos e duplo opt-in (rel. 26; `whatsapp/README.md`).
 
 ## 10 maiores lacunas e riscos
-1. **Gamificação contra a própria evidência**: "Ao chegar ao nível X, você ganha Y" (D019; `jogo-completo/07` §5), cadeado "Leia 5 palavras com M para desbloquear" (D021) e níveis que sobem por volume de tentativas são exatamente o formato que o rel. 08 manda evitar ("leia 10 palavras e ganhe um chapéu", linha 115; Deci, Koestner & Ryan 1999).
+1. **Gamificação contra a própria evidência**: "Ao chegar ao nível X, você ganha Y" (D019; `jogo-completo/07` §5), cadeado "Leia 5 palavras com M para desbloquear" (D021) e níveis que sobem por volume de tentativas são exatamente o formato que o rel. 08 manda evitar ("leia 10 palavras e ganhe um chapéu", linha 115; Deci, Koestner & Ryan 1999). A D023 soma **12 escadas de patentes** ("ser a melhor em tudo", até "Lenda" com estrelas sem fim) e o catálogo de conquistas chega a **523 itens e 953 degraus** (`conquistas/catalogo.md` §1): são 6 sistemas de progressão sobrepostos (moedinhas, níveis, títulos, selos B-P-O-D, patentes, coleções).
 2. **Ranking por esforço** (D018; `jogo-completo/README.md` §6) contradiz o doc. mestre §4.12 (anti-padrão), o conflito 42, a salvaguarda S3 do rel. 38 e a lista vermelha do rel. 42.
 3. **Linguagem e compreensão quase ausentes no Ano 1 do produto**: "vocabulário" aparece 0 vez em R0–R6; "compreensão", 1 vez por arquivo; a Hora da História quase não aparece. Risco Reading First (ganho em decodificação, zero em compreensão; P1/P12).
 4. **Ritmo da jornada incoerente com a regra de taxa**: o doc. mestre §4.3 pede 2–5 grafemas novos por semana; a jornada dá ~0,4–1 por semana (R2a: M, L, F em 4 semanas; R3: 4 letras em 10). Frases só em R4 (~6º mês), CVC e nasais em R6–R7 (~10º–15º mês), vogais átonas finais em R7, embora SAPO e BOLO apareçam desde R2. Rel. 01: em ortografias como a nossa, a base do código cabe em ~1 ano.

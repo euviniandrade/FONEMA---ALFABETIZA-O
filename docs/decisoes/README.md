@@ -30,6 +30,8 @@ Para criar uma decisão nova, veja [`../CONVENCOES.md`](../CONVENCOES.md) §3.
 | [020](020-espelho-do-som-prioridade.md) | Espelho do Som, o formato da boca, é prioridade máxima | 13/11/2026 | Aprovada | Boca da Sofia e do Tales em 3D, close, 3 vistas (frente, raio-X, dentro), fiel a cada fonema do PB; validação por fonoaudióloga |
 | [021](021-lojinha-conquistas-nivelamento-maternal.md) | Lojinha e Conquistas em cada fase, sem pular fases, nivelamento e Maternal | 13/11/2026 | Aprovada (saúde e legal a verificar) | Botões Lojinha e Minhas Conquistas por fase; progressão sequencial; sondagem de 5–10 min e Trilha Expressa; módulo Maternal (2–3 anos) |
 | [022](022-titulos-neutros-curva.md) | Títulos neutros pela ação e curva de desafios | 13/11/2026 | Aprovada | Títulos e selos nomeiam a ação (Primeiros Sons → Maestria da Leitura); curva de 2–6 → 8–14 → até 24 desafios por nível |
+| [023](023-escadas-de-patentes-por-area.md) | Escada de patentes em cada área | 13/11/2026 | Aprovada (nomes a confirmar) | 8 patentes neutras por área (Aprendiz → Lenda), com I-II-III e estrelas sem fim; convivem com os títulos da leitura (D022) |
+| [024](024-musica-danca-multissensorial.md) | Música, dança e todos os sentidos | 13/11/2026 | Aprovada | Músicas originais da dupla com dancinha que representa o som, sempre seguidas de atividade (D015); versão calma para TEA |
 
 ## Conflitos entre decisões (e como ficam)
 

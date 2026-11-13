@@ -13,7 +13,7 @@ Mapa navegável de todas as pastas e documentos principais. Comece pelo [README 
 ## 2. Decisões do dono (`decisoes/`) — fonte de verdade
 | Documento | O que é |
 |---|---|
-| [decisoes/README.md](decisoes/README.md) | Tabela 001–022 com status, resumo e quadro de conflitos entre decisões |
+| [decisoes/README.md](decisoes/README.md) | Tabela 001–024 com status, resumo e quadro de conflitos entre decisões |
 | [001](decisoes/001-jornada-e-modelo-de-precos.md) | Jornada de 2 anos e modelo de preços mensal |
 | [002](decisoes/002-economia-virtual-avatar-educacao-financeira.md) | Cadastro pelo adulto, economia de moedinhas, avatar e educação financeira |
 | [003](decisoes/003-formacao-integral-e-aprendizagem-profunda.md) | Formação integral e aprendizagem profunda (não decoreba) |
@@ -36,6 +36,8 @@ Mapa navegável de todas as pastas e documentos principais. Comece pelo [README 
 | [020](decisoes/020-espelho-do-som-prioridade.md) | Espelho do Som (formato da boca) como prioridade máxima |
 | [021](decisoes/021-lojinha-conquistas-nivelamento-maternal.md) | Lojinha e Conquistas por fase, sem pular fases, nivelamento inicial e Maternal |
 | [022](decisoes/022-titulos-neutros-curva.md) | Títulos neutros pela ação e curva de desafios |
+| [023](decisoes/023-escadas-de-patentes-por-area.md) | Escada de patentes em cada área (Aprendiz → Lenda) |
+| [024](decisoes/024-musica-danca-multissensorial.md) | Música, dança e todos os sentidos |
 
 ## 3. Universo (`universo/`) — Bíblia canônica (D016)
 | Documento | O que é |
@@ -164,7 +166,7 @@ Cada pasta 01–05 também tem `arquitetura.md`, `design.md`, `esqueleto.md` e `
 | [tools/bibliografia/](../tools/bibliografia/) | `coletar.py` e `exportar.py`: coleta e exportação da bibliografia (dados em `data/`, fora do Git) |
 | [tools/qualidade/](../tools/qualidade/) | `verificar_links.py`, `verificar_arquivos.py`, `verificar_termos.py` (ver [QUALIDADE.md](QUALIDADE.md) §2) |
 
-## 8. Revisão geral (`revisao/`)
+## 10. Revisão geral (`revisao/`)
 | Documento | O que é |
 |---|---|
 | [revisao/README.md](revisao/README.md) | Sumário executivo da revisão geral: notas por dimensão, 10 forças, 10 lacunas |
