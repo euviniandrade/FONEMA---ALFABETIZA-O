@@ -1091,3 +1091,557 @@ Lyrics (Brazilian Portuguese):
 ```
 
 ---
+
+### 17 · Som pelo Nariz
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R6 · Caatinga/Sertão**: verso do til em R6-F01, do AM/AN/EM/EN em F02, do IM/IN/OM/ON/UM/UN em F03 |
+| Objetivo | **Vogais nasais**: o ar passa também pelo nariz (ã, õ; vogal + M ou N no fim da sílaba) |
+| Estilo · BPM | Xote (sanfona, zabumba, triângulo) · **92 BPM** · Sol maior |
+| Duração | ~75 s |
+| Quem canta | Sofia (til), Tales (M/N no fim); Coro |
+
+**Letra**
+
+> **Verso 1 — S:**
+> Põe o dedinho do lado do nariz,
+> canta comigo e sente o que ele diz:
+> *(pausa)* ããã! Vibrou no nariz!
+> MAÇÃ, IRMÃ, a LÃ da ovelha: ããã!
+>
+> **Verso 2 — T:**
+> Quando o M ou o N vem no fim da sílaba,
+> a vogal passeia pelo nariz:
+> CAM-po, CAN-to, DEN-te,
+> PON-te, MUN-do, LIM-po!
+>
+> **Refrão — S+T + Coro:**
+> Som pelo nariz, som pelo nariz,
+> o dedinho sente, o dedinho diz:
+> an, en, in, on, un,
+> o ar passeia pelo nariz!
+>
+> **Ponte — S:** Tapa o nariz e canta "lã"… *(som abafado)* Viu? O nariz faz parte do som! **T:** Por quê? **S:** Porque o ar passa por ali!
+>
+> **Refrão** (2×)
+
+**Dancinha (5 movimentos)**
+1. **Nasal:** **dedinho encostado do lado do nariz** (dica de boca da jornada), sentindo vibrar.
+2. **Til (~):** a mão desenha uma **ondinha** no ar acima da letra.
+3. **M ou N no fim:** mão fecha em "rabinho" no fim da sílaba (prepara a música 19).
+4. **Sílabas separadas (CAM-po):** um passo de xote por sílaba, dedinho no nariz na sílaba nasal.
+5. **Refrão:** dois-pra-lá-dois-pra-cá do xote, dedinho no nariz no "nariz!".
+
+**Assiste e Faz**
+- **Oral × nasal (TOCAR):** ouvir **LÃ × LÁ**, **CANTO × CATO**, **MUNDO × MUDO**; tocar a palavra com som nasal.
+- **Ler:** MAÇÃ, CAMPO, PONTE, MUNDO (ícone de nariz como pista retirável).
+- Registro: nasalidade; par oral/nasal.
+
+**Notas:** em várias regiões (especialmente no Nordeste) a vogal antes de M/N da sílaba seguinte também fica nasal ("banana", "cama"): **é variação, não erro**. Evitados "pinto" e "bomba". O tapar o nariz é **opcional**, rápido, e nunca para quem estiver resfriado ou não quiser.
+
+**Prompt (ElevenLabs Music)**
+```
+Gentle Brazilian "xote" children's song, 92 BPM, G major, 2/4 feel, about 75 seconds. Accordion, zabumba drum, triangle, acoustic guitar. Warm, swaying, one note per syllable. Nasal vowels must sound clearly nasal (Portuguese "ã", "an", "en", "in", "on", "un"); split the words by syllable on the beat: "CAM-po, CAN-to, DEN-te". Voices: warm girl-like animated-character voice (Sofia) and energetic boy-like voice (Tales), adult singers; small choir on the chorus. Clear Brazilian Portuguese. Not in the style of any specific artist. No festival or celebration references.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Sofia] Põe o dedinho do lado do nariz, / canta comigo e sente o que ele diz: / ããã! Vibrou no nariz! / Maçã, irmã, a lã da ovelha: ããã!
+[Verse 2 - Tales] Quando o M ou o N vem no fim da sílaba, / a vogal passeia pelo nariz: / cam-po, can-to, den-te, / pon-te, mun-do, lim-po!
+[Chorus - all] Som pelo nariz, som pelo nariz, / o dedinho sente, o dedinho diz: / an, en, in, on, un, / o ar passeia pelo nariz!
+[Chorus - all, twice] Som pelo nariz, som pelo nariz, / o dedinho sente, o dedinho diz: / an, en, in, on, un, / o ar passeia pelo nariz!
+```
+
+---
+
+### 18 · Rima do Sertão
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R6-F05 (-ÃO × -AM)** e **R6-F06 (rimas e fluência do cordel)**; reprise na **Feira do Cordel** (chefe do Ano 1, R6-F08) |
+| Objetivo | **-ÃO** quando a força (sílaba tônica) está no fim × **-AM** quando a força está antes (verbos: cantam, falam); rima de cordel |
+| Estilo · BPM | Baião (sanfona, zabumba, triângulo, viola) · **116 BPM** · Ré maior |
+| Duração | ~85 s |
+| Quem canta | Tales como cordelista (verso 1), Sofia (verso 2, a regra); Coro no refrão; sanfoneiro da vila no solo |
+
+**Letra**
+
+> **Verso 1 — T (cordel cantado):**
+> Lá no meu sertão querido
+> tem açude e tem feijão,
+> tem asa-branca voando
+> e sanfona no salão;
+> quem escuta bem a rima
+> sabe o fim de cada canção: *(Coro)* ÃO!
+>
+> **Verso 2 — S:**
+> Os meninos e as meninas
+> **CAN**-tam, **DAN**-çam, batem a mão:
+> a força vem no começo,
+> CANTAM, DANÇAM: é AM, então!
+> Se a força cai lá no fim,
+> can-**ÇÃO**, ser-**TÃO**, fei-**JÃO**: é ÃO!
+>
+> **Refrão — S+T + Coro:**
+> Ão, ão, ão, rima do sertão!
+> Bate o pé na sílaba forte
+> e escreve com atenção:
+> força no fim, é ÃO;
+> força antes, é AM, oxente, que lição!
+>
+> **Solo de sanfona** (8 compassos: a turma bate o pé no tempo forte)
+>
+> **Refrão** (2×)
+
+**Dancinha (6 movimentos)**
+1. **Sílaba forte:** **bate o pé** no chão exatamente na tônica (CAN-tam: pé no CAN; can-ÇÃO: pé no ÇÃO).
+2. **-ÃO:** dedinho no nariz + braço que desce no fim (força no fim).
+3. **-AM:** dedinho no nariz + braço que desce no começo.
+4. **asa-branca:** braços abertos batendo devagar.
+5. **sanfona:** mãos abrindo e fechando o fole.
+6. **Refrão:** passo de baião (pé, pé, troca), palma no "lição!".
+
+**Assiste e Faz**
+- **Bate o pé e escolhe (TOCAR):** ouvir a palavra, bater o pé na tônica e tocar -ÃO ou -AM (CANÇÃO, SERTÃO, MÃO, CANTAM, FALAM, PULAM).
+- **Completar o verso (cordel):** "e sanfona no… ___" (SALÃO).
+- **Projeto "Meu cordel":** completar versos rimados em -ÃO e ilustrar em xilogravura (R6-F08).
+- Registro: regra -ÃO × -AM; rimas.
+
+**Notas:** -ÃO e -AM **soam quase igual** no fim; a pista é a **força da sílaba**, por isso o **pé marca a tônica** (gesto que ensina a regra). O xote e o baião entram como **música do Sertão** (sanfona, zabumba, triângulo), sem imagens de festa junina (D012). "Oxente" é interjeição regional, sem sentido religioso. Cordel é literatura popular, citado como gênero, sem copiar versos de autores.
+
+**Prompt (ElevenLabs Music)**
+```
+Energetic but child-friendly Brazilian "baião", 116 BPM, D major, 2/4, about 85 seconds. Accordion, zabumba, triangle, ten-string viola. Story-telling sung verse like northeastern popular poetry, one note per syllable, very clear stressed syllables: stress falls on the first syllable in "CANtam, DANçam" and on the last in "canÇÃO, serTÃO, feiJÃO". Include an 8-bar accordion solo. Voices: energetic boy-like animated-character voice (Tales) and warm girl-like voice (Sofia), adult singers; small choir answers "ÃO!". Clear Brazilian Portuguese. Not in the style of any specific artist. No festival, saint or celebration references.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Tales] Lá no meu sertão querido / tem açude e tem feijão, / tem asa-branca voando / e sanfona no salão; / quem escuta bem a rima / sabe o fim de cada canção: [Choir] ÃO!
+[Verse 2 - Sofia] Os meninos e as meninas / cantam, dançam, batem a mão: / a força vem no começo, / cantam, dançam: é AM, então! / Se a força cai lá no fim, / canção, sertão, feijão: é ÃO!
+[Chorus - all] Ão, ão, ão, rima do sertão! / Bate o pé na sílaba forte / e escreve com atenção: / força no fim, é ÃO; / força antes, é AM, oxente, que lição!
+[Instrumental - 8 bars accordion solo]
+[Chorus - all, twice] Ão, ão, ão, rima do sertão! / Bate o pé na sílaba forte / e escreve com atenção: / força no fim, é ÃO; / força antes, é AM, oxente, que lição!
+```
+
+---
+
+### 19 · Remando no Rio
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R7 · Amazônia** (abre o Ano 2): R7-F01 (R no fim da sílaba) e R7-F02 (S e L no fim) |
+| Objetivo | Sílaba com **"rabinho"** (CVC): BAR-co, POR-to, MAR; CES-ta, PAS-ta; SOL, SAL, AN-ZOL (L no fim soa quase U) |
+| Estilo · BPM | Folk-pop amazônico com flauta, violão e chocalho (ritmo de remada) · **96 BPM** · Mi maior |
+| Duração | ~75 s |
+| Quem canta | Tales (R), Sofia (S e L); Coro "rema!"; um pescador ribeirinho da vila pode dizer a fala final |
+
+**Letra**
+
+> **Verso 1 — T:**
+> Rema, rema, no BARCO, devagar,
+> do PORTO até o MAR!
+> O R no fim da sílaba
+> é o rabinho pra segurar:
+> BAR-co, POR-to, MAR!
+>
+> **Verso 2 — S:**
+> O S no fim faz sss baixinho:
+> CES-ta, PAS-ta, no caminho!
+> O L no fim parece um U,
+> mas é L, escuta bem:
+> SOL, SAL, AN-ZOL também!
+>
+> **Refrão — S+T + Coro:**
+> Rema, rema, rema no rio,
+> sílaba com rabinho no fim!
+> R, S e L seguram o barco,
+> rema, rema, e lê assim:
+> MAR, SOL, CES-TA, BAR-CO!
+>
+> **Final — (falado, pescador):** O rio é de todos: cuida dele, que ele cuida da gente.
+
+**Dancinha (5 movimentos)**
+1. **Remada:** braços remando dos dois lados, **uma remada por sílaba**.
+2. **"rabinho":** no fim da sílaba com coda, a mão **fecha** (o rabinho segura): BAR (fecha) - co.
+3. **R no fim:** o toquinho do R fraco na palma, no fechamento.
+4. **S no fim:** a mão que desliza reta, curtinha.
+5. **L no fim:** indicador sobe (língua) e a boca faz um biquinho leve (o som parece U).
+
+**Assiste e Faz**
+- **Montar a sílaba com rabinho (ARRASTAR):** BA + R = BAR; depois BAR + CO = BARCO; ≥ 1 pseudopalavra ("MURTO").
+- **Ler:** BARCO, PORTO, CESTA, SOL.
+- Registro: CVC com R, S, L; L × U no fim (só percepção, a regra vem no R7-F04).
+
+**Notas:** a **coda** fica na **mesma nota** da sílaba, sem vogal extra ("ba-ri-co", "ma-ri" são erro de canto). Em algumas regiões o R final some na fala ("remá"): **variação, não erro**; na leitura, o R está escrito. Amazônia sem mitos tratados como seres (nada de boto que vira gente, nada de Iara do folclore; D012); povos da floresta só com consultoria indígena (jornada R7).
+
+**Prompt (ElevenLabs Music)**
+```
+Warm Brazilian Amazon-inspired folk-pop children's song, 96 BPM, E major, 4/4, about 75 seconds. Wooden flute, acoustic guitar, seed shaker, soft river-like percussion with a steady rowing pulse. One note per syllable; keep final consonants inside the same syllable with no extra vowel ("BAR-co" never "ba-ri-co", "MAR" never "ma-ri"). Voices: energetic boy-like animated-character voice (Tales) and warm girl-like voice (Sofia), adult singers; small choir. A calm older man speaks the final line. Clear Brazilian Portuguese. Not in the style of any specific artist. No folklore or legend references.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Tales] Rema, rema, no barco, devagar, / do porto até o mar! / O R no fim da sílaba / é o rabinho pra segurar: / bar-co, por-to, mar!
+[Verse 2 - Sofia] O S no fim faz sss baixinho: / ces-ta, pas-ta, no caminho! / O L no fim parece um U, / mas é L, escuta bem: / sol, sal, an-zol também!
+[Chorus - all] Rema, rema, rema no rio, / sílaba com rabinho no fim! / R, S e L seguram o barco, / rema, rema, e lê assim: / mar, sol, ces-ta, bar-co!
+[Chorus - all, repeat]
+[Outro - older man, spoken] O rio é de todos: cuida dele, que ele cuida da gente.
+```
+
+---
+
+### 20 · A Viagem da Gotinha · *conhecimento de base (Ciências)*
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R7-F05 · Ciências: o caminho da água** (conhecimento de base, D017); volta em R6 (cisterna) como revisão e no Dia do Meio Ambiente |
+| Objetivo | **Ciclo da água**: evaporar, virar nuvem (condensar), chover, correr no rio e na terra, voltar ao mar; vocabulário camada 2 (evaporar, nuvem, chuva) e cuidado com a água |
+| Estilo · BPM | Pop infantil com flauta, piano e cordas leves · **100 BPM** · Fá maior |
+| Duração | ~80 s |
+| Quem canta | Sofia (ciência), Tales (perguntas "E se…?"); Coro no refrão |
+
+**Letra**
+
+> **Verso 1 — S:**
+> A gotinha no rio sentiu o sol esquentar,
+> ficou levinha, levinha, e subiu pelo ar:
+> **evaporou!** *(Coro)* Evaporou!
+>
+> **Verso 2 — T:**
+> E se lá no alto fizer frio? **S:** Ela encontra as amigas,
+> todas juntinhas viram **nuvem**, branquinha e fofa!
+> **T:** E se a nuvem ficar pesada? **S:** Aí… **choveu!** *(Coro)* Choveu!
+>
+> **Refrão — S+T + Coro:**
+> Sobe, sobe, vira nuvem,
+> desce, desce, vira chuva,
+> corre, corre, vira rio,
+> e começa outra vez a viagem da gotinha!
+>
+> **Verso 3 — S:**
+> A chuva molha a terra, a planta bebe e cresce,
+> o rio leva pro mar, e o sol aquece outra vez.
+> **T:** Então a água dá a volta no mundo? **S:** Dá! Por isso a gente cuida dela!
+>
+> **Refrão** · **Final — S+T:** Fecha a torneira, guarda a gotinha!
+
+**Dancinha (6 movimentos)**
+1. **Sol:** braços em círculo acima da cabeça.
+2. **Evaporar:** dedos subindo e balançando devagar (gotinha leve).
+3. **Nuvem:** braços se juntam em roda na frente do corpo (as gotinhas juntas).
+4. **Chuva:** dedos descendo como pingos.
+5. **Rio:** braço ondulando para o lado.
+6. **"outra vez":** giro de uma volta (o ciclo).
+
+**Assiste e Faz**
+- **Ordenar o ciclo (ARRASTAR):** 4 cartões lidos: SOL → NUVEM → CHUVA → RIO.
+- **Pergunta de compreensão:** "O que acontece quando a nuvem fica pesada?" (3 figuras).
+- **Em casa:** "experiência da tampa": o adulto põe água quente numa tigela com tampa e mostra as gotinhas na tampa (**só o adulto mexe com água quente**).
+- Registro: conhecimento de base (Ciências) + palavras lidas.
+
+**Notas:** simplificação adequada à idade (o vapor é invisível; "ficou levinha" é imagem, não erro científico). Ciência com respeito à criação e cuidado com a água (D010, D012), sem tom alarmista.
+
+**Prompt (ElevenLabs Music)**
+```
+Bright, gentle Brazilian children's pop song about the water cycle, 100 BPM, F major, 4/4, about 80 seconds. Flute, piano, light strings, soft percussion, a few rising and falling melodic figures to illustrate going up and coming down. One note per syllable, clear diction. Voices: warm girl-like animated-character voice (Sofia) explaining, energetic curious boy-like voice (Tales) asking, adult singers; small choir echoes key words. Clear Brazilian Portuguese. Not in the style of any specific artist.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Sofia] A gotinha no rio sentiu o sol esquentar, / ficou levinha, levinha, e subiu pelo ar: / evaporou! [Choir] Evaporou!
+[Verse 2 - Tales] E se lá no alto fizer frio? [Sofia] Ela encontra as amigas, / todas juntinhas viram nuvem, branquinha e fofa! / [Tales] E se a nuvem ficar pesada? [Sofia] Aí... choveu! [Choir] Choveu!
+[Chorus - all] Sobe, sobe, vira nuvem, / desce, desce, vira chuva, / corre, corre, vira rio, / e começa outra vez a viagem da gotinha!
+[Verse 3 - Sofia] A chuva molha a terra, a planta bebe e cresce, / o rio leva pro mar, e o sol aquece outra vez. / [Tales] Então a água dá a volta no mundo? [Sofia] Dá! Por isso a gente cuida dela!
+[Chorus - all]
+[Outro - Sofia and Tales] Fecha a torneira, guarda a gotinha!
+```
+
+---
+
+### 21 · Trem dos Encontros
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R8 · Litoral e Mar**: vagões PR/BR/TR/DR em R8-F01, CR/GR/FR/VR em F02, PL/BL/CL/GL/FL em F03; reprise na inauguração do trem (chefe R8-F07, momento uau) |
+| Objetivo | **Encontros consonantais** (CCV): a segunda letra (R ou L) **gruda** na primeira, sem vogal no meio |
+| Estilo · BPM | Samba leve infantil "de quintal" (violão, cavaquinho, pandeiro, ganzá como trem) · **104 BPM** · Dó maior |
+| Duração | ~85 s |
+| Quem canta | Tales (maquinista dos vagões R), Sofia (vagões L); Coro "piuí!" |
+
+**Letra**
+
+> **Intro — T:** Piuí! Todo mundo pro trem!
+>
+> **Verso 1 — T:**
+> Primeiro vagão: o P e o R vão juntinhos: **PRA**-to!
+> O B e o R, sem soltar: **BRA**-ço!
+> O T e o R: **TREM**! **TRI**-go!
+> O D e o R: **PE**-dra, **QUA**-dro!
+>
+> **Verso 2 — S:**
+> Agora o L engata o vagão:
+> **PLAN**-ta, **BLU**-sa, **CLU**-be,
+> **FLOR**, **FLAU**-ta e o **GLO**-bo na estação!
+>
+> **Refrão — S+T + Coro:**
+> Encontro, encontro, uma letra gruda na outra,
+> sem vogal no meio, sem parar!
+> PRA, BRA, TRA, olha o trem passar!
+> PLA, BLA, FLA, todo mundo vai chegar!
+>
+> **Verso 3 — T:** E o **LI-VRO**? Tem V e R juntinhos lá no fim!
+> **S:** E a **FRU-TA**, o **GRI-LO**, o **CRE-ME**, a **GRA-MA**!
+>
+> **Refrão** (2×) · **Final — Coro:** Piuí!
+
+**Dancinha (5 movimentos)**
+1. **Vagão:** braços dobrados fazendo a roda do trem (gira no ritmo do ganzá).
+2. **Engatar:** os **dedos das duas mãos se enganchando** (a letra que gruda), no instante do encontro.
+3. **Sílaba de encontro:** um passo à frente só na sílaba PR/BR/PL (as outras, passo normal).
+4. **"sem vogal no meio":** mãos coladas, sem espaço entre elas.
+5. **Refrão:** trenzinho (mão no ombro de quem está na frente; sozinho: braços de roda) e "piuí" com a mão puxando o apito.
+
+**Assiste e Faz**
+- **Montar o encontro (ARRASTAR):** P + R + A = PRA; PRA + TO = PRATO; pista de sílaba retirável (N11).
+- **Leitura repetida (fluência):** frase "O TREM LEVA A FRUTA E A FLOR." (lida 3×: Sofia → juntos → sozinha).
+- Registro: CCV por família; fluência em frase.
+
+**Notas:** **leitura ≠ fala**: falar "pato" por "prato" é normal até cerca de 6–7 anos (rel. 29); a música **convida**, a atividade **nunca corrige a fala**, só a leitura. Evitadas: bruxa, dragão (D012), flecha (arma), madrinha (termo de rito). "Trem dos Encontros" é o nome do chefe da região (jornada R8).
+
+**Prompt (ElevenLabs Music)**
+```
+Light, joyful Brazilian children's samba ("backyard samba" feel), 104 BPM, C major, 2/4, about 85 seconds. Acoustic guitar, cavaquinho, pandeiro, shaker imitating a train, train whistle "piuí" sung by the choir. One note per syllable. Consonant clusters must be sung tight with NO vowel inserted between the two consonants: "PRA-to" never "pe-ra-to", "BRA-ço", "TREM", "PLAN-ta", "FLOR", "GLO-bo". Voices: energetic boy-like animated-character voice (Tales) and warm girl-like voice (Sofia), adult singers; small choir. Clear Brazilian Portuguese. Not in the style of any specific artist. No carnival references.
+
+Lyrics (Brazilian Portuguese):
+[Intro - Tales] Piuí! Todo mundo pro trem!
+[Verse 1 - Tales] Primeiro vagão: o P e o R vão juntinhos: pra-to! / O B e o R, sem soltar: bra-ço! / O T e o R: trem! tri-go! / O D e o R: pe-dra, qua-dro!
+[Verse 2 - Sofia] Agora o L engata o vagão: / plan-ta, blu-sa, clu-be, / flor, flau-ta e o glo-bo na estação!
+[Chorus - all] Encontro, encontro, uma letra gruda na outra, / sem vogal no meio, sem parar! / PRA, BRA, TRA, olha o trem passar! / PLA, BLA, FLA, todo mundo vai chegar!
+[Verse 3 - Tales] E o li-vro? Tem V e R juntinhos lá no fim! / [Sofia] E a fru-ta, o gri-lo, o cre-me, a gra-ma!
+[Chorus - all, twice]
+[Outro - choir] Piuí!
+```
+
+---
+
+### 22 · Meu Endereço no Planeta · *conhecimento de base (Geografia)*
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R8-F04 · Geografia: mapa, país e planeta** (D017); reprise em R10-F05 (país e cidadania) |
+| Objetivo | Escalas do espaço: **casa → rua → bairro → cidade → estado → país → continente → planeta**; cuidado com o planeta |
+| Estilo · BPM | Marcha escolar (tambor, metais leves, glockenspiel) · **108 BPM** · Si bemol maior |
+| Duração | ~75 s |
+| Quem canta | Sofia e Tales em "zoom" (cada verso abre a câmera); Coro |
+
+**Letra**
+
+> **Verso 1 — S:**
+> No meu quarto tem a minha cama,
+> o meu quarto fica na minha casa,
+> a casa fica numa **rua**,
+> e a rua fica num **bairro** que continua…
+>
+> **Verso 2 — T:**
+> O bairro fica numa **cidade**,
+> a cidade fica num **estado**,
+> o estado fica no **país**: o **Brasil**!
+> E o Brasil fica na **América do Sul**!
+>
+> **Refrão — S+T + Coro:**
+> Do meu quarto ao planeta,
+> vou contando sem parar:
+> casa, rua, bairro, cidade,
+> estado, país, continente…
+> planeta **Terra**, nosso lar!
+>
+> **Final — S:** E quem cuida do nosso lar? **Coro:** Todo mundo!
+
+**Dancinha (5 movimentos)**
+1. **Quarto/casa:** mãos em telhado sobre a cabeça.
+2. **Rua/bairro:** braços apontando caminhos (frente, lado).
+3. **"zoom":** a cada lugar maior, os **braços se abrem mais** (do pequeno ao grande).
+4. **Planeta:** braços em roda gigante; giro de uma volta.
+5. **"Todo mundo!":** mão no coração, depois apontar para todos.
+
+**Assiste e Faz**
+- **Ordenar do menor ao maior (ARRASTAR):** CASA, RUA, CIDADE, PAÍS, PLANETA (cartões lidos).
+- **Mapa da vila:** completar o **endereço da Sofia** (Rua das Letras, Vila do Bolota…) — nunca o endereço real da criança.
+- Registro: conhecimento de base (Geografia) + palavras lidas.
+
+**Notas:** **privacidade (LGPD, ECA Digital):** a atividade usa o endereço **da vila**, nunca pergunta, grava ou digita o endereço da criança. Apartidário e sem símbolos de partidos (D017). Como os estados e os nomes de cidade variam, a música não cita nenhum (cada escola pode cantar o seu, fora da plataforma).
+
+**Prompt (ElevenLabs Music)**
+```
+Upbeat Brazilian school marching-band children's song, 108 BPM, B-flat major, 4/4, about 75 seconds. Snare, bass drum, light brass, glockenspiel; arrangement grows a little with each verse, like a camera zooming out from a bedroom to the planet. One note per syllable, clear diction. Voices: warm girl-like animated-character voice (Sofia) and energetic boy-like voice (Tales), adult singers; small choir. Clear Brazilian Portuguese. Not in the style of any specific artist.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Sofia] No meu quarto tem a minha cama, / o meu quarto fica na minha casa, / a casa fica numa rua, / e a rua fica num bairro que continua...
+[Verse 2 - Tales] O bairro fica numa cidade, / a cidade fica num estado, / o estado fica no país: o Brasil! / E o Brasil fica na América do Sul!
+[Chorus - all] Do meu quarto ao planeta, / vou contando sem parar: / casa, rua, bairro, cidade, / estado, país, continente... / planeta Terra, nosso lar!
+[Chorus - all, repeat]
+[Outro - Sofia] E quem cuida do nosso lar? [Choir] Todo mundo!
+```
+
+---
+
+### 23 · O H Fica Quietinho
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R9-F01 · H que não tem som**; lembra os dígrafos de R4 (música 14) |
+| Objetivo | **H no começo da palavra não tem som**: quem fala é a vogal seguinte (HORA, HOJE, HORTA, HOTEL, HOSPITAL) |
+| Estilo · BPM | Pop-rock infantil com percussão de oficina (martelinho, chave, caixa de ferramentas) · **112 BPM** · Sol maior |
+| Duração | ~70 s |
+| Quem canta | Tales e Sofia; a inventora **Lia** e o robô **Tec** fazem a percussão |
+
+**Letra**
+
+> **Verso 1 — T:**
+> Na oficina da cidade tem uma letra diferente,
+> ela fica bem quietinha na frente de muita gente!
+> **HO**-ra… *(1 tempo de silêncio total)* o H não fala: **ho-ra**!
+> **HO**-je… *(silêncio)* o H não fala: **ho-je**!
+>
+> **Refrão — S+T + Coro:**
+> O H fica quietinho, quietinho… *(1 tempo de silêncio)*
+> quem fala é a vogal do ladinho!
+> HORA, HOJE, HORTA, HOTEL:
+> o H não fala, mas tá no papel!
+>
+> **Verso 2 — S:**
+> Mas quando o H dá a mão pro C, pro N e pro L,
+> ele ajuda a fazer um som novo, lembra? *(Coro)* Lembro!
+> CHAVE, NINHO, ABELHA!
+>
+> **Refrão** (2×)
+
+**Dancinha (5 movimentos)**
+1. **H quietinho:** **ombros sobem, mãos abertas para os lados, boca fechada**, sem som (uma "estátua muda").
+2. **Vogal que fala:** em seguida, o gesto da vogal (O: círculo; I: sorriso).
+3. **Silêncio da banda:** todo mundo **congela** no tempo de silêncio (o H é uma pausa na música).
+4. **"mas tá no papel":** dedo aponta para a palavra escrita no karaokê.
+5. **Verso 2:** mãos dadas (dígrafo) e os gestos de CH, NH, LH da música 14.
+
+**Assiste e Faz**
+- **Ler e ouvir (TOCAR):** ler HORTA, HOJE, HOTEL; ouvir "ORA" e escolher a escrita com H (HORA); descoberta: "por que tem H se não tem som?" (a escrita guarda a história da palavra; N10).
+- Registro: H inicial; erros esperados e explicados ("a gente fala assim, escreve assado").
+
+**Notas:** **não usar o gesto "shhh"** para o H mudo: no português "xxx" é um **som de verdade** (CH, X); o gesto do H é **sem som e com a boca fechada**. No karaokê, o **H aparece mais claro** e a vogal seguinte acende no instante do som. O "silêncio da banda" é a parte mais importante: o H vira **pausa musical** (congruência som–grafia). Nomes como **Helena** começam com o som /e/ (D019 §3).
+
+**Prompt (ElevenLabs Music)**
+```
+Fun Brazilian children's pop-rock song with workshop percussion (small hammer taps, wrench clinks, toolbox hits as rhythm), 112 BPM, G major, 4/4, about 70 seconds. Electric guitar (clean), bass, light drums. IMPORTANT: one full beat of complete silence (all instruments stop) where marked, to represent the silent letter H. One note per syllable. In Portuguese the H is silent: "hora" sounds like "ora", "hoje" like "oje". Voices: energetic boy-like animated-character voice (Tales) and warm girl-like voice (Sofia), adult singers; small choir. Clear Brazilian Portuguese. Not in the style of any specific artist.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Tales] Na oficina da cidade tem uma letra diferente, / ela fica bem quietinha na frente de muita gente! / Hora... (one beat of total silence) o H não fala: ho-ra! / Hoje... (silence) o H não fala: ho-je!
+[Chorus - all] O H fica quietinho, quietinho... (one beat of total silence) / quem fala é a vogal do ladinho! / Hora, hoje, horta, hotel: / o H não fala, mas tá no papel!
+[Verse 2 - Sofia] Mas quando o H dá a mão pro C, pro N e pro L, / ele ajuda a fazer um som novo, lembra? [Choir] Lembro! / Chave, ninho, abelha!
+[Chorus - all, twice]
+```
+
+---
+
+### 24 · Ponto, Pergunta, Exclamação
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R10-F02 · Ler com voz de história** (revê R8-F05, maiúscula e pontuação); reprise no Festival de Leitura (chefe final) |
+| Objetivo | **Prosódia e fluência**: a mesma frase muda com o sinal (ponto: a voz desce; interrogação: a voz sobe; exclamação: a voz pula); a frase começa com **maiúscula** |
+| Estilo · BPM | Pop orquestral leve (piano, cordas, madeiras, percussão suave) · **96 BPM** · Mi bemol maior |
+| Duração | ~80 s |
+| Quem canta | Sofia (explica), Tales (lê a frase de três jeitos); Bolota "dorme"; Coro |
+
+**Letra**
+
+> **Verso 1 — S:**
+> Toda frase começa com letra grande,
+> a **maiúscula** abre a porta pra gente entrar.
+> E no fim tem um sinal que diz
+> como a voz vai cantar:
+>
+> **Verso 2 (a mesma frase, três vozes) — T:**
+> **Ponto final:** a voz desce e descansa:
+> "O Bolota dormiu."
+> **Interrogação:** a voz sobe, curiosa:
+> "O Bolota dormiu?"
+> **Exclamação:** a voz pula, animada:
+> "O Bolota dormiu!"
+> **B (falado, acordando):** Hã? Eu? Dormi!
+>
+> **Refrão — S+T + Coro:**
+> Ponto, pergunta, exclamação,
+> cada sinal muda a entonação!
+> Desce, sobe, pula,
+> lê com voz de contação!
+>
+> **Final — S+T:** Amanhã a gente lembra!
+
+**Dancinha (5 movimentos)**
+1. **Maiúscula:** braços abrem uma "porta" grande.
+2. **Ponto:** mão espalmada **desce e para** (palma para baixo).
+3. **Interrogação:** a mão **sobe** desenhando um gancho; sobrancelhas para cima.
+4. **Exclamação:** **pulinho** com o braço reto para cima e um ponto no chão (bate o pé).
+5. **"voz de contação":** mãos abertas como um livro.
+
+**Assiste e Faz**
+- **Ler com voz de história (LER-VOZ, karaokê de 4 passos):** a criança lê uma frase com o sinal certo ("A FLOR ABRIU." / "A FLOR ABRIU?" / "A FLOR ABRIU!"); a Sofia lê → juntos → com apoio → sozinha. A prosódia é **sinal**, nunca nota.
+- **Escolher o sinal (TOCAR):** ouvir a Sofia lendo e tocar o sinal certo.
+- Registro: fluência e prosódia em frases; uso da maiúscula.
+
+**Notas:** a mesma frase com três sinais é um **contraste mínimo de prosódia** (ótimo para a leitura em eco). O karaokê aqui acende **por palavra** (fluência), com o sinal de pontuação destacado.
+
+**Prompt (ElevenLabs Music)**
+```
+Light orchestral Brazilian children's pop song, 96 BPM, E-flat major, 4/4, about 80 seconds. Piano, strings, woodwinds, soft percussion. One note per syllable. In verse 2 the same spoken-sung sentence is performed three times with different intonation: falling and calm for the period, rising and curious for the question, bouncy and excited for the exclamation. Voices: warm girl-like animated-character voice (Sofia) and energetic boy-like voice (Tales), adult singers; small choir on the chorus. Clear Brazilian Portuguese. Not in the style of any specific artist.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Sofia] Toda frase começa com letra grande, / a maiúscula abre a porta pra gente entrar. / E no fim tem um sinal que diz / como a voz vai cantar:
+[Verse 2 - Tales] Ponto final: a voz desce e descansa: / "O Bolota dormiu." / Interrogação: a voz sobe, curiosa: / "O Bolota dormiu?" / Exclamação: a voz pula, animada: / "O Bolota dormiu!"
+[Chorus - all] Ponto, pergunta, exclamação, / cada sinal muda a entonação! / Desce, sobe, pula, / lê com voz de contação!
+[Chorus - all, repeat]
+[Outro - Sofia and Tales] Amanhã a gente lembra!
+```
+
+---
+
+## 6. Canções-tema dos personagens
+
+Curtas (20–30 s), no modelo do musical de animação ([README §2](README.md#2-o-modelo-musical-de-animação-estrutura-não-cópia)): apresentam quem o personagem é e o que ele quer, usando os **bordões canônicos** (série §1.4). Cada uma gera o **leitmotiv** (3–5 notas) do personagem. Entram na **apresentação** do personagem (R0) e em reprises nos momentos emocionais.
+
+### T1 · Sofia — "Letra por Letra"
+Pop acústico suave · 90 BPM · voz calorosa e pausada.
+> Eu gosto de livro, de mapa e de lista,
+> palavra nova é coisa que eu conquisto!
+> Ainda não sei? Vamos descobrir!
+> Primeiro a gente escuta… e depois vai ler:
+> **letra por letra, letra por letra,**
+> devagarinho, eu chego lá!
+
+**Reprise calma** (quando ela sente medo de errar, R6): só "Respira comigo: cheira a flor, sopra a vela… letra por letra, eu chego lá", a 70 BPM, piano.
+
+### T2 · Tales — "E Se…?"
+Pop-rock leve · 116 BPM · voz animada, levemente rouca.
+> E se eu juntar? E se eu trocar?
+> Por quê, por quê? Eu vou testar!
+> Opa! Errei? Bora de novo,
+> vou mais devagar e acerto, ó!
+> **E se… e se… e se…?**
+> Pergunta boa abre o mundo pra você!
+
+**Reprise:** "Opa! Vou mais devagar" (desacelera a música junto: modela autorregulação).
+
+### T3 · Bolota — "Me Ensina?"
+Cantiga fofa · 84 BPM · voz pequena (🟡 voz a definir); 1 a 4 palavras por frase, o resto o coro canta.
+> **B:** Ops! **Coro:** O Bolota errou!
+> **B:** Me ensina? **Coro:** A gente ensinou!
+> **B:** Rola, rola… **Coro:** e pensou, pensou…
+> **B:** Aprendi! **Coro:** O Bolota aprendeu, e quem ensinou foi você!
+
+### T4 · Zum-Zum — "Zzz, Olha Ali!"
+Rasqueado leve, rápido e engraçado · 120 BPM · voz pequena e rápida (🟡 a definir), nunca assustadora.
+> Zzz, olha ali! Zzz, olha lá!
+> Tanta coisa pra ver, pra onde eu vou voar?
+> Zzz, uma letra! Zzz, um som!
+> Será que eu presto atenção? Hum…
+
+**Reprise "vira amigo"** (fim de cada região): a mesma melodia, mais lenta e no tom maior: "Zzz… parei pra escutar, olhei pra sua boca e aprendi a prestar atenção. Zzz… tô prestando atenção!"
+
+---
+
+## 7. Próximas músicas (fila)
+
+🟡 A decidir depois do piloto: "Tchau, Amanhã a Gente Lembra" (fim de sessão calmo, rel. 28 §3.3), "X de Muitos Sons" (R9-F02), "Ditongos do Rio" (R7-F03), "Palavras que Aparecem Muito" (R10-F01), "Dias da Semana", "Cofrinho" (educação financeira, D002), **medley da formatura** com os refrões da jornada (R10-F09), uma música por som consoante restante (J, G, C, CH/X, Ç, S entre vogais) e a canção de cada região (tema instrumental com letra curta).
