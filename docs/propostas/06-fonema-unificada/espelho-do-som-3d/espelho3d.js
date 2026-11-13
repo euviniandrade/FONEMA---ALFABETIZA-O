@@ -191,14 +191,14 @@ export function criar(container, opts = {}) {
 
   const M = {
     dente: fisico(0xfdfdff, { roughness: 0.18, clearcoat: 1, clearcoatRoughness: 0.06, sheen: 0.3, sheenColor: new THREE.Color(0xdff1ff) }),
-    lingua: fisico(0xff7f8c, { roughness: 0.42, clearcoat: 0.7, clearcoatRoughness: 0.28, sheen: 0.6, sheenColor: new THREE.Color(0xffd3da), side: THREE.DoubleSide }),
+    lingua: fisico(0xff8a72, { roughness: 0.42, clearcoat: 0.7, clearcoatRoughness: 0.28, sheen: 0.6, sheenColor: new THREE.Color(0xffd3da), side: THREE.DoubleSide }),
     labio: fisico(0xd8636f, { roughness: 0.4, clearcoat: 0.55, clearcoatRoughness: 0.3, sheen: 0.5, sheenColor: new THREE.Color(0xffc9cf) }),
     ceu: fisico(0xf6a9bd, { roughness: 0.55, clearcoat: 0.3, side: THREE.DoubleSide }),
     osso: fisico(0xf8e5c4, { roughness: 0.5, clearcoat: 0.4 }),
     veu: fisico(0xf28ca6, { roughness: 0.45, clearcoat: 0.5, side: THREE.DoubleSide }),
-    cavidade: new THREE.MeshStandardMaterial({ color: 0x8a3157, roughness: 0.85, side: THREE.BackSide, emissive: 0x3a0d22, emissiveIntensity: 0.6 }),
+    cavidade: new THREE.MeshStandardMaterial({ color: 0x8f5466, roughness: 0.9, side: THREE.BackSide, emissive: 0x2e1219, emissiveIntensity: 0.5 }),
     pele: fisico(0xb87855, { roughness: 0.55, clearcoat: 0.15, sheen: 0.7, sheenColor: new THREE.Color(0xffd6bf) }),
-    bochecha: new THREE.MeshBasicMaterial({ color: 0xff8a8a, transparent: true, opacity: 0.22, depthWrite: false }),
+    bochecha: new THREE.MeshBasicMaterial({ color: 0xff9a8a, map: texBolinha(), transparent: true, opacity: 0.22, depthWrite: false }),
     narina: new THREE.MeshStandardMaterial({ color: 0x8a4a33, roughness: 0.9 }),
     olhoB: fisico(0xffffff, { roughness: 0.2, clearcoat: 1 }),
     olhoI: fisico(0x3a2418, { roughness: 0.25, clearcoat: 1 }),
@@ -287,20 +287,24 @@ export function criar(container, opts = {}) {
   }
 
   /* -------- dentinhos (blocos brancos arredondados), arco de cima fixo, de baixo na mandíbula -------- */
-  const ARCO = [[0.18, -0.27], [0.5, -0.4], [0.79, -0.68], [1.0, -1.08], [1.13, -1.62], [1.2, -2.25]];
-  const TAM = [[0.34, 0.6, 0.2], [0.3, 0.52, 0.2], [0.3, 0.56, 0.26], [0.36, 0.44, 0.42], [0.42, 0.42, 0.5], [0.44, 0.4, 0.52]];
-  const PONTA_C = [-0.05, 0.0, -0.02, 0.12, 0.15, 0.16], PONTA_B = [0.02, 0.03, 0.06, 0.1, 0.12, 0.12];
+  // arco limpo e simétrico: 4 dentes de cada lado (2 da frente, canino, 1 molar), espaçados pelo comprimento do arco
+  function arco(lx, prof, z0, n, passo, ini) {
+    const am = []; let s = 0, ant = [0, z0];
+    for (let k = 1; k <= 400; k++) { const th = (k / 400) * 1.45, p = [lx * Math.sin(th), z0 - prof * (1 - Math.cos(th))]; s += Math.hypot(p[0] - ant[0], p[1] - ant[1]); am.push([s, p, th]); ant = p; }
+    return Array.from({ length: n }, (_, i) => { const alvo = ini + i * passo, e = am.find((a) => a[0] >= alvo) || am[am.length - 1]; return { x: e[1][0], z: e[1][1], ang: e[2] }; });
+  }
+  const TAM = [[0.36, 0.54, 0.22], [0.33, 0.5, 0.22], [0.33, 0.48, 0.28], [0.44, 0.4, 0.46]];
+  const PONTA_C = [-0.05, -0.02, 0.02, 0.14], PONTA_B = [-0.1, -0.08, -0.03, 0.1];
   const dentes = { cima: { '-1': [], 0: [], 1: [] }, baixo: { '-1': [], 0: [], 1: [] } };
   const matDente = { '-1': M.dente.clone(), 0: M.dente, 1: M.dente.clone() };
-  const geoDente = TAM.map(([w, h, d]) => caixaRedonda(w, h, d, Math.min(w, d) * 0.42));
-  [-1, 1].forEach((s) => ARCO.forEach(([x, z], i) => {
-    const prox = ARCO[Math.min(5, i + 1)], ant = ARCO[Math.max(0, i - 1)];
-    const ang = Math.atan2(prox[0] - ant[0], -(prox[1] - ant[1])); // gira o dente ao longo do arco
+  const geoDente = TAM.map(([w, h, d]) => caixaRedonda(w, h, d, Math.min(w, d) * 0.45));
+  const AC = arco(1.18, 2.1, -0.25, 4, 0.36, 0.172), AB = arco(1.05, 1.9, -0.44, 4, 0.34, 0.17);
+  [-1, 1].forEach((s) => [0, 1, 2, 3].forEach((i) => {
     const lado = i < 2 ? 0 : s;
-    const c = new THREE.Mesh(geoDente[i], matDente[String(lado)]); c.position.set(x * s, PONTA_C[i] + TAM[i][1] / 2, z); c.rotation.y = s * (Math.PI / 2 - ang) * 0.9; raiz.add(c);
+    const c = new THREE.Mesh(geoDente[i], matDente[String(lado)]); c.position.set(AC[i].x * s, PONTA_C[i] + TAM[i][1] / 2, AC[i].z); c.rotation.y = s * AC[i].ang; raiz.add(c);
     c.userData.zona = 'dentes'; dentes.cima[lado].push(c);
-    const b = new THREE.Mesh(geoDente[i], matDente[String(lado)]); b.scale.set(0.9, 0.92, 0.95);
-    noMand(b, x * s * 0.9, PONTA_B[i] - (TAM[i][1] * 0.92) / 2 - (i < 2 ? 0.02 : 0), z - (i < 3 ? 0.17 : 0.05)); b.rotation.y = c.rotation.y; dentes.baixo[lado].push(b);
+    const b = new THREE.Mesh(geoDente[i], matDente[String(lado)]); b.scale.set(0.92, 0.9, 0.92);
+    noMand(b, AB[i].x * s, PONTA_B[i] - (TAM[i][1] * 0.9) / 2, AB[i].z); b.rotation.y = s * AB[i].ang; dentes.baixo[lado].push(b);
   }));
 
   /* -------- língua (loft) e véu (loft) -------- */
@@ -321,6 +325,11 @@ export function criar(container, opts = {}) {
   const matAr = new THREE.PointsMaterial({ size: 0.26, map: texBolinha(), vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true });
   const pontosAr = new THREE.Points(geoAr, matAr); pontosAr.frustumCulled = false; raiz.add(pontosAr);
   const part = Array.from({ length: NP }, (_, i) => ({ t: Math.random(), cam: i % 4, v: 0.75 + Math.random() * 0.5, j: (Math.random() - 0.5) * 0.18 }));
+
+  /* -------- ondinhas de ar fora da boca (vista de frente, no lugar das bolinhas) -------- */
+  const matOnd = new THREE.MeshBasicMaterial({ color: 0xbff0ff, transparent: true, opacity: 0, depthWrite: false, toneMapped: false });
+  const ondAr = [-1, 1].flatMap((s) => [0, 1, 2].map((i) => { const m = new THREE.Mesh(new THREE.TorusGeometry(0.4, 0.035, 8, 32, Math.PI / 1.8), matOnd.clone()); m.geometry.rotateZ(-Math.PI / 3.6); if (s < 0) m.geometry.rotateY(Math.PI); m.userData.s = s; m.userData.i = i; raiz.add(m); return m; }));
+  const ondNariz = [-1, 1].flatMap((s) => [0, 1].map((i) => { const m = new THREE.Mesh(new THREE.TorusGeometry(0.22, 0.025, 8, 40), matOnd.clone()); m.userData.s = s; m.userData.i = i; raiz.add(m); return m; }));
 
   /* -------- alvos invisíveis para tocar (exercícios) + marcador -------- */
   const ALVOS = { labios: [0, -0.05, 0.3, 0.55], dentes: [0, 0.2, -0.32, 0.34], alveolo: [0, 0.55, -0.85, 0.36], palato: [0, 1.25, -2.2, 0.62],
@@ -496,7 +505,7 @@ export function criar(container, opts = {}) {
     const alvo = CAMADAS[modoAtual], k = Math.min(1, dt * 3.2);
     for (const c in vis) vis[c] += (alvo[c] - vis[c]) * k;
     const op = (mat, v) => { mat.opacity = v; mat.transparent = v < 0.999; mat.depthWrite = v > 0.6; };
-    grupos.rosto.visible = vis.rosto > 0.02; op(M.pele, vis.rosto); op(M.narina, vis.rosto); M.bochecha.opacity = 0.22 * vis.rosto;
+    grupos.rosto.visible = vis.rosto > 0.02; op(M.pele, vis.rosto); op(M.narina, vis.rosto); M.bochecha.opacity = 0.3 * vis.rosto;
     grupos.casca.visible = cascaMand.visible = vis.casca > 0.02; casca.uniforms.opac.value = vis.casca * 0.9; cabelo.uniforms.opac.value = vis.casca * 0.55;
     grupos.cavidade.visible = vis.cavidade > 0.02; op(M.cavidade, vis.cavidade);
     grupos.tubos.visible = vis.tubos > 0.02; tuboNariz.uniforms.opac.value = vis.tubos * 0.8; tuboGarg.uniforms.opac.value = vis.tubos * 0.7;
@@ -504,7 +513,7 @@ export function criar(container, opts = {}) {
     { const lat = modoAtual === 'dentro' && camDentro() === CAMS.dentro ? 1 : 0; vis.corte = (vis.corte || 0) + (lat - (vis.corte || 0)) * Math.min(1, dt * 3); corte.constant = 9; }
     { const v = Math.max(vis.rosto, vis.cavidade); M.ceu.opacity = v; M.ceu.transparent = v < 0.999; M.ceu.depthWrite = v > 0.9; M.ceu.visible = v > 0.05; }
     tubosCeu.forEach((t) => (t.visible = !(modoAtual === 'dentro' && camDentro() !== CAMS.dentro)));
-    pontosAr.visible = modoAtual !== 'dentro' || camVoo !== null && false;
+    pontosAr.visible = modoAtual === 'lado' || modoAtual === 'corpo';
     olhos.visible = vis.casca > 0.3 || modoAtual === 'frente';
     olhos.children.forEach((o) => { o.visible = tmp.copy(cam.position).sub(ctl.target).normalize().x * o.userData.s > -0.5; });
     // dentes do lado de perto da câmera somem quando a câmera está de lado (para ver a língua)
@@ -588,6 +597,12 @@ export function criar(container, opts = {}) {
     ondas.forEach(({ m, i }) => { const ph = (tempo * (lento ? 0.4 : 1.1) + i / 3) % 1; m.scale.setScalar(0.65 + ph * 1.1); m.material.opacity = voz * Math.min(1, (1 - ph) * 1.6); m.visible = voz > 0.02; });
     pulmoes.forEach((p, i) => { p.scale.set(1.25, 2.1, 1.1).multiplyScalar(1 + 0.05 * Math.sin(tempo * 1.6)); });
     atualizaAr(o, ptsL, dt);
+    { // ondinhas de frente
+      const f = P.F[idPara], ar = o._k > 0.6 ? f.ar : 'nenhum', fr = vis.rosto, sl = lento ? 0.35 : 1;
+      const boca = ['oral', 'oral+nasal', 'lateral'].includes(ar) && !(f.modo === 'plosiva' && !(o._solta > 0.05)), nariz = ar === 'nasal' || ar === 'oral+nasal';
+      ondAr.forEach((m) => { const ph = (tempo * 0.7 * sl * (f.modo === 'fricativa' ? 1.8 : 1) + m.userData.i / 3) % 1; m.position.set(m.userData.s * (lab.W + 0.15 + ph * 0.9), lab.yC, lab.z); m.scale.setScalar(0.8 + ph * 0.6); m.material.opacity = boca ? fr * Math.sin(ph * Math.PI) * 0.9 : 0; m.visible = m.material.opacity > 0.01; });
+      ondNariz.forEach((m) => { const ph = (tempo * 0.8 * sl + m.userData.i / 2) % 1; m.position.set(0.2 * m.userData.s + m.userData.s * ph * 0.35, 1.1 - ph * 0.3, 0.95 + ph * 0.4); m.rotation.x = -0.9; m.scale.setScalar(0.7 + ph * 0.6); m.material.opacity = nariz ? fr * (1 - ph) * 0.9 : 0; m.visible = m.material.opacity > 0.01; });
+    }
     // marcador do exercício
     const mt = tempo - marcaT; M.alvo.opacity = mt < 2.2 ? (1 - mt / 2.2) * (0.55 + 0.25 * Math.sin(mt * 12)) : 0;
     aplicaCamadas(dt); voaCamera(); ctl.update(dt);

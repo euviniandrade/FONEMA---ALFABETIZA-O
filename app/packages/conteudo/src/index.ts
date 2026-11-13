@@ -1,0 +1,12 @@
+export * from './tipos.ts';
+export * from './sons.ts';
+export * from './palavras.ts';
+export * from './habilidades.ts';
+export * from './regioes.ts';
+export * from './conquistas.ts';
+export * from './lojinha.ts';
+export * from './config.ts';
+export * from './falas-gerais.ts';
+export { FASES_R0 } from './fases/r0.ts';
+export { FASES_R1 } from './fases/r1.ts';
+export { FASES_R2A } from './fases/r2a.ts';

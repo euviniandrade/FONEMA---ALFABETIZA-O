@@ -108,11 +108,11 @@
     lin: [[-0.95, 0.16], [-1.45, 0.5], [-2.2, 0.6], [-3.2, 0.42], [-4.35, -0.35], [-4.55, -1.6]],
     t: { labios: 'entreabertos', lingua: 'a ponta bate uma vez, rapidinho', contato: 'toque rápido da ponta no alvéolo' }, boca: ['S', false], zona: 'alveolo',
     dica: 'O "r" fraquinho de arara: a ponta da língua dá uma batidinha atrás dos dentes de cima.' });
-  def('s', { ipa: 's', letra: 'S', ex: 'sapo', fala: 'ssss', jaw: 1.5, tj: 0, lab: LAB(0.18, 1.22), voz: false, modo: 'fricativa',
+  def('s', { ipa: 's', letra: 'S', ex: 'sapo', fala: 'ssss', jaw: 1.5, tj: 0, lab: LAB(0.28, 1.22), voz: false, modo: 'fricativa',
     lin: [[-0.72, 0.27], [-1.2, 0.64], [-2.0, 0.66], [-3.1, 0.48], [-4.3, -0.32], [-4.5, -1.6]],
     t: { labios: 'sorriso, dentes juntinhos', lingua: 'ponta perto do alvéolo, sem encostar', contato: 'quase: fica um caminho fininho para o ar' }, boca: ['S', true], zona: 'alveolo',
     dica: 'Dentes juntinhos, a ponta da língua pertinho, e o ar sai como uma cobrinha: sss.' });
-  def('z', { ipa: 'z', letra: 'Z', ex: 'zebra', fala: 'zzzz', jaw: 1.5, tj: 0, lab: LAB(0.18, 1.22), modo: 'fricativa',
+  def('z', { ipa: 'z', letra: 'Z', ex: 'zebra', fala: 'zzzz', jaw: 1.5, tj: 0, lab: LAB(0.28, 1.22), modo: 'fricativa',
     lin: [[-0.72, 0.27], [-1.2, 0.64], [-2.0, 0.66], [-3.1, 0.48], [-4.3, -0.32], [-4.5, -1.6]],
     t: { labios: 'sorriso, dentes juntinhos', lingua: 'ponta perto do alvéolo, sem encostar', contato: 'quase: caminho fininho para o ar' }, boca: ['S', true], zona: 'alveolo',
     dica: 'Dentes juntinhos, como uma abelhinha, e a garganta vibra: zzz.' });
