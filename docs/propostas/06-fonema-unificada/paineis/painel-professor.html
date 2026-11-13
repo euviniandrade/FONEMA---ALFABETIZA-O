@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FONEMA Professor · Turma 2º B (dados fictícios)</title>
+<link rel="stylesheet" href="base.css">
+<script src="comum.js"></script>
+<script src="vendor/echarts.min.js"></script>
+<script src="vendor/echarts-gl.min.js"></script>
+<style>
+.l1{grid-template-columns:1.55fr 1fr}
+.quem{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.pessoa{border:1px solid var(--linha);border-radius:12px;padding:12px 13px;background:var(--cartao-2);display:flex;flex-direction:column;gap:8px}
+.pessoa .nm{display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px}
+.ini{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;background:var(--info-fundo);color:var(--lousa)}
+.pessoa p{font-size:13.5px;color:var(--tinta-2);line-height:1.35;flex:1}
+.pessoa .dose{font-size:12px;color:var(--tinta-3)}
+.pessoa button{font-family:inherit;font-weight:700;font-size:13px;padding:7px 10px;border-radius:8px;border:1px solid var(--acao);background:var(--cartao);color:var(--acao)}
+.pessoa button.prim{background:var(--acao);color:var(--acao-tinta)}
+#termo{height:206px;margin-top:6px}
+.l2{grid-template-columns:1.25fr 1fr;margin-top:16px}
+#calor{height:600px}
+#terreno{height:520px;margin-top:10px}
+.leg5{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--tinta-2);margin-top:8px;align-items:center}
+.leg5 span{display:inline-flex;align-items:center;gap:6px}
+.leg5 i{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid var(--linha)}
+.nota3d{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--tinta-3);margin-top:10px}
+.anot{position:absolute;font-size:12px;font-weight:700;background:var(--cartao);border:1px solid var(--linha-forte);color:var(--tinta);padding:4px 8px;border-radius:7px;box-shadow:var(--sombra);white-space:nowrap}
+.anot:after{content:"";position:absolute;left:14px;bottom:-6px;width:10px;height:10px;background:var(--cartao);border-right:1px solid var(--linha-forte);border-bottom:1px solid var(--linha-forte);transform:rotate(45deg)}
+.l3{grid-template-columns:1.45fr 1fr;margin-top:16px}
+.grupos{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.grupo{border:1px solid var(--linha);border-radius:12px;padding:12px 13px;border-top:5px solid var(--gc);background:var(--cartao-2)}
+.grupo h3{font-size:15px;display:flex;align-items:center;gap:7px}
+.grupo h3 .tag{font-size:11.5px;font-weight:700;color:var(--cartao);background:var(--gc);border-radius:5px;padding:1px 6px}
+.grupo .por{font-size:12.5px;color:var(--tinta-3);margin:6px 0 8px}
+.grupo .mem{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:9px}
+.grupo .mem span{font-size:12px;padding:2px 7px;border-radius:999px;background:var(--cartao);border:1px solid var(--linha);color:var(--tinta-2)}
+.grupo .ativ{font-size:13px;color:var(--tinta);border-top:1px dashed var(--linha);padding-top:8px}
+.plano{margin-top:10px;display:grid;gap:0}
+.passo{display:grid;grid-template-columns:62px 18px 1fr;gap:10px;align-items:start;padding:7px 0}
+.passo .h{font-size:13px;color:var(--tinta-3);font-weight:700;padding-top:1px}
+.passo .bol{width:12px;height:12px;border-radius:50%;margin-top:4px;border:2px solid var(--cartao);box-shadow:0 0 0 2px var(--gc,var(--lousa-2))}
+.passo b{font-size:14px}.passo p{font-size:13px;color:var(--tinta-2)}
+html[data-tema="escuro"] .grupo h3 .tag{color:#0C131B}
+</style>
+</head>
+<body>
+<header class="topo">
+  <div class="marca"><i>F</i>FONEMA Professor</div>
+  <nav class="nav"><a class="ativo">Minha turma</a><a>Alunos</a><a>Grupos</a><a>Plano de aula</a><a>Famílias</a><a>Formação</a></nav>
+  <div class="usuario"><div><b>Prof.ª Helena Duarte (fictícia)</b>2º B · EM Jardim das Flores</div><div class="avatar">HD</div></div>
+</header>
+<main class="pagina">
+  <div class="cab">
+    <div><h1>Turma 2º B · bom dia, Helena</h1><div class="sub">24 alunos · semana 39 do ano letivo · dados até hoje, 07h12 · escala por critério (0–10)</div></div>
+    <div class="filtros"><span class="chip">Fase <b>sílabas complexas → frases</b></span><button class="botao">Modo sala (sem nomes)</button><button class="botao prim">Abrir plano de amanhã</button></div>
+  </div>
+  <section class="grade l1">
+    <div class="cartao"><h2>Quem precisa de mim hoje <small>4 de 24 · cada sinal exige 2+ semanas e dose adequada</small></h2><div class="quem" id="quem"></div></div>
+    <div class="cartao"><h2>Turma no termômetro <small>quantos alunos em cada nível · não é ranking</small></h2><div id="termo"></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--tinta-2);margin-top:2px"><span>Mediana <b class="num" style="color:var(--tinta)">nível 7</b> · faltam 3 até o 10</span><span><b class="num" style="color:var(--tinta)">3</b> já no nível 10</span></div></div>
+  </section>
+
+  <section class="grade l2">
+    <div class="cartao">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start"><div><h2>Mapa de calor: aluno × habilidade <small>fase atual · 14 habilidades</small></h2><div class="pergunta">Onde a turma está? Quem está travado em quê? Linhas agrupadas pelo grupo sugerido, nunca por nota.</div></div><div class="alterna"><span class="on">2D preciso</span><span>Tabela</span></div></div>
+      <div id="calor"></div>
+      <div class="leg5" id="leg5"></div>
+    </div>
+    <div class="cartao" style="box-shadow:var(--sombra-heroi)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start"><div><h2>Terreno da turma <small>visão panorâmica 3D</small></h2><div class="pergunta">Os mesmos dados do mapa ao lado: montanhas = domínio, vales = onde a turma trava.</div></div><span class="selo" style="background:var(--lousa-2)">EXPLORAÇÃO</span></div>
+      <div style="position:relative"><div id="terreno" class="palco"></div><div id="anots"></div></div>
+      <div class="nota3d"><span style="flex:1">Altura = estado da habilidade (0 não iniciado → 4 automatizado), suavizada entre vizinhos. Use o mapa 2D para valores exatos; o terreno mostra o “relevo” de uma vez. Arraste para girar.</span></div>
+    </div>
+  </section>
+
+  <section class="grade l3">
+    <div class="cartao"><h2>Grupos sugeridos para amanhã <small>pela próxima habilidade a ensinar · arraste para mudar</small></h2><div class="grupos" id="grupos"></div></div>
+    <div class="cartao"><h2>Plano de amanhã <small>quinta, 14/11 · rotação por estações · 100 min</small></h2><div class="plano" id="plano"></div></div>
+  </section>
+  <div class="rodape">
+    <div><span id="cad"></span><span>Só você e a coordenação da escola veem nomes. Famílias veem apenas o próprio filho; a secretaria, só agregados.</span></div>
+    <div><span>Sem ranking, pódio ou percentil. “Sinal de atenção” não é diagnóstico.</span></div>
+    <div><span>Células hachuradas: leitura com reconhecimento de voz incerto (fora do cálculo, aguardando sua escuta).</span></div>
+  </div>
+</main>
+<script>
+const F=FONEMA,c=F.css,cor=F.niveis();
+document.getElementById('cad').innerHTML=F.ic.cadeado;
+// paleta categórica dos grupos (validada: azul, laranja, verde-água, violeta; sempre com rótulo G1–G4)
+const GC=F.escuro?['#3987e5','#d95926','#199e70','#9085e9']:['#2a78d6','#eb6834','#1baf7a','#6250d6'];
+let s=7;const rnd=()=>(s=(s*16807)%2147483647)/2147483647;
+const hab=['CV regular','pseudopalavras','R/S/L no fim','nasal AM/AN','nasal com til','dígrafo CH','dígrafo LH','dígrafo NH','RR / SS','encontro PR/BR','encontro BL/CL','C / Ç','G / GU','frases curtas'];
+const dif=[2,3,4.5,4.8,5.2,5.4,6,6.2,6.4,6.9,7.2,7.4,7.8,8.3];
+const grupos=[
+ {id:'G1',nome:'Encontros PR/BR',alvo:9,por:'Dominam dígrafos; travam em PR/BR/TR',ativ:'Com a professora: “trem de sílabas” PR-BR + espelho do som (15 min)',al:['Davi R.','Bia S.','Caio L.','Nina F.','Théo A.','Ana C.']},
+ {id:'G2',nome:'Dígrafos LH e NH',alvo:6,por:'Leem CH; confundem LH/NH/L',ativ:'Tablets FONEMA: missão “Ilha do LH” + bingo de pares mínimos',al:['Lara M.','Enzo P.','Maya T.','Gael V.','Iris N.','Joana B.']},
+ {id:'G3',nome:'Nasais',alvo:4,por:'CVC ok; nasal com til e AM/AN em consolidação',ativ:'Leitura em dupla com história decodificável nível 5 (“O pão do João”)',al:['Pedro H.','Rui O.','Sara D.','Luan K.','Yasmin E.','Otto G.']},
+ {id:'G4',nome:'Frases e fluência',alvo:13,por:'Decodificam bem; foco em frases e compreensão',ativ:'Leitura de pequenos textos + pergunta de compreensão literal',al:['Lia W.','Tom Q.','Malu J.','Noah Z.','Vic Y.','Zoe U.']}];
+const nivelAl={'Davi R.':6,'Bia S.':7,'Caio L.':7,'Nina F.':6,'Théo A.':7,'Ana C.':8,'Lara M.':6,'Enzo P.':5,'Maya T.':6,'Gael V.':5,'Iris N.':6,'Joana B.':6,'Pedro H.':4,'Rui O.':4,'Sara D.':5,'Luan K.':3,'Yasmin E.':4,'Otto G.':5,'Lia W.':9,'Tom Q.':8,'Malu J.':10,'Noah Z.':10,'Vic Y.':9,'Zoe U.':10};
+const alunos=[];grupos.forEach((g,gi)=>g.al.forEach(n=>alunos.push({n,g:gi,nv:nivelAl[n]})));
+// estado 0..4 a partir do nível e da dificuldade da habilidade
+const M=[];const travado=new Set(),incerto=new Set();
+alunos.forEach((a,y)=>hab.forEach((h,x)=>{let d=a.nv+1.2-dif[x]+(rnd()-.5)*1.1;let st=d<-.6?0:d<.4?1:d<1.3?2:d<2.6?3:4;
+  if(a.g===0&&x===9)st=Math.min(st,1); if(a.g===1&&(x===6||x===7))st=Math.min(st,2);
+  M.push([x,y,st]);}));
+[['Davi R.',9],['Nina F.',9],['Enzo P.',7]].forEach(([n,x])=>travado.add(x+','+alunos.findIndex(a=>a.n===n)));
+[['Luan K.',2],['Malu J.',13],['Gael V.',6]].forEach(([n,x])=>incerto.add(x+','+alunos.findIndex(a=>a.n===n)));
+const EST=['não iniciado','adquirindo','consolidando','dominado','automatizado'];
+const CE=[c('--n1'),c('--n3'),c('--n6'),c('--n8'),c('--n10')];
+const txtSobre=st=>F.escuro?(st>=2?'#0C131B':'#E8EEF4'):(st>=2?'#FFFFFF':'#152232');
+
+// ===== quem precisa de mim hoje =====
+const quem=[
+ ['alerta','travado','Davi R.','Travado em <b>PR/BR</b> há 3 semanas, com dose boa (58 min/sem).','Mini-aula de 5 min com espelho do som','Fazer agora'],
+ ['aviso','pouca prática','Pedro H.','Só <b>12 min</b> de prática nesta semana; tablet de casa sem sincronizar.','Mensagem para a família pelo canal da escola','Enviar'],
+ ['info','escuta','Gael V.','3 leituras com voz incerta aguardam sua escuta (LH/NH).','Ouvir e confirmar (2 min)','Ouvir'],
+ ['ok','avançou','Ana C.','Passou para o <b>nível 8</b> ontem: provinha + revisão após 5 dias.','Parabenizar e entregar livrinho nível 8','Registrar']];
+document.getElementById('quem').innerHTML=quem.map(([t,r,n,p,a,b],i)=>`<div class="pessoa"><div class="nm"><span class="ini">${n.split(' ').map(x=>x[0]).join('')}</span>${n}</div><div>${F.st(t,r)}</div><p>${p}</p><div class="dose">Próxima ação: ${a}</div><button class="${i===0?'prim':''}">${b}</button></div>`).join('');
+
+// ===== termômetro da turma (contagem por nível) =====
+const cont=Array(11).fill(0);alunos.forEach(a=>cont[a.nv]++);
+const gt=F.registrar(echarts.init(document.getElementById('termo'),null,{renderer:'svg'}));
+gt.setOption({...F.base(),grid:{left:8,right:8,top:24,bottom:26},
+ tooltip:F.tooltip({trigger:'item',formatter:p=>`Nível ${p.name}: <b>${p.value}</b> aluno(s)`}),
+ xAxis:{type:'category',data:cont.map((_,i)=>String(i)),axisTick:{show:false},axisLine:{lineStyle:{color:c('--linha-forte')}},axisLabel:{color:c('--tinta-2'),fontSize:12.5,fontWeight:'bold'}},
+ yAxis:{show:false,max:6},
+ series:[{type:'bar',data:cont.map((v,i)=>({value:v,itemStyle:{color:cor[i],borderRadius:[5,5,0,0]}})),barWidth:'62%',label:{show:true,position:'top',color:c('--tinta'),fontWeight:'bold',fontSize:13,formatter:p=>p.value||''},
+  markArea:{silent:true,itemStyle:{color:F.escuro?'rgba(178,226,232,.06)':'rgba(14,70,86,.05)'},label:{show:true,position:'insideTop',color:c('--tinta-3'),fontSize:11.5,formatter:'meta'},data:[[{xAxis:'10'},{xAxis:'10'}]]}}]});
+
+// ===== mapa de calor 2D =====
+const gc=F.registrar(echarts.init(document.getElementById('calor'),null,{renderer:'canvas'}));
+const nomes=alunos.map(a=>a.n);
+const sepY=[5.5,11.5,17.5];
+gc.setOption({...F.base(),
+ grid:{left:112,right:12,top:96,bottom:8},
+ tooltip:F.tooltip({formatter:p=>`<b>${nomes[p.value[1]]}</b> · ${hab[p.value[0]]}<br>${EST[p.value[2]]}${travado.has(p.value[0]+','+p.value[1])?'<br>⚑ travado há 3+ semanas':''}${incerto.has(p.value[0]+','+p.value[1])?'<br>voz incerta: fora do cálculo':''}`}),
+ xAxis:{type:'category',data:hab,position:'top',axisTick:{show:false},axisLine:{show:false},axisLabel:{rotate:40,color:c('--tinta-2'),fontSize:12,interval:0,margin:8},splitArea:{show:false}},
+ yAxis:{type:'category',data:nomes,inverse:true,axisTick:{show:false},axisLine:{show:false},axisLabel:{color:c('--tinta'),fontSize:12.5,margin:30}},
+ visualMap:{show:false,type:'piecewise',dimension:2,pieces:EST.map((e,i)=>({value:i,color:CE[i]}))},
+ series:[{type:'heatmap',data:M.map(v=>{const k=v[0]+','+v[1];const inc=incerto.has(k);return {value:v,itemStyle:inc?{color:{image:hatch(),repeat:'repeat'}}:{},label:{show:travado.has(k)||inc,formatter:travado.has(k)?'⚑':'?',color:inc?c('--tinta'):txtSobre(v[2]),fontSize:13,fontWeight:'bold'}}}),
+   itemStyle:{borderColor:c('--cartao'),borderWidth:2,borderRadius:3},emphasis:{itemStyle:{borderColor:c('--tinta'),borderWidth:2}}}],
+ graphic:grupos.map((g,i)=>({type:'group',children:[
+   {type:'rect',shape:{x:0,y:0,width:6,height:0},style:{fill:GC[i]}}]}))
+});
+function hatch(){const cv=document.createElement('canvas');cv.width=cv.height=8;const x=cv.getContext('2d');x.fillStyle=c('--cartao-2');x.fillRect(0,0,8,8);x.strokeStyle=c('--tinta-3');x.lineWidth=1.2;x.beginPath();x.moveTo(0,8);x.lineTo(8,0);x.moveTo(-2,2);x.lineTo(2,-2);x.moveTo(6,10);x.lineTo(10,6);x.stroke();return cv;}
+// faixas coloridas dos grupos à esquerda dos nomes (calculadas após o layout)
+gc.on('finished',function once(){gc.off('finished',once);const gr=[];grupos.forEach((g,i)=>{const y0=gc.convertToPixel({yAxisIndex:0},g.al[0]),y1=gc.convertToPixel({yAxisIndex:0},g.al[g.al.length-1]);const h=(y1-y0)/(g.al.length-1||1);
+  gr.push({type:'rect',shape:{x:4,y:y0-h/2+2,width:5,height:y1-y0+h-4,r:3},style:{fill:GC[i]}},{type:'text',x:14,y:y0-h/2+3,style:{text:g.id,fill:c('--tinta-3'),font:'bold 11px Atkinson'}});});
+  gc.setOption({graphic:gr},{replaceMerge:['graphic']});});
+document.getElementById('leg5').innerHTML=EST.map((e,i)=>`<span><i style="background:${CE[i]}"></i>${i} ${e}</span>`).join('')+`<span><b>⚑</b> travado</span><span><i style="background:repeating-linear-gradient(135deg,${c('--tinta-3')} 0 1.5px,transparent 1.5px 5px)"></i>voz incerta</span>`;
+
+// ===== terreno 3D =====
+const gtr=F.registrar(echarts.init(document.getElementById('terreno')));
+const X=hab.length,Y=alunos.length,Z=(x,y)=>M[y*X+x][2];
+// grade suavizada (passo 0,5) para relevo contínuo
+const sd=[];for(let yy=0;yy<=Y-1;yy+=.5)for(let xx=0;xx<=X-1;xx+=.5){let sum=0,w=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const xi=Math.round(xx)+dx,yi=Math.round(yy)+dy;if(xi<0||yi<0||xi>=X||yi>=Y)continue;const ww=Math.exp(-((xi-xx)**2+(yi-yy)**2)/1.1);sum+=Z(xi,yi)*ww;w+=ww;}sd.push([xx,yy,+(sum/w).toFixed(3)]);}
+const ax={axisLine:{lineStyle:{color:c('--linha-forte')}},axisTick:{show:false},splitLine:{show:false},axisLabel:{show:false},nameTextStyle:{color:c('--tinta-3'),fontSize:12,fontFamily:F.fonte}};
+gtr.setOption({...F.base(),
+ tooltip:F.tooltip({formatter:p=>`${hab[Math.round(p.value[0])]} · ${grupos[alunos[Math.round(p.value[1])].g].id}<br>relevo ${p.value[2].toFixed(1)} de 4`}),
+ visualMap:{show:false,min:0,max:4,dimension:2,inRange:{color:CE}},
+ xAxis3D:{...ax,type:'value',name:'',min:0,max:X-1,interval:1,axisLabel:{show:true,interval:0,formatter:v=>({0:'CV',3:'nasais',6:'LH',9:'PR/BR',13:'frases'})[v]||'',textStyle:{color:c('--tinta-2'),fontSize:12,fontFamily:F.fonte}}},
+ yAxis3D:{...ax,type:'value',name:'',min:0,max:Y-1,interval:1,axisLabel:{show:true,interval:0,formatter:v=>({2:'G1',8:'G2',14:'G3',20:'G4'})[v]||'',textStyle:{color:c('--tinta-2'),fontSize:12,fontWeight:'bold',fontFamily:F.fonte}}},
+ zAxis3D:{...ax,type:'value',name:'',min:0,max:4.2},
+ grid3D:{boxWidth:190,boxDepth:150,boxHeight:58,top:-4,left:20,environment:'none',axisPointer:{show:false},
+   viewControl:{projection:'perspective',alpha:30,beta:38,distance:310,animation:false},
+   light:{main:{intensity:1.35,shadow:true,alpha:55,beta:60},ambient:{intensity:F.escuro?.38:.5}},
+   postEffect:{enable:true,FXAA:{enable:true}},temporalSuperSampling:{enable:true}},
+ series:[{type:'surface',data:sd,shading:'lambert',wireframe:{show:true,lineStyle:{color:F.escuro?'rgba(255,255,255,.16)':'rgba(255,255,255,.55)',width:1}},
+   itemStyle:{opacity:1}}]});
+// anotações (posição calculada a partir do ponto 3D aproximado → definida manualmente após inspeção)
+document.getElementById('anots').innerHTML=`<div class="anot" style="left:64%;top:57%">Vale: G3 ainda nas nasais</div><div class="anot" style="left:56%;top:22%">Planalto: G4 já lê frases</div>`;
+addEventListener('resize',()=>[gt,gc,gtr].forEach(x=>x.resize()));
+
+// ===== grupos =====
+document.getElementById('grupos').innerHTML=grupos.map((g,i)=>`<div class="grupo" style="--gc:${GC[i]}"><h3><span class="tag">${g.id}</span>${g.nome}</h3><div class="por">Por quê: ${g.por}</div><div class="mem">${g.al.map(a=>`<span>${a}</span>`).join('')}</div><div class="ativ">${g.ativ}</div></div>`).join('');
+// ===== plano =====
+const pl=[['08:00','','Abertura coletiva (10 min)','Som do LH com a Sofia no projetor; aquecimento de rimas.'],
+ ['08:10',GC[0],'Estação 1 · com a professora · G1','Encontros PR/BR: trem de sílabas + espelho do som.'],
+ ['08:10',GC[1],'Estação 2 · tablets FONEMA · G2','Missão “Ilha do LH”; o app ajusta a dificuldade sozinho.'],
+ ['08:10',GC[2],'Estação 3 · leitura em dupla · G3','“O pão do João” (decodificável nível 5).'],
+ ['08:10',GC[3],'Estação 4 · autonomia · G4','Pequeno texto + 1 pergunta de compreensão.'],
+ ['09:25','','Fechamento (15 min)','Ditado de 3 palavras; cada um lê a sua frase para o colega.']];
+document.getElementById('plano').innerHTML=pl.map(([h,g,t,p])=>`<div class="passo" style="${g?'--gc:'+g:''}"><span class="h num">${h}</span><span class="bol" style="background:${g||c('--lousa-2')}"></span><div><b>${t}</b><p>${p}</p></div></div>`).join('')+`<div style="font-size:12.5px;color:var(--tinta-3);margin-top:6px">Rodízio a cada 18 min · materiais: cartões PR/BR, 6 tablets carregados, 6 livrinhos nível 5.</div>`;
+</script>
+</body>
+</html>

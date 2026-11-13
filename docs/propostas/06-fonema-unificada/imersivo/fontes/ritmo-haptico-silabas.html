@@ -1,0 +1,113 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="common.css">
+<style>
+html,body{width:1280px;height:800px;overflow:hidden}
+body{padding:34px 34px 0}
+.tag{display:inline-block;font:600 13px Fredoka;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--ipe);padding:4px 11px;border-radius:99px;margin-bottom:6px}
+h1{font:700 31px/1.05 Fredoka}
+.sub{font:400 15px/1.35 Atkinson;color:var(--cinza);margin-top:5px}
+.wrap{display:flex;gap:22px;margin-top:14px}
+.graf{width:772px;background:var(--papel);border-radius:18px;box-shadow:0 2px 0 var(--linha),0 10px 24px rgba(59,42,32,.07);padding:14px 16px 10px}
+.graf h2,.lado h2{font:600 16px Fredoka;color:var(--tinta);margin-bottom:2px}
+.leg{display:flex;gap:16px;font:400 12.5px Atkinson;color:var(--cinza);margin:2px 0 4px}
+.leg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-2px}
+.lado{flex:1;display:flex;flex-direction:column;gap:12px}
+.card{background:#fff;border:1.5px solid var(--linha);border-radius:16px;padding:11px 14px}
+table{width:100%;border-collapse:collapse;font:400 12.3px/1.3 Atkinson}
+td{padding:4px 4px;border-top:1px solid #F0E4D4;vertical-align:top}
+td:first-child{font-weight:700;white-space:nowrap;width:112px}
+.ok{color:var(--folha);font-weight:700}.parc{color:#B07A12;font-weight:700}.no{color:var(--cinza);font-weight:700}
+.modos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modo{background:#fff;border:1.5px solid var(--linha);border-radius:14px;padding:9px 12px;font:400 12.5px/1.34 Atkinson}
+.modo b{font:600 14px Fredoka;display:block;margin-bottom:2px}
+.rod{display:flex;gap:10px;margin-top:12px}
+.r{flex:1;background:#fff;border:1.5px solid var(--linha);border-radius:12px;padding:8px 12px;font:400 12.5px/1.3 Atkinson}
+.r b{color:var(--terracota)}
+.r.calmo b{color:var(--folha)}
+.ch{font:700 22px Andika;padding:4px 10px;border-radius:10px;background:#FCE3A6;position:relative}
+.ch.on{background:#8FC7D4;box-shadow:0 0 0 5px rgba(31,110,130,.25),0 0 0 11px rgba(31,110,130,.10)}
+</style></head><body class="papel-tex">
+<span class="tag">5D · háptico</span><h1>Ritmo háptico: cada sílaba é um pulso leve</h1>
+<div class="sub">O aparelho “bate” junto com a sílaba, no mesmo instante da voz e do destaque visual: som, letra e toque marcam a mesma unidade (estímulos congruentes).</div>
+<div class="wrap">
+ <div class="graf">
+  <h2>Linha do tempo: voz da Sofia × destaque × vibração</h2>
+  <div class="leg"><span><i style="background:#C9B8A6"></i>envelope da voz</span><span><i style="background:#F2B33D"></i>sílaba destacada</span><span><i style="background:#A9472A"></i>pulso (40 ms)</span><span>altura do pulso = intensidade</span></div>
+  <svg id="g" width="740" height="470" viewBox="0 0 740 470"></svg>
+ </div>
+ <div class="lado">
+  <div class="card"><h2>Onde funciona</h2>
+   <table>
+    <tr><td>iOS (app)</td><td><span class="ok">sim</span> · Core Haptics, toque “transient”, intensidade 0,35, nitidez 0,3</td></tr>
+    <tr><td>Android (app)</td><td><span class="ok">sim</span> · VibrationEffect 40 ms, amplitude ≈ 90/255; sem controle de amplitude: 20 ms</td></tr>
+    <tr><td>Web · Android</td><td><span class="parc">parcial</span> · navigator.vibrate(40), sem ajuste de força</td></tr>
+    <tr><td>Web · iPhone/iPad</td><td><span class="no">não</span> · sem API: usa só o pulso visual</td></tr>
+    <tr><td>Tablet / PC</td><td><span class="no">não</span> · pulso visual + “toc” suave opcional</td></tr>
+   </table></div>
+  <div class="modos">
+   <div class="modo"><b style="color:var(--mar)">1 · Sofia lê</b>A Sofia diz BOR-BO-LE-TA e o aparelho marca cada sílaba. A criança <b style="display:inline;font:inherit;font-weight:700">sente</b> quantas partes a palavra tem.</div>
+   <div class="modo"><b style="color:var(--ipe)">2 · Bater a sílaba</b>A criança toca a tela 1 vez por sílaba (as “palmas”); cada toque certo devolve 1 pulso. Toque a mais: nada vibra.</div>
+  </div>
+  <div class="card"><h2>Sem vibração? Pulso visual</h2>
+   <div style="display:flex;gap:10px;align-items:center;margin:8px 0 6px">
+    <span class="ch">BOR</span><span class="ch">BO</span><span class="ch on">LE</span><span class="ch">TA</span>
+    <span style="font:400 12.3px/1.3 Atkinson;color:#6E5D52;margin-left:6px">um anel cresce 1 vez<br>em 300 ms e some</span></div>
+   <div style="font:400 12.3px/1.3 Atkinson;color:#3B2A20">Mesmo tempo do pulso. Também é o sinal para crianças surdas (todo evento sonoro tem par visual).</div></div>
+ </div>
+</div>
+<div class="rod">
+ <div class="r"><b>Limites:</b> pulso de 30–50 ms, intensidade ≤ 40%, intervalo ≥ 250 ms, no máximo 6 pulsos por palavra; nunca vibração contínua.</div>
+ <div class="r"><b>Nunca para erro:</b> vibração só confirma a sílaba. Errar não vibra, não “zumbe” e não tem som negativo.</div>
+ <div class="r calmo"><b>Modo calmo:</b> vibração desligada; fica só o pulso visual (círculo que cresce 1 vez, sem piscar).</div>
+ <div class="r"><b>Responsável decide:</b> chave própria “vibração” no perfil sensorial; padrão ligado só no app.</div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg';const g=document.getElementById('g');
+const el=(n,a,p=g)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e;};
+const X0=196,X1=726,TMAX=2.2,px=t=>X0+t/TMAX*(X1-X0);
+// eixo
+for(let t=0;t<=TMAX+1e-6;t+=.2){const x=px(t);el('line',{x1:x,x2:x,y1:14,y2:440,stroke:t%1<.01||t%1>.99?'#E2D2BE':'#F1E7DA','stroke-width':1});
+ if(Math.round(t*10)%4===0&&t<2.1)el('text',{x,y:458,'text-anchor':'middle',fill:'#6E5D52','font-family':'Atkinson','font-size':12}).textContent=(t*1000).toFixed(0)+' ms';}
+const pal=[
+ {w:'SOL',s:[['SOL',.15,.62]]},
+ {w:'PATO',s:[['PA',.15,.42],['TO',.6,.38]]},
+ {w:'BONECA',s:[['BO',.15,.36],['NE',.58,.34],['CA',1.0,.4]]},
+ {w:'BORBOLETA',s:[['BOR',.15,.44],['BO',.68,.32],['LE',1.08,.32],['TA',1.48,.42]]},
+];
+const cores=['#F2B33D','#8FC7D4','#F2B33D','#8FC7D4'];
+pal.forEach((p,i)=>{const y=28+i*104;
+ // rótulo
+ el('text',{x:0,y:y+30,fill:'#3B2A20','font-family':'Andika','font-weight':700,'font-size':22}).textContent=p.s.map(s=>s[0]).join('-');
+ el('text',{x:0,y:y+52,fill:'#6E5D52','font-family':'Atkinson','font-size':12.5}).textContent=p.s.length+(p.s.length>1?' sílabas · ':' sílaba · ')+p.s.length+(p.s.length>1?' pulsos':' pulso');
+ p.s.forEach(([sil,t0,d],k)=>{
+  // faixa de destaque
+  el('rect',{x:px(t0),y:y-2,width:px(t0+d)-px(t0),height:52,rx:9,fill:cores[k%4],opacity:.28});
+  el('text',{x:(px(t0)+px(t0+d))/2,y:y+15,'text-anchor':'middle',fill:'#3B2A20','font-family':'Andika','font-weight':700,'font-size':15}).textContent=sil;
+  // envelope de voz (determinístico)
+  let d1='';const n=40;for(let j=0;j<=n;j++){const u=j/n;const t=t0+u*d;const env=Math.sin(Math.PI*Math.pow(u,.7))*(.75+.25*Math.sin(u*31+k*2+i));d1+=(j?'L':'M')+px(t).toFixed(1)+','+(y+34-env*12).toFixed(1);}
+  for(let j=n;j>=0;j--){const u=j/n;const t=t0+u*d;const env=Math.sin(Math.PI*Math.pow(u,.7))*(.75+.25*Math.sin(u*31+k*2+i));d1+='L'+px(t).toFixed(1)+','+(y+34+env*12).toFixed(1);}
+  el('path',{d:d1+'Z',fill:'#C9B8A6'});
+  // pulso
+  const pw=px(t0+.04)-px(t0);
+  el('rect',{x:px(t0),y:y+80-28*0.35/0.4,width:Math.max(pw,4),height:28*0.35/0.4,rx:2,fill:'#A9472A'});
+  el('line',{x1:px(t0),x2:px(t0),y1:y-4,y2:y+82,stroke:'#A9472A','stroke-width':1.2,'stroke-dasharray':'3 3',opacity:.6});
+ });
+ el('line',{x1:X0,x2:X1,y1:y+82,y2:y+82,stroke:'#D9C6AE','stroke-width':1.5});
+ el('text',{x:X0-8,y:y+80,'text-anchor':'end',fill:'#A9472A','font-family':'Atkinson','font-size':11.5,'font-weight':700}).textContent='vibração';
+ if(p.nota)el('text',{x:X1,y:y+15,'text-anchor':'end',fill:'#6E5D52','font-family':'Atkinson','font-size':12.5,'font-style':'italic'}).textContent=p.nota;
+});
+// anotações na linha BORBOLETA
+const y=28+3*104;
+const ann=(x1,x2,yy,txt)=>{el('path',{d:`M${x1},${yy} L${x2},${yy}`,stroke:'#3B2A20','stroke-width':1.3,'marker-start':'url(#m)','marker-end':'url(#m)'});el('text',{x:(x1+x2)/2,y:yy-5,'text-anchor':'middle',fill:'#3B2A20','font-family':'Atkinson','font-size':12,'font-weight':700}).textContent=txt;};
+const defs=el('defs',{});const mk=el('marker',{id:'m',viewBox:'0 0 8 8',refX:4,refY:4,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);el('path',{d:'M0,1 L7,4 L0,7Z',fill:'#3B2A20'},mk);
+// zoom do pulso
+const zx=px(1.15),zy=28+14;
+el('rect',{x:zx,y:zy-6,width:150,height:60,rx:10,fill:'#fff',stroke:'#E8D9C4'});
+el('rect',{x:zx+18,y:zy+40-25,width:40,height:25,rx:2,fill:'#A9472A'});
+el('line',{x1:zx+12,x2:zx+140,y1:zy+40,y2:zy+40,stroke:'#D9C6AE'});
+el('text',{x:zx+75,y:zy-12,'text-anchor':'middle',fill:'#6E5D52','font-family':'Atkinson','font-size':11.5,'font-style':'italic'}).textContent='zoom de 1 pulso';
+el('text',{x:zx+38,y:zy+8,'text-anchor':'middle',fill:'#3B2A20','font-family':'Atkinson','font-size':11.5,'font-weight':700}).textContent='40 ms';
+el('text',{x:zx+66,y:zy+24,fill:'#3B2A20','font-family':'Atkinson','font-size':11.5}).textContent='35% de força';
+el('text',{x:zx+66,y:zy+38,fill:'#6E5D52','font-family':'Atkinson','font-size':11}).textContent='(teto: 40%)';
+ann(px(.15),px(.68),y+96,'≥ 250 ms entre pulsos');
+</script></body></html>

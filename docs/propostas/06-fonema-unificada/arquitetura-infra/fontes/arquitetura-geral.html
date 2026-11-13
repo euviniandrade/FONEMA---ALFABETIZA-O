@@ -1,0 +1,86 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="comum.css">
+<style>
+.pagina{width:1800px}
+.grade{display:grid;grid-template-columns:1268px 428px;gap:24px}
+.esq{display:flex;flex-direction:column;gap:44px}.dir{display:flex;flex-direction:column;gap:20px}
+.linha{display:flex;gap:12px}.linha>.caixa{flex:1}
+.usu .caixa{text-align:center;padding:9px 8px}.usu .caixa h3{font-size:16.5px;margin:0}.usu .caixa p{font-size:13.5px}
+.app{flex:2.25!important}
+.pac .chip{font-size:14px;background:var(--roxo-c);border-color:#D6CCF2}
+.modulos .chip{background:var(--azul-c);border-color:#C9DBF2}
+.borda{display:flex;gap:12px;align-items:stretch}
+.aws{border-color:#F0B37E;background:#FFFBF6}.aws>.rot{background:var(--laranja)}
+.ext>.rot{background:var(--cinza)}.fab>.rot{background:var(--teal)}
+.nota{font-size:13.5px;color:var(--suave);margin-top:6px}
+</style></head><body><div class="pagina">
+<div class="cab"><h1>FONEMA Unificada — Arquitetura geral<small>Uma base TypeScript para app (Android, iOS, Web), painéis e servidor · dados no Brasil · offline-first · privacidade por arquitetura</small></h1>
+<div class="marca"><b>FONEMA</b><br>Proposta 6 · arquitetura-infra · v1 · 13/11/2026</div></div>
+<div class="grade"><div class="esq">
+ <div class="camada usu"><span class="rot">Quem usa</span>
+  <div class="linha">
+   <div class="caixa c-rosa" id="u-crianca"><h3>Criança 4–8 anos</h3><p>perfil sem e-mail · figuras/QR</p></div>
+   <div class="caixa c-rosa" id="u-familia"><h3>Família</h3><p>celular + código · porteira</p></div>
+   <div class="caixa c-rosa" id="u-prof"><h3>Professor(a)</h3><p>SSO da rede + MFA</p></div>
+   <div class="caixa c-rosa" id="u-rede"><h3>Escola · Secretaria</h3><p>gov.br / SSO · só agregados</p></div>
+   <div class="caixa c-rosa" id="u-equipe"><h3>Equipe editorial</h3><p>SSO + chave física</p></div>
+  </div></div>
+ <div class="camada"><span class="rot">Clientes</span>
+  <div class="linha">
+   <div class="caixa c-azul app" id="c-app"><h3>apps/app — Expo universal (Android · iOS · Web PWA)</h3>
+    <div class="chips"><span class="chip">Mundo 3D: R3F + Three.js (expo-gl / WebGL2)</span><span class="chip">Perfis A · B · C (Modo Leve 2,5D em 2 GB)</span><span class="chip">Lições 2D: Skia + Reanimated</span><span class="chip">Sofia e Bolota: Rive (12 bocas)</span><span class="chip">Espelho do Som</span><span class="chip">Fala no aparelho: sherpa-onnx</span><span class="chip">SQLite cifrado + fila de eventos</span><span class="chip">Lojinha · coleções · emblemas</span><span class="chip">Vídeos offline</span><span class="chip">Modo sala (40 perfis)</span><span class="chip">Porteira parental</span></div></div>
+   <div class="caixa c-azul" id="c-web"><h3>apps/web — Next.js</h3><p>Site · família · professor · escola · secretaria · conta</p><div class="chips"><span class="chip">ECharts + echarts-gl (3D sóbrio)</span><span class="chip">WCAG 2.2 AA</span></div></div>
+   <div class="caixa c-azul" id="c-estudio"><h3>apps/estudio</h3><p>Payload CMS · revisão fono + pedagogia · visualizador 3D</p></div>
+  </div></div>
+ <div class="camada aws"><span class="rot">AWS · São Paulo (sa-east-1) · 3 zonas de disponibilidade</span>
+  <div class="borda" style="margin-bottom:34px">
+   <div class="caixa c-laranja" id="a-borda" style="flex:1"><h3>Borda: Route 53 · CloudFront · AWS WAF · Shield · ACM</h3><p>TLS · cache de pacotes e OTA · URLs assinadas · limites por tenant · Bot Control no login</p></div></div>
+  <div class="linha" style="margin-bottom:14px">
+   <div class="caixa c-azul modulos" id="a-api" style="flex:2.3"><h3>services/api — NestJS monólito modular (ECS Fargate) · entrypoints api + worker</h3>
+    <div class="chips"><span class="chip">identidade</span><span class="chip">tenancy</span><span class="chip">familias</span><span class="chip">consentimentos</span><span class="chip">sync</span><span class="chip">progresso</span><span class="chip">provinhas</span><span class="chip">economia · vila · lojinha</span><span class="chip">conteudo · midia</span><span class="chip">fala-modelos</span><span class="chip">recomendacao</span><span class="chip">relatorios</span><span class="chip">mensageria</span><span class="chip">assinaturas</span><span class="chip">privacidade</span><span class="chip">dispositivos</span><span class="chip">auditoria</span></div></div>
+   <div class="caixa c-verde" id="a-ps" style="flex:.8"><h3>PowerSync</h3><p>auto-hospedado · baldes por família/turma/criança</p></div>
+   <div class="caixa c-roxo" id="a-kc" style="flex:.8"><h3>Keycloak</h3><p>OIDC/SAML · MFA · gov.br · token de dispositivo</p></div>
+   <div class="caixa c-cinza" id="a-tools" style="flex:.9"><h3>Plataforma</h3><p>OTA próprio · GrowthBook · GlitchTip · OTel</p></div>
+  </div>
+  <div class="linha">
+   <div class="caixa c-verde" id="d-aurora" style="flex:1.3"><h3>Aurora PostgreSQL</h3><p>RLS em 100% · <b>pii</b> cifrado · réplicas · PITR 35 dias</p></div>
+   <div class="caixa c-verde" id="d-cache"><h3>Valkey · SQS · EventBridge</h3><p>limites · filas com DLQ · Step Functions</p></div>
+   <div class="caixa c-verde" id="d-s3"><h3>S3 + CDN</h3><p>pacotes assinados · vídeo · 3D · OTA</p></div>
+   <div class="caixa c-verde" id="d-lake" style="flex:1.4"><h3>Lake pseudonimizado</h3><p>Firehose → Iceberg → Athena + dbt → agregados n ≥ 10</p></div>
+  </div></div>
+ <div class="camada pac"><span class="rot">Pacotes compartilhados — mesmo código no app, na web e no servidor (API)</span>
+  <div class="chips"><span class="chip"><b>pedagogia</b> (domínio, escala 0–10, agendador, gerador)</span><span class="chip"><b>economia</b></span><span class="chip">contratos (zod/OpenAPI)</span><span class="chip">sync</span><span class="chip">mundo-3d</span><span class="chip">licoes</span><span class="chip">personagens</span><span class="chip">fala</span><span class="chip">telemetria (sem PII)</span><span class="chip">graficos</span><span class="chip">ui-crianca · ui-painel · design-tokens</span><span class="chip">validador-conteudo</span></div></div>
+</div>
+<div class="dir">
+ <div class="camada fab"><span class="rot">Fábricas (CI, fora do caminho da criança)</span>
+  <div class="caixa c-teal" id="f-cont" style="margin-bottom:10px"><h3>Conteúdo</h3><p>CMS → snapshot Git → <b>validador de decodificabilidade</b> → LLM só nos bastidores + revisão humana dupla → TTS pré-gerado + visemas → pacote <b>assinado Ed25519</b></p></div>
+  <div class="caixa c-teal" id="f-midia" style="margin-bottom:10px"><h3>Mídia</h3><p>MediaConvert (HLS + MP4 offline) · ffmpeg −16 LUFS · gltf-transform (Meshopt, KTX2, LOD) · impostores do Modo Leve · Rive</p></div>
+  <div class="caixa c-teal" id="f-ml"><h3>ML de fala (conta isolada)</h3><p>Só dados consentidos · CTC fonêmico int8 · <b>portão de viés por região</b> · modo sombra</p></div>
+ </div>
+ <div class="camada ext"><span class="rot">Externos (operadores com contrato)</span>
+  <div class="caixa c-cinza" id="e-wa" style="margin-bottom:10px"><h3>WhatsApp Business (Cloud API)</h3><p>modelos aprovados · opt-in · ≤ 3/semana ⚖️</p></div>
+  <div class="caixa c-cinza" id="e-lojas" style="margin-bottom:10px"><h3>Apple Kids · Google Famílias · gateway BR</h3><p>IAP e Pix/cartão só para adultos · webhooks verificados</p></div>
+  <div class="caixa c-cinza" id="e-idp" style="margin-bottom:10px"><h3>gov.br · SSO das redes</h3><p>Google Workspace Edu · Microsoft Entra · IdP estadual</p></div>
+  <div class="caixa c-cinza" id="e-build"><h3>Só no build (sem dado pessoal)</h3><p>TTS Azure/Polly · Amazon Bedrock · Expo EAS</p></div>
+ </div>
+ <div class="caixa c-vermelho f-vermelho"><h3>Nunca sai do aparelho</h3><p>áudio cru · imagem de câmera · autorrelato emocional · ID de publicidade</p></div>
+</div></div>
+<div class="rodape"><div class="leg"><span><i style="border-color:#1B2433"></i>requisição HTTPS</span><span><i class="tr" style="border-color:#1E7A4C"></i>sincronização offline</span><span><i style="border-color:#0E7480"></i>publicação de pacotes</span><span><i class="tr" style="border-color:#5F6B7A"></i>integração externa</span></div><div>Detalhes: README.md §3–§13 · ⚖️ depende de parecer jurídico</div></div>
+</div>
+<script src="setas.js"></script><script>
+desenhar([
+ ['u-crianca','c-app',{de:'b',para:'t',vert:true,cor:'#A63A72'}],
+ ['u-familia','c-app',{de:'b',para:'t',vert:true,cor:'#A63A72'}],
+ ['u-prof','c-web',{de:'b',para:'t',vert:true,cor:'#A63A72'}],
+ ['u-rede','c-web',{de:'b',para:'t',da:-60,vert:true,cor:'#A63A72'}],
+ ['u-equipe','c-estudio',{de:'b',para:'t',vert:true,cor:'#A63A72'}],
+ ['c-app','a-borda',{de:'b',para:'t',da:250,vert:true,rot:'HTTPS · lotes de eventos · pacotes · OTA',cor:'#1B2433',t:.3}],
+ ['c-web','a-borda',{de:'b',para:'t',vert:true,rot:'HTTPS',cor:'#1B2433',t:.3}],
+ ['c-estudio','a-borda',{de:'b',para:'t',vert:true,cor:'#1B2433'}],
+ ['a-borda','a-api',{de:'b',para:'t',da:-345,vert:true,rot:'API',t:.5,cor:'#1B2433'}],
+ ['a-borda','a-ps',{de:'b',para:'t',da:47,vert:true,cor:'#1E7A4C',tr:true,rot:'sync',t:.5}],
+ ['a-borda','a-kc',{de:'b',para:'t',da:269,vert:true,rot:'login',t:.5,cor:'#5B3FA6'}],
+ ['f-ml','a-borda',{de:'l',para:'r',cor:'#0E7480'}],
+ ['a-tools','e-wa',{de:'r',para:'l',da:-20,cor:'#5F6B7A',tr:true}],
+ ['a-tools','e-lojas',{de:'r',para:'l',da:20,cor:'#5F6B7A',tr:true}],
+]);
+</script></body></html>

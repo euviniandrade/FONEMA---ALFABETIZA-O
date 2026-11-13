@@ -1,0 +1,79 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="common.css">
+<style>
+body{background:#5E3A22}
+.bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,#8A5A34,#4A2C18 80%)}
+.fechar{position:absolute;right:24px;top:20px;width:54px;height:54px;border-radius:50%;background:#FFFBF4;box-shadow:0 4px 0 #C9AE8A;display:flex;align-items:center;justify-content:center;z-index:5}
+.saldo{position:absolute;right:92px;top:20px;display:flex;align-items:center;gap:8px;background:#FFFBF4;border-radius:999px;padding:5px 16px 5px 7px;box-shadow:0 4px 0 #C9AE8A;font-family:Fredoka;font-weight:700;font-size:26px}
+.palco{position:absolute;left:28px;top:24px;width:520px;height:752px;border-radius:30px;background:radial-gradient(ellipse at 50% 30%,#FFF8E6,#FBE3B5 55%,#F0C98A);box-shadow:0 10px 0 #B9874E,0 30px 40px -10px rgba(0,0,0,.5);overflow:hidden}
+.luz{position:absolute;left:60px;top:-40px;width:400px;height:520px;background:radial-gradient(ellipse at 50% 70%,rgba(255,255,255,.85),rgba(255,255,255,0) 60%)}
+.ped{position:absolute;left:100px;top:368px;width:320px;height:80px}
+.nome{position:absolute;left:0;right:0;top:470px;text-align:center}
+.sil{display:inline-flex;gap:10px;align-items:center}
+.s{font-family:Fredoka;font-weight:700;font-size:64px;letter-spacing:3px;background:#FFFBF4;border-radius:20px;padding:0 22px;box-shadow:0 5px 0 #E2C08A;color:#3B2A20}
+.s.a{color:#A9472A}
+.ouvir{width:64px;height:64px;border-radius:50%;background:linear-gradient(180deg,#2B88A0,#1F6E82);box-shadow:0 5px 0 #144E5D;display:flex;align-items:center;justify-content:center}
+.lido{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-family:Fredoka;font-weight:600;font-size:17px;color:#2F6B43;background:#E3F0DF;border-radius:99px;padding:6px 16px}
+.painel{position:absolute;left:570px;top:90px;width:686px;height:686px}
+.h{font-family:Fredoka;font-weight:700;font-size:26px;color:#FFF4E2;margin:0 0 10px 6px}
+.uso{display:flex;gap:14px;align-items:center;padding:12px 16px;margin-bottom:12px;border-radius:22px}
+.uso .k{font-family:Fredoka;font-weight:600;font-size:12px;letter-spacing:1.2px;padding:2px 9px;border-radius:99px;color:#fff;display:inline-block}
+.uso .tt{font-family:Fredoka;font-weight:600;font-size:19px;line-height:1.2;margin:4px 0 2px}
+.uso .sm{font-size:14px;color:#6E5D52;line-height:1.3}
+.barra{height:14px;border-radius:99px;background:#F1E4D0;box-shadow:inset 0 2px 3px rgba(0,0,0,.12);overflow:hidden;position:relative;margin-top:6px}
+.barra i{position:absolute;left:0;top:0;bottom:0;border-radius:99px}
+.compra{display:flex;gap:14px}
+.compra .card{padding:14px 16px}
+.pilha{display:flex;gap:6px;align-items:flex-end}
+.pilha .st{display:flex;flex-direction:column-reverse}
+.pilha .st svg{margin-top:-15px}
+</style></head><body>
+<div class="bg"></div>
+<div class="saldo" id="saldo"></div>
+<div class="fechar"><svg width="22" height="22" viewBox="0 0 20 20"><path d="M4,4 L16,16 M16,4 L4,16" stroke="#7A4B2E" stroke-width="3.5" stroke-linecap="round"/></svg></div>
+
+<div class="palco">
+ <div class="luz"></div>
+ <svg class="ped" viewBox="0 0 320 80"><defs><linearGradient id="pd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9894A"/><stop offset="1" stop-color="#8A5228"/></linearGradient><radialGradient id="pt" cx="40%" cy="30%"><stop offset="0" stop-color="#F0C489"/><stop offset="1" stop-color="#C08A4E"/></radialGradient></defs>
+ <path d="M10,30 v18 q150,50 300,0 v-18z" fill="url(#pd)"/><ellipse cx="160" cy="30" rx="150" ry="26" fill="url(#pt)" stroke="#8A5228" stroke-width="3"/><ellipse cx="160" cy="30" rx="120" ry="18" fill="none" stroke="#FFF1D8" stroke-width="2" opacity=".6" stroke-dasharray="6 8"/></svg>
+ <div id="big" style="position:absolute;left:90px;top:84px"></div>
+ <div style="position:absolute;left:20px;top:20px" class="t"><span style="background:#A9472A;color:#fff;font-weight:600;font-size:14px;letter-spacing:1.5px;padding:5px 12px;border-radius:99px">CONSTRUÇÃO DA VILA</span></div>
+ <div class="nome"><div class="sil"><span class="s">FOR</span><span class="s a">NO</span><span class="ouvir"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M4,9 h4 l5,-4 v14 l-5,-4 h-4z" fill="#fff"/><path d="M16,8 q3,4 0,8 M18.5,5.5 q5,6.5 0,13" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span></div>
+ <div><span class="lido"><svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2F6B43"/><path d="M5.5,10 l3,3 6,-6" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>Você leu sozinha! O som /r/ no fim: FOR.</span></div></div>
+ <div id="sofia" style="position:absolute;left:14px;top:600px"></div>
+ <div class="bal" style="left:150px;top:618px;width:350px;font-size:17px">"O <b>FORNO</b> é para a padaria. Com ele, a vila ganha pão quentinho!"</div>
+</div>
+
+<div class="painel">
+ <div class="h">Para que serve?</div>
+ <div class="uso card"><div id="antes" style="display:flex;align-items:center;gap:4px;flex:none"></div>
+  <div><span class="k" style="background:#A9472A">A VILA CRESCE</span><div class="tt">A padaria abre e o Seu Zé faz pão</div><div class="sm">Desbloqueia a história <b>"O pão do Bolota"</b> e um novo morador pede ajuda com palavras do /r/.</div></div></div>
+ <div class="uso card"><div id="emb" style="flex:none;width:96px;height:106px"></div>
+  <div style="flex:1"><span class="k" style="background:#A9472A">EMBLEMA · AJUDANTE DA VILA</span><div class="tt">Prata: ajude 3 construções da vila</div><div class="sm">Este forno conta como <b>2 de 3</b>. Emblema vem da ajuda, não do gasto: doar moedas ao projeto coletivo também vale.</div>
+  <div class="barra"><i style="width:66%;background:linear-gradient(90deg,#C9D2DB,#8E9AA6)"></i></div></div></div>
+ <div class="uso card"><div id="col" style="flex:none;display:grid;grid-template-columns:repeat(4,26px);gap:4px"></div>
+  <div><span class="k" style="background:#2F6B43">COLEÇÃO · PRAÇA DA VILA</span><div class="tt">4 de 7 construções</div><div class="sm">Completar a praça faz o coreto tocar a música da festa.</div></div></div>
+ <div class="compra">
+  <div class="card" style="flex:1.25">
+   <div class="t" style="font-size:13px;letter-spacing:1.2px;color:#7A4B2E;font-weight:600">CUSTA</div>
+   <div style="display:flex;align-items:center;gap:16px;margin-top:2px"><div class="t" style="font-size:58px;font-weight:700;line-height:1">24</div><div class="pilha" id="pilha"></div></div>
+   <div class="ad" style="font-size:14px;margin-top:8px;color:#6E5D52">Você tem <b>31</b> → depois sobram <b>7</b>. <br>Seu cofrinho (22 para a SANFONA) não é mexido.</div>
+  </div>
+  <div class="card" style="flex:1;display:flex;flex-direction:column;gap:12px;justify-content:center">
+   <div class="btn btn-sol" style="height:62px;font-size:24px">${'Quero o FORNO'}</div>
+   <div class="btn btn-papel" style="height:48px;font-size:17px"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M10,17 C-2,9 4,1 10,6 C16,1 22,9 10,17Z" fill="#B23C62"/></svg>Lista de desejos</div>
+   <div class="ad" style="font-size:12.5px;color:#6E5D52;text-align:center">Mudou de ideia? Dá para desfazer em 24 h e as moedas voltam.</div>
+  </div>
+ </div>
+</div>
+<div class="nota" style="left:584px;top:22px;max-width:420px">"Leia para conhecer": a criança tenta ler primeiro; a Sofia ajuda (sílaba → som → palavra). Ler <b>nunca</b> é condição para comprar.</div>
+<script src="base.js"></script><script src="chars.js"></script>
+<script>
+saldo.innerHTML=coin(36)+'31';
+big.innerHTML=item('forno','width="340" height="340"');
+document.getElementById('sofia').innerHTML=sofia({busto:true,pose:'aponta',attrs:'width="130" height="136"'});
+antes.innerHTML=padaria(false,'width="74" height="74"')+`<svg width="26" height="26" viewBox="0 0 20 20"><path d="M3,10 h12 M10,4 l6,6 -6,6" stroke="#A9472A" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`+padaria(true,'width="86" height="86"');
+emb.innerHTML=emblema('vila','prata',{attrs:'width="96" height="106"'});
+col.innerHTML=['fonte','horta','coreto','ponte','forno','moinho','banca'].map((k,i)=>`<div style="width:26px;height:26px;border-radius:7px;background:${i<4?'#fff':'#EEF6EC'};border:2px ${i<4?'solid #CFE3D2':'dashed #8CC084'};display:flex;align-items:center;justify-content:center;${i===4?'box-shadow:0 0 0 3px #F2B33D':''}">${i<4||i===4?item(k,'width="22" height="22"'+(i===4?' opacity=".55"':'')):''}</div>`).join('');
+let p='',acc=0;[5,5,5,5,4].forEach(n=>{acc+=n;p+='<div style="text-align:center"><div class="st">'+Array.from({length:n},()=>coin(26)).join('')+'</div><div class="t" style="font-size:13px;font-weight:700;color:#7A4B2E;margin-top:3px">'+acc+'</div></div>'});pilha.innerHTML=p;
+document.querySelector('.btn-sol').innerHTML=coin(30)+'Quero o FORNO';
+</script></body></html>

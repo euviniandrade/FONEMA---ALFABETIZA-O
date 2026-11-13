@@ -76,7 +76,7 @@ html[data-tema="escuro"] .selo{color:#1A1405}
 .st.info{background:var(--info-fundo);color:var(--info)}
 /* alternador 3D | 2D | tabela */
 .alterna{display:inline-flex;border:1px solid var(--linha);border-radius:9px;overflow:hidden;font-size:13px}
-.alterna span{padding:5px 11px;color:var(--tinta-2)}
+.alterna span{white-space:nowrap;padding:5px 11px;color:var(--tinta-2)}
 .alterna span.on{background:var(--info-fundo);color:var(--lousa);font-weight:700}
 .palco{background:var(--palco);border-radius:12px;border:1px solid var(--linha)}
 .rodape{display:flex;gap:28px;color:var(--tinta-3);font-size:13px;margin-top:18px;align-items:flex-start}

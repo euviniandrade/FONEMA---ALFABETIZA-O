@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><style>
+body{margin:0;background:#fbf8f2;font-family:"DejaVu Sans",Arial,sans-serif;color:#1f2a37}
+.wrap{width:1960px;height:1120px;position:relative}
+h1{position:absolute;left:40px;top:22px;margin:0;font-size:32px}
+.sub{position:absolute;left:40px;top:66px;font-size:16px;color:#4b5563}
+svg{position:absolute;left:0;top:0}
+.leg{position:absolute;left:1320px;top:120px;width:610px;columns:2;column-gap:26px;font-size:14.5px;line-height:1.32}
+.sec{break-inside:avoid;margin-bottom:12px}
+.sec h3{margin:0 0 4px;font-size:16px;border-bottom:2px solid #d1c7b4;padding-bottom:2px}
+.it{display:flex;gap:6px;align-items:baseline}
+.n{display:inline-block;min-width:24px;height:20px;border-radius:10px;color:#fff;font-weight:700;font-size:12px;text-align:center;line-height:20px}
+.foot{position:absolute;left:40px;bottom:16px;font-size:13px;color:#6b7280}
+</style></head><body><div class="wrap">
+<h1>FONEMA · Radar de tecnologia gráfica e imersiva</h1>
+<div class="sub">3D (mundo) · "4D" (tempo e movimento) · "5D" (sentidos e interação) — coleta 13/11/2026 · centro = adotar já</div>
+<svg id="s" width="1960" height="1120"></svg>
+<div class="leg" id="leg"></div>
+<div class="foot">Fonte: docs/propostas/06-fonema-unificada/tecnologia-grafica/README.md · estrelas/licenças via GitHub search API · coluna "2 GB" ainda sem medição em aparelho real</div>
+</div><script>
+const rings=[{n:"ADOTAR",c:"#1f8a4c",r:175},{n:"EXPERIMENTAR",c:"#2563eb",r:295},{n:"AVALIAR",c:"#c27c0e",r:395},{n:"EVITAR",c:"#c0392b",r:480}];
+const S=[
+["Mundo 3D",[["Three.js","WebGPU + TSL","r3f + drei","three-mesh-bvh","detect-gpu"],["react-native-webgpu","PixiJS 2,5D (plano B)"],["Babylon.js","PlayCanvas","RN Filament"],["Unity 6 web","Godot web","Bevy"]]],
+["Personagens",[["Rive (data binding)","dotLottie"],["Rive como textura 3D","Rhubarb","wawa-lipsync"],["Live2D","Spine"],["Sofia em 3D (VRM)"]]],
+["Efeitos 4D",[["Toon shading","Céu + dia/noite","postprocessing (alto)","Molas / GSAP"],["three.quarks","Rapier","Água toon TSL"],["Theatre.js","Jolt"],["realism-effects","cannon-es"]]],
+["Sentidos 5D",[["Áudio espacial","Háptico","MediaPipe Face"],["Sofia imita você","model-viewer AR","AR.js marcador"],["8th Wall OSS","ViroReact","Omnitone"],["Resonance Audio","MindAR"]]],
+["Dados",[["ECharts","ECharts GL","Recharts / visx"],["deck.gl"],["Nivo"],["Plotly 3D","vtk.js"]]],
+["Assets e IA",[["Blender","glTF-Transform","Meshopt","KTX2 / Basis"],["Spark (splats)","SuperSplat","TripoSR"],["TRELLIS.2","Hunyuan3D","Stable Fast 3D","Spline"],["NeRF","Inria 3DGS"]]]];
+const cx=650,cy=610,svg=document.getElementById('s'),NS="http://www.w3.org/2000/svg";
+function el(t,a,txt){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;svg.appendChild(e);return e}
+const bgs=["#f3ead8","#eef2e6","#f3ead8","#eef2e6","#f3ead8","#eef2e6"];
+const sa=2*Math.PI/S.length, off=-Math.PI/2;
+for(let i=rings.length-1;i>=0;i--){el('circle',{cx,cy,r:rings[i].r,fill:i%2?"#fffdf8":"#f6f0e4",stroke:"#cbbfa8","stroke-width":1.5})}
+S.forEach((s,i)=>{const a=off+i*sa;el('line',{x1:cx,y1:cy,x2:cx+485*Math.cos(a),y2:cy+485*Math.sin(a),stroke:"#a8997c","stroke-width":2});
+ const m=a+sa/2, lr=518; const x=cx+lr*Math.cos(m), y=cy+lr*Math.sin(m);
+ el('text',{x,y:y+6,"text-anchor":Math.abs(Math.cos(m))<0.3?"middle":(Math.cos(m)>0?"start":"end"),"font-size":21,"font-weight":700,fill:"#3b2f1e"},s[0]);});
+// ring labels: in legend
+let num=1;const leg=document.getElementById('leg');
+S.forEach((s,i)=>{const d=document.createElement('div');d.className='sec';d.innerHTML='<h3>'+s[0]+'</h3>';
+ s[1].forEach((items,ri)=>{const r0=ri?rings[ri-1].r:48,r1=rings[ri].r;const n=items.length;
+  items.forEach((name,k)=>{let rad,ang;
+   const base=off+i*sa;
+   if(n<=3||ri>0&&n<=4){const pad=0.13;const a0=base+pad,a1=base+sa-pad;ang=a0+(a1-a0)*(n==1?0.5:k/(n-1));rad=(r0+r1)/2+(n>2&&ri>0?((k%2)?-14:14):0);if(ri==0)rad=r0+(r1-r0)*0.62;}
+   else{const inner=Math.floor(n/2);const row=k<inner?0:1;const kk=row?k-inner:k;const nn=row?n-inner:inner;
+    const pad=row?0.13:0.30;const a0=base+pad,a1=base+sa-pad;
+    ang=a0+(a1-a0)*(nn==1?0.5:kk/(nn-1));rad=r0+(r1-r0)*(row?0.80:0.30);}
+   const x=cx+rad*Math.cos(ang),y=cy+rad*Math.sin(ang);
+   el('circle',{cx:x,cy:y,r:15,fill:rings[ri].c,stroke:"#fff","stroke-width":2.5});
+   el('text',{x,y:y+5,"text-anchor":"middle","font-size":14,"font-weight":700,fill:"#fff"},num);
+   const it=document.createElement('div');it.className='it';it.innerHTML='<span class="n" style="background:'+rings[ri].c+'">'+num+'</span><span>'+name+'</span>';d.appendChild(it);num++;});});
+ leg.appendChild(d);});
+// ring legend
+const L=document.createElement('div');L.className='sec';L.innerHTML='<h3>Anéis</h3>'+rings.map(r=>'<div class="it"><span class="n" style="background:'+r.c+'">&nbsp;</span><span><b>'+r.n+'</b></span></div>').join('');leg.appendChild(L);
+</script></body></html>

@@ -1,0 +1,79 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="comum.css">
+<style>
+.pagina{width:1800px}
+.org{border-color:#9AA6B6}.org>.rot{background:var(--tinta)}
+.contas{display:grid;grid-template-columns:repeat(9,1fr);gap:9px;margin-bottom:18px}
+.contas .caixa{padding:8px 9px}.contas .caixa h3{font-size:15.5px}.contas .caixa p{font-size:13px;line-height:1.3}
+.prod{border:2.5px solid var(--laranja);background:#FFFBF6}.prod>.rot{background:var(--laranja)}
+.topo{display:grid;grid-template-columns:330px 1fr;gap:16px}
+.edge .caixa{margin-bottom:9px}
+.reg{border:2px dashed #E3A36B;border-radius:12px;padding:30px 12px 12px;position:relative;background:#fff}
+.reg>.rot2{position:absolute;top:6px;left:12px;font-size:14px;font-weight:700;color:var(--laranja);letter-spacing:.5px}
+.vpc{border:2px solid var(--verde);border-radius:12px;padding:30px 12px 12px;position:relative;background:#FBFEFC}
+.vpc>.rot2{position:absolute;top:6px;left:12px;font-size:14px;font-weight:700;color:var(--verde)}
+.azs{display:grid;grid-template-columns:150px repeat(3,1fr);gap:8px}
+.azh{font-size:14.5px;font-weight:700;text-align:center;color:var(--suave);padding:4px;border-radius:8px;background:var(--cinza-c)}
+.sub{font-size:14px;font-weight:700;display:flex;align-items:center;padding:8px;border-radius:8px}
+.cel{border:1.5px dashed var(--linha);border-radius:9px;padding:7px;display:flex;flex-wrap:wrap;gap:5px;align-content:flex-start;background:#fff}
+.cel .chip{font-size:13.5px}
+.pub{background:#EAF2FB}.app{background:#EEF8F1}.dados{background:#F6EEFB}
+.k-pub .chip{background:#DCE9F8;border-color:#BBD2EE}.k-app .chip{background:#DDF1E3;border-color:#B9E0C5}.k-dados .chip{background:#EADCF6;border-color:#D3BEEC}
+.regionais{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:12px}
+.regionais .caixa h3{font-size:15.5px}.regionais .caixa p{font-size:13.5px}
+</style></head><body><div class="pagina">
+<div class="cab"><h1>Infraestrutura AWS — São Paulo (sa-east-1)<small>AWS Organizations com 10 contas · SCP bloqueia outras regiões · produção em 3 zonas de disponibilidade · tudo em Terraform</small></h1>
+<div class="marca"><b>FONEMA</b><br>infra-aws · v1 · custos em README §22 [EST]</div></div>
+<div class="camada org" style="margin-bottom:18px"><span class="rot">AWS Organizations · IAM Identity Center (MFA) · SCPs: só sa-east-1, sem buckets públicos, sem chaves longas, logs indesligáveis</span>
+ <div class="contas">
+  <div class="caixa c-cinza"><h3>management</h3><p>faturamento · SCPs · Identity Center</p></div>
+  <div class="caixa c-vermelho"><h3>security</h3><p>GuardDuty · Security Hub · Inspector · Macie · <b>Security Lake + OpenSearch (SIEM)</b></p></div>
+  <div class="caixa c-vermelho"><h3>log-archive</h3><p>CloudTrail org · Config · VPC/WAF logs · Object Lock 2 anos</p></div>
+  <div class="caixa c-cinza"><h3>shared-services</h3><p>ECR assinado · estado Terraform · OIDC do CI</p></div>
+  <div class="caixa c-verde"><h3>backup</h3><p>AWS Backup · <b>Vault Lock</b> · réplica S3</p></div>
+  <div class="caixa c-teal"><h3>ml-dados</h3><p>corpus de fala consentido · sem internet · acesso nominal</p></div>
+  <div class="caixa c-azul"><h3>dev</h3><p>sintéticos · efêmeros por PR · desliga à noite</p></div>
+  <div class="caixa c-azul"><h3>homolog</h3><p>pedagogia · QA · testes com crianças (contas de teste)</p></div>
+  <div class="caixa c-azul"><h3>staging</h3><p>espelho de prod · carga · restauração · pentest</p></div>
+ </div></div>
+<div class="camada prod"><span class="rot">Conta prod · região sa-east-1</span>
+ <div class="topo">
+  <div class="edge">
+   <div class="caixa c-laranja" id="r53"><h3>Route 53 (DNSSEC)</h3><p>api · sync · cdn · ota · erros · painel</p></div>
+   <div class="caixa c-laranja" id="cf"><h3>CloudFront + ACM</h3><p>origens: <b>ALB</b> (API/web) e <b>S3 via OAC</b> (pacotes, OTA, vídeo); URLs/cookies assinados</p></div>
+   <div class="caixa c-vermelho" id="waf"><h3>AWS WAF + Shield</h3><p>regras gerenciadas · Bot Control no login/OTP · limite por IP e por tenant → <b>ALB</b></p></div>
+   <div class="caixa c-cinza" id="va"><h3>Verified Access (ZTNA)</h3><p>estúdio, Superset, Grafana: só equipe com SSO + MFA</p></div>
+   <div class="caixa c-cinza"><h3>Acesso administrativo</h3><p>SSM Session Manager gravado · JIT · break-glass 2 aprovações / 1 h</p></div>
+  </div>
+  <div class="reg"><span class="rot2">REGIÃO sa-east-1</span>
+   <div class="vpc" id="vpc"><span class="rot2">VPC 10.40.0.0/16 · 3 AZs · VPC endpoints (S3, ECR, SQS, KMS, Secrets, Logs, STS)</span>
+    <div class="azs">
+     <div></div><div class="azh">AZ sa-east-1a</div><div class="azh">AZ sa-east-1b</div><div class="azh">AZ sa-east-1c</div>
+     <div class="sub pub">Sub-rede pública</div>
+     <div class="cel k-pub" id="alb"><span class="chip">ALB</span><span class="chip">NAT GW</span></div>
+     <div class="cel k-pub"><span class="chip">ALB</span><span class="chip">NAT GW</span></div>
+     <div class="cel k-pub"><span class="chip">ALB</span><span class="chip">NAT GW</span></div>
+     <div class="sub app">Sub-rede privada · aplicação (ECS Fargate ARM64)</div>
+     <div class="cel k-app" id="ecs"><span class="chip">api</span><span class="chip">worker</span><span class="chip">powersync</span><span class="chip">keycloak</span><span class="chip">web (Next.js)</span><span class="chip">ota</span><span class="chip">otel-collector</span></div>
+     <div class="cel k-app"><span class="chip">api</span><span class="chip">worker</span><span class="chip">powersync</span><span class="chip">keycloak</span><span class="chip">web (Next.js)</span><span class="chip">growthbook</span><span class="chip">glitchtip</span></div>
+     <div class="cel k-app"><span class="chip">api</span><span class="chip">worker</span><span class="chip">powersync</span><span class="chip">keycloak</span><span class="chip">payload (estúdio)</span><span class="chip">superset</span></div>
+     <div class="sub dados">Sub-rede isolada · dados (sem rota para internet)</div>
+     <div class="cel k-dados" id="db"><span class="chip"><b>Aurora PG — escritor</b></span><span class="chip">Aurora Keycloak — escritor</span><span class="chip">Valkey primário</span><span class="chip">RDS Proxy</span></div>
+     <div class="cel k-dados"><span class="chip">Aurora PG — leitor (painéis)</span><span class="chip">Aurora Keycloak — réplica</span><span class="chip">Valkey réplica</span></div>
+     <div class="cel k-dados"><span class="chip">Aurora PG — leitor</span><span class="chip">Aurora ferramentas</span><span class="chip">Valkey réplica</span></div>
+    </div></div>
+   <div class="regionais">
+    <div class="caixa c-verde" id="s3"><h3>S3 (KMS)</h3><p>conteudo (imutável) · midia-masters (Glacier IR) · lake bruto/pseudonimizado (Iceberg) · exportações (Object Lock)</p></div>
+    <div class="caixa c-azul"><h3>Assíncrono</h3><p>SQS + DLQ · EventBridge (outbox) · Step Functions (LGPD, relatórios, medição) · Scheduler</p></div>
+    <div class="caixa c-teal"><h3>Dados e mídia</h3><p>Kinesis Firehose · Glue + Athena + dbt · Lake Formation · MediaConvert · Bedrock (só conteúdo)</p></div>
+    <div class="caixa c-vermelho"><h3>Segurança e operação</h3><p>KMS por domínio · Secrets Manager (rotação) · CloudWatch · AMP + Grafana · GuardDuty · Config</p></div>
+   </div>
+  </div>
+ </div></div>
+<div class="rodape"><div class="leg"><span><i style="border-color:#B4570B"></i>tráfego de usuários</span><span>Backups: snapshots e réplicas S3 vão para a conta <b>backup</b> (Vault Lock); logs para <b>log-archive</b>; achados para <b>security</b></span></div><div>RPO ≤ 5 min · RTO ≤ 1 h (serviço) · ≤ 72 h (perda da região, 2º provedor no Brasil)</div></div>
+</div>
+<script src="setas.js"></script><script>
+desenhar([
+ ['r53','cf',{de:'b',para:'t',cor:'#B4570B'}],
+ ['cf','waf',{de:'b',para:'t',cor:'#B4570B'}],
+]);
+</script></body></html>

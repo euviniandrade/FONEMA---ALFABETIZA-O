@@ -1,0 +1,97 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="common.css">
+<style>
+body{background:#E9D3B1}
+.mesa{position:absolute;inset:0;background:repeating-linear-gradient(90deg,#C99A66 0 120px,#C3925D 120px 240px);}
+.mesa::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 45%,rgba(255,240,210,.35),rgba(60,30,10,.35) 90%)}
+.top{position:absolute;left:24px;top:18px;display:flex;align-items:center;gap:14px;z-index:3}
+.voltar{width:56px;height:56px;border-radius:18px;background:#FFFBF4;box-shadow:0 4px 0 #A87A48;display:flex;align-items:center;justify-content:center}
+.titulo{font-family:Fredoka;font-weight:700;font-size:30px;color:#FFFBF4;text-shadow:0 3px 0 rgba(90,50,20,.45)}
+.livro{position:absolute;left:24px;top:90px;width:900px;height:690px}
+.capa{position:absolute;inset:0;border-radius:26px;background:linear-gradient(180deg,#2B88A0,#1F6E82);box-shadow:0 12px 0 #144E5D,0 30px 40px -10px rgba(40,20,5,.55)}
+.pag{position:absolute;top:14px;bottom:18px;width:432px;background:#FFFBF4;box-shadow:inset 0 0 0 1px #F1E2CB}
+.pag.e{left:14px;border-radius:18px 4px 4px 18px;background:linear-gradient(90deg,#FFFBF4 85%,#F1E2CB)}
+.pag.d{right:14px;border-radius:4px 18px 18px 4px;background:linear-gradient(90deg,#EFDDC2,#FFFBF4 12%)}
+.aba{position:absolute;right:-30px;width:44px;height:64px;border-radius:0 14px 14px 0;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 rgba(0,0,0,.15)}
+.cena{margin:16px 16px 0;height:170px;border-radius:16px;overflow:hidden;position:relative}
+.cab{font-family:Fredoka;font-weight:700;font-size:28px;margin:12px 20px 0;display:flex;align-items:center;justify-content:space-between}
+.cont{font-family:Fredoka;font-weight:700;font-size:20px;background:#E3F0DF;color:#2F6B43;padding:3px 12px;border-radius:99px}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 18px}
+.sl{height:128px;border-radius:16px;background:#FFF6E8;border:2px solid #F1E2CB;text-align:center;position:relative;box-shadow:0 3px 0 #EAD8BE}
+.sl svg{width:84px;height:84px;margin-top:6px}
+.sl .n{font-family:Fredoka;font-weight:700;font-size:14px;letter-spacing:.8px}
+.sl .ok{position:absolute;right:6px;top:6px;width:22px;height:22px;border-radius:50%;background:#2F6B43;display:flex;align-items:center;justify-content:center}
+.sl.falta{border:3px dashed #A9472A;background:repeating-linear-gradient(45deg,#FFF1E6 0 10px,#FFF8F0 10px 20px)}
+.sl.falta svg{opacity:.28;filter:grayscale(1) brightness(.6)}
+.lado{position:absolute;left:944px;top:90px;width:314px;height:690px}
+.col{display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:9px;border-radius:18px}
+.anel{width:58px;height:58px;flex:none;position:relative}
+.anel svg.r{position:absolute;inset:0}
+.anel .ic{position:absolute;inset:9px;border-radius:50%;background:#FFF6E8;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.col .nm{font-family:Fredoka;font-weight:700;font-size:17px;line-height:1.1}
+.col .sb{font-size:12.5px;color:#6E5D52;line-height:1.2;margin-top:2px}
+.col.on{box-shadow:0 0 0 3px #2F6B43,0 3px 0 #EAD8BE}
+</style></head><body>
+<div class="mesa"></div>
+<div class="top"><div class="voltar"><svg width="30" height="30" viewBox="0 0 20 20"><path d="M12,4 L6,10 L12,16" stroke="#7A4B2E" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="titulo">Meu álbum de coleções</div></div>
+
+<div class="livro"><div class="capa"></div>
+ <div class="aba" style="top:40px;background:#2F6B43"><svg width="24" height="24" viewBox="0 0 20 20"><path d="M10,2 q-8,8 0,16 q8,-8 0,-16z" fill="#FCE3A6"/></svg></div>
+ <div class="aba" style="top:112px;background:#D9483B"><svg width="22" height="22" viewBox="0 0 20 20"><path d="M3,4 h14 v8 l-7,-3 -7,3z" fill="#FCE3A6"/></svg></div>
+ <div class="aba" style="top:184px;background:#6B5BA8"><svg width="22" height="22" viewBox="0 0 20 20"><path d="M7,15 a3,3 0 1 1 -1,-2 v-10 l9,-2 v11 a3,3 0 1 1 -1,-2 v-7 l-7,1.5z" fill="#FCE3A6"/></svg></div>
+ <div class="pag e">
+  <div class="cena" id="cena"></div>
+  <div class="cab"><span>Coleção do Cerrado</span><span class="cont">4 de 5</span></div>
+  <div class="slots" id="slots"></div>
+  <div style="margin:4px 20px 0;font-size:14.5px;color:#6E5D52;line-height:1.3">Cada figurinha <b>fala a palavra</b> quando você toca. Os itens da coleção também enfeitam a sua casa.</div>
+  <div style="margin:12px 20px 0;display:flex;gap:8px"><div style="flex:1;background:#EEF6EC;border-radius:14px;padding:8px 10px;font-size:13px;line-height:1.25"><b class="t" style="font-size:15px;color:#2F6B43">3 comprados</b><br>com moedas da lojinha</div><div style="flex:1;background:#F3EEFA;border-radius:14px;padding:8px 10px;font-size:13px;line-height:1.25"><b class="t" style="font-size:15px;color:#6B5BA8">1 conquistado</b><br>a FIGURINHA IPÊ veio ao dominar o /p/ (não paga de novo)</div></div>
+ </div>
+ <div class="pag d">
+  <div style="margin:22px 26px 0" class="t"><span style="background:#F2B33D;color:#3B2A20;font-weight:600;font-size:13px;letter-spacing:1.4px;padding:4px 12px;border-radius:99px">QUANDO COMPLETAR</span></div>
+  <div class="t" style="font-size:27px;font-weight:700;margin:12px 26px 4px;line-height:1.15">O ipê da vila floresce e o Lobo-guará conta uma história</div>
+  <div id="premio" style="margin:6px 26px;height:186px;border-radius:18px;position:relative;overflow:hidden"></div>
+  <div style="margin:10px 26px 0;font-size:15px;line-height:1.35">Nova história decodificável: <b>"A NOITE DO LOBO"</b>, com as palavras do Cerrado que você já sabe ler.</div>
+  <div style="margin:14px 26px 0;padding:12px 14px;border-radius:16px;background:#FFF1E6;border:2px dashed #A9472A;display:flex;gap:12px;align-items:center">
+   <div id="lobo" style="flex:none"></div>
+   <div><div class="t" style="font-weight:700;font-size:18px">Falta: LOBO-GUARÁ</div><div style="font-size:13.5px;line-height:1.3;color:#6E5D52">★ Pede o som <b>/g/</b> dominado <span style="color:#2F6B43;font-weight:700">✓ você já tem</span> e <b>26</b> moedas. Você tem 31.</div></div>
+  </div>
+  <div style="margin:12px 26px 0;display:flex;gap:10px;align-items:center"><div id="emb"></div><div style="font-size:13.5px;line-height:1.3"><b class="t" style="font-size:15px">Emblema Colecionador · bronze</b><br>Complete 1 coleção de bioma. Prata: 3 coleções. Ouro: 5.</div></div>
+ </div>
+</div>
+
+<div class="lado">
+ <div class="t" style="font-weight:700;font-size:19px;color:#FFFBF4;text-shadow:0 2px 0 rgba(90,50,20,.4);margin:0 0 10px 4px">Todas as coleções</div>
+ <div id="lista"></div>
+</div>
+<div class="nota" style="left:600px;top:24px;max-width:330px">Coleção com <b>fim conhecido</b> (sem pacote surpresa): a criança vê todos os itens, preços e o que ganha ao completar.</div>
+<script src="base.js"></script><script src="chars.js"></script>
+<script>
+const {Ctx,lt,dk}=FX;
+// cena do Cerrado
+(function(){const c=new Ctx();const tree=(x,y,s,col)=>`<g transform="translate(${x},${y}) scale(${s})"><path d="M0,0 q-4,-30 6,-50 M4,-30 q12,-10 22,-6 M2,-40 q-14,-8 -20,-20" stroke="#6B3E22" stroke-width="5" fill="none" stroke-linecap="round"/>${[[-18,-60,16],[6,-58,20],[26,-40,14],[-4,-74,14]].map(([a,b,r])=>`<circle cx="${a}" cy="${b}" r="${r}" fill="${c.r(col,{hi:.45})}"/>`).join('')}</g>`;
+cena.innerHTML=c.svg(`<rect width="400" height="170" fill="${c.stops([[0,'#9ED3E4'],[.7,'#FCE3A6'],[1,'#F9D58A']])}"/>
+<circle cx="330" cy="46" r="26" fill="${c.r('#F2B33D',{hi:.6})}"/><circle cx="330" cy="46" r="38" fill="#F2B33D" opacity=".18"/>
+<path d="M0,120 q80,-30 160,-6 q90,-30 240,0 v56 h-400z" fill="${c.l('#D9B65A')}"/>
+<path d="M0,140 q100,-24 220,0 q100,-18 180,-4 v34 h-400z" fill="${c.l('#C29A3E')}"/>
+${tree(60,128,1,'#7FA650')}${tree(300,124,.8,'#7FA650')}${tree(190,132,1.25,'#F2C94C')}
+<path d="M120,150 q6,-36 14,-40 q8,6 12,40z" fill="${c.l('#B7703C')}"/><path d="M128,124 h8" stroke="#8A4E22" stroke-width="2"/>
+${[30,80,140,240,350,380].map(x=>`<path d="M${x},160 l-4,-12 M${x},160 l0,-14 M${x},160 l4,-12" stroke="#8A7A2A" stroke-width="2"/>`).join('')}
+<g transform="translate(236,130) scale(.42)" opacity=".85">${'<path d="M30,62 Q50,40 76,52 Q90,62 84,82 Q60,94 40,84 Q26,80 30,62Z" fill="#C9622D"/><path d="M58,50 L52,14 L74,40Z M76,54 L86,18 L94,48Z" fill="#C9622D"/>'}</g>
+`,'0 0 400 170','width="100%" height="100%" preserveAspectRatio="xMidYMid slice"');})();
+const items=[['fig_ipe','IPÊ',1],['tiara','TIARA',1],['jabuti','JABUTI',1],['bota','BOTA',1],['lobo','LOBO',0]];
+slots.innerHTML=items.map(([k,n,ok])=>`<div class="sl ${ok?'':'falta'}">${ok?'<span class="ok"><svg width="14" height="14" viewBox="0 0 20 20"><path d="M4,10 l4,4 8,-8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span>':''}${item(k)}<div class="n">${n}</div></div>`).join('')+
+`<div class="sl" style="background:linear-gradient(180deg,#FFF1C7,#FCE3A6);border-color:#E9C46A;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><svg viewBox="0 0 40 40" style="width:46px;height:46px;margin:0"><path d="M20,3 l5,10 11,1.6 -8,7.8 2,11 -10,-5.3 -10,5.3 2,-11 -8,-7.8 11,-1.6z" fill="#F2B33D" stroke="#B07A12" stroke-width="2"/></svg><div class="n" style="font-size:12px;line-height:1.15;padding:0 6px">Recompensa<br>na outra página</div></div>`;
+document.getElementById('lobo').innerHTML=item('lobo','width="66" height="66"');
+emb.innerHTML=emblema('colecao','bronze',{attrs:'width="62" height="68"'});
+// premio: vila com ipê florido + lobo contando
+(function(){const c=new Ctx();premio.innerHTML=c.svg(`<rect width="380" height="186" fill="${c.stops([[0,'#3E4E86'],[.6,'#7E6FA8'],[1,'#E9A07A']])}"/>
+${[[40,30],[110,20],[200,40],[300,24],[350,60],[150,60]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2" fill="#FFF4D0"/>`).join('')}
+<circle cx="320" cy="40" r="18" fill="#FFF4D0"/><circle cx="328" cy="34" r="16" fill="#6A6098"/>
+<path d="M0,150 q120,-30 380,-6 v42 h-380z" fill="${c.l('#5E7A3A')}"/>
+<g transform="translate(110,156)"><path d="M0,0 q-6,-50 8,-80 M6,-50 q20,-14 36,-8 M4,-64 q-20,-10 -30,-30" stroke="#5A3420" stroke-width="8" fill="none" stroke-linecap="round"/>${[[-30,-96,24],[6,-104,30],[40,-78,22],[-6,-126,20],[30,-118,18],[-40,-70,14]].map(([a,b,r])=>`<circle cx="${a}" cy="${b}" r="${r}" fill="${c.r('#F2C94C',{hi:.55})}"/>`).join('')}${[[-20,-100],[10,-110],[36,-84],[-2,-128]].map(([a,b])=>`<circle cx="${a}" cy="${b}" r="3.5" fill="#E8892E"/>`).join('')}</g>
+<circle cx="110" cy="50" r="80" fill="#FFE08A" opacity=".12"/>
+<g transform="translate(170,62) scale(.62)">${item('lobo').replace(/<svg[^>]*>/,'').replace('</svg>','')}</g>
+<g transform="translate(306,84)"><rect x="-20" y="-16" width="70" height="40" rx="10" fill="#FFFBF4"/><path d="M-6,18 l-6,12 14,-10z" fill="#FFFBF4"/><text x="15" y="10" font-family="Fredoka" font-weight="700" font-size="16" text-anchor="middle" fill="#3B2A20">ERA UMA…</text></g>
+`,'0 0 380 186','width="100%" height="100%" preserveAspectRatio="xMidYMid slice"');})();
+const L=[['Quintal da Sofia',6,6,'#2F6B43','pipa','Completa! O Bolota ganhou uma casinha.'],['Coleção do Cerrado',4,5,'#2F6B43','fig_ipe','Falta o LOBO-GUARÁ',1],['Mata Atlântica',4,6,'#2F6B43','mico','Recompensa: trilha do tucano'],['Festa Junina',3,6,'#D9483B','bandeirinha','Volta todo ano. Nada some.'],['Instrumentos do Brasil',2,8,'#6B5BA8','pandeiro','Cada um toca o som de uma letra'],['Cabelos do Brasil',2,5,'#E8792E','micanga','Tranças, lenços, faixas'],['Pantanal',0,6,'#9C8F80','capivara','Em breve: espie a região no mapa',0,1]];
+lista.innerHTML=L.map(([n,a,b,col,ic,sb,on,breve])=>{const p=a/b,R=25,C=2*Math.PI*R;return `<div class="col card ${on?'on':''}" style="${breve?'opacity:.75':''}"><div class="anel"><svg class="r" viewBox="0 0 58 58"><circle cx="29" cy="29" r="${R}" fill="none" stroke="#F1E4D0" stroke-width="6"/><circle cx="29" cy="29" r="${R}" fill="none" stroke="${a===b?'#F2B33D':col}" stroke-width="6" stroke-linecap="round" stroke-dasharray="${(C*p).toFixed(1)} ${C}" transform="rotate(-90 29 29)"/></svg><div class="ic">${item(ic,'width="36" height="36"'+(breve?' style="filter:grayscale(.8)"':''))}</div></div><div><div class="nm">${n} <span style="font-size:14px;color:${a===b?'#B07A12':'#6E5D52'}">${a}/${b}${a===b?' ★':''}</span></div><div class="sb">${sb}</div></div></div>`}).join('');
+</script></body></html>

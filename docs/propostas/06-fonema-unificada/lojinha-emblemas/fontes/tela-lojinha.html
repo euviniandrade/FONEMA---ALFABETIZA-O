@@ -1,0 +1,103 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="common.css">
+<style>
+body{background:#FFF4E2}
+.toldo{position:absolute;left:0;right:0;top:0;height:74px}
+.top{position:absolute;left:0;right:0;top:12px;height:70px;display:flex;align-items:center;padding:0 22px;gap:14px;z-index:5}
+.voltar{width:58px;height:58px;border-radius:18px;background:#FFFBF4;box-shadow:0 4px 0 #D9C3A3;display:flex;align-items:center;justify-content:center}
+.placa{margin:0 auto;position:relative;top:34px;background:linear-gradient(180deg,#B9773F,#8A5228);border:3px solid #6B3E1E;border-radius:16px;padding:6px 30px 8px;box-shadow:0 6px 0 #5A3218,0 14px 20px -6px rgba(60,30,10,.5);color:#FFF4E2;font-family:Fredoka;font-weight:700;font-size:28px;letter-spacing:1px}
+.placa::before,.placa::after{content:'';position:absolute;top:-38px;width:4px;height:38px;background:#6B3E1E}
+.placa::before{left:40px}.placa::after{right:40px}
+.saldo{display:flex;align-items:center;gap:8px;background:#FFFBF4;border-radius:999px;padding:6px 18px 6px 8px;box-shadow:0 4px 0 #D9C3A3;font-family:Fredoka;font-weight:700;font-size:30px}
+.col-esq{position:absolute;left:22px;top:118px;width:300px}
+.h2{font-family:Fredoka;font-weight:700;font-size:19px;margin:0 0 8px 4px;display:flex;align-items:center;gap:8px}
+.dest{position:relative;margin-bottom:10px;padding:10px 12px 10px 82px;min-height:112px;border-radius:20px}
+.dest .ic{position:absolute;left:8px;top:12px;width:68px;height:68px;border-radius:16px;display:flex;align-items:center;justify-content:center}
+.dest .k{font-family:Fredoka;font-weight:600;font-size:11px;letter-spacing:1.2px;padding:2px 8px;border-radius:99px;color:#fff;display:inline-block}
+.dest .tt{font-family:Fredoka;font-weight:600;font-size:17px;line-height:1.15;margin:4px 0 4px}
+.dest .tt b{font-weight:700}
+.dest .sm{font-size:12.5px;color:#6E5D52;line-height:1.25}
+.slots{display:flex;gap:4px;margin-top:5px}
+.slot{width:34px;height:34px;border-radius:9px;background:#fff;border:2px solid #CFE3D2;display:flex;align-items:center;justify-content:center}
+.slot.vazio{border:2px dashed #2F6B43;background:#EEF6EC;font-family:Fredoka;font-weight:700;color:#2F6B43}
+.loja{position:absolute;left:338px;top:118px;width:612px;height:662px;border-radius:26px;background:linear-gradient(180deg,#8E5A33,#734424);box-shadow:0 8px 0 #5A3218,0 20px 30px -10px rgba(60,30,10,.5);padding:14px}
+.abas{display:flex;gap:6px;margin-bottom:10px}
+.aba{font-family:Fredoka;font-weight:600;font-size:15px;padding:7px 13px;border-radius:14px;background:#5E361C;color:#F3DCC0;display:flex;align-items:center;gap:6px}
+.aba.on{background:#FFF4E2;color:#3B2A20;box-shadow:0 3px 0 #D9C3A3}
+.fundo{position:absolute;left:14px;right:14px;top:60px;bottom:14px;border-radius:16px;background:linear-gradient(180deg,#F7E6CC,#EBD3B0);overflow:hidden}
+.prat{position:absolute;left:0;right:0;height:16px;background:linear-gradient(180deg,#C0864E,#94592C);box-shadow:0 6px 8px -2px rgba(70,35,10,.45)}
+.it{position:absolute;width:140px;height:178px;text-align:center}
+.it>svg{width:118px;height:118px;display:block;margin:0 auto;filter:drop-shadow(0 4px 3px rgba(70,35,10,.18))}
+.tag{position:relative;margin:2px auto 0;width:128px;background:#FFFBF4;border-radius:12px;padding:5px 4px 6px;box-shadow:0 3px 0 #D9C3A3,0 6px 10px -4px rgba(70,35,10,.35);border:2px solid #F1E2CB}
+.tag::before{content:'';position:absolute;left:50%;top:-8px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#C0864E;border:2px solid #FFFBF4}
+.tag .n{font-family:Fredoka;font-weight:700;font-size:17px;letter-spacing:1.5px;line-height:1}
+.tag .r{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px}
+.mini{font-family:Fredoka;font-weight:600;font-size:10px;padding:2px 6px;border-radius:99px;color:#fff;line-height:1.2}
+.it.sel .tag{border-color:#A9472A;box-shadow:0 0 0 4px rgba(169,71,42,.25),0 3px 0 #D9C3A3}
+.it.sel::before{content:'';position:absolute;left:-2px;right:-2px;top:-6px;height:130px;border-radius:50%;background:radial-gradient(ellipse at 50% 60%,rgba(255,255,255,.9),rgba(255,240,200,0) 65%)}
+.ja{position:absolute;right:6px;top:2px;background:#2F6B43;color:#fff;font-family:Fredoka;font-weight:600;font-size:11px;padding:2px 8px;border-radius:99px;z-index:3}
+.estrela{position:absolute;left:6px;top:2px;background:#3B2A20;color:#F2B33D;font-family:Fredoka;font-weight:700;font-size:11px;padding:2px 7px;border-radius:99px;z-index:3}
+.col-dir{position:absolute;left:964px;top:118px;width:294px;height:662px}
+.palco{position:absolute;left:0;top:0;width:294px;height:404px;border-radius:26px;background:radial-gradient(ellipse at 50% 35%,#FFF6DF,#F9DFAE 70%,#F2C98A);box-shadow:0 4px 0 #E2C08A,0 14px 24px -10px rgba(122,75,46,.45);overflow:hidden}
+.cofre{position:absolute;left:0;top:418px;width:294px;height:244px;border-radius:24px;padding:14px 16px}
+.barra{height:22px;border-radius:99px;background:#F1E4D0;box-shadow:inset 0 2px 3px rgba(0,0,0,.12);overflow:hidden;position:relative}
+.barra i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:linear-gradient(180deg,#FFD978,#E9A22A);box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+</style></head><body class="papel-tex">
+<svg class="toldo" viewBox="0 0 1280 74" preserveAspectRatio="none"><defs><linearGradient id="tA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9603E"/><stop offset="1" stop-color="#A9472A"/></linearGradient><linearGradient id="tB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD978"/><stop offset="1" stop-color="#F2B33D"/></linearGradient></defs>
+<rect width="1280" height="10" fill="#7A4B2E"/><g id="tg"></g></svg>
+<div class="top">
+ <div class="voltar"><svg width="34" height="34" viewBox="0 0 40 40"><path d="M6,20 L20,7 L34,20" stroke="#A9472A" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M11,18 v15 h18 v-15" fill="#F3C7A8"/><rect x="17" y="24" width="6" height="9" fill="#7A4B2E"/></svg></div>
+ <div class="placa">LOJINHA DA VILA</div>
+ <div class="saldo" id="saldo"></div>
+</div>
+
+<div class="col-esq">
+ <div class="h2"><svg width="22" height="22" viewBox="0 0 20 20"><path d="M10,1 l2.6,5.6 6,.8 -4.4,4.2 1.1,6 -5.3,-2.9 -5.3,2.9 1.1,-6 -4.4,-4.2 6,-.8z" fill="#F2B33D" stroke="#B07A12"/></svg>Para que comprar?</div>
+ <div class="dest card"><div class="ic" style="background:#FBE2D6" id="d1"></div><span class="k" style="background:#A9472A">A VILA PRECISA</span><div class="tt">A padaria precisa de um <b>FORNO</b></div><div class="sm">Com o forno, a padaria abre e o Seu Zé conta uma história nova.</div></div>
+ <div class="dest card"><div class="ic" style="background:#E3F0DF" id="d2"></div><span class="k" style="background:#2F6B43">COLEÇÃO DO CERRADO</span><div class="tt">Falta <b>1</b> para completar!</div><div class="slots" id="slots"></div></div>
+ <div class="dest card"><div class="ic" style="background:#FDEBC4" id="d3"></div><span class="k" style="background:#D9483B">FESTA JUNINA NA VILA</span><div class="tt">Enfeite a praça para a festa</div><div class="sm">Volta todo ano. Nada some.</div></div>
+ <div class="dest card"><div class="ic" style="background:#F7E0EA" id="d4"></div><span class="k" style="background:#B23C62">PRESENTE</span><div class="tt">A Dona Ema adora flores</div><div class="sm">Dê a TIARA e ouça o segredo do ipê.</div></div>
+</div>
+
+<div class="loja">
+ <div class="abas" id="abas"></div>
+ <div class="fundo" id="fundo"></div>
+</div>
+
+<div class="col-dir">
+ <div class="palco" id="palco"></div>
+ <div class="cofre card" id="cofre"></div>
+</div>
+
+<div class="nota" style="left:30px;max-width:290px;top:722px">Destaques escolhidos por <b>propósito</b> (vila, coleção, festa, presente), nunca por "oferta" ou prazo. Nomes = palavras decodificáveis da fase; ★ = exige domínio.</div>
+
+
+<script src="base.js"></script><script src="chars.js"></script>
+<script>
+// toldo
+let tg='';for(let i=0;i<20;i++){const x=i*64;tg+=`<path d="M${x},10 h64 v40 q-32,30 -64,0z" fill="url(#${i%2?'tB':'tA'})"/><path d="M${x+6},14 v30" stroke="#fff" stroke-width="3" opacity=".25"/>`}
+document.getElementById('tg').innerHTML=tg;
+document.getElementById('saldo').innerHTML=coin(42)+'<span>31</span>';
+const S=(k,s)=>item(k,`width="${s}" height="${s}"`);
+d1.innerHTML=S('forno',60);d2.innerHTML=S('lobo',60);d3.innerHTML=S('bandeirinha',62);d4.innerHTML=S('tiara',60);
+slots.innerHTML=['fig_ipe','tiara','jabuti','bota'].map(k=>`<div class="slot">${S(k,28)}</div>`).join('')+'<div class="slot vazio">?</div>';
+abas.innerHTML=[['Tudo',1],['Roupas'],['Casa'],['Vila'],['Bichinhos'],['Música'],['Festas']].map(([n,on])=>`<div class="aba ${on?'on':''}">${n}</div>`).join('');
+const mini={vila:['VILA','#A9472A'],col:['COLEÇÃO','#2F6B43'],festa:['FESTA','#D9483B'],pres:['PRESENTE','#B23C62'],som:['SOM /s/','#6B5BA8'],bicho:['BICHINHO','#4F8A3A'],casa:['CASA','#7A4B2E'],ler:['LEITURA','#1F6E82']};
+const rows=[[ ['forno',24,'vila',0,0,1],['lobo',26,'col',1],['bandeirinha',6,'festa'],['tiara',16,'pres'] ],
+            [ ['sanfona',36,'som',1],['capivara',20,'bicho'],['estante',18,'ler',0,1],['rede',15,'casa'] ],
+            [ ['pipa',5,'festa',0,1],['horta',20,'vila'],['bone',8,'casa'],['pandeiro',16,'som'] ]];
+let h='';rows.forEach((r,ri)=>{const y=12+ri*196;h+=`<div class="prat" style="top:${y+150}px"></div>`;
+ r.forEach(([k,p,m,star,ja,sel],ci)=>{const x=6+ci*144;const [mn,mc]=mini[m];
+ h+=`<div class="it ${sel?'sel':''}" style="left:${x}px;top:${y}px">${star?'<span class="estrela">★ domínio</span>':''}${ja?'<span class="ja">já tenho</span>':''}${S(k,118)}<div class="tag"><div class="n">${(k==='lobo'?'LOBO':ITENS[k].nome.replace(' DE ',' ').split(' ')[0])}</div><div class="r"><span class="preco" style="font-size:15px">${coin(18)}${p}</span><span class="mini" style="background:${mc}">${mn}</span></div></div></div>`;});});
+fundo.innerHTML=h;
+palco.innerHTML=`<div style="position:absolute;left:14px;top:12px;font-family:Fredoka;font-weight:700;font-size:15px;color:#7A4B2E">PROVADOR</div>
+<div style="position:absolute;left:22px;top:226px;width:250px;height:60px;border-radius:50%;background:radial-gradient(ellipse,#E7B877,#D9A35E 60%,rgba(0,0,0,0) 72%)"></div>
+<div style="position:absolute;left:84px;top:26px">${lia({pose:'feliz',bone:'#D9483B',attrs:'width="160" height="236"'})}</div>
+<div style="position:absolute;left:6px;top:196px">${bolota({attrs:'width="110" height="77"'})}</div>
+<div class="bal" style="left:12px;top:300px;width:270px;font-size:14.5px;padding:9px 12px"><b>Toque no nome para ler.</b> Depois a Sofia lê junto com você.</div>`;
+cofre.innerHTML=`<div style="display:flex;align-items:center;gap:10px"><div>${S('sanfona',62)}</div><div><div class="t" style="font-size:12px;letter-spacing:1.2px;color:#B23C62;font-weight:600">MINHA META NO COFRINHO</div><div class="t" style="font-size:24px;font-weight:700;letter-spacing:1.5px">SANFONA</div></div></div>
+<div style="display:flex;justify-content:space-between;font-family:Fredoka;font-weight:600;font-size:15px;margin:8px 2px 4px"><span>guardei 22</span><span>meta 36</span></div>
+<div class="barra"><i style="width:61%"></i></div>
+<div style="display:flex;align-items:center;gap:8px;margin-top:10px">
+<div style="width:46px;height:46px;flex:none">${sofia({busto:true,attrs:'width="46" height="48"'})}</div>
+<div style="font-size:13.5px;line-height:1.25">Se comprar o <b>FORNO</b> agora, a <b>SANFONA</b> fica para depois. Você decide!</div></div>`;
+</script></body></html>

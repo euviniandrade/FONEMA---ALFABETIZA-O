@@ -1,0 +1,113 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="common.css">
+<script src="chars.js"></script>
+<style>
+html,body{width:1280px;height:800px;overflow:hidden}
+body{padding:30px 34px 0}
+.tag{display:inline-block;font:600 13px Fredoka;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--lilas);padding:4px 11px;border-radius:99px;margin-bottom:6px}
+h1{font:700 31px/1.05 Fredoka}
+.sub{font:400 15px/1.35 Atkinson;color:var(--cinza);margin-top:5px}
+.wrap{display:flex;gap:26px;margin-top:16px}
+.tablet{width:790px;height:600px;background:#2B211B;border-radius:38px;padding:20px;box-shadow:0 18px 40px rgba(59,42,32,.22);position:relative;flex:none}
+.tablet:before{content:"";position:absolute;left:50%;top:8px;width:7px;height:7px;border-radius:50%;background:#4a3d35;transform:translateX(-50%)}
+.tela{width:100%;height:100%;border-radius:22px;background:#FFF4E2;position:relative;overflow:hidden}
+.barra{position:absolute;left:18px;right:18px;top:14px;display:flex;justify-content:space-between;align-items:center}
+.priv{display:flex;align-items:center;gap:8px;background:#2F6B43;color:#fff;font:700 13.5px Atkinson;padding:7px 14px 7px 10px;border-radius:99px}
+.priv .d{width:10px;height:10px;border-radius:50%;background:#9FE3A6;box-shadow:0 0 0 3px rgba(159,227,166,.35)}
+.btn{font:600 14px Fredoka;background:#fff;color:var(--tinta);padding:7px 14px;border-radius:99px;box-shadow:0 2px 0 var(--linha);display:flex;gap:7px;align-items:center}
+.paineis{position:absolute;left:18px;right:18px;top:62px;display:flex;gap:14px}
+.p{flex:1;height:340px;border-radius:20px;position:relative;overflow:hidden}
+.p .rot{position:absolute;left:12px;top:10px;font:700 14px Fredoka;padding:4px 11px;border-radius:99px;background:rgba(255,255,255,.9);color:var(--tinta)}
+.p2 .rot{background:rgba(255,255,255,.12);color:#E7F3F6}
+.p1{background:#B27650}.p2{background:radial-gradient(ellipse at 50% 55%,#24414B,#162A31)}
+.p2 .loc{position:absolute;left:12px;bottom:10px;right:12px;font:700 12.5px Atkinson;color:#BFE3EC;display:flex;gap:7px;align-items:center}
+.baixo{position:absolute;left:18px;right:18px;top:418px;display:flex;gap:14px;align-items:center}
+.letra{width:130px;height:130px;border-radius:22px;background:#fff;box-shadow:0 2px 0 var(--linha);display:grid;place-items:center;font:700 84px Andika;color:var(--lilas)}
+.letra small{font-size:52px;color:var(--lilas);opacity:.8}
+.fala{flex:1;display:flex;gap:10px;align-items:center}
+.fala svg.s{width:96px;height:126px;flex:none}
+.balao{background:#fff;border-radius:18px;padding:12px 16px;font:700 21px/1.25 Andika;box-shadow:0 2px 0 var(--linha);position:relative}
+.balao small{display:block;font:400 12px Atkinson;color:var(--cinza)}
+.ouvir{width:72px;height:72px;border-radius:50%;background:var(--mar);display:grid;place-items:center;flex:none;box-shadow:0 3px 0 #15505F}
+.lado{flex:1;display:flex;flex-direction:column;gap:11px}
+.card{background:#fff;border:1.5px solid var(--linha);border-radius:16px;padding:11px 14px;font:400 12.8px/1.36 Atkinson}
+.card h2{font:600 15.5px Fredoka;margin-bottom:5px}
+.pipe{display:flex;align-items:center;gap:4px;margin:4px 0 2px}
+.pipe span{flex:1;text-align:center;background:#EEF6F8;border-radius:10px;padding:6px 4px;font:700 11.5px/1.2 Atkinson;color:#174F5D}
+.pipe i{font-style:normal;color:#1F6E82;font-weight:700}
+.nao{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:4px 10px}
+.nao li:before{content:"✕ ";color:var(--terracota);font-weight:700}
+.sim li{margin-left:16px}
+</style></head><body class="papel-tex">
+<span class="tag">5D · Espelho do Som com rastreamento local</span><h1>A boca da Sofia ao lado do contorno da boca da criança</h1>
+<div class="sub">A criança compara as duas bocas e ajusta a sua. O app <b>não dá nota</b> e <b>não mostra foto</b>: só um contorno de pontos, calculado e descartado no próprio aparelho.</div>
+<div class="wrap">
+ <div class="tablet"><div class="tela">
+  <div class="barra"><div class="priv"><span class="d"></span>câmera ligada · processado só no aparelho · nada é gravado</div>
+   <div class="btn"><svg width="18" height="18" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3" fill="#3B2A20"/><path d="M16 10l6-3v10l-6-3z" fill="#3B2A20"/><path d="M3 3l18 18" stroke="#A9472A" stroke-width="2.6" stroke-linecap="round"/></svg>desligar</div></div>
+  <div class="paineis">
+   <div class="p p1"><svg width="100%" height="100%" viewBox="0 0 366 340" preserveAspectRatio="xMidYMid slice" id="sofiaBoca"></svg><span class="rot">boca da Sofia · /o/</span></div>
+   <div class="p p2"><svg width="100%" height="100%" viewBox="0 0 366 340" id="pontos"></svg><span class="rot">sua boca</span>
+    <div class="loc"><svg width="16" height="16" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2" fill="#BFE3EC"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="#BFE3EC" stroke-width="2.4" fill="none"/></svg>só pontos dos lábios · sem imagem do rosto</div></div>
+  </div>
+  <div class="baixo">
+   <div class="letra"><span>O<small>o</small></span></div>
+   <div class="fala"><svg class="s" viewBox="0 0 200 262"><use href="#sofia"/></svg>
+    <div class="balao"><small>Sofia</small>“Boca redondinha: /ooo/.<br>A sua ficou parecida?”</div></div>
+   <div class="ouvir"><svg width="38" height="38" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#fff"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
+  </div>
+ </div></div>
+ <div class="lado">
+  <div class="card"><h2 style="color:var(--mar)">Como funciona (tudo no aparelho)</h2>
+   <div class="pipe"><span>câmera<br>frontal</span><i>→</i><span>MediaPipe Face Landmarker</span><i>→</i><span>40 pontos dos lábios</span><i>→</i><span>quadro apagado</span></div>
+   <div style="margin-top:5px">Roda em WASM/GPU, a ~30 qps. A imagem nunca vai para a tela, o disco ou a rede; só o contorno é desenhado.</div></div>
+  <div class="card"><h2 style="color:var(--terracota)">O que o Espelho NÃO faz</h2>
+   <ul class="nao"><li>gravar foto ou vídeo</li><li>enviar dados à nuvem</li><li>reconhecer quem é</li><li>inferir emoção</li><li>dar nota à boca</li><li>guardar os pontos</li></ul></div>
+  <div class="card"><h2 style="color:var(--folha)">Regras de uso</h2>
+   <ul class="sim"><li><b>Desligado por padrão.</b> O responsável liga, com consentimento específico (LGPD art. 11, dado sensível).</li>
+   <li>Indicador verde sempre visível e botão “desligar” na tela.</li>
+   <li>Sem câmera: espelho de verdade + boca da Sofia. Entrega quase o mesmo valor.</li></ul></div>
+  <div class="card" style="background:#F6F1FB;border-color:#E2D8F1"><h2 style="color:var(--lilas)">Por que sem nota</h2>Comparar a própria boca com um modelo ajuda a ligar som e letra (Sargiani, Ehri e Maluf, 2018). Não há evidência de que pontuar a boca por visão computacional ajude, e um “errado” falso desmotiva.</div>
+ </div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg';
+const el=(p,n,a)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e;};
+// --- boca da Sofia (close ilustrado, /o/ arredondado) ---
+const s=document.getElementById('sofiaBoca');
+s.innerHTML=`<defs><radialGradient id="pele" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#C98A60"/><stop offset="1" stop-color="#A86C46"/></radialGradient>
+<radialGradient id="boc" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#2A0E0A"/><stop offset="1" stop-color="#5A1E18"/></radialGradient></defs>
+<rect width="366" height="340" fill="url(#pele)"/>
+<path d="M150,20 Q183,70 168,92 Q183,102 198,92 Q183,70 216,20" fill="none" stroke="#8E5636" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+<ellipse cx="160" cy="92" rx="10" ry="6" fill="#8E5636" opacity=".45"/><ellipse cx="206" cy="92" rx="10" ry="6" fill="#8E5636" opacity=".45"/>
+<circle cx="70" cy="160" r="26" fill="#E07F62" opacity=".35"/><circle cx="296" cy="160" r="26" fill="#E07F62" opacity=".35"/>
+<ellipse cx="183" cy="184" rx="60" ry="70" fill="#8E3B2E"/>
+<ellipse cx="183" cy="186" rx="30" ry="41" fill="url(#boc)"/>
+<ellipse cx="183" cy="212" rx="16" ry="8" fill="#C2524A"/>
+<path d="M150,146 Q166,126 183,124" stroke="#C66A5A" stroke-width="6" fill="none" stroke-linecap="round" opacity=".7"/>
+<path d="M150,226 Q166,246 186,248" stroke="#6E2A20" stroke-width="5" fill="none" stroke-linecap="round" opacity=".5"/>
+<path d="M170,268 Q183,276 196,268" stroke="#8E5636" stroke-width="4" fill="none" stroke-linecap="round" opacity=".5"/>
+<g transform="translate(286,232)"><rect x="-56" y="-24" width="112" height="48" rx="14" fill="rgba(255,251,244,.92)"/>
+<text x="0" y="-4" text-anchor="middle" font-family="Atkinson" font-weight="700" font-size="12" fill="#3B2A20">lábios redondos</text>
+<text x="0" y="13" text-anchor="middle" font-family="Atkinson" font-size="11.5" fill="#6E5D52">e para a frente</text></g>`;
+// --- contorno de pontos (40 landmarks: 20 externos + 20 internos) ---
+const p=document.getElementById('pontos');
+for(let i=0;i<12;i++)el(p,'line',{x1:i*33,x2:i*33,y1:0,y2:300,stroke:'rgba(191,227,236,.06)'});
+for(let i=0;i<11;i++)el(p,'line',{x1:0,x2:366,y1:i*33,y2:i*33,stroke:'rgba(191,227,236,.06)'});
+const cx=183,cy=184;
+const ext=[],int=[];
+for(let i=0;i<20;i++){const a=i/20*Math.PI*2-Math.PI/2;let rx=82,ry=60;let x=cx+Math.cos(a)*rx,y=cy+Math.sin(a)*ry;
+  if(Math.sin(a)<0)y-=Math.pow(Math.abs(Math.cos(a)),6)*0+(Math.abs(Math.cos(a))<.25?6*(1-Math.abs(Math.cos(a))*4):0);// arco do cupido
+  ext.push([x+Math.sin(i*1.7)*1.5,y+Math.cos(i*2.3)*1.5]);}
+for(let i=0;i<20;i++){const a=i/20*Math.PI*2-Math.PI/2;int.push([cx+Math.cos(a)*46+Math.sin(i)*1.2,cy+4+Math.sin(a)*26]);}
+const poly=(pts,st,w,f='none')=>el(p,'path',{d:'M'+pts.map(q=>q.map(v=>v.toFixed(1)).join(',')).join('L')+'Z',fill:f,stroke:st,'stroke-width':w,'stroke-linejoin':'round'});
+// silhueta-guia fantasma da Sofia (mesmo fonema), tracejada
+el(p,'ellipse',{cx:183,cy:184,rx:66,ry:77,fill:'none',stroke:'rgba(242,179,61,.75)','stroke-width':2.5,'stroke-dasharray':'7 7'});
+poly(ext,'rgba(143,215,230,.55)',2,'rgba(143,215,230,.10)');poly(int,'rgba(143,215,230,.45)',1.6);
+ext.forEach(([x,y])=>{el(p,'circle',{cx:x,cy:y,r:5.2,fill:'#8FD7E6'});el(p,'circle',{cx:x,cy:y,r:9,fill:'none',stroke:'rgba(143,215,230,.25)'});});
+int.forEach(([x,y])=>el(p,'circle',{cx:x,cy:y,r:3.8,fill:'#E7F3F6'}));
+// legenda do guia
+el(p,'line',{x1:236,y1:128,x2:280,y2:100,stroke:'rgba(242,179,61,.9)','stroke-width':1.5});
+const t1=el(p,'text',{x:300,y:80,fill:'#F2B33D','font-family':'Atkinson','font-weight':700,'font-size':12,'text-anchor':'middle'});t1.textContent='forma da Sofia';
+const t2=el(p,'text',{x:300,y:94,fill:'#F2B33D','font-family':'Atkinson','font-size':11,'text-anchor':'middle'});t2.textContent='(guia tracejado)';
+</script></body></html>
