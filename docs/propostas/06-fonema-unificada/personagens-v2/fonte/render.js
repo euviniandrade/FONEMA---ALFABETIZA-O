@@ -1,7 +1,7 @@
 // Renderiza as folhas: node render.js [nome...]
 const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path');
-const pages = require('./pages');
+const pages = require('./pages2');
 (async () => {
   const want = process.argv.slice(2);
   const b = await chromium.launch();

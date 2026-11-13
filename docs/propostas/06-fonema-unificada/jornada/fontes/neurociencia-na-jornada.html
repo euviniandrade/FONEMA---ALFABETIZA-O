@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Neurociência na jornada</title>
+<link rel="stylesheet" href="comum.css">
+<style>
+  .grade { position: absolute; left: 32px; top: 92px; width: 1216px; }
+  .lin { display: grid; grid-template-columns: 24px 304px 74px repeat(12, 45px) 274px; align-items: center; }
+  .cab { height: 54px; align-items: end; padding-bottom: 6px; }
+  .cab .rg { text-align: center; }
+  .cab .rg b { display: block; margin: 0 auto 3px; width: 34px; border-radius: 7px; color: #fff; font-family: 'Fredoka'; font-weight: 700; font-size: 11px; padding: 2px 0; }
+  .cab .rg span { font-size: 8.8px; color: var(--tinta2); line-height: 1.05; display: block; height: 19px; }
+  .cab .h { font-family: 'Fredoka'; font-weight: 600; font-size: 12px; color: var(--tinta2); padding-left: 6px; }
+  .row { height: 43px; background: #fff; border-radius: 10px; margin-bottom: 3px; box-shadow: 0 2px 6px rgba(60,40,10,.07); }
+  .nome { display: flex; align-items: center; gap: 9px; padding-left: 8px; }
+  .nome .t { font-family: 'Fredoka'; font-weight: 600; font-size: 14px; line-height: 1.05; }
+  .nome .t small { display: block; font-family: 'Andika'; font-weight: 400; font-size: 10.5px; color: var(--tinta2); margin-top: 2px; }
+  .rel { font-size: 10px; color: var(--tinta2); text-align: center; line-height: 1.1; }
+  .rel b { font-family: 'Fredoka'; font-weight: 600; color: var(--tinta); font-size: 11px; display: block; }
+  .cel { display: flex; justify-content: center; align-items: center; height: 100%; }
+  .ses { font-size: 10.5px; line-height: 1.2; color: var(--tinta); padding: 0 10px; border-left: 1px dashed var(--linha); height: 100%; display: flex; align-items: center; } .ses > div { display:block; }
+  .grp { position: absolute; left: 32px; width: 20px; border-radius: 8px; color: #fff; font-family: 'Fredoka'; font-weight: 600; font-size: 10.5px;
+         writing-mode: vertical-rl; transform: rotate(180deg); display: flex; align-items: center; justify-content: center; letter-spacing: .3px; }
+  .faixa { position: absolute; top: 92px; height: 610px; width: 45px; border-radius: 10px; opacity: .08; }
+  .nota { position: absolute; left: 32px; right: 32px; bottom: 38px; display: flex; gap: 18px; font-size: 11px; color: var(--tinta2); align-items: center; }
+  .nota .k { white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
+</style></head>
+<body>
+<div class="topo">
+  <div>
+    <h1>Os <b>12 princípios da neurociência da aprendizagem</b> e onde eles trabalham</h1>
+    <div class="sub">Todos operam em todas as regiões (ponto pequeno); o ponto grande marca onde o desenho da região <b>depende</b> mais daquele princípio. À direita: em que momento da sessão ele age.</div>
+  </div>
+  <span class="marca">FONEMA · JORNADA</span>
+</div>
+<div id="faixas"></div>
+<div class="grade" id="g"></div>
+<div id="grupos"></div>
+<div class="nota">
+  <span class="k"><svg width="20" height="20"><circle cx="10" cy="10" r="9" fill="#1F2A44"/></svg> ênfase da região</span>
+  <span class="k"><svg width="20" height="20"><circle cx="10" cy="10" r="3.5" fill="#B9B2A4"/></svg> sempre presente</span>
+  <span>· Os 4 primeiros = pilares de Dehaene (rel. 15). Evidência: P4–P9 e P15 do doc. mestre §3 (níveis A/B); a ponte cérebro → sala é indireta (rel. 15).</span>
+</div>
+<div class="rodape"><span>Proibido no marketing: “treina o cérebro”, “comprovado pela neurociência”, “aprende dormindo” (16 frases do rel. 15). A evidência é do <b>método</b>, não do app.</span><span>Relatórios internos: docs/pesquisa/06–15, 20, 30, 35, 37, 39, 41, 42</span></div>
+<script src="dados.js"></script><script src="comum.js"></script>
+<script>
+const SES = {
+  N1: 'Acolhida mostra a trilha de 3–5 estações; Espelho do Som com destaque sincronizado; 1 meta por tela',
+  N2: '“Você faz”: o mini-jogo <b>é</b> a operação de leitura; missão na vila (a palavra lida vira coisa)',
+  N3: '“Nós fazemos”: dica leve → modelo → fazer junto; feedback < 1 s; o item volta depois',
+  N4: 'Ritual no fim da tarde → sono → <b>revisão curta na manhã seguinte</b>; janela noturna bloqueada',
+  N5: '<b>Jardim da Revisão</b> abre a sessão (~60–70% dos itens); regiões antigas = revisão',
+  N6: 'Aquecimento, verificação e recapitulação: a criança tenta <b>antes</b> de ouvir de novo',
+  N7: 'Bloco de <b>contraste</b> (b/d, p/b, f/v, R/RR…) só após ≥ 2 recuperações isoladas de cada',
+  N8: '“Eu faço”: som + boca + corte lateral + letra no mesmo quadro; o clipe termina na letra',
+  N9: 'Verificação com pseudopalavra; palavra nova entra na <b>Árvore das Palavras</b>',
+  N10: 'Acolhida fecha o gancho de ontem; ritual planta o de amanhã; perguntas CROWD',
+  N11: 'Instrução ≤ 1 frase; 2–4 alternativas; pausa ativa; avatar fora da lição',
+  N12: 'Começa e termina em êxito (~85–90%); erro sem buzina; moedinhas só no ritual',
+};
+const SUB = {
+  N1:'foco no grafema molda a rede da leitura', N2:'responder, não assistir', N3:'erro é informação, nunca punição', N4:'o sono fixa as palavras novas',
+  N5:'intervalos crescentes por item', N6:'lembrar fortalece mais que rever', N7:'misturar para discriminar', N8:'som, boca e letra coerentes',
+  N9:'som + letra + significado', N10:'lacuna pequena e fechável', N11:'memória de trabalho é pequena', N12:'sem estresse na hora de lembrar'
+};
+const X0 = 32 + 24 + 304 + 74;
+document.getElementById('faixas').innerHTML = REG.map((r, i) => `<div class="faixa" style="left:${X0 + i * 45}px;background:${r.cor}"></div>`).join('');
+let h = `<div class="lin cab"><div></div><div class="h">Princípio</div><div class="h" style="text-align:center;padding:0">Relatórios</div>` +
+  REG.map(r => `<div class="rg"><span>${r.nome.split(' ')[0].replace('Caatinga','Caatinga')}</span><b style="background:${r.cor}">${r.id}</b></div>`).join('') +
+  `<div class="h">Onde age na sessão</div></div>`;
+PRINC.forEach(p => {
+  h += `<div class="lin row"><div></div><div class="nome">${icone(p.id, 30)}<div class="t">${p.nome}<small>${SUB[p.id]}</small></div></div>
+    <div class="rel"><b>${p.id}</b>rel. ${p.rel}</div>` +
+    REG.map(r => `<div class="cel">${r.enf.includes(p.id)
+      ? `<svg width="24" height="24"><circle cx="12" cy="12" r="10.5" fill="${p.cor}"/><circle cx="12" cy="12" r="10.5" fill="none" stroke="#fff" stroke-width="2"/></svg>`
+      : `<svg width="10" height="10"><circle cx="5" cy="5" r="3.5" fill="#C9C1B1"/></svg>`}</div>`).join('') +
+    `<div class="ses"><div>${SES[p.id]}</div></div></div>`;
+});
+document.getElementById('g').innerHTML = h;
+const top0 = 92 + 54, rh = 46;
+const G = [['4 pilares', 0, 4, '#1F2A44'], ['memória', 4, 3, '#1F7A8C'], ['codificação', 7, 2, '#8338EC'], ['motivação e capacidade', 9, 3, '#C8642B']];
+document.getElementById('grupos').innerHTML = G.map(([n, a, k, c]) => `<div class="grp" style="top:${top0 + a * rh}px;height:${k * rh - 4}px;background:${c}">${n}</div>`).join('');
+</script>
+</body></html>

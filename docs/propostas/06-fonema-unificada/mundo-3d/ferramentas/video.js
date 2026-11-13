@@ -25,7 +25,7 @@ const only = process.argv.slice(4).map(Number);
   await browser.close();
   if (!only.length) {
     const out = path.resolve(__dirname, '../voo-arquipelago-vila.mp4');
-    execSync(`ffmpeg -y -framerate ${FPS} -i "${DIR}/q%04d.jpg" -c:v libx264 -preset slow -crf 21 -pix_fmt yuv420p -movflags +faststart -vf "fade=t=in:st=0:d=0.6,fade=t=out:st=${DUR - 0.8}:d=0.8" "${out}"`, { stdio: 'inherit' });
+    execSync(`ffmpeg -y -framerate ${FPS} -i "${DIR}/q%04d.jpg" -c:v libx264 -preset slow -crf 24 -maxrate 4.2M -bufsize 8M -pix_fmt yuv420p -movflags +faststart -vf "fade=t=in:st=0:d=0.6,fade=t=out:st=${DUR - 0.8}:d=0.8" "${out}"`, { stdio: 'inherit' });
     console.log('ok', out, (fs.statSync(out).size / 1e6).toFixed(1) + ' MB');
   }
 })();

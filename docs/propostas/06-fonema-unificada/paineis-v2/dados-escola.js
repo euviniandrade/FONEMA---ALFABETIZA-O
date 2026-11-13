@@ -55,10 +55,10 @@
     ['Caio L.',7,2,'Encontros','TR','trem → “tem” · trigo → “tigo”','',59],
     ['Théo A.',7,2,'Pseudopalavras','PR','“prilo” → “pilo”','',61],
     ['Ana C.',8,2,'—','—','passou ao nível 8 ontem','ok',64],
-    ['Tom Q.',8,3,'Fluência','—','frases longas: pausa a cada palavra','',60],
-    ['Lia W.',9,3,'Compreensão','—','perguntas inferenciais (2 de 4)','',58],
-    ['Vic Y.',9,3,'Fluência','—','ritmo bom; entonação em perguntas','',57],
-    ['Malu J.',10,3,'—','—','textos autorais · 1 leitura com voz incerta','',55],
+    ['Tom Q.',8,3,'Fluência','—','pausa entre palavras','',60],
+    ['Lia W.',9,3,'Compreensão','—','inferências: 2 de 4','',58],
+    ['Vic Y.',9,3,'Fluência','—','entonação em perguntas','',57],
+    ['Malu J.',10,3,'—','—','textos autorais','',55],
     ['Noah Z.',10,3,'—','—','textos autorais','',59],
     ['Zoe U.',10,3,'—','—','textos autorais','',60]].map(([n,nv,g,hab,som,pal,sinal,dose])=>({n,nv,g,hab,som,pal,sinal,dose}));
 

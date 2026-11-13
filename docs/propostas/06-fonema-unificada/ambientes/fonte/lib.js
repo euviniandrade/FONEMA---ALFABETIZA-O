@@ -62,15 +62,17 @@ function rays(s, x, y, angs, len, col = '#FFF3C8', o = .22, l = 'sky', w = 0.06)
   angs.forEach(a => { const a1 = a - w, a2 = a + w; g += `<path d="M${x},${y} L${f(x + Math.cos(a1) * len)},${f(y + Math.sin(a1) * len)} L${f(x + Math.cos(a2) * len)},${f(y + Math.sin(a2) * len)}Z" fill="${gr}"/>`; });
   s.add(l, `<g filter="${s.blur(10)}" style="mix-blend-mode:screen">${g}</g>`);
 }
-function cloud(s, x, y, w, light = '#FFFFFF', shadow = '#D8E2F0', seed = 1, o = 1) {
-  const r = rng(seed); const n = 6 + Math.floor(r() * 4); let a = '', b = '';
+function cloud(s, x, y, w, light = '#FFFFFF', shadow = '#D8E2F0', seed = 1, o = 1, lx = -.4) {
+  const r = rng(seed); const n = 7 + Math.floor(r() * 4); let a = '', b = '';
+  const hgt = w * .34;
   for (let i = 0; i < n; i++) {
-    const t = i / (n - 1), cx = x - w / 2 + t * w, rr = w * (0.12 + 0.16 * Math.sin(t * Math.PI)) * (0.8 + r() * 0.45), cy = y - rr * 0.55;
+    const t = i / (n - 1), cx = x - w / 2 + t * w + (r() - .5) * w * .05, bump = Math.sin(t * Math.PI), rr = w * (0.07 + 0.11 * bump) * (0.75 + r() * .5), cy = y - rr * .5 - bump * hgt * .35 * r();
     a += `<circle cx="${f(cx)}" cy="${f(cy)}" r="${f(rr)}"/>`;
-    b += `<circle cx="${f(cx - rr * .08)}" cy="${f(cy - rr * .16)}" r="${f(rr * .9)}"/>`;
+    if (r() < .8) b += `<circle cx="${f(cx + lx * rr * .25)}" cy="${f(cy - rr * .22)}" r="${f(rr * .78)}"/>`;
   }
-  const base = `<rect x="${f(x - w / 2 - w * .06)}" y="${f(y - w * .1)}" width="${f(w * 1.12)}" height="${f(w * .12)}" rx="${f(w * .06)}"/>`;
-  return `<g opacity="${o}"><g fill="${shadow}">${a}${base}</g><g fill="${light}">${b}</g></g>`;
+  a += `<ellipse cx="${x}" cy="${f(y - w * .02)}" rx="${f(w * .52)}" ry="${f(w * .05)}"/>`;
+  const gid = s.lin([[0, light], [.55, mix(light, shadow, .35)], [1, shadow]], 0, y - hgt * 1.2, 0, y + w * .04, true);
+  return `<g opacity="${o}"><g fill="${gid}">${a}</g><g fill="${light}" opacity=".75" filter="${s.blur(w * .012)}">${b}</g></g>`;
 }
 function ridge(seed, y0, amp, { step = 6, fr = [1, 2.3, 5.1, 11.7], wt = [1, .5, .22, .09], x0 = -30, x1 = W + 30, bottom = H + 10, sharp = 0 } = {}) {
   const r = rng(seed); const ph = fr.map(() => r() * Math.PI * 2);
@@ -91,7 +93,7 @@ function mesa(x0, x1, top, base, seed) {
 // Flora
 // ---------------------------------------------------------------------------------------------
 // copa volumétrica: 3 passes (sombra · meio-tom · luz) com direção da luz (lx,ly)
-function canopy(cx, cy, rx, ry, cols, seed, { n = 30, lx = -.55, ly = -.8, smin = .18, smax = .34, spec = true } = {}) {
+function canopy(cx, cy, rx, ry, cols, seed, { n = 30, lx = -.55, ly = -.8, smin = .26, smax = .42, spec = true } = {}) {
   const r = rng(seed); const pts = [];
   for (let i = 0; i < n; i++) { const t = r() * Math.PI * 2, d = Math.sqrt(r()) * .82; pts.push([cx + Math.cos(t) * rx * d, cy + Math.sin(t) * ry * d, Math.min(rx, ry) * (smin + r() * (smax - smin)) * 1.25]); }
   pts.sort((a, b) => a[1] - b[1]);
@@ -103,7 +105,7 @@ function canopy(cx, cy, rx, ry, cols, seed, { n = 30, lx = -.55, ly = -.8, smin 
     if (dot > -.05) c += `<circle cx="${f(x + lx * s * .42)}" cy="${f(y + ly * s * .42)}" r="${f(s * .46)}"/>`;
     if (spec && dot > .35) d2 += `<circle cx="${f(x + lx * s * .55)}" cy="${f(y + ly * s * .55)}" r="${f(s * .18)}"/>`;
   });
-  return `<g fill="${cols[0]}">${a}</g><g fill="${cols[1]}">${b}</g><g fill="${cols[2]}" opacity=".85">${c}</g>${cols[3] ? `<g fill="${cols[3]}" opacity=".7">${d2}</g>` : ''}`;
+  return `<g fill="${cols[0]}">${a}</g><g fill="${cols[1]}">${b}</g><g fill="${cols[2]}" opacity=".8">${c}</g>${cols[3] ? `<g fill="${cols[3]}" opacity=".45">${d2}</g>` : ''}`;
 }
 function trunkPath(x, y, h, w, lean = 0, top = .35) {
   return `M${f(x - w)},${y} C${f(x - w * .7)},${f(y - h * .45)} ${f(x + lean - w * top * 1.6)},${f(y - h * .75)} ${f(x + lean - w * top)},${f(y - h)} L${f(x + lean + w * top)},${f(y - h)} C${f(x + lean + w * top * 1.6)},${f(y - h * .7)} ${f(x + w * .7)},${f(y - h * .45)} ${f(x + w)},${y}Z`;
@@ -159,9 +161,9 @@ function fanPalm(x, y, { h = 240, col = ['#3B6B34', '#5E9447', '#9CC46A'], trunk
     const a = -Math.PI / 2 + (i / (n - 1) - .5) * Math.PI * 1.7 + (r() - .5) * .15, L = len * (.85 + r() * .3), c = col[i % 3 === 0 ? 0 : 1];
     const px = tx + Math.cos(a) * L * .55, py = ty + Math.sin(a) * L * .45 + (Math.abs(Math.cos(a)) * L * .2);
     g += `<path d="M${tx},${ty} L${f(px)},${f(py)}" stroke="${trunk[0]}" stroke-width="2.4"/>`;
-    let fan = ''; const fa = a, spread = .9;
-    for (let k = 0; k < 9; k++) { const b = fa + (k / 8 - .5) * spread, ll = L * .55 * (.75 + r() * .3); fan += `<path d="M${f(px)},${f(py)} L${f(px + Math.cos(b) * ll)},${f(py + Math.sin(b) * ll + ll * .25)}" stroke="${k % 2 ? c : col[2]}" stroke-width="${f(4.2)}" stroke-linecap="round"/>`; }
-    g += `<path d="M${f(px)},${f(py)} L${f(px + Math.cos(fa - spread / 2) * L * .5)},${f(py + Math.sin(fa - spread / 2) * L * .5 + L * .12)} Q${f(px + Math.cos(fa) * L * .62)},${f(py + Math.sin(fa) * L * .62 + L * .1)} ${f(px + Math.cos(fa + spread / 2) * L * .5)},${f(py + Math.sin(fa + spread / 2) * L * .5 + L * .12)}Z" fill="${c}" opacity=".9"/>` + fan;
+    let fan = ''; const fa = a, spread = 1.1;
+    for (let k = 0; k < 13; k++) { const b = fa + (k / 12 - .5) * spread, ll = L * .6 * (.7 + r() * .35), dr = ll * (.15 + Math.abs(Math.cos(b)) * .35); fan += `<path d="M${f(px)},${f(py)} Q${f(px + Math.cos(b) * ll * .6)},${f(py + Math.sin(b) * ll * .6)} ${f(px + Math.cos(b) * ll)},${f(py + Math.sin(b) * ll + dr)}" stroke="${k % 3 ? c : col[2]}" stroke-width="${f(3.4 - Math.abs(k - 6) * .15)}" stroke-linecap="round" fill="none"/>`; }
+    g += fan;
   }
   return g;
 }
@@ -262,7 +264,8 @@ function quad(x, y, s, flip, o) {
   let g = shadowE(0, 0, bl * .7);
   const by = -leg - bh / 2;
   // pernas de trás (mais escuras)
-  g += `<rect x="${-bl * .38}" y="${by + bh * .2}" width="${bl * .1}" height="${leg + bh * .3}" rx="${bl * .04}" fill="${mix(legCol, '#000000', .2)}"/><rect x="${bl * .26}" y="${by + bh * .2}" width="${bl * .1}" height="${leg + bh * .3}" rx="${bl * .04}" fill="${mix(legCol, '#000000', .2)}"/>`;
+  const legP = (lx0, c, bend) => `<path d="M${lx0},${by + bh * .1} L${lx0 + bl * .12},${by + bh * .1} Q${lx0 + bl * .1 + bend},${by + bh * .5 + leg * .45} ${lx0 + bl * .075},${-2} L${lx0 + bl * .025},${-2} Q${lx0 + bend * .5},${by + bh * .5 + leg * .45} ${lx0},${by + bh * .1}Z" fill="${c}"/><rect x="${lx0 + bl * .015}" y="-4" width="${bl * .07}" height="4" rx="1.5" fill="${mix(c, '#000000', .45)}"/>`;
+  g += legP(-bl * .4, mix(legCol, '#000000', .22), 3) + legP(bl * .24, mix(legCol, '#000000', .22), -3);
   // cauda
   if (tail === 'thin') g += `<path d="M${-bl * .48},${by - bh * .2} Q${-bl * .6},${by + bh * .3} ${-bl * .56},${by + bh * .9}" stroke="${dark}" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="${-bl * .56}" cy="${by + bh * .95}" rx="3.5" ry="6" fill="${dark}"/>`;
   if (tail === 'bushy') g += `<path d="M${-bl * .46},${by - bh * .1} Q${-bl * .75},${by + bh * .1} ${-bl * .72},${by + bh * .9} Q${-bl * .6},${by + bh * .4} ${-bl * .46},${by + bh * .2}Z" fill="${col}"/><path d="M${-bl * .72},${by + bh * .9} q-2,-12 4,-16 q2,10 -4,16z" fill="#F4EEE2"/>`;
@@ -272,7 +275,7 @@ function quad(x, y, s, flip, o) {
   g += `<path d="M${-bl * .42},${by - bh * .2} Q${0},${by - bh * .5} ${bl * .38},${by - bh * .25}" stroke="${light}" stroke-width="${bh * .22}" fill="none" stroke-linecap="round" opacity=".55"/>`;
   g += `<path d="M${-bl * .4},${by + bh * .38} Q${0},${by + bh * .55} ${bl * .4},${by + bh * .35}" stroke="${dark}" stroke-width="${bh * .16}" fill="none" stroke-linecap="round" opacity=".45"/>`;
   // pernas da frente
-  g += `<rect x="${-bl * .28}" y="${by + bh * .2}" width="${bl * .1}" height="${leg + bh * .3}" rx="${bl * .04}" fill="${legCol}"/><rect x="${bl * .36}" y="${by + bh * .2}" width="${bl * .1}" height="${leg + bh * .3}" rx="${bl * .04}" fill="${legCol}"/>`;
+  g += legP(-bl * .3, legCol, -2) + legP(bl * .34, legCol, 2);
   // pescoço + cabeça
   const nx = bl * .42 + neck[0], ny = by + neck[1];
   g += `<path d="M${bl * .22},${by - bh * .45} Q${nx - 4},${ny - 8} ${nx + 4},${ny - 4} L${nx + 8},${ny + head[1] * .6} Q${bl * .5},${by + bh * .1} ${bl * .42},${by + bh * .2}Z" fill="${col}"/>`;

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Anatomia da sessão</title>
+<link rel="stylesheet" href="comum.css">
+<style>
+  .fase { position: absolute; width: 230px; height: 142px; background: #fff; border-radius: 14px; box-shadow: 0 4px 12px rgba(60,40,10,.10); overflow: hidden; }
+  .fase .tp { height: 6px; }
+  .fase .h { display: flex; align-items: center; gap: 7px; padding: 7px 10px 2px; }
+  .fase .n { width: 22px; height: 22px; border-radius: 50%; color: #fff; font-family: 'Fredoka'; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; flex: none; }
+  .fase .t { font-family: 'Fredoka'; font-weight: 600; font-size: 13.5px; line-height: 1.05; flex: 1; }
+  .fase .d { font-family: 'Fredoka'; font-weight: 600; font-size: 10.5px; background: #F4EEE2; border-radius: 999px; padding: 1px 7px; white-space: nowrap; color: var(--tinta2); }
+  .fase .x { font-size: 10.6px; line-height: 1.27; padding: 3px 11px 0; color: var(--tinta); height: 74px; }
+  .fase .x b { color: #1F2A44; }
+  .fase .ic { position: absolute; left: 10px; bottom: 7px; display: flex; gap: 3px; align-items: center; }
+  .fase .ic span { font-size: 9.5px; color: var(--suave); margin-left: 3px; }
+  .seta { position: absolute; width: 14px; height: 14px; }
+  .bloco { position: absolute; left: 32px; right: 32px; }
+  .tit2 { font-family: 'Fredoka'; font-weight: 600; font-size: 14px; color: var(--tinta); }
+  .tit2 i { font-style: normal; font-family: 'Andika'; font-weight: 400; font-size: 11px; color: var(--tinta2); margin-left: 8px; }
+  .barra { position: absolute; height: 26px; display: flex; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,.08); }
+  .barra div { height: 100%; border-right: 1.5px solid rgba(255,255,255,.85); display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Fredoka'; font-weight: 600; font-size: 10px; overflow: hidden; white-space: nowrap; }
+  .idade { position: absolute; left: 32px; width: 120px; font-family: 'Fredoka'; font-weight: 600; font-size: 13px; line-height: 1.05; }
+  .idade small { display: block; font-family: 'Andika'; font-weight: 400; font-size: 10.5px; color: var(--tinta2); }
+  .tot { position: absolute; font-family: 'Fredoka'; font-weight: 700; font-size: 13px; }
+  .depois { position: absolute; top: 572px; height: 128px; border-radius: 14px; padding: 10px 12px; color: #fff; }
+  .depois h3 { font-size: 13.5px; display: flex; align-items: center; gap: 7px; margin-bottom: 4px; }
+  .depois p { font-size: 10.8px; line-height: 1.3; opacity: .96; }
+  .regras { position: absolute; top: 548px; left: 1008px; width: 240px; height: 210px; background: #fff; border-radius: 14px; padding: 10px 12px; box-shadow: 0 4px 12px rgba(60,40,10,.10); }
+  .regras h3 { font-size: 13px; margin-bottom: 4px; }
+  .regras li { font-size: 10.5px; line-height: 1.3; margin-left: 14px; }
+</style></head>
+<body>
+<div class="topo">
+  <div>
+    <h1>Anatomia de <b>uma sessão</b> (10–20 min): os princípios em cadeia</h1>
+    <div class="sub">Lembrar → ver/ouvir o novo → tentar com ajuda → tentar sozinho → provar fora do jogo → respirar → usar no mundo → discriminar → fechar em alta e dormir.</div>
+  </div>
+  <span class="marca">FONEMA · JORNADA</span>
+</div>
+<div id="fases"></div>
+<div class="bloco" style="top:400px"><div class="tit2">Orçamento de tempo por idade <i>núcleo fixo ≈ 70–75% · 1 slot rotativo por sessão · tempos = proposta de síntese a calibrar no piloto (doc. mestre §4.4; rels. 07, 09, 14, 42)</i></div></div>
+<div id="barras"></div>
+<div id="depois"></div>
+<div class="regras"><h3 class="fred">Regras que não se negociam</h3><ul>
+  <li>Sem cronômetro na tela; latência medida em silêncio (rel. 20)</li>
+  <li>Moedinhas só no ritual, nunca anunciadas antes (rels. 08, 37)</li>
+  <li>3 erros seguidos → muda a estratégia e fecha com êxito (rel. 13)</li>
+  <li>Nada se mexe enquanto a criança responde (rels. 09, 23)</li>
+  <li>Sem “só mais uma”, autoplay ou streak (rels. 08, 42)</li></ul></div>
+<div class="rodape"><span>Fontes: documento mestre §4.4 (lição e sessão) e §4.5 · rels. 07, 08, 09, 10, 13, 14, 15, 35, 37, 39, 41, 42. TDAH: blocos de 5 min (3–7) com pausa extra; TEA: trilha fixa e aviso 10 s antes de cada transição.</span></div>
+<script src="dados.js"></script><script src="comum.js"></script>
+<script>
+const NUC = '#1F2A44', SLOT = '#E07A2F', PAU = '#7A8399', RIT = '#C23B6C', LIC = '#2A6F97';
+const F = [
+  ['Acolhida', '~30 s', NUC, 'A Sofia mostra a <b>trilha de hoje</b> (3–5 estações) e <b>responde ao gancho de ontem</b>. Previsível para todos; obrigatório no modo TEA.', ['N1','N10','N12']],
+  ['Jardim da Revisão', '2–3 min', NUC, '3–5 <b>sons-relâmpago</b> já dominados (começar acertando) e as <b>revisões vencidas</b> do agendador (≈ 60–70% dos itens). Itens de ontem = checagem de retenção.', ['N5','N6','N4','N12']],
+  ['Eu faço · Espelho do Som', '1–1,5 min', LIC, 'Som isolado ×2 → boca + <b>corte lateral</b> → a <b>letra surge no instante do som</b> → palavra-âncora com imagem. 1–2 exemplos e 1 contraexemplo; descoberta guiada quando cabe.', ['N8','N9','N1','N11']],
+  ['Nós fazemos', '1,5–2,5 min', LIC, 'Síntese e segmentação com <b>alfabeto móvel</b>. Escada de ajuda: 1º erro → dica leve; 2º → modelo; 3º → fazer junto, e o item <b>volta depois</b>.', ['N3','N2','N11']],
+  ['Você faz', '1,5–3 min', LIC, 'Mini-jogo em que <b>a ação é a leitura</b>. Mistura ~60% alvo, ~30% revisão, ~10% transferência; motor em <b>~85%</b> de acerto; dica só se a criança pedir.', ['N2','N6','N3']],
+  ['Verificação', '30–60 s', LIC, '2–4 itens <b>fora do formato do jogo</b>, com ≥ 1 <b>pseudopalavra</b>. A palavra que passou ganha um galho na <b>Árvore das Palavras</b>.', ['N9','N6']],
+  ['Pausa ativa', '20–90 s', PAU, 'Movimento que <b>também treina fonologia</b> (“pula quando ouvir /p/”); respirar com a Sofia é opcional. Zera a fadiga antes do 2º bloco.', ['N11','N1','N12']],
+  ['Slot rotativo', '2–4 min', SLOT, 'Um por dia: <b>Hora da História</b> (CROWD, tema da região) · <b>Papo com a Sofia</b> · <b>Criar</b> (escrita inventada) · <b>missão transversal</b> (≤ 1, sempre via leitura).', ['N10','N9','N2']],
+  ['Contraste', '45 s–1,5 min', NUC, '<b>Pares confusos intercalados</b> (b/d, p/b, f/v, R/RR…) só depois de ≥ 2 recuperações isoladas de cada. Itens “sanguessuga” vêm para cá. Em R0–R2a: jogo de rimas.', ['N7','N3','N8']],
+  ['Ritual de fim', '45 s–1 min', RIT, 'Aviso em 2 etapas; <b>última tarefa fácil</b> (fim em alta). Recapitula, <b>entrega as moedinhas em bloco</b>, ilumina o mapa, <b>planta o gancho</b> de amanhã e a ponte com o mundo real. Sem botão “continuar”.', ['N12','N10','N6','N4']],
+];
+const W = 230, gx = 16, x0 = 32, ys = [90, 246];
+let h = '';
+F.forEach((f, i) => {
+  const row = i < 5 ? 0 : 1, k = i % 5, x = x0 + k * (W + gx + 2), y = ys[row];
+  h += `<div class="fase" style="left:${x}px;top:${y}px"><div class="tp" style="background:${f[2]}"></div>
+    <div class="h"><span class="n" style="background:${f[2]}">${i + 1}</span><span class="t">${f[0]}</span><span class="d">${f[1]}</span></div>
+    <div class="x">${f[3]}</div>
+    <div class="ic">${f[4].map(p => icone(p, 18)).join('')}<span>${f[4].join(' ')}</span></div></div>`;
+  if (k < 4) h += `<svg class="seta" style="left:${x + W + 2}px;top:${y + 64}px" viewBox="0 0 14 14"><path d="M2 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="#B9A98C" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`;
+});
+// volta da linha 1 para a linha 2
+h += `<svg style="position:absolute;left:0;top:0" width="1280" height="800"><path d="M ${x0 + 4*(W+gx+2) + W/2} 232 C ${x0 + 4*(W+gx+2) + W/2} 240, ${x0 + W/2} 232, ${x0 + W/2} 244" stroke="#B9A98C" stroke-width="2" fill="none" stroke-dasharray="4 4"/></svg>`;
+document.getElementById('fases').innerHTML = h;
+// barras por idade
+const T = {
+  '4–5 anos': { s: 'padrão 10–12 min', v: [0.5, 2, 1, 1.5, 1.5, 0.5, 0.75, 2, 0.75, 0.75] },
+  '6 anos': { s: 'padrão 10–15 min', v: [0.5, 2, 1.5, 2, 2, 0.75, 0.67, 2.5, 1, 0.75] },
+  '7–8 anos': { s: 'padrão 15–20 min', v: [0.5, 3, 1.5, 2.5, 3, 1, 0.67, 4, 1.5, 1] },
+};
+const cores = F.map(f => f[2]), esc = 50, bx = 160;
+let b = '';
+Object.entries(T).forEach(([k, o], j) => {
+  const y = 428 + j * 38, tot = o.v.reduce((a, c) => a + c, 0);
+  b += `<div class="idade" style="top:${y - 2}px">${k}<small>${o.s}</small></div><div class="barra" style="left:${bx}px;top:${y}px">` +
+    o.v.map((m, i) => `<div style="width:${m * esc}px;background:${cores[i]}${i === 2 || i === 3 || i === 4 || i === 5 ? '' : ''}">${m * esc > 22 ? i + 1 : ''}</div>`).join('') + `</div>`;
+  b += `<div class="tot" style="left:${bx + tot * esc + 10}px;top:${y + 4}px">≈ ${tot.toFixed(1).replace('.', ',')} min</div>`;
+  const av = bx + tot * 0.8 * esc;
+  b += `<svg style="position:absolute;left:${av - 6}px;top:${y - 8}px" width="12" height="10"><path d="M1 1h10L6 9z" fill="#C23B6C"/></svg>`;
+});
+b += `<div style="position:absolute;left:${bx + 15 * esc}px;top:484px;width:250px;font-size:10.5px;line-height:1.3;color:var(--tinta2)"><svg width="10" height="9"><path d="M1 1h8L5 8z" fill="#C23B6C"/></svg> ~80% do tempo: “mais 2 desafios!”<br>Legenda: <b style="color:${NUC}">núcleo</b> · <b style="color:${LIC}">lição</b> · <b style="color:${PAU}">pausa</b> · <b style="color:${SLOT}">slot</b> · <b style="color:${RIT}">ritual</b></div>`;
+document.getElementById('barras').innerHTML = b;
+// depois da sessão
+const D = [
+  ['#5B8E3E', 'N2', 'Tempo livre na vila', 'Só <b>depois</b> do ritual e só se o adulto ligou: vestir o avatar, decorar, lojinha. <b>Sem missões e sem moedas.</b> Teto diário: 15 min (4–5) · 30 min (6–8).'],
+  ['#4B3F72', 'N4', 'Noite: o sono trabalha', 'Sessão principal no <b>fim da tarde</b>. Nada novo a partir de 1 h antes de dormir: só a “história para dormir” em áudio. O sono <b>consolida as palavras novas</b> (rels. 07, 15, 42) — sem prometer “aprende dormindo”.'],
+  ['#1F7A8C', 'N5', 'Manhã seguinte', '<b>Revisão curta</b> opcional (microssessão) e, na próxima sessão, o Jardim da Revisão traz de volta os itens de ontem (intervalo de 1 dia). Três microssessões rendem mais que uma longa (Seabrook 2005, rel. 07).'],
+];
+document.getElementById('depois').innerHTML = `<div style="position:absolute;left:32px;top:548px" class="tit2">Depois da sessão: a aprendizagem continua fora da tela</div>` +
+  D.map((d, i) => `<div class="depois" style="left:${32 + i * 325}px;width:312px;background:${d[0]}"><h3 class="fred">${icone(d[1], 20, 'rgba(255,255,255,.25)')}${d[2]}</h3><p>${d[3]}</p></div>`).join('');
+</script>
+</body></html>

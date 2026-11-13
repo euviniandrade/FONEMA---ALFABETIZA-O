@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FONEMA Professora · Turma 2º B (dados fictícios)</title>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="v2.css">
+<script src="comum.js"></script>
+<script src="dados-escola.js"></script>
+<script src="vendor/echarts.min.js"></script>
+<style>
+body{font-size:13px}
+.l{display:grid;grid-template-columns:548px 1fr 330px;gap:12px;height:664px}
+.col{display:grid;gap:12px;min-height:0}
+.c2{grid-template-rows:auto 1fr auto}.c3{grid-template-rows:1fr auto}
+/* lista da turma */
+.lista{width:100%;margin-top:6px}
+.lista th{font-size:10.5px;padding:3px 4px;text-transform:uppercase;letter-spacing:.05em}
+.lista td{padding:0 4px;height:21.4px;font-size:12.5px;border-bottom:1px solid var(--linha);white-space:nowrap}
+.lista tr.gsep td{border-top:2px solid var(--gc)}
+.lista .nm{font-weight:700;color:var(--tinta)}
+.lista .nm .tag-g{margin-right:6px}
+.lista .hb{color:var(--tinta-2)}
+.lista .vazio{color:var(--tinta-3)}
+.lista tr.sel td{background:var(--sel)}
+.lista tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--aviso)}
+.sn{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:5px}
+.sn svg{width:11px;height:11px}
+.sn.alerta{background:var(--alerta-fundo);color:var(--alerta)}.sn.aviso{background:var(--aviso-fundo);color:var(--aviso)}.sn.info{background:var(--info-fundo);color:var(--info)}.sn.ok{background:var(--ok-fundo);color:var(--ok)}
+/* quem precisa */
+.quem{display:grid;gap:7px;margin-top:8px}
+.q{display:grid;grid-template-columns:30px 1fr auto;gap:9px;align-items:center;padding:6px 9px;border:1px solid var(--linha);border-radius:10px;background:var(--cartao-2)}
+.q .ini{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:700;background:var(--info-fundo);color:var(--lousa)}
+.q b{font-size:13px}.q p{font-size:12px;color:var(--tinta-2);line-height:1.3;margin-top:1px}
+.q button{font-family:inherit;font-weight:700;font-size:12px;padding:5px 9px;border-radius:7px;border:1px solid var(--acao);background:var(--cartao);color:var(--acao);white-space:nowrap}
+.q button.prim{background:var(--acao);color:var(--acao-tinta)}
+.q .st{font-size:10.5px;padding:1px 6px 1px 5px;margin-left:5px;vertical-align:1px}.q .st svg{width:10px;height:10px}
+#erros{display:grid;gap:7px;margin-top:9px}
+.er{display:grid;grid-template-columns:1fr 64px;gap:2px 8px;align-items:center}
+.er .t{font-size:12px;font-weight:700;color:var(--tinta);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.er .t small{font-weight:400;color:var(--tinta-3);font-size:11px;margin-left:5px}
+.er .v{grid-row:span 2;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}.er .v small{display:block;font-size:10.5px;font-weight:400;color:var(--tinta-3)}
+/* grupos + plano */
+.gp{display:grid;gap:7px;margin-top:8px}
+.g{border:1px solid var(--linha);border-left:4px solid var(--gc);border-radius:9px;padding:7px 10px;background:var(--cartao-2)}
+.g h3{font-size:13px;display:flex;align-items:center;gap:7px}
+.g h3 .h{margin-left:auto;font-size:11px;color:var(--tinta-3);font-weight:700}
+.g .mem{font-size:11.5px;color:var(--tinta-2);margin-top:3px}
+.g .at{font-size:11.5px;color:var(--tinta);margin-top:4px;padding-top:4px;border-top:1px dashed var(--linha)}
+.msg{display:grid;gap:7px;margin-top:8px}
+.m{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:12px;color:var(--tinta-2);align-items:start}
+.m .wa{width:22px;height:22px;border-radius:6px;background:#25D366;display:grid;place-items:center}
+html[data-tema="escuro"] .m .wa{background:#1E9E50}
+.m b{color:var(--tinta)}
+.sala{display:grid;grid-template-columns:1fr 150px;gap:10px;align-items:center}
+.sala .tela{border-radius:8px;background:#0F2333;padding:7px;display:grid;grid-template-columns:repeat(11,1fr);gap:2px;align-items:end;height:74px}
+.sala .tela i{background:#4FAAB7;border-radius:2px 2px 0 0}
+.sala .tela span{grid-column:1/-1;color:#CFE6EC;font-size:9px;font-weight:700;letter-spacing:.06em}
+.rod{display:flex;gap:18px;font-size:11px;color:var(--tinta-3);margin-top:8px}
+.rod span{display:flex;gap:6px;align-items:center}.rod svg{width:12px;height:12px}
+</style>
+</head>
+<body>
+<header class="topo c">
+  <div class="marca"><i>F</i>FONEMA Professora</div>
+  <nav class="nav"><a class="ativo">Minha turma</a><a>Crianças</a><a>Palavras e sons</a><a>Grupos</a><a>Plano de aula</a><a>Famílias</a><a>Academia</a></nav>
+  <div class="usuario"><div><b>Prof.ª Helena Duarte (fictícia)</b>2º B · EM Jardim das Flores</div><div class="avatar">HD</div></div>
+</header>
+<main class="pagina c">
+  <div class="cab c">
+    <div><h1>Turma 2º B · bom dia, Helena</h1><div class="sub">quinta, 13/11 · semana 39 · dados até 07h12 · escala por critério 0–10 (não é nota)</div></div>
+    <div class="mini-kpi">
+      <div><b>24</b>crianças</div><div><b>nível 6</b>mediana · faltam 4</div><div><b>3</b>no nível 10</div><div><b>59 <small style="font-size:12px;font-weight:400;color:var(--tinta-3)">min/sem</small></b>dose média</div>
+    </div>
+    <div class="filtros"><button class="botao"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>Modo sala</button><button class="botao prim"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7h8M8 11h8M8 15h5"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg>Plano de amanhã</button></div>
+  </div>
+  <section class="l">
+    <!-- coluna 1: a turma -->
+    <div class="cartao c" style="overflow:hidden">
+      <h2>A turma e onde cada criança está travada <small>por grupo sugerido, nunca por nota</small></h2>
+      <table class="lista"><thead><tr><th>Criança</th><th>Nível 0–10</th><th>Habilidade</th><th>Som</th><th>Palavra com dificuldade</th><th></th></tr></thead><tbody id="lista"></tbody></table>
+    </div>
+    <!-- coluna 2 -->
+    <div class="col c2">
+      <div class="cartao c"><h2>Quem precisa de mim hoje <small>sinais de 2+ semanas</small></h2><div class="quem" id="quem"></div></div>
+      <div class="cartao c" style="display:flex;flex-direction:column"><h2>Padrão de erros da turma <small>ocorrências em 2 semanas</small></h2><div id="erros"></div></div>
+      <div class="cartao c"><div class="sala"><div><h2>Modo sala <small>para projetar</small></h2><div style="font-size:12px;color:var(--tinta-2);margin-top:4px">Mostra a turma subindo junta, <b>sem nomes e sem ranking</b>. Bom para celebrar a semana.</div></div><div class="tela" id="sala"></div></div></div>
+    </div>
+    <!-- coluna 3 -->
+    <div class="col c3">
+      <div class="cartao c"><h2>Plano de amanhã <small>sex 14/11 · estações</small></h2><div class="gp" id="grupos"></div></div>
+      <div class="cartao c"><h2>Mensagens às famílias <small>você revisa e envia</small></h2><div class="msg" id="msg"></div></div>
+    </div>
+  </section>
+  <div class="rod"><span id="cad"></span><span>Só você e a coordenação veem nomes. Famílias veem só o próprio filho.</span><span>“Sinal” não é diagnóstico.</span><span>Clique numa criança para ver tentativas, palavras e sugestão.</span></div>
+</main>
+<script>
+const F=FONEMA,c=F.css,D=FONEMA_DADOS;
+document.getElementById('cad').innerHTML=F.ic.cadeado;
+const GC=['var(--g1)','var(--g2)','var(--g3)','var(--g4)'];
+// ===== lista =====
+const trilha=nv=>`<div class="trilha"><i style="width:${(nv+.5)/11*100}%"></i>${nv<10?'<u></u>':''}<b style="left:${(nv+.5)/11*100}%">${nv}</b></div>`;
+let ult=-1;
+document.getElementById('lista').innerHTML=D.AL.map(a=>{const sep=a.g!==ult;ult=a.g;const g=D.GRUPOS[a.g];
+  const p1=a.pal.split(' · ')[0];const m=p1.match(/^(.*?) → “(.*)”$/);
+  const pal=a.som==='—'?`<span class="vazio">${a.pal}</span>`:m?`<span class="w">${m[1]}<s>${m[2]}</s></span>`:`<span class="pal">${p1}</span>`;
+  const sn=a.sinal?`<span class="sn ${a.sinal}" title="${a.sinal}">${F.ic[a.sinal]}</span>`:'';
+  return `<tr class="${sep?'gsep':''} ${a.n==='Iris N.'?'sel':''}" style="--gc:${GC[a.g]}"><td class="nm"><span class="tag-g" style="--gc:${GC[a.g]}">${g.id}</span>${a.n}</td><td style="width:112px;padding-right:10px">${trilha(a.nv)}</td><td class="hb">${a.hab==='—'?'<span class="vazio">—</span>':a.hab}</td><td>${a.som==='—'?'':`<span class="som">${a.som}</span>`}</td><td>${pal}</td><td>${sn}</td></tr>`;}).join('');
+// ===== quem precisa =====
+const Q=[['alerta','travado','Davi R.','<b>PR</b> há 3 semanas: prato → “pato”','Mini-aula 5 min','prim'],
+ ['alerta','travado','Luan K.','<b>P/B</b> em 5 de 9 tentativas: pato → “bato”','Espelho do Som',''],
+ ['aviso','pouca prática','Pedro H.','<b>12 min</b> na semana; tablet sem sincronizar','Avisar família',''],
+ ['info','escuta','Gael V.','3 leituras de <b>LH</b> com voz incerta','Ouvir (2 min)','']];
+document.getElementById('quem').innerHTML=Q.map(([t,r,n,p,a,cl])=>`<div class="q"><span class="ini">${n.split(' ').map(x=>x[0]).join('')}</span><div><b>${n}</b>${F.st(t,r)}<p>${p}</p></div><button class="${cl}">${a}</button></div>`).join('');
+// ===== padrão de erros (barras HTML com valor exato) =====
+const E=D.ERROS,mx=Math.max(...E.map(e=>e.n));
+document.getElementById('erros').innerHTML=E.map((e,i)=>`<div class="er"><div class="t">${e.cat}<small>${e.ex}</small></div><div class="v">${e.n}<small>${e.crc} crianças</small></div><div class="barra-h"><i style="width:${e.n/mx*100}%;background:${i<3?c('--n8'):c('--n5')}"></i></div></div>`).join('');
+window.__pronto=true;
+// ===== modo sala (miniatura) =====
+const cont=Array(11).fill(0);D.AL.forEach(a=>cont[a.nv]++);
+document.getElementById('sala').innerHTML='<span>A TURMA ESTÁ SUBINDO</span>'+cont.map(v=>`<i style="height:${4+v*7}px"></i>`).join('');
+// ===== grupos + plano =====
+const HR=['08:10','08:28','08:46','09:04'],EST=['com a professora','tablets FONEMA','leitura em dupla','autonomia'];
+document.getElementById('grupos').innerHTML=D.GRUPOS.map((g,i)=>{const mem=D.AL.filter(a=>a.g===i).map(a=>a.n.split(' ')[0]);
+ return `<div class="g" style="--gc:${GC[i]}"><h3><span class="tag-g">${g.id}</span>${g.nome}<span class="som" style="margin-left:auto">${g.foco}</span></h3><div class="mem">${HR[i]} · <b>${EST[i]}</b> · ${mem.join(', ')}</div><div class="at">${g.ativ}</div></div>`}).join('')
+ +`<div style="font-size:11px;color:var(--tinta-3)">08:00 abertura com a Sofia (som do RR) · 09:25 ditado de 3 palavras</div>`;
+// ===== mensagens =====
+const wa='<svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M12 3a9 9 0 00-7.8 13.5L3 21l4.6-1.2A9 9 0 1012 3z"/></svg>';
+document.getElementById('msg').innerHTML=[
+ ['Família do Pedro','“Pedro praticou pouco esta semana. O tablet de casa precisa sincronizar: abra o app com Wi-Fi. 10 min por dia já ajudam!”'],
+ ['Família da Iris','Missão da semana: <b>caça-palavras com R forte</b> (5 min, sem tela) + vídeo da Academia.'],
+ ['Toda a turma (24)','Áudio de 40 s: “Esta semana a turma leu 412 palavras novas.”']].map(([q,t])=>`<div class="m"><span class="wa">${wa}</span><div><b>${q}</b> · ${t}</div></div>`).join('')
+ +`<div style="display:flex;gap:6px;margin-top:2px"><button class="botao prim">Revisar e enviar (3)</button><button class="botao">Canal da escola</button></div>`;
+
+</script>
+</body>
+</html>
