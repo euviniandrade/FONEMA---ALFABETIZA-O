@@ -23,7 +23,7 @@
 | Princípios N1–N12 aplicados | **8** | Cada cena tem N marcado; N10 (curiosidade) e N7 (intercalação) muito bem; N12 é ameaçado pela deriva da gamificação |
 | Avaliação e monitoramento | **6,5** | Critério de domínio exemplar; falta marco fixo, checagem fônica, plano psicométrico e triagem operacionalizada |
 | Inclusão | **7** | TEA, TDAH, dislexia e Down com parâmetros concretos; faltam gagueira, deficiência motora, cegueira (escopo), escolas indígenas e migrantes |
-| Engajamento ético | **6** | Salvaguardas S1–S13 e ritual de fim exemplares; D018/D019/D021/D022 contradizem P10 e o rel. 08 |
+| Engajamento ético | **6** | Salvaguardas S1–S13 e ritual de fim exemplares; D018/D019/D021/D022/D023 contradizem P10 e o rel. 08 |
 | Professor e família | **7,5** | Painel "3 perguntas", WhatsApp cuidadoso, Academia 40 h; falta medir carga real do professor |
 | Coerência entre documentos | **6,5** | Quadro de conflitos e QUALIDADE.md bons; doc. mestre parado na D018; vários conflitos novos não registrados |
 | Privacidade e legal | **7** | Arquitetura exemplar; todos os pontos P0 de advogado seguem abertos |

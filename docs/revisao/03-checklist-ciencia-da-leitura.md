@@ -114,7 +114,7 @@
 | G4 | Fim natural, sem "continuar"; janela noturna | ✅ | |
 | G5 | Nenhuma recompensa anunciada antes da tarefa ("se fizer X ganha Y") | ❌ | D019, D021, JC/07 §5 · R-01 |
 | G6 | Sem ranking entre crianças | ❌ | D018 §3 · R-02 |
-| G7 | Coleção com fim de capítulo | ⚠️ | Selos infinitos (D018) · R-11 |
+| G7 | Coleção com fim de capítulo | ⚠️ | Selos infinitos (D018); 12 escadas de patentes com estrelas sem fim (D023) · R-11, R-30 |
 | G8 | Lojinha fora da tela inicial | ⚠️ | D021: botão em toda fase · R-11 |
 | G9 | Sem visual de loot box (baú) | ⚠️ | `recompensas-3d/` · R-27 |
 | G10 | Tempo de tela por idade (Maternal 5–10 min; 4–5 anos ≤ 15 min) | ✅ | Doc. mestre §4.4; JC/08 §2 |

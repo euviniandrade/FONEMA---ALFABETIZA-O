@@ -59,7 +59,7 @@ Aplicação concreta: **sim, na maioria**. Cada cena das tabelas do JC tem a col
 | N5 Espaçamento | Jardim da Revisão 1·2·4·8·16·32·60 dias | ✅ (Leitner 1972 ainda "não encontrada", doc. mestre §9.1) |
 | N6 Recuperação | Tentar antes de ouvir; áudio nunca antes da tentativa | ✅ |
 | N7 Intercalação | Pares só depois de firmar cada um | ✅ |
-| N8 Multissensorial | Espelho do Som + traçado + "mão na garganta" | ✅; ⚠️ D020 com 3 vistas + giro 360° pode virar carga extra (ver N11) |
+| N8 Multissensorial | Espelho do Som + traçado + "mão na garganta"; D024: músicas da dupla com gesto que representa o som | ✅; ⚠️ D020 com 3 vistas + giro 360° pode virar carga extra (ver N11); D024 bem fundamentada (música → consciência fonológica, d ≈ 0,2; Gordon et al. 2015, rel. 14 §2.4), mas o efeito é **modesto**, não transfere para fluência, e "fixar para sempre" e "viral" não podem virar promessa pública (rel. 15) |
 | N9 Mapeamento ortográfico | Pseudopalavras, Árvore das Palavras | ✅ |
 | N10 Curiosidade | Ganchos, "por quê?" do Tales | ✅; ⚠️ gancho-cliffhanger diário é também mecânica de retenção: manter leve |
 | N11 Carga cognitiva | 2–4 opções, pistas retiráveis | ✅; ⚠️ Espelho 3D com 3 vistas sincronizadas e giro livre contraria "um foco por tela" (Sundararajan & Adesope 2020, g ≈ −0,33 para detalhes sedutores) |
@@ -169,6 +169,8 @@ A cobertura de países na pesquisa é excelente (rels. 01, 16–19; 56 países n
 | C7 | Sofia 2D sobre 3D (D005) nos painéis × dupla 3D (D007) | `paineis-v2/README.md` C1 × D007 | Texto desatualizado |
 | C8 | "Câmera fora do MVP; no máximo espelho local" × "Imite a Sofia (espelho com câmera opcional)" | doc. mestre §4.7 × D020 | Compatível se for só espelho local, sem gravação; falta dizer em que versão entra e o consentimento |
 | C9 | "Nunca prometer resultado" × "revolucionar a educação infantil e a alfabetização" | D002 × D021 §4 (ambição) | Só interno: não usar em material público |
+| C11 | "Não há ranking de **leitura** entre crianças" (D023 §4) deixa implícito ranking em outras áreas | D023 × doc. mestre §4.12 | Esclarecer junto com R-02 |
+| C12 | Música "de surpresa, no meio da jornada" × modo Previsível (TEA: surpresas desligadas, transição anunciada) | D024 §2 × doc. mestre §4.13 | Prever o aviso e a versão calma (a D024 §5 já cita versão calma) |
 | C10 | Vídeo nunca sozinho (D015) × canal no YouTube com reprodução automática da plataforma | D015 × `universo/05` Linha B | ⚖️ e valores: o próprio YouTube encadeia vídeos de terceiros |
 
 ### 7.2 Viabilidade técnica e custo

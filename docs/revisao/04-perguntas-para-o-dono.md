@@ -2,7 +2,7 @@
 
 > Só o que **exige decisão sua**. Cada pergunta traz o porquê em 1–2 linhas, as opções e a recomendação da revisão. O resto das recomendações ([02](02-recomendacoes-priorizadas.md)) a equipe pode executar sem nova decisão.
 
-## P1 · Recompensas anunciadas por nível e cadeados com contagem (D019, D021, D022)
+## P1 · Recompensas anunciadas por nível e cadeados com contagem (D019, D021, D022, D023)
 **Por quê:** "Ao chegar ao nível X, você ganha Y" e "Leia 5 palavras com M para desbloquear" são o formato que a pesquisa do próprio projeto diz que mais reduz a vontade de ler por prazer em crianças (rel. 08; Deci, Koestner & Ryan 1999, 128 experimentos).
 **Opções:**
 - (a) manter como está;
@@ -10,6 +10,8 @@
 - (c) tirar itens dos níveis e deixar só títulos e celebração.
 
 **Recomendação:** **(b)**. Preserva a sensação de progresso que você quer e remove o mecanismo que a evidência condena.
+
+**Junto com isso (D023, patentes por área):** hoje a criança teria 6 sistemas de progressão ao mesmo tempo (moedinhas, níveis, títulos, selos em 4 níveis, 12 escadas de patentes, coleções), com 523 itens no catálogo. A revisão recomenda **um eixo visível para a criança** (títulos da leitura + álbum por região) e as patentes por área como visão do adulto ou só a partir dos 7–8 anos, trocando "ser a melhor em tudo" por "melhor do que eu era" (R-30).
 
 ## P2 · Ranking por esforço (D018 §3)
 **Por quê:** o documento mestre lista ranking como anti-padrão proibido, e os rels. 38 e 42 também. Mesmo "por esforço", a criança que se esforça e lê devagar aparece abaixo.
