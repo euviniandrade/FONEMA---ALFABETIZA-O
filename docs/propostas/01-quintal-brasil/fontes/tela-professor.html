@@ -1,0 +1,75 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="common.css">
+<style>
+body{width:1440px;height:900px;overflow:hidden;font-family:Atkinson,sans-serif;background:#FBF6EE;display:flex;font-size:14px}
+.side{width:210px;background:#3B2A20;color:#F3E6D2;padding:22px 16px;display:flex;flex-direction:column;gap:6px}
+.logo{font-family:Fredoka;font-weight:700;font-size:24px;color:#F2B33D;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.side a{padding:10px 12px;border-radius:10px;font-size:14.5px;color:#E8D9C4}
+.side a.on{background:#A9472A;color:#fff;font-weight:700}
+.main{flex:1;padding:20px 24px;display:flex;flex-direction:column;gap:14px}
+.hdr{display:flex;align-items:flex-end;gap:16px}
+.hdr h1{font-size:24px}
+.hdr small{color:var(--cinza)}
+.pill{border:1.5px solid var(--linha);background:#fff;border-radius:18px;padding:6px 12px;font-size:13px}
+.kpis{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:12px}
+.k{background:#fff;border-radius:16px;padding:12px 14px;box-shadow:0 1px 0 #EADBC3}
+.k .t{font-size:12px;color:var(--cinza);text-transform:uppercase;letter-spacing:.5px}
+.k .v{font-size:26px;font-weight:700;margin-top:2px}
+.grid{display:grid;grid-template-columns:1fr 330px;gap:14px;flex:1;min-height:0}
+.panel{background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 1px 0 #EADBC3;min-height:0}
+.panel h2{font-size:16px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+table{border-collapse:separate;border-spacing:3px 2px;font-size:12.5px}
+th{font-weight:700;color:var(--cinza);font-size:11.5px;height:100px;vertical-align:bottom;padding:0 0 4px}
+th.r{writing-mode:vertical-rl;transform:rotate(180deg);text-align:left;width:46px;white-space:nowrap}
+td.n{white-space:nowrap;padding-right:6px;font-size:13px}
+td.c{width:46px;height:22px;border-radius:5px;text-align:center;font-size:12px;font-weight:700}
+td.lv{font-weight:700;text-align:center;padding:0 6px}
+.legend{display:flex;gap:12px;font-size:12px;color:var(--cinza);margin-top:8px;align-items:center;flex-wrap:wrap}
+.legend i{display:inline-block;width:16px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+.grp{border-radius:14px;padding:10px 12px;margin-bottom:9px;border:1.5px solid var(--linha)}
+.grp b{font-size:14px}
+.grp .who{font-size:12.5px;color:var(--cinza);margin:3px 0 6px}
+.grp .act{font-size:13px;background:#FBF3E6;border-radius:9px;padding:6px 8px}
+.bar{display:flex;align-items:flex-end;gap:5px;height:58px;margin-top:6px}
+.bar div{flex:1;background:#7FB8C9;border-radius:4px 4px 0 0;position:relative}
+.bar span{position:absolute;bottom:-16px;left:0;right:0;text-align:center;font-size:10.5px;color:var(--cinza)}
+.foot{font-size:11.5px;color:var(--cinza)}
+</style></head><body>
+<div class="side"><div class="logo"><svg width="30" height="30" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#F2B33D"/><text x="32" y="43" text-anchor="middle" font-family="Andika" font-weight="700" font-size="30" fill="#3B2A20">F</text></svg>FONEMA</div>
+<a class="on">Minha turma</a><a>Grupos de amanhã</a><a>Fila de escuta</a><a>Alunos</a><a>Atividades de sala</a><a>Relatórios (PDF)</a><a>Famílias</a><div style="flex:1"></div><a style="font-size:12.5px;opacity:.8">Profa. Ana Paula · sair</a></div>
+<div class="main">
+ <div class="hdr"><div><small>Escola Municipal Ipê Amarelo · 1º ano B · 24 alunos</small><h1>Como está a turma hoje?</h1></div><div style="flex:1"></div><span class="pill">Semana de 2 a 8/nov ▾</span><span class="pill">Leitura ▾</span><span class="pill" style="background:#A9472A;color:#fff;border-color:#A9472A">Exportar PDF</span></div>
+ <div class="kpis">
+  <div class="k"><div class="t">Termômetro da Leitura · alunos por nível (0–10)</div>
+   <div class="bar" id="hist"></div><div style="height:14px"></div></div>
+  <div class="k"><div class="t">Nível mediano da turma</div><div class="v">3 <span style="font-size:15px;color:var(--cinza);font-weight:400">de 10 · faltam 7</span></div></div>
+  <div class="k"><div class="t">Dose média (meta 10–15 min/dia)</div><div class="v">12 min <span style="font-size:15px;color:var(--folha)">● na faixa</span></div></div>
+  <div class="k"><div class="t">Precisam de você hoje</div><div class="v" style="color:var(--terracota)">4 alunos</div><div style="font-size:12px;color:var(--cinza)">travados há 3 sessões ou sem uso há 7 dias</div></div>
+ </div>
+ <div class="grid">
+  <div class="panel"><h2>Mapa de calor · aluno × habilidade <span style="font-weight:400;font-size:12.5px;color:var(--cinza)">(precisão antes de velocidade; itens com ASR incerto fora do cálculo)</span></h2>
+   <table id="hm"></table>
+   <div class="legend"><span><i style="background:#F4EEE6;border:1px dashed #CDBBA6"></i>ainda não visto</span><span><i style="background:#EAF4F6"></i>em contato</span><span><i style="background:#BFDDE5"></i>praticando</span><span><i style="background:#7FB8C9"></i>quase lá</span><span><i style="background:#357E94"></i>domínio</span><span>▲ travado (3 sessões)</span><span>◆ lapso na revisão</span><span>⧗ lento, mas preciso</span></div>
+  </div>
+  <div class="panel" style="overflow:hidden"><h2>Grupos sugeridos para amanhã</h2>
+   <div class="grp" style="border-color:#A9472A"><b>Grupo 1 · Sons V e F</b><div class="who">Davi, Kauã, Yasmin, Pietro (4)</div><div class="act">Mão na garganta: “ffff” × “vvvv”. Depois, caça ao som /v/ com figuras (10 min, mesa da professora).</div></div>
+   <div class="grp"><b>Grupo 2 · Sílabas com S e N</b><div class="who">Lia, Heitor, Ana Clara, Miguel, Sofia R., Enzo (6)</div><div class="act">Fábrica de sílabas com cartões SA–NA–SO–NO; ler 4 pseudopalavras (SANO, NOSA).</div></div>
+   <div class="grp"><b>Grupo 3 · Vogais e rima</b><div class="who">Bernardo, Isis (2)</div><div class="act">Rima ou não rima com objetos da sala; vogais na massinha.</div></div>
+   <div class="grp" style="background:#F3F8F1"><b>Grupo 4 · Prontos para avançar</b><div class="who">Valentina, Luiza, João, Maria Eduarda +8</div><div class="act">Leitura em dupla do livrinho “A LUA E A MALA” e reconto oral.</div></div>
+  </div>
+ </div>
+ <div class="foot">Escala FONEMA por critério; a referência ao Saeb (743) é estimativa, não equivalência. Dados socioemocionais nunca aparecem aqui. A secretaria vê só agregados (n ≥ 10).</div>
+</div>
+<script>
+const hist=[0,1,3,9,6,4,1,0,0,0,0],mx=9;document.getElementById('hist').innerHTML=hist.map((v,i)=>`<div style="height:${Math.max(3,v/mx*52)}px;background:${i===3?'#1F6E82':'#7FB8C9'}"><span>${i}</span></div>`).join('');
+const sk=['Rima','Sílaba','Som inicial','Vogais','M','L','F','V','S','N','Sílabas CV','Pseudopalavras','Palavras CV.CV','Frase curta'];
+const al=[['Valentina',5],['Luiza',5],['João',4],['Maria Eduarda',4],['Gael',4],['Lia',3],['Heitor',3],['Ana Clara',3],['Miguel',3],['Sofia R.',3],['Enzo',3],['Davi',3],['Kauã',3],['Yasmin',2],['Pietro',2],['Bernardo',1],['Isis',1]];
+const col=['#F4EEE6','#EAF4F6','#BFDDE5','#7FB8C9','#357E94'];
+let rnd=7;const r=()=>{rnd=(rnd*9301+49297)%233280;return rnd/233280};
+let h='<tr><th></th><th style="writing-mode:vertical-rl;transform:rotate(180deg);text-align:left">Nível</th>'+sk.map(s=>`<th class="r">${s}</th>`).join('')+'</tr>';
+al.forEach(([n,l],ri)=>{h+=`<tr><td class="n">${n}</td><td class="lv">${l}</td>`;sk.forEach((s,j)=>{const base=l*2.6+2-j;let st=Math.max(0,Math.min(4,Math.round(base/2.2+ (r()-.5)*1.2)));if(j<4&&l>=2)st=Math.max(st,3);if(j>=12&&l<4)st=0;let g='';
+ if((n==='Davi'||n==='Kauã'||n==='Yasmin'||n==='Pietro')&&(s==='V'||s==='F')){st=1;g='▲'}
+ if(n==='Heitor'&&s==='M'){st=2;g='◆'} if(n==='Gael'&&s==='Pseudopalavras'){g='⧗'}
+ h+=`<td class="c" style="background:${col[st]};color:${st>=4?'#fff':'#3B2A20'};${st===0?'outline:1px dashed #CDBBA6;outline-offset:-1px':''}">${g}</td>`});h+='</tr>'});
+h+=`<tr><td class="n" colspan="16" style="color:#6E5D52;font-size:12px;padding-top:4px">+ 7 alunos (role para ver) · ordenado por nível</td></tr>`;document.getElementById('hm').innerHTML=h;
+</script>
+</body></html>

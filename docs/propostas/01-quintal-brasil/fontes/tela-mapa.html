@@ -1,0 +1,129 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="common.css">
+<style>
+body{width:1280px;height:800px;overflow:hidden;position:relative;background:#CFE9EE}
+#mapa{position:absolute;inset:0}
+.hud-btn{position:absolute;width:84px;height:84px;border-radius:26px;background:var(--papel);box-shadow:0 5px 0 #E2CDB0,0 8px 18px rgba(59,42,32,.15);display:flex;align-items:center;justify-content:center}
+.hud-btn svg{width:56px;height:56px}
+.termo{position:absolute;left:22px;top:22px;width:104px;height:470px;background:var(--papel);border-radius:52px;box-shadow:0 5px 0 #E2CDB0,0 10px 24px rgba(59,42,32,.15)}
+.bubble{position:absolute;left:206px;top:686px;width:560px;font-size:24px!important;background:var(--papel);border-radius:28px;padding:16px 44px 16px 26px;font-size:24px;line-height:1.3;box-shadow:0 5px 0 #E2CDB0,0 10px 24px rgba(59,42,32,.15)}
+.bubble:before{content:"";position:absolute;left:-18px;top:30px;border:14px solid transparent;border-right:22px solid var(--papel);border-left:0}
+.bubble .som{position:absolute;right:-30px;top:18px;width:60px;height:60px;border-radius:50%;background:var(--sol);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 #D4952A}
+.play{position:absolute;right:40px;bottom:36px;width:136px;height:136px;border-radius:50%;background:var(--terracota);box-shadow:0 8px 0 #7E3219,0 14px 26px rgba(59,42,32,.25);display:flex;align-items:center;justify-content:center}
+.play:after{content:"";position:absolute;inset:-12px;border-radius:50%;border:5px solid rgba(169,71,42,.35)}
+.coins{position:absolute;right:228px;top:34px;height:60px;padding:0 20px 0 10px;border-radius:30px;background:var(--papel);display:flex;align-items:center;gap:8px;font-size:30px;font-weight:700;box-shadow:0 4px 0 #E2CDB0}
+.gate{position:absolute;right:14px;top:14px;width:44px;height:44px;border-radius:12px;background:rgba(255,251,244,.7);display:flex;align-items:center;justify-content:center}
+.anot{position:absolute;font-family:Atkinson;font-size:13px;color:#fff;background:rgba(59,42,32,.78);padding:5px 9px;border-radius:8px;letter-spacing:.2px}
+</style></head><body>
+<script src="chars.js"></script>
+<svg id="mapa" viewBox="0 0 1280 800" width="1280" height="800"></svg>
+<div class="termo"><svg viewBox="0 0 104 470" width="104" height="470" id="termo"></svg></div>
+<div class="hud-btn" style="right:124px;top:22px"><svg><use href="#i-casa"/></svg></div>
+<div class="hud-btn" style="right:24px;top:22px"><svg><use href="#i-album"/></svg></div>
+<div class="hud-btn" style="right:424px;top:22px;display:none"></div>
+<div class="coins"><svg width="42" height="42"><use href="#moeda"/></svg>26</div>
+<div class="hud-btn" style="right:24px;top:22px;display:none"></div>
+
+<div class="gate" style="right:14px;top:120px"><svg width="30" height="30"><use href="#i-porteira"/></svg></div>
+<svg style="position:absolute;left:8px;top:556px" width="190" height="250" viewBox="0 0 200 262"><use href="#sofia"/></svg>
+<div class="bubble">Olha, Lia! O Bolota achou uma trilha nova na mata. Vamos ler juntos?<div class="som"><svg width="36" height="36"><use href="#i-ouvido"/></svg></div></div>
+<div class="play"><svg width="70" height="70" style="margin-left:10px"><use href="#i-play"/></svg></div>
+<script>
+const S=document.getElementById('mapa');let h='';
+h+=`<defs>
+<pattern id="ondas" width="60" height="22" patternUnits="userSpaceOnUse"><path d="M4,12 q8,-7 16,0 t16,0" stroke="#AFD9E2" stroke-width="2.5" fill="none" stroke-linecap="round"/></pattern>
+<pattern id="graos" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="rgba(122,75,46,.10)"/><circle cx="6.5" cy="6" r=".8" fill="rgba(122,75,46,.07)"/></pattern>
+<filter id="sombra" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#3B2A20" flood-opacity=".18"/></filter>
+<radialGradient id="nevoa"><stop offset="0" stop-color="#FFFBF4" stop-opacity=".0"/><stop offset="1" stop-color="#FFFBF4" stop-opacity=".0"/></radialGradient>
+</defs>`;
+h+=`<rect width="1280" height="800" fill="#CDE8EE"/><rect width="1280" height="800" fill="url(#ondas)" opacity=".8"/>`;
+// terra
+const land="M190,250 C180,140 300,86 450,96 C600,74 760,62 905,92 C1045,112 1102,205 1084,322 C1074,420 1046,500 986,598 C906,664 764,652 652,644 C562,644 474,624 424,566 C384,522 302,520 226,502 C166,484 162,384 190,250 Z";
+h+=`<path d="${land}" fill="#E9D3A8" transform="translate(0,10)" opacity=".7"/><path d="${land}" fill="#F3E2BE"/><path d="${land}" fill="url(#graos)"/>`;
+// biomas (manchas)
+const blob=(cx,cy,rx,ry,fill,op=1)=>`<path d="M${cx-rx},${cy} C${cx-rx},${cy-ry*1.1} ${cx-rx*0.2},${cy-ry*1.05} ${cx+rx*0.2},${cy-ry} C${cx+rx*0.9},${cy-ry*0.95} ${cx+rx*1.05},${cy-ry*0.2} ${cx+rx},${cy+ry*0.15} C${cx+rx*0.95},${cy+ry} ${cx+rx*0.1},${cy+ry*1.1} ${cx-rx*0.3},${cy+ry} C${cx-rx*0.9},${cy+ry*0.9} ${cx-rx*1.02},${cy+ry*0.5} ${cx-rx},${cy} Z" fill="${fill}" opacity="${op}"/>`;
+h+=blob(270,440,95,80,'#6FA86A');      // mata a
+h+=blob(340,300,95,75,'#5E9A5C');      // mata b
+h+=blob(450,170,110,62,'#B8D98C');     // pampa
+h+=blob(575,345,105,70,'#9CCBB0');     // pantanal
+h+=blob(680,170,95,62,'#E3B86B');      // cerrado
+h+=blob(860,160,110,60,'#EBCB8E');     // caatinga
+h+=blob(840,350,120,85,'#3F7D4E');     // amazonia
+h+=blob(985,300,80,95,'#D9C3A8');      // cidade
+h+=blob(920,560,105,62,'#F6E3B4');     // litoral
+h+=blob(590,540,115,72,'#E9C99A');     // quintal
+// mar ao redor do litoral
+h+=`<path d="M1000,640 C1060,560 1100,520 1120,470" stroke="#AFD9E2" stroke-width="6" fill="none" opacity=".7"/>`;
+// rios
+h+=`<path d="M760,300 C800,330 830,360 880,370 C930,380 960,420 1000,470" stroke="#7FC1D3" stroke-width="10" fill="none" stroke-linecap="round"/>`;
+h+=`<ellipse cx="545" cy="335" rx="38" ry="16" fill="#8CC9DA"/><ellipse cx="610" cy="370" rx="30" ry="12" fill="#8CC9DA"/><ellipse cx="620" cy="318" rx="20" ry="9" fill="#8CC9DA"/>`;
+// arvores
+const tree=(x,y,s,c,t='#7A4B2E')=>`<g filter="url(#sombra)"><rect x="${x-2.5*s}" y="${y}" width="${5*s}" height="${12*s}" rx="${2*s}" fill="${t}"/><circle cx="${x}" cy="${y-2*s}" r="${11*s}" fill="${c}"/><circle cx="${x-7*s}" cy="${y+2*s}" r="${7*s}" fill="${c}"/><circle cx="${x+7*s}" cy="${y+2*s}" r="${7*s}" fill="${c}"/><circle cx="${x-3*s}" cy="${y-6*s}" r="${4*s}" fill="#fff" opacity=".18"/></g>`;
+[[220,420,1.1],[255,470,1],[300,430,1.2],[205,470,.9],[320,480,.9]].forEach(a=>h+=tree(a[0],a[1],a[2],'#2F6B43'));
+[[300,280,1.1],[360,270,1],[395,320,1.1],[280,330,.9]].forEach(a=>h+=tree(a[0],a[1],a[2],'#2F6B43'));
+[[780,320,1.2],[810,300,1],[900,330,1.3],[930,300,1],[760,370,1],[870,410,1.1],[800,410,1.2]].forEach(a=>h+=tree(a[0],a[1],a[2],'#24563A'));
+// cerrado: arvores tortas + ipe
+const torta=(x,y,c)=>`<path d="M${x},${y+16} q-4,-10 3,-16 q6,-6 2,-14" stroke="#7A4B2E" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="${x+5}" cy="${y-18}" rx="14" ry="8" fill="${c}"/>`;
+h+=torta(640,160,'#7FA05A')+torta(700,150,'#F2B33D')+torta(720,195,'#7FA05A')+torta(665,205,'#F2B33D');
+// pampa: colinas + moinho
+h+=`<ellipse cx="420" cy="190" rx="50" ry="16" fill="#A6CC79"/><ellipse cx="500" cy="160" rx="40" ry="12" fill="#A6CC79"/>
+<g transform="translate(470,130)"><rect x="-5" y="0" width="10" height="34" fill="#FFFBF4" stroke="#7A4B2E" stroke-width="2"/><g stroke="#A9472A" stroke-width="5" stroke-linecap="round"><path d="M0,0 L0,-20 M0,0 L19,6 M0,0 L-12,16 M0,0 L-18,-6"/></g><circle r="4" fill="#7A4B2E"/></g>`;
+// caatinga: mandacaru
+const cacto=(x,y,s)=>`<g fill="#5E8C4E"><rect x="${x-5*s}" y="${y-30*s}" width="${10*s}" height="${32*s}" rx="${5*s}"/><rect x="${x-17*s}" y="${y-20*s}" width="${8*s}" height="${16*s}" rx="${4*s}"/><rect x="${x-17*s}" y="${y-8*s}" width="${16*s}" height="${6*s}" rx="${3*s}"/><rect x="${x+9*s}" y="${y-24*s}" width="${8*s}" height="${14*s}" rx="${4*s}"/><rect x="${x+1*s}" y="${y-14*s}" width="${16*s}" height="${6*s}" rx="${3*s}"/></g>`;
+h+=cacto(800,170,1.1)+cacto(905,150,.9)+cacto(860,195,.8);
+// cidade
+const predio=(x,y,w,hh,c)=>`<g filter="url(#sombra)"><rect x="${x}" y="${y-hh}" width="${w}" height="${hh}" rx="4" fill="${c}"/>${Array.from({length:Math.floor(hh/18)}).map((_,i)=>`<rect x="${x+6}" y="${y-hh+8+i*18}" width="${w-12}" height="7" rx="2" fill="#FFFBF4" opacity=".75"/>`).join('')}</g>`;
+h+=predio(950,300,30,70,'#B23C62')+predio(985,300,34,96,'#1F6E82')+predio(1023,300,28,58,'#F2B33D')+predio(965,360,32,46,'#6B5BA8')+predio(1003,360,30,62,'#A9472A');
+// litoral: coqueiros + areia
+const coq=(x,y)=>`<path d="M${x},${y} q4,-22 -2,-40" stroke="#8B5A35" stroke-width="5" fill="none" stroke-linecap="round"/><g fill="#3E8A55"><path d="M${x-2},${y-40} q-20,-6 -30,8 q16,-8 30,-8z"/><path d="M${x-2},${y-40} q20,-8 30,6 q-16,-6 -30,-6z"/><path d="M${x-2},${y-40} q-6,-18 8,-26 q-6,12 -8,26z"/></g>`;
+h+=coq(880,575)+coq(940,560)+coq(990,580);
+// quintal/vila
+const casa=(x,y,c)=>`<g filter="url(#sombra)"><rect x="${x}" y="${y}" width="40" height="30" rx="4" fill="#FFFBF4"/><path d="M${x-6},${y+2} L${x+20},${y-20} L${x+46},${y+2} Z" fill="${c}"/><rect x="${x+15}" y="${y+12}" width="11" height="18" rx="3" fill="#7A4B2E"/></g>`;
+h+=casa(530,520,'#A9472A')+casa(600,500,'#B23C62')+casa(650,545,'#A9472A')+casa(560,575,'#1F6E82');
+h+=`<g transform="translate(624,600)"><rect x="-30" y="0" width="60" height="18" rx="6" fill="#8CC084"/><circle cx="-18" cy="0" r="6" fill="#B23C62"/><circle cx="0" cy="-2" r="6" fill="#F2B33D"/><circle cx="18" cy="0" r="6" fill="#B23C62"/></g>`;
+// Ilha das Vogais
+h+=`<ellipse cx="350" cy="618" rx="125" ry="46" fill="#E9D3A8" transform="translate(0,8)" opacity=".7"/><ellipse cx="350" cy="618" rx="125" ry="46" fill="#F6E3B4"/>
+<g transform="translate(262,622)"><rect x="-9" y="-46" width="18" height="50" fill="#FFFBF4"/><rect x="-9" y="-34" width="18" height="9" fill="#A9472A"/><rect x="-9" y="-14" width="18" height="9" fill="#A9472A"/><path d="M-13,-46 L0,-60 L13,-46Z" fill="#A9472A"/><circle cx="0" cy="-50" r="4" fill="#F2B33D"/></g>`;
+['A','E','I','O','U'].forEach((v,i)=>{const x=405+i*16,y=612+(i%2)*6;h+=`<path d="M${x},${y-14} C${x+7},${y-4} ${x+8},${y+6} ${x},${y+7} C${x-8},${y+6} ${x-7},${y-4} ${x},${y-14}Z" fill="#6B5BA8"/><text x="${x}" y="${y+4}" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" font-family="Andika">${v}</text>`});
+// Arquipelago dos livros
+const ilha=(x,y,rx)=>`<ellipse cx="${x}" cy="${y+6}" rx="${rx}" ry="${rx*.38}" fill="#E9D3A8" opacity=".7"/><ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${rx*.38}" fill="#F3E2BE"/>`;
+h+=ilha(1170,440,62)+ilha(1220,330,40)+ilha(1130,540,36);
+const livros=(x,y)=>`<g filter="url(#sombra)"><rect x="${x-22}" y="${y-10}" width="44" height="10" rx="2" fill="#1F6E82"/><rect x="${x-18}" y="${y-20}" width="38" height="10" rx="2" fill="#B23C62"/><rect x="${x-20}" y="${y-30}" width="40" height="10" rx="2" fill="#F2B33D"/><path d="M${x-14},${y-30} L${x},${y-44} L${x+14},${y-30}" fill="#FFFBF4" stroke="#7A4B2E" stroke-width="2"/></g>`;
+h+=livros(1170,435)+livros(1220,327);
+// trilha
+const nodes=[['R0',590,525,'Quintal da Sofia'],['R1',340,592,'Ilha das Vogais'],['R2a',258,418,'Vale do M-L-F'],['R2b',342,296,'Trilha do V-S-N'],['R3',452,190,'Pampa'],['R4',575,340,'Pantanal'],['R5',680,178,'Cerrado'],['R6',860,170,'Caatinga'],['R7',845,352,'Amazônia'],['R8',935,540,'Litoral e Mar'],['R9',1000,250,'Cidade das Letras'],['R10',1165,420,'Arquipélago dos Livros']];
+const pts=nodes.map(n=>[n[1],n[2]]);
+let d=`M${pts[0][0]},${pts[0][1]}`;for(let i=1;i<pts.length;i++){const [x0,y0]=pts[i-1],[x1,y1]=pts[i];const mx=(x0+x1)/2+(i%2?18:-18),my=(y0+y1)/2+(i%2?-14:14);d+=` Q${mx},${my} ${x1},${y1}`}
+h+=`<path d="${d}" stroke="#FFFBF4" stroke-width="16" fill="none" stroke-linecap="round" opacity=".9"/><path d="${d}" stroke="#C9A77E" stroke-width="5" fill="none" stroke-dasharray="2 13" stroke-linecap="round"/>`;
+let dd=`M${pts[0][0]},${pts[0][1]}`;for(let i=1;i<=3;i++){const [x0,y0]=pts[i-1],[x1,y1]=pts[i];const mx=(x0+x1)/2+(i%2?18:-18),my=(y0+y1)/2+(i%2?-14:14);dd+=` Q${mx},${my} ${x1},${y1}`}
+h+=`<path d="${dd}" stroke="#A9472A" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="1 0"/>`;
+// nevoa leve nas regioes futuras (sem cadeado)
+nodes.forEach((n,i)=>{
+ const [id,x,y,nome]=n;const feito=i<3,atual=i===3;
+ const r=atual?34:27;
+ if(i>3) h+=`<circle cx="${x}" cy="${y}" r="58" fill="#FFFBF4" opacity=".28"/>`;
+ h+=`<g filter="url(#sombra)"><circle cx="${x}" cy="${y}" r="${r}" fill="${feito?'#2F6B43':atual?'#A9472A':'#FFFBF4'}" stroke="#FFFBF4" stroke-width="5"/></g>`;
+ if(feito) h+=`<path d="M${x-10},${y+1} l7,7 l13,-15" stroke="#FFFBF4" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+ else if(atual) h+=`<circle cx="${x}" cy="${y}" r="${r+12}" fill="none" stroke="#A9472A" stroke-width="4" opacity=".45"/><text x="${x}" y="${y+12}" font-size="32" font-weight="700" fill="#FFFBF4" text-anchor="middle" font-family="Andika">V</text>`;
+ else h+=`<circle cx="${x}" cy="${y}" r="7" fill="#D9C3A8"/>`;
+ // plaquinha
+ const w=nome.length*7.6+22, py=y+r+10;
+ h+=`<g opacity="${i>3?.85:1}"><rect x="${x-w/2}" y="${py}" width="${w}" height="24" rx="7" fill="${atual?'#A9472A':'#FFFBF4'}" stroke="${atual?'#7E3219':'#D9C3A8'}" stroke-width="1.5"/><text x="${x}" y="${py+17}" font-size="14" font-weight="700" fill="${atual?'#FFFBF4':'#3B2A20'}" text-anchor="middle" font-family="Andika">${nome}</text></g>`;
+});
+// avatar da Lia sobre o no atual + Bolota
+h+=`<g filter="url(#sombra)"><path d="M342,252 C322,252 312,236 312,222 C312,200 328,188 342,188 C356,188 372,200 372,222 C372,236 362,252 342,252Z" fill="#FFFBF4"/><circle cx="342" cy="216" r="25" fill="#FCE3A6"/></g><svg x="317" y="186" width="50" height="62" viewBox="40 20 120 125"><use href="#lia"/></svg>`;
+h+=`<svg x="232" y="250" width="78" height="52"><use href="#bolota"/></svg>`;
+S.innerHTML=h;
+// termometro
+const T=document.getElementById('termo');let t='';
+t+=`<rect x="34" y="40" width="36" height="360" rx="18" fill="#F3E6D2"/>`;
+const nivel=3, segH=36; const topo=400-nivel*segH;
+t+=`<defs><linearGradient id="liq" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#A9472A"/><stop offset="1" stop-color="#F2B33D"/></linearGradient></defs>`;
+t+=`<rect x="34" y="${topo}" width="36" height="${400-topo}" rx="18" fill="url(#liq)"/><rect x="34" y="${topo}" width="36" height="30" rx="15" fill="#F2B33D"/>`;
+for(let i=1;i<10;i++){const y=400-i*segH;t+=`<path d="M70,${y} h9" stroke="${i<=nivel?'#A9472A':'#D9C3A8'}" stroke-width="4" stroke-linecap="round"/><path d="M25,${y} h9" stroke="${i<=nivel?'#A9472A':'#D9C3A8'}" stroke-width="4" stroke-linecap="round"/>`}
+t+=`<circle cx="52" cy="${topo+8}" r="6" fill="#FFFBF4" opacity=".9"/><circle cx="64" cy="${topo-8}" r="3" fill="#F2B33D"/>`;
+t+=`<circle cx="52" cy="420" r="34" fill="#A9472A"/><circle cx="52" cy="420" r="24" fill="#F2B33D"/>`;
+for(let k=0;k<8;k++){const a=k*Math.PI/4;t+=`<path d="M${52+Math.cos(a)*27},${420+Math.sin(a)*27} L${52+Math.cos(a)*31},${420+Math.sin(a)*31}" stroke="#FCE3A6" stroke-width="3" stroke-linecap="round"/>`}
+t+=`<g transform="translate(52,22)"><rect x="-22" y="-6" width="20" height="24" rx="3" fill="#1F6E82" transform="skewY(8)"/><rect x="2" y="-3" width="20" height="24" rx="3" fill="#1F6E82" transform="skewY(-8)"/><path d="M0,-4 V20" stroke="#FFFBF4" stroke-width="2"/></g>`;
+T.innerHTML=t;
+</script>
+</body></html>

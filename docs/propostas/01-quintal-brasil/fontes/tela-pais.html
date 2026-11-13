@@ -1,0 +1,72 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="common.css">
+<style>
+body{width:390px;height:844px;overflow:hidden;font-family:Atkinson,sans-serif;background:#FFF8EE;position:relative;font-size:15px}
+.status{height:38px;display:flex;justify-content:space-between;align-items:center;padding:0 22px;font-weight:700;font-size:14px}
+.top{padding:4px 18px 10px;display:flex;align-items:center;gap:12px}
+.top .av{width:46px;height:46px;border-radius:50%;background:#FCE3A6;overflow:hidden;display:flex;justify-content:center}
+.top h1{font-size:19px;line-height:1.1}
+.top small{color:var(--cinza);font-size:13px}
+.sel{margin-left:auto;font-size:13px;border:1.5px solid var(--linha);border-radius:18px;padding:6px 10px;color:var(--cinza)}
+.wrap{padding:0 14px;display:flex;flex-direction:column;gap:9px}
+.card{background:#fff;border-radius:20px;padding:12px 14px;box-shadow:0 1px 0 #EADBC3,0 4px 14px rgba(59,42,32,.06)}
+.nivel{background:var(--mar);color:#fff}
+.nivel .big{font-size:25px;font-weight:700;line-height:1.1}
+.nivel .big span{color:var(--sol)}
+.escala{display:flex;gap:4px;margin:12px 0 6px}
+.escala i{flex:1;height:14px;border-radius:7px;background:rgba(255,255,255,.22);position:relative}
+.escala i.ok{background:var(--sol)}
+.escala i.now{background:var(--sol);box-shadow:0 0 0 3px rgba(242,179,61,.45)}
+.lbl{display:flex;justify-content:space-between;font-size:11.5px;opacity:.85}
+.prev{margin-top:10px;font-size:13px;background:rgba(255,255,255,.12);border-radius:12px;padding:7px 10px;line-height:1.35}
+h3{font-size:12.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--cinza);margin-bottom:8px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:13px;padding:5px 10px;border-radius:14px;background:#EEF6EC;color:var(--folha);font-weight:700}
+.chip.a{background:#FFF1D6;color:#8A5A10}
+.audio{display:flex;align-items:center;gap:10px;background:#FFF1D6;border-radius:14px;padding:9px 12px;font-weight:700;font-size:14px}
+.audio .pl{width:34px;height:34px;border-radius:50%;background:var(--terracota);display:flex;align-items:center;justify-content:center}
+.missao{display:flex;gap:12px;align-items:flex-start}
+.btn{background:var(--folha);color:#fff;border-radius:14px;padding:10px 14px;font-weight:700;text-align:center;font-size:15px}
+.tr{display:grid;grid-template-columns:1fr auto;gap:6px 10px;font-size:13.5px;align-items:center}
+.st{font-size:12px;font-weight:700;padding:3px 8px;border-radius:10px}
+.nav{position:absolute;bottom:0;left:0;right:0;height:70px;background:#fff;border-top:1px solid var(--linha);display:flex;justify-content:space-around;padding-top:10px;font-size:11.5px;color:var(--cinza)}
+.nav div{display:flex;flex-direction:column;align-items:center;gap:3px}
+.nav .on{color:var(--terracota);font-weight:700}
+.dot{width:26px;height:26px;border-radius:8px;background:currentColor;opacity:.9}
+.foot{font-size:11px;color:var(--cinza);padding:2px 4px}
+</style></head><body>
+<script src="chars.js"></script>
+<div class="status"><span>9:41</span><span>●●● ▮</span></div>
+<div class="top"><div class="av"><svg width="46" height="78" viewBox="30 18 140 150"><use href="#lia"/></svg></div>
+ <div><h1>Lia, 6 anos</h1><small>Semana de 2 a 8 de novembro</small></div><div class="sel">Trocar</div></div>
+<div class="wrap">
+ <div class="card nivel">
+  <div style="font-size:13px;opacity:.9;margin-bottom:2px">Termômetro da Leitura</div>
+  <div class="big">Nível 3 de 10 · <span>faltam 7 níveis</span></div>
+  <div style="font-size:13.5px;margin-top:3px;opacity:.95">“Juntando sons”: já lê sílabas simples e palavras curtas.</div>
+  <div class="escala"><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="now"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="lbl"><span>0 · Ponto de partida</span><span>10 · Alfabetizada plena</span></div>
+  <div class="prev">Próximo nível: <b>entre 3 e 6 semanas</b> no ritmo atual (estimativa, não promessa)</div>
+ </div>
+ <div class="card">
+  <h3>O que a Lia já sabe e o que está aprendendo</h3>
+  <div class="row"><span class="chip">✓ Vogais</span><span class="chip">✓ M · L · F</span><span class="chip">✓ VA VE VI VO VU</span><span class="chip a">→ S e N</span><span class="chip a">→ palavras como SOFÁ</span></div>
+  <div class="audio" style="margin-top:9px;padding:7px 12px"><div class="pl"><svg width="16" height="16" viewBox="0 0 64 64"><path d="M18,10 L54,32 L18,54Z" fill="#fff"/></svg></div>Ouvir este resumo (1 min)</div>
+ </div>
+ <div class="card">
+  <h3>Missão da semana · sem tela</h3>
+  <div class="missao"><svg width="54" height="54" viewBox="0 0 64 64" style="flex:none"><rect x="6" y="10" width="52" height="44" rx="10" fill="#EEF6EC"/><text x="32" y="42" text-anchor="middle" font-family="Andika" font-weight="700" font-size="24" fill="#2F6B43">V</text></svg>
+   <div style="font-size:14px;line-height:1.35">Na cozinha, procurem juntos coisas que começam com o som <b>/v/</b> (vaca, vela, vassoura). Mão no pescoço: vibra!</div></div>
+  <div style="display:flex;gap:8px;margin-top:8px"><div class="btn" style="flex:1;padding:8px">Fizemos! ✓</div><div class="btn" style="background:#FFF1D6;color:#8A5A10;padding:8px 12px">▶ Ouvir</div></div>
+ </div>
+ <div class="card">
+  <h3>Outras competências</h3>
+  <div class="tr">
+   <span>Poupando para a VIOLA (26 de 40 moedinhas)</span><span class="st" style="background:#FFF1D6;color:#8A5A10">praticando</span>
+   <span>Sequência de 3 passos com o Bolota</span><span class="st" style="background:#EEF6EC;color:#2F6B43">usa em situação nova</span>
+   <span>Conversa da semana: “querer × precisar”</span><span class="st" style="background:#EAF4F6;color:#1F6E82">novo</span>
+  </div>
+ </div>
+ <div class="foot">Escala por critério (o que a criança faz), sem comparação com outras crianças. Não é nota do Saeb. 4 sessões · 12 min/dia em média.</div>
+</div>
+<div class="nav"><div class="on"><svg width="28" height="28" viewBox="0 0 32 32"><path d="M6,16 L16,7 L26,16 V27 H6Z" fill="currentColor"/></svg>Resumo</div><div><svg width="28" height="28" viewBox="0 0 32 32"><rect x="6" y="6" width="20" height="5" rx="2" fill="currentColor"/><rect x="6" y="14" width="20" height="5" rx="2" fill="currentColor"/><rect x="6" y="22" width="14" height="5" rx="2" fill="currentColor"/></svg>Atividades</div><div><svg width="28" height="28" viewBox="0 0 32 32"><path d="M6,10 H26 M6,22 H26" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="12" cy="10" r="4" fill="currentColor"/><circle cx="21" cy="22" r="4" fill="currentColor"/></svg>Ajustes</div><div><svg width="28" height="28" viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="17" rx="3" fill="currentColor"/><rect x="4" y="12" width="24" height="3" fill="#fff"/></svg>Assinatura</div></div>
+</body></html>

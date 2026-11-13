@@ -1,0 +1,69 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="common.css">
+<style>
+body{width:1600px;height:1020px;overflow:hidden;background:var(--areia);padding:34px 40px;font-family:Atkinson}
+h1{font-family:Fredoka;font-weight:700;font-size:38px;color:var(--terracota)}
+.sub{color:var(--cinza);font-size:15px;margin-bottom:18px}
+.cols{display:grid;grid-template-columns:600px minmax(0,1fr);gap:26px}
+.box{background:var(--papel);border-radius:22px;padding:18px 20px;box-shadow:0 3px 0 #EADBC3}
+h2{font-family:Fredoka;font-weight:600;font-size:20px;margin-bottom:12px}
+.pal{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.sw{border-radius:14px;overflow:hidden;border:1px solid #EADBC3;background:#fff}
+.sw .c{height:58px;display:flex;align-items:flex-end;padding:6px 8px;font-family:Andika;font-weight:700;font-size:18px}
+.sw .m{padding:6px 8px;font-size:11.5px;line-height:1.3}
+.sw .m b{font-size:12.5px}
+.type div{margin-bottom:8px}
+.comp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.cbox{background:#FBF3E6;border-radius:16px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px;color:var(--cinza);text-align:center}
+.bp{width:120px;height:120px;border-radius:50%;background:var(--terracota);box-shadow:0 7px 0 #7E3219;display:flex;align-items:center;justify-content:center}
+.ba{width:120px;height:96px;border-radius:26px;background:#fff;border:4px solid #E8D9C4;display:flex;align-items:center;justify-content:center;font-family:Andika;font-weight:700;font-size:44px;color:var(--tinta)}
+.nav{width:80px;height:80px;border-radius:24px;background:#fff;box-shadow:0 5px 0 #E2CDB0;display:flex;align-items:center;justify-content:center}
+.chars{display:flex;gap:18px;align-items:flex-end}
+</style></head><body>
+<script src="chars.js"></script>
+<h1>Quintal Brasil · guia de estilo v0</h1>
+<div class="sub">Ilustração 2D “feita à mão”, papel e cores quentes. Um foco por tela; mundo rico (6–10 elementos), tarefa calma (≤ 3 elementos além do alvo). Sem preto puro, sem vermelho de erro, sem flashes &gt; 3/s.</div>
+<div class="cols">
+<div style="display:flex;flex-direction:column;gap:18px">
+ <div class="box"><h2>Paleta (contraste WCAG calculado)</h2><div class="pal" id="pal"></div>
+ <div style="font-size:12px;color:var(--cinza);margin-top:10px">Mapa de calor: 1 matiz (Mar) em 5 passos <span style="display:inline-flex;gap:3px;vertical-align:middle"><i style="width:22px;height:12px;background:#F4EEE6;display:inline-block;border:1px dashed #CDBBA6"></i><i style="width:22px;height:12px;background:#EAF4F6;display:inline-block"></i><i style="width:22px;height:12px;background:#BFDDE5;display:inline-block"></i><i style="width:22px;height:12px;background:#7FB8C9;display:inline-block"></i><i style="width:22px;height:12px;background:#357E94;display:inline-block"></i></span> + símbolos ▲ ◆ ⧗. Nunca par vermelho/verde.</div></div>
+ <div class="box type"><h2>Tipografia (todas OFL)</h2>
+  <div style="font-family:Andika;font-size:64px;line-height:1;font-weight:700">A a  g  BOLA</div>
+  <div style="font-size:13px;color:var(--cinza)"><b>Andika</b> · letra bastão e leitura (“a” e “g” de um andar). Letra-alvo 72–160 · sílaba 64 · palavra 48 · frase 40 · livro 32–36</div>
+  <div style="font-family:Fredoka;font-weight:700;font-size:34px;color:var(--terracota)">Ilha das Vogais</div>
+  <div style="font-size:13px;color:var(--cinza)"><b>Fredoka</b> · só títulos e marca, nunca em texto para decodificar</div>
+  <div style="font-family:Atkinson;font-size:22px"><b>Nível 6 de 10</b> · faltam 4 níveis</div>
+  <div style="font-size:13px;color:var(--cinza)"><b>Atkinson Hyperlegible</b> · área de pais, professor e secretaria (16–18 px)</div>
+ </div>
+</div>
+<div style="display:flex;flex-direction:column;gap:18px">
+ <div class="box"><h2>Componentes da área infantil (medidas em dp)</h2>
+ <div class="comp">
+  <div class="cbox"><div class="bp"><svg width="60" height="60" style="margin-left:8px"><use href="#i-play"/></svg></div>Botão principal 120 (mín. 96)</div>
+  <div class="cbox"><div class="ba">MA</div>Alternativa 120×96 (mín. 88) · 3–4 por tela</div>
+  <div class="cbox"><div style="display:flex;gap:10px"><div class="nav"><svg width="52" height="52"><use href="#i-casa"/></svg></div><div class="nav"><svg width="52" height="52"><use href="#i-ouvido"/></svg></div></div>Navegação 80 (cantos superiores) · ícones concretos, sem ☰ ⋮ ⚙</div>
+  <div class="cbox"><div style="display:flex;gap:12px;align-items:center">
+   <svg width="56" height="64" viewBox="0 0 56 64"><path d="M28,2 C44,22 52,38 52,46 C52,58 40,62 28,62 C16,62 4,58 4,46 C4,38 12,22 28,2Z" fill="#6B5BA8"/><text x="28" y="54" font-family="Andika" font-weight="700" font-size="30" fill="#fff" text-anchor="middle">A</text></svg>
+   <svg width="60" height="60" viewBox="0 0 60 60"><rect x="2" y="2" width="56" height="56" rx="12" fill="#1F6E82"/><text x="30" y="42" font-family="Andika" font-weight="700" font-size="32" fill="#fff" text-anchor="middle">M</text></svg></div>Vogal = gota · consoante = bloco (cor sempre com forma)</div>
+  <div class="cbox"><div style="display:flex;gap:6px;align-items:center;background:#FCE3A6;border-radius:20px;padding:6px 14px 6px 6px;font-family:Andika;font-weight:700;font-size:22px;color:var(--tinta)"><svg width="30" height="30"><use href="#moeda"/></svg>12</div><div style="font-family:Andika;font-weight:700;font-size:28px;color:var(--tinta)">LUVA</div>Etiqueta: palavra decodificável + numeral + moeda</div>
+  <div class="cbox"><svg width="150" height="60" viewBox="0 0 150 60"><rect x="4" y="18" width="142" height="24" rx="12" fill="#F3E6D2"/><rect x="4" y="18" width="52" height="24" rx="12" fill="#A9472A"/><rect x="40" y="18" width="18" height="24" rx="9" fill="#F2B33D"/></svg>Termômetro da Leitura (criança): enche, nunca desce, sem número</div>
+  <div class="cbox"><div style="background:#EEF6EC;border-radius:16px;padding:8px 14px;font-family:Andika;font-size:20px;color:var(--folha);font-weight:700">Isso! Você juntou os sons.</div>Acerto: fala específica + brilho ≤ 1,5 s</div>
+  <div class="cbox"><div style="background:#FFF1D6;border-radius:16px;padding:8px 14px;font-family:Andika;font-size:20px;color:#7A4B10;font-weight:700">Quase! Ouve de novo?</div>Erro = pista: sem X, sem vermelho, sem buzina</div>
+  <div class="cbox"><div style="display:flex;gap:4px;align-items:end;height:40px;background:var(--mar);border-radius:16px;padding:8px 14px"><i style="width:7px;height:12px;background:#fff;border-radius:3px"></i><i style="width:7px;height:24px;background:#fff;border-radius:3px"></i><i style="width:7px;height:16px;background:#fff;border-radius:3px"></i><i style="width:7px;height:28px;background:#fff;border-radius:3px"></i></div>Indicador “ouvindo” sempre visível com microfone aberto</div>
+ </div></div>
+ <div class="box"><h2>Personagens (SVG de referência; versão final em Rive)</h2>
+  <div class="chars">
+   <svg width="150" height="196"><use href="#sofia"/></svg>
+   <div style="font-size:13px;width:230px;line-height:1.4"><b style="font-family:Fredoka;font-size:20px;color:var(--terracota)">Sofia</b><br>~9–10 anos, parda, cabelo cacheado 3C/4A, jardineira e flor de ipê. Guia: aponta, ouve, pensa, comemora. Nunca triste. 12 bocas (visemas) por Data Binding.</div>
+   <svg width="160" height="104" viewBox="0 0 190 124"><use href="#bolota"/></svg>
+   <div style="font-size:13px;width:200px;line-height:1.4"><b style="font-family:Fredoka;font-size:20px;color:var(--barro)">Bolota</b><br>Filhote de tatu-bola (fauna da Caatinga/Cerrado). Aprende com a criança: ela ensina, ele erra de propósito.</div>
+   
+  </div></div>
+</div>
+</div>
+<script>
+const L=h=>{const c=[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255).map(v=>v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4));return 0.2126*c[0]+0.7152*c[1]+0.0722*c[2]};
+const cr=(a,b)=>{const x=L(a),y=L(b);return ((Math.max(x,y)+0.05)/(Math.min(x,y)+0.05)).toFixed(1)};
+const P=[['Tinta','#3B2A20','texto'],['Areia','#FFF4E2','fundo'],['Papel','#FFFBF4','cartões'],['Terracota','#A9472A','ação principal'],['Sol','#F2B33D','destaque/moeda'],['Folha','#2F6B43','acerto/feito'],['Mar','#1F6E82','info/painéis'],['Ipê','#B23C62','acento'],['Lilás','#6B5BA8','vogais (gota)'],['Barro','#7A4B2E','madeira/traço'],['Céu','#BFE3EC','água/fundo frio'],['Cinza quente','#6E5D52','texto secundário']];
+document.getElementById('pal').innerHTML=P.map(([n,h,u])=>{const tw=cr(h,'#FFFFFF'),tt=cr(h,'#3B2A20');const onDark=+tw>=+tt;return `<div class="sw"><div class="c" style="background:${h};color:${onDark?'#fff':'#3B2A20'}">Aa</div><div class="m"><b>${n}</b> ${h}<br>${u}<br>c/ branco ${tw}:1 · c/ tinta ${tt}:1</div></div>`}).join('');
+</script>
+</body></html>
