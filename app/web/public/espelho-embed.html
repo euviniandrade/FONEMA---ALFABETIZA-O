@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Espelho do Som</title>
+<!-- Página-ponte do app: embute a demo do Espelho do Som (docs/propostas/06-fonema-unificada/espelho-do-som-3d,
+     copiada para ./espelho/ no build). O app controla pela API window.esp (mesma origem). -->
+<script type="importmap">{ "imports": { "three": "./espelho/vendor/three.module.js", "three/addons/": "./espelho/vendor/" } }</script>
+<link rel="stylesheet" href="./espelho/espelho.css">
+<style>
+  html,body{margin:0;height:100%;background:transparent;overflow:hidden}
+  #palco{position:absolute;inset:0;border-radius:0}
+  .esp3d-rot{font-size:15px}
+</style>
+</head>
+<body>
+<div id="palco"></div>
+<script src="./espelho/fonemas.js"></script>
+<script src="./espelho/espelho-svg.js"></script>
+<script src="./espelho/espelho.js"></script>
+<script>
+  (async function () {
+    const q = new URLSearchParams(location.search);
+    window.ESPELHO_MUDO = true; // a voz vem do app (Sofia/Tales), não da demo
+    try {
+      const esp = await window.EspelhoSom.criar(document.getElementById('palco'), {
+        fonema: q.get('f') || 'a', modo: q.get('m') || 'lado', forcar2D: q.get('2d') === '1'
+      });
+      if (q.get('rot') === '0' && esp.rotulos) esp.rotulos(false);
+      window.esp = esp;
+      parent.postMessage({ tipo: 'espelho:pronto', modo: esp.tipo || '2d' }, '*');
+    } catch (e) {
+      parent.postMessage({ tipo: 'espelho:erro', erro: String(e) }, '*');
+    }
+  })();
+</script>
+</body>
+</html>
