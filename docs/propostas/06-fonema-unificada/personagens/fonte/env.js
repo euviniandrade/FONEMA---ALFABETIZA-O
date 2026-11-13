@@ -56,6 +56,23 @@ function monstera(x, y, s = 1, seed = 3) {
   return `<g transform="translate(${x},${y}) scale(${s})">${g}<path d="M-70,0 L70,0 L56,110 Q0,124 -56,110Z" fill="#C2693E" stroke="#7A3E22" stroke-width="3"/><rect x="-78" y="-12" width="156" height="24" rx="8" fill="#D9804F" stroke="#7A3E22" stroke-width="3"/><path d="M-50,40 h100" stroke="#E8A070" stroke-width="5" opacity=".6"/></g>`;
 }
 
+// ipê com galhos aparentes e cachos de flores separados (silhueta irregular)
+function ipe(x, y, h, w, cols, seed, bark = '#4E3524', line = null) {
+  const r = rng(seed);
+  const top = [x, y - h];
+  const N = 6;
+  const cl = [];
+  for (let i = 0; i < N; i++) {
+    const t = i / (N - 1) - 0.5;
+    cl.push([x + t * w * 1.6 + (r() - .5) * 30, y - h - 40 - Math.cos(t * Math.PI) * h * 0.38 + (r() - .5) * 26, w * (0.34 + r() * 0.12)]);
+  }
+  cl.push([x + (r() - .5) * 40, y - h - h * 0.52, w * 0.42]);
+  let g = `<path d="M${x - 14},${y} C${x - 8},${y - h * 0.4} ${x + 12},${y - h * 0.6} ${top[0]},${top[1]} L${top[0] + 12},${top[1]} C${x + 24},${y - h * 0.6} ${x + 8},${y - h * 0.4} ${x + 14},${y}Z" fill="${bark}"/>`;
+  cl.forEach(([cx, cy]) => g += `<path d="M${top[0] + 6},${top[1] + 10} Q${(top[0] + cx) / 2},${top[1] - 10} ${f(cx)},${f(cy + 16)}" stroke="${bark}" stroke-width="${7}" stroke-linecap="round" fill="none"/>`);
+  g += `<path d="M${x - 6},${y - 10} q6,${-h * 0.3} 4,${-h * 0.6}" stroke="#000" stroke-opacity=".18" stroke-width="3" fill="none"/>`;
+  cl.forEach(([cx, cy, rr], i) => g += canopy(cx, cy, rr, rr * 0.62, cols, seed * 7 + i, 16, line));
+  return g;
+}
 // =================== CASA DA SOFIA ===================
 function casa() {
   let g = `<defs>${chitaPattern('chita')}${chitaPattern('chita2', '#1F7A70')}
@@ -172,8 +189,7 @@ function praca() {
   ];
   H.forEach(([x, w, h, c, d, s]) => g += casinha(x, w, h, c, d, s));
   // ipê ao fundo, no vão entre as casas (atrás do coreto)
-  g += trunk(625, 470, 170, 12, '#5C3A26', -6, [[620, 360, 570, 310, 9], [624, 350, 680, 300, 9]]);
-  g += canopy(625, 270, 120, 74, ['#D98E00', P.ipe, P.ipeHi], 8, 52, '#C27C00');
+  g += ipe(625, 470, 120, 110, ['#D98E00', P.ipe, P.ipeHi], 8, '#5C3A26', '#B87400');
   // chão da praça
   g += `<path d="M0,470 H1280 V800 H0Z" fill="url(#chao)"/>`;
   g += `<path d="M0,680 Q640,650 1280,680 V800 H0Z" fill="url(#ondas)" opacity=".75"/><path d="M0,680 Q640,650 1280,680" stroke="#C9B08A" stroke-width="6" fill="none"/>`;
@@ -247,14 +263,14 @@ function cerrado() {
   g += `<path d="M0,470 Q300,440 640,470 Q980,450 1280,480 V800 H0Z" fill="url(#campo)"/>`;
   g += grassTufts(3, 160, 0, 1280, 480, 560, ['#B08C3E', '#E0C878', '#9E7A32'], 8, 18);
   // lobo-guará ao fundo
-  g += `<ellipse cx="1010" cy="534" rx="54" ry="7" fill="#000" opacity=".12"/>` + lobo(1000, 534, .48);
-  g += grassTufts(7, 30, 940, 1080, 520, 540, ['#B08C3E', '#E0C878'], 10, 20);
+  g += `<ellipse cx="830" cy="548" rx="60" ry="7" fill="#000" opacity=".12"/>` + lobo(820, 548, .52);
+  g += grassTufts(7, 30, 760, 900, 534, 554, ['#B08C3E', '#E0C878'], 10, 20);
   // cupinzeiros
   g += cupim(150, 540, .9) + cupim(860, 520, .6) + cupim(1190, 600, 1.1);
   // ipê roxo
-  g += trunk(1080, 620, 230, 14, '#4E3524', 20, [[1086, 470, 1020, 420, 10], [1094, 450, 1160, 400, 10]]) + canopy(1090, 380, 150, 80, ['#9B4D8C', '#C36BB0', '#E6A6D6'], 14, 60);
+  g += ipe(1090, 620, 170, 150, ['#8E4380', '#C36BB0', '#EAB2DC'], 14, '#4E3524', '#7A3570');
   // ipê amarelo
-  g += trunk(260, 640, 280, 18, '#5C3A26', -14, [[254, 460, 170, 400, 12], [250, 440, 330, 370, 12], [246, 500, 200, 470, 8]]) + canopy(250, 340, 190, 105, ['#D98E00', P.ipe, P.ipeHi], 21, 72);
+  g += ipe(250, 650, 200, 180, ['#D98E00', P.ipe, P.ipeHi], 21, '#5C3A26', '#B87400');
   // trilha de terra
   g += `<path d="M420,800 Q520,660 600,600 Q660,560 720,540 L760,542 Q700,580 680,620 Q640,700 760,800Z" fill="url(#trilha)"/><path d="M600,600 Q660,560 720,540" stroke="#E2A57C" stroke-width="4" fill="none" opacity=".6"/>`;
   // primeiro plano: capim dourado, canela-de-ema, flores
