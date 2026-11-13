@@ -99,6 +99,46 @@ class Loft {
   }
 }
 
+
+/* Cabeça cartunesca "inflada" a partir do perfil de lado: em cada altura y, um corte oval entre a frente
+   (testa, nariz, boca, queixo) e a nuca. O queixo acompanha a mandíbula. Material fresnel = brilho de raio-X. */
+const FRENTE = [[6.7, -2.9], [6.2, -1.3], [5.2, 0.1], [3.8, 0.8], [2.7, 0.85], [2.0, 1.12], [1.45, 1.55], [1.15, 1.25], [0.9, 0.6], [0.5, 0.52],
+  [0.0, 0.42], [-0.5, 0.45], [-1.0, 0.6], [-1.45, 0.45], [-1.85, -0.4], [-2.2, -1.6], [-2.6, -2.05], [-4.0, -2.1], [-7.5, -2.0]];
+const NUCA = [[6.7, -2.9], [6.2, -4.6], [5.0, -6.1], [3.0, -6.7], [1.0, -6.3], [-0.5, -5.7], [-1.8, -5.3], [-4.0, -5.3], [-7.5, -5.3]];
+const LARG = [[6.7, 0.2], [6.2, 2.4], [4.5, 3.5], [2.5, 3.7], [0.5, 3.3], [-1.0, 2.7], [-2.0, 2.0], [-2.6, 1.75], [-7.5, 1.75]];
+function perfil(tab, y) {
+  for (let i = 1; i < tab.length; i++) if (y >= tab[i][0]) { const [y0, a] = tab[i - 1], [y1, b] = tab[i], t = (y - y0) / (y1 - y0), k = t * t * (3 - 2 * t); return a + (b - a) * (0.5 * t + 0.5 * k); }
+  return tab[tab.length - 1][1];
+}
+function cascaCabeca() {
+  const NY = 90, NA = 56, base = [], pos = new Float32Array((NY + 1) * NA * 3), idx = [];
+  for (let i = 0; i <= NY; i++) {
+    const y = 6.69 - (14.1 * i) / NY, f = perfil(FRENTE, y), n = perfil(NUCA, y), w = perfil(LARG, y), zc = (f + n) / 2, hd = (f - n) / 2;
+    const nariz = y > 0.8 && y < 2.1 ? 0.72 : (y > -1.9 && y <= 0.8 ? 0.42 : 0.15);
+    for (let j = 0; j < NA; j++) {
+      const a = (j / NA) * Math.PI * 2, c = Math.cos(a), s = Math.sin(a);
+      const estreita = c > 0 ? 1 - nariz * Math.pow(c, 6) : 1;
+      base.push([w * s * estreita, y, zc + hd * c]);
+    }
+  }
+  for (let i = 0; i < NY; i++) for (let j = 0; j < NA; j++) { const a = i * NA + j, b = i * NA + ((j + 1) % NA), c = a + NA, d = b + NA; idx.push(a, c, b, b, c, d); }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setIndex(idx);
+  const mesh = new THREE.Mesh(g, null);
+  let ultimo = null;
+  function atualiza(jaw) {
+    if (ultimo !== null && Math.abs(ultimo - jaw) < 0.01) return; ultimo = jaw;
+    base.forEach(([x, y, z], i) => {
+      const w = Math.min(1, Math.max(0, (-y - 0.15) / 1.1)) * Math.min(1, Math.max(0, (z + 3.4) / 2.2));
+      let yy = y, zz = z;
+      if (w > 0 && y > -3.2) { const r = window.FonemasPT.giraMand([z, y], jaw * w); zz = r[0]; yy = r[1]; }
+      pos[i * 3] = x; pos[i * 3 + 1] = yy; pos[i * 3 + 2] = zz;
+    });
+    g.attributes.position.needsUpdate = true; g.computeVertexNormals(); g.computeBoundingSphere();
+  }
+  atualiza(0);
+  return { mesh, atualiza };
+}
+
 /* textura de bolinha para as partículas de ar */
 function texBolinha() {
   const c = document.createElement('canvas'); c.width = c.height = 64;
@@ -111,7 +151,7 @@ function texBolinha() {
 /* ------------------------------------------------------------------ câmeras */
 const CAMS = {
   frente: { pos: V3(0, 0.02, 5.4), alvo: V3(0, -0.12, 0), fov: 30 },
-  lado: { pos: V3(13.6, -0.5, -2.2), alvo: V3(0, -0.75, -2.2), fov: 32 },
+  lado: { pos: V3(15.2, -0.6, -2.3), alvo: V3(0, -0.75, -2.3), fov: 32 },
   dentro: { pos: V3(1.08, 0.5, -1.55), alvo: V3(-0.35, 0.5, -2.25), fov: 64 },
   corpo: { pos: V3(31, -5.6, -2.8), alvo: V3(0, -5.6, -2.8), fov: 32 }
 };
@@ -163,7 +203,7 @@ export function criar(container, opts = {}) {
     laringe: fisico(0xf3a0b0, { roughness: 0.5, clearcoat: 0.5 }),
     prega: fisico(0xfff0f3, { roughness: 0.35, clearcoat: 0.8 }),
     pulmao: fisico(0xf59aac, { roughness: 0.5, clearcoat: 0.5, transparent: true, opacity: 0.92, sheen: 0.6, sheenColor: new THREE.Color(0xffe0e6) }),
-    onda: new THREE.MeshBasicMaterial({ color: 0xffd25a, transparent: true, opacity: 0.9, depthWrite: false, blending: THREE.AdditiveBlending }),
+    onda: new THREE.MeshBasicMaterial({ color: 0xffcf4a, transparent: true, opacity: 0.9, depthWrite: false, blending: THREE.AdditiveBlending }),
     alvo: new THREE.MeshBasicMaterial({ color: 0xffe08a, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }),
     pick: new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false, colorWrite: false })
   };
@@ -180,18 +220,12 @@ export function criar(container, opts = {}) {
   /* -------- casca raio-X (cabeça cartunesca translúcida) -------- */
   const esf = (r, s = 48) => new THREE.SphereGeometry(r, s, Math.round(s * 0.75));
   const add = (g, geo, mat, x, y, z, sx = 1, sy = 1, sz = 1) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.scale.set(sx, sy, sz); g.add(m); return m; };
-  add(grupos.casca, esf(4.0), casca, 0, 2.45, -2.75, 1, 1, 1.02);
-  add(grupos.casca, esf(1), casca, 0, 0.15, -1.25, 2.35, 1.95, 1.75);
-  add(grupos.casca, esf(1), casca, 0, 1.25, 0.72, 0.52, 0.48, 0.5);
-  add(grupos.casca, new THREE.CylinderGeometry(1.75, 1.95, 6.5, 40, 1, true), casca, 0, -5.4, -3.55);
-  add(grupos.casca, esf(1), casca, 3.95, 1.4, -3.4, 0.35, 0.95, 0.7);
-  add(grupos.casca, esf(1), casca, -3.95, 1.4, -3.4, 0.35, 0.95, 0.7);
-  add(grupos.casca, esf(4.15), cabelo, 0, 3.15, -3.35, 1.02, 0.98, 1.05);
-  add(cascaMand, esf(1), casca, 0, -1.15 - DOBRA[1], -1.05 - DOBRA[0], 1.85, 1.15, 1.55);
+  const cabeca = cascaCabeca(); cabeca.mesh.material = casca; grupos.casca.add(cabeca.mesh);
+  [-1, 1].forEach((s) => add(grupos.casca, esf(1), casca, 3.45 * s, 1.35, -3.6, 0.42, 0.95, 0.72));
   // olhinhos fofos (aparecem no raio-X e de frente)
   const olhos = new THREE.Group(); raiz.add(olhos);
   [-1, 1].forEach((s) => {
-    const o = new THREE.Group(); o.position.set(1.28 * s, 2.55, 0.92); olhos.add(o);
+    const o = new THREE.Group(); o.position.set(1.25 * s, 2.6, 0.55); olhos.add(o);
     add(o, esf(0.46, 32), M.olhoB, 0, 0, 0, 1, 1.12, 0.8);
     add(o, esf(0.27, 32), M.olhoI, 0.03 * s, -0.02, 0.24, 1, 1.15, 0.7);
     add(o, esf(0.08, 16), M.brilho, 0.1 * s, 0.12, 0.42);
@@ -211,7 +245,7 @@ export function criar(container, opts = {}) {
   const ondas = [];
   [1, -1].forEach((lado) => {
     for (let i = 0; i < 3; i++) {
-      const g = new THREE.TorusGeometry(1, 0.045, 10, 40, Math.PI / 2.2);
+      const g = new THREE.TorusGeometry(1, 0.07, 12, 40, Math.PI / 2.2);
       const m = new THREE.Mesh(g, M.onda.clone()); m.rotation.z = -Math.PI / 4.4; const piv = new THREE.Group();
       piv.rotation.y = lado > 0 ? -Math.PI / 2 : Math.PI / 2; piv.add(m); laringe.add(piv); ondas.push({ m, i });
     }
@@ -242,8 +276,9 @@ export function criar(container, opts = {}) {
     }
     for (let i = 0; i < NZ; i++) for (let j = 0; j < NX; j++) { const a = i * (NX + 1) + j, b = a + 1, c = a + NX + 1, d = c + 1; idx.push(a, c, b, b, c, d); }
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
-    add(raiz, g, M.ceu, 0, 0, 0);
-    tubo(P.CEU.map(([z, y]) => [z, y + 0.06]), 0.075, M.osso, raiz);
+    add(raiz, g, M.ceu, 0, 0, 0).renderOrder = 2;
+    tubo(P.CEU.map(([z, y]) => [z, y + 0.2]), 0.1, M.osso, raiz);
+    tubo(P.CEU.map(([z, y]) => [z, y + 0.06]), 0.11, M.veu, raiz);
   }
 
   /* -------- dentinhos (blocos brancos arredondados), arco de cima fixo, de baixo na mandíbula -------- */
@@ -266,7 +301,7 @@ export function criar(container, opts = {}) {
   /* -------- língua (loft) e véu (loft) -------- */
   const lingua = new Loft(46, 28); const mLingua = new THREE.Mesh(lingua.geo, M.lingua); raiz.add(mLingua);
   const veu = new Loft(22, 20); const mVeu = new THREE.Mesh(veu.geo, M.veu); raiz.add(mVeu);
-  const LW = [0.4, 0.82, 1.06, 1.1, 0.95, 0.72, 0.48], LD = [0.26, 0.58, 1.05, 1.45, 1.25, 0.9, 0.5];
+  const LW = [0.42, 0.84, 1.06, 1.1, 0.95, 0.72, 0.5], LD = [0.3, 0.62, 1.05, 1.4, 1.2, 0.85, 0.45];
 
   /* -------- lábios (tubos macios) -------- */
   const mLabC = new THREE.Mesh(new THREE.BufferGeometry(), M.labio), mLabB = new THREE.Mesh(new THREE.BufferGeometry(), M.labio);
@@ -341,7 +376,7 @@ export function criar(container, opts = {}) {
       const g = P.giraMand(p, o.jaw);
       return [p[0] + (g[0] - p[0]) * o.tj, p[1] + (g[1] - p[1]) * o.tj];
     });
-    const raizP = P.giraMand([-4.15, -2.45], o.jaw * 0.5);
+    const raizP = P.giraMand([-4.45, -2.55], o.jaw * 0.5);
     pts.push(raizP);
     const ctrl = pts.map(([z, y], i) => ({ z, y, w: LW[i] * (i < 3 ? THREE.MathUtils.lerp(1, o.larg, i === 2 ? 0.5 : 1) : 1), d: LD[i] }));
     lingua.atualiza(ctrl);
@@ -350,47 +385,56 @@ export function criar(container, opts = {}) {
   function montaVeu(o) {
     const v = o.vel, uv = o._uvula || 0;
     const A = [[-3.72, 1.3], [-4.38, 1.52], [-4.98, 1.47]], B = [[-3.72, 1.3], [-4.22, 1.06], [-4.5, 0.58]];
-    const ctrl = A.map((a, i) => ({ z: a[0] + (B[i][0] - a[0]) * v, y: a[1] + (B[i][1] - a[1]) * v + (i === 2 ? uv * 3 : 0), w: [0.98, 0.7, 0.2][i], d: [0.3, 0.3, 0.3][i] }));
+    const ctrl = A.map((a, i) => ({ z: a[0] + (B[i][0] - a[0]) * v, y: a[1] + (B[i][1] - a[1]) * v + (i === 2 ? uv * 3 : 0), w: [1.0, 0.75, 0.24][i], d: [0.34, 0.36, 0.34][i] }));
     veu.atualiza(ctrl);
   }
   const curva = (pts) => new THREE.CatmullRomCurve3(pts, false, 'centripetal');
   function montaLabios(o) {
-    // abertura no meio; arredondar projeta e estreita; "ld" = lábio de baixo encosta nos dentes de cima
-    const W = o.lg * 1.02, yU = 0.06 + o.ab * 0.36, yL = -0.06 - o.ab * 0.64, zb = 0.2 + o.arr * 0.38, rU = 0.21, rL = 0.25;
-    const yC = (yU + yL) / 2 * 0.6;
-    const ptsC = [], ptsB = [], furo = [];
-    const N = 13;
+    // Um anel macio só (tubo fechado) em volta da abertura: lábio de cima + lábio de baixo, cantinhos redondos.
+    // abertura no meio (ab); o lábio de baixo acompanha a mandíbula; arredondar (arr) projeta e estreita;
+    // "ld" = lábio de baixo sobe e encosta nos dentes de cima (f, v).
+    const R = 0.23, W = o.lg * 1.0, zb = 0.22 + o.arr * 0.4;
+    let yU = 0.05 + o.ab * 0.3;
+    let yL = P.giraMand([0.15, -0.06], o.jaw)[1] - o.ab * 0.22;
+    const junta = 1 - THREE.MathUtils.smoothstep(o.ab, 0.0, 0.14);       // lábios fechados se encostam
+    const meio = (yU + yL) / 2; yU += (meio - yU) * junta; yL += (meio - yL) * junta;
+    const ldY = -0.05 - 0.02;                                             // ponta dos dentes de cima
+    if (o.ld > 0) yL += (ldY - yL) * o.ld;
+    const yC = THREE.MathUtils.lerp(yU, yL, 0.55);
+    const N = 15, cima = [], baixo = [], furo = [];
     for (let i = 0; i < N; i++) {
-      const u = -1 + (2 * i) / (N - 1), m = Math.pow(Math.max(0, 1 - u * u), 0.62), x = W * u;
-      const z = zb - 0.3 * u * u - o.arr * 0.12 * u * u;
-      const arco = 0.35 + 0.65 * Math.sqrt(Math.max(0, 1 - u * u));
-      const yiU = yC + (yU - yC) * m - 0.03 * Math.exp(-u * u * 40) * (1 - o.arr); // arco do cupido
+      const u = -1 + (2 * i) / (N - 1), m = Math.pow(Math.max(0, 1 - u * u), 0.6), x = W * u;
+      const z = zb - 0.32 * u * u - o.arr * 0.15 * u * u;
+      const yiU = yC + (yU - yC) * m - 0.035 * Math.exp(-u * u * 30) * (1 - o.arr);  // arco do cupido
       const yiL = yC + (yL - yC) * m;
-      ptsC.push(V3(x, yiU + rU * arco, z));
-      let lb = V3(x, yiL - rL * arco, z + 0.02);
-      if (o.ld > 0) { const t = o.ld * m; lb.lerp(V3(x * 0.92, -0.05 - rL - 0.02 + (1 - m) * (yC - 0.0), -0.08 + (1 - m) * (z - 0.08) * 0.5), t); }
-      ptsB.push(lb);
-      furo.push([x, yiU], [x, yiL]);
+      const g = 0.25 + 0.75 * Math.sqrt(Math.max(0, 1 - u * u));                      // mais fino nos cantos
+      cima.push(V3(x, yiU + R * g, z));
+      const zl = z + 0.03 - o.ld * m * (z + 0.06);                                    // lábio de baixo vai para trás no f/v
+      baixo.push(V3(x * (1 - 0.06 * o.ld), yiL - R * g * 1.08, zl));
+      furo.push([x, yiU, yiL]);
     }
-    mLabC.geometry.dispose(); mLabB.geometry.dispose();
-    mLabC.geometry = new THREE.TubeGeometry(curva(ptsC), 64, rU, 18, false);
-    mLabB.geometry = new THREE.TubeGeometry(curva(ptsB), 64, rL, 18, false);
-    cantos[0].position.copy(ptsC[0]).lerp(ptsB[0], 0.5); cantos[1].position.copy(ptsC[N - 1]).lerp(ptsB[N - 1], 0.5);
+    const anel = [...cima, ...baixo.slice(1, -1).reverse()];
+    mLabC.geometry.dispose();
+    mLabC.geometry = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(anel, true, 'centripetal'), 120, R, 22, true);
+    mLabB.visible = false; cantos.forEach((c) => (c.visible = false));
     lab.yC = yC; lab.W = W; lab.z = zb; lab.yU = yU; lab.yL = yL;
-    // pele com o buraco da boca (contorno um pouco maior, escondido sob os lábios)
-    const sh = new THREE.Shape(); sh.absellipse(0, 0.35, 3.6, 3.1, 0, Math.PI * 2, false, 0);
-    const buraco = new THREE.Path(), cont = [];
-    for (let i = 0; i < N; i++) cont.push(ptsC[i]);
-    for (let i = N - 1; i >= 0; i--) cont.push(ptsB[i]);
-    cont.forEach((p, i) => { const q = [p.x * 0.97, p.y > yC ? p.y - 0.02 : p.y + 0.02]; i ? buraco.lineTo(q[0], q[1]) : buraco.moveTo(q[0], q[1]); });
+    // pele com o buraco da boca (contorno = linha do meio do anel, escondido sob os lábios)
+    const sh = new THREE.Shape(); sh.absellipse(0, 0.35, 3.8, 3.3, 0, Math.PI * 2, false, 0);
+    const buraco = new THREE.Path();
+    anel.forEach((p, i) => (i ? buraco.lineTo(p.x, p.y) : buraco.moveTo(p.x, p.y)));
     sh.holes = [buraco];
     const g = new THREE.ShapeGeometry(sh, 28), pa = g.attributes.position;
+    const yBaixo = yL - R * 2;
     for (let i = 0; i < pa.count; i++) {
       const x = pa.getX(i), y = pa.getY(i);
-      let z = 0.06 - 0.11 * x * x - 0.045 * (y - 0.3) * (y - 0.3) + 0.12 * Math.exp(-(x * x) / 0.8 - Math.pow(y - 0.75, 2) / 0.25);
+      const z = 0.08 - 0.1 * x * x - 0.04 * (y - 0.3) * (y - 0.3) + 0.1 * Math.exp(-(x * x) / 0.9 - Math.pow(y - 0.85, 2) / 0.3);
+      // queixo acompanha a mandíbula, longe da boca
+      const w = THREE.MathUtils.clamp((yBaixo - y) / 1.4, 0, 1) * THREE.MathUtils.clamp(1 - Math.abs(x) / 3.6, 0, 1);
       let yy = y, zz = z;
-      const w = THREE.MathUtils.clamp((-(y - yC) - 0.1) / 1.3, 0, 1) * THREE.MathUtils.clamp(1 - Math.abs(x) / 3.4, 0, 1);
-      if (w > 0) { const r = P.giraMand([z, y], o.jaw * w); zz = r[0]; yy = r[1]; }
+      if (w > 0) { const r = P.giraMand([z, y], o.jaw * w * 0.8); zz = r[0]; yy = r[1]; }
+      // perto do anel, encosta a pele atrás do lábio
+      const dy = y > yC ? y - (yU + R) : (yL - R) - y, perto = Math.max(0, 1 - Math.max(0, dy) / 0.5) * Math.max(0, 1 - Math.abs(x) / (W + 0.6));
+      zz = zz + (zb - 0.15 - zz) * perto * 0.6;
       pa.setXYZ(i, x, yy, zz);
     }
     g.computeVertexNormals();
@@ -445,6 +489,7 @@ export function criar(container, opts = {}) {
     grupos.cavidade.visible = vis.cavidade > 0.02; op(M.cavidade, vis.cavidade);
     grupos.tubos.visible = vis.tubos > 0.02; tuboNariz.uniforms.opac.value = vis.tubos * 0.8; tuboGarg.uniforms.opac.value = vis.tubos * 0.7;
     grupos.corpo.visible = vis.corpo > 0.02; torso.uniforms.opac.value = vis.corpo * 0.6; M.pulmao.opacity = vis.corpo * 0.92;
+    { const v = 0.35 + 0.65 * Math.max(vis.rosto, vis.cavidade); M.ceu.opacity = v; M.ceu.transparent = v < 0.999; M.ceu.depthWrite = v > 0.9; }
     olhos.visible = vis.casca > 0.3 || modoAtual === 'frente';
     // dentes do lado de perto da câmera somem quando a câmera está de lado (para ver a língua)
     const dir = tmp.copy(cam.position).sub(ctl.target).normalize();
@@ -519,7 +564,7 @@ export function criar(container, opts = {}) {
     if (parado) return;
     const agora = performance.now(), dt = Math.min(0.05, (agora - ultimo) / 1000); ultimo = agora; tempo += dt;
     const o = poseAgora();
-    mand.rotation.x = THREE.MathUtils.degToRad(o.jaw);
+    mand.rotation.x = THREE.MathUtils.degToRad(o.jaw); if (vis.casca > 0.02) cabeca.atualiza(o.jaw);
     const ptsL = montaLingua(o); montaVeu(o); montaLabios(o);
     // voz: pregas vibram e as ondinhas douradas saem da garganta
     const voz = o.voz * THREE.MathUtils.smoothstep(o._k, 0.5, 1), vf = lento ? 6 : 16;
