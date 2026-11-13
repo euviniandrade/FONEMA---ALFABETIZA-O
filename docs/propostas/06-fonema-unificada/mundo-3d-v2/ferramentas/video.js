@@ -7,7 +7,8 @@ const AQUI = path.resolve(__dirname, '..');
 const TIPOS = { '.html': 'text/html', '.js': 'text/javascript', '.png': 'image/png', '.woff2': 'font/woff2' };
 const FPS = Number(process.argv[2] || 15), QUAL = process.argv[3] || 'medio', DUR = 23;
 const so = process.argv.slice(4).map(Number);
-const DIR = process.env.QUADROS || path.join(require('os').tmpdir(), 'fonema-quadros');
+// QUADROS=pasta permite retomar uma renderização interrompida; sem ela, cada execução usa uma pasta nova.
+const DIR = process.env.QUADROS || fs.mkdtempSync(path.join(require('os').tmpdir(), 'fonema-mundo-v2-quadros-'));
 const srv = http.createServer((q, r) => { const f = path.join(AQUI, decodeURIComponent(q.url.split('?')[0])); if (!f.startsWith(AQUI)) { r.writeHead(403); return r.end(); } fs.readFile(f, (e, d) => { if (e) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'Content-Type': TIPOS[path.extname(f)] || 'application/octet-stream' }); r.end(d); }); }).listen(0, async () => {
   fs.mkdirSync(DIR, { recursive: true });
   const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });

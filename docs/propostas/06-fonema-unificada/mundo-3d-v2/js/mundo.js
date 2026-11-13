@@ -46,10 +46,10 @@ export function qualidadeAuto() {
 export const VISTAS = {
   aerea: { cena: 'vila', cam: [64, 58, 92], alvo: [3, 0, 2] },
   praca: { cena: 'vila', cam: [-0.6, 1.75, 20.5], alvo: [0.8, 3.3, 1] },
-  escola: { cena: 'vila', cam: [1.0, 2.2, -12.4], alvo: [-0.4, 5.6, -29] },
+  escola: { cena: 'vila', cam: [11.5, 3.2, -13.5], alvo: [-1.5, 4.6, -27] },
   rio: { cena: 'vila', cam: [29, 3.0, 24], alvo: [45, 1.2, 5] },
   campinho: { cena: 'vila', cam: [-28, 13, 41], alvo: [-27.5, 0.5, 19] },
-  entardecer: { cena: 'vila', cam: [20, 14.5, 18], alvo: [-5, 3, -8], hora: 1 },
+  entardecer: { cena: 'vila', cam: [24, 15, 7], alvo: [-4, 3, -6], hora: 1 },
   rua: { cena: 'vila', cam: [6, 4.2, 62], alvo: [0, 2.6, 30] },
   horta: { cena: 'vila', cam: [19.5, 9.5, 33.5], alvo: [23, 0.5, 18] },
   arquipelago: { cena: 'arquipelago', cam: [62, 150, 205], alvo: [22, 0, -48] },
@@ -388,7 +388,7 @@ export async function criarMundo(container, opts = {}) {
       if (vista) { camera.position.set(...vista.cam); controls.target.set(...vista.alvo); }
       { const h = (vista && vista.hora !== undefined) ? vista.hora : extra.hora !== undefined ? extra.hora : o.hora; if (h !== hora) { hora = h; ceu.aplicar(hora, renderer); } }
       if (extra.tilt !== undefined) o.tiltShift = extra.tilt;
-      camera.lookAt(controls.target); controls.update();
+      camera.lookAt(controls.target); const damp = controls.enableDamping; controls.enableDamping = false; controls.update(); controls.enableDamping = damp;
       atualizar(t, 1 / 30); render();
       return { cena: cenaAtual, calls: renderer.info.render.calls, tris: renderer.info.render.triangles };
     },

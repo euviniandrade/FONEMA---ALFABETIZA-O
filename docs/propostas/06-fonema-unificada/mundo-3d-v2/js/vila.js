@@ -29,7 +29,7 @@ export function altura(x, z) {
 // ---------- pontos de interesse (câmera) ----------
 export const POIS = [
   { id: 'praca', nome: 'Praça do Coreto', icone: '🎪', alvo: [0, 2.5, 2], cam: [15, 9.5, 27] },
-  { id: 'escola', nome: 'Escola', icone: '🏫', alvo: [0, 4.5, -27], cam: [7, 6.5, -5] },
+  { id: 'escola', nome: 'Escola', icone: '🏫', alvo: [-1, 4.5, -27], cam: [11.5, 4.5, -13.5] },
   { id: 'biblioteca', nome: 'Biblioteca', icone: '📚', alvo: [-25, 4.5, -5], cam: [-8, 7, 6] },
   { id: 'padaria', nome: 'Padaria', icone: '🥖', alvo: [24, 3, -6], cam: [9, 5.5, 5] },
   { id: 'casa', nome: 'Casa da Sofia', icone: '🏡', alvo: [-12, 2.5, 21], cam: [4, 6, 30] },

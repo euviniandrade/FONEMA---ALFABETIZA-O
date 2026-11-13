@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FONEMA · Mundo 3D v2 · exemplo de integração (iframe + postMessage)</title>
+<style>
+  body { margin: 0; font: 16px system-ui, sans-serif; background: #FFF8EC; color: #2E4374; display: grid; grid-template-columns: 1fr 320px; height: 100vh; }
+  iframe { width: 100%; height: 100%; border: 0; }
+  aside { padding: 16px; overflow: auto; border-left: 2px solid #F2D9A8; }
+  button { font: inherit; margin: 3px; padding: 8px 12px; border-radius: 12px; border: 0; background: #F2B33D; color: #2E4374; cursor: pointer; }
+  pre { background: #fff; padding: 8px; border-radius: 8px; font-size: 12px; white-space: pre-wrap; max-height: 40vh; overflow: auto; }
+</style>
+</head>
+<body>
+<!-- O app passa o progresso pela URL: fase atual, fases feitas, região atual e qualidade. -->
+<iframe id="mundo" src="index.html?fase=R0-F03&feitas=R0-F01,R0-F02&regiao=R0&q=auto" allow="fullscreen"></iframe>
+<aside>
+  <h3>App (lado de fora)</h3>
+  <p>Comandos enviados ao mundo por <code>postMessage</code>:</p>
+  <div>
+    <button data-c='["irPara",["escola"]]'>Ir para a escola</button>
+    <button data-c='["irPara",["praca"]]'>Praça</button>
+    <button data-c='["passeio",[true]]'>Passeio</button>
+    <button data-c='["voar",[1]]'>Voar ↑</button>
+    <button data-c='["trocarCena",["arquipelago"]]'>Arquipélago</button>
+    <button data-c='["trocarCena",["vila"]]'>Vila (voo)</button>
+    <button data-c='["definirHora",[1]]'>Entardecer</button>
+    <button data-c='["abrirPortal",["R0-F03"]]'>Portal R0-F03</button>
+    <button data-c='["hud",[false]]'>Esconder HUD</button>
+  </div>
+  <p>Eventos recebidos do mundo:</p>
+  <pre id="log"></pre>
+</aside>
+<script>
+  const mundo = document.getElementById('mundo').contentWindow, log = document.getElementById('log');
+  document.querySelectorAll('[data-c]').forEach((b) => b.onclick = () => { const [acao, args] = JSON.parse(b.dataset.c); mundo.postMessage({ tipo: 'fonema:comando', acao, args }, '*'); });
+  window.addEventListener('message', (e) => {
+    if (!e.data || !String(e.data.tipo).startsWith('fonema:')) return;
+    log.textContent = `${e.data.tipo} ${JSON.stringify(e.data.detalhe)}\n` + log.textContent;
+    if (e.data.tipo === 'fonema:missao') alert(`O app abriria a fase ${e.data.detalhe.id}: ${e.data.detalhe.nome}`);
+  });
+</script>
+</body>
+</html>

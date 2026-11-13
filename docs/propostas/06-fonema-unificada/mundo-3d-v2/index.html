@@ -114,7 +114,7 @@ if (!temWebGL()) {
   avisar('fonema:pronto', { semWebGL: true });
 } else {
   // repassa os eventos do mundo para o app que embute (iframe → postMessage)
-  for (const ev of ['fonema:pronto', 'fonema:lugar', 'fonema:missao', 'fonema:regiao', 'fonema:portal', 'fonema:cena', 'fonema:bloqueada', 'fonema:qualidade']) window.addEventListener(ev, (e) => avisar(ev, e.detail));
+  for (const ev of ['fonema:pronto', 'fonema:lugar', 'fonema:missao', 'fonema:regiao', 'fonema:portal', 'fonema:cena', 'fonema:bloqueada', 'fonema:qualidade', 'fonema:passeio']) window.addEventListener(ev, (e) => avisar(ev, e.detail));
   const mundo = await criarMundo($('#palco'), opts);
   window.FONEMA_MUNDO = mundo;
   $('#carga').style.opacity = 0; setTimeout(() => $('#carga').remove(), 700);
