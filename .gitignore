@@ -1,2 +1,4 @@
 tools/bibliografia/data/
 __pycache__/
+.env
+.env.*
