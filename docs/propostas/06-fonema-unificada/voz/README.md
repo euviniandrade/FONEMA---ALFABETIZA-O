@@ -71,3 +71,11 @@ O dono gostou da **N-sofia-natural-sorridente-1**. A N1 foi salva na conta como 
 | `S-sofia-n1-mais-leve.mp3` | Mais leve, risonha e descontraída |
 
 Uma variação "mais menina pequena" foi bloqueada pelo filtro de segurança e não foi insistida.
+
+## Vozes definidas ✅
+| Personagem | Escolha do dono | Nome na conta ElevenLabs |
+|---|---|---|
+| **Sofia** | `Q-sofia-n1-mais-doce` (rodada 5) | **Sofia — FONEMA** |
+| **Tales** | `K-tales-desenho-moleque-1` (rodada 3) | **Tales — FONEMA** |
+
+Ajustes de fala: modelo `eleven_v3`, estabilidade 0,5, similaridade 0,8, com marcações de emoção usadas com moderação para não soar forçado. A amostra da dupla conversando está em `dupla/sofia-e-tales-ilha-das-vogais.mp3`. Os IDs das vozes ficam fora do repositório.
