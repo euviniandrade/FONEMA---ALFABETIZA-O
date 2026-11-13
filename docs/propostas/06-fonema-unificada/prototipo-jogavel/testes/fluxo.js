@@ -93,6 +93,7 @@ async function missao(page, prefixo, { mic, errarFigura, errarLetra }) {
   await page.click('#bTerminar');
   await pausa(900);
   await foto(page, prefixo + '12-celebracao-selo');
+  ok(/Próximo objetivo: faltam 2 desafios/.test(await texto(page)) && /Caçador de Sílabas/.test(await texto(page)), 'álbum mostra o próximo objetivo e o caminho para Caçador de Sílabas (D019)');
   await page.click('#bMostra');
 }
 

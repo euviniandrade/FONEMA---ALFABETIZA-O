@@ -727,6 +727,19 @@
       return `<div class="selo-mini ${tem ? 'tem' : ''}">${tem ? seloSVG(nm.replace('Selo ', ''), sim(), 'bronze', 'mini') : '<span class="vago" aria-hidden="true">?</span>'}<small>${esc(nm)}${tem ? '' : ' · em breve'}</small></div>`;
     }).join('')}</div>`;
   }
+  // PRÓXIMO OBJETIVO (Decisão 019; jogo-completo/07): nível da jornada e título, por esforço; nunca desce.
+  // Após a 1ª missão: Nível 1 · Aprendiz dos Sons I. Nível 2 pede 2 desafios; para Caçador de Sílabas
+  // são 2+3+4+5+6+6 = 26 desafios e vencer a Festa das Rimas (chefe de R0).
+  const PROGRESSO = { nivel: 1, titulo: 'Aprendiz dos Sons I', feitos: 0, proxNivel: 2, paraCacador: 26 };
+  function proximoHTML() {
+    const p = PROGRESSO;
+    const bolinhas = Array.from({ length: p.proxNivel }, (_, i) => `<span class="bol ${i < p.feitos ? 'cheia' : ''}" aria-hidden="true"></span>`).join('');
+    return `<div class="proximo" aria-label="Próximo objetivo">
+      <p class="titulo-j"><strong>Nível ${p.nivel}</strong> · ${esc(p.titulo)}</p>
+      <p class="prox-txt">Próximo objetivo: faltam <strong>${p.proxNivel - p.feitos} desafios</strong> para o nível ${p.nivel + 1}. <span class="bolinhas">${bolinhas}</span></p>
+      <p class="regra-moeda">Rumo a <strong>Caçador de Sílabas</strong>: faltam ${p.paraCacador} desafios e a Festa das Rimas. Nada se perde.</p>
+    </div>`;
+  }
   TELAS.celebra = (t) => {
     const primeira = !E.emblemas.includes('meu-nome');
     if (primeira) { E.moedas += MOEDAS_MISSAO; E.emblemas.push('meu-nome'); }
@@ -740,7 +753,7 @@
         <div id="falaC"></div>
         <div class="cartao"><div class="ganho"><span class="moeda" aria-hidden="true"></span>+${MOEDAS_MISSAO} moedinhas</div>
           <p class="regra-moeda">Toda missão completa vale ${MOEDAS_MISSAO} moedinhas. Sempre o mesmo valor, para todo mundo. Sem sorte, sem sorteio.</p></div>
-        <div class="cartao"><h3 style="margin-bottom:8px">Meu Álbum de Selos</h3>${albumHTML()}</div>
+        <div class="cartao"><h3 style="margin-bottom:8px">Meu Álbum de Selos</h3>${albumHTML()}${proximoHTML()}</div>
         <div class="acoes"><button class="btn ipe grande" id="bMostra">Mostra pro professor <span class="ic" aria-hidden="true">→</span></button></div>
       </div></div>`;
     const fc = $('#falaC'); fc.appendChild(fala(txt, 'sofia', 'joinha'));

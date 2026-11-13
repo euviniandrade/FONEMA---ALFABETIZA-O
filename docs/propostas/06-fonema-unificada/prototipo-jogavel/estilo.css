@@ -356,6 +356,12 @@ body.calmo *,body.calmo *::before,body.calmo *::after{animation:none!important;t
 .selo-mini .vago{width:64px;height:72px;border-radius:18px;border:3px dashed #C7D9EA;display:grid;place-items:center;font-family:Fredoka;font-size:28px;color:#B4C6D8}
 .selo-mini small{font-family:Atkinson;font-size:12px;color:var(--cinza);line-height:1.15}
 .selo-mini.tem small{color:var(--marinho);font-weight:700}
+.proximo{margin-top:10px;padding-top:10px;border-top:2px dashed #E3EEF8;display:flex;flex-direction:column;gap:2px}
+.proximo .titulo-j{font-family:Fredoka;font-size:18px;color:var(--marinho)}
+.proximo .prox-txt{font-family:Atkinson;font-size:16px;color:var(--marinho);display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.proximo .bolinhas{display:inline-flex;gap:6px}
+.proximo .bol{width:16px;height:16px;border-radius:50%;border:3px solid #C7D9EA;background:#fff}
+.proximo .bol.cheia{background:#F4B73C;border-color:#C98A12}
 .prof-botoes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .prof-botoes .btn{font-size:21px;padding:0 14px}
 .parabens-box{display:flex;gap:16px;align-items:center;background:var(--creme);border:3px solid #F0DFC0;border-radius:24px;padding:14px}
