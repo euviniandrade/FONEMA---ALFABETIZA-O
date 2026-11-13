@@ -427,29 +427,31 @@
     return `<svg viewBox="0 0 120 120" width="100" height="100" role="img" aria-label="Desenho da boca para este som">${formas[tipo]}</svg>`;
   }
 
-  // ESPELHO DO SOM novo (../espelho-do-som-3d/): boca da Sofia de frente com ZOOM grande + mini raio-X de lado
-  // (cabeça de vidro da Sofia, língua/dentes/véu/ar/voz animados na posição do som). Posições simplificadas: validar com fonoaudióloga.
+  // ESPELHO DO SOM novo (../espelho-do-som-3d/, estilos da D020): de frente a "Boca gigante" com a língua animada
+  // e a Sofia e o Tales apontando; de lado a Sofia "3D fofinho" com a janelinha na bochecha (língua, dentes, véu,
+  // ar e voz na posição do som). Posições simplificadas: validar com fonoaudióloga.
   const ESP = '../espelho-do-som-3d/';
   const ROSTO_SOFIA = { M: 'p b m', A: 'a a~ E k g rr', O: 'O o o~', S: 's z i i~ t d n nh lh', F: 'f v', L: 'l', CH: 'x j u u~', E: 'e e~ r' };
   const rostoSofia = (k) => { for (const [q, ids] of Object.entries(ROSTO_SOFIA)) if (ids.split(' ').includes(k)) return q; return 'A'; };
-  let raioX = null;
+  let raioX = null, frenteX = null;
   function espelhoHTML(titulo) {
     const k = M.som.chave;
     return `<div class="espelho espelho2">
-      <figure class="lupa-boca"><img src="${ESP}recortes/boca-sofia-${rostoSofia(k)}.jpg" alt="A boca da Sofia de frente, bem de perto, fazendo o som ${esc(M.info.ipa)}"></figure>
-      <div class="raiox-mini" aria-label="Raio-X de lado: onde a língua fica no som ${esc(M.info.ipa)}"></div>
+      <div class="frente-mini" aria-label="A boca de frente fazendo o som ${esc(M.info.ipa)}"></div>
+      <div class="raiox-mini" aria-label="A boca de lado: onde a língua fica no som ${esc(M.info.ipa)}"></div>
       <div class="esp-txt"><h3>${titulo} <span class="ipa">${esc(M.info.ipa)}</span></h3><p>${esc(M.info.dica)}</p><p class="valida">posições simplificadas · validar com fonoaudióloga</p></div>
     </div>`;
   }
   function montaRaioX(t) {
     if (raioX) { raioX.destruir(); raioX = null; }
-    const box = $('.raiox-mini', t);
+    if (frenteX) { frenteX.destruir(); frenteX = null; }
+    const box = $('.raiox-mini', t), fbox = $('.frente-mini', t);
     if (!box || !window.EspelhoSVG || !window.FonemasPT) return;
-    box.classList.add('esp-palco');
     const k = window.FonemasPT.F[M.som.chave] ? M.som.chave : 'a';
-    raioX = window.EspelhoSVG.criar(box, { fonema: 'e', personagem: 'sofia' });
+    if (fbox && window.EspelhoFrente) frenteX = window.EspelhoFrente.criar(fbox, { fonema: 'e', viewBox: '410 30 580 650' }); // só a boca
+    raioX = window.EspelhoSVG.criar(box, { fonema: 'e', personagem: 'lado3d' });
     raioX.rotulos(false);
-    setTimeout(() => raioX && raioX.fonema(k), 350); // a boca "chega" na posição do som
+    setTimeout(() => { if (raioX) raioX.fonema(k); if (frenteX) frenteX.fonema(k); }, 350); // a boca "chega" na posição do som
   }
 
   // 6a · ASSISTE: mini-vídeo da dupla apresentando o som do nome

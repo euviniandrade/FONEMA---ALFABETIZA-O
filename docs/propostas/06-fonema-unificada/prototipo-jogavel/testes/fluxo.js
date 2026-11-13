@@ -52,7 +52,7 @@ async function missao(page, prefixo, { mic, errarFigura, errarLetra }) {
   await foto(page, prefixo + '06-assiste-video');
   await page.waitForSelector('[data-tela=suaVez]', { timeout: 20000 });
   await foto(page, prefixo + '07-agora-e-sua-vez');
-  ok(await page.locator('.lupa-boca img').count() === 1 && await page.locator('.raiox-mini svg.esp-svg').count() === 1, 'Espelho do Som: boca da Sofia com zoom + mini raio-X do som inicial');
+  ok(await page.locator('.frente-mini svg.esp-frente').count() === 1 && await page.locator('.raiox-mini svg.esp-svg').count() === 1, 'Espelho do Som: boca gigante de frente + Sofia de lado com o som inicial');
   await page.click('#bIr');
   // Figura
   const figs = await page.evaluate(() => window.FONEMA.missao().figuras.map((f) => f.certo));
