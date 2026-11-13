@@ -185,3 +185,48 @@ function bolotaExpr() {
 }
 module.exports['bolota-folha-modelo'] = bolotaFolha;
 module.exports['bolota-expressoes'] = bolotaExpr;
+
+const M = require('./mouth');
+const CT = require('./corte');
+const { uid } = require('./core');
+function faceCrop(mouthSvg, w, h, k = 1.9, bg = P.skin) {
+  const id = uid('fcp');
+  return `<defs><clipPath id="${id}"><rect width="${w}" height="${h}" rx="${Math.min(w, h) * 0.2}"/></clipPath></defs><g clip-path="url(#${id})">
+    <rect width="${w}" height="${h}" fill="#946040"/>
+    <g transform="translate(${w / 2},${h * 0.52}) scale(${k}) translate(0,-332)">
+      <path d="${S.FACE}" fill="url(#gFace)" transform="translate(0,-60) scale(1.5) translate(0,-60)"/>
+      <ellipse cx="-74" cy="316" rx="22" ry="12" fill="${P.blush}" opacity=".3" filter="url(#soft2)"/><ellipse cx="74" cy="316" rx="22" ry="12" fill="${P.blush}" opacity=".3" filter="url(#soft2)"/>
+      <path d="M-7,298 Q0,306 8,297" fill="none" stroke="${P.skinSh}" stroke-width="3.6" stroke-linecap="round"/><ellipse cx="-2" cy="289" rx="6" ry="4" fill="${P.skinHi}" opacity=".8"/>
+      <g transform="translate(0,338)">${mouthSvg}</g></g></g>
+    <rect width="${w}" height="${h}" rx="${Math.min(w, h) * 0.2}" fill="none" stroke="${P.line}" stroke-opacity=".25" stroke-width="2"/>`;
+}
+function bocasVisemas() {
+  const W = 1800, H = 1250;
+  let g = `<text x="64" y="176" font-family="Fredoka" font-weight="600" font-size="24" fill="${P.ink}">A · 12 bocas (visemas) para lip-sync — propriedade <tspan font-family="Andika" fill="${P.focus}">viseme</tspan> (0–11) no Rive, alimentada pelos Viseme IDs do Azure pt-BR</text>`;
+  M.VISEMAS.forEach((v, i) => {
+    const c = i % 6, r = Math.floor(i / 6), x = 64 + c * 282, y = 200 + r * 178;
+    g += `<g transform="translate(${x},${y})"><rect width="270" height="164" rx="22" fill="#FFFBF4" stroke="${P.line}" stroke-opacity=".1" stroke-width="2"/>
+      <g transform="translate(12,12)">${faceCrop(M.viseme(v.n), 140, 140, 1.75)}</g>
+      <text x="166" y="50" font-family="Fredoka" font-weight="700" font-size="34" fill="${P.focus}">${v.n}</text>
+      <text x="166" y="82" font-family="Andika" font-weight="700" font-size="16.5" fill="${P.ink}">${v.nome.split(' ').slice(0, 2).join(' ')}</text>
+      <text x="166" y="102" font-family="Andika" font-weight="700" font-size="16.5" fill="${P.ink}">${v.nome.split(' ').slice(2).join(' ')}</text>
+      <text x="166" y="132" font-size="16" fill="${P.slate}">${v.fon}</text></g>`;
+  });
+  g += `<text x="64" y="590" font-family="Fredoka" font-weight="600" font-size="24" fill="${P.ink}">B · Espelho do Som: boca de frente + corte lateral animável (6 fonemas-exemplo)</text>`;
+  const ph = [['m', 6, 'mala'], ['f', 7, 'faca'], ['v', 7, 'vaca'], ['s', 8, 'sapo'], ['l', 10, 'lua'], ['a', 1, 'abelha']];
+  ph.forEach(([p, vis, word], i) => {
+    const x = 64 + i * 282, y = 612;
+    const F = CT.FON[p];
+    g += `<g transform="translate(${x},${y})"><rect width="270" height="590" rx="24" fill="#FFFBF4" stroke="${P.line}" stroke-opacity=".1" stroke-width="2"/>
+      <text x="22" y="54" font-family="Andika" font-weight="700" font-size="44" fill="${p === 'a' ? P.vowel : P.cons}">/${p}/</text>
+      <text x="248" y="50" text-anchor="end" font-size="17" fill="${P.slate}">${word.toUpperCase()}</text>
+      <g transform="translate(70,74)">${faceCrop(M.viseme(vis), 130, 116, 1.6)}</g>
+      <g transform="translate(15,204) scale(.8)">${CT.corte(p)}</g>
+      <g transform="translate(18,474)">${CT.PISTAS[p].map((t, j) => `<g transform="translate(0,${j * 32})"><circle cx="10" cy="-5" r="9" fill="${[P.vowel, CT.C.air, CT.C.voice][j]}" opacity="${j === 2 && !F.voice ? .25 : 1}"/><text x="28" y="0" font-size="16" fill="${P.ink}">${t}</text></g>`).join('')}</g></g>`;
+  });
+  const leg = `<g transform="translate(64,1226)"><text font-size="15.5" fill="${P.slate}">Legenda do corte:  <tspan fill="${CT.C.air}" font-weight="700">· · ➜ caminho do ar</tspan>   <tspan fill="#C08A00" font-weight="700">))) garganta vibra (vozeado)</tspan>   véu palatino abaixado = ar pelo nariz (/m/) · camadas separadas (mandíbula, língua, lábios, véu, ar, vibração) para animar no Rive · revisão por 2 fonoaudiólogas.</text></g>`;
+  const body = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${defs()}<rect width="${W}" height="${H}" fill="${P.cream}"/>
+   ${header(W, 'Bocas da Sofia · visemas e "por dentro da boca"', 'Evolução do Espelho do Som (proposta 2): boca real para imitar + corte lateral para mostrar o invisível (língua, véu, garganta)')}${g}${leg}</svg>`;
+  return { w: W, h: H, html: page(W, H, body) };
+}
+module.exports['bocas-visemas'] = bocasVisemas;

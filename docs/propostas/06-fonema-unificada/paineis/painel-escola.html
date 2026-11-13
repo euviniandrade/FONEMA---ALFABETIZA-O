@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FONEMA Escola · EM Jardim das Flores (dados fictícios)</title>
+<link rel="stylesheet" href="base.css">
+<script src="comum.js"></script>
+<script src="vendor/echarts.min.js"></script>
+<script src="vendor/echarts-gl.min.js"></script>
+<style>
+.kpis{grid-template-columns:repeat(5,1fr)}
+.l1{grid-template-columns:1fr 1fr;margin-top:16px}
+#barras{height:400px}#g3d{height:400px;margin-top:10px}
+.l2{grid-template-columns:1.1fr 1fr 1.2fr;margin-top:16px}
+#antes{height:330px}#dose{height:330px}
+.fid td{text-align:center;padding:7px 4px}.fid td:first-child{text-align:left;font-weight:700}
+.fid th{text-align:center;white-space:normal;font-size:11.5px;line-height:1.2;vertical-align:bottom}.fid th:first-child{text-align:left}
+.ponto{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px}
+.ponto svg{width:13px;height:13px}
+.ponto.ok{background:var(--ok-fundo);color:var(--ok)}.ponto.aviso{background:var(--aviso-fundo);color:var(--aviso)}.ponto.alerta{background:var(--alerta-fundo);color:var(--alerta)}
+.idx{font-weight:700}
+.acoes{grid-template-columns:repeat(3,1fr);margin-top:16px}
+.acao{display:flex;gap:12px;align-items:flex-start}
+.acao .n{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--info-fundo);color:var(--lousa);font-weight:700;flex:none}
+.acao p{font-size:13.5px;color:var(--tinta-2);margin-top:3px}
+</style>
+</head>
+<body>
+<header class="topo">
+  <div class="marca"><i>F</i>FONEMA Escola</div>
+  <nav class="nav"><a class="ativo">Visão da escola</a><a>Turmas</a><a>Implantação</a><a>Professoras</a><a>Famílias</a><a>Aparelhos</a></nav>
+  <div class="usuario"><div><b>Direção · Márcia Lopes (fictícia)</b>EM Jardim das Flores · Rede de Vale Verde</div><div class="avatar">ML</div></div>
+</header>
+<main class="pagina">
+  <div class="cab">
+    <div><h1>EM Jardim das Flores · alfabetização</h1><div class="sub">8 turmas de 1º e 2º ano · termômetro FONEMA 0–10 · dados até 12/11/2026</div></div>
+    <div class="filtros"><span class="chip">Período <b>fev → nov 2026</b></span><span class="chip">Turmas <b>todas</b></span><button class="botao prim">Pauta da reunião pedagógica</button></div>
+  </div>
+  <section class="grade kpis">
+    <div class="cartao kpi"><div class="rot">Alunos acompanhados</div><div class="val num">181</div><div class="det">1º ano: 93 · 2º ano: 88</div></div>
+    <div class="cartao kpi"><div class="rot">2º ano no nível 10</div><div class="val num">24%</div><div class="det"><b>+16 p.p.</b> desde fevereiro (8%)</div></div>
+    <div class="cartao kpi"><div class="rot">Nível mediano · 1º / 2º ano</div><div class="val num">4 <small>/</small> 7</div><div class="det">fevereiro: 1 / 4</div></div>
+    <div class="cartao kpi"><div class="rot">Dose média de prática</div><div class="val num">55 <small>min/sem</small></div><div class="det">7 de 8 turmas na faixa 45–60</div></div>
+    <div class="cartao kpi"><div class="rot">Fidelidade de implementação</div><div class="val num">82%</div><div class="det">dos 40 critérios cumpridos (8 turmas × 5)</div></div>
+  </section>
+
+  <section class="grade l1">
+    <div class="cartao"><h2>Turmas por nível <small>% dos alunos de cada turma · barras 100% · valores exatos</small></h2>
+      <div class="pergunta">Que turmas estão mais longe do nível 10 e onde cada uma se concentra?</div><div id="barras"></div>
+      <div class="leg-n" id="legn" style="margin-top:6px"></div></div>
+    <div class="cartao" style="box-shadow:var(--sombra-heroi)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><h2>As mesmas turmas em relevo <small>vista 3D · altura = % no nível</small></h2><div class="pergunta">Para a reunião: o “degrau” entre 1º e 2º ano e o pico de cada turma.</div></div><span class="selo" style="background:var(--lousa-2)">EXPLORAÇÃO</span></div>
+      <div id="g3d" class="palco"></div>
+      <div style="font-size:12.5px;color:var(--tinta-3);margin-top:8px">Rótulos só no nível 10. Para comparar valores, use as barras ao lado (sem distorção de perspectiva).</div></div>
+  </section>
+
+  <section class="grade l2">
+    <div class="cartao"><h2>Antes e depois <small>nível mediano por turma · fevereiro → novembro</small></h2><div id="antes"></div></div>
+    <div class="cartao"><h2>Dose de prática fônica <small>min/semana · média das últimas 4 semanas</small></h2><div id="dose"></div></div>
+    <div class="cartao"><h2>Fidelidade de implementação <small>últimas 4 semanas</small></h2>
+      <table class="fid" style="margin-top:8px"><thead><tr><th>Turma</th><th>Dose ≥ 45 min</th><th>Sessões até o fim</th><th>Grupos aplicados</th><th>Rotação por estações</th><th>Formação em dia</th><th>Índice</th></tr></thead><tbody id="fid"></tbody></table>
+      <div class="leg5" style="display:flex;gap:14px;font-size:12.5px;color:var(--tinta-2);margin-top:10px" id="legf"></div></div>
+  </section>
+
+  <section class="grade acoes">
+    <div class="cartao acao"><span class="n">1</span><div><b>1º C: aparelhos antes de pedagogia</b><p>Dose de 31 min/sem: 3 de 6 tablets sem sincronizar. Pedir troca de carregadores à secretaria antes de qualquer conversa sobre ritmo.</p></div></div>
+    <div class="cartao acao"><span class="n">2</span><div><b>2º D: retomar grupos semanais</b><p>Grupos sugeridos aplicados em 1 de 4 semanas. Convidar a Prof.ª do 2º B (rotação em dia) para planejar junto.</p></div></div>
+    <div class="cartao acao"><span class="n">3</span><div><b>Celebrar o 2º B</b><p>Maior avanço da escola (mediana 4 → 7). Compartilhar o plano de estações na reunião de sexta.</p></div></div>
+  </section>
+  <div class="rodape">
+    <div><span id="cad"></span><span>A direção vê turmas e, quando precisa, alunos da própria escola. Sem ranking de crianças nem de professoras.</span></div>
+    <div><span>Fidelidade mede se o programa foi aplicado como previsto: explica resultados, não avalia pessoas.</span></div>
+    <div><span>Termômetros socioemocionais ficam com professora e família; não entram neste painel.</span></div>
+  </div>
+</main>
+<script>
+const F=FONEMA,c=F.css,cor=F.niveis();
+document.getElementById('cad').innerHTML=F.ic.cadeado;
+document.getElementById('legn').innerHTML='<span style="margin-right:8px">Nível</span>'+cor.map((k,i)=>`<i style="background:${k}"></i>`).join('')+'<span style="margin-left:8px">0 → 10</span>';
+const g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s));
+const T=[['1º A',24,3.6,1.8,58,0.9],['1º B',23,3.2,1.8,52,0.7],['1º C',22,2.3,1.7,31,0.4],['1º D',24,3.9,1.9,56,1.1],
+         ['2º A',22,6.6,2.0,57,4],['2º B',24,null,null,59,4],['2º C',21,6.9,2.0,55,4.6],['2º D',21,5.6,2.1,47,3.2]];
+const turmas=T.map(([n,al,mu,sd,dose,fev])=>{let d;
+  if(n==='2º B')d=[0,0,0,1,3,4,6,3,2,2,3].map(v=>Math.round(v*1000/24)/10);
+  else{const w=Array.from({length:11},(_,i)=>g(i,mu,sd)+0.01);d=F.para100(w);} 
+  if(n==='2º B'){d=F.para100(d);}
+  return {n,al,dist:d,med:F.mediana(d),dose,fev:Math.round(fev)};});
+// ===== barras 100% =====
+const gb=F.registrar(echarts.init(document.getElementById('barras'),null,{renderer:'svg'}));
+gb.setOption({...F.base(),grid:{left:44,right:56,top:14,bottom:4},
+ tooltip:F.tooltip({trigger:'item',formatter:p=>`<b>${p.name}</b> · nível ${p.seriesIndex}: <b>${p.value}%</b>`}),
+ xAxis:{type:'value',max:100,show:false},
+ yAxis:{type:'category',data:turmas.map(t=>t.n),inverse:true,axisTick:{show:false},axisLine:{show:false},axisLabel:{color:c('--tinta'),fontSize:13,fontWeight:'bold'}},
+ series:cor.map((k,i)=>({type:'bar',stack:'t',name:'nível '+i,data:turmas.map(t=>t.dist[i]),barWidth:26,itemStyle:{color:k,borderColor:c('--cartao'),borderWidth:1.5,borderRadius:i===10?[0,5,5,0]:i===0?[5,0,0,5]:0},
+   label:{show:true,formatter:p=>p.value>=9?p.value+'%':'',color:i>=5?(F.escuro?'#0C131B':'#fff'):c('--tinta'),fontSize:11.5,fontWeight:'bold'}})).concat([{type:'bar',stack:'x',data:turmas.map(()=>0),label:{show:true,position:'right',offset:[100*0,0],formatter:p=>'',},silent:true}]),
+ graphic:[]});
+gb.on('finished',function f(){gb.off('finished',f);const gr=turmas.map((t,i)=>{const y=gb.convertToPixel({yAxisIndex:0},t.n);return{type:'text',x:gb.getWidth()-50,y:y-8,style:{text:'mediana '+t.med,fill:c('--tinta-2'),font:'12px Atkinson',width:50}}});
+  gr.forEach((x,i)=>{x.style.text=String(turmas[i].dist[10])+'%';x.style.font='bold 13px Atkinson';x.style.fill=c('--tinta');x.x=gb.getWidth()-44;});
+  gr.push({type:'text',x:gb.getWidth()-50,y:0,style:{text:'nível 10',fill:c('--tinta-3'),font:'bold 11px Atkinson'}});
+  gb.setOption({graphic:gr});});
+// ===== 3D =====
+const g3=F.registrar(echarts.init(document.getElementById('g3d')));
+const dd=[];turmas.forEach((t,x)=>t.dist.forEach((v,y)=>dd.push({value:[x,y,v],itemStyle:{color:cor[y]},label:{show:y===10,formatter:v+'%',textStyle:{fontSize:12,fontWeight:'bold',color:F.escuro?'#0C131B':'#fff',backgroundColor:cor[10],padding:[3,5],borderRadius:4}}})));
+const eixo={axisLine:{lineStyle:{color:c('--linha-forte')}},axisTick:{show:false},splitLine:{show:true,lineStyle:{color:c('--linha')}},axisLabel:{textStyle:{color:c('--tinta-2'),fontSize:12,fontFamily:F.fonte}}};
+g3.setOption({...F.base(),tooltip:F.tooltip({formatter:p=>`<b>${turmas[p.value[0]].n}</b> · nível ${p.value[1]}: <b>${p.value[2]}%</b>`}),
+ xAxis3D:{...eixo,type:'category',name:'',data:turmas.map(t=>t.n),axisLabel:{...eixo.axisLabel,interval:0,textStyle:{...eixo.axisLabel.textStyle,fontWeight:'bold',color:c('--tinta')}}},
+ yAxis3D:{...eixo,type:'category',name:'',data:cor.map((_,i)=>String(i)),axisLabel:{...eixo.axisLabel,interval:1}},
+ zAxis3D:{...eixo,type:'value',name:'',max:40,interval:20,axisLabel:{...eixo.axisLabel,formatter:'{value}%'}},
+ grid3D:{boxWidth:200,boxDepth:120,boxHeight:64,top:0,environment:'none',axisPointer:{show:false},
+  viewControl:{projection:'orthographic',orthographicSize:150,alpha:30,beta:12,animation:false},
+  light:{main:{intensity:1.25,shadow:true,shadowQuality:'high',alpha:52,beta:28},ambient:{intensity:F.escuro?.42:.55}},
+  postEffect:{enable:true,FXAA:{enable:true}},temporalSuperSampling:{enable:true}},
+ series:[{type:'bar3D',data:dd,shading:'lambert',barSize:[13,6.5],bevelSize:.35,bevelSmoothness:4}]});
+// ===== antes/depois (halteres) =====
+const ga=F.registrar(echarts.init(document.getElementById('antes'),null,{renderer:'svg'}));
+const nov=turmas.map(t=>t.med),fev=turmas.map(t=>t.fev);
+ga.setOption({...F.base(),grid:{left:44,right:24,top:30,bottom:30},
+ tooltip:F.tooltip({trigger:'axis',axisPointer:{type:'none'},formatter:ps=>`<b>${ps[0].name}</b><br>fevereiro: nível ${fev[ps[0].dataIndex]}<br>novembro: nível ${nov[ps[0].dataIndex]} (+${nov[ps[0].dataIndex]-fev[ps[0].dataIndex]})`}),
+ legend:{top:0,left:0,itemWidth:12,itemHeight:12,textStyle:{color:c('--tinta-2'),fontSize:12.5},data:[{name:'fevereiro',icon:'circle'},{name:'novembro',icon:'diamond'}]},
+ xAxis:{type:'value',min:0,max:10,interval:1,axisLabel:{color:c('--tinta-3'),fontSize:12},splitLine:{lineStyle:{color:c('--linha')}},name:'nível',nameLocation:'end',nameTextStyle:{color:c('--tinta-3'),fontSize:12,padding:[24,0,0,-30]}},
+ yAxis:{type:'category',data:turmas.map(t=>t.n),inverse:true,axisTick:{show:false},axisLine:{show:false},axisLabel:{color:c('--tinta'),fontSize:13,fontWeight:'bold'}},
+ series:[{type:'custom',renderItem:(p,api)=>{const a=api.coord([api.value(0),p.dataIndex]),b=api.coord([api.value(1),p.dataIndex]);return{type:'line',shape:{x1:a[0],y1:a[1],x2:b[0],y2:b[1]},style:{stroke:c('--linha-forte'),lineWidth:4,lineCap:'round'}}},data:turmas.map(t=>[t.fev,t.med]),silent:true,z:1},
+  {name:'fevereiro',type:'scatter',data:fev,symbol:'circle',symbolSize:12,itemStyle:{color:c('--cartao'),borderColor:cor[5],borderWidth:2.5},z:3},
+  {name:'novembro',type:'scatter',data:nov,symbol:'diamond',symbolSize:15,itemStyle:{color:cor[10],borderColor:c('--cartao'),borderWidth:1.5},z:4,
+   label:{show:true,position:'right',distance:8,formatter:p=>'+'+(nov[p.dataIndex]-fev[p.dataIndex]),color:c('--tinta'),fontWeight:'bold',fontSize:12.5}}]});
+// ===== dose =====
+const gd=F.registrar(echarts.init(document.getElementById('dose'),null,{renderer:'svg'}));
+gd.setOption({...F.base(),grid:{left:44,right:30,top:30,bottom:30},
+ tooltip:F.tooltip({trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:v=>v+' min/semana'}),
+ xAxis:{type:'value',max:70,interval:15,axisLabel:{color:c('--tinta-3'),fontSize:12},splitLine:{lineStyle:{color:c('--linha')}}},
+ yAxis:{type:'category',data:turmas.map(t=>t.n),inverse:true,axisTick:{show:false},axisLine:{show:false},axisLabel:{color:c('--tinta'),fontSize:13,fontWeight:'bold'}},
+ series:[{type:'bar',data:turmas.map(t=>({value:t.dose,itemStyle:{color:t.dose<45?c('--aviso'):cor[7],borderRadius:[0,4,4,0]}})),barWidth:16,
+   label:{show:true,position:'right',color:c('--tinta'),fontWeight:'bold',fontSize:12.5,formatter:p=>(p.value<45?'▼ ':'')+p.value},
+   markArea:{silent:true,itemStyle:{color:F.escuro?'rgba(92,196,138,.10)':'rgba(47,133,90,.08)'},label:{show:true,position:'insideTop',offset:[0,-22],color:c('--ok'),fontSize:12,fontWeight:'bold',formatter:'faixa-alvo 45–60'},data:[[{xAxis:45},{xAxis:60}]]}}]});
+// ===== fidelidade =====
+const FD={'1º A':'ooooa','1º B':'oaooo','1º C':'xaaoo','1º D':'ooooo','2º A':'ooaoo','2º B':'ooooo','2º C':'oooao','2º D':'oaxao'};
+const mp={o:'ok',a:'aviso',x:'alerta'},tt={o:'cumprido',a:'parcial',x:'não cumprido'};
+document.getElementById('fid').innerHTML=Object.entries(FD).map(([t,s])=>{const pts=[...s].reduce((a,k)=>a+(k==='o'?1:k==='a'?.5:0),0);const ix=Math.round(pts/5*100);
+ return `<tr><td>${t}</td>${[...s].map(k=>`<td><span class="ponto ${mp[k]}" title="${tt[k]}">${F.ic[mp[k]]}</span></td>`).join('')}<td class="idx num">${ix}%</td></tr>`}).join('');
+document.getElementById('legf').innerHTML=['o','a','x'].map(k=>`<span style="display:inline-flex;gap:6px;align-items:center"><span class="ponto ${mp[k]}">${F.ic[mp[k]]}</span>${tt[k]}</span>`).join('')+'<span style="color:var(--tinta-3)">parcial = meio ponto</span>';
+addEventListener('resize',()=>[gb,g3,ga,gd].forEach(x=>x.resize()));
+</script>
+</body>
+</html>

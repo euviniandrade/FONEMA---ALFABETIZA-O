@@ -1,0 +1,61 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="common.css">
+<style>
+body{background:#7A4B2E}
+.parede{position:absolute;inset:0;background:linear-gradient(180deg,#F6E3C4,#EFD3A8);}
+.parede::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(122,75,46,.05) 0 2px,transparent 2px 80px)}
+.top{position:absolute;left:24px;top:18px;display:flex;align-items:center;gap:14px}
+.voltar{width:56px;height:56px;border-radius:18px;background:#FFFBF4;box-shadow:0 4px 0 #D9C3A3;display:flex;align-items:center;justify-content:center}
+.titulo{font-family:Fredoka;font-weight:700;font-size:30px}
+.mural{position:absolute;left:22px;top:88px;width:900px;height:694px;border-radius:24px;background:linear-gradient(180deg,#9A6234,#7A4B2E);padding:14px;box-shadow:0 8px 0 #5A3218,0 20px 30px -10px rgba(60,30,10,.5)}
+.feltro{position:absolute;inset:14px;border-radius:14px;background:#2F5E4A;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1.5px);background-size:6px 6px;box-shadow:inset 0 4px 12px rgba(0,0,0,.35)}
+.grid{position:absolute;inset:26px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:12px}
+.fam{background:#FFFBF4;border-radius:18px;padding:10px 12px 8px;position:relative;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+.fam::before{content:'';position:absolute;left:50%;top:-6px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FFD978,#C08A1E);box-shadow:0 2px 2px rgba(0,0,0,.35)}
+.fam .nm{font-family:Fredoka;font-weight:700;font-size:16.5px;display:flex;align-items:center;gap:6px}
+.fam .nm i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.meds{display:flex;justify-content:space-between;margin-top:2px}
+.med{width:84px;text-align:center;position:relative}
+.med svg{width:72px;height:79px}
+.med .l{font-family:Fredoka;font-weight:600;font-size:11px;color:#6E5D52;line-height:1.1}
+.fam .como{font-size:11.5px;color:#6E5D52;line-height:1.2;margin-top:2px}
+.fam.sel{box-shadow:0 0 0 4px #F2B33D,0 4px 0 rgba(0,0,0,.25)}
+.det{position:absolute;left:940px;top:88px;width:318px;height:694px;border-radius:24px;padding:18px}
+.passo{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:14px;margin-bottom:8px}
+.passo .b{flex:none;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Fredoka;font-weight:700;color:#fff;font-size:14px}
+.passo .tx{font-size:13.5px;line-height:1.28}
+.barra{height:12px;border-radius:99px;background:#F1E4D0;overflow:hidden;position:relative;margin-top:5px}
+.barra i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:linear-gradient(90deg,#F8C95A,#E9A22A)}
+</style></head><body>
+<div class="parede"></div>
+<div class="top"><div class="voltar"><svg width="30" height="30" viewBox="0 0 20 20"><path d="M12,4 L6,10 L12,16" stroke="#7A4B2E" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="titulo">Meu mural de emblemas</div>
+<div class="t" style="margin-left:18px;font-weight:600;font-size:15px;background:#FFFBF4;border-radius:99px;padding:6px 14px;box-shadow:0 3px 0 #D9C3A3">13 conquistados · cada um conta uma coisa que você <b style="color:#A9472A">aprendeu ou fez</b></div></div>
+<div class="mural"><div class="feltro"></div><div class="grid" id="grid"></div></div>
+<div class="det card" id="det"></div>
+<div class="nota" style="left:962px;top:676px;max-width:276px">Níveis por <b>esforço e domínio</b>, com regra escrita. Nunca por tempo de tela, sequência de dias ou moedas gastas. Sem ranking entre crianças.</div>
+<script src="base.js"></script><script src="chars.js"></script>
+<script>
+// fam, titulo, [bronze, prata, ouro] estados: 2=conquistado 1=em andamento 0=bloqueado, como
+const F=[
+ ['som','Mestre do M',[2,2,1],'Um emblema para cada som. Ouro: lê o M em histórias e lembra depois de 2 semanas.','M'],
+ ['leitor','Leitor do Cerrado',[2,1,0],'Bronze: 3 histórias da região. Prata: vencer o Ipê sem Flores. Ouro: recontar para a família.'],
+ ['colecao','Colecionador',[2,0,0],'1, 3 e 5 coleções de bioma completas.'],
+ ['vila','Ajudante da Vila',[2,1,0],'Ajudar 1, 3 e 6 construções (comprar, doar ou cumprir missão).'],
+ ['poupador','Poupador',[2,2,0],'Bronze: 1 meta. Prata: 3 metas. Ouro: meta grande planejada na lista de desejos.'],
+ ['generoso','Generoso',[2,1,0],'Conta presentes, não valor. Bilhete escrito à mão também vale.'],
+ ['curioso','Curioso',[2,2,1],'Ver um vídeo e responder à pergunta da Sofia; explorar cantos novos.'],
+ ['criador','Criador',[1,0,0],'Escrever 1 história, 3 histórias e o livro da vila.'],
+ ['persist','Persistência',[2,2,2],'Tentar de novo depois de errar e dominar um som que estava difícil.'],
+];
+const T=['bronze','prata','ouro'],TL=['Bronze','Prata','Ouro'];
+grid.innerHTML=F.map(([f,t,st,como,L],i)=>`<div class="fam ${i===0?'sel':''}"><div class="nm"><i style="background:${EMB_FAM[f].cor}"></i>${t}</div><div class="meds">${st.map((s,j)=>`<div class="med">${emblema(f,T[j],{locked:s===0,letra:L})}${s===1?`<div style="position:absolute;left:14px;right:14px;top:70px"><div class="barra" style="height:7px;margin:0"><i style="width:${[60,45,70][j]}%"></i></div></div>`:''}<div class="l" style="${s===2?'color:#2F6B43':''}">${TL[j]}${s===2?' ✓':s===1?' · quase':''}</div></div>`).join('')}</div><div class="como">${como}</div></div>`).join('');
+// estilo: em andamento = medalha visível mas esmaecida
+document.querySelectorAll('.med').forEach(m=>{if(m.querySelector('.barra'))m.querySelector('svg').style.cssText+='opacity:.5;filter:saturate(.4)'});
+det.innerHTML=`<div style="text-align:center">${emblema('som','ouro',{letra:'M',attrs:'width="150" height="165"'})}</div>
+<div class="t" style="text-align:center;font-weight:700;font-size:26px;margin-top:-2px">Mestre do M</div>
+<div class="t" style="text-align:center;font-weight:600;font-size:14px;color:#B07A12;letter-spacing:1px">PRÓXIMO: OURO</div>
+<div class="t" style="font-weight:700;font-size:16px;margin:12px 0 8px">Como conquistar</div>
+<div class="passo" style="background:#F8EADB"><div class="b" style="background:#B8733C">✓</div><div class="tx"><b>Bronze:</b> ouvir e achar o /m/ em 10 palavras.</div></div>
+<div class="passo" style="background:#EEF1F4"><div class="b" style="background:#8E9AA6">✓</div><div class="tx"><b>Prata:</b> ler 20 palavras com M sozinha, em 2 dias diferentes.</div></div>
+<div class="passo" style="background:#FFF4D6;border:2px solid #F2B33D"><div class="b" style="background:#D99A1E">3</div><div class="tx" style="flex:1"><b>Ouro:</b> ler uma história com M sem ajuda <b>e</b> lembrar na revisão depois de 2 semanas.<div class="barra"><i style="width:70%"></i></div><div style="font-size:11.5px;color:#6E5D52;margin-top:3px">Falta a revisão do dia 27. Faltar não apaga nada.</div></div></div>
+<div style="display:flex;gap:8px;margin-top:10px"><div class="btn btn-papel" style="flex:1;height:44px;font-size:14.5px">Pôr na vitrine</div><div class="btn btn-sol" style="flex:1;height:44px;font-size:14.5px">Contar p/ família</div></div>`;
+</script></body></html>
