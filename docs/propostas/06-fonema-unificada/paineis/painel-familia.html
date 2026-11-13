@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FONEMA Família · Iris (dados fictícios)</title>
+<link rel="stylesheet" href="base.css">
+<script src="comum.js"></script>
+<script src="vendor/echarts.min.js"></script>
+<style>
+body{background:linear-gradient(180deg,#E8F1F6 0,#F2F5F8 380px)}
+.app{padding:0 16px 28px}
+.barra{display:flex;align-items:center;gap:10px;padding:14px 0 10px}
+.barra .foto{width:40px;height:40px;border-radius:50%;background:linear-gradient(145deg,#FFC94A,#FF7A59);display:grid;place-items:center;color:#2B2340;font-weight:700;font-size:16px;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.barra b{display:block;font-size:17px}.barra span{font-size:13px;color:var(--tinta-3)}
+.barra .sino{margin-left:auto;width:38px;height:38px;border-radius:12px;background:var(--cartao);display:grid;place-items:center;border:1px solid var(--linha)}
+.heroi{background:var(--cartao);border-radius:22px;padding:18px 16px 16px;box-shadow:var(--sombra-heroi);border:1px solid var(--linha);display:grid;grid-template-columns:128px 1fr;gap:8px;align-items:center}
+.heroi .eti{font-size:13px;color:var(--tinta-3);font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.heroi .grande{white-space:nowrap;font-size:36px;font-weight:700;letter-spacing:-.02em;line-height:1;margin-top:6px}
+.heroi .grande small{font-size:17px;color:var(--tinta-2);font-weight:400;letter-spacing:0}
+.falta{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:var(--info-fundo);color:var(--lousa);font-weight:700;font-size:15px;padding:6px 11px;border-radius:999px}
+.heroi .desc{font-size:14px;color:var(--tinta-2);margin-top:12px;line-height:1.4}
+.heroi .prev{font-size:13px;color:var(--tinta-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--linha)}
+.ouvir{width:100%;grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;background:var(--acao);color:var(--acao-tinta);font-family:inherit;font-weight:700;font-size:15.5px;padding:13px;margin-top:4px}
+.bloco{background:var(--cartao);border-radius:18px;padding:16px;margin-top:14px;border:1px solid var(--linha);box-shadow:var(--sombra)}
+.bloco h2{font-size:16.5px;display:flex;justify-content:space-between;align-items:baseline}
+.bloco h2 small{font-weight:400;font-size:12.5px;color:var(--tinta-3)}
+#traj{height:170px;margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.chip2{display:inline-flex;align-items:center;gap:6px;font-size:14px;padding:7px 11px;border-radius:12px;background:var(--ok-fundo);color:var(--tinta);font-weight:700}
+.chip2 svg{width:14px;height:14px;color:var(--ok)}
+.chip2.apr{background:var(--aviso-fundo)}.chip2.apr svg{color:var(--aviso)}
+.sub2{font-size:13px;color:var(--tinta-3);margin-top:12px;font-weight:700}
+.missao{background:linear-gradient(135deg,#FFF6E5,#FFE9C2);border-color:#F3D9A4}
+html[data-tema="escuro"] .missao{background:linear-gradient(135deg,#2A2212,#33270F);border-color:#4A3A18}
+.passos{margin-top:10px;display:grid;gap:8px}
+.passos div{display:grid;grid-template-columns:26px 1fr;gap:8px;font-size:14.5px;align-items:start}
+.passos i{width:24px;height:24px;border-radius:8px;background:#FFC94A;color:#2B2340;font-style:normal;font-weight:700;display:grid;place-items:center;font-size:13px}
+.video{margin-top:10px;border-radius:14px;overflow:hidden;position:relative;height:178px;background:linear-gradient(160deg,#8ED1FC 0%,#DDF2FF 55%,#BFE8B0 56%,#3FA34D 100%)}
+.video .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.video .dur{position:absolute;right:10px;bottom:10px;background:rgba(21,34,50,.8);color:#fff;font-size:12px;font-weight:700;padding:3px 7px;border-radius:6px}
+.video .leg{position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.92);color:#152232;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px}
+.dias{display:flex;justify-content:space-between;margin-top:12px}
+.dias div{display:grid;justify-items:center;gap:5px;font-size:12px;color:var(--tinta-3)}
+.dias span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:2px dashed var(--linha-forte)}
+.dias span.f{border:0;background:var(--n6);color:#fff}
+.nota{font-size:12.5px;color:var(--tinta-3);margin-top:14px;display:flex;gap:8px;line-height:1.4}
+.abas{display:grid;grid-template-columns:repeat(4,1fr);background:var(--cartao);border-top:1px solid var(--linha);padding:8px 6px 14px;margin:18px -16px -28px}
+.abas div{display:grid;justify-items:center;font-size:11.5px;color:var(--tinta-3);gap:3px}
+.abas div.on{color:var(--lousa);font-weight:700}
+.abas svg{width:22px;height:22px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="barra"><div class="foto">I</div><div><b>Iris · 2º B</b><span>EM Jardim das Flores · semana de 11/11</span></div><div class="sino"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--tinta-2)"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21h4"/></svg></div></div>
+
+  <section class="heroi">
+    <svg id="tubo" viewBox="0 0 132 360" width="132" height="360" role="img" aria-label="Termômetro: nível 6 de 10"></svg>
+    <div>
+      <div class="eti">Termômetro da leitura</div>
+      <div class="grande num">Nível 6 <small>de 10</small></div>
+      <div class="falta"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 13V3M4 7l4-4 4 4"/></svg>faltam 4 níveis</div>
+      <div class="desc"><b style="color:var(--tinta)">Encontros e casos especiais.</b> Iris já lê palavras com <b>pr</b>, <b>bl</b>, <b>tr</b> e está aprendendo quando o <b>r</b> soa forte.</div>
+      <div class="prev">Chegada prevista ao nível 10: <b style="color:var(--tinta)">entre 4 e 7 meses</b>. É uma faixa, recalculada toda semana; não é promessa.</div>
+    </div>
+    <button class="ouvir"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Ouvir este resumo (40 s)</button>
+  </section>
+
+  <section class="bloco"><h2>O caminho da Iris <small>só ela com ela mesma</small></h2><div id="traj"></div></section>
+
+  <section class="bloco"><h2>O que a Iris já sabe <small>esta semana</small></h2>
+    <div class="chips" id="sabe"></div>
+    <div class="sub2">ESTÁ APRENDENDO</div><div class="chips" id="aprende"></div></section>
+
+  <section class="bloco missao"><h2>Missão da semana <small>5 minutos · em casa</small></h2>
+    <div style="font-size:15px;margin-top:8px"><b>Caça-palavras com R forte</b> no rótulo dos alimentos.</div>
+    <div class="passos"><div><i>1</i><span>Peguem 3 embalagens da cozinha (arroz, carro de brinquedo vale!).</span></div><div><i>2</i><span>Iris procura palavras com <b>rr</b> ou <b>r</b> no começo e lê em voz alta.</span></div><div><i>3</i><span>Você repete devagar e bate palma no som forte. Errou? Tudo bem: leiam juntas de novo.</span></div></div>
+    <button class="ouvir" style="background:#2B2340;color:#FFF6E5;margin-top:12px">▶ Ouvir a missão</button></section>
+
+  <section class="bloco"><h2>Vídeo da semana <small>para a família</small></h2>
+    <div class="video" id="video"></div>
+    <div style="font-size:14.5px;margin-top:10px"><b>Por que o “r” muda de som?</b><div style="font-size:13px;color:var(--tinta-3);margin-top:2px">A Sofia explica em 1 min 40 s, com legenda e áudio.</div></div></section>
+
+  <section class="bloco"><h2>Dias de leitura <small>não é sequência: nada se perde</small></h2>
+    <div class="dias" id="dias"></div></section>
+
+  <div class="nota"><span id="cad"></span><span>Aqui a Iris só é comparada com ela mesma. O FONEMA não mostra ranking, nota de outras crianças nem percentil.</span></div>
+  <nav class="abas">
+    <div class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9H3z"/></svg>Início</div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5h16v14z"/><path d="M8 9h8M8 13h5"/></svg>Missões</div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v11H8l-4 4z"/></svg>Escola</div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Ajustes</div>
+  </nav>
+</div>
+<script>
+const F=FONEMA,c=F.css;
+document.getElementById('cad').innerHTML=F.ic.cadeado;
+// ===== tubo de vidro 3D (SVG) =====
+(function(){
+ const N=6, x=34, w=40, top=24, bot=300, bulbR=31, cx=x+w/2;
+ const yN=n=>bot-8-(n/10)*(bot-8-top-14);
+ const esc=F.escuro;
+ let s=`<defs>
+  <linearGradient id="vidro" x1="0" x2="1"><stop offset="0" stop-color="${esc?'#2A3A4A':'#DCE7EE'}"/><stop offset=".18" stop-color="${esc?'#3B4F63':'#FFFFFF'}"/><stop offset=".55" stop-color="${esc?'#1E2A36':'#EEF3F7'}"/><stop offset="1" stop-color="${esc?'#2D3E4F':'#C9D7E1'}"/></linearGradient>
+  <linearGradient id="liq" x1="0" x2="1"><stop offset="0" stop-color="#0E4656"/><stop offset=".25" stop-color="#3FA7B6"/><stop offset=".5" stop-color="#2A8797"/><stop offset="1" stop-color="#0E4656"/></linearGradient>
+  <linearGradient id="liqv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FD3DD" stop-opacity=".55"/><stop offset="1" stop-color="#0E4656" stop-opacity="0"/></linearGradient>
+  <radialGradient id="bulbo" cx=".38" cy=".35" r=".75"><stop offset="0" stop-color="#8FDCE5"/><stop offset=".45" stop-color="#2E8E9D"/><stop offset="1" stop-color="#0B3A47"/></radialGradient>
+  <radialGradient id="somb" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity="${esc?.5:.18}"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  <filter id="brilho" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.2"/></filter>
+  <clipPath id="clipT"><rect x="${x+4}" y="${top}" width="${w-8}" height="${bot-top+10}" rx="${(w-8)/2}"/></clipPath>
+ </defs>`;
+ s+=`<ellipse cx="${cx}" cy="${bot+bulbR+18}" rx="38" ry="7" fill="url(#somb)"/>`;
+ // tubo de vidro
+ s+=`<rect x="${x}" y="${top-6}" width="${w}" height="${bot-top+12}" rx="${w/2}" fill="url(#vidro)" stroke="${esc?'#4A6075':'#B7C8D4'}" stroke-width="1.2"/>`;
+ // líquido
+ const yl=yN(N);
+ s+=`<g clip-path="url(#clipT)"><rect x="${x+4}" y="${yl}" width="${w-8}" height="${bot-yl+12}" fill="url(#liq)"/><rect x="${x+4}" y="${yl}" width="${w-8}" height="40" fill="url(#liqv)"/></g>`;
+ s+=`<ellipse cx="${cx}" cy="${yl}" rx="${(w-8)/2}" ry="4" fill="#9BE0E8" stroke="#3FA7B6" stroke-width=".8"/>`;
+ // bulbo
+ s+=`<circle cx="${cx}" cy="${bot+bulbR-6}" r="${bulbR+4}" fill="url(#vidro)" stroke="${esc?'#4A6075':'#B7C8D4'}" stroke-width="1.2"/>`;
+ s+=`<rect x="${x+4}" y="${bot-20}" width="${w-8}" height="30" fill="url(#liq)"/>`;
+ s+=`<circle cx="${cx}" cy="${bot+bulbR-6}" r="${bulbR-1}" fill="url(#bulbo)"/>`;
+ s+=`<ellipse cx="${cx-10}" cy="${bot+bulbR-17}" rx="9" ry="6" fill="#fff" opacity=".55" filter="url(#brilho)"/>`;
+ // reflexos do vidro
+ s+=`<rect x="${x+7}" y="${top+6}" width="5" height="${bot-top-6}" rx="2.5" fill="#fff" opacity="${esc?.18:.75}"/>`;
+ s+=`<rect x="${x+w-11}" y="${top+16}" width="2" height="${bot-top-40}" rx="1" fill="#fff" opacity="${esc?.12:.45}"/>`;
+ // marcas 0–10
+ for(let n=0;n<=10;n++){const y=yN(n),on=n===N,meta=n===10;
+  s+=`<line x1="${x+w+4}" x2="${x+w+(n%5===0?14:10)}" y1="${y}" y2="${y}" stroke="${c('--tinta-3')}" stroke-width="1.4"/>`;
+  s+=`<text x="${x+w+18}" y="${y+4.5}" font-family="Atkinson" font-size="${on||meta?14:12}" font-weight="${on||meta?700:400}" fill="${on?c('--tinta'):c('--tinta-3')}">${n}</text>`;}
+ // marcador do nível atual
+ s+=`<g transform="translate(${x-30},${yl-11})"><rect width="24" height="22" rx="6" fill="${c('--acao')}"/><text x="12" y="15.5" text-anchor="middle" font-family="Atkinson" font-weight="700" font-size="13" fill="${c('--acao-tinta')}">6</text><path d="M24 7l5 4-5 4z" fill="${c('--acao')}"/></g>`;
+ // bandeira na meta
+ const y10=yN(10);
+ s+=`<g transform="translate(${x+w+38},${y10-26})"><line x1="0" y1="0" x2="0" y2="22" stroke="${c('--tinta-2')}" stroke-width="1.6"/><path d="M0 0h16l-4 5 4 5H0z" fill="#FFC94A"/></g>`;
+ document.getElementById('tubo').innerHTML=s;
+})();
+// ===== trajetória =====
+const meses=['fev','mar','abr','mai','jun','jul','ago','set','out','nov'],nv=[2,2,3,3,4,4,5,5,6,6];
+const gtj=F.registrar(echarts.init(document.getElementById('traj'),null,{renderer:'svg'}));
+gtj.setOption({...F.base(),grid:{left:26,right:16,top:14,bottom:24},
+ tooltip:F.tooltip({trigger:'axis',formatter:p=>`${p[0].name}: nível <b>${p[0].value}</b>`}),
+ xAxis:{type:'category',data:meses,boundaryGap:false,axisTick:{show:false},axisLine:{lineStyle:{color:c('--linha-forte')}},axisLabel:{color:c('--tinta-3'),fontSize:11.5}},
+ yAxis:{type:'value',min:0,max:10,interval:2,axisLabel:{color:c('--tinta-3'),fontSize:11.5},splitLine:{lineStyle:{color:c('--linha')}}},
+ series:[{type:'line',step:'end',data:nv,symbol:'none',lineStyle:{width:3,color:c('--n8')},areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:c('--n6')+'66'},{offset:1,color:c('--n6')+'05'}])},
+   markPoint:{symbol:'circle',symbolSize:12,itemStyle:{color:c('--n10'),borderColor:c('--cartao'),borderWidth:2.5},label:{show:true,position:'top',distance:8,offset:[-22,0],formatter:'hoje: 6',color:c('--tinta'),fontWeight:'bold',fontSize:12.5},data:[{coord:['nov',6]}]},
+   markLine:{silent:true,symbol:'none',lineStyle:{color:'#C8961E',type:'dashed',width:1.5},label:{formatter:'nível 10 · alfabetização plena',position:'insideStartTop',color:c('--tinta-2'),fontSize:11.5},data:[{yAxis:10}]}}]});
+// ===== chips =====
+const ok=F.ic.ok;
+document.getElementById('sabe').innerHTML=['pr, br, tr','bl, cl, fl','ch, lh, nh','ão e õe','lê frases curtas'].map(t=>`<span class="chip2">${ok}${t}</span>`).join('');
+document.getElementById('aprende').innerHTML=['r forte e r fraco','s com som de z'].map(t=>`<span class="chip2 apr"><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 1.5A6.5 6.5 0 018 14.5z"/></svg>${t}</span>`).join('');
+// ===== vídeo (miniatura ilustrada) =====
+document.getElementById('video').innerHTML=`<svg width="100%" height="100%" viewBox="0 0 358 178" preserveAspectRatio="xMidYMid slice"><circle cx="300" cy="40" r="22" fill="#FFC94A"/><ellipse cx="80" cy="150" rx="140" ry="40" fill="#3FA34D"/><ellipse cx="290" cy="165" rx="120" ry="34" fill="#2F8A3E"/>
+<g transform="translate(70,40)"><circle cx="30" cy="30" r="26" fill="#C98B5B"/><path d="M6 26c2-20 46-22 48 0-6-10-40-10-48 0z" fill="#2B2340"/><circle cx="21" cy="32" r="3" fill="#2B2340"/><circle cx="39" cy="32" r="3" fill="#2B2340"/><path d="M22 42q8 7 16 0" stroke="#2B2340" stroke-width="2.5" fill="none" stroke-linecap="round"/><rect x="10" y="56" width="40" height="44" rx="14" fill="#6C4AB6"/></g>
+<g transform="translate(170,36)" font-family="Andika" font-weight="700"><rect width="96" height="62" rx="14" fill="#fff" opacity=".95"/><text x="48" y="44" text-anchor="middle" font-size="36" fill="#2B2340">rr</text></g></svg>
+<div class="play"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="#1E3A5F"/></svg></div><span class="leg">Sofia · sons do R</span><span class="dur">1:40</span>`;
+// ===== dias =====
+const d=['seg','ter','qua','qui','sex','sáb','dom'],f=[1,1,0,1,1,0,0];
+document.getElementById('dias').innerHTML=d.map((x,i)=>`<div><span class="${f[i]?'f':''}">${f[i]?ok.replace('<svg','<svg width="16" height="16"'):''}</span>${x}</div>`).join('');
+</script>
+</body>
+</html>

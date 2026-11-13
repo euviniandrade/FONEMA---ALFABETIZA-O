@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>FONEMA · Mundo 3D — Arquipélago e Vila (protótipo de direção de arte)</title>
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }
+</script>
+<style>
+@font-face { font-family: Andika; src: url(fonts/andika-latin-700-normal.woff2); font-weight: 700; }
+@font-face { font-family: Andika; src: url(fonts/andika-latin-400-normal.woff2); font-weight: 400; }
+@font-face { font-family: Fredoka; src: url(fonts/fredoka-latin-600-normal.woff2); font-weight: 600; }
+@font-face { font-family: Fredoka; src: url(fonts/fredoka-latin-700-normal.woff2); font-weight: 700; }
+:root { --tinta:#3B2A20; --papel:#FFFBF4; --areia:#FFF4E2; --terracota:#A9472A; --sol:#F2B33D; --folha:#2F6B43; --mar:#1F6E82; --ipe:#B23C62; --sombra: 0 6px 0 rgba(59,42,32,.16), 0 14px 30px rgba(59,42,32,.18); }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #FCEBCB; font-family: Andika, system-ui, sans-serif; color: var(--tinta); -webkit-tap-highlight-color: transparent; user-select: none; }
+#c { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+/* vinheta e "papel" (usada no nível leve; nos outros níveis a vinheta vem do pós-processamento) */
+#vinheta { position: fixed; inset: 0; pointer-events: none; display: none; background: radial-gradient(120% 95% at 50% 45%, transparent 60%, rgba(84,46,24,.22) 100%); }
+body.leve #vinheta { display: block; }
+#carregando { position: fixed; inset: 0; display: grid; place-items: center; background: #FCEBCB; z-index: 50; font: 600 28px Fredoka, sans-serif; color: var(--terracota); transition: opacity .6s; }
+#carregando.fora { opacity: 0; pointer-events: none; }
+
+/* ---------- HUD da criança ---------- */
+#hud { position: fixed; inset: 0; pointer-events: none; transition: opacity .35s; }
+#hud.oculto { opacity: 0; }
+#hud > * { pointer-events: auto; }
+.btn { border: 0; cursor: pointer; background: var(--papel); border-radius: 28px; box-shadow: var(--sombra); display: grid; place-items: center; transition: transform .12s; }
+.btn:active { transform: translateY(3px) scale(.97); }
+#casa { position: absolute; left: 28px; top: 24px; width: 92px; height: 92px; }
+#termo { position: absolute; left: 34px; top: 140px; width: 80px; height: 400px; background: var(--papel); border-radius: 40px; box-shadow: var(--sombra); padding: 14px 0; display: flex; flex-direction: column; align-items: center; }
+#termo .livro { width: 54px; height: 54px; border-radius: 16px; background: var(--mar); display: grid; place-items: center; margin-bottom: 12px; }
+#termo .tubo { position: relative; flex: 1; width: 30px; background: #F1E4CB; border-radius: 16px; overflow: visible; }
+#termo .nivel { position: absolute; left: 0; right: 0; bottom: 0; height: 62%; border-radius: 16px; background: linear-gradient(#F7CB62, #F2B33D 40%, #E39B1B); }
+#termo .bulbo { position: absolute; left: 50%; bottom: -26px; width: 58px; height: 58px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(circle at 38% 35%, #FBD98A, #F2B33D 55%, #E39B1B); box-shadow: 0 4px 0 rgba(59,42,32,.12); }
+#termo .marcas { position: absolute; right: -16px; top: 6px; bottom: 6px; display: flex; flex-direction: column; justify-content: space-between; }
+#termo .marcas i { width: 9px; height: 9px; border-radius: 50%; background: #E7D7BD; display: block; }
+#termo .marcas i.ok { background: var(--sol); }
+#termo .espaco { height: 34px; }
+#moedas { position: absolute; right: 28px; top: 24px; height: 92px; padding: 0 30px 0 22px; border-radius: 30px; gap: 12px; display: flex; align-items: center; font: 700 46px Fredoka, sans-serif; }
+#moedas svg { width: 56px; height: 56px; }
+#nav { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); display: flex; gap: 16px; }
+#nav .btn { width: 104px; height: 104px; border-radius: 30px; flex-direction: column; gap: 2px; font: 600 15px Fredoka, sans-serif; color: var(--tinta); }
+#nav .btn svg { width: 56px; height: 56px; }
+#nav .btn.ativo { outline: 6px solid var(--sol); }
+#sofia-fala { position: absolute; right: 196px; bottom: 30px; max-width: 360px; background: var(--papel); border-radius: 28px 28px 8px 28px; padding: 20px 26px; box-shadow: var(--sombra); font: 400 27px/1.25 Andika, sans-serif; }
+#sofia-fala small { display: block; margin-top: 6px; font-size: 15px; color: #6E5D52; }
+#avatar { position: absolute; right: 28px; bottom: 26px; width: 152px; height: 152px; border-radius: 50%; background: #FCE3A6; border: 7px solid var(--papel); box-shadow: var(--sombra); overflow: hidden; }
+#avatar svg { width: 100%; height: 118%; margin-top: 6px; }
+#jogar { position: absolute; right: 28px; top: 140px; width: 112px; height: 112px; border-radius: 34px; background: #3FB463; box-shadow: 0 7px 0 #2C8A4A, 0 16px 30px rgba(59,42,32,.2); }
+
+/* ---------- Painel de direção de arte (adulto) ---------- */
+#painel { position: fixed; top: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; align-items: center; background: rgba(255,251,244,.92); border-radius: 18px; padding: 6px 8px; box-shadow: 0 6px 20px rgba(59,42,32,.18); font: 600 13px Fredoka, sans-serif; z-index: 20; flex-wrap: wrap; justify-content: center; max-width: calc(100% - 300px); }
+#painel.oculto { display: none; }
+#painel .grupo { display: flex; gap: 3px; background: #F1E4CB; border-radius: 12px; padding: 3px; }
+#painel button { border: 0; background: transparent; border-radius: 9px; padding: 6px 9px; font: inherit; color: var(--tinta); cursor: pointer; }
+#painel button.on { background: var(--papel); box-shadow: 0 2px 0 rgba(59,42,32,.15); color: var(--terracota); }
+#painel .stat { font: 400 11px/1.2 ui-monospace, monospace; color: #6E5D52; padding: 0 6px; min-width: 150px; }
+#dica { position: fixed; left: 50%; bottom: 150px; transform: translateX(-50%); background: rgba(59,42,32,.78); color: var(--papel); padding: 8px 16px; border-radius: 14px; font: 600 14px Fredoka, sans-serif; pointer-events: none; transition: opacity .5s; }
+#dica.oculto { opacity: 0; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="vinheta"></div>
+<div id="carregando">Abrindo o arquipélago…</div>
+
+<div id="hud">
+  <button class="btn" id="casa" title="Início" aria-label="Início"><svg viewBox="0 0 64 64" width="58" height="58"><path d="M10,30 L32,12 L54,30" fill="#A9472A" stroke="#A9472A" stroke-width="6" stroke-linejoin="round"/><rect x="16" y="29" width="32" height="25" rx="4" fill="#F3C7A8"/><rect x="27" y="37" width="11" height="17" rx="3" fill="#7A4B2E"/></svg></button>
+  <div id="termo" aria-label="Termômetro da leitura">
+    <div class="livro"><svg viewBox="0 0 64 64" width="38" height="38"><path d="M32,16 Q20,10 8,14 V50 Q20,46 32,52 Q44,46 56,50 V14 Q44,10 32,16Z" fill="#FFFBF4"/><path d="M32,17 V51" stroke="#1F6E82" stroke-width="3"/></svg></div>
+    <div class="tubo"><div class="nivel"></div><div class="bulbo"></div>
+      <div class="marcas"><i></i><i></i><i></i><i></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i></div></div>
+    <div class="espaco"></div>
+  </div>
+  <div class="btn" id="moedas" aria-label="Moedinhas"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#E39B1B"/><circle cx="20" cy="18.5" r="16.5" fill="#F2B33D"/><circle cx="20" cy="18.5" r="11" fill="none" stroke="#E39B1B" stroke-width="2.5"/><path d="M15,21 Q20,9 26,14 Q22,22 15,21Z" fill="#E39B1B"/><path d="M10,12 Q13,7 18,6" stroke="#FFF1C9" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><span>23</span></div>
+  <button class="btn" id="jogar" aria-label="Começar a lição"><svg viewBox="0 0 64 64" width="64" height="64"><path d="M22,12 L52,32 L22,52 Z" fill="#FFFBF4" stroke="#FFFBF4" stroke-width="6" stroke-linejoin="round"/></svg></button>
+  <nav id="nav">
+    <button class="btn" data-view="arquipelago" aria-label="Ver o arquipélago"><svg viewBox="0 0 64 64"><ellipse cx="32" cy="40" rx="27" ry="13" fill="#6FDCD3"/><ellipse cx="22" cy="36" rx="11" ry="6" fill="#7CC46A"/><ellipse cx="44" cy="40" rx="8" ry="4.5" fill="#F6C945"/><ellipse cx="34" cy="28" rx="7" ry="4" fill="#3E9A57"/></svg>Ilhas</button>
+    <button class="btn" data-view="vila" aria-label="Entrar na vila"><svg viewBox="0 0 64 64"><path d="M8,30 L24,16 L40,30" fill="#A9472A"/><rect x="12" y="29" width="24" height="20" rx="3" fill="#F6C453"/><rect x="20" y="36" width="8" height="13" rx="2" fill="#1F6E82"/><circle cx="48" cy="34" r="10" fill="#5DAE57"/><rect x="46" y="40" width="4" height="10" fill="#8A5A3B"/></svg>Vila</button>
+    <button class="btn" data-view="praca" aria-label="Ir à praça"><svg viewBox="0 0 64 64"><path d="M14,28 L32,14 L50,28 Z" fill="#C2552F"/><rect x="18" y="28" width="3" height="16" fill="#FFFBF4"/><rect x="43" y="28" width="3" height="16" fill="#FFFBF4"/><rect x="30.5" y="28" width="3" height="16" fill="#FFFBF4"/><rect x="12" y="44" width="40" height="6" rx="2" fill="#E9DCC4"/><circle cx="32" cy="10" r="3" fill="#F2B33D"/></svg>Praça</button>
+    <button class="btn" data-view="biblioteca" aria-label="Ir à biblioteca"><svg viewBox="0 0 64 64"><path d="M32,16 Q20,10 8,14 V50 Q20,46 32,52 Q44,46 56,50 V14 Q44,10 32,16Z" fill="#1F6E82"/><path d="M32,17 V51" stroke="#FFFBF4" stroke-width="3"/></svg>Livros</button>
+  </nav>
+  <div id="sofia-fala">Que tal ler uma história na biblioteca?<small>a Sofia fala em voz alta · toque para ouvir de novo</small></div>
+  <div id="avatar"></div>
+</div>
+
+<div id="painel" title="Painel de direção de arte (adulto)">
+  <div class="grupo" id="g-tod"><button data-tod="0">Dia</button><button data-tod="1">Entardecer</button><button data-tod="2">Noite</button></div>
+  <div class="grupo" id="g-q"><button data-q="alto">Alto</button><button data-q="medio">Médio</button><button data-q="leve">Leve</button></div>
+  <div class="grupo"><button id="b-som">Som 3D</button><button id="b-festa">Celebrar</button><button id="b-hud" class="on">HUD</button></div>
+  <div class="stat" id="stat">—</div>
+</div>
+<div id="dica" class="oculto">Arraste para girar · pinça/roda para zoom · toque numa ilha para voar até ela</div>
+
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>
