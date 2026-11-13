@@ -285,7 +285,7 @@
 | **Coruja** | marinho + amarelo-ipê | R5 (C, R) | Arquipélago dos Livros |
 
 **Como é cooperativa.**
-1. **Fase de visitas** (uma por região já liberada): cada partida é uma **dupla de seleções contra a Nuvem Bagunceira** *(D019: substituída pelo **Zum-Zum**, besouro barulhento que distrai)*, que apagou as letras do placar (moldura narrativa da jornada §1). As duas seleções devolvem as letras **juntas**.
+1. **Fase de visitas** (uma por região já liberada): cada partida é uma **dupla de seleções contra o Zum-Zum, o besouro barulhento** (D019; no lugar da antiga "Nuvem Bagunceira"), que embaralhou as letras do placar e zune para tirar a atenção dos jogadores (moldura narrativa da jornada §1). As duas seleções devolvem as letras **juntas**, prestando atenção em cada som; no fim da partida, o Zum-Zum torce junto e cumprimenta os dois times.
 2. **Placar de palavras:** o placar final é a palavra reconstruída ("AMIZADE" em R5; "PRAIA" em R8), lida por todos.
 3. **Cartão de fair play** em vez de cartão amarelo: a criança lê e escolhe o gesto certo numa situação do jogo (seção 2.4). Escolher o gesto respeitoso **não paga moedas**; o que conta é a leitura (rel. 33 §4, regra 4).
 4. **Final = Festival da Copa** no campinho: as 8 seleções juntas completam o **Grande Placar da Vila**, uma frase da fase da criança. Todas recebem a **Taça da Amizade** (★ projeto, seção 4). Não há campeão nem eliminado.
