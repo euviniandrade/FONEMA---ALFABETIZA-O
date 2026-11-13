@@ -661,3 +661,123 @@ Legenda das colunas: **Pergunta** = a dúvida do usuário que o gráfico resolve
 - Alertas push de desempenho para a criança (só para o adulto, opcional) [doc 04 §4.3].
 
 ---
+## 4. Funcionalidades priorizadas (MoSCoW → MVP / V1 / V2 / Futuro)
+
+Legenda:
+- **Comp.** = complexidade (P ≤ 2 sem., M 2–6 sem., G > 6 sem. ou várias disciplinas);
+- **Risco** = principal risco (técnico, pedagógico, legal ⚖️ ou de produção);
+- as evidências remetem aos documentos internos.
+
+### 4.1 MVP — "Must have" (lançamento piloto: casa + escolas parceiras)
+
+| ID | Funcionalidade | Descrição | Evidência | Comp. | Risco |
+|---|---|---|---|---|---|
+| F01 | Contas, papéis e vínculos | Responsável, criança (perfil sem e-mail), professor, escola. RLS por papel. Vários perfis por aparelho (até 40 em tablet de turma) | [doc 03 §7, §9; doc 24 §3.8] | M | Modelo de dados multi-escola mal desenhado |
+| F02 | Consentimento parental e porteira adulta | Consentimento LGPD art. 14 em linguagem simples, granular (microfone/câmera/pesquisa). Porteira = segurar 3 s + tarefa escrita sorteada | [doc 05 §6, §8; doc 24 §3.5] | M | ⚖️ ECA Digital + Decreto 12.880/2026 e verificação de idade: parecer jurídico obrigatório |
+| F03 | Login por figuras + QR | Grade de avatares, senha de 3 figuras (ordem configurável), QR da turma e QR individual para casa | [doc 24 §3.4] | M | Troca de perfis em aparelho compartilhado |
+| F04 | Currículo fônico em dados | "Language pack" JSON: etapas 0–10, CGF, sílabas, palavras, pseudopalavras, tags BNCC canônicas + aliases estaduais | [doc 02 §5.5, §8; doc 03 §7.1] | M | Sequência sem validação de pedagoga/fono |
+| F05 | Missão de boas-vindas (diagnóstico) | 3 sessões de 4–6 min, roteamento multiestágio. Define fase de entrada, priors e bandeiras | [doc 20 §3.3] | G | Itens sem calibração inicial; ASR no item oral |
+| F06 | Mundo/trilha (W2) | Mapa linear por regiões de sons, 2–3 escolhas por dia, ponte do desafio | [doc 24 §3.3; doc 04 #28; doc 08 P6] | M | Arte cara |
+| F07 | Sessão estruturada e ritual | Aquecimento → revisões → novos → contraste → fechamento → ritual de despedida. Limite diário configurável | [doc 07 §3.2C; doc 08 §3.6; doc 09 §3.3] | M | — |
+| F08 | Motor de aprendizagem v0 | Agendador Leitner + estabilidade, modelo Elo por habilidade, gate de domínio (4 critérios), regras de bloqueio de novos | [doc 07 §3.2; doc 20 §3.4–3.5] | G | Limiares de latência sem norma BR (hipóteses a recalibrar) |
+| F09 | Sofia roteirizada | Rive com state machine (idle, falando, apontando, ouvindo, comemorando), falas pré-geradas por TTS neural + visemas, banco de 15–30 variações por tipo de fala | [doc 23 §3.4–3.6; doc 21 §3.3; doc 03 §6] | G | Visual (marca "Sofia" ⚖️ INPI; distância da "Princesinha Sofia") [doc 04 §1, item 6] |
+| F10 | Inventário de fonemas gravado por humano | Fonemas e sílabas do PB gravados com fonoaudióloga/locutora, sprites de áudio | [doc 23 §3.4; doc 04 §5.3; doc 21 §3.2] | M | Produção e direção de voz |
+| F11 | Vídeos da boquinha (W4) | 1 vídeo por fonema: frontal real + lateral esquemática + letra no instante do som; versões leves | [doc 10 §3.1; doc 03 §6] | M | Produção (iluminação, sincronia no nível de quadro) |
+| F12 | 14 jogos-núcleo | Ver §5: #1, #2, #3, #6, #9, #10, #11, #16, #18, #20, #21, #23, #28, #32 (todos com alternativa de toque e sem fala) | [doc 04 §3] | G | Escopo: manter as mecânicas parametrizáveis (mesmo motor) |
+| F13 | Escada de ajuda e feedback | Dica temporizada 5/10/20 s, prompt→recast→leitura conjunta, mudança de estratégia após 3 erros, microcopy da Sofia | [doc 13 §3.1–3.4; doc 24 §3.3] | M | Roteiro extenso |
+| F14 | Recompensas intrínsecas | Trilha que se colore, álbum (domínio), "palavras que eu sei", celebração ≤ 1,5–3 s | [doc 08 §3.1–3.4; doc 09 §3.2] | M | Escorregar para "economia de moedas" |
+| F15 | Desafio da Sofia (provinhas) | Provinha de letra (10 itens, ≥ 8/10 com pseudopalavra) e de fase (20+4+texto), sem cronômetro visível, trilha de reforço | [doc 20 §3.6; doc 13 §3.5] | M | Pseudopalavras precisam de revisão por fono |
+| F16 | Livrinhos decodificáveis (~30) + leitura sob demanda | Biblioteca inicial F1–F3, palavra tocável, destaque sincronizado, cena anima ao terminar. Sem hotspots | [doc 25 §3.1; doc 09 §3.4; doc 04 #21] | G | Escrever textos naturais com poucas CGF |
+| F17 | Linter de decodificabilidade (interno) | Decomposição em grafemas PB, % decodificável, repetição de CGF, fora-da-fase | [doc 25 §3.1; doc 21 §3.4] | M | G2P do PB (x, s, r, nasais) |
+| F18 | Perfil sensorial + modo calmo (W11) | Presets editáveis, volumes separados, menos movimento, contraste, velocidade da voz, legendas | [doc 05 §2.4; doc 12 §3] | M | — |
+| F19 | Acessibilidade base | WCAG 2.2 AA, alternativa de toque para arrastar, legendas das falas, leitor de tela na área adulta, `prefers-reduced-motion` | [doc 05 §2.2; doc 24 §3.7] | M | Testes com usuários com deficiência |
+| F20 | Offline-first e aparelhos fracos | Pacotes de lição ≤ 5 MB, instalação ≤ 40 MB, fila de sincronização, Android 8.1/2 GB | [doc 24 §3.8; doc 03 §7] | G | Sincronização de conflitos (PowerSync/WatermelonDB) |
+| F21 | Relatório semanal da família (W8) | 1 tela + 1 atividade sem tela com áudio + botão "fizemos!" | [doc 20 §3.8; doc 14 §3.5] | P | Notificação vira pressão: opcional e só para o adulto |
+| F22 | Painel do professor v1 (W9, W10) | Turma, mapa de calor, grupos sugeridos, relatório individual, exportar PDF | [doc 20 §3.8; doc 21 §3.6] | G | Sobrecarga de informação: começar só com P1, P2, P3, P7 e P12 |
+| F23 | Analytics first-party e privacidade | Eventos pedagógicos próprios, sem SDK de terceiros, sem AD_ID, retenção e exclusão | [doc 05 §6.6; doc 04 §4.2] | M | ⚖️ |
+| F24 | ASR camada 1 (VAD) + modo "só incentiva" | Detecta que a criança falou (energia/duração) e celebra a tentativa. Sem nota | [doc 03 §10.2] | P | — |
+| F25 | **Beta "Eu leio, a Sofia escuta"** (escolas-piloto) | ASR restrito a alvo conhecido, on-device quando possível. Com baixa confiança, o item não é pontuado. Coleta de corpus **só** com consentimento específico | [doc 22 §3; doc 03 §10; doc 21 §3.1; doc 05 §6.6] | G | Falso "errado" com voz infantil; ⚖️ dado de voz |
+
+### 4.2 V1 — "Should have" (3–6 meses após o MVP)
+
+| ID | Funcionalidade | Descrição | Evidência | Comp. | Risco |
+|---|---|---|---|---|---|
+| F30 | "Eu leio, a Sofia escuta" (geral) | Verificação de leitura de sílabas, palavras e frases (camada 2), ajuda graduada (sílaba → som → palavra), autocorreção conta como meio acerto | [doc 03 §10.2; doc 25 §3.2; doc 20 §3.4] | G | Precisão por região/sotaque; liberar só itens com ≥ 90% de acordo com juízes |
+| F31 | Karaokê em 4 passos (fluência) | Ouvir (destaque palavra/sílaba) → eco/coral → ler sozinho (destaque segue a criança) → reler até o critério | [doc 25 §3.2; doc 04 #19] | G | Alinhamento em tempo real |
+| F32 | Medição de PCPM e precisão | Textos equivalentes calibrados, sílabas corretas/min, gráficos R4/P5 | [doc 20 §3.7] | M | Metas provisórias sem norma BR |
+| F33 | Bolota, o aprendiz que a criança ensina | Erros planejados alinhados à lição (p/b, t/d, b/d...), caderninho, "ler para o Bolota dormir" | [doc 23 §3.7–3.8] | M | Bolota errar o que a criança não domina gera frustração |
+| F34 | Jardim da Revisão | Visual C2 ligado ao agendador | [doc 04 #29; doc 07] | M | No modo TEA, mudanças precisam de aviso |
+| F35 | Traçado de letras | Demonstração → trilho → mão livre → reconhecer; Skia; corredor ≥ 40 dp; aceitar traço em partes | [doc 24 §3.2; doc 10 §3.4; doc 25 §3.4] | M | Desempenho em aparelho fraco |
+| F36 | Ditado e escrita inventada | Montagem com letras móveis e teclado grande; feedback "um passo à frente"; classificação de erros (Morais) | [doc 25 §3.4; doc 02 §2] | M | Classificador de erros |
+| F37 | Presets de apoio (TEA / foco curto / reforço) | Parâmetros do agendador e da interface por perfil, combináveis, com a previsibilidade com prioridade | [doc 07 §3.2D; doc 12 §3; doc 11 §3.3] | M | Rótulos visíveis: nunca mostrar para a criança |
+| F38 | Benchmark trimestral | Versão paralela de ~8 min do diagnóstico | [doc 20 §3.3] | M | Equivalência das versões |
+| F39 | Faixas de risco e sinais de atenção | P6 e R6 com persistência e dose; textos padronizados | [doc 20 §3.8; doc 11 §3.2; doc 05 §7] | M | ⚖️ dado sensível de saúde; falso positivo |
+| F40 | Painel escola/rede (W13) | G1–G5, exportação no formato do ICA, supressão de n pequeno | [doc 20 §3.8; doc 02 §3.3] | G | Interpretação como "nota Saeb" |
+| F41 | Modo "Ler junto" (família) | Revezamento adulto-criança, perguntas CROWD/PEER para o adulto, dicas em áudio | [doc 04 #30; doc 14 §3.5; doc 09 §3.4] | M | — |
+| F42 | Fila de escuta do professor | O professor ouve leituras incertas e corrige o veredito (vira dado) | [doc 21 §3.6] | M | ⚖️ armazenamento temporário de áudio só com consentimento |
+| F43 | Espelho local | Câmera frontal só como espelho, sem análise, sem gravação; opt-in do adulto | [doc 10 §3.2; doc 05 §6.6] | P | Permissão de câmera em apps infantis (lojas) |
+| F44 | Pausas ativas da Sofia | 20–90 s com função fonológica ("pula quando ouvir /p/") | [doc 09 §3.3; doc 14 §3.3] | P | — |
+| F45 | Canções e parlendas | Canção por fonema, "Bate a Sílaba", parlendas de domínio público | [doc 14 §3.2] | M | Direitos musicais (preferir domínio público ou produção própria) |
+| F46 | Trilha "Recomeço" (8+) | Mesmo núcleo fônico com estética "mais velha" | [doc 14 §3.1] | M | Infantilização |
+| F47 | Importação de turmas e PDF | CSV/planilha, QR em lote, relatórios em PDF | [doc 24 §3.4] | P | — |
+| F48 | Biblioteca ampliada (100+) | Conjuntos temáticos e textos ricos para escuta (vocabulário de camada 2) | [doc 25 §3.1c, §3.3] | G | Produção editorial |
+
+### 4.3 V2 — "Could have" (6–12 meses)
+
+| ID | Funcionalidade | Descrição | Evidência | Comp. | Risco |
+|---|---|---|---|---|---|
+| F50 | Dica articulatória por câmera | MediaPipe Face Landmarker, blendshapes por grupo visível (/p b m/, /f v/, /a/, /o u/, /ʃ ʒ/), calibração neutra, só local, só "dica" | [doc 03 §5, §10] | G | Sem evidência de ganho de aprendizagem [doc 10 §3.2]; ⚖️ imagem de criança. Fazer A/B antes de escalar |
+| F51 | Pipeline de histórias com LLM | Rascunho por LLM → linter → filtros → revisão humana → publicação estática; o professor pede tema local | [doc 21 §3.4; doc 25 §3.1] | G | Qualidade e estereótipos; nunca ao vivo para a criança |
+| F52 | Estúdio de Histórias | A criança monta frases com palavras dominadas e grava a própria voz | [doc 04 #32] | M | ⚖️ gravação da voz da criança (local; compartilhar só com a família) |
+| F53 | Mundo da cursiva | Traçado cursivo como região própria, configurável pela escola | [doc 04 §5.2; doc 02 EF02LP07] | M | Debate pedagógico |
+| F54 | Rubrica de prosódia (experimental) | Pausa em pontuação, entonação de pergunta | [doc 25 §3.2] | G | Experimental: não mostrar à família |
+| F55 | Assistente do professor (LLM, lado adulto) | Resumo da turma, rascunho de devolutiva para a família; dados pseudonimizados | [doc 21 §3.1, §3.6] | M | Alucinação; ⚖️ dados no prompt |
+| F56 | Libras e CAA | Vídeos em Libras nas instruções-chave; resposta por pictogramas; importar prancha de CAA | [doc 05 §4; doc 24 §3.7] | G | Produção com intérpretes surdos |
+| F57 | Pacotes regionais | Cenários e histórias de fundo (sertão, Amazônia, litoral, periferia, sul), sotaque neutro por padrão | [doc 23 §3.1] | M | Estereótipo; revisão de diversidade |
+| F58 | Integração com redes | SSO institucional, exportação para sistemas de gestão escolar das redes | [doc 20 §3.8] | G | Heterogeneidade dos sistemas |
+| F59 | Publicação aberta da acurácia do ASR infantil pt-BR | Relatório técnico e benchmark | [doc 21 §3.8; doc 22] | M | Expor fraquezas (mas gera credibilidade) |
+
+### 4.4 Futuro (pesquisa ou dependente de dados)
+
+| ID | Funcionalidade | Por que esperar | Evidência |
+|---|---|---|---|
+| F70 | Agendador FSRS/HLR treinado com dados próprios | Precisa de milhares de crianças-mês; A/B com retenção em 30 dias | [doc 07 §3.2E] |
+| F71 | DKT/transformers para risco e ordem ótima | O Elo segue como camada interpretável | [doc 20 §3.4] |
+| F72 | Ancoragem psicométrica à escala Saeb (itens de ligação, TRI) | Exige parceria e dados | [doc 20 §3.8] |
+| F73 | Perguntas dialógicas com LLM **classificando** respostas orais | Só respostas pré-aprovadas e com estudo | [doc 21 §3.3] |
+| F74 | Diagnóstico automático de erro fonêmico (MDD) em pares mínimos | Tecnologia ainda em pesquisa com voz infantil | [doc 03 §10.1; doc 22 §2.5] |
+| F75 | Trilha EJA (jovens e adultos) | Mesmo núcleo, outra estética | [doc 06 §3E] |
+| F76 | Estudo de efeito randomizado e pré-registrado | Base para B2G | [doc 21 §3.8; doc 04 §6, item 7] |
+
+### 4.5 "Won't" — lista vermelha permanente
+
+Não entra em nenhuma versão:
+- anúncios e SDKs de terceiros no app infantil;
+- loot boxes, baús e sorteios;
+- moedas compráveis e loja para a criança;
+- vidas, "game over" e cronômetros de pressão;
+- streak que zera e push para a criança;
+- Sofia triste ou carente;
+- autoplay e "só mais uma";
+- ranking entre crianças;
+- chat livre com LLM;
+- TTS ao vivo para fonemas isolados;
+- inferência de emoção por câmera;
+- reconhecimento facial e voiceprint;
+- uso do sinal de risco para vender plano.
+
+Fontes: [doc 04 §4.3; doc 08 §3.5; doc 21 §3.2; doc 23 §3.9; doc 05 §6.6–§7].
+
+### 4.6 Ordem sugerida de épicos (para o backlog)
+
+1. **Fundação:** F01, F02, F04, F20, F23 (dados, contas, consentimento, offline).
+2. **Núcleo da criança:** F03, F06, F07, F09, F10, F11, F13, F14, F18, F19.
+3. **Motor:** F05, F08, F15.
+4. **Conteúdo:** F12 (jogos em motor parametrizável), F16, F17.
+5. **Adultos:** F21, F22.
+6. **Fala:** F24, F25 → F30, F31, F32.
+7. **Expansão:** os demais itens da V1, em seguida a V2.
+
+**Critério de "pronto" de cada jogo:** passa no checklist de tela [doc 09 §3.1], tem alternativa de toque e sem fala, declara a evidência gerada (ECD) e o peso [doc 20 §3.1] e passa no protocolo de teste com crianças (≥ 80% de sucesso sem ajuda, < 15% de toques fora do alvo) [doc 24 §3.9].
+
+---
