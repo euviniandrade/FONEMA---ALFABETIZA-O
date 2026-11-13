@@ -427,6 +427,31 @@
     return `<svg viewBox="0 0 120 120" width="100" height="100" role="img" aria-label="Desenho da boca para este som">${formas[tipo]}</svg>`;
   }
 
+  // ESPELHO DO SOM novo (../espelho-do-som-3d/): boca da Sofia de frente com ZOOM grande + mini raio-X de lado
+  // (cabeça de vidro da Sofia, língua/dentes/véu/ar/voz animados na posição do som). Posições simplificadas: validar com fonoaudióloga.
+  const ESP = '../espelho-do-som-3d/';
+  const ROSTO_SOFIA = { M: 'p b m', A: 'a a~ E k g rr', O: 'O o o~', S: 's z i i~ t d n nh lh', F: 'f v', L: 'l', CH: 'x j u u~', E: 'e e~ r' };
+  const rostoSofia = (k) => { for (const [q, ids] of Object.entries(ROSTO_SOFIA)) if (ids.split(' ').includes(k)) return q; return 'A'; };
+  let raioX = null;
+  function espelhoHTML(titulo) {
+    const k = M.som.chave;
+    return `<div class="espelho espelho2">
+      <figure class="lupa-boca"><img src="${ESP}recortes/boca-sofia-${rostoSofia(k)}.jpg" alt="A boca da Sofia de frente, bem de perto, fazendo o som ${esc(M.info.ipa)}"></figure>
+      <div class="raiox-mini" aria-label="Raio-X de lado: onde a língua fica no som ${esc(M.info.ipa)}"></div>
+      <div class="esp-txt"><h3>${titulo} <span class="ipa">${esc(M.info.ipa)}</span></h3><p>${esc(M.info.dica)}</p><p class="valida">posições simplificadas · validar com fonoaudióloga</p></div>
+    </div>`;
+  }
+  function montaRaioX(t) {
+    if (raioX) { raioX.destruir(); raioX = null; }
+    const box = $('.raiox-mini', t);
+    if (!box || !window.EspelhoSVG || !window.FonemasPT) return;
+    box.classList.add('esp-palco');
+    const k = window.FonemasPT.F[M.som.chave] ? M.som.chave : 'a';
+    raioX = window.EspelhoSVG.criar(box, { fonema: 'e', personagem: 'sofia' });
+    raioX.rotulos(false);
+    setTimeout(() => raioX && raioX.fonema(k), 350); // a boca "chega" na posição do som
+  }
+
   // 6a · ASSISTE: mini-vídeo da dupla apresentando o som do nome
   TELAS.assiste = (t) => {
     const c = M.certa.palavra;
@@ -479,14 +504,12 @@
     t.innerHTML = `<div class="missao">
       <div class="sua-vez"><h1>Agora é a sua vez, ${esc(E.nome)}!</h1></div>
       ${nomeGrande(true)}
-      <div class="espelho">
-        <div class="boca" aria-hidden="true">${bocaSVG(M.som.chave)}</div>
-        <div style="flex:1"><h3>Espelho do som <span class="ipa">${esc(M.info.ipa)}</span></h3><p>${esc(M.info.dica)}</p></div>
-      </div>
+      ${espelhoHTML('Espelho do som')}
       ${M.som.nota ? `<p class="nota-som">💡 ${esc(M.som.nota)}</p>` : ''}
       <div class="acoes"><button class="btn ipe grande" id="bIr">Vamos lá! <span class="ic" aria-hidden="true">→</span></button></div>
     </div>`;
-    const esp = $('.espelho', t); esp.appendChild(botaoOuvir('Olha a boca: ' + M.info.dica, 'sofia', 'Ouvir a dica da boca'));
+    const esp = $('.esp-txt', t); esp.appendChild(botaoOuvir('Olha a boca: ' + M.info.dica, 'sofia', 'Ouvir a dica da boca'));
+    montaRaioX(t);
     falar(ouv(`Agora é a sua vez, ${N}! Repare no comecinho do seu nome.`), 'tales');
     $('#bIr').addEventListener('click', () => ir('figura'));
   };
@@ -621,7 +644,7 @@
     const txt = `Agora fale bem alto o primeiro som do seu nome, ${N}! Como em ${N}... e ${M.certa.palavra}. Toque no microfone.`;
     t.innerHTML = `<div class="missao">
       <div id="falaF"></div>
-      <div class="espelho"><div class="boca" aria-hidden="true">${bocaSVG(M.som.chave)}</div><div style="flex:1"><h3>Lembre da boca <span class="ipa">${esc(M.info.ipa)}</span></h3><p>${esc(M.info.dica)}</p></div></div>
+      ${espelhoHTML('Lembre da boca')}
       <div class="mic-area">
         <button class="mic" id="bMic" aria-label="Tocar para falar no microfone">🎤</button>
         <div class="nivel" id="nivel" aria-hidden="true">${'<i></i>'.repeat(9)}</div>
@@ -630,6 +653,7 @@
       </div>
     </div>`;
     $('#falaF').appendChild(fala(txt, 'sofia', 'confiante'));
+    montaRaioX(t);
     falar(ouv(txt), 'sofia');
     let concluido = false;
     const concluir = async (ouviu) => {
@@ -724,7 +748,8 @@
   function albumHTML() {
     return `<div class="album" aria-label="Álbum de Selos">${ALBUM.map(([k, nm, sim]) => {
       const tem = E.emblemas.includes(k);
-      return `<div class="selo-mini ${tem ? 'tem' : ''}">${tem ? seloSVG(nm.replace('Selo ', ''), sim(), 'bronze', 'mini') : '<span class="vago" aria-hidden="true">?</span>'}<small>${esc(nm)}${tem ? '' : ' · em breve'}</small></div>`;
+      const arte = tem && k === 'meu-nome' ? `<span class="selo-img"><img src="../recompensas-3d/recortes/selo-meu-nome.png" alt=""><b>${esc(sim())}</b></span>` : null;
+      return `<div class="selo-mini ${tem ? 'tem' : ''}">${tem ? (arte || seloSVG(nm.replace('Selo ', ''), sim(), 'bronze', 'mini')) : '<span class="vago" aria-hidden="true">?</span>'}<small>${esc(nm)}${tem ? '' : ' · em breve'}</small></div>`;
     }).join('')}</div>`;
   }
   // PRÓXIMO OBJETIVO (Decisão 019; jogo-completo/07): nível da jornada e título, por esforço; nunca desce.
@@ -747,19 +772,32 @@
     salvar();
     const txt = `Você conseguiu, ${N}! Descobriu o primeiro som do seu nome, achou o ${M.certa.palavra}, montou as letras e falou em voz alta! Ganhou o Selo Meu Nome!`;
     t.innerHTML = `<div class="celebra">
-      <div>${seloSVG('Meu Nome', E.nome.charAt(0).toUpperCase(), 'bronze')}</div>
+      <div class="selo-palco" id="seloPalco"></div>
       <div style="display:flex;flex-direction:column;gap:16px">
         <h1>Selo “Meu Nome” · bronze!</h1>
         <div id="falaC"></div>
-        <div class="cartao"><div class="ganho"><span class="moeda" aria-hidden="true"></span>+${MOEDAS_MISSAO} moedinhas</div>
+        <div class="cartao"><div class="ganho"><span class="rc-cofrinho" id="tatu"><img src="../recompensas-3d/recortes/cofrinho-tatu.png" alt="Cofrinho-tatu"></span><span>+${MOEDAS_MISSAO} moedinhas <small class="no-cofre">no cofrinho: <b id="cofreNum">${primeira ? E.moedas - MOEDAS_MISSAO : E.moedas}</b></small></span></div>
           <p class="regra-moeda">Toda missão completa vale ${MOEDAS_MISSAO} moedinhas. Sempre o mesmo valor, para todo mundo. Sem sorte, sem sorteio.</p></div>
         <div class="cartao"><h3 style="margin-bottom:8px">Meu Álbum de Selos</h3>${albumHTML()}${proximoHTML()}</div>
         <div class="acoes"><button class="btn ipe grande" id="bMostra">Mostra pro professor <span class="ic" aria-hidden="true">→</span></button></div>
       </div></div>`;
     const fc = $('#falaC'); fc.appendChild(fala(txt, 'sofia', 'joinha'));
     falar(ouv(txt), 'sofia');
-    if (primeira && !E.prefs.calmo) chuvaMoedas();
+    // selo 3D animado com a LETRA INICIAL do nome (../recompensas-3d/)
+    const R = window.Recompensas, sp = $('#seloPalco');
+    if (R) {
+      const sel = R.selo({ arte: 'selo-meu-nome', letra: E.nome.charAt(0), nivel: 'bronze', tamanho: 330, rotulo: `Selo Meu Nome com a letra ${E.nome.charAt(0).toUpperCase()}, nível bronze` });
+      sp.appendChild(sel);
+      if (!E.prefs.calmo) R.entrar(sel); else sel.classList.add('parado');
+      // moedinhas 3D voam do selo até o cofrinho-tatu; o contador sobe
+      if (primeira) {
+        let n = E.moedas - MOEDAS_MISSAO;
+        const conta = () => { n++; $('#cofreNum') && ($('#cofreNum').textContent = n); R.engolir($('#tatu')); $('#moedasNum').textContent = n; };
+        if (E.prefs.calmo) { $('#cofreNum').textContent = E.moedas; } else setTimeout(() => R.moedasVoam({ de: sel, para: $('#tatu'), n: MOEDAS_MISSAO, aoChegar: conta }), 1500);
+      }
+    } else sp.innerHTML = seloSVG('Meu Nome', E.nome.charAt(0).toUpperCase(), 'bronze');
     atualizaTopo();
+    if (primeira && window.Recompensas && !E.prefs.calmo) $('#moedasNum').textContent = E.moedas - MOEDAS_MISSAO;
     $('#bMostra').addEventListener('click', () => ir('mostra'));
   };
 

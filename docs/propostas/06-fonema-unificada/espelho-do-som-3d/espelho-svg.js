@@ -110,6 +110,7 @@
 
     function desenha() {
       if (parado) return;
+      if (!svg.isConnected) { parado = true; return; } // a tela mudou: para de animar
       const agora = performance.now(), dt = Math.min(0.1, (agora - ultimo) / 1000); ultimo = agora; tempo += dt;
       const k = congel ? (congel._k ?? 1) : Math.min(1, (tempo - t0) / dur);
       const o = congel || P.mistura(de, para, P.suave(k)); if (!congel) atual = o;
