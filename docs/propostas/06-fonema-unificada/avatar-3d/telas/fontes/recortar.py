@@ -108,6 +108,24 @@ xs = [30, 192, 362, 528, 700, 862, 1024, 1190, 1360]
 for i, n in enumerate(ROUPAS_A):
     if n: salvar(aparar(so_maior(full.crop((xs[i], 150, xs[i+1], 768)))), f'roupa-a{i+1:02d}-{n}.png')
 
+def objeto(img, box, thr=26, raio=22):
+    t = img.crop(box).convert('RGB')
+    a = np.asarray(t).astype(int); h, w, _ = a.shape
+    # cor do tile = mediana de faixas junto às bordas (sem os cantos arredondados)
+    faixas = np.concatenate([a[3:9, 30:w-30].reshape(-1, 3), a[h-9:h-3, 30:w-30].reshape(-1, 3),
+                             a[30:h-30, 3:9].reshape(-1, 3), a[30:h-30, w-9:w-3].reshape(-1, 3)])
+    cor = np.median(faixas, 0)
+    canto = Image.new('L', (w, h), 0); ImageDraw.Draw(canto).rounded_rectangle((0, 0, w-1, h-1), raio, fill=255)
+    a = np.where(np.asarray(canto)[..., None] > 0, a, cor.astype(int))
+    t = Image.fromarray(a.astype(np.uint8))
+    d = np.sqrt(((a - cor)**2).sum(-1))
+    bgl = Image.fromarray(np.where(d < thr, 255, 0).astype(np.uint8)).copy()
+    for s in [(x, 2) for x in range(10, w-10, 6)] + [(2, y) for y in range(10, h-10, 6)] + [(w-3, y) for y in range(10, h-10, 6)] + [(x, h-3) for x in range(10, w-10, 6)]:
+        if bgl.getpixel(s) == 255: ImageDraw.floodfill(bgl, s, 128)
+    al = Image.fromarray(np.where(np.asarray(bgl) == 128, 0, 255).astype(np.uint8))
+    al = al.filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(0.8))
+    o = t.convert('RGBA'); o.putalpha(al)
+    return aparar(o, 4)
 # ---------- 3. cabelos (tiles arredondados) ----------
 def tile(img, box, raio=34):
     t = img.crop(box).convert('RGBA')
@@ -121,7 +139,8 @@ cx = [16, 244, 472, 700, 927, 1155]; cy = [16, 268, 525]
 k = 0
 for r in range(3):
     for c in range(6):
-        salvar(tile(img, (cx[c], cy[r], cx[c]+206, cy[r]+228)), f'cabelo-a{k+1:02d}-{CA[k]}.png'); k += 1
+        salvar(tile(img, (cx[c], cy[r], cx[c]+206, cy[r]+228)), f'cabelo-a{k+1:02d}-{CA[k]}.png')
+        salvar(objeto(img, (cx[c]+6, cy[r]+6, cx[c]+200, cy[r]+222), thr=24, raio=30), f'cabelo-a{k+1:02d}-{CA[k]}-recorte.png'); k += 1
 CB = ['crespo-curto', 'dois-puffs', 'cacheado-longo', 'cacheado-ruivo', 'duas-trancas-nago', 'nago-curto', 'box-braids-longas', 'coque-alto',
       'rabo-lateral', 'chanel-loiro', 'liso-longo', 'ondulado-ruivo', 'raspado', 'liso-curto-topete', 'arrepiado', 'cacheado-curto-loiro']
 img = Image.open(os.path.join(AV, 'cabelos-b.png'))
@@ -129,27 +148,10 @@ bx = [30, 366, 702, 1038]; by = [14, 205, 397, 588]
 k = 0
 for r in range(4):
     for c in range(4):
-        salvar(tile(img, (bx[c], by[r], bx[c]+308, by[r]+168), 26), f'cabelo-b{k+1:02d}-{CB[k]}.png'); k += 1
+        salvar(tile(img, (bx[c], by[r], bx[c]+308, by[r]+168), 26), f'cabelo-b{k+1:02d}-{CB[k]}.png')
+        salvar(objeto(img, (bx[c]+6, by[r]+6, bx[c]+302, by[r]+162), thr=24, raio=22), f'cabelo-b{k+1:02d}-{CB[k]}-recorte.png'); k += 1
 
 # ---------- 4. utensílios (tile + objeto sem fundo) ----------
-def objeto(img, box, thr=26):
-    t = img.crop(box).convert('RGB')
-    a = np.asarray(t).astype(int); h, w, _ = a.shape
-    # cor do tile = mediana de faixas junto às bordas (sem os cantos arredondados)
-    faixas = np.concatenate([a[3:9, 30:w-30].reshape(-1, 3), a[h-9:h-3, 30:w-30].reshape(-1, 3),
-                             a[30:h-30, 3:9].reshape(-1, 3), a[30:h-30, w-9:w-3].reshape(-1, 3)])
-    cor = np.median(faixas, 0)
-    canto = Image.new('L', (w, h), 0); ImageDraw.Draw(canto).rounded_rectangle((0, 0, w-1, h-1), 22, fill=255)
-    a = np.where(np.asarray(canto)[..., None] > 0, a, cor.astype(int))
-    t = Image.fromarray(a.astype(np.uint8))
-    d = np.sqrt(((a - cor)**2).sum(-1))
-    bgl = Image.fromarray(np.where(d < thr, 255, 0).astype(np.uint8)).copy()
-    for s in [(x, 2) for x in range(10, w-10, 6)] + [(2, y) for y in range(10, h-10, 6)] + [(w-3, y) for y in range(10, h-10, 6)] + [(x, h-3) for x in range(10, w-10, 6)]:
-        if bgl.getpixel(s) == 255: ImageDraw.floodfill(bgl, s, 128)
-    al = Image.fromarray(np.where(np.asarray(bgl) == 128, 0, 255).astype(np.uint8))
-    al = al.filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(0.8))
-    o = t.convert('RGBA'); o.putalpha(al)
-    return aparar(o, 4)
 UA = ['mochila', 'lupa', 'binoculo', 'lanterna', 'caderno', None, 'mapa', 'kit-de-ciencias', 'regador', None, 'bola', None,
       'violao', 'pandeiro', None, 'capa-de-chuva', 'galocha', 'chapeu-explorador', 'chapeu-de-palha', 'balde-de-praia', 'patinete',
       'telescopio', 'telescopio-2', 'vaso-com-muda']
