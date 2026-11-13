@@ -105,7 +105,7 @@
   - Comunicado da universidade [13].
 - **Limitação:** ainda não há avaliação independente [14][15].
 
-### 2.3 Índia (VERIFICADO PARCIALMENTE)
+### 2.3 Índia (VERIFICADO)
 
 **Google Read Along / Bolo**
 
