@@ -1,7 +1,9 @@
-# Roda da Sofia: a "academia" do FONEMA para crianças, famílias e professores
+# Academia FONEMA: vídeos e trilhas para crianças, famílias e professores
+
+> **Atualizado pela [Decisão 011](../../../decisoes/011-academia-pintura-vozes.md):** o nome oficial é **Academia** (Academia FONEMA). "Roda da Sofia", recomendado na primeira versão deste documento (§1), deixou de ser o nome principal e pode ficar só como nome da **seção de conversas mediadas** (rodas on-line, rodas na escola). As telas PNG desta pasta ainda mostram o logotipo "Roda da Sofia" e precisam ser regeradas (ver `docs/QUALIDADE.md`).
 
 > **Origem:** [Decisão 006](../../../decisoes/006-academia-uniforme-elenco-voz.md), item 1: uma academia lúdica, com nome mais brincalhão que "academy", para **crianças, famílias e professores**. Ela parte das 3 amostras de vídeo que o dono aprovou ([`../videos/`](../videos/README.md)).
-> **Em uma frase:** a Roda da Sofia é o lugar dos vídeos curtos e das trilhas do FONEMA. Ela tem **3 portas**: a das crianças (assistir pouco e praticar muito), a das famílias (5 minutos, de preferência em áudio, também pelo WhatsApp) e a dos professores (formação continuada com microvídeos, planos de aula, comunidade de prática e **certificado com carga horária**).
+> **Em uma frase:** a Academia é o lugar dos vídeos curtos e das trilhas do FONEMA. Ela tem **3 portas**: a das crianças (assistir pouco e praticar muito), a das famílias (5 minutos, de preferência em áudio, também pelo WhatsApp) e a dos professores (formação continuada com microvídeos, planos de aula, comunidade de prática e **certificado com carga horária**).
 > **Bases:** pesquisas [26](../../../pesquisa/26-familia-professores-escolas.md) (família, professores, implementação), [15](../../../pesquisa/15-neuroeducacao-mitos.md) (neuroeducação e neuromitos), [41](../../../pesquisa/41-linguagem-oral-vocabulario.md) (linguagem oral) e [43](../../../pesquisa/43-avaliacao-competencias-transversais.md) (avaliação sem virar prova).
 
 ![Escolha de perfil: 3 portas](academia-inicio.png)
@@ -11,9 +13,9 @@
 | Arquivo (2560×1600) | O que mostra |
 |---|---|
 | `academia-inicio.png` | Escolha de perfil com 3 portas (Crianças, Famílias, Professores). A Sofia, de uniforme, pergunta em voz alta "Quem vai entrar na roda hoje?". As portas dos adultos abrem pela porteira. No rodapé, os 4 pilares da aprendizagem |
-| `academia-criancas.png` | Roda das Crianças: o som novo do dia (/v/), a videoteca "Sofia apresenta o som" com selos **assisti + pratiquei**, "Como funciona" (E se eu errar?), regrinha R/RR e um teto diário de "1 vídeo + 1 prática" |
-| `academia-familias.png` | Roda das Famílias: missão da semana ligada ao som da criança, 6 microcursos de 5 min (áudio, vídeo e WhatsApp), um celular com a sequência fato, missão e reforço no WhatsApp, a versão simples por ícones e voz, e uma nota de ciência sem exagero |
-| `academia-professores.png` | Roda dos Professores: a trilha de 40 h em 9 módulos com progresso (13 h de 40 h), requisitos do certificado, plano de aula do dia e comunidade de prática da rede |
+| `academia-criancas.png` | Academia · Crianças: o som novo do dia (/v/), a videoteca "Sofia apresenta o som" com selos **assisti + pratiquei**, "Como funciona" (E se eu errar?), regrinha R/RR e um teto diário de "1 vídeo + 1 prática" |
+| `academia-familias.png` | Academia · Famílias: missão da semana ligada ao som da criança, 6 microcursos de 5 min (áudio, vídeo e WhatsApp), um celular com a sequência fato, missão e reforço no WhatsApp, a versão simples por ícones e voz, e uma nota de ciência sem exagero |
+| `academia-professores.png` | Academia · Professores: a trilha de 40 h em 9 módulos com progresso (13 h de 40 h), requisitos do certificado, plano de aula do dia e comunidade de prática da rede |
 | `academia-aula.png` | Aula do professor: player do microvídeo "Como modelar o /v/ sem vogal extra" (corte lateral, legenda, capítulos, Libras) com a atividade ao lado (checagem sem nota, "leve para a sala", registro da prática) e o quadro "mito ou fato?" |
 | `academia-certificado.png` | Certificado de formação continuada (modelo marcado "MODELO"), com carga horária detalhada, módulos, código e QR de verificação, e espaços para a IES parceira e a Secretaria |
 | `fonte/` | HTML/CSS/SVG próprios. `node fonte/capturar.js` gera as 6 telas com Playwright (`chromium.launch()`, viewport 1280×800, `deviceScaleFactor: 2`) |
@@ -22,7 +24,7 @@
 
 ---
 
-## 1. Nome: 8 opções e a recomendada
+## 1. Nome: 8 opções avaliadas (histórico; o nome escolhido pelo dono é "Academia", D011)
 
 Critérios: palavras curtas, fáceis de ler e, de preferência, **decodificáveis** por quem está aprendendo (sílabas CV); som lúdico; sentido que funcione para os 3 públicos; nenhuma marca conflitante óbvia. **Nenhuma busca no INPI foi feita nesta sessão.** Todas as opções precisam de busca em [busca.inpi.gov.br](https://busca.inpi.gov.br) nas classes NCL **9** (software/app), **16** (material impresso), **41** (educação e formação) e **42** (plataforma). Também é preciso checar domínio .com.br e os perfis de rede social.
 
@@ -37,7 +39,7 @@ Critérios: palavras curtas, fáceis de ler e, de preferência, **decodificávei
 | 7 | Recreio Sabido | Recreio é a parte preferida da escola | **Recreio** é revista infantil tradicional. Risco médio. "Recreio" também sugere pausa, não estudo |
 | 8 | Ninho das Letras | Acolhimento: aprender protegido | Muitas escolas usam "Ninho". Marca fraca, e o nome soa mais como educação infantil que como formação de professores |
 
-**Recomendação: Roda da Sofia.** As sub-marcas são **Roda das Crianças**, **Roda das Famílias** e **Roda dos Professores**. O encontro da comunidade de prática se chama "roda" (roda on-line, roda na escola). A busca no INPI, feita por advogado de PI, decide. Se "Sofia" for impeditivo, o plano B é **"Roda do Som"**, que mantém o conceito e o logotipo (crianças de mãos dadas em roda em volta de uma onda sonora).
+**Recomendação original (superada pela D011): Roda da Sofia.** As sub-marcas eram são **Roda das Crianças**, **Roda das Famílias** e **Roda dos Professores**. O encontro da comunidade de prática se chama "roda" (roda on-line, roda na escola). A busca no INPI, feita por advogado de PI, decide. Se "Sofia" for impeditivo, o plano B é **"Roda do Som"**, que mantém o conceito e o logotipo (crianças de mãos dadas em roda em volta de uma onda sonora).
 
 ---
 
@@ -51,7 +53,7 @@ Os princípios comuns às 3 portas valem antes do conteúdo:
 4. **Neurociência sem neuromito.** Os 4 pilares de Dehaene (atenção, engajamento ativo, retorno de erro, consolidação) organizam o desenho e aparecem nos conteúdos em linguagem de cada público (§3).
 5. **Cada etapa liga a próxima** (Decisão 006, item 5): o vídeo da criança alimenta a missão da família, que alimenta o painel e o microvídeo do professor (§6).
 
-### 2.1 Roda das Crianças (4–8 anos), ver `academia-criancas.png`
+### 2.1 Academia · Crianças (4–8 anos), ver `academia-criancas.png`
 
 | Elemento | Como funciona |
 |---|---|
@@ -63,7 +65,7 @@ Os princípios comuns às 3 portas valem antes do conteúdo:
 | **Teto do dia** | "Hoje: 1 vídeo + 1 prática". O tempo de vídeo conta no teto diário do app (vídeos §5). Ao atingir o teto, a Sofia propõe brincar longe da tela |
 | **Sem leitura obrigatória** | Todo rótulo tem botão de ouvir. A navegação usa ícones grandes. A porteira dos adultos separa a área infantil |
 
-### 2.2 Roda das Famílias, ver `academia-familias.png`
+### 2.2 Academia · Famílias, ver `academia-familias.png`
 
 - **Microcursos de 5 minutos.** Cada curso tem de 3 a 5 partes de 1 minuto, em **áudio** (formato principal), **vídeo** (≤ 60 s, 16:9 e 9:16) e **WhatsApp** (áudio + 1 imagem + link). Os 6 cursos: *Como ajudar em casa*, *Ler junto (leitura dialógica)*, *Rotina e sono*, *Telas saudáveis*, *Dinheiro e escolhas (educação financeira com a criança)*, *Como ler o termômetro*. Há ainda cursos complementares no catálogo (§5).
 - **Missão da semana**, ligada ao som que a criança está aprendendo. Segue o formato READY4K: **fato** (segunda), **missão** (quarta), **reforço** (sexta), com no máximo **3 mensagens por semana** em horário escolhido pela família (rel. 26 §2.2 e §3.1). O reforço usa o que a criança fez ("ele já lê 3 palavras com V") e nunca rótulo ("ele é inteligente") (rel. 43 §1.10).
@@ -71,7 +73,7 @@ Os princípios comuns às 3 portas valem antes do conteúdo:
 - **Versão para pais com baixa escolaridade** (rel. 26 §2.4; Inaf 2024: ~29% de analfabetismo funcional): chave "Versão simples" que troca a tela por **4 ícones grandes falados** (missão, ler junto, sono, como meu filho está). Todo texto tem botão de ouvir, as frases têm até 12 palavras e não há gráfico. O lema é "Você não precisa ser professor". O áudio da missão pode vir na **voz da professora da turma**, o que aumenta o vínculo (rel. 26 §3.1.5).
 - **Dados leves**: "baixar tudo no Wi-Fi" (≈ 4 MB por curso); vídeo em 480p; áudio Opus/AAC de 32–48 kbps.
 
-### 2.3 Roda dos Professores, ver `academia-professores.png` e `academia-aula.png`
+### 2.3 Academia · Professores, ver `academia-professores.png` e `academia-aula.png`
 
 **Trilha 1: "Alfabetizar pelo som: da ciência à sala de aula"** tem 40 h, 9 módulos, 62 microvídeos de 2–3 min e 27 planos de aula.
 
@@ -117,7 +119,7 @@ Regras de produção:
 
 Situação verificada por busca nesta sessão. Os itens marcados **[conferir]** precisam de checagem em fonte primária (DOU, regulamento da IES ou estatuto da rede) antes de qualquer comunicação pública.
 
-| Tema | O que se sabe | Consequência para a Roda |
+| Tema | O que se sabe | Consequência para a Academia |
 |---|---|---|
 | Dever de formar | A LDB (Lei 9.394/1996) atribui à União, aos estados e aos municípios a formação continuada dos profissionais do magistério (art. 62) e prevê aperfeiçoamento continuado e tempo de estudo na carga de trabalho (art. 67) **[conferir redação vigente]** | A Roda deve se apresentar como **ferramenta da rede**, não como concorrente da formação oficial (rel. 26 §3.5.5) |
 | Diretriz nacional | A **BNC-Formação Continuada** (Res. CNE/CP 1/2020) foi **revogada** pela Res. CNE/CP 4/2024, e analistas apontam que a formação continuada ficou sem orientação nacional específica [fonte: nota técnica da ANDES-SN; artigos de 2024–2025] **[conferir no DOU]** | Não há currículo nacional obrigatório a seguir. Alinhar à BNCC, ao Compromisso Nacional Criança Alfabetizada e aos referenciais estaduais (por exemplo, o PAIC) |
@@ -138,7 +140,7 @@ Situação verificada por busca nesta sessão. Os itens marcados **[conferir]** 
 
 Legenda de formato: **V16** = vídeo 16:9 · **V9** = vídeo 9:16 (WhatsApp) · **A** = áudio · **WA** = envio pelo WhatsApp · **P** = prática no app · **PDF** = ficha/plano · **L** = versão com Libras · **CC** = legenda. A coluna "Tipo" usa as letras da biblioteca de vídeos (a–f).
 
-### 5.1 Roda das Crianças (26 itens)
+### 5.1 Academia · Crianças (26 itens)
 
 | # | Título | Público | Duração | Objetivo | Formato | Tipo |
 |---|---|---|---|---|---|---|
@@ -169,7 +171,7 @@ Legenda de formato: **V16** = vídeo 16:9 · **V9** = vídeo 9:16 (WhatsApp) · 
 | C25 | Baú de Palavras: 3 palavras da semana | 5–8 | 60 s | Definição amigável + produção oral | V16 · CC · P | c |
 | C26 | Brincar fora da tela: caça aos sons | 4–7 | 40 s | Convite para procurar objetos com o som da semana (com adulto) | V16 · CC · P (missão) | d |
 
-### 5.2 Roda das Famílias (24 itens)
+### 5.2 Academia · Famílias (24 itens)
 
 | # | Título | Público | Duração | Objetivo | Formato |
 |---|---|---|---|---|---|
@@ -198,7 +200,7 @@ Legenda de formato: **V16** = vídeo 16:9 · **V9** = vídeo 9:16 (WhatsApp) · 
 | F23 | Missões da semana (≈ 40, uma por som/regra) | Responsáveis | 1 min cada | Atividade de 5 min ligada ao som atual, formato fato/missão/reforço | A · V9 · WA (gerada + revisada) |
 | F24 | Quando procurar ajuda (fala e leitura) | Responsáveis | 1 min | Sinais para conversar com a escola ou o pediatra, sem diagnóstico do app | A · V16 · L |
 
-### 5.3 Roda dos Professores (30 itens)
+### 5.3 Academia · Professores (30 itens)
 
 | # | Título | Público | Duração | Objetivo | Formato |
 |---|---|---|---|---|---|
@@ -243,7 +245,7 @@ Legenda de formato: **V16** = vídeo 16:9 · **V9** = vídeo 9:16 (WhatsApp) · 
 |---|---|
 | **Biblioteca de vídeos** (`../videos/`) | Mesma esteira (roteiro YAML → linter → TTS/ElevenLabs para falas e fonemas gravados por fonoaudióloga → render determinístico → CC/Libras → R2/CDN). A Roda é a **camada de catálogo e trilha** sobre os mesmos arquivos: um vídeo, vários lugares. Cada vídeo ganha metadados `publico`, `trilha`, `modulo`, `pilar`, `pratica_id` e `carga_estimada_min` |
 | **Voz** (Decisão 006) | O ElevenLabs entra nas falas dos microcursos de família (voz calorosa e pausada) e nas narrações dos módulos do professor (voz de formadora). **Fonemas isolados continuam gravados por fonoaudióloga** |
-| **Trilha da criança** | O som novo abre o vídeo (a) no passo "ouvir → ver". O selo da Roda é **o mesmo evento** da prática concluída na lição: não há sistema paralelo de pontos |
+| **Trilha da criança** | O som novo abre o vídeo (a) no passo "ouvir → ver". O selo da Academia é **o mesmo evento** da prática concluída na lição: não há sistema paralelo de pontos |
 | **WhatsApp** (frente `../whatsapp/`) | Os microcursos da família são enviados em partes de 1 min (áudio + 1 imagem + link). Máximo de 3 mensagens por semana, horário escolhido, opt-in e SAIR. Os microvídeos de professor vão em trechos 9:16 para o WhatsApp da rede, com consentimento da Secretaria |
 | **Painel da família** | O cartão "missão da semana" e o curso "Como ler o termômetro" ficam ao lado do "Nível X de 10" |
 | **Painel do professor** (`../paineis/`) | Microvídeo contextual em cada gráfico ("como modelar o /r/" ao lado da linha R/RR); "plano de aula de hoje" ligado à lição da turma; progresso da trilha e do certificado no perfil |
@@ -274,7 +276,7 @@ Os valores são **incrementais** à biblioteca de vídeos (`../videos/README.md`
 | Bloco | Unidade | Custo unitário | Qtde. | Total |
 |---|---|---|---|---|
 | Marca: busca INPI (advogado), registro em 2–4 classes, logotipo final | pacote | — | 1 | R$ 8–20 mil |
-| UI da Roda (6 telas + estados, design system, acessibilidade) | pacote | — | 1 | R$ 40–70 mil |
+| UI da Academia (6 telas + estados, design system, acessibilidade) | pacote | — | 1 | R$ 40–70 mil |
 | Desenvolvimento: catálogo/trilhas, selos, progresso, checagens, registros de prática, comunidade, emissão e verificação de certificado | pacote | — | 1 | R$ 180–320 mil |
 | Microcursos de família **novos** (≈ 20 partes de 1 min: roteiro, revisão, áudio ElevenLabs, V9) | parte | R$ 800–1,5 mil | 20 | R$ 16–30 mil |
 | Vídeos de professor **novos** (ciência, inclusão etc., ≈ 17 além dos 45 da biblioteca) | vídeo | R$ 3–5 mil | 17 | R$ 51–85 mil |
@@ -312,7 +314,7 @@ A fatia do MVP (M0–M6) inclui: telas e catálogo, selos, F01–F10 e F21–F22
 3. **Conteúdo de ciência com neuromito ou promessa.** Mitigação: checklist da rel. 15 §4 no linter de roteiro, além de revisão pelo conselho científico.
 4. **Sobrecarga da família por WhatsApp.** Mitigação: 3 mensagens por semana, horário escolhido, SAIR sempre visível.
 5. **Dados de alunos em registros e comunidade.** Mitigação: validação de texto, moderação e termo de uso.
-6. **Marca.** Mitigação: risco "Sofia" (Disney) e plano B "Roda do Som" (§1).
+6. **Marca.** Mitigação: nome oficial "Academia" (D011); risco "Sofia" (Disney) continua valendo para a personagem (§1).
 
 ---
 
