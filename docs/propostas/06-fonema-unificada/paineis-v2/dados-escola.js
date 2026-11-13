@@ -50,7 +50,7 @@
     ['Gael V.',5,1,'LH / NH','LH','palha → ? (voz incerta)','info',54],
     ['Sara D.',5,1,'R forte / fraco','RR','morro → “moro” · torre → “tore”','',57],
     ['Davi R.',6,2,'Encontros','PR','prato → “pato” · prego → “pego”','alerta',58],
-    ['Nina F.',6,2,'Encontros','BR','bruxa → “buxa” · braço → “baço”','',60],
+    ['Nina F.',6,2,'Encontros','BR','broto → “boto” · braço → “baço”','',60],
     ['Bia S.',7,2,'Encontros','BL/CL','bloco → “boco” · clube → “cube”','',63],
     ['Caio L.',7,2,'Encontros','TR','trem → “tem” · trigo → “tigo”','',59],
     ['Théo A.',7,2,'Pseudopalavras','PR','“prilo” → “pilo”','',61],
@@ -75,7 +75,7 @@
   // palavras com mais erro na turma (erros / tentativas, nº de crianças, leitura mais comum)
   const PALAVRAS=[
     ['carro',14,31,7,'caro','RR',1],['pato',11,36,5,'bato','P/B',0],['prato',10,24,6,'pato','PR',2],['terra',9,22,5,'tera','RR',1],
-    ['bruxa',8,19,4,'buxa','BR',2],['faca',7,25,4,'vaca','F/V',0],['mesa',7,28,4,'messa','S=Z',1],['barro',6,14,4,'baro','RR',1],
+    ['broto',8,19,4,'boto','BR',2],['faca',7,25,4,'vaca','F/V',0],['mesa',7,28,4,'messa','S=Z',1],['barro',6,14,4,'baro','RR',1],
     ['tatu',6,20,3,'datu','T/D',0],['campo',5,17,3,'capo','AM',0],['pipa',5,21,3,'biba','P/B',0],['bloco',4,15,3,'boco','BL',2]]
     .map(([w,e,t,c,lido,som,g])=>({w,e,t,c,lido,som,g,pct:Math.round(e*100/t)}));
   const PSEUDO=[['pafo','bafo',6,18,'P/B'],['trelo','telo',5,16,'TR'],['carri','cari',5,15,'RR'],['bopa','popa',4,14,'P/B'],['nesa','nessa',3,13,'S=Z']]
@@ -86,7 +86,7 @@
     ['RR','carro · terra',41,8,'r'],['R-','rato · rua',22,4,'r'],['-R-','caro · fera',8,2,'r'],['S/SS','sapo · passa',12,3,'s'],
     ['S=Z','mesa · casa',19,4,'s'],['C/Ç','poço · caça',11,2,'s'],['LH','palha · filho',9,2,'dig'],['NH','ninho · unha',7,2,'dig'],
     ['CH','chuva · bicho',4,1,'dig'],['QU/GU','queijo · guia',10,2,'dig'],['AM/AN','campo · lã',13,3,'nas'],['ÃO/ÕE','pão · limões',5,1,'nas'],
-    ['PR','prato · prego',28,6,'enc'],['BR','bruxa · braço',25,5,'enc'],['TR','trem · trigo',21,4,'enc'],['BL/CL','bloco · clube',16,3,'enc']]
+    ['PR','prato · prego',28,6,'enc'],['BR','broto · braço',25,5,'enc'],['TR','trem · trigo',21,4,'enc'],['BL/CL','bloco · clube',16,3,'enc']]
     .map(([s,ex,pct,crc,fam])=>({s,ex,pct,crc,fam}));
   // matriz de trocas (lido no lugar do alvo), ocorrências
   const TROCAS={alvo:['P','B','T','D','F','V'],lido:['P','B','T','D','F','V'],m:[[0,17,0,0,0,0],[6,0,0,1,0,0],[1,0,0,8,0,0],[0,1,3,0,0,0],[0,0,0,0,0,7],[0,0,0,0,2,0]]};

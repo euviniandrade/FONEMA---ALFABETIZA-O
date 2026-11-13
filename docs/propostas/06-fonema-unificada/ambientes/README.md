@@ -105,7 +105,7 @@ Para gerar tudo de novo: `node fonte/render.js` e depois `node fonte/extras.js`.
 - **Etapa fônica:** concorrências S/Z/X, CH/X, J/G e H; -ou, -ão, -inho.
 - **Pontos ✦:** **relógio** (G antes de i), **horta** (H inicial), **chave** (CH), **caixa** (X) e **balão** (-ão).
 - **Fauna e flora:** urbana. Horta comunitária em canteiros, gato na calçada, sobrados coloridos, torre do relógio, bonde, chaveiro e caixotes de feira.
-- **Clima e hora:** hora azul com janelas acesas e bandeirinhas, que liga com "quem constrói e faz a cidade funcionar?".
+- **Clima e hora:** hora azul com janelas acesas e toldos da feira em 2–3 cores, que liga com "quem constrói e faz a cidade funcionar?".
 - **Sons ambientes:** murmúrio de praça (cama), sino do bonde, tique-taque e badalada do relógio, ferramentas na oficina e pombos.
 - **Ligação com a próxima:** do alto da torre se vê o farol do Arquipélago dos Livros. A badalada final abre a ponte para o desafio último.
 

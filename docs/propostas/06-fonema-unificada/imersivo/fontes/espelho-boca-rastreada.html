@@ -101,7 +101,7 @@ for(let i=0;i<20;i++){const a=i/20*Math.PI*2-Math.PI/2;let rx=82,ry=60;let x=cx+
   ext.push([x+Math.sin(i*1.7)*1.5,y+Math.cos(i*2.3)*1.5]);}
 for(let i=0;i<20;i++){const a=i/20*Math.PI*2-Math.PI/2;int.push([cx+Math.cos(a)*46+Math.sin(i)*1.2,cy+4+Math.sin(a)*26]);}
 const poly=(pts,st,w,f='none')=>el(p,'path',{d:'M'+pts.map(q=>q.map(v=>v.toFixed(1)).join(',')).join('L')+'Z',fill:f,stroke:st,'stroke-width':w,'stroke-linejoin':'round'});
-// silhueta-guia fantasma da Sofia (mesmo fonema), tracejada
+// silhueta-guia tracejada da Sofia (mesmo fonema), tracejada
 el(p,'ellipse',{cx:183,cy:184,rx:66,ry:77,fill:'none',stroke:'rgba(242,179,61,.75)','stroke-width':2.5,'stroke-dasharray':'7 7'});
 poly(ext,'rgba(143,215,230,.55)',2,'rgba(143,215,230,.10)');poly(int,'rgba(143,215,230,.45)',1.6);
 ext.forEach(([x,y])=>{el(p,'circle',{cx:x,cy:y,r:5.2,fill:'#8FD7E6'});el(p,'circle',{cx:x,cy:y,r:9,fill:'none',stroke:'rgba(143,215,230,.25)'});});

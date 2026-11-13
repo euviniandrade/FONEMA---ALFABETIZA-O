@@ -667,7 +667,8 @@ function cidade() {
   s.add('near', `<g>${[[740, 520, '#E2483D'], [770, 500, '#F2C94C'], [800, 524, '#4FA3C7'], [760, 540, '#6FB86A']].map(([x, y, c]) => `<path d="M${x},${y + 24} Q${x + 4},${y + 60} 770,640" stroke="#E8E0D0" stroke-width="1.2" fill="none"/><ellipse cx="${x}" cy="${y}" rx="18" ry="22" fill="${c}"/><ellipse cx="${x - 6}" cy="${y - 8}" rx="5" ry="7" fill="#fff" opacity=".45"/>`).join('')}<path d="M770,640 V700" stroke="#7A6A5A" stroke-width="3"/></g>`);
   s.hotspot('near', 770, 520, 50, 'balão');
   s.add('near', L.gato(560, 650, .9, false, '#3A3A3A'));
-  { const cols = ['#E2483D', '#F2C94C', '#4FA3C7', '#6FB86A', '#B56FD0', '#F28C28']; let b = `<path d="M-20,30 Q640,150 1300,30" stroke="#3A2A3A" stroke-width="2" fill="none"/>`; for (let i = 0; i < 30; i++) { const t = (i + .5) / 30, x = -20 + t * 1320, y = (1 - t) * (1 - t) * 30 + 2 * (1 - t) * t * 150 + t * t * 30; b += `<path d="M${f(x - 18)},${f(y)} L${f(x + 18)},${f(y)} L${f(x)},${f(y + 40)}Z" fill="${cols[i % 6]}"/>`; } s.add('fg', `<g filter="${s.blur(1.6)}">${b}</g>`); }
+  // varal de livros da feira de leitura (Decisão 012: sem bandeirinhas; Decisão 009: 3 cores)
+  { const cols = ['#1F3A6B', '#F2C94C', '#FFFBF4']; let b = `<path d="M-20,30 Q640,150 1300,30" stroke="#3A2A3A" stroke-width="2" fill="none"/>`; for (let i = 0; i < 30; i++) { const t = (i + .5) / 30, x = -20 + t * 1320, y = (1 - t) * (1 - t) * 30 + 2 * (1 - t) * t * 150 + t * t * 30; if (i % 2) continue; b += `<rect x="${f(x - 16)}" y="${f(y)}" width="32" height="40" rx="3" fill="${cols[(i / 2) % 3]}" stroke="#3A2A3A" stroke-width="1"/><path d="M${f(x)},${f(y)} v40" stroke="#3A2A3A" stroke-width="1" opacity=".5"/>`; } s.add('fg', `<g filter="${s.blur(1.6)}">${b}</g>`); }
   s.add('fg', particles(104, 30, 0, W, 300, 700, '#FFE8B0', 1.6, .5));
   finish(s, { vignette: '#120E2A', vo: .4, warm: '#FFB070', warmO: .08 });
   return s;

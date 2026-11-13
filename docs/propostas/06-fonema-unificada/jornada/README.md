@@ -167,7 +167,7 @@ Cada ficha junta: sons, nível, tema, metas das 5 transversais (rel. 39, matriz 
 | Transversais | **PC** decompor o ciclo da cheia em 4 passos · **Lóg** classificar por onde vivem (água, terra, ar) · **Emo** empatia com o filhote perdido; pedir ajuda · **Tec** armadilha fotográfica · **Fin** necessidade × desejo: o que levar na canoa (rels. 37, 39) |
 | Ambientes e elenco | Planície alagada, canoa, viveiro; capivara, tuiuiú, onça, jacaré; veterinária de resgate [proposta da jornada] |
 | Academia | (a) /ʒ/, /z/, /ʃ/ + **pares s/z e ʃ/ʒ**; (b) regrinhas **NH** e **LH**; (c) histórias da cheia |
-| Lojinha | MOCHILA, PIJAMA, FONTE, PONTE, GALINHEIRO, CAIS, JABUTI, BOTO, CHOCALHO, BANDEIRINHA; coleção **Pantanal** (recompensa: os bichos resgatados visitam a vila) |
+| Lojinha | MOCHILA, PIJAMA, FONTE, PONTE, GALINHEIRO, CAIS, JABUTI, BOTO, CHOCALHO, VARAL DE LIVROS; coleção **Pantanal** (recompensa: os bichos resgatados visitam a vila) |
 | Chefe / projeto | A Cheia: ler instruções para salvar os bichos · "Mapa da cheia" |
 | Gancho → R5 | [proposta da jornada] Os bichos salvos contam de um lugar seco onde um **ipê floresce justamente na seca** |
 | Neurociência | **N11** dígrafo = 2 letras, 1 som: pista visual retirável (dígrafo marcado); **N8** corte lateral para /ʃ/ × /s/; **N9** frases com compreensão; **N2** missão de resgate em que ler é agir |
@@ -195,7 +195,7 @@ Cada ficha junta: sons, nível, tema, metas das 5 transversais (rel. 39, matriz 
 | Academia | (a) nasais + **par oral/nasal**; (b) **M antes de P/B** e **-ÃO × -AM**; (c) Noite de cordel |
 | Lojinha | CHAPÉU DE COURO ★ (pede o /ch/), GIBÃO, SANFONA ★, PANDEIRO, TAMBOR, REDE, PAMONHA, FIGURINHA MAMÃO; coleção **Sertão** (recompensa: noite de cordel no coreto) |
 | Chefe / projeto | **Feira do Cordel** (ler e recontar) · **"Meu cordel"**: completar versos rimados e ilustrar em xilogravura (EF12LP19, a conferir) |
-| Gancho → R7 | [proposta da jornada] A carranca do barco do São Francisco aponta para o norte: "lá existe um rio **tão grande que parece mar**" |
+| Gancho → R7 | [proposta da jornada] A proa do barco do São Francisco aponta para o norte: "lá existe um rio **tão grande que parece mar**" |
 | Neurociência | **N4** fecha o Ano 1: provinha de fase + **retenção** de sons de meses atrás + benchmark trimestral; **N12** provinha sem ansiedade, público real (família); **N6** reconto; **N8** ícone "nariz" para nasalidade |
 
 #### R7 · Amazônia — abre o Ano 2 — semanas 58–70 · nível 5 → 7

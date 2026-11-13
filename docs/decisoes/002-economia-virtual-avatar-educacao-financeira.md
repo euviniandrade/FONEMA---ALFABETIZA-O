@@ -39,7 +39,7 @@ Regra: a educação financeira é **leve e lúdica**. Não ofusca a alfabetizaç
 ## 4. Mundo de possibilidades (ideias para o backlog)
 - **Avatar:** corpo, tom de pele, cabelo (cacheado, crespo, liso, tranças), óculos, aparelhos auditivos, cadeira de rodas e outros elementos de representatividade, já disponíveis de graça.
 - **Casa/quintal/vila** que cresce e se decora; bichinhos de estimação da fauna brasileira para cuidar.
-- **Guarda-roupa por região** (biomas e cultura brasileira: festa junina, carnaval, praia, sertão, Amazônia).
+- **Guarda-roupa por região** (biomas e cultura brasileira: feira da colheita, festival de talentos, formatura, praia, sertão, Amazônia). *Atualizado pela Decisão 012: sem festa junina nem carnaval.*
 - **Coleções:** figurinhas que falam a palavra, instrumentos musicais que tocam sons de letras, livros desbloqueados para a estante.
 - **Conquistas e títulos** por domínio ("Mestre do S", "Leitor da Floresta"), nunca por tempo de tela.
 - **Presentes de temporada** (eventos), sempre obtidos aprendendo.

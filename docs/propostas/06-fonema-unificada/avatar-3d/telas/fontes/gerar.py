@@ -153,7 +153,7 @@ def rp(img, nome, sel=False, preco=None):
     return f'<div class="{cls}"><div class="im"><img src="{P}{img}"></div><div class="nm">{nome}</div>{ok}{cad}</div>'
 gratis = rp('roupa-01-uniforme.png', 'U·NI·FOR·ME') + rp('roupa-02-blusao-capuz.png', 'BLU·SÃO', True)
 conquistar = (rp('roupa-03-explorador.png', 'CO·LE·TE', preco=30) + rp('roupa-04-capa-de-chuva.png', 'CA·PA', preco=20) +
-              rp('roupa-06-pijama.png', 'PI·JA·MA', preco=18) + rp('roupa-07-festa-junina-xadrez.png', 'XA·DREZ', preco=25) +
+              rp('roupa-06-pijama.png', 'PI·JA·MA', preco=18) + rp('roupa-07-xadrez-colheita.png', 'XA·DREZ', preco=25) +
               rp('roupa-08-esporte.png', 'TI·ME', preco=22))
 acess = f'''
 <div class="acc"><div class="im"><img src="{P}rosto-09-oculos-aparelho.png" style="left:50%;top:8px;width:104px;transform:translateX(-50%)"></div><div class="nm">ÓCULOS</div></div>

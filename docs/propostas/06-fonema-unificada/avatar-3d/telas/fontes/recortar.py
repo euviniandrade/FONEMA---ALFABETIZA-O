@@ -104,14 +104,14 @@ for arq, lst in DIV.items():
         salvar(aparar(limpar_chao(aparar(so_maior(c.crop((x0, 60, x1, 768)), 0.35)))), nome + '.png')
 
 # ---------- 2. roupas (mesmo menino, 8 roupas) ----------
-ROUPAS_B = ['uniforme', 'blusao-capuz', 'explorador', 'capa-de-chuva', 'verao-camiseta-verde', 'pijama', 'festa-junina-xadrez', 'esporte']
+ROUPAS_B = ['uniforme', 'blusao-capuz', 'explorador', 'capa-de-chuva', 'verao-camiseta-verde', 'pijama', 'xadrez-colheita', 'esporte']
 full = tirar_fundo(Image.open(os.path.join(AV, 'roupas-b.png')), thr=36)
 xs = [20, 188, 360, 528, 700, 862, 1030, 1198, 1370]
 for i, n in enumerate(ROUPAS_B):
     rec = aparar(so_maior(full.crop((xs[i], 70, xs[i+1], 768)), 0.35))
     salvar(rec if n == 'pijama' else aparar(limpar_chao(rec)), f'roupa-{i+1:02d}-{n}.png')  # pantufa do pijama é azul-clara
 # roupas-a: a camiseta listrada multicolorida (col. 5) NÃO é recortada (Decisão 009)
-ROUPAS_A = ['uniforme', 'blusao-capuz', 'explorador', 'capa-de-chuva', None, 'pijama', 'festa-junina-xadrez', 'esporte']
+ROUPAS_A = ['uniforme', 'blusao-capuz', 'explorador', 'capa-de-chuva', None, 'pijama', 'xadrez-colheita', 'esporte']
 full = tirar_fundo(Image.open(os.path.join(AV, 'roupas-a.png')), thr=22, ceu='claro', ilha=11)
 xs = [30, 192, 362, 528, 700, 862, 1024, 1190, 1360]
 for i, n in enumerate(ROUPAS_A):

@@ -302,7 +302,7 @@ const PE = require('./people');
 function elenco() {
   const W = 1800, H = 1040;
   const L = [
-    ['cida', 'Dona Cida', '72 anos · contadora de histórias', ['Avó do bairro, borda e conta', 'causos. Usa bengala e óculos.', 'Ensina parlendas e cantigas.'], 1.12],
+    ['cida', 'Dona Cida', '72 anos · contadora de histórias', ['Avó do bairro, borda e conta', 'histórias. Usa bengala e óculos.', 'Ensina parlendas e cantigas.'], 1.12],
     ['davi', 'Davi', '28 anos · professor de música', ['Cadeirante, toca percussão na', 'praça. Puxa as canções das', 'letras e o ritmo das sílabas.'], 1.12],
     ['tito', 'Tito', '6 anos · amigo da Sofia', ['Usa aparelho auditivo (azul!).', 'Adora pipa. Mostra que ver a', 'boca ajuda todo mundo a ouvir.'], 0.86],
     ['kenji', 'Seu Kenji', '58 anos · padeiro', ['Neto de japoneses, faz o pão', 'de queijo e o pão francês da', 'vila. Letreiros: PÃO, BOLO.'], 1.14],

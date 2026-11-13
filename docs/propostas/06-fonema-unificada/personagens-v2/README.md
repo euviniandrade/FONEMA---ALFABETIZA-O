@@ -101,7 +101,7 @@ Proporção (4 cabeças), regras de uso, voz e personalidade continuam como na b
 | 7 | **Seu Nonato** | 67 · pescador | Voz mansa, conta histórias do rio, ensina a respirar antes de falar | Preto, idoso, barba branca, chapéu de pescador, colete, vara | /r/ REDE, REMO, RIO |
 | 8 | **Davi** | 28 · professor de música | Alegre e rítmico, marca as sílabas no pandeiro | Cadeirante (cadeira esportiva), barba, camiseta verde-mar | /t/ TAMBOR, TATU, TOM |
 | 9 | **Lia** | 40 · cientista e inventora | Inventiva, erra e testa de novo junto com o robô Tec | Preta retinta, locs, macacão, óculos de proteção (EPI), frasco | /i/ IDEIA, ÍMÃ, ILHA |
-| 10 | **Dona Cida** | 72 · artesã (bordadeira) | Avó do bairro, conta causos, parlendas e cantigas | Preta, cabelo branco, óculos de grau, bengala, bastidor de bordado | /f/ FIO, FITA, FIGO |
+| 10 | **Dona Cida** | 72 · artesã (bordadeira) | Avó do bairro, conta histórias da roça, parlendas e cantigas | Preta, cabelo branco, óculos de grau, bengala, bastidor de bordado | /f/ FIO, FITA, FIGO |
 | 11 | **Seu Jorge** | 49 · motorista do ônibus escolar | Pontual e cuidadoso. Brinca de achar letras nas placas | Moreno, bigode, quepe e camisa de motorista, crachá | /ʒ/ JANELA, JOGO, JUNTO |
 | 12 | **Iara** | 26 · guarda-parque | Atenta aos sons da mata, cuida dos bichos | Parda, trança, **aparelho auditivo** azul, chapéu de guarda, binóculo, mapa | /m/ MATA, MICO, MEL |
 

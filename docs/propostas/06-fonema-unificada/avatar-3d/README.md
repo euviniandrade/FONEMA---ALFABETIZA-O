@@ -6,7 +6,7 @@
 |---|---|
 | `diversidade-a.png`, `diversidade-b.png` | Linha de crianças-base: tons de pele, tipos de cabelo, óculos, aparelho auditivo, cadeira de rodas |
 | `cabelos-a.png`, `cabelos-b.png` | 16–18 penteados: crespo curto, black power, cacheado longo e médio, tranças, nagô, box braids, coque, rabo, chanel, liso, ondulado, raspado e outros |
-| `roupas-a.png`, `roupas-b.png` | Uniforme, blusão de capuz, explorador, capa de chuva, verão, pijama, festa junina (xadrez) e esporte |
+| `roupas-a.png`, `roupas-b.png` | Uniforme, blusão de capuz, explorador, capa de chuva, verão, pijama, xadrez da feira da colheita e esporte |
 | `utensilios-a.png`, `utensilios-b.png` | Mochila, lupa, binóculo, lanterna, caderno, mapa, kit de ciências, regador, pipa, bola, violão, pandeiro, xilofone, capa e galocha, chapéus, balde de praia, patinete, telescópio, vaso com muda |
 
 ## Regras aplicadas

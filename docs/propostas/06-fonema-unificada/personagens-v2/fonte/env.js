@@ -31,10 +31,11 @@ function cloud(x, y, s = 1, o = 0.9) {
   return `<g transform="translate(${x},${y}) scale(${s})" opacity="${o}"><ellipse cx="0" cy="10" rx="90" ry="22" fill="#fff"/><circle cx="-40" cy="0" r="30" fill="#fff"/><circle cx="0" cy="-14" r="40" fill="#fff"/><circle cx="44" cy="0" r="28" fill="#fff"/><ellipse cx="0" cy="22" rx="80" ry="10" fill="#DCEBF5"/></g>`;
 }
 function bunting(x1, y1, x2, y2, sag, n, seed = 1) {
-  const cols = [P.ipe, P.vowel, P.cons, P.ok, '#E26D5A', P.focus]; let g = `<path d="M${x1},${y1} Q${(x1 + x2) / 2},${(y1 + y2) / 2 + sag * 2} ${x2},${y2}" stroke="#7A5A48" stroke-width="2" fill="none"/>`;
+  // varal de livros da feira de leitura (Decisão 012: sem bandeirinhas juninas; Decisão 009: 3 cores)
+  const cols = ['#1F3A6B', P.ipe, '#FFFBF2']; let g = `<path d="M${x1},${y1} Q${(x1 + x2) / 2},${(y1 + y2) / 2 + sag * 2} ${x2},${y2}" stroke="#7A5A48" stroke-width="2" fill="none"/>`;
   for (let i = 1; i < n; i++) {
     const t = i / n, x = (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * ((x1 + x2) / 2) + t * t * x2, y = (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * ((y1 + y2) / 2 + sag * 2) + t * t * y2;
-    g += `<path d="M${f(x - 9)},${f(y)} L${f(x + 9)},${f(y)} L${f(x)},${f(y + 22)}Z" fill="${cols[(i + seed) % cols.length]}" stroke="#7A5A48" stroke-width="1"/>`;
+    if (i % 2) g += `<rect x="${f(x - 8)}" y="${f(y)}" width="16" height="20" rx="2" fill="${cols[(i + seed) % cols.length]}" stroke="#7A5A48" stroke-width="1"/><path d="M${f(x)},${f(y)} v20" stroke="#7A5A48" stroke-width="1" opacity=".5"/>`;
   }
   return g;
 }
@@ -199,7 +200,7 @@ function praca(castFn) {
     <path d="M-140,-30 H140" stroke="#FFFBF2" stroke-width="6"/>${Array.from({ length: 14 }, (_, i) => `<path d="M${-130 + i * 20},-30 V0" stroke="#FFFBF2" stroke-width="3"/>`).join('')}
     <path d="M-176,-146 Q0,-250 176,-146 Z" fill="#C2410C"/>${[-120, -60, 0, 60, 120].map(x => `<path d="M${x},-146 Q${x * 0.4},-210 0,-232" stroke="#FFF3D6" stroke-width="6" fill="none"/>`).join('')}<rect x="-180" y="-152" width="360" height="12" rx="4" fill="#FFFBF2"/>
     <path d="M0,-232 V-262" stroke="#7A5A48" stroke-width="3"/><path d="M0,-262 l26,8 l-26,8z" fill="${P.ipe}"/></g>`;
-  // bandeirinhas
+  // varais de livros (feira de leitura)
   g += bunting(245, 238, 425, 246, 14, 8) + bunting(830, 238, 1010, 242, 14, 8, 3) + bunting(1010, 242, 1190, 232, 14, 8, 2);
   // barraca de suco/frutas
   g += `<g transform="translate(1160,600)"><rect x="-90" y="-60" width="180" height="70" fill="#C98D58" stroke="#7A4B2E" stroke-width="3"/><path d="M-90,-30 h180" stroke="#B5793F" stroke-width="3"/>
