@@ -68,15 +68,15 @@ export function makeSea(islands) {
         float d = 1e5;
         for(int i=0;i<16;i++){ float dd = length(vW.xz - uIsl[i].xy) - uIsl[i].z; d = min(d, dd); }
         vec3 n = normalize(cross(dFdx(vW), dFdy(vW))); if(n.y<0.) n=-n;
-        float sh = 1.0 - smoothstep(0.0, 26.0, d);
-        vec3 c = mix(uDeep, uMid, smoothstep(0.0, 1.0, 1.0 - smoothstep(0.0, 70.0, d)));
+        float sh = 1.0 - smoothstep(0.0, 15.0, d);
+        vec3 c = mix(uDeep, uMid, smoothstep(0.0, 1.0, 1.0 - smoothstep(0.0, 45.0, d)));
         c = mix(c, uShallow, sh*sh);
         float lit = 0.88 + 0.12*dot(n, normalize(uSunDir));
         c *= lit;
         // espuma na beira + anéis que se afastam
         float foam = 1.0 - smoothstep(0.0, 1.6, abs(d - 0.6 - 0.5*sin(uTime*1.3 + vW.x*0.05)));
-        float ring = fract(d*0.11 - uTime*0.18); float rings = smoothstep(0.86, 0.93, ring)*(1.0 - smoothstep(0.93, 1.0, ring))*(1.0 - smoothstep(2.0, 20.0, d));
-        c = mix(c, uFoam, clamp(foam*0.9 + rings*0.55, 0.0, 1.0));
+        float ring = fract(d*0.11 - uTime*0.18); float rings = smoothstep(0.86, 0.93, ring)*(1.0 - smoothstep(0.93, 1.0, ring))*(1.0 - smoothstep(1.0, 11.0, d));
+        c = mix(c, uFoam, clamp(foam*0.9 + rings*0.3, 0.0, 1.0));
         // brilho do sol (facetas) + cintilas estilizadas
         vec3 V = normalize(cameraPosition - vW); vec3 H = normalize(normalize(uSunDir) + V);
         float spec = pow(max(dot(n, H), 0.0), 140.0);
@@ -128,9 +128,9 @@ export function buildIslands(ctx) {
     }
     // rótulo
     const t = labelTexture(I.nome, I.status, renderer);
-    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, sizeAttenuation: false, depthTest: false, transparent: true }));
-    const hh = 0.052; sp.scale.set(hh * t.userData.aspect, hh, 1); sp.center.set(0.5, 0);
-    sp.position.set(I.x, GY + (I.id === 'vila' ? 22 : 14), I.z + (I.id === 'vila' ? 12 : I.r * 0.4)); sp.renderOrder = 10;
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, sizeAttenuation: false, depthTest: false, transparent: true, toneMapped: false }));
+    const hh = 0.04; sp.scale.set(hh * t.userData.aspect, hh, 1); sp.center.set(0.5, 0);
+    if (I.id === 'vila') sp.position.set(-16, 13, -36); else sp.position.set(I.x, GY + 5, I.z - I.r * 0.8); sp.renderOrder = 10;
     group.add(sp); labelSprites.push(sp);
   }
   for (const E of EXTRA_ISLETS) {
@@ -163,11 +163,10 @@ const BIOMES = {
     const letters = ['A', 'E', 'I', 'O', 'U'];
     const cols = ['#6B5BA8', '#7D6BC0', '#5E4E9C', '#8A78C9', '#6B5BA8'];
     letters.forEach((L, i) => {
-      const a = Math.PI * 0.95 + i * 0.5 - 1.0, rr = I.r * 0.45;
-      const x = I.x + Math.cos(a) * rr + 2, z = I.z + Math.sin(a) * rr * 0.8 + 3;
+      const x = I.x - 6 + i * 3.0, z = I.z + 3 - Math.abs(i - 2) * 1.2;
       const mat = new THREE.MeshStandardMaterial({ map: letterTexture(L, cols[i], renderer), roughness: 0.7 });
       const b = new THREE.Mesh(new THREE.BoxGeometry(2.6, 2.6, 2.6), mat);
-      b.position.set(x, GY + 1.3 + (i % 2) * 0.0, z); b.rotation.y = -0.5 + (rnd() - 0.5) * 0.3; b.castShadow = b.receiveShadow = true; group.add(b);
+      b.position.set(x, GY + 1.3 + (i % 2) * 0.0, z); b.rotation.y = (i - 2) * -0.12 + (rnd() - 0.5) * 0.2; b.castShadow = b.receiveShadow = true; group.add(b);
       occ.push([x, z, 2.2]);
       // gota lilás no topo
       m.add(G.ico1, '#A797D6', M(x, GY + 3.05, z, 0, 0, 0, 0.7, 0.9, 0.7)); m.add(G.cone8, '#A797D6', M(x, GY + 3.6, z, 0, 0, 0, 0.52, 0.6, 0.52));
@@ -187,7 +186,7 @@ const BIOMES = {
     m.add(G.cone8, '#8E8A80', M(mx, GY + 11.8, mz, 0, 0.3, 0, 6.8, 3.6, 6.2), { grad: 0.3 });
     m.add(G.cone5, '#4C9A5A', M(mx + 7, GY + 4, mz + 2, 0, 0.8, 0, 11, 8, 10), { grad: 0.35 });
     // cachoeira
-    const wf = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 9), new THREE.MeshStandardMaterial({ color: '#CFF3F7', emissive: '#9EE6EF', emissiveIntensity: 0.45, roughness: 0.3 }));
+    const wf = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 9), new THREE.MeshStandardMaterial({ color: '#CFF3F7', emissive: '#7FD3E0', emissiveIntensity: 0.2, roughness: 0.3 }));
     wf.position.set(mx + 2.5, GY + 4.6, mz + 7.2); wf.rotation.x = -0.48; group.add(wf);
     m.add(G.cyl16, '#8FE0E8', M(mx + 2.8, GY + 0.1, mz + 10.5, 0, 0, 0, 6, 0.2, 4), { jitter: 0.02 });
     d.add(G.ico1, '#F4FFF8', M(mx + 2.7, GY + 0.35, mz + 9.2, 0, 0, 0, 2.4, 0.6, 1.2));

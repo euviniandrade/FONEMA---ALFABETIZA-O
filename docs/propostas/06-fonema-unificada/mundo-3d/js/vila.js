@@ -519,7 +519,7 @@ export function buildVila(ctx) {
     if (!free(x, z, 0.5)) continue;
     const t = rnd();
     if (t < 0.18) N.bush(d, x, GY, z, 0.7 + rnd() * 0.5, ['#5AA851', '#4E9A48', '#6CB85E'][i % 3], rnd);
-    else if (t < 0.6) N.flower(d, x, GY, z, ['#E8547A', '#F2B33D', '#FFFBF4', '#A797D6', '#F28B5B'][i % 5], rnd, 0.9 + rnd() * 0.4);
+    else if (t < 0.6) N.flower(d, x, GY, z, ['#E8547A', '#F2B33D', '#F28B5B', '#A797D6', '#E8547A'][i % 5], rnd, 0.9 + rnd() * 0.4);
     else if (t < 0.92) N.tuft(d, x, GY, z, 0.9 + rnd() * 0.5, '#5DAA4E', rnd);
     else N.rock(d, x, GY, z, 0.5 + rnd() * 0.5, '#C9BBA6', rnd);
   }

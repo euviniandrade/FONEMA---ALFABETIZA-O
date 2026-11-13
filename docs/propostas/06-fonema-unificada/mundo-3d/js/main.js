@@ -203,7 +203,7 @@ const colliders = ISLANDS.map((I) => { const m = new THREE.Mesh(new THREE.Cylind
 
 // ---------------- PÓS-PROCESSAMENTO ----------------
 const GradeShader = {
-  uniforms: { tDiffuse: { value: null }, uWarm: { value: 0.04 }, uVig: { value: 0.28 }, uSat: { value: 1.06 }, uTime: U.time, uRes: { value: new THREE.Vector2(1, 1) } },
+  uniforms: { tDiffuse: { value: null }, uWarm: { value: 0.04 }, uVig: { value: 0.28 }, uSat: { value: 1.16 }, uTime: U.time, uRes: { value: new THREE.Vector2(1, 1) } },
   vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.); }',
   fragmentShader: `uniform sampler2D tDiffuse; uniform float uWarm, uVig, uSat; uniform vec2 uRes; varying vec2 vUv;
     float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)))*43758.5453); }
@@ -233,7 +233,7 @@ function setupPost() {
     const dof = new BokehPass(scene, camera, { focus: 30, aperture: 0.0005, maxblur: 0.0045 });
     hideFor(dof); dof.enabled = false; composer.addPass(dof); passes.dof = dof;
   }
-  const bloom = new UnrealBloomPass(new THREE.Vector2(size.x / (cfg.post === 'full' ? 1 : 2), size.y / (cfg.post === 'full' ? 1 : 2)), 0.32, 0.55, 0.88);
+  const bloom = new UnrealBloomPass(new THREE.Vector2(size.x / (cfg.post === 'full' ? 1 : 2), size.y / (cfg.post === 'full' ? 1 : 2)), 0.28, 0.5, 1.0);
   composer.addPass(bloom); passes.bloom = bloom;
   const grade = new ShaderPass(GradeShader); grade.uniforms.uRes.value.set(size.x, size.y); composer.addPass(grade); passes.grade = grade;
   composer.addPass(new OutputPass());
@@ -287,13 +287,13 @@ function applyTOD(v) {
   renderer.toneMappingExposure = n('exp');
   charSprites.forEach((s) => s.material.color.copy(c('tint')));
   if (passes.grade) passes.grade.uniforms.uWarm.value = n('warm');
-  if (passes.bloom) { passes.bloom.strength = 0.3 + night * 0.45; passes.bloom.threshold = 0.88 - night * 0.2; }
+  if (passes.bloom) { passes.bloom.strength = 0.26 + night * 0.5; passes.bloom.threshold = 1.0 - night * 0.3; }
   document.querySelectorAll('#g-tod button').forEach((b) => b.classList.toggle('on', Math.round(v) === Number(b.dataset.tod)));
 }
 
 // ---------------- CÂMERA: vistas e voos ----------------
 const VIEWS = {
-  arquipelago: { pos: [38, 255, 175], target: [24, 0, -92] },
+  arquipelago: { pos: [38, 172, 228], target: [36, 0, -108] },
   voo: { pos: [44, 44, 30], target: [112, 6, -38] },
   vila: { pos: [64, 50, 80], target: [0, 1, -3] },
   vila34: { pos: [-56, 27, 46], target: [2, 3, -5] },
@@ -354,7 +354,7 @@ function animateWorld(t) {
   clouds.forEach((c) => { const d = c.userData; c.position.set(((d.x0 + t * d.v + 300) % 620) - 300, d.y, d.z0); });
   { const a = t * 0.05; boat.position.set(Math.cos(a) * 68 + 10, 0.1, Math.sin(a) * 68 - 5); boat.rotation.set(Math.sin(t * 1.3) * 0.05, -a, Math.sin(t) * 0.06); }
   { const a = -t * 0.04 + 2; boat2.position.set(Math.cos(a) * 30 - 6, 0.1, Math.sin(a) * 30 - 214); boat2.rotation.set(0, -a + Math.PI, Math.sin(t * 1.1) * 0.06); }
-  balloon.position.set(70 + Math.sin(t * 0.1) * 12, 48 + Math.sin(t * 0.7) * 1.5, -10 + Math.cos(t * 0.08) * 8); balloon.rotation.y = t * 0.1;
+  balloon.position.set(-38 + Math.sin(t * 0.1) * 12, 44 + Math.sin(t * 0.7) * 1.5, -10 + Math.cos(t * 0.08) * 8); balloon.rotation.y = t * 0.1;
   birds.forEach((b) => { const d = b.userData, a = t * 0.35 + d.ph; b.position.set(Math.cos(a) * d.r + 4, d.h + Math.sin(t * 2 + d.ph) * 0.8, Math.sin(a) * d.r - 2); b.rotation.set(0, -a, Math.sin(t * 9 + d.ph) * 0.35); b.scale.setScalar(1); });
   dyn.windmills.forEach((w) => (w.rotation.z = t * 1.2));
   dyn.flags.forEach((f, i) => (f.rotation.y = Math.sin(t * 1.4 + i) * 0.25));
