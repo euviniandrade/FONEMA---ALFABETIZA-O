@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { CONQUISTAS, FALAS, FASE_POR_ID, ITENS_LOJA, REGIOES, SONS, SURPRESAS, type ItemLoja } from '@fonema/conteudo';
+import { CONQUISTAS, FASE_POR_ID, ITENS_LOJA, REGIOES, SONS, SURPRESAS, type ItemLoja } from '@fonema/conteudo';
 import { aplicarSondagem, comprar, infoNome, podeComprar, podeEntrar } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
@@ -11,7 +11,7 @@ import { efeitos } from '../../servicos/efeitos.ts';
 import { gravar, temGravacao } from '../../servicos/microfone.ts';
 import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
-import { falar, textoTela } from '../../util.ts';
+import { falar, falarVarias, textoTela } from '../../util.ts';
 
 /** Lojinha (de brincadeirinha, D002): pode × ainda não pode, "faltam X moedinhas", meta do cofrinho. */
 export function Lojinha({ criancaId }: { criancaId: string }) {
@@ -28,13 +28,13 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
     await salvarProgresso({ ...p, equipados: [...p.equipados, i.id].slice(-4) });
     await repo.registrarEvento({ id: novoId('ev'), criancaId, em: Date.now(), tipo: 'compra', texto: `Trocou ${i.preco} moedinhas por: ${i.nome}` });
     efeitos.moeda();
-    await falar({ quem: 'sofia', texto: `Que escolha boa! ${i.nome} já está na sua mochila.` }, crianca);
+    await falar({ quem: 'sofia', texto: 'Que escolha boa! Já está na sua mochila.' }, crianca);
     setConfirmar(null);
   };
   const definirMeta = async (i: ItemLoja) => {
     const contadores = Object.fromEntries(Object.entries(progresso.contadores).filter(([k]) => !k.startsWith('meta:')));
     await salvarProgresso({ ...progresso, contadores: { ...contadores, [`meta:${i.id}`]: 1 } });
-    await falar({ quem: 'tales', texto: `Meta escolhida: ${i.nome}. Faltam ${Math.max(0, i.preco - progresso.moedinhas.saldo)} moedinhas!` }, crianca);
+    await falar({ quem: 'tales', texto: 'Meta escolhida! Agora é juntar moedinhas aprendendo.' }, crianca);
   };
 
   return (
@@ -74,7 +74,7 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
                     <>
                       <div className="barrinha"><i style={{ width: `${Math.min(100, (progresso.moedinhas.saldo / i.preco) * 100)}%` }} /></div>
                       <small>Faltam {faltam}</small>
-                      <button className="btn mini" onClick={() => { definirMeta(i); falar({ quem: 'sofia', texto: FALAS.lojinhaFalta.replace('[FALTAM]', String(faltam)).replace('[ITEM]', i.nome) }, crianca); }}>Quero juntar</button>
+                      <button className="btn mini" onClick={() => { definirMeta(i); void faltam; }}>Quero juntar</button>
                     </>
                   )}
                 </div>
@@ -193,7 +193,7 @@ export function MostraProfessor({ criancaId, faseId }: { criancaId: string; fase
   const [estado, setEstado] = useState<'escolher' | 'gravando' | 'enviado'>('escolher');
   const [nivel, setNivel] = useState(0);
   const fase = FASE_POR_ID[faseId];
-  useEffect(() => { if (crianca && fase?.demonstracao) falar({ quem: 'tales', texto: `Vamos mostrar pro professor, [NOME]? ${fase.demonstracao.descricao}.` }, crianca); }, [crianca, fase]);
+  useEffect(() => { if (crianca && fase?.demonstracao) falarVarias([{ quem: 'tales', texto: 'Vamos mostrar pro professor, [NOME]?' }, { quem: 'tales', texto: `${fase.demonstracao.descricao}.` }], crianca); }, [crianca, fase]);
   if (!crianca || !fase?.demonstracao) return <Carregando />;
   const enviar = async (modo: 'ao-vivo' | 'gravacao', audio?: Blob) => {
     const id = novoId('dm');

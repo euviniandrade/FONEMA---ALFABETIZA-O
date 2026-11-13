@@ -7,12 +7,19 @@
 //       BASE_URL=http://localhost:5173 node e2e/fluxo.e2e.mjs
 import { chromium } from '@playwright/test';
 import { spawn } from 'node:child_process';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const aqui = dirname(fileURLToPath(import.meta.url));
 const CAPTURAS = process.argv.includes('--capturas');
+const COLETAR = process.argv.includes('--coletar');
+const coletadas = new Set();
+async function guardarFalas(pg) {
+  if (!COLETAR) return;
+  const l = await pg.evaluate(() => JSON.parse(localStorage.getItem('fonema-falas') || '[]'));
+  l.forEach((x) => coletadas.add(x));
+}
 const DIR_CAP = resolve(aqui, '../../docs/capturas');
 const EXEC = process.env.CHROMIUM ?? '/opt/pw-browsers/chromium';
 let BASE = process.env.BASE_URL;
@@ -148,7 +155,7 @@ async function main() {
   await subirServidor();
   const browser = await chromium.launch({ executablePath: EXEC, args: ['--autoplay-policy=no-user-gesture-required'] });
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: CAPTURAS ? 2 : 1, locale: 'pt-BR' });
-  await ctx.addInitScript(() => localStorage.setItem('fonema-teste-rapido', '1'));
+  await ctx.addInitScript((c) => { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); }, COLETAR);
   const page = await ctx.newPage();
   const erros = [];
   page.on('pageerror', (e) => erros.push(String(e)));
@@ -277,7 +284,7 @@ async function main() {
   console.log('9. Jornada inteira R0 → R2a (modo demonstração: domínio em 1 sessão)');
   {
     const ctx2 = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: 'pt-BR' });
-    await ctx2.addInitScript(() => localStorage.setItem('fonema-teste-rapido', '1'));
+    await ctx2.addInitScript((c) => { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); }, COLETAR);
     const pj = await ctx2.newPage();
     pj.on('pageerror', (e) => erros.push(String(e)));
     await pj.goto(BASE + '#/adulto/config');
@@ -312,6 +319,7 @@ async function main() {
     await pj.getByText('Nível 2 de 10').first().waitFor({ timeout: 5000 }).catch(() => {});
     ok(/Nível 2 de 10/.test(await pj.getByTestId('painel-familia').innerText()), 'termômetro subiu para 2 depois da Cachoeira das Sílabas');
     ok(/Exploração das Palavras/.test(await pj.getByTestId('painel-familia').innerText()), 'título "Exploração das Palavras" depois do portão');
+    await guardarFalas(pj);
     await ctx2.close();
   }
 
@@ -345,6 +353,13 @@ async function main() {
     await cel.close();
   }
 
+  await guardarFalas(page);
+  if (COLETAR) {
+    const arq = resolve(aqui, 'falas-coletadas.json');
+    const antes = existsSync(arq) ? JSON.parse(readFileSync(arq, 'utf8')) : [];
+    writeFileSync(arq, JSON.stringify([...new Set([...antes, ...coletadas])].sort(), null, 1));
+    console.log(`  · ${coletadas.size} falas coletadas → e2e/falas-coletadas.json`);
+  }
   ok(erros.length === 0, `sem erros de JavaScript na página${erros.length ? ': ' + erros.join(' | ') : ''}`);
   await browser.close();
   console.log('\nE2E OK');

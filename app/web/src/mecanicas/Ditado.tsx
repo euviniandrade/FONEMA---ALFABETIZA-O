@@ -28,7 +28,7 @@ export function Ditado({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
     const certo = escrito.join('') === palavra;
     setConferido(certo);
     tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, certo ? 0 : 1));
-    if (certo) { efeitos.acerto(); await voz.falar(`Você escreveu ${palavra.toLowerCase()}! Letra por letra.`, { quem: 'sofia' }); }
+    if (certo) { efeitos.acerto(); await voz.falar('Muito bem! Letra por letra.', { quem: 'sofia' }); await voz.falar(palavra.toLowerCase(), { quem: 'sofia' }); }
     else await voz.falar('Olha: assim você escreveu, e assim os adultos escrevem. Repara na diferença.', { quem: 'sofia' });
   };
   const seguir = async () => {

@@ -68,7 +68,7 @@ export function Tracar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
     setOk(true);
     efeitos.acerto();
     tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, 0));
-    await voz.falar(`${letra}! ${SOM[letra] ?? ''}`, { quem: 'tales' });
+    await voz.falar(SOM[letra] ?? letra, { quem: 'tales' });
     await espera(400);
     if (i + 1 < atividade.letras.length) setI(i + 1);
     else onFim({ tentativas: tents.current, tentouDeNovo: 0, extras: { tracados: atividade.letras.length } });

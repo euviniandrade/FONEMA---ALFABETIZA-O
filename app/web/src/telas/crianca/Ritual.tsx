@@ -27,7 +27,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
     let vivo = true;
     (async () => {
       const f = (t: string, quem: 'sofia' | 'tales' = 'sofia') => (vivo ? voz.falar(textoVoz(t, crianca), { quem }) : Promise.resolve());
-      await f(`${FALAS.ritual.recap} Hoje você fez ${relatorio.atividades} desafios.`);
+      await f(FALAS.ritual.recap);
       if (!vivo) return;
       setPasso(1);
       if (relatorio.moedinhas > 0) {
@@ -38,11 +38,11 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
       await espera(600);
       if (!vivo) return;
       setPasso(2);
-      for (const g of relatorio.conquistasNovas) {
+      if (relatorio.conquistasNovas.length) {
         efeitos.conquista();
-        await f(FALAS.conquista.replace('[CONQUISTA]', CONQUISTA_POR_ID[g.id]?.nome ?? ''));
+        await f(FALAS.conquista);
       }
-      for (const s of relatorio.surpresas) await f(`${FALAS.surpresa} ${s.nome}!`, 'tales');
+      if (relatorio.surpresas.length) await f(FALAS.surpresa, 'tales');
       if (relatorio.faseConcluida && fase.uau) await f(fase.uau, 'tales');
       if (relatorio.chefe && !relatorio.chefe.passou) await f('Vamos treinar mais um pouquinho e tentar de novo outro dia. Nada se perde!');
       if (!vivo) return;
@@ -62,7 +62,8 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
       <main className="palco ritual">
         <section className="cartao ritual-cartao">
           <h1 className="t">{relatorio.faseConcluida ? `Fase concluída: ${fase.titulo}!` : 'Missão de hoje feita!'}</h1>
-          <Balao fala={{ quem: 'sofia', texto: `${FALAS.ritual.recap} Hoje você fez ${relatorio.atividades} desafios.` }} crianca={crianca} />
+          <Balao fala={{ quem: 'sofia', texto: FALAS.ritual.recap }} crianca={crianca} />
+          <p className="ritual-desafios">Hoje: <b>{relatorio.atividades}</b> desafios feitos</p>
           <div className="ritual-grade">
             <div className="ritual-moedas">
               <Cofrinho saldo={saldoAntes + (passo >= 1 ? relatorio.moedinhas : 0)} animar={moedasAnim} />

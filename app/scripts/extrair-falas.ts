@@ -38,7 +38,9 @@ for (const f of FASES) {
     if (a.tipo === 'falar') a.itens.forEach((i) => add('sofia', i.falar, c.id));
     if (a.tipo === 'pausa') a.sequencia.forEach((s) => add('tales', s.falar, c.id));
   }
-  for (const id of f.conquistas) if (CONQUISTA_POR_ID[id]) { add('sofia', FALAS.conquista.replace('[CONQUISTA]', CONQUISTA_POR_ID[id].nome), id); add('sofia', CONQUISTA_POR_ID[id].dica, id); }
+  // dicas do cadeado: geradas só se sobrar orçamento (DICAS=1)
+  if (process.env.DICAS === '1') for (const id of f.conquistas) if (CONQUISTA_POR_ID[id]) add('sofia', CONQUISTA_POR_ID[id].dica, id);
+  if (f.demonstracao) add('tales', `${f.demonstracao.descricao}.`, f.id);
 }
 FALAS.chegada.forEach((f) => addF(f, 'chegada'));
 FALAS.voltou.forEach((f) => addF(f, 'voltou'));
@@ -48,7 +50,8 @@ for (const k of ['erro1', 'erro2', 'erroJunto', 'naoOuvi', 'euFalei', 'professor
 Object.values(FALAS.ritual).forEach((t) => add('sofia', t, 'ritual'));
 Object.values(FIGURAS).forEach((w) => add('sofia', w.texto, 'figuras'));
 PALAVRAS_R2A.forEach((w) => add('sofia', w.texto.toLowerCase(), 'palavras'));
-ITENS_LOJA.forEach((i) => add('sofia', `Que escolha boa! ${i.nome} já está na sua mochila.`, 'lojinha'));
+void ITENS_LOJA;
+add('sofia', FALAS.conquista, 'ritual'); add('tales', FALAS.surpresa, 'ritual');
 
 const coletadas = 'web/e2e/falas-coletadas.json';
 if (existsSync(coletadas)) {

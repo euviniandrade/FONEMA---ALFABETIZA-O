@@ -10,3 +10,4 @@ export * from './falas-gerais.ts';
 export { FASES_R0 } from './fases/r0.ts';
 export { FASES_R1 } from './fases/r1.ts';
 export { FASES_R2A } from './fases/r2a.ts';
+export * from './nomes-comuns.ts';

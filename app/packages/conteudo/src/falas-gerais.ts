@@ -35,7 +35,7 @@ export const FALAS = {
     amanha: 'Amanhã a gente lembra!',
     tchau: 'Tchau, [NOME]! A tela vai descansar e você também.'
   },
-  conquista: 'Você conquistou [CONQUISTA], [NOME]!',
+  conquista: 'Olha que lindo! Você ganhou uma conquista nova, [NOME]!',
   surpresa: 'Olha só o que chegou para você, [NOME]!',
   professorAprendeu: 'Parabéns, [NOME]! O professor viu que você aprendeu!',
   professorTreinar: 'Vamos treinar mais um pouquinho juntos, [NOME]. Treinar é assim mesmo!',

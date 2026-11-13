@@ -53,7 +53,7 @@ export function Montar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
         tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, errosTotal));
         if (errosTotal) deNovo.current++;
         await espera(500);
-        await voz.falar(textoVoz(atividade.comemora?.texto ?? `Você montou ${palavra}!`, crianca), { quem: atividade.comemora?.quem ?? 'sofia' });
+        await voz.falar(textoVoz(atividade.comemora?.texto ?? 'Você montou a palavra!', crianca), { quem: atividade.comemora?.quem ?? 'sofia' });
         await espera(400);
         if (i + 1 < atividade.palavras.length) setI(i + 1);
         else onFim({ tentativas: tents.current, tentouDeNovo: deNovo.current });
@@ -64,7 +64,9 @@ export function Montar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
       setTimeout(() => setBalanca(null), 500);
       setErrosSeguidos((e) => e + 1);
       setErrosTotal((e) => e + 1);
-      await voz.falar(`${som}… ${errosSeguidos >= 1 ? 'Olha, a peça certa está brilhando.' : 'Escuta de novo: ' + (SOM_LETRA[alvo[pos]] ?? alvo[pos].toLowerCase())}`, { quem: 'sofia' });
+      await voz.falar(som, { quem: 'sofia', rate: 0.85 });
+      await voz.falar(errosSeguidos >= 1 ? 'Olha, a peça certa está brilhando.' : 'Escuta de novo.', { quem: 'sofia' });
+      if (errosSeguidos < 1) await voz.falar(atividade.porSilaba ? alvo[pos].toLowerCase() : SOM_LETRA[alvo[pos]] ?? alvo[pos].toLowerCase(), { quem: 'sofia', rate: 0.85 });
     }
   };
 

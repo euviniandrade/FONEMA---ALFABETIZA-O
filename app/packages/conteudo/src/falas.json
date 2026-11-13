@@ -6,12 +6,6 @@
   "origem": "R2a-F04-C4"
  },
  {
-  "id": "s-10ko9ui",
-  "voz": "sofia",
-  "texto": "Desenhar as vogais com o dedo",
-  "origem": "S-R1-05"
- },
- {
   "id": "s-10uxica",
   "voz": "sofia",
   "texto": "Você ouviu a diferença!",
@@ -30,58 +24,16 @@
   "origem": "acertos"
  },
  {
-  "id": "s-11gwra6",
-  "voz": "sofia",
-  "texto": "O som /i/ da letra I",
-  "origem": "S-SOM-I"
- },
- {
   "id": "s-11idavc",
   "voz": "sofia",
   "texto": "Chefe: Cachoeira das Sílabas. Ler palavras e nomes de bichinhos da mata e escrever 4 palavras.",
   "origem": "R2a-F05"
  },
  {
-  "id": "s-11njp0d",
-  "voz": "sofia",
-  "texto": "Você conquistou Leu pra Mim, [NOME]!",
-  "origem": "V-R2a-02"
- },
- {
-  "id": "s-11w7y68",
-  "voz": "sofia",
-  "texto": "Você conquistou Hora de Descansar, [NOME]!",
-  "origem": "S-R0-15"
- },
- {
-  "id": "s-12e2f9g",
-  "voz": "sofia",
-  "texto": "Você conquistou Bate-Sílaba, [NOME]!",
-  "origem": "S-R0-03"
- },
- {
   "id": "s-12xqa5g",
   "voz": "sofia",
   "texto": "Lábios fechados, o som sai pelo nariz: /mmm/. Sua vez, [NOME]!",
   "origem": "R2a-F01-C2"
- },
- {
-  "id": "s-12ype7g",
-  "voz": "sofia",
-  "texto": "Você conquistou Cinco Sinais, [NOME]!",
-  "origem": "S-R1-01"
- },
- {
-  "id": "s-13el9a3",
-  "voz": "sofia",
-  "texto": "Você conquistou Visto do Professor: Vogais, [NOME]!",
-  "origem": "V-R1-01"
- },
- {
-  "id": "s-141oi0",
-  "voz": "sofia",
-  "texto": "Você conquistou Leitura do Quintal, [NOME]!",
-  "origem": "S-R0-06"
  },
  {
   "id": "s-14efwa7",
@@ -96,40 +48,16 @@
   "origem": "R0-F04-C3"
  },
  {
-  "id": "s-14yvois",
-  "voz": "sofia",
-  "texto": "Ler palavras da mata em dias diferentes",
-  "origem": "S-R2a-05"
- },
- {
   "id": "s-14zllpx",
   "voz": "sofia",
   "texto": "Quem mora com você, [NOME]? Bate as palmas do nome.",
   "origem": "R0-F06-C7"
  },
  {
-  "id": "s-154m0b1",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Patinete já está na sua mochila.",
-  "origem": "lojinha"
- },
- {
-  "id": "s-1589s66",
-  "voz": "sofia",
-  "texto": "Fazer o guia da mata para o Bolota",
-  "origem": "S-R2a-09"
- },
- {
   "id": "s-15ak9x9",
   "voz": "sofia",
   "texto": "Olha, eu te mostro. É esta aqui!",
   "origem": "erro2"
- },
- {
-  "id": "s-15eu7cp",
-  "voz": "sofia",
-  "texto": "Você conquistou Álbum da Minha Família, [NOME]!",
-  "origem": "S-R0-07"
  },
  {
   "id": "s-15jw11t",
@@ -150,12 +78,6 @@
   "origem": "R2a-F04-C4"
  },
  {
-  "id": "s-15x68xy",
-  "voz": "sofia",
-  "texto": "Ouvir a diferença entre vovó e vovô",
-  "origem": "S-R1-04"
- },
- {
   "id": "s-15yvsqq",
   "voz": "sofia",
   "texto": "Amanhã é a vez do sorriso mais largo de todos!",
@@ -174,12 +96,6 @@
   "origem": "R1-F06"
  },
  {
-  "id": "s-16jtv2f",
-  "voz": "sofia",
-  "texto": "Você conquistou Cultivo da Revisão, [NOME]!",
-  "origem": "S-R1-18"
- },
- {
   "id": "s-16o3epn",
   "voz": "sofia",
   "texto": "sss… ooo… lll",
@@ -192,18 +108,6 @@
   "origem": "R0-F05-C3"
  },
  {
-  "id": "s-17vcv8x",
-  "voz": "sofia",
-  "texto": "Ler a primeira palavra sem ajuda",
-  "origem": "M-R2a-01"
- },
- {
-  "id": "s-186kzt9",
-  "voz": "sofia",
-  "texto": "Você conquistou Maestria do Som E (é/ê), [NOME]!",
-  "origem": "S-SOM-E-E-E"
- },
- {
   "id": "s-18fdyii",
   "voz": "sofia",
   "texto": "Tchau, [NOME]! A tela vai descansar e você também.",
@@ -214,12 +118,6 @@
   "voz": "sofia",
   "texto": "Você ouviu o comecinho de palavras novas!",
   "origem": "R1-F06-C5"
- },
- {
-  "id": "s-18uqtkr",
-  "voz": "sofia",
-  "texto": "Achar a vogal do começo das palavras",
-  "origem": "S-R1-06"
  },
  {
   "id": "s-193fu3z",
@@ -240,28 +138,10 @@
   "origem": "R2a-F03-C4"
  },
  {
-  "id": "s-1a0zn6y",
-  "voz": "sofia",
-  "texto": "Você conquistou Espelho da Ilha, [NOME]!",
-  "origem": "S-R1-02"
- },
- {
   "id": "s-1abgg4w",
   "voz": "sofia",
   "texto": "Chefe: O Farol Apagado. Mostrar as 5 vogais (ouvir e tocar, ver e falar) e acender o farol.",
   "origem": "R1-F07"
- },
- {
-  "id": "s-1ajlhp",
-  "voz": "sofia",
-  "texto": "Juntar consoante e vogal: MA, LO, FU",
-  "origem": "S-R2a-03"
- },
- {
-  "id": "s-1auvyix",
-  "voz": "sofia",
-  "texto": "Lembrar o que aprendeu em outros dias",
-  "origem": "S-R1-18"
  },
  {
   "id": "s-1avoeg9",
@@ -294,12 +174,6 @@
   "origem": "R0-F03-C5"
  },
  {
-  "id": "s-1ch9l7c",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Chapéu de explorador já está na sua mochila.",
-  "origem": "lojinha"
- },
- {
   "id": "s-1dfc6n5",
   "voz": "sofia",
   "texto": "Qual letra faz /lll/, [NOME]?",
@@ -318,34 +192,16 @@
   "origem": "R2a-F04-C5"
  },
  {
-  "id": "s-1ecrp9a",
-  "voz": "sofia",
-  "texto": "O som /l/ da letra L",
-  "origem": "S-SOM-L"
- },
- {
   "id": "s-1egnpj4",
   "voz": "sofia",
   "texto": "Eu sou a Sofia. SO… FI… A! Três palmas!",
   "origem": "R0-F01-C2"
  },
  {
-  "id": "s-1en8sv1",
-  "voz": "sofia",
-  "texto": "Você conquistou Classifica-Som, [NOME]!",
-  "origem": "S-R1-08"
- },
- {
   "id": "s-1ewan5d",
   "voz": "sofia",
   "texto": "Esta é a sua letra, [NOME]. E este é o som dela! Foi você que descobriu.",
   "origem": "R0-F01-C5"
- },
- {
-  "id": "s-1f8tw19",
-  "voz": "sofia",
-  "texto": "Você conquistou Primeiro Som, [NOME]!",
-  "origem": "S-R0-04"
  },
  {
   "id": "s-1fszss8",
@@ -360,34 +216,10 @@
   "origem": "R0-F01-C2"
  },
  {
-  "id": "s-1goa156",
-  "voz": "sofia",
-  "texto": "Você conquistou O de Bolinha, [NOME]!",
-  "origem": "S-R1-04"
- },
- {
-  "id": "s-1h6lh3g",
-  "voz": "sofia",
-  "texto": "Você conquistou Maestria do Som I, [NOME]!",
-  "origem": "S-SOM-I"
- },
- {
   "id": "s-1hs1iuo",
   "voz": "sofia",
   "texto": "As moedinhas vão para o cofrinho-tatu!",
   "origem": "ritual"
- },
- {
-  "id": "s-1hy8ftq",
-  "voz": "sofia",
-  "texto": "O som /a/ da letra A",
-  "origem": "S-SOM-A"
- },
- {
-  "id": "s-1i8kohr",
-  "voz": "sofia",
-  "texto": "Terminar a sessão no ritual de fim",
-  "origem": "S-R0-15"
  },
  {
   "id": "s-1ia5gbr",
@@ -420,12 +252,6 @@
   "origem": "R1-F05"
  },
  {
-  "id": "s-1j5fyxx",
-  "voz": "sofia",
-  "texto": "Você conquistou Leitura da Mata, [NOME]!",
-  "origem": "S-R2a-08"
- },
- {
   "id": "s-1jbedh7",
   "voz": "sofia",
   "texto": "Qual letra faz este som, [NOME]?",
@@ -438,18 +264,6 @@
   "origem": "geral"
  },
  {
-  "id": "s-1kamo03",
-  "voz": "sofia",
-  "texto": "Você conquistou Maestria do Som O (ó/ô), [NOME]!",
-  "origem": "S-SOM-O-O-O"
- },
- {
-  "id": "s-1kxme4g",
-  "voz": "sofia",
-  "texto": "Você conquistou Ouvido Atento, [NOME]!",
-  "origem": "S-R2a-02"
- },
- {
   "id": "s-1l8st3w",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Lembra do som que veio da mata? /mmm/…",
@@ -460,12 +274,6 @@
   "voz": "sofia",
   "texto": "Isso! Você fez o som do seu nome!",
   "origem": "R0-F01-C2b"
- },
- {
-  "id": "s-1lxanty",
-  "voz": "sofia",
-  "texto": "Você conquistou Amarelinha das Sílabas, [NOME]!",
-  "origem": "S-R0-13"
  },
  {
   "id": "s-1mbnwmv",
@@ -510,22 +318,10 @@
   "origem": "R0-F02-C4"
  },
  {
-  "id": "s-1njrxcm",
-  "voz": "sofia",
-  "texto": "Ler 3 palavras para alguém da família",
-  "origem": "V-R2a-02"
- },
- {
   "id": "s-1nnazrj",
   "voz": "sofia",
   "texto": "Cada palma acendeu uma lâmpada!",
   "origem": "R0-F03-C4"
- },
- {
-  "id": "s-1npo5py",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Telescópio já está na sua mochila.",
-  "origem": "lojinha"
  },
  {
   "id": "s-1o64pg2",
@@ -534,40 +330,16 @@
   "origem": "R1-F02-C2"
  },
  {
-  "id": "s-1o6whn8",
-  "voz": "sofia",
-  "texto": "Vencer a Festa das Rimas",
-  "origem": "TI-R0-02"
- },
- {
   "id": "s-1ojmdzj",
   "voz": "sofia",
   "texto": "Isso! Você abriu bem a boca: aaa!",
   "origem": "R1-F01-C2"
  },
  {
-  "id": "s-1or7t7l",
-  "voz": "sofia",
-  "texto": "Acender o farol da ilha",
-  "origem": "S-R1-07"
- },
- {
   "id": "s-1owymw4",
   "voz": "sofia",
   "texto": "L. Ligar a letra L ao som /l/ e ler LUA e MALA.",
   "origem": "R2a-F02"
- },
- {
-  "id": "s-1oxxkq3",
-  "voz": "sofia",
-  "texto": "Você conquistou Pesca de Vogais, [NOME]!",
-  "origem": "S-R1-06"
- },
- {
-  "id": "s-1p2kvf",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Caderno já está na sua mochila.",
-  "origem": "lojinha"
  },
  {
   "id": "s-1p8k0l1",
@@ -726,52 +498,16 @@
   "origem": "R2a-F04-C2"
  },
  {
-  "id": "s-1qmhr53",
-  "voz": "sofia",
-  "texto": "Escrever palavras ditadas com letras móveis",
-  "origem": "S-R2a-07"
- },
- {
   "id": "s-1qmmj56",
   "voz": "sofia",
   "texto": "Que sorriso! iii!",
   "origem": "R1-F04-C2"
  },
  {
-  "id": "s-1qrpdds",
-  "voz": "sofia",
-  "texto": "Separar figuras pelo primeiro som",
-  "origem": "S-R1-08"
- },
- {
-  "id": "s-1r32o3r",
-  "voz": "sofia",
-  "texto": "Bater palmas nos nomes da família",
-  "origem": "S-R0-07"
- },
- {
   "id": "s-1rskjwt",
   "voz": "sofia",
   "texto": "Quantas palmas tem esta palavra, [NOME]? Eu me perdi!",
   "origem": "R0-F03-C4"
- },
- {
-  "id": "s-1s7y0ow",
-  "voz": "sofia",
-  "texto": "Atravessar a Cachoeira das Sílabas",
-  "origem": "S-R2a-08"
- },
- {
-  "id": "s-1s9t4nc",
-  "voz": "sofia",
-  "texto": "Você conquistou Mostrei em Casa, [NOME]!",
-  "origem": "V-R0-01"
- },
- {
-  "id": "s-1suupoe",
-  "voz": "sofia",
-  "texto": "Os sons /é/ e /ê/ da letra E",
-  "origem": "S-SOM-E-E-E"
  },
  {
   "id": "s-1svhpmb",
@@ -786,28 +522,10 @@
   "origem": "voltou"
  },
  {
-  "id": "s-1tdotdk",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Binóculo já está na sua mochila.",
-  "origem": "lojinha"
- },
- {
-  "id": "s-1tsrbh7",
-  "voz": "sofia",
-  "texto": "Você conquistou Som Comprido, [NOME]!",
-  "origem": "S-R2a-01"
- },
- {
   "id": "s-1tzsjgn",
   "voz": "sofia",
   "texto": "Parabéns, [NOME]! O professor viu que você aprendeu!",
   "origem": "professorAprendeu"
- },
- {
-  "id": "s-1u3et1r",
-  "voz": "sofia",
-  "texto": "Montar sílabas na tábua",
-  "origem": "S-R2a-04"
  },
  {
   "id": "s-1u78zhe",
@@ -1170,12 +888,6 @@
   "origem": "R0-F02-C2"
  },
  {
-  "id": "s-1vifaox",
-  "voz": "sofia",
-  "texto": "Imitar a boca da Sofia nas vogais",
-  "origem": "S-R1-02"
- },
- {
   "id": "s-1vptk7v",
   "voz": "sofia",
   "texto": "o que rima com panela?",
@@ -1218,52 +930,10 @@
   "origem": "R1-F04-C2"
  },
  {
-  "id": "s-1xmxj8l",
-  "voz": "sofia",
-  "texto": "Você conquistou Medalha do Farol Aceso, [NOME]!",
-  "origem": "M-R1-01"
- },
- {
-  "id": "s-1xx4txs",
-  "voz": "sofia",
-  "texto": "Você conquistou Leitura da Ilha, [NOME]!",
-  "origem": "S-R1-07"
- },
- {
   "id": "s-1yf579q",
   "voz": "sofia",
   "texto": "A concha abriu!",
   "origem": "R1-F01-C4"
- },
- {
-  "id": "s-1yg0uqb",
-  "voz": "sofia",
-  "texto": "O som do começo do seu nome",
-  "origem": "S-R0-01"
- },
- {
-  "id": "s-1yu77qc",
-  "voz": "sofia",
-  "texto": "Você conquistou Ditado da Mata, [NOME]!",
-  "origem": "S-R2a-07"
- },
- {
-  "id": "s-1yxy8to",
-  "voz": "sofia",
-  "texto": "Juntar sons falados devagar",
-  "origem": "S-R0-05"
- },
- {
-  "id": "s-22bo2o",
-  "voz": "sofia",
-  "texto": "Mostrar o que aprendeu para um adulto",
-  "origem": "V-R0-01"
- },
- {
-  "id": "s-237fha",
-  "voz": "sofia",
-  "texto": "O som /m/ da letra M",
-  "origem": "S-SOM-M"
  },
  {
   "id": "s-2aajyj",
@@ -1272,28 +942,10 @@
   "origem": "chegada"
  },
  {
-  "id": "s-2dtnym",
-  "voz": "sofia",
-  "texto": "Você conquistou Errei, e Agora?, [NOME]!",
-  "origem": "S-R1-10"
- },
- {
-  "id": "s-2etsum",
-  "voz": "sofia",
-  "texto": "Pular a amarelinha batendo as sílabas",
-  "origem": "S-R0-13"
- },
- {
   "id": "s-2jnu1",
   "voz": "sofia",
   "texto": "Qual rima, [NOME]?",
   "origem": "R0-F06-C4a"
- },
- {
-  "id": "s-2uepyo",
-  "voz": "sofia",
-  "texto": "Mostrar a primeira palavra para o professor",
-  "origem": "V-R2a-01"
  },
  {
   "id": "s-2v3dp4",
@@ -1320,28 +972,10 @@
   "origem": "R1-F07-C4b"
  },
  {
-  "id": "s-3mpqpc",
-  "voz": "sofia",
-  "texto": "Os sons /ó/ e /ô/ da letra O",
-  "origem": "S-SOM-O-O-O"
- },
- {
-  "id": "s-3x1lim",
-  "voz": "sofia",
-  "texto": "Você conquistou Primeiros Sons, [NOME]!",
-  "origem": "TI-R0-01"
- },
- {
   "id": "s-3zwej4",
   "voz": "sofia",
   "texto": "Lê a pedra e toca a figura, [NOME].",
   "origem": "R2a-F05-C4a"
- },
- {
-  "id": "s-4hbayb",
-  "voz": "sofia",
-  "texto": "Você conquistou Ensinar o Bolota, [NOME]!",
-  "origem": "S-R0-12"
  },
  {
   "id": "s-559ma2",
@@ -1356,18 +990,6 @@
   "origem": "euFalei"
  },
  {
-  "id": "s-5cdw16",
-  "voz": "sofia",
-  "texto": "Você conquistou E aberto, E fechado, [NOME]!",
-  "origem": "S-R1-03"
- },
- {
-  "id": "s-5olo4z",
-  "voz": "sofia",
-  "texto": "Você conquistou Junta-Som, [NOME]!",
-  "origem": "S-R2a-03"
- },
- {
   "id": "s-5qllno",
   "voz": "sofia",
   "texto": "O Zum-Zum embaralhou a placa. Escuta bem: qual som começa a palavra, [NOME]?",
@@ -1380,28 +1002,10 @@
   "origem": "R2a-F01-C2"
  },
  {
-  "id": "s-6ddbqx",
-  "voz": "sofia",
-  "texto": "Tentar de novo depois de errar",
-  "origem": "S-R1-10"
- },
- {
-  "id": "s-6orfck",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Galocha já está na sua mochila.",
-  "origem": "lojinha"
- },
- {
   "id": "s-6qj94i",
   "voz": "sofia",
   "texto": "formiga",
   "origem": "figuras"
- },
- {
-  "id": "s-6xztv2",
-  "voz": "sofia",
-  "texto": "Você conquistou Palavra que Faz, [NOME]!",
-  "origem": "S-R2a-06"
  },
  {
   "id": "s-75h53n",
@@ -1416,12 +1020,6 @@
   "origem": "R0-F05-C3"
  },
  {
-  "id": "s-7xsykz",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Regador já está na sua mochila.",
-  "origem": "lojinha"
- },
- {
   "id": "s-8dfnot",
   "voz": "sofia",
   "texto": "É a vovó ou o vovô, [NOME]?",
@@ -1434,12 +1032,6 @@
   "origem": "R2a-F01-C4"
  },
  {
-  "id": "s-8xom1l",
-  "voz": "sofia",
-  "texto": "Você conquistou Praia Limpa, [NOME]!",
-  "origem": "S-R1-12"
- },
- {
   "id": "s-9a09w5",
   "voz": "sofia",
   "texto": "Ficou a sua cara! Tudo pronto pra começar?",
@@ -1450,12 +1042,6 @@
   "voz": "sofia",
   "texto": "Terminam igual! Você achou a rima!",
   "origem": "R0-F02-C4"
- },
- {
-  "id": "s-9mpp2f",
-  "voz": "sofia",
-  "texto": "Bater palmas nos pedacinhos das palavras",
-  "origem": "S-R0-03"
  },
  {
   "id": "s-9p2wlb",
@@ -1474,12 +1060,6 @@
   "voz": "sofia",
   "texto": "Palmas das sílabas. Separar palavras em pedacinhos (sílabas) com palmas.",
   "origem": "R0-F03"
- },
- {
-  "id": "s-af1wq9",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Pandeiro já está na sua mochila.",
-  "origem": "lojinha"
  },
  {
   "id": "s-b1gma7",
@@ -1534,18 +1114,6 @@
   "voz": "sofia",
   "texto": "[NOME] começa com este som. Olha a minha boca. Agora é a sua vez, [NOME]!",
   "origem": "R0-F01-C2b"
- },
- {
-  "id": "s-cubk1d",
-  "voz": "sofia",
-  "texto": "Você conquistou Medalha da Festa das Rimas, [NOME]!",
-  "origem": "M-R0-01"
- },
- {
-  "id": "s-cvq0v2",
-  "voz": "sofia",
-  "texto": "Esticar /mmm/, /lll/ e /fff/",
-  "origem": "S-R2a-01"
  },
  {
   "id": "s-cy7ik",
@@ -1644,12 +1212,6 @@
   "origem": "R0-F02-C3"
  },
  {
-  "id": "s-fcubgf",
-  "voz": "sofia",
-  "texto": "Você conquistou Caça às Sílabas, [NOME]!",
-  "origem": "TI-R0-02"
- },
- {
   "id": "s-fk1ezn",
   "voz": "sofia",
   "texto": "concha",
@@ -1680,18 +1242,6 @@
   "origem": "professorExplicou"
  },
  {
-  "id": "s-gict26",
-  "voz": "sofia",
-  "texto": "O som /f/ da letra F",
-  "origem": "S-SOM-F"
- },
- {
-  "id": "s-gkf0lg",
-  "voz": "sofia",
-  "texto": "Você conquistou Maestria do Som A, [NOME]!",
-  "origem": "S-SOM-A"
- },
- {
   "id": "s-goa7hw",
   "voz": "sofia",
   "texto": "Toda letra tem um NOME e um SOM.",
@@ -1708,6 +1258,12 @@
   "voz": "sofia",
   "texto": "gato… qual rima com gato?",
   "origem": "R0-F02-C2"
+ },
+ {
+  "id": "s-h71jsf",
+  "voz": "sofia",
+  "texto": "Olha que lindo! Você ganhou uma conquista nova, [NOME]!",
+  "origem": "ritual"
  },
  {
   "id": "s-h8p4wq",
@@ -1728,28 +1284,10 @@
   "origem": "R0-F01-C5"
  },
  {
-  "id": "s-i44vgo",
-  "voz": "sofia",
-  "texto": "Você conquistou Maestria do Som M, [NOME]!",
-  "origem": "S-SOM-M"
- },
- {
-  "id": "s-i5kc5a",
-  "voz": "sofia",
-  "texto": "Você conquistou Visto do Professor: Primeira Palavra, [NOME]!",
-  "origem": "V-R2a-01"
- },
- {
   "id": "s-iaa9ia",
   "voz": "sofia",
   "texto": "Que ventinho bom!",
   "origem": "R2a-F03-C2"
- },
- {
-  "id": "s-idq76r",
-  "voz": "sofia",
-  "texto": "Guardar moedinhas no cofrinho-tatu",
-  "origem": "S-R0-10"
  },
  {
   "id": "s-j0b53",
@@ -1758,22 +1296,10 @@
   "origem": "figuras"
  },
  {
-  "id": "s-j5t3d9",
-  "voz": "sofia",
-  "texto": "Você conquistou Guia da Mata, [NOME]!",
-  "origem": "S-R2a-09"
- },
- {
   "id": "s-j7stzy",
   "voz": "sofia",
   "texto": "Boca redonda, muito bem!",
   "origem": "R1-F02-C2"
- },
- {
-  "id": "s-j8rdc6",
-  "voz": "sofia",
-  "texto": "Você conquistou Junta-Junta, [NOME]!",
-  "origem": "S-R0-05"
  },
  {
   "id": "s-jr365",
@@ -1798,48 +1324,6 @@
   "voz": "sofia",
   "texto": "Você conseguiu, [NOME]!",
   "origem": "acertos"
- },
- {
-  "id": "s-l7xh6j",
-  "voz": "sofia",
-  "texto": "Você conquistou Mão na Areia, [NOME]!",
-  "origem": "S-R1-05"
- },
- {
-  "id": "s-li8dm1",
-  "voz": "sofia",
-  "texto": "Você conquistou Maestria do Som L, [NOME]!",
-  "origem": "S-SOM-L"
- },
- {
-  "id": "s-lkxguk",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Vaso com muda já está na sua mochila.",
-  "origem": "lojinha"
- },
- {
-  "id": "s-lmh00y",
-  "voz": "sofia",
-  "texto": "Ouvir a diferença entre é e ê",
-  "origem": "S-R1-03"
- },
- {
-  "id": "s-lp5xkq",
-  "voz": "sofia",
-  "texto": "Limpar a praia para a tartaruga",
-  "origem": "S-R1-12"
- },
- {
-  "id": "s-lt5q8a",
-  "voz": "sofia",
-  "texto": "Achar palavras que terminam igual",
-  "origem": "S-R0-02"
- },
- {
-  "id": "s-lyxfku",
-  "voz": "sofia",
-  "texto": "O som /u/ da letra U",
-  "origem": "S-SOM-U"
  },
  {
   "id": "s-lz4a3j",
@@ -1882,12 +1366,6 @@
   "voz": "sofia",
   "texto": "Junta comigo, [NOME]: mmm-aaa… MA!",
   "origem": "R2a-F01-C4"
- },
- {
-  "id": "s-mr9kta",
-  "voz": "sofia",
-  "texto": "A primeira missão: o som do seu nome",
-  "origem": "TI-R0-01"
  },
  {
   "id": "s-mty594",
@@ -1938,22 +1416,10 @@
   "origem": "figuras"
  },
  {
-  "id": "s-oj0aq5",
-  "voz": "sofia",
-  "texto": "Achar /m/, /l/ e /f/ no começo das palavras",
-  "origem": "S-R2a-02"
- },
- {
   "id": "s-otn16y",
   "voz": "sofia",
   "texto": "Quando termina igual, a gente diz que RIMA.",
   "origem": "R0-F02-C2"
- },
- {
-  "id": "s-p2mf6i",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Kit de ciências já está na sua mochila.",
-  "origem": "lojinha"
  },
  {
   "id": "s-pkvgiy",
@@ -1986,12 +1452,6 @@
   "origem": "figuras"
  },
  {
-  "id": "s-q9xzkg",
-  "voz": "sofia",
-  "texto": "Você conquistou Maestria do Som U, [NOME]!",
-  "origem": "S-SOM-U"
- },
- {
   "id": "s-qb8apk",
   "voz": "sofia",
   "texto": "Som e nome das vogais. Reconhecer as 5 vogais misturadas.",
@@ -2004,24 +1464,6 @@
   "origem": "figuras"
  },
  {
-  "id": "s-qg25ip",
-  "voz": "sofia",
-  "texto": "Ensinar o Bolota com gentileza",
-  "origem": "S-R0-12"
- },
- {
-  "id": "s-qgwfmk",
-  "voz": "sofia",
-  "texto": "Ler a palavra e ver a coisa acontecer",
-  "origem": "S-R2a-06"
- },
- {
-  "id": "s-qqrt0j",
-  "voz": "sofia",
-  "texto": "Você conquistou Maestria do Som F, [NOME]!",
-  "origem": "S-SOM-F"
- },
- {
   "id": "s-qscwis",
   "voz": "sofia",
   "texto": "Primeiro a gente escuta: /sss/. Dentinhos quase fechados, língua escondida. Agora é a sua vez, [NOME]!",
@@ -2032,18 +1474,6 @@
   "voz": "sofia",
   "texto": "Fala o som desta letra, [NOME]. A concha abre!",
   "origem": "R1-F01-C4"
- },
- {
-  "id": "s-qyhgqp",
-  "voz": "sofia",
-  "texto": "Você conquistou Exploração das Palavras, [NOME]!",
-  "origem": "TI-R2a-01"
- },
- {
-  "id": "s-r9jnl6",
-  "voz": "sofia",
-  "texto": "Você conquistou Tábua de Sílabas, [NOME]!",
-  "origem": "S-R2a-04"
  },
  {
   "id": "s-reqymh",
@@ -2220,40 +1650,16 @@
   "origem": "R0-F06-C7"
  },
  {
-  "id": "s-s2o4nf",
-  "voz": "sofia",
-  "texto": "Você conquistou Cofrinho Novo, [NOME]!",
-  "origem": "S-R0-10"
- },
- {
   "id": "s-sbxrcn",
   "voz": "sofia",
   "texto": "O primeiro som. Achar o primeiro som das palavras (/mmm/, /sss/, /fff/).",
   "origem": "R0-F04"
  },
  {
-  "id": "s-sg81nq",
-  "voz": "sofia",
-  "texto": "Você conquistou Medalha da Primeira Palavra, [NOME]!",
-  "origem": "M-R2a-01"
- },
- {
-  "id": "s-sin25",
-  "voz": "sofia",
-  "texto": "Você conquistou Palavras da Mata, [NOME]!",
-  "origem": "S-R2a-05"
- },
- {
   "id": "s-sztnpj",
   "voz": "sofia",
   "texto": "pa… to",
   "origem": "R0-F05-C2"
- },
- {
-  "id": "s-te0984",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Lanterna já está na sua mochila.",
-  "origem": "lojinha"
  },
  {
   "id": "s-tgzh8v",
@@ -2274,40 +1680,10 @@
   "origem": "R2a-F05-C4c"
  },
  {
-  "id": "s-txj4l4",
-  "voz": "sofia",
-  "texto": "Você conquistou Caça às Rimas, [NOME]!",
-  "origem": "S-R0-02"
- },
- {
-  "id": "s-tz013z",
-  "voz": "sofia",
-  "texto": "Ouvir as 5 vogais e tocar a letra",
-  "origem": "S-R1-01"
- },
- {
   "id": "s-u20fs1",
   "voz": "sofia",
   "texto": "O som do meu nome. Descobrir o primeiro som do próprio nome.",
   "origem": "R0-F01"
- },
- {
-  "id": "s-um2a2",
-  "voz": "sofia",
-  "texto": "Você conquistou Medalha da Cachoeira das Sílabas, [NOME]!",
-  "origem": "M-R2a-02"
- },
- {
-  "id": "s-uvfql4",
-  "voz": "sofia",
-  "texto": "Escutar o comecinho das palavras",
-  "origem": "S-R0-04"
- },
- {
-  "id": "s-vkimau",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Mapa já está na sua mochila.",
-  "origem": "lojinha"
  },
  {
   "id": "s-vkiuif",
@@ -2316,34 +1692,16 @@
   "origem": "naoOuvi"
  },
  {
-  "id": "s-vwps73",
-  "voz": "sofia",
-  "texto": "Você conquistou Meu Nome, [NOME]!",
-  "origem": "S-R0-01"
- },
- {
   "id": "s-waq3p0",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje a gente escuta o comecinho das palavras.",
   "origem": "R0-F04"
  },
  {
-  "id": "s-wg8w68",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Capa de chuva já está na sua mochila.",
-  "origem": "lojinha"
- },
- {
   "id": "s-wh1czs",
   "voz": "sofia",
   "texto": "Chefe: Festa das Rimas. Mostrar rima, sílaba, som inicial e juntar sons na festa.",
   "origem": "R0-F06"
- },
- {
-  "id": "s-wsfaan",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Balde de praia já está na sua mochila.",
-  "origem": "lojinha"
  },
  {
   "id": "s-x25bp3",
@@ -2388,18 +1746,6 @@
   "origem": "R2a-F04"
  },
  {
-  "id": "s-y1od5b",
-  "voz": "sofia",
-  "texto": "Vencer a Cachoeira das Sílabas",
-  "origem": "TI-R2a-01"
- },
- {
-  "id": "s-ygpicm",
-  "voz": "sofia",
-  "texto": "Mostrar as vogais para o professor",
-  "origem": "V-R1-01"
- },
- {
   "id": "s-ymomve",
   "voz": "sofia",
   "texto": "O de boca redonda: ó e ô. Ligar os sons /ó/ e /ô/ à letra O.",
@@ -2410,18 +1756,6 @@
   "voz": "sofia",
   "texto": "garrafa",
   "origem": "figuras"
- },
- {
-  "id": "s-yop823",
-  "voz": "sofia",
-  "texto": "Que escolha boa! Violão já está na sua mochila.",
-  "origem": "lojinha"
- },
- {
-  "id": "s-yr3job",
-  "voz": "sofia",
-  "texto": "A Festa das Rimas, na praça",
-  "origem": "S-R0-06"
  },
  {
   "id": "s-yuxfl0",
@@ -2460,6 +1794,12 @@
   "origem": "R0-F04"
  },
  {
+  "id": "t-10v9c1l",
+  "voz": "tales",
+  "texto": "Traçar o I e falar /iii/.",
+  "origem": "R1-F04"
+ },
+ {
   "id": "t-118nxim",
   "voz": "tales",
   "texto": "fff… cadê o que começa com fff?",
@@ -2484,6 +1824,12 @@
   "origem": "R1-F01-C6"
  },
  {
+  "id": "t-13xcsht",
+  "voz": "tales",
+  "texto": "Falar duas palavras que rimam (GATO e PATO).",
+  "origem": "R0-F02"
+ },
+ {
   "id": "t-148clcu",
   "voz": "tales",
   "texto": "Qual começa com o som, [NOME]?",
@@ -2494,6 +1840,12 @@
   "voz": "tales",
   "texto": "Tem um lago lá na frente… e dizem que a lua aparece nele!",
   "origem": "R2a-F01"
+ },
+ {
+  "id": "t-14k0se0",
+  "voz": "tales",
+  "texto": "Ouvir \"bo… la\" e dizer a palavra inteira.",
+  "origem": "R0-F05"
  },
  {
   "id": "t-15hhr35",
@@ -2530,6 +1882,12 @@
   "voz": "tales",
   "texto": "Andar 1! Qual letra, [NOME]?",
   "origem": "R1-F07-C4a"
+ },
+ {
+  "id": "t-1aqriaq",
+  "voz": "tales",
+  "texto": "Falar /fff/ e montar FALA.",
+  "origem": "R2a-F03"
  },
  {
   "id": "t-1b217g6",
@@ -2676,6 +2034,12 @@
   "origem": "R1-F01-C6"
  },
  {
+  "id": "t-1ko34ui",
+  "voz": "tales",
+  "texto": "Bater as palmas das sílabas do próprio nome.",
+  "origem": "R0-F03"
+ },
+ {
   "id": "t-1kqffb3",
   "voz": "tales",
   "texto": "Mais um anel do farol acendeu!",
@@ -2697,6 +2061,12 @@
   "id": "t-1msyvae",
   "voz": "tales",
   "texto": "A cachoeira tem pedras com sílabas… Amanhã a gente atravessa!",
+  "origem": "R2a-F04"
+ },
+ {
+  "id": "t-1nuflpi",
+  "voz": "tales",
+  "texto": "Ler MALA e LUA e explicar \"juntei o /m/ com o /a/\".",
   "origem": "R2a-F04"
  },
  {
@@ -2850,6 +2220,12 @@
   "origem": "R0-F01-C2"
  },
  {
+  "id": "t-1qdh25w",
+  "voz": "tales",
+  "texto": "Dizer \"vovó ou vovô?\" e tocar o O.",
+  "origem": "R1-F02"
+ },
+ {
   "id": "t-1qh5y7j",
   "voz": "tales",
   "texto": "pé",
@@ -2934,6 +2310,12 @@
   "origem": "R2a-F03"
  },
  {
+  "id": "t-1vpwe98",
+  "voz": "tales",
+  "texto": "Ler LUA e MALA em voz alta.",
+  "origem": "R2a-F02"
+ },
+ {
   "id": "t-1wpzevk",
   "voz": "tales",
   "texto": "Ficou lindo na areia!",
@@ -2968,6 +2350,12 @@
   "voz": "tales",
   "texto": "Oi, [NOME]! Repara no meu sorriso hoje.",
   "origem": "R1-F03"
+ },
+ {
+  "id": "t-2rnmu9",
+  "voz": "tales",
+  "texto": "Falar /aaa/ e tocar a letra A.",
+  "origem": "R1-F01"
  },
  {
   "id": "t-35m31w",
@@ -3090,6 +2478,12 @@
   "origem": "R1-F03-C4"
  },
  {
+  "id": "t-ctcpem",
+  "voz": "tales",
+  "texto": "Dizer o primeiro som de 3 figuras.",
+  "origem": "R0-F04"
+ },
+ {
   "id": "t-cw2zz7",
   "voz": "tales",
   "texto": "A placa do vale voltou a funcionar!",
@@ -3138,6 +2532,18 @@
   "origem": "R0-F03-C5"
  },
  {
+  "id": "t-en5dqv",
+  "voz": "tales",
+  "texto": "Falar /mmm/, tocar o M e juntar MA.",
+  "origem": "R2a-F01"
+ },
+ {
+  "id": "t-exx60h",
+  "voz": "tales",
+  "texto": "Olha só o que chegou para você, [NOME]!",
+  "origem": "ritual"
+ },
+ {
   "id": "t-fo8l8w",
   "voz": "tales",
   "texto": "peteca",
@@ -3154,6 +2560,12 @@
   "voz": "tales",
   "texto": "Passa a bola, [NOME]! MO… LA! Monta e o gol vale!",
   "origem": "R2a-F04-C4b"
+ },
+ {
+  "id": "t-g7eut",
+  "voz": "tales",
+  "texto": "Falar /é/ de PÉ e tocar a letra E.",
+  "origem": "R1-F03"
  },
  {
   "id": "t-gklppr",
@@ -3312,6 +2724,12 @@
   "origem": "R0-F03-C6"
  },
  {
+  "id": "t-t1a9u3",
+  "voz": "tales",
+  "texto": "Bater as palmas do próprio nome e falar o primeiro som.",
+  "origem": "R0-F01"
+ },
+ {
   "id": "t-t59sgr",
   "voz": "tales",
   "texto": "Isso! O sorriso abriu!",
@@ -3328,6 +2746,12 @@
   "voz": "tales",
   "texto": "Agora eu sei a mata!",
   "origem": "R2a-F05-C7"
+ },
+ {
+  "id": "t-uzc3z3",
+  "voz": "tales",
+  "texto": "Falar o som das 5 vogais e tocar cada letra.",
+  "origem": "R1-F06"
  },
  {
   "id": "t-vpoc0d",
@@ -3370,5 +2794,11 @@
   "voz": "tales",
   "texto": "E eu sou o Tales! Seja bem-vindo na Vila das Letras, [NOME]!",
   "origem": "chegada"
+ },
+ {
+  "id": "t-zr5ugx",
+  "voz": "tales",
+  "texto": "Falar /uuu/ e tocar o U.",
+  "origem": "R1-F05"
  }
 ]
