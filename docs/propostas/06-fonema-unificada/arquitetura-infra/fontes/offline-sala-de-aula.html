@@ -6,7 +6,7 @@
 .meio{display:grid;grid-template-columns:1040px 1fr;gap:110px}
 .escola>.rot{background:var(--verde)}.nuvem>.rot{background:var(--laranja)}.nuvem{border-color:#F0B37E;background:#FFFBF6}
 .esc{display:grid;grid-template-columns:1fr 300px;gap:20px}
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:14px;border:2.5px dashed #8E76D0;border-radius:16px;padding:30px 10px 10px;position:relative}.tabs:before{content:"rede local da sala (Wi-Fi sem internet) ↔ hub da professora";position:absolute;top:6px;left:12px;font-size:13.5px;font-weight:700;color:var(--roxo)}
 .tab{border:3px solid #2B3445;border-radius:18px;padding:10px 12px;background:#fff}
 .tab h3{font-size:16px}.tab p{font-size:13.5px;line-height:1.35;color:#2D3748}
 .tab .chips .chip{font-size:12.8px}
@@ -56,8 +56,6 @@ desenhar([
  ['t1','t2',{de:'r',para:'l',horiz:true}],['t2','t3',{de:'r',para:'l',horiz:true}],['t3','t4',{de:'r',para:'l',horiz:true}],
  ['cdn','escola',{de:'l',para:'r',cor:'#0E7480',horiz:true,rot:'noite: pacotes',t:.5}],
  ['ps','escola',{de:'l',para:'r',cor:'#1E7A4C',tr:true,horiz:true,rot:'dados da turma',t:.5}],
- ['escola','api',{de:'r',para:'l',cor:'#1F5FAD',duplo:false,horiz:false,rot:'depois: lotes',t:.5,da:150}],
- ['hub','tb2',{de:'l',para:'r',cor:'#5B3FA6',tr:true,duplo:true}],
- ['hub','tb4',{de:'l',para:'r',cor:'#5B3FA6',tr:true,duplo:true}],
+ ['api','escola',{de:'l',para:'r',cor:'#1F5FAD',horiz:true,rot:'depois: lotes',t:.5,inverso:true}],
 ]);
 </script></body></html>

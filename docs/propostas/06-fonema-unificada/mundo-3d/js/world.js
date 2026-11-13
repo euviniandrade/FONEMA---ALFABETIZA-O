@@ -98,7 +98,7 @@ export function makeSea(islands) {
 
 // ---------------- ILHAS-BIOMA ----------------
 export function buildIslands(ctx) {
-  const { m, d, w, group, renderer, dyn, labelSprites } = ctx;
+  const { m, d, f, w, group, renderer, dyn, labelSprites } = ctx;
   for (const I of ISLANDS) {
     const rnd = rng(I.x * 13 + I.z * 7 + 99);
     const occ = [];
@@ -113,7 +113,7 @@ export function buildIslands(ctx) {
     };
     const at = (lx, lz) => [I.x + lx, I.z + lz];
     const B = BIOMES[I.id];
-    if (B) B({ I, m, d, w, group, renderer, rnd, occ, scatter, at, GY, dyn, free });
+    if (B) B({ I, m, f, d, w, group, renderer, rnd, occ, scatter, at, GY, dyn, free });
     // pedras na praia
     for (let i = 0; i < Math.round(I.r / 3); i++) { const a = rnd() * 6.28, rr = I.r * (1.03 + rnd() * 0.12); N.rock(d, I.x + Math.cos(a) * rr, 0.1, I.z + Math.sin(a) * rr, 0.6 + rnd(), '#CDBFA8', rnd); }
     // bandeirola de progresso (ilhas concluídas / atual)
@@ -135,8 +135,8 @@ export function buildIslands(ctx) {
   }
   for (const E of EXTRA_ISLETS) {
     N.islandTerrain(m, { ...E, seed: E.x + 3, grass: '#A7D98A', grass2: '#B6E096' });
-    const rnd = rng(E.x);
-    N.palm(m, E.x, E.H, E.z, 1.2, rnd, 0.3);
+    const rnd = rng(E.x); const f = ctx.f;
+    N.palm(f, E.x, E.H, E.z, 1.2, rnd, 0.3);
     bookStack(m, E.x + 2.5, E.H, E.z + 1, rnd, 4);
   }
 }
@@ -159,7 +159,7 @@ function house(m, w, x, y, z, ry, wall, roof, s = 1) {
 }
 
 const BIOMES = {
-  vogais({ I, m, d, group, renderer, rnd, scatter, GY, occ }) {
+  vogais({ I, m, f, d, group, renderer, rnd, scatter, GY, occ }) {
     const letters = ['A', 'E', 'I', 'O', 'U'];
     const cols = ['#6B5BA8', '#7D6BC0', '#5E4E9C', '#8A78C9', '#6B5BA8'];
     letters.forEach((L, i) => {
@@ -178,10 +178,10 @@ const BIOMES = {
       m.add(G.cone8, c, M(x, GY + 1.6, z, 0, 0, 0, 4, 3.2, 4), { grad: 0.2 }); m.add(G.cone8, '#FFFBF4', M(x, GY + 1.61, z, 0, Math.PI / 8, 0, 3.9, 3.18, 3.9));
       m.add(G.box, '#7A4B2E', M(x, GY + 0.6, z + 1.5, 0, 0, 0, 0.9, 1.2, 0.3));
     });
-    scatter(6, 1.6, (x, z) => N.palm(m, x, GY, z, 1.05 + rnd() * 0.3, rnd, 0.35));
+    scatter(6, 1.6, (x, z) => N.palm(f, x, GY, z, 1.05 + rnd() * 0.3, rnd, 0.35));
     scatter(40, 0.4, (x, z, k) => N.flower(d, x, GY, z, ['#A797D6', '#F2B33D', '#FFFBF4'][k % 3], rnd, 1.1));
   },
-  mata({ I, m, d, w, group, rnd, scatter, GY, occ }) {
+  mata({ I, m, f, d, w, group, rnd, scatter, GY, occ }) {
     const mx = I.x - 4, mz = I.z - 6; occ.push([mx, mz, 9]);
     m.add(G.cone8, '#3E8A4E', M(mx, GY + 6.5, mz, 0, 0.3, 0, 20, 13, 18), { grad: 0.35, jitter: 0.08 });
     m.add(G.cone8, '#8E8A80', M(mx, GY + 11.8, mz, 0, 0.3, 0, 6.8, 3.6, 6.2), { grad: 0.3 });
@@ -192,8 +192,8 @@ const BIOMES = {
     m.add(G.cyl16, '#8FE0E8', M(mx + 2.8, GY + 0.1, mz + 10.5, 0, 0, 0, 6, 0.2, 4), { jitter: 0.02 });
     d.add(G.ico1, '#F4FFF8', M(mx + 2.7, GY + 0.35, mz + 9.2, 0, 0, 0, 2.4, 0.6, 1.2));
     occ.push([mx + 2.8, mz + 10.5, 3.2]);
-    scatter(34, 1.8, (x, z, k) => N.treeRound(m, x, GY, z, 0.9 + rnd() * 0.6, ['#2F8A49', '#3B9A52', '#2A7E43'][k % 3], '#2F7D45', rnd));
-    scatter(10, 1.5, (x, z) => N.palm(m, x, GY, z, 1.0 + rnd() * 0.3, rnd, 0.15));
+    scatter(34, 1.8, (x, z, k) => N.treeRound(f, x, GY, z, 0.9 + rnd() * 0.6, ['#2F8A49', '#3B9A52', '#2A7E43'][k % 3], '#2F7D45', rnd));
+    scatter(10, 1.5, (x, z) => N.palm(f, x, GY, z, 1.0 + rnd() * 0.3, rnd, 0.15));
     scatter(30, 0.4, (x, z) => { d.add(G.cone5, '#E04A5A', M(x, GY + 0.4, z, 0, rnd(), 0, 0.5, 0.8, 0.5)); d.add(G.cone5, '#4F9A48', M(x, GY + 0.3, z, 0, rnd(), 0, 0.8, 0.5, 0.8)); });
     // anel "você está aqui"
     const ring = new THREE.Mesh(new THREE.RingGeometry(3.2, 4.0, 48), new THREE.MeshBasicMaterial({ color: '#F2B33D', transparent: true, opacity: 0.9 }));
@@ -201,7 +201,7 @@ const BIOMES = {
     occ.push([I.x + 9, I.z + 10, 4.5]);
     ctxPins.push(new THREE.Vector3(I.x + 9, GY, I.z + 10));
   },
-  pampa({ I, m, d, group, rnd, scatter, GY, occ, dyn }) {
+  pampa({ I, m, f, d, group, rnd, scatter, GY, occ, dyn }) {
     // cata-vento (pás animadas)
     const wx = I.x + 5, wz = I.z - 3; occ.push([wx, wz, 2]);
     m.add(G.taper6, '#FFFBF4', M(wx, GY + 4.5, wz, 0, 0, 0, 1.1, 9, 1.1));
@@ -216,11 +216,11 @@ const BIOMES = {
     for (let i = 0; i < 14; i++) { const x = I.x - 12 + i * 1.9, z = I.z + 10; m.add(G.cyl5, '#8A5A3B', M(x, GY + 0.6, z, 0, 0, 0, 0.18, 1.2, 0.18)); }
     m.add(G.box, '#A86F3F', M(I.x - 12 + 13 * 0.95, GY + 0.9, I.z + 10, 0, 0, 0, 24.7, 0.14, 0.1));
     m.add(G.box, '#A86F3F', M(I.x - 12 + 13 * 0.95, GY + 0.5, I.z + 10, 0, 0, 0, 24.7, 0.14, 0.1));
-    scatter(6, 3.0, (x, z) => N.araucaria(m, x, GY, z, 1.2 + rnd() * 0.4, rnd));
+    scatter(6, 3.0, (x, z) => N.araucaria(f, x, GY, z, 1.2 + rnd() * 0.4, rnd));
     scatter(12, 1.0, (x, z) => N.sheep(m, x, GY, z, rnd() * 6, rnd));
     scatter(60, 0.3, (x, z) => N.tuft(d, x, GY, z, 1.1, '#93C25A', rnd));
   },
-  pantanal({ I, m, d, rnd, scatter, GY, occ }) {
+  pantanal({ I, m, f, d, rnd, scatter, GY, occ }) {
     [[-6, -4, 7, 5], [7, 5, 6, 4.5], [-2, 9, 4, 3]].forEach(([a, b, rx, rz]) => {
       const x = I.x + a, z = I.z + b; occ.push([x, z, Math.max(rx, rz)]);
       m.add(G.cyl16, '#BFAF87', M(x, GY + 0.04, z, 0, rnd(), 0, rx * 2.2, 0.12, rz * 2.2), { jitter: 0.05 });
@@ -229,23 +229,23 @@ const BIOMES = {
     });
     scatter(5, 1.2, (x, z) => N.tuiuiu(m, x, GY, z, rnd() * 6));
     scatter(5, 1.0, (x, z) => N.capybara(m, x, GY, z, rnd() * 6));
-    scatter(10, 1.5, (x, z) => N.palm(m, x, GY, z, 1.1 + rnd() * 0.3, rnd, 0.1));
-    scatter(8, 1.8, (x, z) => N.treeRound(m, x, GY, z, 0.9 + rnd() * 0.3, '#6DB85C', '#5DA851', rnd));
+    scatter(10, 1.5, (x, z) => N.palm(f, x, GY, z, 1.1 + rnd() * 0.3, rnd, 0.1));
+    scatter(8, 1.8, (x, z) => N.treeRound(f, x, GY, z, 0.9 + rnd() * 0.3, '#6DB85C', '#5DA851', rnd));
     scatter(60, 0.3, (x, z) => N.tuft(d, x, GY, z, 1.2, '#5DAA4E', rnd));
   },
-  cerrado({ I, m, d, rnd, scatter, GY }) {
-    scatter(8, 2.0, (x, z, k) => { N.treeIpe(m, x, GY, z, 1.0 + rnd() * 0.4, k % 2 ? '#F6C945' : '#E77FB0', rnd); N.petals(d, x, GY, z, 1, k % 2 ? '#F8D86A' : '#F2A5C8', rnd, 8); });
+  cerrado({ I, m, f, d, rnd, scatter, GY }) {
+    scatter(8, 2.0, (x, z, k) => { N.treeIpe(f, x, GY, z, 1.0 + rnd() * 0.4, k % 2 ? '#F6C945' : '#E77FB0', rnd); N.petals(d, x, GY, z, 1, k % 2 ? '#F8D86A' : '#F2A5C8', rnd, 8); });
     scatter(7, 1.0, (x, z) => m.add(G.cone6, '#C46A3B', M(x, GY + 1.0, z, 0, rnd(), 0, 1.4, 2.2 + rnd(), 1.4), { grad: 0.3 }));
-    scatter(8, 1.5, (x, z) => N.dryTree(m, x, GY, z, 0.9 + rnd() * 0.3, rnd));
+    scatter(8, 1.5, (x, z) => N.dryTree(f, x, GY, z, 0.9 + rnd() * 0.3, rnd));
     scatter(70, 0.3, (x, z) => N.tuft(d, x, GY, z, 1.3, '#D8C46A', rnd));
   },
-  caatinga({ I, m, d, w, rnd, scatter, GY, occ }) {
+  caatinga({ I, m, f, d, w, rnd, scatter, GY, occ }) {
     house(m, w, I.x - 3, GY, I.z + 4, 0.4, '#F4EBDD', '#B5502C', 1.2); occ.push([I.x - 3, I.z + 4, 3.5]);
     scatter(12, 1.4, (x, z) => N.cactus(m, x, GY, z, 0.9 + rnd() * 0.6, rnd));
-    scatter(8, 1.4, (x, z) => N.dryTree(m, x, GY, z, 1.0, rnd));
+    scatter(8, 1.4, (x, z) => N.dryTree(f, x, GY, z, 1.0, rnd));
     scatter(14, 1.0, (x, z) => N.rock(m, x, GY, z, 0.8 + rnd() * 1.2, '#C9A97F', rnd));
   },
-  amazonia({ I, m, d, w, group, rnd, scatter, GY, occ }) {
+  amazonia({ I, m, f, d, w, group, rnd, scatter, GY, occ }) {
     // rio cruzando a ilha
     const rv = new THREE.Mesh(new THREE.PlaneGeometry(I.r * 2.3, 7, 20, 1), new THREE.MeshStandardMaterial({ color: '#3FA6B8', roughness: 0.35 }));
     const pa = rv.geometry.attributes.position; for (let i = 0; i < pa.count; i++) pa.setY(i, pa.getY(i) + Math.sin(pa.getX(i) * 0.15) * 3);
@@ -256,11 +256,11 @@ const BIOMES = {
     const hx = I.x + 8, hz = I.z + 10; occ.push([hx, hz, 3]);
     [[-1.4, -1.2], [1.4, -1.2], [-1.4, 1.2], [1.4, 1.2]].forEach(([a, b]) => m.add(G.cyl5, '#7A4B2E', M(hx + a, GY + 0.8, hz + b, 0, 0, 0, 0.25, 1.6, 0.25)));
     house(m, w, hx, GY + 1.5, hz, -0.4, '#C98E58', '#C9B061', 1.0);
-    scatter(40, 2.2, (x, z, k) => N.bigTree(m, x, GY, z, 0.75 + rnd() * 0.45, rnd, ['#2F8A49', '#267A3E', '#3A9A50'][k % 3], '#2A8143'));
-    scatter(12, 1.4, (x, z) => N.palm(m, x, GY, z, 1.2, rnd, 0.1));
+    scatter(40, 2.2, (x, z, k) => N.bigTree(f, x, GY, z, 0.75 + rnd() * 0.45, rnd, ['#2F8A49', '#267A3E', '#3A9A50'][k % 3], '#2A8143'));
+    scatter(12, 1.4, (x, z) => N.palm(f, x, GY, z, 1.2, rnd, 0.1));
     scatter(6, 0.5, (x, z) => d.add(G.ico1, '#E0403A', M(x, GY + 5 + rnd() * 2, z, 0, 0, 0, 0.6, 0.45, 0.9)));
   },
-  litoral({ I, m, d, w, rnd, scatter, GY, occ }) {
+  litoral({ I, m, f, d, w, rnd, scatter, GY, occ }) {
     // farol listrado
     const fx = I.x + 8, fz = I.z - 6; occ.push([fx, fz, 2.5]);
     for (let i = 0; i < 5; i++) m.add(G.cyl12, i % 2 ? '#FFFBF4' : '#C9553A', M(fx, GY + 1 + i * 2, fz, 0, 0, 0, 3.2 - i * 0.22, 2, 3.2 - i * 0.22));
@@ -269,12 +269,12 @@ const BIOMES = {
     m.add(G.cone8, '#C9553A', M(fx, GY + 12.5, fz, 0, 0, 0, 2.2, 1.3, 2.2));
     // casinhas coloridas
     [['#F2B33D', -8, 2], ['#7FB3D5', -4, 6], ['#E58FA4', 0, 8.5], ['#7DC48A', 4.5, 8]].forEach(([c, a, b]) => { house(m, w, I.x + a, GY, I.z + b, 0.2, c, '#A9472A', 0.9); occ.push([I.x + a, I.z + b, 2.4]); });
-    scatter(9, 1.4, (x, z) => N.palm(m, x, GY, z, 1.1 + rnd() * 0.3, rnd, 0.4));
+    scatter(9, 1.4, (x, z) => N.palm(f, x, GY, z, 1.1 + rnd() * 0.3, rnd, 0.4));
     // guarda-sóis na areia
     for (let i = 0; i < 4; i++) { const a = 1.2 + i * 0.35, rr = I.r * 1.2; const x = I.x + Math.cos(a) * rr, z = I.z + Math.sin(a) * rr;
       m.add(G.cyl5, '#FFFBF4', M(x, 1.6, z, 0, 0, 0, 0.1, 3, 0.1)); m.add(G.cone8, ['#B23C62', '#F2B33D', '#1F6E82', '#E07F62'][i], M(x, 3.1, z, 0, 0, 0, 3, 0.8, 3)); }
   },
-  cidade({ I, m, d, w, group, renderer, rnd, scatter, GY, occ }) {
+  cidade({ I, m, f, d, w, group, renderer, rnd, scatter, GY, occ }) {
     m.add(G.cyl24, '#E6D6BE', M(I.x, GY + 0.06, I.z, 0, 0, 0, I.r * 1.2, 0.12, I.r * 1.2), { jitter: 0.03 });
     const letters = 'BCDFLMNPRSTV'.split('');
     const cols = ['#1F6E82', '#B23C62', '#2F8A49', '#E07F62', '#F2B33D', '#6B5BA8'];
@@ -293,9 +293,9 @@ const BIOMES = {
     // torre do relógio
     m.add(G.box, '#FFFBF4', M(I.x, GY + 5, I.z, 0, 0.3, 0, 3.2, 10, 3.2)); m.add(G.pyr, '#1F6E82', M(I.x, GY + 11.5, I.z, 0, 0.3, 0, 5, 3, 5));
     m.add(G.cyl16, '#F2B33D', M(I.x, GY + 8.4, I.z, Math.PI / 2, 0.3, 0, 2.2, 3.4, 2.2)); occ.push([I.x, I.z, 3]);
-    scatter(10, 1.2, (x, z) => N.treeRound(m, x, GY, z, 0.8, '#5DAE57', '#4C9A4A', rnd));
+    scatter(10, 1.2, (x, z) => N.treeRound(f, x, GY, z, 0.8, '#5DAE57', '#4C9A4A', rnd));
   },
-  livros({ I, m, d, rnd, scatter, GY, occ }) {
+  livros({ I, m, f, d, rnd, scatter, GY, occ }) {
     // livro aberto gigante
     const x = I.x - 2, z = I.z + 1; occ.push([x, z, 6]);
     m.add(G.box, '#B23C62', M(x, GY + 0.35, z, 0, 0.3, 0, 11, 0.5, 7.6));
@@ -308,7 +308,7 @@ const BIOMES = {
       m.add(G.box, '#FFF4E2', M(bx, GY + h / 2, bz, 0, i * 0.4, 0, 1.2, h - 0.3, 4.5));
     });
     scatter(4, 2.2, (x2, z2) => bookStack(m, x2, GY, z2, rnd, 3 + Math.floor(rnd() * 3), 0.8));
-    scatter(6, 1.4, (x2, z2) => N.treeRound(m, x2, GY, z2, 0.9, '#6CB85E', '#5DAE57', rnd));
+    scatter(6, 1.4, (x2, z2) => N.treeRound(f, x2, GY, z2, 0.9, '#6CB85E', '#5DAE57', rnd));
   },
 };
 export const ctxPins = [];

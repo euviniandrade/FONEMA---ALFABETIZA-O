@@ -25,7 +25,7 @@ function desenhar(lista){
     const path=document.createElementNS(ns,'path');
     path.setAttribute('d',`M${p1} C${c1} ${c2} ${p2}`);path.setAttribute('fill','none');path.setAttribute('stroke',c);
     path.setAttribute('stroke-width',o.w||2.6);if(o.tr)path.setAttribute('stroke-dasharray','8 6');
-    path.setAttribute('marker-end',`url(#${marcador(c)})`);if(o.duplo)path.setAttribute('marker-start',`url(#${marcador(c)})`);svg.appendChild(path);
+    if(!o.inverso)path.setAttribute('marker-end',`url(#${marcador(c)})`);else path.setAttribute('marker-start',`url(#${marcador(c)})`);if(o.duplo)path.setAttribute('marker-start',`url(#${marcador(c)})`);svg.appendChild(path);
     if(o.rot)rotulos.push([path,o,c]);}
   pg.appendChild(svg);
   for(const [path,o,c] of rotulos){const t=o.t??0.5;const P=path.getPointAtLength(path.getTotalLength()*t);

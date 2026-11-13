@@ -1,0 +1,88 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="common.css">
+<style>
+body{background:#F3D9B4}
+.a{position:absolute}
+.top{position:absolute;left:20px;right:20px;top:14px;display:flex;align-items:center;gap:12px;z-index:20}
+.voltar{width:54px;height:54px;border-radius:18px;background:#FFFBF4;box-shadow:0 4px 0 #C9A57A;display:flex;align-items:center;justify-content:center}
+.titulo{font-family:Fredoka;font-weight:700;font-size:26px;background:#FFFBF4;border-radius:18px;padding:8px 18px;box-shadow:0 4px 0 #C9A57A}
+.modo{display:flex;background:#FFFBF4;border-radius:16px;padding:4px;box-shadow:0 4px 0 #C9A57A}
+.modo span{font-family:Fredoka;font-weight:600;font-size:15px;padding:8px 14px;border-radius:12px}
+.modo .on{background:#2F6B43;color:#fff}
+.gav{position:absolute;left:20px;bottom:14px;width:900px;height:112px;border-radius:22px;background:rgba(255,251,244,.94);box-shadow:0 -2px 0 #EAD8BE,0 10px 24px -6px rgba(70,35,10,.45);z-index:20;padding:8px 14px}
+.gav .its{display:flex;gap:10px;margin-top:4px}
+.gav .g{width:74px;height:74px;border-radius:16px;background:#FFF1D8;border:2px solid #F1E2CB;display:flex;align-items:center;justify-content:center}
+.vit{position:absolute;left:944px;top:96px;width:316px;height:560px;z-index:6}
+.sel{position:absolute;border:3px dashed #F2B33D;border-radius:20px;z-index:9}
+.hd{position:absolute;width:34px;height:34px;border-radius:50%;background:#FFFBF4;box-shadow:0 3px 0 #C9A57A;display:flex;align-items:center;justify-content:center}
+</style></head><body>
+<svg class="a" style="left:0;top:0" width="1280" height="800" viewBox="0 0 1280 800" id="sala"></svg>
+<div id="moveis"></div>
+<div class="top">
+ <div class="voltar"><svg width="30" height="30" viewBox="0 0 20 20"><path d="M12,4 L6,10 L12,16" stroke="#7A4B2E" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+ <div class="titulo">Casa da Lia</div>
+ <div class="modo"><span>Passear</span><span class="on">Arrumar</span></div>
+ <div style="flex:1"></div>
+ <div class="btn btn-sol" style="height:54px;padding:0 20px;font-size:17px"><svg width="24" height="24" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3" fill="#3B2A20"/><circle cx="12" cy="12.5" r="4" fill="#F2B33D"/><rect x="8" y="3" width="8" height="4" rx="1" fill="#3B2A20"/></svg>Mostrar para a família</div>
+</div>
+<div class="vit" id="vit"></div>
+<div class="gav"><div class="t" style="font-weight:700;font-size:15px;display:flex;justify-content:space-between"><span>Meus guardados <span style="font-family:Andika;font-weight:400;color:#6E5D52;font-size:13px">· toque e arraste para a casa</span></span><span style="font-family:Andika;font-weight:400;color:#6E5D52;font-size:13px">Tudo que você compra é seu para sempre</span></div><div class="its" id="its"></div></div>
+<div class="nota" style="left:952px;top:676px;max-width:300px">"Mostrar" envia uma foto da casa <b>só para o painel da família</b>. Sem visitar casas de outras crianças, sem curtidas, sem ranking.</div>
+<script src="base.js"></script><script src="chars.js"></script>
+<script>
+const {Ctx,lt,dk}=FX;
+(function(){const c=new Ctx();
+const wall=c.stops([[0,'#FBE7C6'],[1,'#F3D2A2']]);
+let stripes='';for(let x=0;x<1280;x+=48)stripes+=`<rect x="${x}" y="0" width="24" height="560" fill="#fff" opacity=".18"/>`;
+let dots='';for(let x=24;x<1280;x+=48)for(let y=40;y<540;y+=60)dots+=`<circle cx="${x+((y/60)%2)*0}" cy="${y}" r="3" fill="#E8B57A" opacity=".5"/>`;
+let planks='';for(let i=-12;i<=28;i++){const xb=640+i*90, xt=640+i*48;planks+=`<path d="M${xt},560 L${xb},800" stroke="#9A6234" stroke-width="2" opacity=".35"/>`}
+for(let y of [600,650,712])planks+=`<path d="M0,${y} H1280" stroke="#9A6234" stroke-width="1.5" opacity=".25"/>`;
+// janela com a vila
+const vila=`<g transform="translate(372,120)"><rect x="-14" y="-14" width="288" height="248" rx="14" fill="${c.l('#FFFBF4')}" stroke="#C9A57A" stroke-width="4"/>
+<clipPath id="jan"><rect width="260" height="220" rx="6"/></clipPath><g clip-path="url(#jan)"><rect width="260" height="220" fill="${c.stops([[0,'#8FCFE3'],[1,'#DFF1F2']])}"/>
+<circle cx="210" cy="44" r="20" fill="${c.r('#F2B33D',{hi:.6})}"/><ellipse cx="60" cy="40" rx="30" ry="10" fill="#fff" opacity=".85"/><ellipse cx="80" cy="34" rx="20" ry="10" fill="#fff" opacity=".85"/>
+<path d="M0,150 q70,-40 140,-10 q60,-30 120,-6 v90 h-260z" fill="${c.l('#7FB06A')}"/><path d="M0,180 q120,-24 260,0 v40 h-260z" fill="${c.l('#5E9E5A')}"/>
+<g transform="translate(16,96) scale(.55)">${padaria(true).replace(/<\/?svg[^>]*>/g,'')}</g>
+<g transform="translate(150,104) scale(.45)">${item('coreto').replace(/<\/?svg[^>]*>/g,'')}</g>
+<g transform="translate(206,118) scale(.32)">${item('moinho').replace(/<\/?svg[^>]*>/g,'')}</g></g>
+<rect x="128" y="0" width="6" height="220" fill="#FFFBF4"/><rect x="0" y="108" width="260" height="6" fill="#FFFBF4"/>
+<path d="M-24,-20 q40,120 10,250 h-20z M284,-20 q-40,120 -10,250 h20z" fill="${c.l('#B23C62')}" opacity=".95"/>
+<rect x="-34" y="-26" width="328" height="12" rx="6" fill="${c.l('#7A4B2E')}"/>
+<rect x="-24" y="230" width="308" height="14" rx="5" fill="${c.l('#C08A4E')}"/></g>`;
+sala.innerHTML=c.svg(`<rect width="1280" height="560" fill="${wall}"/>${stripes}
+<rect y="530" width="1280" height="30" fill="${c.l('#C08A4E')}"/>
+<path d="M0,560 H1280 V800 H0Z" fill="${c.stops([[0,'#C99A66'],[1,'#B07D4A']])}"/>${planks}
+<rect width="1280" height="800" fill="${c.stops([[0,'#fff',0],[.6,'#fff',0],[1,'#3b1d0c',.18]],[50,40,80],true)}"/>
+${vila}${(()=>{const cols=['#D9483B','#F2B33D','#1F6E82','#2F6B43','#B23C62','#E8792E','#6B5BA8'];let o='';for(let seg=0;seg<3;seg++){const x0=seg*430-20,x1=x0+440;o+=`<path d="M${x0},78 Q${(x0+x1)/2},128 ${x1},78" stroke="#7A4B2E" stroke-width="3" fill="none"/>`;for(let i=1;i<11;i++){const t=i/11,x=x0+(x1-x0)*t,y=78+4*t*(1-t)*25-1;const col=cols[(i+seg*3)%7];o+=`<path d="M${x-14},${y} h28 l-14,30z" fill="${c.l(col,{dir:[0,0,1,1]})}" stroke="${FX.S(col)}" stroke-width="1.5"/>`}}return o})()}
+<ellipse cx="500" cy="200" rx="300" ry="220" fill="#FFF6D8" opacity=".25"/>`,'0 0 1280 800','width="1280" height="800"').replace(/^<svg[^>]*>|<\/svg>$/g,'');
+})();
+const P=(k,x,y,s,extra='')=>`<div class="a" style="left:${x}px;top:${y}px;${extra}">${item(k,`width="${s}" height="${s}"`)}</div>`;
+let m='';
+// bandeirinhas no teto
+m+=P('quadro',212,128,132);
+m+=P('pandeiro',672,130,96);
+m+=P('estante',8,268,300);
+m+=P('rede',650,190,250);
+m+=P('sofa',330,340,290);
+m+=P('vaso',262,400,140);
+m+=P('tapete',370,430,360);
+m+=P('capivara',450,486,160);
+m+=P('sanfona',160,552,110);
+m+=`<div class="a" style="left:750px;top:330px">${lia({pose:'acena',bone:'#D9483B',attrs:'width="176" height="260"'})}</div>`;
+m+=`<div class="a" style="left:640px;top:556px">${bolota({attrs:'width="140" height="98"'})}</div>`;
+m+=`<div class="sel" style="left:446px;top:496px;width:170px;height:132px"></div>
+<div class="hd" style="left:430px;top:480px;z-index:10"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M10,2 v16 M2,10 h16 M10,2 l-3,3 M10,2 l3,3 M10,18 l-3,-3 M10,18 l3,-3 M2,10 l3,-3 M2,10 l3,3 M18,10 l-3,-3 M18,10 l-3,3" stroke="#7A4B2E" stroke-width="2" fill="none"/></svg></div>
+<div class="hd" style="left:598px;top:480px;z-index:10"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M16,10 a6,6 0 1 1 -2,-4.5 M16,3 v4 h-4" stroke="#7A4B2E" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></div>
+<div class="bal" style="left:478px;top:446px;font-size:13px;padding:5px 10px;z-index:11;font-family:Fredoka;font-weight:600">CAPIVARA</div>`;
+moveis.innerHTML=m;
+// vitrine
+vit.innerHTML=`<div style="position:absolute;inset:0;border-radius:22px;background:linear-gradient(180deg,#9A6234,#7A4B2E);box-shadow:0 8px 0 #5A3218,0 18px 26px -8px rgba(60,30,10,.5)"></div>
+<div style="position:absolute;left:12px;right:12px;top:56px;bottom:14px;border-radius:12px;background:linear-gradient(160deg,rgba(255,255,255,.55),rgba(220,240,245,.35) 40%,rgba(255,255,255,.15));box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)"></div>
+<div class="t" style="position:absolute;left:0;right:0;top:12px;text-align:center"><span style="background:#F2B33D;color:#3B2A20;font-weight:700;font-size:17px;letter-spacing:2px;padding:5px 16px;border-radius:12px;box-shadow:0 3px 0 #B9781A">MINHA VITRINE</span></div>
+${[200,356,500].map(y=>`<div style="position:absolute;left:12px;right:12px;top:${y}px;height:12px;background:linear-gradient(180deg,#C0864E,#8A5228)"></div>`).join('')}
+<div style="position:absolute;left:20px;top:82px;display:flex;gap:2px">${[['persist','ouro'],['som','prata','M'],['poupador','prata']].map(([f,t,L])=>emblema(f,t,{letra:L,attrs:'width="90" height="99"'})).join('')}</div>
+<div style="position:absolute;left:26px;top:224px;display:flex;gap:6px">${['fig_ipe','fig_onca','fig_caju'].map(k=>item(k,'width="84" height="84"')).join('')}</div>
+<div class="ad" style="position:absolute;left:24px;top:314px;font-size:11.5px;color:#FFF4E2">Figurinhas: toque e elas falam a palavra</div>
+<div style="position:absolute;left:30px;top:378px;display:flex;gap:16px;align-items:flex-end">${item('banca','width="110" height="110"')}<div style="background:#FFFBF4;border-radius:12px;padding:8px 10px;width:130px;font-size:12.5px;line-height:1.25;box-shadow:0 3px 0 #C9A57A"><b class="t" style="font-size:14px">12 livros lidos</b><br>"A noite do lobo" é o mais novo</div></div>
+<div class="ad" style="position:absolute;left:20px;right:20px;top:516px;font-size:11.5px;color:#FFF4E2;line-height:1.25">A vitrine guarda o que você <b>conquistou</b>: emblemas, figurinhas e livros lidos.</div>`;
+its.innerHTML=['pipa','piao','chocalho','mascara','fogueira','tiara','mochila','tambor','micanga','fonte'].map(k=>`<div class="g">${item(k,'width="62" height="62"')}</div>`).join('');
+</script></body></html>

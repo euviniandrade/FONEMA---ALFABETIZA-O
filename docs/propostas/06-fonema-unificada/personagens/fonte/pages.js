@@ -255,7 +255,7 @@ function telaEspelho() {
   // palco principal
   g += `<rect x="20" y="108" width="${W - 40}" height="672" rx="40" fill="#FFFBF4" stroke="${P.line}" stroke-opacity=".08" stroke-width="2"/>`;
   // Sofia
-  g += `<defs><clipPath id="stage"><rect x="20" y="108" width="${W - 40}" height="672" rx="40"/></clipPath></defs><g clip-path="url(#stage)"><g transform="translate(190,272) scale(.72)">${S.sofia({ expr: { eyes: 'open', mouth: 6, b: [-8, 0, -8, 0], look: [6, 0], blush: 1 }, letter: 'M', armR: { t: [236, 330], hand: 'point', hrot: -30 } })}</g></g>`;
+  g += `<defs><clipPath id="stage"><rect x="20" y="108" width="${W - 40}" height="672" rx="40"/></clipPath></defs><g clip-path="url(#stage)"><g transform="translate(190,272) scale(.72)">${S.sofia({ expr: { eyes: 'open', mouth: 6, b: [-8, 0, -8, 0], look: [6, 0], blush: 1 }, letter: 'M', armR: { t: [222, 470], hand: 'point', hrot: -20 } })}</g></g>`;
   // balão de fala
   g += `<g transform="translate(46,132)"><rect width="300" height="150" rx="28" fill="#fff" stroke="${P.line}" stroke-opacity=".12" stroke-width="2"/><path d="M150,148 l18,22 l14,-24z" fill="#fff"/>
     <text x="24" y="46" font-size="25" fill="${P.ink}">Fecha os lábios…</text><text x="24" y="80" font-size="25" fill="${P.ink}">o som sai pelo nariz:</text><text x="24" y="118" font-size="30" font-weight="700" fill="${P.cons}">mmmm!</text>

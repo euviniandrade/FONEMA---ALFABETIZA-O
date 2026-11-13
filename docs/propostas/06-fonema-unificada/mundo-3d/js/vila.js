@@ -10,7 +10,7 @@ export const VILA = { x: 0, z: 0, r: 44, H: 2.5 };
 const GY = VILA.H;
 
 export function buildVila(ctx) {
-  const { m, d, w, thin, group, renderer, signMats } = ctx;
+  const { m, d, f, w, thin, group, renderer, signMats } = ctx;
   const rnd = rng(42);
   const occ = []; // áreas ocupadas (x, z, raio)
   const lampTops = [];
@@ -324,8 +324,8 @@ export function buildVila(ctx) {
     m.add(G.box, '#B23C62', M(cp.x, GY + 1.3, cp.z, 0, casa.ry, 0, 0.5, 0.4, 0.7));
     N.dog(m, L.pt(1.6, 0, dz + 2.6).x, GY + 0.35, L.pt(1.6, 0, dz + 2.6).z, casa.ry + 0.8);
     N.cat(m, L.pt(3.5, 0, dz + 0.4).x, GY + 0.5, L.pt(3.5, 0, dz + 0.4).z, casa.ry - 0.6);
-    const mt = L.pt(-8.2, 0, 1.0); N.treeFruit(m, mt.x, GY, mt.z, 1.35, '#F28B2E', rnd); occupy(mt.x, mt.z, 2.6);
-    const mt2 = L.pt(8.4, 0, -1.0); N.banana(m, mt2.x, GY, mt2.z, 1.3, rnd); occupy(mt2.x, mt2.z, 1.8);
+    const mt = L.pt(-8.2, 0, 1.0); N.treeFruit(f, mt.x, GY, mt.z, 1.35, '#F28B2E', rnd); occupy(mt.x, mt.z, 2.6);
+    const mt2 = L.pt(8.4, 0, -1.0); N.banana(f, mt2.x, GY, mt2.z, 1.3, rnd); occupy(mt2.x, mt2.z, 1.8);
     for (let i = 0; i < 14; i++) { const p = L.pt(-5.4 + rnd() * 1.4, 0, dz + 0.6 + rnd() * 3.4); N.flower(d, p.x, GY, p.z, ['#E8547A', '#F2B33D', '#FFFBF4'][i % 3], rnd, 1.1); }
     occupy(L.pt(0, 0, dz + 2.2).x, L.pt(0, 0, dz + 2.2).z, 5.5);
   }
@@ -493,14 +493,14 @@ export function buildVila(ctx) {
     ['palm', -7, 37, 1.25], ['ipeAmarelo', -36, 8, 1.1], ['banana', -16, 16, 1.0],
   ];
   for (const [k, x, z, s] of trees) {
-    if (k === 'ipeRosa') { N.treeIpe(m, x, GY, z, s, '#E77FB0', rnd); N.petals(d, x, GY, z, s, '#F2A5C8', rnd); }
-    else if (k === 'ipeAmarelo') { N.treeIpe(m, x, GY, z, s, '#F6C945', rnd); N.petals(d, x, GY, z, s, '#F8D86A', rnd); }
-    else if (k === 'laranja') N.treeFruit(m, x, GY, z, s, '#F28B2E', rnd);
-    else if (k === 'manga') N.treeFruit(m, x, GY, z, s, '#F2C14A', rnd);
-    else if (k === 'caju') N.treeFruit(m, x, GY, z, s, '#E04A3A', rnd);
-    else if (k === 'banana') N.banana(m, x, GY, z, s, rnd);
-    else if (k === 'palm') N.palm(m, x, GY, z, s, rnd, 0.3);
-    else N.treeRound(m, x, GY, z, s, '#5DAE57', '#4C9A4A', rnd);
+    if (k === 'ipeRosa') { N.treeIpe(f, x, GY, z, s, '#E77FB0', rnd); N.petals(d, x, GY, z, s, '#F2A5C8', rnd); }
+    else if (k === 'ipeAmarelo') { N.treeIpe(f, x, GY, z, s, '#F6C945', rnd); N.petals(d, x, GY, z, s, '#F8D86A', rnd); }
+    else if (k === 'laranja') N.treeFruit(f, x, GY, z, s, '#F28B2E', rnd);
+    else if (k === 'manga') N.treeFruit(f, x, GY, z, s, '#F2C14A', rnd);
+    else if (k === 'caju') N.treeFruit(f, x, GY, z, s, '#E04A3A', rnd);
+    else if (k === 'banana') N.banana(f, x, GY, z, s, rnd);
+    else if (k === 'palm') N.palm(f, x, GY, z, s, rnd, 0.3);
+    else N.treeRound(f, x, GY, z, s, '#5DAE57', '#4C9A4A', rnd);
     occupy(x, z, 1.6 * s);
   }
   // árvores extras na borda + arbustos + flores + pedras (detalhe)
@@ -511,7 +511,7 @@ export function buildVila(ctx) {
     if (Math.abs(Math.atan2(22, 62) - a) < 0.15) continue; // ponte
     if (!free(x, z, 1.8)) continue;
     const s = 0.9 + rnd() * 0.5;
-    if (rnd() < 0.3) N.palm(m, x, GY, z, s, rnd, 0.35); else N.treeRound(m, x, GY, z, s, ['#5DAE57', '#68B85C', '#4FA350'][placed % 3], '#4C9A4A', rnd);
+    if (rnd() < 0.3) N.palm(f, x, GY, z, s, rnd, 0.35); else N.treeRound(f, x, GY, z, s, ['#5DAE57', '#68B85C', '#4FA350'][placed % 3], '#4C9A4A', rnd);
     occupy(x, z, 1.8 * s); placed++;
   }
   for (let i = 0; i < 700; i++) {
