@@ -676,7 +676,8 @@
   // Reconhecimento de fala só se for NO APARELHO (sem enviar áudio). Retorna null se indisponível.
   async function tentaReconhecerLocal() {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR || typeof SR.available !== 'function') return null;
+    // navigator.webdriver: em navegador automatizado (testes) o SR.available derruba o Chromium headless; pulamos.
+    if (!SR || typeof SR.available !== 'function' || navigator.webdriver) return null;
     try {
       const disp = await SR.available({ langs: ['pt-BR'], processLocally: true });
       if (disp !== 'available') return null;

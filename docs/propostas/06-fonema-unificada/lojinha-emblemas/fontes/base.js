@@ -149,28 +149,36 @@
     <ellipse cx="100" cy="54" rx="13" ry="11" fill="${c.r(lt(b,.1))}" stroke="${S(b)}" stroke-width="3"/>
     ${gl('M46,118 Q44,82 80,64 Q60,88 58,120Z', .4)}${spark(166, 60)}`;
   });
-  def('tiara', 'TIARA DE IPÊ', 'acessorio', c => {
-    const f = (x, y, col, s = 1) => `<g transform="translate(${x},${y}) scale(${s})">${[0, 72, 144, 216, 288].map(a => `<ellipse rx="9" ry="13" cy="-11" transform="rotate(${a})" fill="${c.r(col, { cy: 70 })}" stroke="${S(col, .4)}" stroke-width="1.5"/>`).join('')}<circle r="6" fill="${c.r('#F2B33D')}"/></g>`;
-    return c.sh(100, 160, 70) + `
-    <path d="M30,140 Q30,58 100,54 Q170,58 170,140" stroke="${c.l('#7A4B2E')}" stroke-width="10" fill="none" stroke-linecap="round"/>
-    <path d="M34,130 Q36,64 100,60" stroke="#fff" stroke-width="2.5" opacity=".4" fill="none"/>
-    ${[[44, 98, -40], [156, 98, 40], [70, 66, -20], [130, 66, 20]].map(([x, y, a]) => `<ellipse cx="${x}" cy="${y}" rx="14" ry="6" transform="rotate(${a} ${x} ${y})" fill="${c.l('#2F6B43')}"/>`).join('')}
-    ${f(54, 82, '#E9A43B', .9)}${f(146, 82, '#E9A43B', .9)}${f(100, 56, '#D96FA0', 1.15)}${f(76, 62, '#F2C94C', .8)}${f(124, 62, '#F2C94C', .8)}${f(38, 116, '#D96FA0', .7)}${f(162, 116, '#D96FA0', .7)}
-    ${spark(100, 22)}`;
+  /* D008: sem tiara, fivela ou miçanga (adornos). Itens utilitários no lugar. */
+  def('muda', 'MUDA DE IPÊ', 'planta', c => {
+    const v = '#A9472A', g = '#2F6B43', f = '#F2C94C';
+    const flor = (x, y, s) => `<g transform="translate(${x},${y}) scale(${s})">${[0, 72, 144, 216, 288].map(a => `<ellipse rx="7" ry="10" cy="-9" transform="rotate(${a})" fill="${c.r(f, { cy: 70 })}" stroke="${S(f, .4)}" stroke-width="1.5"/>`).join('')}<circle r="4.5" fill="${c.r('#C98A1E')}"/></g>`;
+    return c.sh(100, 184, 50) + `
+    <path d="M100,124 C98,96 102,74 100,52" stroke="${c.l('#7A4B2E')}" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M100,92 C86,84 76,74 70,62 M101,80 C114,72 124,64 130,52" stroke="#7A4B2E" stroke-width="4" fill="none" stroke-linecap="round"/>
+    ${[[66, 66, -30], [134, 56, 30], [86, 88, -50], [116, 82, 50]].map(([x, y, a]) => `<ellipse cx="${x}" cy="${y}" rx="14" ry="6" transform="rotate(${a} ${x} ${y})" fill="${c.l(g)}" stroke="${S(g)}" stroke-width="2"/>`).join('')}
+    ${flor(100, 48, 1.1)}${flor(70, 58, .8)}${flor(130, 48, .8)}
+    <path d="M62,124 h76 l-10,56 q-28,9 -56,0z" fill="${c.cyl(v)}" stroke="${S(v)}" stroke-width="3.5" ${sw}/>
+    <rect x="56" y="116" width="88" height="14" rx="6" fill="${c.l(v)}" stroke="${S(v)}" stroke-width="3.5"/>
+    ${spark(160, 40)}`;
   });
-  def('fivela', 'FIVELA', 'acessorio', c => {
-    const clip = (tx, ty, rot, col, shape) => `<g transform="translate(${tx},${ty}) rotate(${rot})">
-      <rect x="-46" y="-8" width="92" height="16" rx="8" fill="${c.l('#C9CED6', { lo: .4 })}" stroke="#6E7682" stroke-width="2.5"/>
-      ${shape === 'star' ? `<path d="M0,-30 l9,18 20,3 -15,14 4,20 -18,-10 -18,10 4,-20 -15,-14 20,-3z" fill="${c.r(col)}" stroke="${S(col)}" stroke-width="3" ${sw}/>` : `<path d="M0,26 C-40,0 -26,-30 0,-14 C26,-30 40,0 0,26z" fill="${c.r(col)}" stroke="${S(col)}" stroke-width="3" ${sw}/>`}
-      ${gl(shape === 'star' ? 'M-4,-20 l3,-4 2,8z' : 'M-18,-12 q8,-6 12,2 q-8,0 -12,-2z', .8)}</g>`;
-    return c.sh(100, 170, 70) + clip(70, 80, -18, '#F2B33D', 'star') + clip(128, 124, 12, '#B23C62', 'heart') + spark(156, 56) + spark(46, 146, .6);
+  def('touca', 'TOUCA', 'cabelo', c => {
+    const t = '#1F6E82';
+    return c.sh(100, 172, 66) + `
+    <path d="M38,140 C34,70 70,40 100,40 C130,40 166,70 162,140 Z" fill="${c.r(t)}" stroke="${S(t)}" stroke-width="3.5" ${sw}/>
+    <rect x="32" y="128" width="136" height="26" rx="12" fill="${c.l(lt(t, .2))}" stroke="${S(t)}" stroke-width="3.5"/>
+    ${[50, 70, 90, 110, 130, 150].map(x => `<path d="M${x},131 v20" stroke="${dk(t, .2)}" stroke-width="2.5" opacity=".6"/>`).join('')}
+    ${gl('M54,110 Q58,66 96,52 Q70,72 66,112Z', .35)}${spark(160, 56)}`;
   });
-  def('micanga', 'MIÇANGA', 'acessorio', c => {
-    const h = '#2B1B12';
-    const seg = Array.from({ length: 6 }, (_, i) => `<ellipse cx="${100 + (i % 2 ? 8 : -8)}" cy="${30 + i * 18}" rx="18" ry="13" fill="${c.r(h, { hi: .3 })}" stroke="#120904" stroke-width="2"/>`).join('');
-    const beads = [['#F2B33D', 140], ['#1F6E82', 156], ['#B23C62', 172]].map(([col, y], i) => `<ellipse cx="100" cy="${y}" rx="${15 - i}" ry="9" fill="${c.r(col)}" stroke="${S(col)}" stroke-width="2.5"/>${gl(`M${92 + i},${y - 4} q4,-4 10,-3 q-6,2 -8,6z`, .8)}`).join('');
-    return c.sh(100, 186, 40) + seg + beads + `<path d="M96,180 l-8,10 M100,181 v12 M104,180 l8,10" stroke="${h}" stroke-width="4" stroke-linecap="round"/>` +
-      `<g transform="translate(150,70)"><ellipse rx="13" ry="9" fill="${c.r('#2F6B43')}" stroke="${S('#2F6B43')}" stroke-width="2.5"/><ellipse cy="26" rx="13" ry="9" fill="${c.r('#F2B33D')}" stroke="${S('#F2B33D')}" stroke-width="2.5"/><ellipse cy="52" rx="13" ry="9" fill="${c.r('#D9483B')}" stroke="${S('#D9483B')}" stroke-width="2.5"/></g>` + spark(56, 60);
+  def('binoculo', 'BINÓCULO', 'utensilio', c => {
+    const b = '#2B2A4C';
+    const tubo = x => `<rect x="${x}" y="70" width="44" height="78" rx="14" fill="${c.cyl(b)}" stroke="${S(b, .3)}" stroke-width="3"/>
+      <ellipse cx="${x + 22}" cy="148" rx="20" ry="8" fill="${c.r('#7FB7D9')}" stroke="${S(b, .3)}" stroke-width="3"/>`;
+    return c.sh(100, 176, 62) + tubo(48) + tubo(108) + `
+    <rect x="88" y="88" width="24" height="30" rx="6" fill="${c.l('#5B6075')}" stroke="${S(b, .3)}" stroke-width="3"/>
+    <circle cx="100" cy="82" r="9" fill="${c.r('#F2B33D')}" stroke="${S('#F2B33D')}" stroke-width="2.5"/>
+    <path d="M58,70 Q100,30 142,70" stroke="#A9472A" stroke-width="5" fill="none" stroke-linecap="round"/>
+    ${gl('M56,80 q4,-6 10,-4 v50 q-6,2 -10,-4z', .35)}${spark(160, 50)}`;
   });
   def('oculos', 'ÓCULOS', 'gratis', c => {
     const f = '#B23C62';
