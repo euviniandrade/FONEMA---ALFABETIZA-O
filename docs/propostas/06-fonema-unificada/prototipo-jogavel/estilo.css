@@ -361,3 +361,18 @@ body.calmo *,body.calmo *::before,body.calmo *::after{animation:none!important;t
 .parabens-box{display:flex;gap:16px;align-items:center;background:var(--creme);border:3px solid #F0DFC0;border-radius:24px;padding:14px}
 svg.mini-g{width:150px;height:165px;flex:none;animation:surge .8s cubic-bezier(.2,1.4,.4,1) both}
 @media (max-width:900px){.prof-botoes{grid-template-columns:1fr}.album{grid-template-columns:repeat(3,1fr)}.parabens-box{flex-direction:column}}
+
+/* ajustes finos */
+.video .legenda .nome-dest{color:var(--ipe)}
+@media (max-width:640px){
+  .marca div{display:none}
+  .moedas{height:44px;font-size:19px;padding:0 12px 0 6px}
+  .moedas .moeda{width:28px;height:28px}
+  .figuras{grid-template-columns:minmax(0,1fr);gap:12px}
+  .fig{min-height:0;flex-direction:row;padding:10px 84px 10px 14px}
+  .fig .escolhe{flex-direction:row!important;min-height:96px!important;justify-content:flex-start!important;gap:16px!important}
+  .fig .emo{font-size:72px}
+  .fig .pal{font-size:22px}
+  .fig .ouvir{top:50%;transform:translateY(-50%);right:12px}
+  .album{grid-template-columns:repeat(3,1fr)}
+}

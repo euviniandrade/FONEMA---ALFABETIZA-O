@@ -706,10 +706,10 @@
       <path d="M150 10 l30 22 l37 -2 l12 35 l31 20 l-11 35 l11 35 l-31 20 l-12 35 l-37 -2 l-30 22 l-30 -22 l-37 2 l-12 -35 l-31 -20 l11 -35 l-11 -35 l31 -20 l12 -35 l37 2z" fill="url(#${id})" stroke="${c2}" stroke-width="6"/>
       <circle cx="150" cy="140" r="92" fill="#1B3160" stroke="#A8D5F2" stroke-width="6"/>
       <path d="M86 92 q18 -24 36 -6 q-22 9 -36 6z M214 92 q-18 -24 -36 -6 q22 9 36 6z" fill="#3E9A63"/>
-      <text x="150" y="178" text-anchor="middle" font-family="Andika,'Noto Color Emoji',sans-serif" font-weight="700" font-size="${simbolo.length > 2 ? 60 : 100}" fill="#fff">${esc(simbolo)}</text>
+      <text x="150" y="178" text-anchor="middle" font-family="Andika,'Noto Color Emoji',sans-serif" font-weight="700" font-size="${simbolo.length > 2 ? 60 : 92}" fill="#fff">${esc(simbolo)}</text>
       <path d="M30 250 h240 l-16 26 l16 26 h-240 l16 -26z" fill="#F4B73C" stroke="#C98A12" stroke-width="5"/>
       <text x="150" y="285" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="${titulo.length > 14 ? 24 : 30}" fill="#1C2738">${esc(titulo.toUpperCase())}</text>
-      <text x="150" y="232" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="20" fill="#fff" letter-spacing="3">${rot}</text>
+      <text x="150" y="214" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="17" fill="#F4B73C" letter-spacing="3">${rot}</text>
     </svg>`;
   }
   // Álbum de Selos: os conquistados + próximos (sem fim). Nenhum se compra.
