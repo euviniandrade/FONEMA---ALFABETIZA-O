@@ -1,4 +1,4 @@
-// Captura as telas da Roda da Sofia: node capturar.js [nome...]  (viewport 1280×800, deviceScaleFactor 2 => PNG 2560×1600)
+// Captura as telas da Academia FONEMA: node capturar.js [nome...]  (viewport 1280×800, deviceScaleFactor 2 => PNG 2560×1600)
 const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path');
 const telas = require('./telas');

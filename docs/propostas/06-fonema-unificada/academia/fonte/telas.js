@@ -1,4 +1,4 @@
-// FONEMA · Roda da Sofia — as 6 telas (HTML/CSS/SVG próprios). Gere com: node capturar.js [nome...]
+// FONEMA · Academia FONEMA — as 6 telas (HTML/CSS/SVG próprios). Gere com: node capturar.js [nome...]
 const U = require('./ui');
 const { C, page, logo, ic, sofiaSvg, sofiaBust, bolotaSvg, thumb, S, B, defs } = U;
 const T = {};
@@ -113,7 +113,7 @@ T['academia-criancas'] = () => {
       ${on ? `<div class="abs" style="right:-4px;bottom:-4px;width:24px;height:24px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.18)">${ic('mic', 14, C.green, 2.6)}</div>` : ''}</div>`;
 
   const body = `
-  <div class="top" style="background:linear-gradient(180deg,#FFF1DC,#FFF8EC)">${logo('Roda das Crianças', 40)}
+  <div class="top" style="background:linear-gradient(180deg,#FFF1DC,#FFF8EC)">${logo('Academia · Crianças', 40)}
     <div style="flex:1"></div>
     <div class="row" style="gap:10px;background:#fff;border-radius:999px;padding:6px 14px 6px 8px;border:1px solid rgba(43,42,76,.1)">
       <svg width="34" height="34" viewBox="0 0 34 34"><circle cx="17" cy="17" r="15" fill="#F2D0A4"/><circle cx="17" cy="14" r="6" fill="#7A4A2E"/><path d="M7,29 q10,-10 20,0" fill="#2F5DA8"/></svg>

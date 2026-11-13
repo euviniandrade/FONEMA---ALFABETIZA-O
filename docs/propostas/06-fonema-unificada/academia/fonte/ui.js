@@ -1,4 +1,4 @@
-// FONEMA · Roda da Sofia (academia) — utilidades de interface: página, logo, ícones, personagens de uniforme.
+// FONEMA · Academia FONEMA — utilidades de interface: página, logo, ícones, personagens de uniforme.
 const { P, defs, groundShadow } = require('./core');
 const S = require('./sofia');
 const B = require('./bolota');
@@ -58,7 +58,7 @@ function logoMark(s = 44) {
 }
 function logo(sub = 'do FONEMA', s = 44, dark = false) {
   const col = dark ? '#fff' : C.ink;
-  return `<div class="row" style="gap:10px">${logoMark(s)}<div><div class="fr" style="font-weight:700;font-size:${s * 0.5}px;line-height:1;color:${col};letter-spacing:.2px">Roda da Sofia</div><div style="font-size:${Math.max(11, s * 0.26)}px;color:${dark ? 'rgba(255,255,255,.8)' : C.slate};margin-top:3px;font-weight:700;letter-spacing:.4px">${sub}</div></div></div>`;
+  return `<div class="row" style="gap:10px">${logoMark(s)}<div><div class="fr" style="font-weight:700;font-size:${s * 0.5}px;line-height:1;color:${col};letter-spacing:.2px">Academia FONEMA</div><div style="font-size:${Math.max(11, s * 0.26)}px;color:${dark ? 'rgba(255,255,255,.8)' : C.slate};margin-top:3px;font-weight:700;letter-spacing:.4px">${sub}</div></div></div>`;
 }
 
 // ---------- ícones (traço 2.2, 24×24) ----------

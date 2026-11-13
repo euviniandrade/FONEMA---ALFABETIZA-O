@@ -39,7 +39,7 @@ Critérios: palavras curtas, fáceis de ler e, de preferência, **decodificávei
 | 7 | Recreio Sabido | Recreio é a parte preferida da escola | **Recreio** é revista infantil tradicional. Risco médio. "Recreio" também sugere pausa, não estudo |
 | 8 | Ninho das Letras | Acolhimento: aprender protegido | Muitas escolas usam "Ninho". Marca fraca, e o nome soa mais como educação infantil que como formação de professores |
 
-**Recomendação original (superada pela D011): Roda da Sofia.** As sub-marcas eram são **Roda das Crianças**, **Roda das Famílias** e **Roda dos Professores**. O encontro da comunidade de prática se chama "roda" (roda on-line, roda na escola). A busca no INPI, feita por advogado de PI, decide. Se "Sofia" for impeditivo, o plano B é **"Roda do Som"**, que mantém o conceito e o logotipo (crianças de mãos dadas em roda em volta de uma onda sonora).
+**Recomendação original (superada pela D011): Roda da Sofia.** As sub-marcas eram **Roda das Crianças**, **Roda das Famílias** e **Roda dos Professores**. O encontro da comunidade de prática se chama "roda" (roda on-line, roda na escola). A busca no INPI, feita por advogado de PI, decide. Se "Sofia" for impeditivo, o plano B é **"Roda do Som"**, que mantém o conceito e o logotipo (crianças de mãos dadas em roda em volta de uma onda sonora).
 
 ---
 

@@ -1,4 +1,4 @@
-// FONEMA · Roda da Sofia — telas de FAMÍLIAS e PROFESSORES
+// FONEMA · Academia FONEMA — telas de FAMÍLIAS e PROFESSORES
 const U = require('./ui');
 const { C, page, logo, ic, sofiaSvg, sofiaBust, bolotaSvg, defs } = U;
 
@@ -41,7 +41,7 @@ T['academia-familias'] = () => {
   const simple = (icn, col, t) => `<div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:78px"><div style="width:62px;height:62px;border-radius:50%;background:${col};display:flex;align-items:center;justify-content:center;position:relative">${ic(icn, 30, '#fff')}<div class="abs" style="right:-4px;bottom:-4px;width:26px;height:26px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.2)">${ic('speaker', 14, C.ink)}</div></div><div style="font-size:12px;font-weight:700;text-align:center;line-height:1.2">${t}</div></div>`;
 
   const body = `
-  <div class="top" style="background:linear-gradient(180deg,#E9F5EE,#FFF8EC)">${logo('Roda das Famílias', 40)}
+  <div class="top" style="background:linear-gradient(180deg,#E9F5EE,#FFF8EC)">${logo('Academia · Famílias', 40)}
     <div style="flex:1"></div>
     <div class="row" style="gap:10px;background:#fff;border-radius:999px;padding:7px 8px 7px 14px;border:1px solid rgba(43,42,76,.1);font-size:13.5px;font-weight:700">Versão simples: ouvir e ver figuras
       <span style="width:46px;height:26px;border-radius:13px;background:${C.green};position:relative;display:inline-block"><i style="position:absolute;right:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff"></i></span></div>
@@ -73,7 +73,7 @@ T['academia-familias'] = () => {
     <div style="width:100%;height:100%;border-radius:26px;overflow:hidden;background:#EFE7DD;position:relative">
       <div class="row" style="height:56px;background:#075E54;color:#fff;padding:0 14px;gap:10px">
         <div style="width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center">${U.logoMark(30)}</div>
-        <div><div style="font-weight:700;font-size:14px">Roda da Sofia · Escola Mun. Ipê</div><div style="font-size:11px;opacity:.85">conta comercial oficial · 3 mensagens por semana</div></div></div>
+        <div><div style="font-weight:700;font-size:14px">Academia FONEMA · Escola Mun. Ipê</div><div style="font-size:11px;opacity:.85">conta comercial oficial · 3 mensagens por semana</div></div></div>
       <div style="display:flex;flex-direction:column;gap:8px;padding:12px 12px">
         <div style="align-self:center;background:#FFF5C4;border-radius:8px;padding:4px 10px;font-size:11px;color:#54656F">Você aceitou receber mensagens · responda SAIR para parar</div>
         ${msg(`<b style="color:${C.green}">Segunda · o fato</b><br>O Pedro está aprendendo o som <b>vvv</b>, da letra V.`, false, '08:02')}
@@ -129,7 +129,7 @@ T['academia-professores'] = () => {
   const req = (ok, t, d) => `<div class="row" style="gap:10px;align-items:flex-start;margin-top:8px"><div style="width:20px;height:20px;border-radius:6px;flex:none;margin-top:1px;background:${ok ? C.green : '#fff'};border:2px solid ${ok ? C.green : '#CFC6B6'};display:flex;align-items:center;justify-content:center">${ok ? ic('check', 14, '#fff', 3) : ''}</div><div style="font-size:13px;line-height:1.3"><b>${t}</b><br><span style="color:${C.slate}">${d}</span></div></div>`;
 
   const body = `
-  <div class="top" style="background:linear-gradient(180deg,#E6EDFB,#FFF8EC)">${logo('Roda dos Professores · formação continuada', 40)}
+  <div class="top" style="background:linear-gradient(180deg,#E6EDFB,#FFF8EC)">${logo('Academia · Professores · formação continuada', 40)}
     <div style="flex:1"></div>
     <span class="pill" style="background:#fff;border:1px solid rgba(43,42,76,.12);color:${C.ink};padding:8px 14px">${ic('calendar', 15, C.ink)} Aula de hoje: som /v/ · 1º ano B</span>
     <span class="pill" style="background:#fff;border:1px solid rgba(43,42,76,.12);color:${C.ink};padding:8px 14px">${ic('people', 15, C.ink)} Comunidade · 3 novas</span>
@@ -196,7 +196,7 @@ T['academia-aula'] = () => {
       <div style="width:28px;height:28px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;background:${state === 'ok' ? C.green : '#F1ECE2'};color:${state === 'ok' ? '#fff' : C.ink}">${state === 'ok' ? ic('check', 16, '#fff', 3) : l}</div>
       <div style="font-size:13.5px;line-height:1.3"><b>${t}</b>${d ? `<br><span style="color:${C.slate};font-size:12.5px">${d}</span>` : ''}</div></div>`;
   const body = `
-  <div class="top" style="background:linear-gradient(180deg,#E6EDFB,#FFF8EC)">${logo('Roda dos Professores · Módulo 2 · Consciência fonológica', 40)}
+  <div class="top" style="background:linear-gradient(180deg,#E6EDFB,#FFF8EC)">${logo('Academia · Professores · Módulo 2 · Consciência fonológica', 40)}
     <div style="flex:1"></div>
     <div class="row" style="gap:10px;font-size:13px;font-weight:700;color:${C.slate}">aula 4 de 8 <div class="bar" style="width:140px"><i style="width:52%;background:${C.blue}"></i></div></div>
     <span class="pill" style="background:#fff;border:1px solid rgba(43,42,76,.12);color:${C.ink};padding:8px 14px">${ic('arrow', 15, C.ink)} Próxima aula</span>
@@ -282,7 +282,7 @@ T['academia-certificado'] = () => {
     <rect x="40" y="40" width="960" height="620" rx="6" fill="#FFFDF7" stroke="#D8C79E" stroke-width="1.5"/></svg>`;
   const body = `
   <div class="abs" style="left:0;top:0;width:1280px;height:800px;background:radial-gradient(circle at 30% 20%,#2A4C8E,#132850 70%)"></div>
-  <div class="abs row" style="left:40px;top:20px;gap:14px">${logo('Roda dos Professores · certificado', 36, true)}</div>
+  <div class="abs row" style="left:40px;top:20px;gap:14px">${logo('Academia · Professores · certificado', 36, true)}</div>
   <div class="abs row" style="right:40px;top:26px;gap:10px">
     <span class="pill" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 14px">${ic('down', 15, '#fff')} Baixar PDF</span>
     <span class="pill" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 14px">${ic('wa', 15, '#fff')} Compartilhar</span>
@@ -291,7 +291,7 @@ T['academia-certificado'] = () => {
   <div class="abs" style="left:120px;top:80px;width:1040px;height:700px;border-radius:16px;background:#FFFBF0;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)">
     ${border}
     <div class="abs" style="left:430px;top:220px;font-family:Fredoka;font-weight:700;font-size:110px;color:rgba(194,65,12,.07);transform:rotate(-18deg);letter-spacing:8px">MODELO</div>
-    <div class="abs row" style="left:80px;top:72px;gap:14px">${U.logoMark(64)}<div><div class="fr" style="font-weight:700;font-size:26px;line-height:1">Roda da Sofia</div><div style="font-size:12.5px;color:${C.slate};font-weight:700;margin-top:3px;letter-spacing:.5px">FONEMA · FORMAÇÃO DE PROFESSORES ALFABETIZADORES</div></div></div>
+    <div class="abs row" style="left:80px;top:72px;gap:14px">${U.logoMark(64)}<div><div class="fr" style="font-weight:700;font-size:26px;line-height:1">Academia FONEMA</div><div style="font-size:12.5px;color:${C.slate};font-weight:700;margin-top:3px;letter-spacing:.5px">FONEMA · FORMAÇÃO DE PROFESSORES ALFABETIZADORES</div></div></div>
     <div class="abs" style="right:80px;top:70px;width:220px;height:66px;border:2px dashed #C9B78A;border-radius:10px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;color:#8A7444;font-weight:700;line-height:1.3">Logo da instituição parceira<br>(IES / Secretaria) — a definir</div>
     <div class="abs" style="left:80px;top:170px;width:880px;text-align:center">
       <div style="font-size:14px;letter-spacing:4px;font-weight:700;color:${C.slate}">CERTIFICADO DE FORMAÇÃO CONTINUADA</div>
