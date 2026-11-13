@@ -207,4 +207,6 @@ ROSTOS = [('rosto-01-avatar-exemplo', 'roupa-01-uniforme.png', 0.29), ('rosto-02
           ('rosto-09-oculos-aparelho', 'crianca-08-oculos-aparelho.png', 0.27), ('rosto-10', 'crianca-04-ruiva-ondulada.png', 0.30)]
 for nome, arq, fr in ROSTOS:
     im = Image.open(os.path.join(OUT, arq))
+    corte = {'rosto-04': (0, 0.88), 'rosto-08': (0.14, 1)}.get(nome, (0, 1))  # tira mechas de vizinhos da prancha
+    im = im.crop((int(im.width * corte[0]), 0, int(im.width * corte[1]), im.height))
     salvar(aparar(so_maior(im.crop((0, 0, im.width, int(im.height * fr))), 0.3), 2), nome + '.png')

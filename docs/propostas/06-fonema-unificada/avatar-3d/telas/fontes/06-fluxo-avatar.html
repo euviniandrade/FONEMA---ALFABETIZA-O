@@ -1,0 +1,70 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Fluxo do avatar</title>
+<link rel="stylesheet" href="comum.css"><style>
+body{background:linear-gradient(180deg,#EAF5FD,#FFF8EC)}
+h1{position:absolute;left:28px;top:20px;font-family:Fredoka;font-weight:700;font-size:30px;color:var(--marinho)}
+.sub{position:absolute;left:28px;top:60px;font-family:Atkinson;font-size:15px;color:var(--cinza)}
+.bx{position:absolute;background:#fff;border-radius:24px;border:2px solid #E1ECF6;box-shadow:0 10px 22px -14px rgba(27,49,96,.45);padding:14px 18px}
+.bx h2{font-family:Fredoka;font-weight:700;font-size:20px;color:var(--marinho);display:flex;align-items:center;gap:10px}
+.fl{position:absolute;top:96px;left:28px;right:28px;height:188px;display:flex;align-items:center;gap:0}
+.pc{width:250px;height:188px;background:#fff;border-radius:24px;border:2px solid #E1ECF6;box-shadow:0 10px 22px -14px rgba(27,49,96,.45);position:relative;overflow:hidden}
+.pc .ft{position:absolute;left:0;top:0;width:110px;bottom:0;background:linear-gradient(180deg,#F2F8FE,#DCEDFA)}
+.pc .ft img{position:absolute;left:50%;transform:translateX(-50%)}
+.pc .tx{position:absolute;left:122px;right:12px;top:16px}
+.num{width:34px;height:34px;border-radius:50%;background:var(--marinho);color:#fff;font-family:Fredoka;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center}
+.pc h3{font-family:Fredoka;font-weight:700;font-size:19px;color:var(--marinho);margin-top:6px;line-height:1.1}
+.pc p{font-family:Atkinson;font-size:13px;color:#425066;line-height:1.3;margin-top:5px}
+.seta{flex:1;display:flex;align-items:center;justify-content:center;color:var(--azul)}
+.seta svg{width:34px;height:34px}
+.ciclo{display:flex;align-items:flex-start;margin-top:14px;padding-left:6px}
+.no{width:118px;text-align:center}
+.no .ic{width:64px;height:64px;border-radius:20px;margin:0 auto;display:flex;align-items:center;justify-content:center;background:var(--ceu);border:2px solid #C9DFF3}
+.no .ic img{max-width:50px;max-height:50px}
+.no b{display:block;font-family:Fredoka;font-weight:600;font-size:15px;color:var(--marinho);margin-top:6px;line-height:1.15}
+.no small{display:block;font-family:Atkinson;font-size:12px;color:var(--cinza);margin-top:2px;line-height:1.2}
+.sm{color:var(--azul);width:26px;flex:none;margin-top:20px}
+.li{font-family:Atkinson;font-size:14.5px;color:#2B3546;line-height:1.3;display:flex;gap:8px;margin-top:7px;align-items:flex-start}
+.li .d{flex:none;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.li .d svg{width:13px;height:13px}
+.d.v{background:var(--folha)} .d.n{background:var(--terracota);color:#fff} .d.a{background:var(--ipe);color:var(--tinta)}
+.slots{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.sl{font-family:Atkinson;font-size:13px;background:#EEF4FB;border:1.5px solid #CFE0F1;border-radius:10px;padding:3px 9px;color:var(--marinho)}
+.sl b{font-family:Fredoka;font-weight:600}
+</style></head><body>
+<h1>Avatar 3D e Lojinha: fluxo e regras</h1>
+<div class="sub">Decisões 002, 006, 007, 008 e 009 · rel. 38 (economia virtual) · peças recortadas das pranchas 3D em <b>avatar-3d/pecas/</b></div>
+<div class="fl"><div class="pc"><div class="ft"><img src="../../pecas/rosto-01-avatar-exemplo.png" style="top:40px;width:96px"></div><div class="tx"><div class="num">1</div><h3>Rosto e cor da pele</h3><p>Rostos prontos + cor de pele ajustável. <b>Sem foto.</b></p></div></div><div class="seta"><span data-ic="seguir" style="display:flex;width:34px;height:34px"></span></div><div class="pc"><div class="ft"><img src="../../pecas/cabelo-a01-crespo-curto-recorte.png" style="top:40px;width:96px"></div><div class="tx"><div class="num">2</div><h3>Cabelo</h3><p>Crespo, cacheado, liso, tranças, coque. <b>Todos grátis.</b></p></div></div><div class="seta"><span data-ic="seguir" style="display:flex;width:34px;height:34px"></span></div><div class="pc"><div class="ft"><img src="../../pecas/roupa-02-blusao-capuz.png" style="top:10px;height:176px"></div><div class="tx"><div class="num">3</div><h3>Roupa e acessibilidade</h3><p>Uniforme e blusão grátis. Óculos, aparelho, cadeira: <b>sempre grátis.</b></p></div></div><div class="seta"><span data-ic="seguir" style="display:flex;width:34px;height:34px"></span></div><div class="pc"><div class="ft"><img src="../../pecas/roupa-03-explorador.png" style="top:10px;height:176px"><img src="../../pecas/utensilio-b-lupa.png" style="top:96px;left:76px;width:30px;transform:none"></div><div class="tx"><div class="num">4</div><h3>Pronto na vila</h3><p>Ao lado da Sofia e do Tales. Muda o visual quando quiser.</p></div></div></div>
+<div class="bx" style="left:28px;top:300px;width:740px;height:228px">
+  <h2>Ciclo da lojinha <span class="selo gratis" style="font-size:13px">a recompensa principal é mais leitura</span></h2>
+  <div class="ciclo"><div class="no"><div class="ic"><img src="../../pecas/utensilio-b-caderno.png"></div><b>Aprender</b><small>lição, leitura, missão</small></div><div class="sm"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></div><div class="no"><div class="ic"><span class="moeda"></span></div><b>Moedinhas</b><small>pelo esforço, com teto</small></div><div class="sm"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></div><div class="no"><div class="ic"><span data-ic="porco" style="display:flex;width:40px;height:40px;color:#D9827A"></span></div><b>Cofrinho</b><small>meta + bônus fixo</small></div><div class="sm"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></div><div class="no"><div class="ic"><img src="../../pecas/utensilio-b-lupa.png"></div><b>Escolher o porquê</b><small>LUPA: explorar o Cerrado</small></div><div class="sm"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></div><div class="no"><div class="ic"><img src="../../pecas/utensilio-b-regador.png"></div><b>Usar no mundo</b><small>a vila muda, história nova</small></div></div>
+  <svg style="position:absolute;left:84px;bottom:12px" width="600" height="22" viewBox="0 0 600 22"><path d="M590 2 v8 a8 8 0 0 1 -8 8 H18 a8 8 0 0 1 -8 -8 v-6" fill="none" stroke="#3D7CC4" stroke-width="2.5" stroke-dasharray="5 6"/><path d="M4 8 L10 0 L16 8" fill="none" stroke="#3D7CC4" stroke-width="2.5" stroke-linecap="round"/></svg>
+</div>
+<div class="bx" style="left:28px;top:544px;width:362px;height:238px;border-color:#BFE0C9">
+  <h2><span class="selo gratis">Grátis, sempre</span>identidade</h2>
+  <div class="li"><span class="d v" data-ic="ok"></span><span>Rosto, cor da pele, olhos e <b>todos os cabelos</b></span></div>
+  <div class="li"><span class="d v" data-ic="ok"></span><span><b>Uniforme e blusão</b> da escola (troca por rede)</span></div>
+  <div class="li"><span class="d v" data-ic="ok"></span><span><b>Acessibilidade:</b> óculos de grau, aparelho auditivo, cadeira de rodas, muleta</span></div>
+  <div class="li"><span class="d v" data-ic="ok"></span><span>Trocar o visual a qualquer hora, sem custo</span></div>
+</div>
+<div class="bx" style="left:406px;top:544px;width:362px;height:238px;border-color:#F0D592">
+  <h2><span class="selo" style="background:#FFF3CF;color:#8A5A00;border:2px solid #EBC35E">Para conquistar</span>com moedinhas</h2>
+  <div class="li"><span class="d a" data-ic="cadeado"></span><span>Roupas de aventura, bioma e festa (COLETE, CAPA, XADREZ...)</span></div>
+  <div class="li"><span class="d a" data-ic="cadeado"></span><span>Utensílios <b>com propósito</b>: LUPA, REGADOR, LANTERNA...</span></div>
+  <div class="li"><span class="d a" data-ic="cadeado"></span><span><b>Preço fixo</b>, igual para todos, com nome decodificável</span></div>
+  <div class="li"><span class="d a" data-ic="cadeado"></span><span>Desfazer compra em 24 h; nada some nem expira</span></div>
+</div>
+<div class="bx" style="left:784px;top:300px;width:468px;height:262px;border-color:#EBC9BC">
+  <h2>Nunca</h2>
+  <div class="li"><span class="d n" data-ic="x"></span><span><b>Foto do rosto</b> da criança (LGPD art. 14, ECA Digital)</span></div>
+  <div class="li"><span class="d n" data-ic="x"></span><span><b>Joias</b>, brincos, colares, pulseiras, maquiagem, enfeites</span></div>
+  <div class="li"><span class="d n" data-ic="x"></span><span>Item que dá <b>vantagem</b> em lição, jogo ou nota</span></div>
+  <div class="li"><span class="d n" data-ic="x"></span><span><b>Sorte</b>: caixa-surpresa, roleta, raridade aleatória</span></div>
+  <div class="li"><span class="d n" data-ic="x"></span><span><b>Dinheiro real</b>, "só hoje", contagem regressiva, ranking</span></div>
+  <div class="li"><span class="d n" data-ic="x"></span><span>Perder item ou bichinho <b>por não comprar</b> ou faltar dias</span></div>
+  <div class="li"><span class="d n" data-ic="x"></span><span>Padrão <b>arco-íris</b> nas peças (2 a 3 cores por item)</span></div>
+</div>
+<div class="bx" style="left:784px;top:578px;width:468px;height:204px">
+  <h2>Na produção: peças glTF modulares</h2>
+  <div class="ad" style="font-size:13.5px;color:#425066;margin-top:4px;line-height:1.3">Um corpo-base com esqueleto comum; cada peça é um <b>.glb</b> que encaixa num ponto. Cor de pele e de cabelo são parâmetros do material.</div>
+  <div class="slots"><span class="sl"><b>corpo</b> base + pele</span><span class="sl"><b>rosto</b> olhos</span><span class="sl"><b>cabelo</b></span><span class="sl"><b>tronco</b></span><span class="sl"><b>pernas</b></span><span class="sl"><b>pés</b></span><span class="sl"><b>mão</b> lupa</span><span class="sl"><b>costas</b> mochila</span><span class="sl"><b>acess.</b> óculos, aparelho, cadeira</span></div>
+</div>
+<script src="icones.js"></script></body></html>
