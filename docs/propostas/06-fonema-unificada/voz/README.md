@@ -37,3 +37,16 @@ O dono não aprovou a 1ª rodada ("tem que ser mais desenho animado, lúdico, di
 A biblioteca pública do ElevenLabs não tem voz "cartoon" com sotaque brasileiro (as que existem são americanas ou latinas). Por isso as vozes foram criadas do zero.
 
 **Verificação por transcrição automática (Scribe):** as marcações de emoção viraram atuação (risada), não texto falado. O "mmmm" saiu como "Hum", o que **confirma que os fonemas isolados precisam ser gravados por fonoaudióloga**.
+
+## Rodada 3: vozes infantis de desenho, Sofia e Tales (pasta `rodada-3-infantil/`)
+O dono pediu vozes "lúdicas, infantis de desenho" para os dois. Esta rodada usa o Eleven v3, com vozes desenhadas como **dubladora adulta fazendo voz de personagem infantil de animação**. Cada voz tem 2 tomadas.
+
+| Arquivo | Personagem | Estilo |
+|---|---|---|
+| `H-sofia-desenho-fofa-1/2.mp3` | Sofia | Muito aguda, fofa, saltitante, risonha |
+| `J-sofia-desenho-meiga-1/2.mp3` | Sofia | Aguda, suave, cantadinha, acolhedora |
+| `K-tales-desenho-moleque-1/2.mp3` | Tales | Aguda, levemente rouca, moleque, corajosa |
+| `L-tales-desenho-curioso-1/2.mp3` | Tales | Clara, entusiasmada, inventor curioso |
+| `M-tales-desenho-gentil-1/2.mp3` | Tales | Calorosa, simpática, melhor amigo |
+
+Um quarto estilo da Sofia ("esperta, nasalada") foi **bloqueado pelo filtro de segurança** do ElevenLabs e não foi insistido. As vozes ainda não foram salvas na conta; os IDs temporários ficam fora do repositório. As amostras E/F/G da rodada 2 continuam valendo como opção.
