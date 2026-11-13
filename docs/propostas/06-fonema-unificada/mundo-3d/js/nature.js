@@ -84,9 +84,19 @@ export function palm(m, x, y, z, s, rnd, lean = 0.25) {
     m.add(G.cyl6, i % 2 ? '#9B7350' : '#8A6444', mm);
     px += dx * Math.sin(tilt) * l; py += Math.cos(tilt) * l; pz += dz * Math.sin(tilt) * l;
   }
-  for (let i = 0; i < 7; i++) {
-    const a = i / 7 * 6.28 + rnd() * 0.3;
-    m.add(G.cone4, i % 2 ? '#4E9F4B' : '#5FB356', M(px + Math.cos(a) * 1.15 * s, py - 0.25 * s, pz + Math.sin(a) * 1.15 * s, 0, -a, Math.PI / 2 + 0.35, 0.55 * s, 2.6 * s, 0.12 * s));
+  const leafM = (cx, cy, cz, d, wid, len, th) => {
+    const w = new THREE.Vector3().crossVectors(d, new THREE.Vector3(0, 1, 0)).normalize();
+    const n = new THREE.Vector3().crossVectors(w, d).normalize();
+    return new THREE.Matrix4().makeBasis(w, d, n).scale(new THREE.Vector3(wid, len, th)).setPosition(cx, cy, cz);
+  };
+  for (let i = 0; i < 8; i++) {
+    const a = i / 8 * 6.28 + rnd() * 0.35, ca = Math.cos(a), sa = Math.sin(a), col = i % 2 ? '#4E9F4B' : '#62B657';
+    const up = 0.2 + rnd() * 0.2, dn = -0.7 - rnd() * 0.25, L1 = 1.35 * s, L2 = 1.55 * s;
+    const d1 = new THREE.Vector3(ca * Math.cos(up), Math.sin(up), sa * Math.cos(up));
+    const d2 = new THREE.Vector3(ca * Math.cos(dn), Math.sin(dn), sa * Math.cos(dn));
+    m.add(G.box, col, leafM(px + d1.x * L1 / 2, py + d1.y * L1 / 2, pz + d1.z * L1 / 2, d1, 0.8 * s, L1, 0.06 * s), { jitter: 0.04 });
+    const ex = px + d1.x * L1, ey = py + d1.y * L1, ez = pz + d1.z * L1;
+    m.add(G.cone4, col, leafM(ex + d2.x * L2 / 2, ey + d2.y * L2 / 2, ez + d2.z * L2 / 2, d2, 1.1 * s, L2, 0.08 * s), { jitter: 0.04 });
   }
   for (let i = 0; i < 3; i++) m.add(G.ico0, '#7A5230', M(px + (rnd() - 0.5) * 0.4 * s, py - 0.3 * s, pz + (rnd() - 0.5) * 0.4 * s, 0, 0, 0, 0.32 * s));
 }
