@@ -1,0 +1,53 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="comum.css">
+<style>
+.pagina{width:1800px}
+.lane{margin-bottom:22px}
+.passos{display:flex;gap:36px;align-items:stretch}
+.passos>.caixa{flex:1}
+.passos .caixa h3{font-size:16px}.passos .caixa p,.passos .caixa li{font-size:13.8px}
+.l1>.rot{background:var(--azul)}.l2>.rot{background:var(--rosa)}.l3>.rot{background:var(--teal)}.l4>.rot{background:var(--laranja)}
+.port{display:inline-block;font-size:12.5px;font-weight:700;padding:2px 7px;border-radius:6px;background:var(--vermelho-c);border:1.5px solid #E7A3AD;color:var(--vermelho);margin-top:6px}
+.cab2{display:grid;grid-template-columns:repeat(6,1fr);gap:36px;margin:0 14px 10px}
+.cab2 div{font-size:14px;font-weight:700;color:var(--suave);text-align:center;border-bottom:2px solid var(--linha);padding-bottom:4px}
+</style></head><body><div class="pagina">
+<div class="cab"><h1>Pipeline CI/CD — do commit à produção e às lojas<small>GitHub Actions com OIDC · main protegida, PR obrigatório, revisão e CI verde · artefatos assinados · rollout gradual com rollback</small></h1>
+<div class="marca"><b>FONEMA</b><br>pipeline-ci-cd · v1</div></div>
+<div class="cab2"><div>1 · Desenvolvimento</div><div>2 · Pull request</div><div>3 · Build e assinatura</div><div>4 · dev → homolog</div><div>5 · staging</div><div>6 · produção</div></div>
+<div class="camada lane l1"><span class="rot">API, web e pacotes</span><div class="passos">
+ <div class="caixa c-azul" id="a1"><h3>Branch curta</h3><p>lefthook: lint, format, <b>gitleaks</b>, commitlint (Conventional Commits)</p></div>
+ <div class="caixa c-azul" id="a2"><h3>ci.yml + seguranca.yml</h3><p>typecheck · Vitest · Testcontainers · <b>pgTAP (RLS)</b> · contrato OpenAPI · Playwright + axe · orçamento · CodeQL · Semgrep · OSV · licenças</p><span class="port">1–2 revisões + CI verde</span></div>
+ <div class="caixa c-azul" id="a3"><h3>Imagens ARM64</h3><p>SBOM (Syft) · Trivy · assinatura <b>cosign</b> · proveniência SLSA · push no ECR</p></div>
+ <div class="caixa c-azul" id="a4"><h3>dev → homolog</h3><p>deploy automático · migrações expand · E2E · validação de produto e pedagogia</p></div>
+ <div class="caixa c-azul" id="a5"><h3>staging (tag rc)</h3><p>carga k6 · <b>ZAP DAST</b> · restauração mensal · teste de sync em volume</p></div>
+ <div class="caixa c-azul" id="a6"><h3>prod</h3><p>2 aprovações · janela 19h–6h · ECS azul/verde · <b>rollback automático por alarme</b></p><span class="port">aprovação manual</span></div>
+</div></div>
+<div class="camada lane l2"><span class="rot">App Expo (Android · iOS · Web) e OTA</span><div class="passos">
+ <div class="caixa c-rosa" id="b1"><h3>Dev Client</h3><p>simulador + aparelho de 2 GB na bancada</p></div>
+ <div class="caixa c-rosa" id="b2"><h3>app.yml</h3><p>EAS Build de PR · <b>Maestro</b> em Android 8.1 / 2 GB · <b>auditoria de domínios</b> · MobSF · orçamento ≤ 40 MB</p></div>
+ <div class="caixa c-rosa" id="b3"><h3>EAS Build produção</h3><p>assinatura (Play App Signing / Apple) · runtimeVersion · checklist Kids/Famílias</p><span class="port">checklist das lojas</span></div>
+ <div class="caixa c-rosa" id="b4"><h3>TestFlight · faixa interna</h3><p>teste com crianças (homolog, contas de teste) · pedagogia</p></div>
+ <div class="caixa c-rosa" id="b5"><h3>Teste fechado</h3><p>escolas-piloto · canal piloto do MDM</p></div>
+ <div class="caixa c-rosa" id="b6"><h3>Lojas + OTA próprio</h3><p>rollout <b>5% → 20% → 50% → 100%</b> · OTA assinado só JS/assets · MDM 19h–6h</p></div>
+</div></div>
+<div class="camada lane l3"><span class="rot">Conteúdo, mídia e modelo de fala</span><div class="passos">
+ <div class="caixa c-teal" id="c1"><h3>Estúdio (Payload)</h3><p>autor → fono → pedagogia → cultura · LLM só bastidores</p></div>
+ <div class="caixa c-teal" id="c2"><h3>conteudo · midia · fala</h3><p><b>validador de decodificabilidade</b> · segurança/cultura · gltf-transform · regressão FRR por região</p><span class="port">bloqueante</span></div>
+ <div class="caixa c-teal" id="c3"><h3>Empacotar</h3><p>TTS só do que mudou · pacotes por região · <b>manifesto Ed25519</b> (KMS)</p></div>
+ <div class="caixa c-teal" id="c4"><h3>Canal dev → homolog</h3><p>prévia no PR · revisão pedagógica no app</p></div>
+ <div class="caixa c-teal" id="c5"><h3>Canal staging</h3><p>teste em aparelho real · modelo de fala em <b>modo sombra</b></p></div>
+ <div class="caixa c-teal" id="c6"><h3>Canal prod</h3><p>aprovação pedagógica · <b>rollback = manifesto anterior</b> (minutos, sem loja)</p></div>
+</div></div>
+<div class="camada lane l4"><span class="rot">Infraestrutura (Terraform)</span><div class="passos">
+ <div class="caixa c-laranja" id="d1"><h3>Módulos versionados</h3><p>terraform fmt · validate · <b>terraform test</b></p></div>
+ <div class="caixa c-laranja" id="d2"><h3>infra.yml</h3><p>tflint · <b>Checkov</b> · Trivy config · <b>plan comentado no PR</b></p><span class="port">2 revisões em infra/</span></div>
+ <div class="caixa c-laranja" id="d3"><h3>Estado remoto</h3><p>S3 + KMS na conta shared-services · OIDC por ambiente</p></div>
+ <div class="caixa c-laranja" id="d4"><h3>apply dev/homolog</h3><p>após merge, automático</p></div>
+ <div class="caixa c-laranja" id="d5"><h3>apply staging</h3><p>aprovação no GitHub Environment</p></div>
+ <div class="caixa c-laranja" id="d6"><h3>apply prod</h3><p>2 aprovações · <b>detecção de desvio diária</b> + AWS Config</p></div>
+</div></div>
+<div class="rodape"><div class="leg"><span class="port" style="margin:0">portão</span><span>Migrações sempre aditivas (expand → migrate → contract) · servidor aceita as 2 últimas versões do protocolo de sync</span></div><div>Detalhes: README.md §18 · esqueleto.md §3–§7</div></div>
+</div>
+<script src="setas.js"></script><script>
+const L=[];for(const p of 'abcd'){const c={a:'#1F5FAD',b:'#A63A72',c:'#0E7480',d:'#B4570B'}[p];for(let i=1;i<6;i++)L.push([p+i,p+(i+1),{de:'r',para:'l',cor:c,horiz:true}]);}
+desenhar(L);
+</script></body></html>

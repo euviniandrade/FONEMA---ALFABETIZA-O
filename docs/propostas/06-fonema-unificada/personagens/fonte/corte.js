@@ -11,7 +11,7 @@ const FON = {
   m: { jaw: 0, velum: 'down', air: 'nasal', voice: true, tongue: [[168, 180], [222, 172]], lips: 'closed' },
   f: { jaw: 3, velum: 'up', air: 'oral', voice: false, tongue: [[168, 178], [222, 172]], lips: 'labiodental' },
   v: { jaw: 3, velum: 'up', air: 'oral', voice: true, tongue: [[168, 178], [222, 172]], lips: 'labiodental' },
-  s: { jaw: 2, velum: 'up', air: 'oral', voice: false, tongue: [[170, 160], [226, 140]], lips: 'apart' },
+  s: { jaw: 2, velum: 'up', air: 'oral', voice: false, tongue: [[170, 160], [221, 136]], lips: 'apart' },
   l: { jaw: 6, velum: 'up', air: 'lateral', voice: true, tongue: [[166, 172], [229, 130]], lips: 'apart' },
   a: { jaw: 15, velum: 'up', air: 'oral', voice: true, tongue: [[166, 194], [218, 190]], lips: 'open' },
 };
@@ -25,6 +25,7 @@ function corte(fon, o = {}) {
   g += `<rect width="300" height="320" fill="${o.bg || '#F4F7FE'}"/>`;
   // cabeça (parte fixa)
   g += `<path d="M-10,-10 H196 C214,10 228,40 232,66 L264,96 Q271,108 255,113 L250,116 Q256,126 258,138 Q259,150 246,154 L228,151 L120,151 L118,240 L170,262 Q190,272 196,330 L-10,330Z" fill="${C.skin}" stroke="${C.skinLine}" stroke-width="3.2" stroke-linejoin="round"/>`;
+  g += `<path d="M196,46 Q210,40 222,46" fill="none" stroke="${P.hair}" stroke-width="5" stroke-linecap="round"/><path d="M200,62 Q210,68 220,62" fill="none" stroke="${C.skinLine}" stroke-width="3.4" stroke-linecap="round"/><path d="M220,62 l6,-3" stroke="${C.skinLine}" stroke-width="2.4" stroke-linecap="round"/>`;
   g += `<path d="M246,128 Q258,132 258,142 Q258,151 246,154 L238,150 Q240,136 246,128Z" fill="${C.lip}"/>`;
   // cavidade nasal, faringe, cavidade oral
   g += `<path d="M116,70 Q180,56 238,80 L257,104 Q252,112 238,108 Q190,111 134,113 Q110,110 112,92Z" fill="${C.nasal}" stroke="${C.skinLine}" stroke-width="2.2"/>`;
@@ -40,8 +41,9 @@ function corte(fon, o = {}) {
   // mandíbula (gira em torno da ATM)
   const ll = F.lips === 'labiodental' ? 'translate(-12,-6)' : '';
   g += `<g transform="rotate(${F.jaw} 118 138)">
-    <path d="M118,151 L246,157 Q258,161 256,175 Q251,184 244,189 Q248,207 236,222 Q220,236 180,240 L118,240Z" fill="${C.skin}" stroke="${C.skinLine}" stroke-width="3.2" stroke-linejoin="round"/>
-    <path d="M118,160 L118,240 L150,240 Q170,200 226,186 L228,160Z" fill="${C.oral}"/>
+    <path d="M118,151 L234,156 L238,192 Q160,198 118,206Z" fill="${C.oral}"/>
+    <path d="M206,189 Q226,186 244,189 Q248,207 236,222 Q220,236 180,240 L118,240 L118,204 Q160,197 206,189Z" fill="${C.skin}"/>
+    <path d="M244,189 Q248,207 236,222 Q220,236 180,240 L168,246" fill="none" stroke="${C.skinLine}" stroke-width="3.2" stroke-linecap="round"/>
     <path d="M118,242 C108,200 128,${dy} ${dx},${dy} C${dx + 36},${dy} ${tx - 14},${ty - 6} ${tx},${ty} Q${tx + 7},${ty + 9} ${tx - 6},${ty + 15} C206,186 176,200 160,242Z" fill="${C.tongue}" stroke="${C.skinLine}" stroke-width="2.4" stroke-linejoin="round"/>
     <path d="M${dx - 10},${dy + 16} Q${dx + 20},${dy + 8} ${tx - 20},${ty + 12}" fill="none" stroke="#C85A62" stroke-width="2" stroke-linecap="round" opacity=".6"/>
     <path d="M229,158 L240,158 Q243,172 237,182 L230,182 Q227,170 229,158Z" fill="${C.tooth}" stroke="${C.skinLine}" stroke-width="2.2"/>

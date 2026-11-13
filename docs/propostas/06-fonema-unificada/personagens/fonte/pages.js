@@ -200,33 +200,100 @@ function faceCrop(mouthSvg, w, h, k = 1.9, bg = P.skin) {
       <g transform="translate(0,338)">${mouthSvg}</g></g></g>
     <rect width="${w}" height="${h}" rx="${Math.min(w, h) * 0.2}" fill="none" stroke="${P.line}" stroke-opacity=".25" stroke-width="2"/>`;
 }
+const BR = { 2: ['Média', 'espalhada'], 3: ['Sorriso', 'fechado'], 4: ['Redonda', 'aberta'], 6: ['Lábios', 'fechados'], 7: ['Dentes no', 'lábio'], 8: ['Dentes', 'juntos'], 9: ['Biquinho', 'c/ dentes'], 10: ['Língua no', 'céu da boca'], 11: ['Fundo da', 'boca'] };
 function bocasVisemas() {
-  const W = 1800, H = 1250;
+  const W = 1800, H = 1262;
   let g = `<text x="64" y="176" font-family="Fredoka" font-weight="600" font-size="24" fill="${P.ink}">A · 12 bocas (visemas) para lip-sync — propriedade <tspan font-family="Andika" fill="${P.focus}">viseme</tspan> (0–11) no Rive, alimentada pelos Viseme IDs do Azure pt-BR</text>`;
   M.VISEMAS.forEach((v, i) => {
     const c = i % 6, r = Math.floor(i / 6), x = 64 + c * 282, y = 200 + r * 178;
     g += `<g transform="translate(${x},${y})"><rect width="270" height="164" rx="22" fill="#FFFBF4" stroke="${P.line}" stroke-opacity=".1" stroke-width="2"/>
       <g transform="translate(12,12)">${faceCrop(M.viseme(v.n), 140, 140, 1.75)}</g>
       <text x="166" y="50" font-family="Fredoka" font-weight="700" font-size="34" fill="${P.focus}">${v.n}</text>
-      <text x="166" y="82" font-family="Andika" font-weight="700" font-size="16.5" fill="${P.ink}">${v.nome.split(' ').slice(0, 2).join(' ')}</text>
-      <text x="166" y="102" font-family="Andika" font-weight="700" font-size="16.5" fill="${P.ink}">${v.nome.split(' ').slice(2).join(' ')}</text>
-      <text x="166" y="132" font-size="16" fill="${P.slate}">${v.fon}</text></g>`;
+      ${(BR[v.n] || [v.nome]).map((t, j) => `<text x="166" y="${82 + j * 20}" font-family="Andika" font-weight="700" font-size="16" fill="${P.ink}">${t}</text>`).join('')}
+      <text x="166" y="140" font-size="15" fill="${P.slate}">${v.fon}</text></g>`;
   });
   g += `<text x="64" y="590" font-family="Fredoka" font-weight="600" font-size="24" fill="${P.ink}">B · Espelho do Som: boca de frente + corte lateral animável (6 fonemas-exemplo)</text>`;
   const ph = [['m', 6, 'mala'], ['f', 7, 'faca'], ['v', 7, 'vaca'], ['s', 8, 'sapo'], ['l', 10, 'lua'], ['a', 1, 'abelha']];
   ph.forEach(([p, vis, word], i) => {
     const x = 64 + i * 282, y = 612;
     const F = CT.FON[p];
-    g += `<g transform="translate(${x},${y})"><rect width="270" height="590" rx="24" fill="#FFFBF4" stroke="${P.line}" stroke-opacity=".1" stroke-width="2"/>
+    g += `<g transform="translate(${x},${y})"><rect width="270" height="598" rx="24" fill="#FFFBF4" stroke="${P.line}" stroke-opacity=".1" stroke-width="2"/>
       <text x="22" y="54" font-family="Andika" font-weight="700" font-size="44" fill="${p === 'a' ? P.vowel : P.cons}">/${p}/</text>
       <text x="248" y="50" text-anchor="end" font-size="17" fill="${P.slate}">${word.toUpperCase()}</text>
       <g transform="translate(70,74)">${faceCrop(M.viseme(vis), 130, 116, 1.6)}</g>
       <g transform="translate(15,204) scale(.8)">${CT.corte(p)}</g>
-      <g transform="translate(18,474)">${CT.PISTAS[p].map((t, j) => `<g transform="translate(0,${j * 32})"><circle cx="10" cy="-5" r="9" fill="${[P.vowel, CT.C.air, CT.C.voice][j]}" opacity="${j === 2 && !F.voice ? .25 : 1}"/><text x="28" y="0" font-size="16" fill="${P.ink}">${t}</text></g>`).join('')}</g></g>`;
+      <g transform="translate(18,492)">${CT.PISTAS[p].map((t, j) => `<g transform="translate(0,${j * 32})"><circle cx="10" cy="-5" r="9" fill="${[P.vowel, CT.C.air, CT.C.voice][j]}" opacity="${j === 2 && !F.voice ? .25 : 1}"/><text x="28" y="0" font-size="16" fill="${P.ink}">${t}</text></g>`).join('')}</g></g>`;
   });
-  const leg = `<g transform="translate(64,1226)"><text font-size="15.5" fill="${P.slate}">Legenda do corte:  <tspan fill="${CT.C.air}" font-weight="700">· · ➜ caminho do ar</tspan>   <tspan fill="#C08A00" font-weight="700">))) garganta vibra (vozeado)</tspan>   véu palatino abaixado = ar pelo nariz (/m/) · camadas separadas (mandíbula, língua, lábios, véu, ar, vibração) para animar no Rive · revisão por 2 fonoaudiólogas.</text></g>`;
+  const leg = `<g transform="translate(64,1240)"><text font-size="15" fill="${P.slate}">Legenda do corte:  <tspan fill="${CT.C.air}" font-weight="700">· · ➜ caminho do ar</tspan>   <tspan fill="#C08A00" font-weight="700">))) garganta vibra (vozeado)</tspan>   véu palatino abaixado = ar pelo nariz (/m/) · camadas separadas (mandíbula, língua, lábios, véu, ar, vibração) para animar no Rive · revisão por 2 fonoaudiólogas.</text></g>`;
   const body = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${defs()}<rect width="${W}" height="${H}" fill="${P.cream}"/>
    ${header(W, 'Bocas da Sofia · visemas e "por dentro da boca"', 'Evolução do Espelho do Som (proposta 2): boca real para imitar + corte lateral para mostrar o invisível (língua, véu, garganta)')}${g}${leg}</svg>`;
   return { w: W, h: H, html: page(W, H, body) };
 }
 module.exports['bocas-visemas'] = bocasVisemas;
+
+function mala(x, y, s = 1) {
+  return `<g transform="translate(${x},${y}) scale(${s})">
+    <path d="M-30,-58 v-16 q0,-12 12,-12 h36 q12,0 12,12 v16" fill="none" stroke="${P.line}" stroke-width="13" stroke-linecap="round"/><path d="M-30,-58 v-16 q0,-12 12,-12 h36 q12,0 12,12 v16" fill="none" stroke="#8A4B2A" stroke-width="7" stroke-linecap="round"/>
+    <rect x="-86" y="-60" width="172" height="118" rx="22" fill="#E2603F" stroke="${P.line}" stroke-width="4.5"/>
+    <rect x="-86" y="-60" width="172" height="40" rx="20" fill="#F07A55"/><rect x="-86" y="-60" width="172" height="118" rx="22" fill="none" stroke="${P.line}" stroke-width="4.5"/>
+    <rect x="-54" y="-60" width="16" height="118" fill="#B9472C" stroke="${P.line}" stroke-width="3"/><rect x="38" y="-60" width="16" height="118" fill="#B9472C" stroke="${P.line}" stroke-width="3"/>
+    <circle cx="-8" cy="10" r="15" fill="${P.ipe}" stroke="${P.line}" stroke-width="3"/><rect x="10" y="-6" width="22" height="16" rx="4" fill="#7FB7E8" stroke="${P.line}" stroke-width="2.6" transform="rotate(12 21 2)"/>
+    <ellipse cx="-56" cy="-44" rx="18" ry="6" fill="#fff" opacity=".35"/></g>`;
+}
+function telaEspelho() {
+  const W = 1280, H = 800;
+  let g = '';
+  // fundo: casa da Sofia desfocada e clareada (carga visual baixa)
+  g += `<rect width="${W}" height="${H}" fill="#EAF0FB"/>
+    <g filter="url(#blur12)" opacity=".55"><rect x="0" y="520" width="${W}" height="280" fill="#E9C9A0"/><rect x="80" y="90" width="260" height="300" rx="20" fill="#BFE3EC"/><rect x="940" y="80" width="240" height="320" rx="20" fill="#BFE3EC"/><circle cx="1180" cy="520" r="120" fill="#8CC084"/><rect x="420" y="60" width="440" height="40" fill="#F4C27A"/></g>
+    <rect width="${W}" height="${H}" fill="#FFF8EC" opacity=".55"/>`;
+  // barra superior
+  const btn = (x, y, inner) => `<g transform="translate(${x},${y})"><rect width="72" height="72" rx="22" fill="#fff" stroke="${P.line}" stroke-opacity=".12" stroke-width="2"/><rect y="66" width="72" height="8" rx="4" fill="${P.line}" opacity=".06"/>${inner}</g>`;
+  g += btn(28, 22, `<path d="M18,38 L36,22 L54,38 V54 Q54,56 52,56 H42 V44 H30 V56 H20 Q18,56 18,54Z" fill="${P.cons}"/>`);
+  g += btn(W - 100, 22, `<path d="M28,24 a14,14 0 0 1 22,12 c0,8 -8,10 -8,18 a6,6 0 0 1 -12,0" fill="none" stroke="${P.cons}" stroke-width="5" stroke-linecap="round"/><path d="M52,26 q6,8 0,18 M58,20 q10,14 0,30" fill="none" stroke="${P.cons}" stroke-width="4" stroke-linecap="round"/>`);
+  g += `<g transform="translate(${W / 2 - 130},34)"><rect width="260" height="48" rx="24" fill="#fff" opacity=".85"/>${[0, 1, 2, 3, 4, 5].map(i => i < 2 ? `<circle cx="${32 + i * 39}" cy="24" r="11" fill="${P.ipe}"/>` : i === 2 ? `<circle cx="${32 + i * 39}" cy="24" r="14" fill="#fff" stroke="${P.focus}" stroke-width="5"/>` : `<circle cx="${32 + i * 39}" cy="24" r="9" fill="#D7DCEB"/>`).join('')}</g>`;
+  // palco principal
+  g += `<rect x="20" y="108" width="${W - 40}" height="672" rx="40" fill="#FFFBF4" stroke="${P.line}" stroke-opacity=".08" stroke-width="2"/>`;
+  // Sofia
+  g += `<defs><clipPath id="stage"><rect x="20" y="108" width="${W - 40}" height="672" rx="40"/></clipPath></defs><g clip-path="url(#stage)"><g transform="translate(190,272) scale(.72)">${S.sofia({ expr: { eyes: 'open', mouth: 6, b: [-8, 0, -8, 0], look: [6, 0], blush: 1 }, letter: 'M', armR: { t: [236, 330], hand: 'point', hrot: -30 } })}</g></g>`;
+  // balão de fala
+  g += `<g transform="translate(46,132)"><rect width="300" height="150" rx="28" fill="#fff" stroke="${P.line}" stroke-opacity=".12" stroke-width="2"/><path d="M150,148 l18,22 l14,-24z" fill="#fff"/>
+    <text x="24" y="46" font-size="25" fill="${P.ink}">Fecha os lábios…</text><text x="24" y="80" font-size="25" fill="${P.ink}">o som sai pelo nariz:</text><text x="24" y="118" font-size="30" font-weight="700" fill="${P.cons}">mmmm!</text>
+    <g transform="translate(244,104)"><circle r="20" fill="${P.sky}"/><path d="M-7,-9 L9,0 L-7,9Z" fill="${P.cons}"/></g></g>`;
+  // Espelho do Som
+  const ex = 360, ey = 140, ew = 560, eh = 420;
+  g += `<rect x="${ex}" y="${ey}" width="${ew}" height="${eh}" rx="36" fill="#F7E3B5"/><rect x="${ex + 10}" y="${ey + 10}" width="${ew - 20}" height="${eh - 20}" rx="28" fill="#FFFDF8" stroke="#E8C36A" stroke-width="3"/>
+    <g transform="translate(${ex + ew / 2 - 110},${ey - 22})"><rect width="220" height="46" rx="23" fill="${P.focus}"/><text x="110" y="31" text-anchor="middle" font-family="Fredoka" font-weight="600" font-size="23" fill="#fff">Espelho do Som</text></g>`;
+  g += `<g transform="translate(${ex + 30},${ey + 48})">${faceCrop(M.viseme(6), 240, 256, 1.9)}<g transform="translate(14,222)"><rect width="104" height="26" rx="13" fill="#fff" opacity=".9"/><text x="52" y="18" text-anchor="middle" font-size="15" fill="${P.ink}">boca da Sofia</text></g></g>`;
+  g += `<g transform="translate(${ex + 290},${ey + 48}) scale(.8)">${CT.corte('m', { bg: '#F1F5FE' })}</g>`;
+  g += `<g transform="translate(${ex + 304},${ey + 270})"><rect width="104" height="26" rx="13" fill="#fff" opacity=".9"/><text x="52" y="18" text-anchor="middle" font-size="15" fill="${P.ink}">por dentro</text></g>`;
+  // linha do tempo animável
+  const tl = ex + 40, ty = ey + 342;
+  g += `<g transform="translate(${tl},${ty})"><circle cx="22" cy="22" r="22" fill="${P.cons}"/><path d="M15,12 L33,22 L15,32Z" fill="#fff"/>
+    <rect x="62" y="16" width="400" height="12" rx="6" fill="#E3E7F3"/><rect x="62" y="16" width="170" height="12" rx="6" fill="${P.cons}" opacity=".85"/><circle cx="232" cy="22" r="13" fill="#fff" stroke="${P.cons}" stroke-width="5"/>
+    ${[['lábios fecham', 62], ['ar pelo nariz', 212], ['abre: MA', 380]].map(([t, x]) => `<text x="${x}" y="58" font-size="15" fill="${P.slate}">${t}</text>`).join('')}
+    <g transform="translate(476,6)"><rect width="32" height="32" rx="10" fill="${P.sky}"/><text x="16" y="22" text-anchor="middle" font-family="Fredoka" font-weight="600" font-size="14" fill="${P.cons}">½×</text></g></g>`;
+  // letra
+  const rx = 950;
+  g += `<g transform="translate(${rx},140)"><rect width="290" height="240" rx="32" fill="#fff" stroke="${P.line}" stroke-opacity=".1" stroke-width="2"/><rect y="232" width="290" height="10" rx="5" fill="${P.line}" opacity=".05"/>
+    <text x="145" y="158" text-anchor="middle" font-family="Andika" font-weight="700" font-size="140" fill="${P.ink}">M<tspan dx="18" fill="${P.cons}">m</tspan></text>
+    <g transform="translate(85,180)"><rect width="120" height="44" rx="22" fill="${P.sky}"/><path d="M18,17 h6 l8,-6 v22 l-8,-6 h-6z" fill="${P.cons}"/><path d="M37,16 q4,6 0,12" fill="none" stroke="${P.cons}" stroke-width="3" stroke-linecap="round"/><text x="70" y="31" text-anchor="middle" font-family="Andika" font-weight="700" font-size="26" fill="${P.cons}">/m/</text></g></g>`;
+  // palavra com imagem
+  g += `<g transform="translate(${rx},400)"><rect width="290" height="160" rx="32" fill="#fff" stroke="${P.line}" stroke-opacity=".1" stroke-width="2"/>${mala(78, 86, .6)}
+    <text x="152" y="96" font-family="Andika" font-weight="700" font-size="48" fill="${P.cons}">M<tspan fill="${P.vowel}">A</tspan><tspan fill="${P.cons}">L</tspan><tspan fill="${P.vowel}">A</tspan></text>
+    <path d="M152,116 h58 M218,116 h50" stroke="${P.ok}" stroke-width="5" stroke-linecap="round" opacity=".6"/></g>`;
+  // sua vez: espelho local + botão falar
+  const by = 574;
+  g += `<g transform="translate(380,${by})"><ellipse cx="90" cy="88" rx="86" ry="88" fill="#C98A4B" stroke="${P.line}" stroke-width="3"/><ellipse cx="90" cy="88" rx="72" ry="74" fill="#DCEBF5"/>
+     <ellipse cx="90" cy="118" rx="50" ry="34" fill="#B9CCDD"/><circle cx="90" cy="76" r="30" fill="#B9CCDD"/><ellipse cx="90" cy="84" rx="20" ry="13" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="5 5"/>
+     <path d="M40,40 q20,-20 50,-22" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".7" fill="none"/>
+     <text x="90" y="196" text-anchor="middle" font-size="14.5" fill="${P.slate}">seu espelho · não grava</text></g>`;
+  g += `<g transform="translate(590,${by + 8})"><rect x="-10" y="-10" width="180" height="180" rx="54" fill="#DFF1E5"/><rect width="160" height="160" rx="46" fill="#2FA35B"/><rect y="148" width="160" height="14" rx="7" fill="#22814A" opacity=".8"/>
+     <rect x="62" y="34" width="36" height="58" rx="18" fill="#fff"/><path d="M48,78 a32,32 0 0 0 64,0 M80,110 v16 M62,128 h36" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/></g>`;
+  g += `<g transform="translate(790,${by + 40})"><text font-family="Andika" font-size="34" fill="${P.ink}"><tspan font-weight="700">Sua vez!</tspan> Fale</text><text y="44" font-family="Andika" font-size="34" fill="${P.ink}"><tspan font-weight="700" fill="${P.cons}">mmmm</tspan> comigo.</text>
+     <text y="80" font-size="16" fill="${P.slate}">sua voz fica no aparelho, não é gravada</text><text y="102" font-size="16" fill="${P.slate}">tocar no botão também vale</text></g>`;
+  g += `${groundShadow(1180, 768, 66)}<g transform="translate(1158,766) scale(.38)">${B.bolota({ pose: 'read', eyes: 'open', look: [3, 2] })}</g>`;
+  const body = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${defs()}${g}</svg>`;
+  return { w: W, h: H, html: page(W, H, body) };
+}
+module.exports['tela-espelho-do-som'] = telaEspelho;

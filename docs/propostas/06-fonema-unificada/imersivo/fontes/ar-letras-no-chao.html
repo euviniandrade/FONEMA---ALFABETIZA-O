@@ -1,0 +1,106 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="common.css">
+<script src="chars.js"></script>
+<style>
+html,body{width:1280px;height:800px;overflow:hidden}
+body{padding:30px 34px 0}
+.tag{display:inline-block;font:600 13px Fredoka;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--mar);padding:4px 11px;border-radius:99px;margin-bottom:6px}
+h1{font:700 31px/1.05 Fredoka}
+.sub{font:400 15px/1.35 Atkinson;color:var(--cinza);margin-top:5px}
+.wrap{display:flex;gap:24px;margin-top:16px}
+.tablet{width:800px;height:600px;flex:none;background:#1E1915;border-radius:36px;padding:18px;box-shadow:0 20px 44px rgba(59,42,32,.25)}
+.tela{position:relative;width:100%;height:100%;border-radius:20px;overflow:hidden;background:#E7D7C2}
+.parede{position:absolute;left:0;right:0;top:0;height:150px;background:linear-gradient(#E3D2BC,#EEE1CF)}
+.cena3d{position:absolute;left:0;right:0;top:150px;bottom:0;perspective:700px;perspective-origin:50% 0%;overflow:hidden}
+.piso{position:absolute;left:50%;bottom:0;width:1700px;height:1000px;margin-left:-850px;transform-origin:50% 100%;transform:rotateX(66deg);
+ background:repeating-linear-gradient(90deg,#C99A6B 0 118px,#B98A5C 118px 120px),#C99A6B}
+.piso:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,0) 0 300px,rgba(90,55,30,.18) 300px 302px)}
+.tapete{position:absolute;left:430px;top:60px;width:840px;height:720px;border-radius:40px;background:#E9DCC9;box-shadow:0 0 0 14px #D7C3A6 inset}
+#letra{position:absolute;left:490px;top:110px;width:720px;height:620px}
+.ui{position:absolute;z-index:5}
+.chip{font:700 12.5px Atkinson;padding:6px 12px 6px 9px;border-radius:99px;display:flex;gap:6px;align-items:center}
+.balao{left:120px;bottom:22px;background:#FFFBF4;border-radius:18px;padding:9px 15px;font:700 19px/1.25 Andika;box-shadow:0 4px 12px rgba(0,0,0,.14)}
+.balao small{display:block;font:400 11px Atkinson;color:var(--cinza)}
+.lado{flex:1;display:flex;flex-direction:column;gap:10px}
+.c{background:#fff;border:1.5px solid var(--linha);border-radius:16px;padding:10px 14px;font:400 12.8px/1.36 Atkinson}
+.c h2{font:600 15px Fredoka;margin-bottom:3px}
+.c ul{margin-left:16px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#crianca{position:absolute;z-index:4;width:76px;height:133px}
+.sofa{position:absolute;left:240px;top:44px;width:330px;height:110px}
+</style></head><body class="papel-tex">
+<span class="tag">5D · realidade aumentada no chão</span><h1>Letras gigantes no chão da sala: traçar com o corpo</h1>
+<div class="sub">A letra aparece do tamanho de um tapete. A criança caminha sobre cada traço, na ordem certa, dizendo o <b>som</b> da letra; o adulto segura o aparelho.</div>
+<div class="wrap">
+ <div class="tablet"><div class="tela">
+  <div class="parede"></div>
+  <svg class="sofa" viewBox="0 0 330 110"><rect x="10" y="30" width="310" height="70" rx="18" fill="#6E8FA0"/><rect x="0" y="50" width="40" height="56" rx="14" fill="#5D7E8F"/><rect x="290" y="50" width="40" height="56" rx="14" fill="#5D7E8F"/><rect x="40" y="58" width="250" height="34" rx="10" fill="#7FA0B0"/><rect x="220" y="34" width="60" height="34" rx="10" fill="#F2B33D" transform="rotate(8 250 50)"/></svg>
+  <div class="cena3d"><div class="piso"><div class="tapete"></div>
+   <svg id="letra" viewBox="0 0 720 620">
+    <defs><marker id="pt" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0 L10,5 L0,10Z" fill="#fff"/></marker></defs>
+    <!-- área segura -->
+    <rect x="10" y="10" width="700" height="600" rx="30" fill="none" stroke="#2F6B43" stroke-width="6" stroke-dasharray="22 16" opacity=".7"/>
+    <!-- sombra de base da letra -->
+    <g stroke-linecap="round" stroke-linejoin="round" fill="none">
+     <path d="M140,540 V90 L360,380 L580,90 V540" stroke="rgba(255,255,255,.55)" stroke-width="92"/>
+     <!-- traço 1 feito -->
+     <path d="M140,90 V540" stroke="#2F6B43" stroke-width="70"/>
+     <!-- traço 2 atual -->
+     <path d="M140,90 L360,380" stroke="#A9472A" stroke-width="70"/>
+     <!-- traços 3 e 4 por fazer -->
+     <path d="M360,380 L580,90" stroke="#FFFBF4" stroke-width="70" opacity=".9"/>
+     <path d="M580,90 V540" stroke="#FFFBF4" stroke-width="70" opacity=".9"/>
+     <path d="M360,380 L580,90 M580,90 V540" stroke="#C9AE8E" stroke-width="5" stroke-dasharray="16 16"/>
+     <path d="M140,110 V500" stroke="#fff" stroke-width="6" marker-end="url(#pt)" opacity=".85"/>
+     <path d="M156,112 L330,340" stroke="#fff" stroke-width="6" marker-end="url(#pt)"/>
+    </g>
+    <!-- pegadas no traço 2 -->
+    <g fill="#5C2A1A" opacity=".55"><ellipse cx="178" cy="150" rx="11" ry="17" transform="rotate(-37 178 150)"/><ellipse cx="206" cy="178" rx="11" ry="17" transform="rotate(-37 206 178)"/><ellipse cx="222" cy="212" rx="11" ry="17" transform="rotate(-37 222 212)"/></g>
+    <!-- pontos de início numerados -->
+    <g font-family="Fredoka" font-weight="700" font-size="40" text-anchor="middle">
+     <circle cx="140" cy="90" r="36" fill="#2F6B43" stroke="#fff" stroke-width="6"/><text x="140" y="104" fill="#fff">1</text>
+     <circle cx="200" cy="40" r="30" fill="#A9472A" stroke="#fff" stroke-width="6"/><text x="200" y="54" fill="#fff" font-size="34">2</text>
+     <circle cx="360" cy="380" r="32" fill="#FFFBF4" stroke="#A9472A" stroke-width="6"/><text x="360" y="394" fill="#A9472A" font-size="34">3</text>
+     <circle cx="580" cy="90" r="32" fill="#FFFBF4" stroke="#A9472A" stroke-width="6"/><text x="580" y="104" fill="#A9472A" font-size="34">4</text>
+    </g>
+    <circle id="alvo" cx="262" cy="252" r="4" fill="none"/>
+   </svg>
+  </div></div>
+  <svg id="crianca" viewBox="0 0 120 210">
+   <!-- criança de costas, caminhando (silhueta ilustrada; câmera não rastreia na V1) -->
+   <ellipse cx="60" cy="202" rx="40" ry="8" fill="#3B2A20" opacity=".28"/>
+   <path d="M46,138 L40,196" stroke="#7A4B2E" stroke-width="14" stroke-linecap="round"/><path d="M74,138 L84,190" stroke="#7A4B2E" stroke-width="14" stroke-linecap="round"/>
+   <ellipse cx="40" cy="198" rx="12" ry="7" fill="#F2B33D"/><ellipse cx="85" cy="192" rx="12" ry="7" fill="#F2B33D"/>
+   <path d="M32,120 Q30,150 40,150 H82 Q92,150 88,120Z" fill="#1F6E82"/>
+   <path d="M28,70 Q60,58 92,70 L96,126 H24Z" fill="#B23C62"/>
+   <path d="M28,78 Q12,96 14,114" stroke="#B23C62" stroke-width="14" fill="none" stroke-linecap="round"/><circle cx="14" cy="118" r="8" fill="#7A4B2E"/>
+   <path d="M92,78 Q110,92 108,110" stroke="#B23C62" stroke-width="14" fill="none" stroke-linecap="round"/><circle cx="108" cy="114" r="8" fill="#7A4B2E"/>
+   <rect x="52" y="54" width="16" height="14" rx="5" fill="#7A4B2E"/>
+   <g fill="#2A1A12"><circle cx="60" cy="36" r="28"/><circle cx="38" cy="26" r="13"/><circle cx="82" cy="26" r="13"/><circle cx="46" cy="10" r="12"/><circle cx="74" cy="10" r="12"/><circle cx="60" cy="6" r="12"/><circle cx="34" cy="46" r="11"/><circle cx="86" cy="46" r="11"/><circle cx="60" cy="56" r="14"/></g>
+  </svg>
+  <div class="ui chip" style="left:16px;top:14px;background:rgba(47,107,67,.95);color:#fff"><span style="width:8px;height:8px;border-radius:50%;background:#9FE3A6"></span>câmera traseira · só neste aparelho</div>
+  <div class="ui chip" style="left:16px;top:50px;background:rgba(255,251,244,.95);color:#2F6B43">✓ área livre de 2 × 2 m conferida pelo adulto</div>
+  <div class="ui chip" style="right:16px;top:14px;background:rgba(255,251,244,.95);color:#3B2A20">traço <b style="color:#A9472A;margin:0 3px">2</b> de 4 &nbsp;<span style="letter-spacing:3px"><span style="color:#2F6B43">●</span><span style="color:#A9472A">●</span><span style="color:#C9AE8E">●●</span></span></div>
+  <div class="ui chip" style="right:16px;top:50px;background:rgba(255,251,244,.95);color:#3B2A20">⏸ pausar</div>
+  <svg class="ui" style="left:16px;bottom:14px;width:96px;height:126px" viewBox="0 0 200 262"><use href="#sofia"/></svg>
+  <div class="ui balao"><small>Sofia</small>“Desce na diagonal dizendo /mmmm/!”</div>
+ </div></div>
+ <div class="lado">
+  <div class="c"><h2 style="color:var(--mar)">Objetivo de aprendizagem</h2>Forma e <b>direção</b> do traçado da letra, ligadas ao som: o corpo inteiro “escreve” o M enquanto a boca diz /m/. Depois a criança traça a mesma letra com o dedo e, por fim, sem guia.</div>
+  <div class="c"><h2 style="color:var(--terracota)">Mecânica</h2><ul><li>O adulto aponta para o chão; a letra (≈ 2 × 1,6 m) se fixa no piso.</li><li>Pontos numerados mostram onde começa cada traço; o traço feito fica verde.</li><li>V1: o adulto toca “próximo traço”. V2 (opcional): o aparelho percebe os pés no fim do traço, por pose local.</li></ul></div>
+  <div class="duo">
+   <div class="c"><h2 style="color:var(--lilas)">Tecnologia</h2>ARCore / ARKit (plano horizontal) no app; WebXR no Chrome Android. A letra é um “adesivo” 3D no chão.</div>
+   <div class="c"><h2 style="color:#B07A12">Sem AR?</h2>A Sofia ensina a montar a letra com <b>fita crepe</b> no chão, e o app só narra os traços.</div>
+  </div>
+  <div class="duo">
+   <div class="c"><h2 style="color:var(--folha)">Segurança e privacidade</h2>Câmera traseira no chão; nada gravado. Área livre conferida; aviso de móveis e escadas; ≤ 3 min.</div>
+   <div class="c"><h2 style="color:var(--folha)">Modo calmo</h2>Letra estática, sem brilho nos traços, sem pegadas animadas; a Sofia fala mais devagar.</div>
+  </div>
+ </div>
+</div>
+<script>
+// posiciona a criança sobre o ponto do traço 2 (posição projetada pela perspectiva real do CSS 3D)
+const a=document.getElementById('alvo').getBoundingClientRect(),t=document.querySelector('.tela').getBoundingClientRect(),c=document.getElementById('crianca');
+c.style.left=(a.left+a.width/2-t.left-38)+"px";c.style.top=(a.top+a.height/2-t.top-127)+"px";
+</script>
+</body></html>

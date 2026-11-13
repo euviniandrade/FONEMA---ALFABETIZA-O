@@ -1,0 +1,60 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="comum.css">
+<style>
+.pagina{width:1800px}
+.cols{display:grid;grid-template-columns:410px 410px 410px 370px;gap:40px}
+.col{display:flex;flex-direction:column;gap:26px}
+.col>.camada{flex:1;display:flex;flex-direction:column;gap:24px}
+.ap>.rot{background:var(--rosa)}.op>.rot{background:var(--azul)}.an>.rot{background:var(--teal)}.qv>.rot{background:var(--tinta)}
+.gate{display:inline-block;font-size:13px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--ambar-c);border:1.5px solid #E2C35A;color:#6B4A00;margin-top:6px}
+.ret{display:inline-block;font-size:13px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--cinza-c);border:1.5px solid var(--linha);color:var(--suave);margin-top:6px}
+.x{color:var(--vermelho);font-weight:700}
+.faixa{margin-top:20px;display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.faixa .caixa h3{font-size:15px}.faixa .caixa p{font-size:13.5px}
+</style></head><body><div class="pagina">
+<div class="cab"><h1>Fluxo de dados e privacidade<small>O que sai do aparelho, onde fica, por quanto tempo e quem vê · LGPD art. 14 · ECA Digital · minimização por padrão</small></h1>
+<div class="marca"><b>FONEMA</b><br>fluxo-dados-privacidade · v1 · ⚖️ bases legais a validar</div></div>
+<div class="cols">
+ <div class="col"><div class="camada ap"><span class="rot">1 · No aparelho</span>
+  <div class="caixa c-rosa" id="d1"><h3>Microfone (só na tela de leitura)</h3><p>indicador "ouvindo"; ligado pelo adulto</p><span class="gate">consentimento: microfone</span></div>
+  <div class="caixa c-rosa" id="d2"><h3>VAD + verificador (sherpa-onnx)</h3><p>resultado: aceita / incerta / erro provável + confiança<br><span class="x">✕ áudio descartado da memória</span></p></div>
+  <div class="caixa c-rosa" id="d3"><h3>Evento de aprendizagem</h3><p>item, resultado, latência, modalidade (voz/toque) · <b>sem texto livre, sem áudio</b></p></div>
+  <div class="caixa c-rosa" id="d4"><h3>SQLite cifrado (SQLCipher)</h3><p>fila de eventos UUID v7 · apagada só após confirmação do servidor</p></div>
+  <div class="caixa c-vermelho f-vermelho"><h3>Nunca sai do aparelho</h3><p>áudio cru · imagem de câmera · autorrelato emocional · ID de publicidade · localização</p></div>
+ </div></div>
+ <div class="col"><div class="camada op"><span class="rot">2 · Operacional (Aurora, sa-east-1)</span>
+  <div class="caixa c-azul" id="o1"><h3>API /sync/eventos</h3><p>TLS · token infantil de 15 min · idempotência · recalcula com as mesmas regras</p></div>
+  <div class="caixa c-azul" id="o2"><h3>core · learning · economy</h3><p>apelido, mês/ano de nascimento, avatar, domínio, nível 0–10 · <b>RLS em 100%</b> + autorização na API</p><span class="ret">enquanto a conta existir</span></div>
+  <div class="caixa c-azul" id="o3"><h3>pii (cifrado por coluna, KMS)</h3><p>telefone/e-mail do adulto · código do aluno na rede · só identidade, mensageria e integração acessam</p></div>
+  <div class="caixa c-azul" id="o4"><h3>Mensageria → WhatsApp · SMS · push adulto</h3><p>≤ 3/semana · sem dado de criança além do apelido · sem foto</p><span class="gate">opt-in por canal</span></div>
+  <div class="caixa c-azul" id="o5"><h3>privacy · audit</h3><p>consentimentos versionados · pedidos do titular · prova de exclusão · trilha append-only</p><span class="ret">auditoria: 2 anos</span></div>
+ </div></div>
+ <div class="col"><div class="camada an"><span class="rot">3 · Analítico (lake)</span>
+  <div class="caixa c-teal" id="a1"><h3>Firehose → S3 bruto (KMS)</h3><p>Parquet particionado por dia · acesso só do pipeline</p><span class="ret">13 meses</span></div>
+  <div class="caixa c-teal" id="a2"><h3>Pseudonimização</h3><p>crianca_id → HMAC(chave do domínio) · chave no KMS, rotação anual · remove campos desnecessários</p></div>
+  <div class="caixa c-teal" id="a3"><h3>Iceberg pseudonimizado + dbt</h3><p>Lake Formation por coluna/linha · marts de aprendizagem, ética, equidade, negócio</p></div>
+  <div class="caixa c-teal" id="a4"><h3>Agregados publicados</h3><p><b>supressão n &lt; 10</b> · <b>sem socioemocional</b> · arredondamento</p></div>
+  <div class="caixa c-teal f-teal"><h3>Pesquisa e corpus de fala</h3><p>conta isolada <b>ml-dados</b> · CEP/CONEP · TCLE + TALE</p><span class="gate">consentimento separado</span></div>
+ </div></div>
+ <div class="col"><div class="camada qv"><span class="rot">4 · Quem vê</span>
+  <div class="caixa c-rosa" id="q1"><h3>Família</h3><p>só as próprias crianças · exportar, corrigir, revogar, <b>apagar tudo</b> (≤ 30 dias)</p><span class="ret">lê o operacional (2) com RLS</span></div>
+  <div class="caixa c-azul" id="q2"><h3>Professor(a)</h3><p>só suas turmas, com nomes · nunca o autorrelato emocional</p><span class="ret">lê o operacional (2) com RLS</span></div>
+  <div class="caixa c-cinza" id="q4"><h3>Equipe e analistas</h3><p>só pseudonimizado · suporte com máscara + acesso JIT auditado</p></div>
+  <div class="caixa c-verde" id="q3"><h3>Escola · Secretaria</h3><p>só agregados n ≥ 10 · distribuição 0–10 · dose · medição</p></div>
+  <div class="caixa c-ambar f-ambar"><h3>Conta encerrada</h3><p>apagada em até 30 dias · backups expiram em até 35 dias · fim de contrato B2G: devolução/eliminação em 30 dias</p></div>
+ </div></div>
+</div>
+<div class="rodape"><div class="leg"><span><i style="border-color:#1B2433"></i>fluxo de dados</span><span class="gate" style="margin:0">portão de consentimento</span><span class="ret" style="margin:0">retenção</span></div><div>Detalhes: seguranca-privacidade.md §6 · B2G/B2B: escola/rede é controladora, FONEMA é operador</div></div>
+</div>
+<script src="setas.js"></script><script>
+const C='#1B2433';
+desenhar([
+ ['d1','d2',{de:'b',para:'t',cor:C}],['d2','d3',{de:'b',para:'t',cor:C}],['d3','d4',{de:'b',para:'t',cor:C}],
+ ['d4','o1',{de:'r',para:'l',cor:C,rot:'lote cifrado\n(TLS)',t:.5}],
+ ['o1','o2',{de:'b',para:'t',cor:C}],
+ ['o2','a1',{de:'r',para:'l',cor:'#0E7480',rot:'eventos',t:.5}],
+ ['a1','a2',{de:'b',para:'t',cor:'#0E7480'}],['a2','a3',{de:'b',para:'t',cor:'#0E7480'}],['a3','a4',{de:'b',para:'t',cor:'#0E7480'}],
+ ['a4','q3',{de:'r',para:'l',cor:'#1E7A4C'}],
+ ['a3','q4',{de:'r',para:'l',cor:'#5F6B7A'}],
+ ['o3','o4',{de:'b',para:'t',cor:C}],
+]);
+</script></body></html>

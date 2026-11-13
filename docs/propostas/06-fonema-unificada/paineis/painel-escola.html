@@ -39,8 +39,8 @@
   </div>
   <section class="grade kpis">
     <div class="cartao kpi"><div class="rot">Alunos acompanhados</div><div class="val num">181</div><div class="det">1º ano: 93 · 2º ano: 88</div></div>
-    <div class="cartao kpi"><div class="rot">2º ano no nível 10</div><div class="val num">24%</div><div class="det"><b>+16 p.p.</b> desde fevereiro (8%)</div></div>
-    <div class="cartao kpi"><div class="rot">Nível mediano · 1º / 2º ano</div><div class="val num">4 <small>/</small> 7</div><div class="det">fevereiro: 1 / 4</div></div>
+    <div class="cartao kpi"><div class="rot">2º ano no nível 10</div><div class="val num" id="k10">–</div><div class="det"><b>+16 p.p.</b> desde fevereiro (8%)</div></div>
+    <div class="cartao kpi"><div class="rot">Nível mediano · 1º / 2º ano</div><div class="val num" id="kmed">–</div><div class="det">fevereiro: 1 / 4</div></div>
     <div class="cartao kpi"><div class="rot">Dose média de prática</div><div class="val num">55 <small>min/sem</small></div><div class="det">7 de 8 turmas na faixa 45–60</div></div>
     <div class="cartao kpi"><div class="rot">Fidelidade de implementação</div><div class="val num">82%</div><div class="det">dos 40 critérios cumpridos (8 turmas × 5)</div></div>
   </section>
@@ -65,7 +65,7 @@
   <section class="grade acoes">
     <div class="cartao acao"><span class="n">1</span><div><b>1º C: aparelhos antes de pedagogia</b><p>Dose de 31 min/sem: 3 de 6 tablets sem sincronizar. Pedir troca de carregadores à secretaria antes de qualquer conversa sobre ritmo.</p></div></div>
     <div class="cartao acao"><span class="n">2</span><div><b>2º D: retomar grupos semanais</b><p>Grupos sugeridos aplicados em 1 de 4 semanas. Convidar a Prof.ª do 2º B (rotação em dia) para planejar junto.</p></div></div>
-    <div class="cartao acao"><span class="n">3</span><div><b>Celebrar o 2º B</b><p>Maior avanço da escola (mediana 4 → 7). Compartilhar o plano de estações na reunião de sexta.</p></div></div>
+    <div class="cartao acao"><span class="n">3</span><div><b>Celebrar o 2º A e o 2º B</b><p>2º A: mediana de 4 para 7 (+3 níveis). 2º B: implementação 100% e grupos em dia. Compartilhar os planos de estações na reunião de sexta.</p></div></div>
   </section>
   <div class="rodape">
     <div><span id="cad"></span><span>A direção vê turmas e, quando precisa, alunos da própria escola. Sem ranking de crianças nem de professoras.</span></div>
@@ -79,12 +79,18 @@ document.getElementById('cad').innerHTML=F.ic.cadeado;
 document.getElementById('legn').innerHTML='<span style="margin-right:8px">Nível</span>'+cor.map((k,i)=>`<i style="background:${k}"></i>`).join('')+'<span style="margin-left:8px">0 → 10</span>';
 const g=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s));
 const T=[['1º A',24,3.6,1.8,58,0.9],['1º B',23,3.2,1.8,52,0.7],['1º C',22,2.3,1.7,31,0.4],['1º D',24,3.9,1.9,56,1.1],
-         ['2º A',22,6.6,2.0,57,4],['2º B',24,null,null,59,4],['2º C',21,6.9,2.0,55,4.6],['2º D',21,5.6,2.1,47,3.2]];
-const turmas=T.map(([n,al,mu,sd,dose,fev])=>{let d;
+         ['2º A',22,6.3,1.6,57,4,30],['2º B',24,null,null,59,4],['2º C',21,6.5,1.5,55,4.6,33],['2º D',21,5.9,1.8,47,3.2,21]];
+const turmas=T.map(([n,al,mu,sd,dose,fev,p10])=>{let d;
   if(n==='2º B')d=[0,0,0,1,3,4,6,3,2,2,3].map(v=>Math.round(v*1000/24)/10);
-  else{const w=Array.from({length:11},(_,i)=>g(i,mu,sd)+0.01);d=F.para100(w);} 
+  else if(p10){const w=Array.from({length:10},(_,i)=>g(i,mu,sd)+0.01);const r=F.para100(w).map(x=>x*(100-p10)/100);d=F.para100(r.concat([p10]));d[Math.round(mu)]+=p10-d[10];d[10]=p10;}
+  else{const w=Array.from({length:11},(_,i)=>g(i,mu,sd)+0.01);w[10]=0;d=F.para100(w);} 
   if(n==='2º B'){d=F.para100(d);}
   return {n,al,dist:d,med:F.mediana(d),dose,fev:Math.round(fev)};});
+// KPIs coerentes com as turmas
+const agr=ini=>{const ts=turmas.filter(t=>t.n.startsWith(ini));const tot=ts.reduce((a,t)=>a+t.al,0);const d=Array(11).fill(0).map((_,i)=>ts.reduce((a,t)=>a+t.dist[i]*t.al,0)/tot);return d;};
+const d1=agr('1º'),d2=agr('2º');
+document.getElementById('kmed').innerHTML=`${F.mediana(d1)} <small>/</small> ${F.mediana(d2)}`;
+document.getElementById('k10').textContent=Math.round(d2[10])+'%';
 // ===== barras 100% =====
 const gb=F.registrar(echarts.init(document.getElementById('barras'),null,{renderer:'svg'}));
 gb.setOption({...F.base(),grid:{left:44,right:56,top:14,bottom:4},
@@ -100,13 +106,13 @@ gb.on('finished',function f(){gb.off('finished',f);const gr=turmas.map((t,i)=>{c
   gb.setOption({graphic:gr});});
 // ===== 3D =====
 const g3=F.registrar(echarts.init(document.getElementById('g3d')));
-const dd=[];turmas.forEach((t,x)=>t.dist.forEach((v,y)=>dd.push({value:[x,y,v],itemStyle:{color:cor[y]},label:{show:y===10,formatter:v+'%',textStyle:{fontSize:12,fontWeight:'bold',color:F.escuro?'#0C131B':'#fff',backgroundColor:cor[10],padding:[3,5],borderRadius:4}}})));
+const dd=[];turmas.forEach((t,x)=>t.dist.forEach((v,y)=>dd.push({value:[x,y,v],itemStyle:{color:cor[y]},label:{show:y===10&&v>0,formatter:v+'%',textStyle:{fontSize:12,fontWeight:'bold',color:F.escuro?'#0C131B':'#fff',backgroundColor:cor[10],padding:[3,5],borderRadius:4}}})));
 const eixo={axisLine:{lineStyle:{color:c('--linha-forte')}},axisTick:{show:false},splitLine:{show:true,lineStyle:{color:c('--linha')}},axisLabel:{textStyle:{color:c('--tinta-2'),fontSize:12,fontFamily:F.fonte}}};
 g3.setOption({...F.base(),tooltip:F.tooltip({formatter:p=>`<b>${turmas[p.value[0]].n}</b> · nível ${p.value[1]}: <b>${p.value[2]}%</b>`}),
  xAxis3D:{...eixo,type:'category',name:'',data:turmas.map(t=>t.n),axisLabel:{...eixo.axisLabel,interval:0,textStyle:{...eixo.axisLabel.textStyle,fontWeight:'bold',color:c('--tinta')}}},
  yAxis3D:{...eixo,type:'category',name:'',data:cor.map((_,i)=>String(i)),axisLabel:{...eixo.axisLabel,interval:1}},
  zAxis3D:{...eixo,type:'value',name:'',max:40,interval:20,axisLabel:{...eixo.axisLabel,formatter:'{value}%'}},
- grid3D:{boxWidth:200,boxDepth:120,boxHeight:64,top:0,environment:'none',axisPointer:{show:false},
+ grid3D:{boxWidth:200,boxDepth:120,boxHeight:64,top:0,left:24,environment:'none',axisPointer:{show:false},
   viewControl:{projection:'orthographic',orthographicSize:150,alpha:30,beta:12,animation:false},
   light:{main:{intensity:1.25,shadow:true,shadowQuality:'high',alpha:52,beta:28},ambient:{intensity:F.escuro?.42:.55}},
   postEffect:{enable:true,FXAA:{enable:true}},temporalSuperSampling:{enable:true}},

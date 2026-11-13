@@ -1,0 +1,117 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="common.css">
+<style>
+body{background:#FBE9EE}
+.bg{position:absolute;inset:0;background:radial-gradient(ellipse at 25% 50%,#FFF6F0,#FBE4EA 60%,#F5D3DD)}
+.top{position:absolute;left:24px;top:18px;display:flex;align-items:center;gap:14px;z-index:3}
+.voltar{width:56px;height:56px;border-radius:18px;background:#FFFBF4;box-shadow:0 4px 0 #E3C2CB;display:flex;align-items:center;justify-content:center}
+.titulo{font-family:Fredoka;font-weight:700;font-size:30px}
+.saldo{position:absolute;right:24px;top:20px;display:flex;align-items:center;gap:10px;background:#FFFBF4;border-radius:999px;padding:6px 18px 6px 8px;box-shadow:0 4px 0 #E3C2CB;font-family:Fredoka;font-weight:600;font-size:16px}
+.saldo b{font-size:26px}
+.porco{position:absolute;left:24px;top:92px;width:560px;height:690px;border-radius:28px;background:radial-gradient(ellipse at 50% 38%,#FFFFFF,#FFEFF3 55%,#F8D9E2);box-shadow:0 6px 0 #E8BCC8,0 20px 30px -12px rgba(150,60,90,.35)}
+.barra{height:34px;border-radius:99px;background:#F4E6EA;box-shadow:inset 0 3px 4px rgba(0,0,0,.12);position:relative;overflow:visible}
+.barra i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:linear-gradient(180deg,#FFD978,#E9A22A);box-shadow:inset 0 -4px 0 rgba(0,0,0,.12),inset 0 3px 0 rgba(255,255,255,.5)}
+.dir{position:absolute;left:604px;top:92px;width:654px}
+.h{font-family:Fredoka;font-weight:700;font-size:20px;margin:0 0 8px 4px}
+.metas{display:flex;gap:12px}
+.meta{flex:1;border-radius:20px;padding:10px;text-align:center;position:relative}
+.meta.on{box-shadow:0 0 0 4px #B23C62,0 4px 0 #E3C2CB}
+.meta .n{font-family:Fredoka;font-weight:700;font-size:19px;letter-spacing:1px}
+.meta .q{font-size:12.5px;color:#6E5D52;line-height:1.2;margin-top:3px}
+.dots{display:flex;gap:3px;justify-content:center;margin-top:5px}
+.dots i{width:12px;height:12px;border-radius:4px;background:#F1E4D0;border:1.5px solid #E3D0B4}
+.dots i.c{background:#F2B33D;border-color:#C9891E}
+.blk{border-radius:20px;padding:12px 16px;margin-top:10px}
+.sw{width:58px;height:32px;border-radius:99px;background:#2F6B43;position:relative;flex:none;box-shadow:inset 0 2px 3px rgba(0,0,0,.25)}
+.sw::after{content:'';position:absolute;right:3px;top:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 2px 2px rgba(0,0,0,.25)}
+</style></head><body>
+<div class="bg"></div>
+<div class="top"><div class="voltar"><svg width="30" height="30" viewBox="0 0 20 20"><path d="M12,4 L6,10 L12,16" stroke="#7A4B2E" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="titulo">Meu cofrinho</div></div>
+<div class="saldo" id="saldo"></div>
+
+<div class="porco">
+ <div class="t" style="position:absolute;left:24px;top:20px;font-weight:600;font-size:13px;letter-spacing:1.5px;color:#B23C62">MINHA META</div>
+ <div style="position:absolute;left:24px;top:40px;display:flex;align-items:center;gap:12px"><div id="metaimg"></div><div class="t" style="font-size:40px;font-weight:700;letter-spacing:2px">SANFONA</div></div>
+ <div id="pig" style="position:absolute;left:60px;top:118px"></div>
+ <div style="position:absolute;left:30px;right:30px;top:478px">
+  <div style="display:flex;justify-content:space-between;font-family:Fredoka;font-weight:700;font-size:20px;margin:0 4px 6px"><span>guardei <span style="color:#B07A12">22</span></span><span>meta 36</span></div>
+  <div class="barra"><i style="width:61%"></i><div id="marks"></div></div>
+  <div class="t" style="text-align:center;font-weight:700;font-size:30px;margin-top:26px;letter-spacing:1px">FALTA <span style="color:#B23C62">14</span></div>
+  <div style="display:flex;gap:10px;margin-top:14px">
+   <div class="btn btn-sol" style="flex:1;height:52px;font-size:19px" id="g5"></div>
+   <div class="btn btn-sol" style="flex:1;height:52px;font-size:19px" id="g10"></div>
+   <div class="btn btn-papel" style="flex:1;height:52px;font-size:16px">Tirar moedas</div>
+  </div>
+ </div>
+</div>
+
+<div class="dir">
+ <div class="h">Escolha a sua meta <span style="font-family:Andika;font-weight:400;font-size:14px;color:#6E5D52">· uma por vez · troque quando quiser</span></div>
+ <div class="metas" id="metas"></div>
+
+ <div class="blk card" style="display:flex;gap:16px;align-items:center;background:linear-gradient(180deg,#FFFBEF,#FFF1CC);border-color:#F3D98E">
+  <div id="bonus" style="flex:none;width:150px;height:110px;position:relative"></div>
+  <div><div class="t" style="font-weight:700;font-size:22px">Bônus de paciência: <span style="color:#B07A12">+3</span></div>
+  <div style="font-size:15px;line-height:1.35;margin-top:3px">Quando chegar a 36, o cofrinho dá <b>1 moeda a mais para cada 10 guardadas</b>. É sempre assim. A regra nunca muda.</div></div>
+ </div>
+
+ <div class="blk card" style="display:flex;gap:14px;align-items:center">
+  <div style="display:flex;gap:4px;align-items:center;flex:none" id="regra"></div>
+  <div style="flex:1"><div class="t" style="font-weight:700;font-size:18px">Guardar 1 de cada 3 moedas</div><div style="font-size:13.5px;color:#6E5D52;line-height:1.3">Escolhido com a mamãe. Pode desligar quando quiser.</div></div>
+  <div class="sw"></div>
+ </div>
+
+ <div class="blk card" style="display:flex;gap:14px;align-items:center;padding:10px 16px">
+  <div style="flex:none" id="sof"></div>
+  <div style="font-size:16px;line-height:1.3">"Você está guardando com paciência. <b>Esperar também é uma conquista!</b> Se quiser usar agora, tudo bem: a escolha é sua."</div>
+ </div>
+ <div style="display:flex;gap:10px;margin-top:12px">
+  <div class="card ad" style="flex:1;padding:8px 12px;font-size:12px;line-height:1.28"><b>Tirar é livre.</b> Nada se perde. Só o bônus espera a meta completa.</div>
+  <div class="card ad" style="flex:1;padding:8px 12px;font-size:12px;line-height:1.28"><b>Progresso real.</b> A barra começa no que foi guardado de verdade, sem "empurrão" falso.</div>
+  <div class="card ad" style="flex:1;padding:8px 12px;font-size:12px;line-height:1.28"><b>Na família:</b> o painel sugere a conversa "O que você está guardando? Por quê?"</div>
+ </div>
+</div>
+<script src="base.js"></script><script src="chars.js"></script>
+<script>
+const {Ctx,lt,dk,S,gl,spark}=FX;
+saldo.innerHTML=coin(36)+'<span>livres</span><b>31</b><span style="margin-left:6px;color:#B23C62">no cofrinho</span><b>22</b>';
+metaimg.innerHTML=item('sanfona','width="64" height="64"');
+// porquinho
+(function(){const c=new Ctx();const p='#F29BB5';
+const coins=[];for(let r=0;r<5;r++)for(let k=0;k<6-(r%2);k++){if(coins.length>=22)break;coins.push([168+k*30+(r%2)*15,262-r*20])}
+pig.innerHTML=c.svg(`${c.sh(220,330,170,22,.28)}
+<path d="M80,290 l-6,40 h34 l4,-34z M310,296 l4,34 h34 l-6,-40z M120,300 l-2,34 h32 l2,-30z M270,302 l2,32 h32 l-2,-34z" fill="${c.l(dk(p,.1))}" stroke="${S(p)}" stroke-width="3" stroke-linejoin="round"/>
+<path d="M376,160 q34,-10 30,20 q-4,16 -18,10" stroke="${dk(p,.1)}" stroke-width="7" fill="none" stroke-linecap="round"/>
+<ellipse cx="220" cy="200" rx="170" ry="128" fill="${c.r(p,{cx:35,cy:25,hi:.5,lo:.3})}" stroke="${S(p)}" stroke-width="4"/>
+<path d="M110,92 L96,36 L150,76Z" fill="${c.l(p)}" stroke="${S(p)}" stroke-width="4" stroke-linejoin="round"/><path d="M112,82 L104,52 L136,76Z" fill="#E9718F"/>
+<path d="M190,74 L196,24 L236,72Z" fill="${c.l(p)}" stroke="${S(p)}" stroke-width="4" stroke-linejoin="round"/>
+<rect x="190" y="84" width="74" height="14" rx="7" fill="${dk(p,.5)}"/>
+<ellipse cx="66" cy="196" rx="40" ry="34" fill="${c.r(lt(p,.1))}" stroke="${S(p)}" stroke-width="4"/>
+<ellipse cx="54" cy="194" rx="7" ry="10" fill="${dk(p,.45)}"/><ellipse cx="78" cy="194" rx="7" ry="10" fill="${dk(p,.45)}"/>
+${FX.eye(112,150,11)}
+<circle cx="120" cy="196" r="14" fill="#E9718F" opacity=".45"/>
+<path d="M100,232 q14,10 28,0" stroke="${dk(p,.45)}" stroke-width="4" fill="none" stroke-linecap="round"/>
+<!-- janela de vidro -->
+<ellipse cx="248" cy="226" rx="104" ry="76" fill="${c.stops([[0,'#ffffff',.85],[1,'#E8F4F8',.75]],[0,0,0,1])}" stroke="${dk(p,.25)}" stroke-width="5"/>
+<clipPath id="jw"><ellipse cx="248" cy="226" rx="100" ry="72"/></clipPath>
+<g clip-path="url(#jw)"><rect x="140" y="${226+72-112}" width="220" height="140" fill="#FFF1C7" opacity=".55"/>
+${coins.map(([x,y])=>`<g transform="translate(${x},${y})"><ellipse rx="15" ry="9" cy="4" fill="#B87A16"/><ellipse rx="15" ry="9" fill="${c.r('#F2B33D',{hi:.55})}" stroke="#A86A12" stroke-width="2"/><ellipse rx="8" ry="4.5" fill="none" stroke="#D99A26" stroke-width="2"/></g>`).join('')}
+<path d="M140,${226+72-112} h220" stroke="#B23C62" stroke-width="3" stroke-dasharray="8 6" opacity=".0"/></g>
+<path d="M166,190 q20,-30 66,-36" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" opacity=".8"/>
+${gl('M90,120 Q120,70 200,60 Q130,86 104,132Z',.45)}
+<g transform="translate(232,40)"><ellipse rx="22" ry="12" cy="5" fill="#B87A16"/><ellipse rx="22" ry="12" fill="${c.r('#F2B33D',{hi:.55})}" stroke="#A86A12" stroke-width="2.5"/></g>
+<path d="M232,58 v20" stroke="#B07A12" stroke-width="3" stroke-dasharray="3 4"/>
+${spark(380,70)}${spark(60,110,.7)}
+`,'0 0 440 340','width="440" height="340"');})();
+// marcas de 5 em 5 na barra
+let m='';for(let v=5;v<36;v+=5){const x=v/36*100;m+=`<div style="position:absolute;left:${x}%;top:-6px;bottom:-6px;width:2px;background:rgba(122,75,46,.25)"></div><div class="t" style="position:absolute;left:${x}%;top:40px;transform:translateX(-50%);font-size:12px;font-weight:600;color:#A8957E">${v}</div>`}
+marks.innerHTML=m;
+g5.innerHTML=coin(26)+'Guardar 5';g10.innerHTML=coin(26)+'Guardar 10';
+const M=[['sanfona','SANFONA',36,'música do Sertão',2,1],['capa','CAPA',40,'★ meta: só com cofrinho',3,0],['coreto','CORETO',45,'a vila ganha música',4,0]];
+metas.innerHTML=M.map(([k,n,p,q,sem,on])=>`<div class="meta card ${on?'on':''}">${on?'<span style="position:absolute;left:8px;top:8px;background:#B23C62;color:#fff;font-family:Fredoka;font-weight:600;font-size:11px;padding:2px 8px;border-radius:99px">ESCOLHIDA</span>':''}${item(k,'width="96" height="96"')}<div class="n">${n}</div><div style="display:flex;justify-content:center;margin-top:4px"><span class="preco" style="font-size:16px">${coin(18)}${p}</span></div><div class="q">${q}</div><div class="dots">${Array.from({length:sem},(_,i)=>`<i class="c"></i>`).join('')}</div><div class="q" style="font-size:11px">faltam ≈ ${sem} sessões de leitura</div></div>`).join('');
+bonus.innerHTML=`<div style="position:absolute;left:0;top:14px;display:flex;gap:2px">${[0,1,2].map(i=>`<div style="text-align:center"><div style="display:flex;flex-direction:column-reverse">${Array.from({length:5},()=>coin(22)).map(s=>`<div style="margin-top:-13px">${s}</div>`).join('')}</div></div>`).join('')}</div>
+<div class="t" style="position:absolute;left:78px;top:30px;font-weight:700;font-size:30px;color:#2F6B43">→</div>
+<div style="position:absolute;left:104px;top:8px;display:flex;flex-direction:column;gap:0">${[0,1,2].map(()=>coin(30)).join('')}</div>
+<div style="position:absolute;left:96px;top:98px;font-family:Fredoka;font-weight:700;font-size:12px;color:#B07A12;white-space:nowrap">+1 a cada 10</div>`;
+regra.innerHTML=coin(28)+coin(28)+`<div style="position:relative">${coin(28)}<svg style="position:absolute;left:4px;top:24px" width="20" height="20" viewBox="0 0 20 20"><path d="M10,2 v12 M5,9 l5,5 5,-5" stroke="#B23C62" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div>`;
+sof.innerHTML=sofia({busto:true,attrs:'width="64" height="68"'});
+</script></body></html>

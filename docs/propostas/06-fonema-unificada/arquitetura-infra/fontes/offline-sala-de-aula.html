@@ -1,0 +1,63 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="comum.css">
+<style>
+.pagina{width:1800px}
+.tempo{display:flex;gap:40px;margin-bottom:26px}.tempo .caixa{flex:1}
+.tempo .caixa h3{font-size:17px}.hora{font-size:13px;font-weight:700;color:var(--suave);letter-spacing:.4px;text-transform:uppercase}
+.meio{display:grid;grid-template-columns:1040px 1fr;gap:110px}
+.escola>.rot{background:var(--verde)}.nuvem>.rot{background:var(--laranja)}.nuvem{border-color:#F0B37E;background:#FFFBF6}
+.esc{display:grid;grid-template-columns:1fr 300px;gap:20px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tab{border:3px solid #2B3445;border-radius:18px;padding:10px 12px;background:#fff}
+.tab h3{font-size:16px}.tab p{font-size:13.5px;line-height:1.35;color:#2D3748}
+.tab .chips .chip{font-size:12.8px}
+.dir{display:flex;flex-direction:column;gap:14px}
+.nuvem .caixa{margin-bottom:14px}
+.regras{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.regras .caixa h3{font-size:16px}.regras .caixa p,.regras .caixa li{font-size:14px}
+</style></head><body><div class="pagina">
+<div class="cab"><h1>Modo sala de aula offline — tablets compartilhados<small>Até 40 perfis por tablet · até 30 dias sem internet · a criança nunca espera a rede · eventos imutáveis + PowerSync</small></h1>
+<div class="marca"><b>FONEMA</b><br>offline-sala-de-aula · v1 · [PoC] 40 perfis × 30 dias</div></div>
+<div class="tempo">
+ <div class="caixa c-azul" id="t1"><div class="hora">Noite anterior · 19h–6h</div><h3>Preparar</h3><p>MDM aplica a versão aprovada · tablet baixa pacotes da turma (região atual + próxima, áudio, vídeos, modelo de fala) e os dados da turma</p></div>
+ <div class="caixa c-rosa" id="t2"><div class="hora">Início da aula</div><h3>Entrar</h3><p>QR da turma → grade de avatares (≤ 30) → senha de 3 figuras entre 9 · troca em ≤ 2 toques · dupla ou estação</p></div>
+ <div class="caixa c-verde" id="t3"><div class="hora">Durante a aula · sem internet</div><h3>Aprender</h3><p>tudo local: lição, mundo, Sofia, fala no aparelho, economia · eventos na fila cifrada · modo ao vivo pelo hub da professora (V1)</p></div>
+ <div class="caixa c-laranja" id="t4"><div class="hora">Depois · quando houver Wi-Fi</div><h3>Sincronizar</h3><p>lotes de eventos sobem · servidor recalcula domínio e nível · job noturno monta grupos e plano de aula de amanhã</p></div>
+</div>
+<div class="meio">
+ <div class="camada escola" id="escola"><span class="rot">Escola · sala de aula (rede local, internet instável ou ausente)</span>
+  <div class="esc"><div class="tabs">
+   <div class="tab" id="tb1"><h3>Tablet 1 · turma 1º A</h3><p>Ana, Davi, Luiza… (perfis da turma)</p><div class="chips"><span class="chip">SQLite cifrado</span><span class="chip">fila de eventos</span><span class="chip">pacotes assinados</span></div></div>
+   <div class="tab" id="tb2"><h3>Tablet 2 · modo dupla</h3><p>2 crianças com turnos · cada evento leva o perfil certo</p><div class="chips"><span class="chip">SQLite cifrado</span><span class="chip">fila de eventos</span></div></div>
+   <div class="tab" id="tb3"><h3>Tablet 3 · modo estação</h3><p>grupo de 10–15 min · troca rápida de aluno</p><div class="chips"><span class="chip">fala no aparelho</span><span class="chip">fila de eventos</span></div></div>
+   <div class="tab" id="tb4"><h3>Tablet 4 · Modo Leve</h3><p>aparelho de 2 GB · mundo em 2,5D · mesmas lições</p><div class="chips"><span class="chip">≤ 250 MB RAM</span><span class="chip">fila de eventos</span></div></div>
+  </div>
+  <div class="dir">
+   <div class="caixa c-roxo" id="hub"><h3>Hub da professora (V1)</h3><p>celular/tablet atrás da porteira · <b>modo ao vivo</b> lendo os tablets pela rede local (mDNS + HTTPS com certificado fixado da turma)</p></div>
+   <div class="caixa c-cinza" id="wifi"><h3>Wi-Fi da escola</h3><p>quando existe: download à noite e envio depois da aula</p></div>
+   <div class="caixa c-cinza" id="mdm"><h3>MDM (Android Enterprise)</h3><p>quiosque · versão aprovada · janela 19h–6h · apagamento remoto</p></div>
+  </div></div></div>
+ <div class="camada nuvem"><span class="rot">AWS sa-east-1</span>
+  <div class="caixa c-teal" id="cdn"><h3>CloudFront + S3</h3><p>pacotes por região e modelo de fala, assinados (Ed25519) e verificados no tablet</p></div>
+  <div class="caixa c-verde" id="ps"><h3>PowerSync (leitura)</h3><p>baldes <b>turma:{id}</b> e <b>crianca:{id}</b>: perfis, grupos do dia, domínio oficial, catálogo</p></div>
+  <div class="caixa c-azul" id="api"><h3>API /sync/eventos (escrita)</h3><p>lotes ≤ 200 eventos · UUID v7 · idempotente · aceita as 2 últimas versões do protocolo</p></div>
+  <div class="caixa c-laranja" id="job" style="margin-bottom:0"><h3>Job noturno da turma</h3><p>alertas · grupos de 3–5 · plano de aula 3 × 15 min</p></div>
+ </div>
+</div>
+<div class="regras">
+ <div class="caixa c-verde"><h3>Regras de conflito</h3><ul><li>progresso = união de eventos (sem conflito)</li><li>domínio/nível: maior estado validado vence; nunca desce visível</li><li>vila: operações ordenadas por relógio lógico</li><li>moedas: correção só no próximo ganho</li></ul></div>
+ <div class="caixa c-azul"><h3>Garantias</h3><ul><li>fila apagada só após confirmação</li><li>lote típico &lt; 200 KB por turma/dia</li><li>tablet nunca bloqueia a criança por falta de rede</li><li>teste de sync 40 perfis × 30 dias no CI</li></ul></div>
+ <div class="caixa c-ambar f-ambar"><h3>Escola sem internet nenhuma</h3><ul><li><b>ponto de coleta</b>: o hub leva os lotes cifrados e assinados por aparelho até um Wi-Fi</li><li>servidor verifica a assinatura de cada tablet</li><li>pacotes pré-instalados via MDM [PoC]</li></ul></div>
+ <div class="caixa c-vermelho"><h3>Segurança do tablet compartilhado</h3><ul><li>token de dispositivo atestado e revogável</li><li>criança sem credencial; sessão de 15 min</li><li>áreas adultas atrás da porteira</li><li>perda/roubo: apagamento remoto</li></ul></div>
+</div>
+<div class="rodape"><div class="leg"><span><i style="border-color:#0E7480"></i>download de pacotes (noite)</span><span><i class="tr" style="border-color:#1E7A4C"></i>leitura PowerSync</span><span><i style="border-color:#1F5FAD"></i>envio de eventos (depois)</span><span><i class="tr" style="border-color:#5B3FA6"></i>rede local (sem internet)</span></div><div>Detalhes: README.md §7 e §20</div></div>
+</div>
+<script src="setas.js"></script><script>
+desenhar([
+ ['t1','t2',{de:'r',para:'l',horiz:true}],['t2','t3',{de:'r',para:'l',horiz:true}],['t3','t4',{de:'r',para:'l',horiz:true}],
+ ['cdn','escola',{de:'l',para:'r',cor:'#0E7480',horiz:true,rot:'noite: pacotes',t:.5}],
+ ['ps','escola',{de:'l',para:'r',cor:'#1E7A4C',tr:true,horiz:true,rot:'dados da turma',t:.5}],
+ ['escola','api',{de:'r',para:'l',cor:'#1F5FAD',duplo:false,horiz:false,rot:'depois: lotes',t:.5,da:150}],
+ ['hub','tb2',{de:'l',para:'r',cor:'#5B3FA6',tr:true,duplo:true}],
+ ['hub','tb4',{de:'l',para:'r',cor:'#5B3FA6',tr:true,duplo:true}],
+]);
+</script></body></html>

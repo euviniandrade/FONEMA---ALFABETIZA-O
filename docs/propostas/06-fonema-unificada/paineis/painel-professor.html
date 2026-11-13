@@ -59,7 +59,7 @@ html[data-tema="escuro"] .grupo h3 .tag{color:#0C131B}
   <section class="grade l1">
     <div class="cartao"><h2>Quem precisa de mim hoje <small>4 de 24 · cada sinal exige 2+ semanas e dose adequada</small></h2><div class="quem" id="quem"></div></div>
     <div class="cartao"><h2>Turma no termômetro <small>quantos alunos em cada nível · não é ranking</small></h2><div id="termo"></div>
-      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--tinta-2);margin-top:2px"><span>Mediana <b class="num" style="color:var(--tinta)">nível 7</b> · faltam 3 até o 10</span><span><b class="num" style="color:var(--tinta)">3</b> já no nível 10</span></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--tinta-2);margin-top:2px"><span id="tmed"></span><span><b class="num" style="color:var(--tinta)">3</b> já no nível 10</span></div></div>
   </section>
 
   <section class="grade l2">
@@ -121,6 +121,7 @@ document.getElementById('quem').innerHTML=quem.map(([t,r,n,p,a,b],i)=>`<div clas
 
 // ===== termômetro da turma (contagem por nível) =====
 const cont=Array(11).fill(0);alunos.forEach(a=>cont[a.nv]++);
+{const tot=cont.reduce((a,b)=>a+b,0);let a=0,m=0;for(let i=0;i<11;i++){a+=cont[i];if(a>=tot/2){m=i;break;}}document.getElementById('tmed').innerHTML=`Mediana <b class="num" style="color:var(--tinta)">nível ${m}</b> · faltam ${10-m} até o 10`;}
 const gt=F.registrar(echarts.init(document.getElementById('termo'),null,{renderer:'svg'}));
 gt.setOption({...F.base(),grid:{left:8,right:8,top:24,bottom:26},
  tooltip:F.tooltip({trigger:'item',formatter:p=>`Nível ${p.name}: <b>${p.value}</b> aluno(s)`}),
