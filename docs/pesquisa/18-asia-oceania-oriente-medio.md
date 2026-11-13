@@ -2,16 +2,17 @@
 
 > Frente 18 de 30 — Pesquisa profunda internacional do projeto FONEMA
 > Data: 13/11/2026
-> Status: **parcial**. Ver "Limitações desta frente" abaixo antes de usar.
+> Status: **completo (2ª rodada, 13/11/2026)**, com lacunas listadas na Tabela B. Ver "Limitações" antes de usar.
 
 ---
 
 ## Limitações desta frente (leia primeiro)
 
-1. **A cota de buscas acabou no meio da coleta.** A cota de buscas web desta rodada é compartilhada entre as 30 frentes e se esgotou depois de 11 buscas desta frente. Não foi possível buscar Singapura, China, Japão, Coreia, Israel, países árabes, Vietnã e Indonésia, nem dados de TaRL/ASER/NIPUN.
-2. **A leitura direta de páginas estava bloqueada.** O ambiente bloqueou o acesso a `blog.google`, `services.google.com`, `readalong.google` e `frontiersin.org`. Os dados dessas fontes vêm dos trechos devolvidos pelo buscador, não da leitura completa dos documentos.
-3. **Cobertura verificada: 3 países.** Austrália, Nova Zelândia e Índia têm fontes verificadas, listadas na Tabela A. Os demais países aparecem na seção 2.4 só com **conhecimento prévio, marcado como NÃO VERIFICADO**. Esse conteúdo serve como pauta para uma nova rodada de busca e não pode ser citado como evidência.
-4. **Para completar:** rodar de novo esta frente com mais cota de buscas e liberar estes domínios na rede: `blog.google`, `readalong.google`, `services.google.com`, `frontiersin.org`, `asercentre.org`, `teachingattherightlevel.org`, `education.gov.in`, `moe.gov.sg`, `edresearch.edu.au`.
+1. **Histórico.** A 1ª rodada só cobriu Austrália, Nova Zelândia e Índia (Read Along), porque a cota de buscas acabou. A 2ª rodada completou Índia (ASER/TaRL/NIPUN), Singapura, China, Japão, Coreia do Sul, Vietnã, Indonésia, Israel, países árabes (Emirados, Jordânia, Arábia Saudita), Turquia e Irã, com **65 fontes novas verificadas** ([45]–[109]).
+2. **A leitura direta de páginas continua bloqueada** para vários domínios (ex.: `blog.google`, `readalong.google`, `frontiersin.org`, `povertyactionlab.org`, `pirls2021.org`). Dados de relatórios e documentos oficiais vêm dos trechos devolvidos pelo buscador. Os artigos acadêmicos foram conferidos no Crossref/PubMed (DOI, autores, ano, periódico), mas não lidos na íntegra.
+3. **Evidência de programas é, em geral, autorrelatada** (Read Along, BSLA, INOVASI, RAMP, Iqra 2020). As exceções com desenho experimental são o TaRL (RCTs da J-PAL [49][50][51]) e o Iqra (RCT da J-PAL, tamanho de efeito não confirmado [95]).
+4. **Cobertura desigual.** Irã e Arábia Saudita têm só pesquisa acadêmica, sem política ou edtech verificável. Ver lacunas NV1–NV6 na Tabela B.
+5. **Para aprofundar:** liberar `povertyactionlab.org`, `pirls2021.org`, `asercentre.org`, `moe.gov.sg`, `education.gov.in`, `frontiersin.org`, `readalong.google`.
 
 ---
 
@@ -30,11 +31,19 @@
   - O país cortou o financiamento do Reading Recovery a partir de 2025 e redirecionou a verba para a literacia estruturada [17][18].
   - Escalou o **Better Start Literacy Approach (BSLA)** da Universidade de Canterbury (Gillon, McNeill). O BSLA mostrou ganhos acelerados em consciência fonêmica e fônica após 10 semanas de ensino Tier 1, com mais de 3.000 professores participando entre 2020 e 2023 [13][14].
   - **Ressalva:** a maioria dos estudos é dos próprios desenvolvedores [14][15].
+- **Índia — níveis, não séries.** A NIPUN Bharat (2021) quer alfabetização e numeracia fundamentais até o 3º ano em 2026–27 [45][46]. O ASER 2024 mostra que só 27,1% das crianças do 3º ano leem texto do 2º ano [47][48]. O TaRL (agrupar por nível de aprendizagem) tem 6 RCTs positivos na Índia, **mas só funciona com tempo dedicado** [49][50].
+- **Ortografias transparentes (turco, vietnamita, indonésio, hebraico e árabe vocalizados) levam a decodificação rápida no 1º ano**; o gargalo seguinte é fluência, morfologia, vocabulário e escrita [84][85][101][103][108]. Share alerta contra importar conclusões do inglês, que é uma ortografia "atípica" [85]. A Turquia trocou o método global por um método fônico nacional em 2004–05 [105].
+- **Escritas com "pistas" que são retiradas aos poucos.** Hebraico e árabe começam com sinais vocálicos e os retiram; o pinyin serve de andaime para os caracteres chineses; o hiragana é aprendido antes dos kanji [62][64][67][109]. No Japão, conhecer ao menos 40 dos 45 hiragana antes do 1º ano é o melhor ponto de corte para prever a fluência [67].
+- **Diglossia e variação dialetal** (árabe) afetam a leitura inicial [89][90][93]: paralelo direto com os sotaques regionais do pt-BR no reconhecimento de fala.
+- **Riscos de edtech:** a "dupla redução" chinesa (2021) acabou com a tutoria acadêmica lucrativa da noite para o dia [56][57], e a China já exigia desde 2019 cadastro, limite de tempo e proteção de dados em apps educativos para menores [60][61]. Na Coreia, os livros didáticos digitais com IA perderam o status legal em 2025, após falhas e resistência [73][74].
+- **Decodificáveis e avaliação simples em todo lugar:** livros decodificáveis nivelados em árabe na Jordânia [97], EGRA simplificado na Indonésia [79][82], programa Iqra de automatização de letras nos Emirados [94][95].
 - **Lição central para o FONEMA:** o pacote que funciona em escala combina:
   - (a) sequência fônica explícita e sistemática;
   - (b) textos decodificáveis alinhados a essa sequência;
   - (c) uma checagem curta e padronizada de decodificação, com pseudopalavras;
   - (d) um tutor de leitura oral com reconhecimento de fala e retorno imediato, de preferência offline e sem coletar áudio, com engajamento como métrica principal.
+  - (e) diagnóstico e agrupamento **por nível** (ASER/TaRL), com tempo diário dedicado;
+  - (f) conformidade e alinhamento à política pública desde o início (lições da China e da Coreia).
 
 ---
 
@@ -252,17 +261,23 @@
 3. **Criar uma "Checagem Fônica FONEMA".** É o equivalente brasileiro do PSC australiano e inglês [9][11][12]: cerca de 40 itens, metade pseudopalavras, aplicada pela Sofia com reconhecimento de fala, para gerar um diagnóstico de decodificação comparável no tempo. Tomar cuidado com o risco de "treinar para o teste".
 4. **Decodificáveis rigorosamente alinhados à sequência.** O padrão australiano (NSW, VCAA) exige que cada livro use só as correspondências letra-som já ensinadas [24][38]. O FONEMA deve gerar ou validar automaticamente a "decodificabilidade" de cada texto contra a sequência pt-BR, e exibir isso ao professor. A crítica ao rótulo "totalmente decodificável" usado como marketing [39] pede transparência na métrica.
 5. **Modelo em camadas (Tier 1 e Tier 2), inspirado no BSLA** [14][16]. Trilha universal + reforço intensivo automático para quem não avança após cerca de 6 a 10 semanas, com alertas para o professor. O BSLA também dá peso à **linguagem oral e ao vocabulário**, que o FONEMA não deve negligenciar.
-6. **Agrupar por nível, não por idade (TaRL/ASER, a verificar).** Diagnóstico inicial em níveis simples: letra, sílaba, palavra, frase, texto.
-7. **Usar a sílaba como andaime visual.** Hangul (blocos) e kana (silabário) sugerem jogos em que a criança "monta" a sílaba a partir das letras e enxerga o bloco silábico. Isso conversa bem com a estrutura CV do português (a verificar).
+6. **Agrupar por nível, não por idade (TaRL/ASER).** Diagnóstico inicial oral de 5–10 min em níveis simples (letra, sílaba, palavra, frase, texto), no modelo do ASER [47]. O painel do professor sugere grupos por nível. Recomendar um **horário fixo diário**: sem tempo dedicado, o TaRL não teve impacto [49].
+7. **Usar a sílaba como andaime visual, sem abandonar o fonema.** Hangul (blocos) e kana (silabário) sugerem jogos em que a criança "monta" a sílaba a partir das letras e enxerga o bloco silábico, o que conversa com a estrutura CV frequente do português. Mas mesmo no japonês a consciência fonêmica se desenvolve e importa [69][71].
 8. **Apoio ao professor e à família.** Os casos australianos mostram que a política só funciona com formação de professores (microcursos NSW, Victorian Academy [24][37]) e com material para casa (SPELD [27]). O FONEMA precisa de um painel do professor e de um modo família.
 9. **Desconfiar de evidência produzida pelo próprio desenvolvedor.** Tanto o Read Along (piloto) quanto o BSLA têm sobretudo estudos internos. O FONEMA deve planejar desde já um piloto com grupo de comparação e, se possível, uma avaliação externa.
-10. **Risco regulatório.** A "dupla redução" chinesa (a verificar) mostra que edtech infantil pode sofrer mudanças regulatórias bruscas. Manter um modelo alinhado a políticas públicas (PNA, Compromisso Nacional Criança Alfabetizada) e às regras de dados de crianças.
+10. **Risco regulatório.** A "dupla redução" chinesa [56][57] e o rebaixamento dos livros digitais com IA na Coreia [73][74] mostram que edtech infantil pode sofrer mudanças bruscas. Manter o FONEMA como complemento alinhado a políticas públicas (PNA, Compromisso Nacional Criança Alfabetizada) e adotar voluntariamente o que a China exige desde 2019: limite de tempo diário, painel dos pais, minimização de dados [60][61] (alinha com ECA Digital/LGPD).
+11. **Limiar de alerta precoce.** Como o ponto de corte de 40/45 hiragana no Japão [67], definir um limiar de domínio das correspondências grafema-fonema do pt-BR que dispare alerta ao professor e à família.
+12. **Pistas retiráveis.** Como o nikud hebraico e as harakat árabes [109][91], usar no início apoios visuais (sílabas coloridas, dígrafos marcados) e retirá-los gradualmente conforme a criança ganha fluência.
+13. **Não importar o ritmo do inglês.** Em ortografias transparentes a decodificação vem cedo [101][108]; Share [85] alerta contra o anglocentrismo. Depois da decodificação, o FONEMA deve investir em **fluência, morfologia, vocabulário e escrita/ditado** (na Turquia, escrever é mais difícil que ler [103]).
+14. **Respeitar a variação dialetal.** A diglossia árabe [89][93] é o paralelo extremo do que ocorre no Brasil: o reconhecimento de fala da Sofia deve aceitar pronúncias regionais (ex.: /tʃi/ × /te/, "r" retroflexo) e avaliar a decodificação, não o sotaque.
+15. **Automatização das letras como treino próprio.** O Iqra (Emirados) treina o reconhecimento visual rápido das letras para ganhar fluência [94][100]: incluir jogos curtos e cronometrados de reconhecimento de letras e sílabas.
+16. **Narrativa animada para cada correspondência.** As animações de pinyin por histórias em Singapura [53] e o ciclo "brincar → reconhecer → praticar → escrever" dos apps chineses [66] são bons moldes para cada unidade letra-som com a Sofia.
 
 ---
 
 ## 4. Referências
 
-### Tabela A — Fontes verificadas (encontradas na busca web desta rodada)
+### Tabela A — Fontes verificadas [V] (1ª rodada: 1–44; 2ª rodada: 45–109)
 
 | # | Autor(es)/Instituição | Ano | Título | País | Tipo | URL/DOI | O que aproveitar |
 |---|---|---|---|---|---|---|---|
@@ -310,22 +325,91 @@
 | 42 | North & South | 2024 | Reading Wars | Nova Zelândia | Revista | https://northandsouth.co.nz/2024/07/15/reading-wars/ | Contexto do debate público |
 | 43 | Phys.org | 2024 | Structured early literacy approach achieves outstanding results for children in New Zealand | Nova Zelândia | Imprensa científica | https://phys.org/news/2024-05-early-literacy-approach-outstanding-results.amp | Divulgação do BSLA |
 | 44 | OUCI (índice) | 2024 | A better start literacy approach: effectiveness of Tier 1 and Tier 2 support… | Nova Zelândia | Registro bibliográfico | https://ouci.dntb.gov.ua/works/4L6G5aL9 | Metadados do artigo [14] |
+| 45 | Ministry of Education, Índia (DoSE&L) | 2021 | NIPUN Bharat — Guidelines for Implementation | Índia | Diretriz oficial | https://diksha.gov.in/assets/docs/NIPUN-BHARAT-GUIDELINES-EN.pdf | Metas por idade (Lakshya); FLN até o 3º ano em 2026–27 |
+| 46 | PIB / Ministry of Education, Índia | 2021 | NIPUN Bharat (documento de lançamento) | Índia | Comunicado oficial | https://static.pib.gov.in/WriteReadData/specificdocs/documents/2021/jul/doc20217531.pdf | Lançamento em 5/7/2021; governança |
+| 47 | ASER Centre | 2025 | ASER 2024 — National findings | Índia | Levantamento nacional | https://asercentre.org/wp-content/uploads/2022/12/ASER_2024_National-findings.pdf | 27,1% do 3º ano leem texto do 2º ano; ferramenta de níveis |
+| 48 | PIB, Governo da Índia | 2025 | Factsheet ASER 2024 | Índia | Nota oficial | https://www.pib.gov.in/FactsheetDetails.aspx?Id=149118 | 23,4% na rede pública; recuperação pós-pandemia |
+| 49 | J-PAL | s.d. | Teaching at the Right Level to improve learning (policy insight) | Índia/global | Síntese de RCTs | https://www.povertyactionlab.org/print/pdf/node/4537 | Agrupar por nível; tempo dedicado; custo-efetividade |
+| 50 | Banerjee, A.; Banerji, R.; Berry, J.; Duflo, E. et al. | 2017 | From Proof of Concept to Scalable Policies: Challenges and Solutions, with an Application | Índia | Artigo (J. Econ. Perspectives 31(4)) | DOI 10.1257/jep.31.4.73 | Como escalar o TaRL |
+| 51 | Banerjee, A.; Cole, S.; Duflo, E.; Linden, L. | 2005 | Remedying Education: Evidence from Two Randomized Experiments in India | Índia | Working paper NBER | DOI 10.3386/w11904 | RCT de remediação por nível |
+| 52 | MOE Singapore (Schoolbag) | 2010 | The STELLAR Way to English Language Learning | Singapura | Publicação oficial | https://www.schoolbag.edu.sg/?p=6513 | Prazer na leitura compartilhada; estratégias do STELLAR |
+| 53 | MOE Singapore | 2024 | Leveraging technology to enhance students' Mother Tongue Language learning experience (forum reply) | Singapura | Resposta oficial | https://www.moe.gov.sg/news/forum-letter-replies/20240510-leveraging-technology-to-enhance-students-mother-tongue-language-learning-experience | Animações de pinyin por histórias (currículo 2024) |
+| 54 | MOE Singapore | 2024 | Schools adopt varied teaching approaches to nurture learners of Chinese Language for life | Singapura | Resposta oficial | https://www.moe.gov.sg/news/forum-letter-replies/20240608-schools-adopt-varied-teaching-approaches-to-nurture-learners-of-chinese-language-for-life | Abordagens de ensino do chinês |
+| 55 | The Star | 2023 | New curriculum for mother tongue languages for Primary 1 pupils in Singapore from 2024 | Singapura | Imprensa | https://thestar.com.my/aseanplus/aseanplus-news/2023/08/27/new-curriculum-for-mother-tongue-languages-for-primary-1-pupils-in-singapore-from-2024 | Recursos interativos de pinyin e caracteres |
+| 56 | WilmerHale | 2021 | China Releases "Double Reduction" Policy in Education Sector | China | Análise jurídica | https://www.wilmerhale.com/en/insights/client-alerts/20210823-china-releases-double-reduction-policy-in-education-sector | Conteúdo da política de 2021 |
+| 57 | Trade Commissioner Service, Canadá | s.d. | China's "Double Reduction" Education Policy: A brief guide for Canadian companies | China | Guia governamental | https://www.tradecommissioner.gc.ca/china-chine/policy-education-politique.aspx?lang=eng | Efeitos sobre empresas de educação |
+| 58 | VoxChina | s.d. | The Economic Toll of China's Tutoring Ban | China | Análise econômica | https://voxchina.org/show-3-422.html | Custos da proibição para o setor |
+| 59 | Zhang, W. | 2019 | Regulating Private Tutoring in China: Uniform Policies, Diverse Responses | China | Artigo (ECNU Review of Education) | DOI 10.1177/2096531119840868 | Contexto regulatório antes de 2021 |
+| 60 | China Daily | 2019 | Education ministry issues rules for schooling apps | China | Imprensa oficial | https://govt.chinadaily.com.cn/s/201909/05/WS5d70db08498ebcb19057924f/education-ministry-issues-rules-for-schooling-apps.html | Regras para apps educativos (2019) |
+| 61 | App in China (tradução) | 2019 | Administrative Measures for the Recording of Mobile Internet Applications for Education | China | Norma (tradução) | https://appinchina.co/government-documents/notice-of-the-general-office-of-the-ministry-of-education-on-printing-and-distributing-the-administrative-measures-for-the-recording-of-mobile-internet-applications-for-education/ | Cadastro obrigatório de apps |
+| 62 | NewsChina | 2017 | Textbook Reform: A Battle for Hearts and Minds | China | Revista | https://www.pressreader.com/china/newschina/20171124/281556586148067 | Caracteres simples antes do pinyin; Wen Rumin |
+| 63 | Shu, H.; Peng, H.; McBride-Chang, C. | 2007 | Phonological awareness in young Chinese children | China | Artigo (Developmental Science) | DOI 10.1111/j.1467-7687.2007.00654.x | Consciência fonológica e leitura em chinês |
+| 64 | Liang, Yu, Wu, Tong | 2026 | Phonological awareness and Pinyin as correlates of reading and spelling in Chinese children: a meta-analysis | China | Meta-análise (Reading and Writing) | DOI 10.1007/s11145-026-10879-1 | Pinyin como fase fônica |
+| 65 | Ding, Liu, McBride, Zhang | 2014 | Pinyin Invented Spelling in Mandarin Chinese-Speaking Children With and Without Reading Difficulties | China | Artigo (J. Learning Disabilities) | DOI 10.1177/0022219414522704 | Escrita inventada como triagem |
+| 66 | Lah Lah Banana (blog) | 2021 | App comparison: iHuman Hongen Chinese versus Wukong Literacy | China | Resenha | https://lahlahbanana.com/2021/03/20/wukong-literacy-versus-ihuman-app-for-chinese-characters/ | Desenho de apps chineses de alfabetização |
+| 67 | Okumura, Kita, Kitamura, Oyama et al. | 2022 | Pre-elementary Children With Imperfect Letter-Name Knowledge Are at Great Risk of Reading Difficulty in First Grade | Japão | Artigo (Frontiers in Education) | DOI 10.3389/feduc.2022.758098 | Ponto de corte 40/45 hiragana |
+| 68 | Uno, A. et al. (CiNii) | 2021 | When and How Much Hiragana Characters Reading Are Acquired? Readiness Related to Acquiring Hiragana | Japão | Artigo (Higher Brain Function Research) | https://cir.nii.ac.jp/crid/1390011231125321216?lang=en | ~70% leem todo o hiragana antes do 1º ano |
+| 69 | Fletcher-Flinn, C.; Thompson, G.; Yamada, M.; Naka, M. | 2010 | The acquisition of phoneme awareness in children learning the hiragana syllabary | Japão | Artigo (Reading and Writing) | DOI 10.1007/s11145-010-9257-8 | Consciência fonêmica num silabário |
+| 70 | Sambai, A.; Uno, A.; Kurokawa, S. et al. | 2012 | An investigation into kana reading development in normal and dyslexic Japanese children | Japão | Artigo (Brain & Development) | DOI 10.1016/j.braindev.2011.09.005 | Testes de leitura de kana |
+| 71 | Park, H. R.; Uno, A. | 2015 | Cognitive Abilities Underlying Reading Accuracy, Fluency and Spelling Acquisition in Korean Hangul Learners from Grades 1 to 4 | Coreia do Sul | Artigo (Dyslexia) | DOI 10.1002/dys.1500 | Preditores da leitura em Hangul |
+| 72 | Cho, J.-R.; McBride-Chang, C.; Park, S.-G. | 2007 | Phonological awareness and morphological awareness: differential associations to regular and irregular word recognition | Coreia do Sul | Artigo (Reading and Writing) | DOI 10.1007/s11145-007-9072-z | Fonologia × morfologia no Hangul |
+| 73 | The Korea Times | 2024 | Nat'l Assembly votes to downgrade AI-generated 'textbooks' to 'educational materials' | Coreia do Sul | Imprensa | https://www.koreatimes.co.kr/amp/southkorea/society/20241226/national-assembly-votes-to-reclassify-ai-generated-textbooks-as-educational-materials | 1ª tentativa de rebaixamento |
+| 74 | Asia News Network (The Korea Herald) | 2025 | South Korea pulls plug on AI textbooks | Coreia do Sul | Imprensa | https://asianews.network/south-korea-pulls-plug-on-ai-textbooks/ | Lei de ago/2025; queda de adesão |
+| 75 | Bae, Joshi | 2025 | Crafting Literacy for Native Korean Children: Insights from Hangul Reading and Writing Studies | Coreia do Sul | Capítulo (Springer) | DOI 10.1007/978-3-031-88087-2_20 | Revisão sobre ensino do Hangul |
+| 76 | Pham, G.; Snow, C. E. | 2021 | Beginning to read in Vietnamese: kindergarten precursors to first grade fluency and reading comprehension | Vietnã | Artigo (Reading and Writing) | DOI 10.1007/s11145-020-10066-w ; PMC7963025 | Preditores pré-escolares |
+| 77 | OECD | 2023 | PISA 2022 Results — Country Notes: Viet Nam | Vietnã | Dados oficiais | https://www.oecd.org/en/publications/pisa-2022-results-volume-i-and-ii-country-notes_ed6fbcc5-en/viet-nam_a727c3a8-en.html | 77% no nível 2+ em leitura; ressalva de comparabilidade |
+| 78 | Báo Nghệ An | s.d. | Pioneering innovation in teaching and learning Vietnamese 1 | Vietnã | Imprensa | https://baonghean.vn/en/tien-phong-doi-moi-day-va-hoc-mon-tieng-viet-1-10021193.html | Programa de Hồ Ngọc Đại |
+| 79 | Devpolicy (equipe INOVASI) | 2021 | From little things big things grow: using data to drive education policy in Indonesia | Indonésia | Blog de política | https://devpolicy.org/using-data-to-drive-education-policy-in-indonesia-20211124/ | 57% → 94% em Bulungan; expansão local |
+| 80 | Devpolicy (equipe INOVASI) | 2023 | Children's literacy in Indonesia: solving the book supply problem | Indonésia | Blog de política | https://devpolicy.org/childrens-literacy-in-indonesia-solving-the-book-supply-problem-20230608/ | Falta de livros nivelados |
+| 81 | DFAT, Austrália | s.d. | INOVASI Results Framework | Indonésia | Documento de programa | https://www.dfat.gov.au/sites/default/files/indonesia-innovation-schoolchildren-result-framework.pdf | Indicadores do programa |
+| 82 | UNICEF / Kemendikbudristek | s.d. | Buku Panduan Praktik Pembelajaran Literasi Kelas Awal untuk Guru | Indonésia | Guia docente | https://uploads.belajar.id/document/files/Buku_Panduan_Praktik_Pembelajaran_Literasi_Kelas_Awal_untuk_Guru_%28UNICEF%29_01hy89sc1dz1zcbp4vk91e1fss.pdf | EGRA na mão do professor |
+| 83 | Heyward, M. (INOVASI) | 2020 | Apresentação no seminário RISE/SMERU–DFAT | Indonésia | Apresentação | https://rise.smeru.or.id/sites/default/files/event/Mark%20Heyward%20-%20BBL%20DFAT%2012%20Feb%2020.pdf | 87% do piloto passaram no 2º ano |
+| 84 | Share, D. L. | 1995 | Phonological recoding and self-teaching: sine qua non of reading acquisition | Israel | Artigo (Cognition 55) | DOI 10.1016/0010-0277(94)00645-2 | Hipótese do autoensino |
+| 85 | Share, D. L. | 2008 | On the Anglocentricities of current reading research and practice | Israel | Artigo (Psychological Bulletin 134(4)) | DOI 10.1037/0033-2909.134.4.584 | Não importar conclusões do inglês |
+| 86 | Share, D. L.; Bar-On, A. | 2017 | Learning to Read a Semitic Abjad: The Triplex Model of Hebrew Reading Development | Israel | Artigo (J. Learning Disabilities) | DOI 10.1177/0022219417718198 | Modelo tríplex |
+| 87 | Cohen-Mimran, R.; Reznik-Nevet, L.; Gott, D.; Share, D. L. | 2022 | Preschool morphological awareness contributes to word reading at the very earliest stages of learning to read in a transparent orthography | Israel | Artigo (Reading and Writing) | DOI 10.1007/s11145-022-10340-z | Morfologia desde a pré-escola |
+| 88 | IEA / PIRLS 2016 Encyclopedia | 2017 | Israel — Reading Instruction in the Primary Grades | Israel | Enciclopédia oficial | https://pirls2016.org/encyclopedia/countries/israel/reading-instruction-in-the-primary-grades/index.html | Início no 1º ano com fonema-grafema |
+| 89 | Saiegh-Haddad, E. | 2003 | Linguistic distance and initial reading acquisition: The case of Arabic diglossia | Árabe (Israel) | Artigo (Applied Psycholinguistics) | DOI 10.1017/s0142716403000225 | Diglossia e leitura inicial |
+| 90 | Saiegh-Haddad, E.; Schiff, R. | 2016 | The Impact of Diglossia on Voweled and Unvoweled Word Reading in Arabic | Árabe | Artigo (Scientific Studies of Reading) | DOI 10.1080/10888438.2016.1180526 | Vocalizado × não vocalizado |
+| 91 | Asadi, I. A. | 2017 | Reading Arabic with the diacritics for short vowels: vowelised but not necessarily easy to read | Árabe | Artigo (Writing Systems Research) | DOI 10.1080/17586801.2017.1400493 | Carga visual dos diacríticos |
+| 92 | Saiegh-Haddad, E. | 2018 | MAWRID: A Model of Arabic Word Reading in Development | Árabe | Artigo (J. Learning Disabilities) | DOI 10.1177/0022219417720460 | Modelo de desenvolvimento |
+| 93 | Rakhlin, N. V.; Li, N.; Aljughaiman, A.; Grigorenko, E. L. | 2025 | "Speech Is Golden": The Importance of Colloquial Arabic for Reading Standard Arabic for Beginning Readers | Arábia Saudita | Artigo (JSLHR) | DOI 10.1044/2024_JSLHR-23-00522 | Língua oral/dialeto como base |
+| 94 | Eckert, Wilson, Abadzi, Jeon | 2020 | Improving Arabic Reading Fluency: Results from Iqra, an Early-Grade Reading Intervention in Ras Al Khaimah | Emirados | Relatório (Al Qasimi Foundation) | DOI 10.18502/aqf.0142 | Fluência e automatização |
+| 95 | J-PAL | 2025/26 | Improving Literacy Through Cognitive Science: Evidence from the United Arab Emirates | Emirados | Avaliação (RCT) | https://www.povertyactionlab.org/evaluation/improving-literacy-through-cognitive-science-evidence-united-arab-emirates | RCT com 83 turmas em 26 escolas |
+| 96 | The National | 2025 | Arabic lessons daily in all UAE private schools for kindergarten pupils | Emirados | Imprensa | https://www.thenationalnews.com/news/uae/2025/06/22/arabic-lessons-daily-in-all-uae-private-schools-for-kindergarten-pupils | 200→300 min/semana de árabe no KG |
+| 97 | RTI International / RAMP | s.d. | RAMP — The Decodable Levelled Reading Books Study Report | Jordânia | Relatório de estudo | https://shared.rti.org/node/1226 | Decodificáveis em árabe funcionam no 1º ano |
+| 98 | Queen Rania Foundation | 2025 | Summative Evaluation Report for the Two Pilot Studies — Let's Read Fluently! | Jordânia | Avaliação | https://qrf.org/sites/default/files/2025-05/Summative%20Evaluation%20Report%20for%20The%20Two%20Pilot%20Studies%20-%20Let%27s%20Read%20Fluently%21%20-%20February%202025.pdf | Programa de fluência complementar |
+| 99 | AGBI | 2023 | Inside Saudi Arabia's plans to raise the bar on education | Arábia Saudita | Análise de imprensa | https://www.agbi.com/analysis/inside-saudi-arabias-plans-to-raise-the-bar-on-education/ | Causas do atraso em leitura; diglossia |
+| 100 | Wilson, Jeon, Cook, Abadzi | 2020 | Perceptual Enhancement for Arabic Reading: An Intervention to Support Fluency and Automaticity in Grade One | Emirados | Artigo (GESPR) | DOI 10.18502/gespr.v1i1.7472 | Realce perceptual das letras |
+| 101 | Öney, B.; Durgunoğlu, A. Y. | 1997 | Beginning to read in Turkish: A phonologically transparent orthography | Turquia | Artigo (Applied Psycholinguistics) | DOI 10.1017/s014271640000984x | Decodificação rápida em ortografia transparente |
+| 102 | Durgunoğlu, A. Y.; Öney, B. | 1999 | A cross-linguistic comparison of phonological awareness and word recognition | Turquia | Artigo (Reading and Writing) | DOI 10.1023/a:1008093232622 | Turco × inglês |
+| 103 | Babayiğit, S. | 2022 | Does a truly symmetrically transparent orthography exist? Spelling is more difficult than reading even in an orthography… | Turquia | Artigo (Reading and Writing) | DOI 10.1007/s11145-022-10259-5 | Escrever é mais difícil que ler |
+| 104 | Alatlı | 2026 | Decoding, fluency, and reading comprehension in a morphologically complex transparent orthography: evidence from Turkish | Turquia | Artigo (Reading and Writing) | DOI 10.1007/s11145-026-10821-5 | Fluência → compreensão |
+| 105 | DergiPark (artigo em turco) | 2022 | Estudo sobre o Ses Temelli Cümle Yöntemi | Turquia | Artigo acadêmico | https://dergipark.org.tr/en/download/article-file/2189917 | Histórico do método fônico de 2004–05 (título não registrado; conteúdo lido por trecho do buscador) |
+| 106 | Rahbari, N.; Sénéchal, M. | 2010 | Learning to read and spell in Persian: A cross-sectional study from Grades 1 to 4 | Irã | Artigo (Developmental Psychology) | DOI 10.1037/a0020377 | Decodificação → lexical |
+| 107 | Rahbari, N.; Sénéchal, M. | 2008 | Lexical and nonlexical processes in the skilled reading and spelling of Persian | Irã | Artigo (Reading and Writing) | DOI 10.1007/s11145-008-9122-1 | Palavras transparentes × opacas |
+| 108 | Ziegler, J. C.; Goswami, U. | 2005 | Reading Acquisition, Developmental Dyslexia, and Skilled Reading Across Languages: A Psycholinguistic Grain Size Theory | Translinguístico | Artigo (Psychological Bulletin 131(1)) | DOI 10.1037/0033-2909.131.1.3 | Base teórica da comparação |
+| 109 | Shany, M.; Bar-On, A.; Katzir, T. | 2011 | Reading different orthographic structures in the shallow-pointed Hebrew script: a cross-grade study in elementary school | Israel | Artigo (Reading and Writing) | DOI 10.1007/s11145-011-9314-y | Transição para a escrita sem vogais |
 
-**Total verificado: 44 fontes, 3 países (Austrália, Nova Zelândia, Índia), além de fontes globais do Google.**
+**Total verificado: 109 fontes [V]**. 1ª rodada: 44 fontes (Austrália, Nova Zelândia, Índia/Read Along). 2ª rodada: **65 fontes novas** [45]–[109], cobrindo Índia (ASER/TaRL/NIPUN), Singapura, China, Japão, Coreia do Sul, Vietnã, Indonésia, Israel, Emirados, Jordânia, Arábia Saudita, Turquia e Irã.
 
-### Tabela B — Referências NÃO VERIFICADAS nesta rodada (conhecimento prévio; confirmar antes de citar)
+**Como foram verificadas:** artigos acadêmicos conferidos no Crossref (DOI, autores, ano, periódico) e, quando havia, no PubMed. Documentos oficiais, relatórios e imprensa foram encontrados pelo buscador web; nesta rodada **a leitura direta de páginas continuou bloqueada** (ex.: povertyactionlab.org, pirls2021.org), então números de relatórios vêm dos trechos devolvidos pelo buscador. Dados de programas (INOVASI, RAMP, Iqra 2020, Read Along) são em geral **autorrelatados** pelos executores.
 
-| # | Autor(es)/Instituição | Ano | Título | País | Identificador (a confirmar) |
-|---|---|---|---|---|---|
-| B1 | Share, D. L. | 2008 | On the Anglocentricities of current reading research and practice | Israel | *Psychological Bulletin* 134(4); DOI 10.1037/0033-2909.134.4.584 |
-| B2 | Share, D. L. | 1995 | Phonological recoding and self-teaching: sine qua non of reading acquisition | Israel | *Cognition* 55(2) |
-| B3 | Banerjee, A. et al. | 2017 | From Proof of Concept to Scalable Policies: Challenges and Solutions, with an Application | Índia | *J. Economic Perspectives* 31(4); DOI 10.1257/jep.31.4.73 |
-| B4 | ASER Centre / Pratham | 2024 | Annual Status of Education Report (Rural) 2024 | Índia | asercentre.org |
-| B5 | Ministry of Education, Índia | 2021 | NIPUN Bharat guidelines | Índia | education.gov.in |
-| B6 | Gabinete Geral do Comitê Central do PCCh / Conselho de Estado | 2021 | Opinions on further reducing the burden of homework and off-campus training ("Double Reduction") | China | — |
-| B7 | Ministry of Education Singapore | — | STELLAR; Mother Tongue Languages policy | Singapura | moe.gov.sg |
-| B8 | OECD | 2019/2023 | PISA results (Vietnã) | Vietnã | oecd.org |
+### Tabela B — Referências não verificadas [NV]
+
+Todas as 8 referências da antiga Tabela B foram verificadas na 2ª rodada e passaram para a Tabela A: B1 → [85], B2 → [84], B3 → [50], B4 → [47], B5 → [45], B6 → [56][57] (documento oficial chinês não acessado; usadas análises jurídica e governamental), B7 → [52]–[55] (documento oficial do STELLAR 2.0 não localizado; usadas publicações do MOE), B8 → [77].
+
+Permanecem [NV] / lacunas:
+
+| # | Item | Situação |
+|---|---|---|
+| NV1 | Tamanho do efeito do RCT do Iqra (J-PAL, 2025/26) | Página bloqueada; só trechos do buscador |
+| NV2 | Ano exato (2016/2017) da mudança "caracteres antes do pinyin" nos livros unificados chineses | Fonte única de imprensa [62] |
+| NV3 | Revisão de 2024 do método fônico turco (Maarif Modeli) | Fonte única [105] |
+| NV4 | Política atual de alfabetização e edtech infantil no Irã | Nada verificável encontrado |
+| NV5 | Programa nacional saudita de leitura inicial | Não localizado |
+| NV6 | Avaliação independente do programa de Hồ Ngọc Đại (Vietnã) e do INOVASI (Indonésia) | Não localizada |
 
 ---
 
-*Este documento não foi commitado. Próximo passo: nova rodada de busca para preencher a seção 2.4 e ler na íntegra as fontes [1], [2], [6] e [14].*
+*Próximos passos: ler na íntegra [1], [2], [6], [14], [49], [95] e [97] quando os domínios forem liberados; fechar as lacunas NV1–NV6.*
