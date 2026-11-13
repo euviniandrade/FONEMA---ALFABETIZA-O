@@ -99,9 +99,9 @@ LINGUA_PAIS = {"BR": "pt", "PT": "pt", "MZ": "pt", "AO": "pt", "ES": "es", "MX":
 EIXOS.update({
     "pensamento_computacional": {
         "nome": "Pensamento computacional na infância",
-        "pubmed": f'(("computational thinking" OR "coding" OR "programming" OR "robotics" OR "algorithmic thinking") AND {CRIANCA})',
+        "pubmed": f'(("computational thinking" OR "computer programming" OR "coding education" OR "educational robotics" OR "algorithmic thinking" OR "programming education" OR ScratchJr OR "Bee-Bot") AND {CRIANCA})',
         "crossref": "computational thinking young children coding early childhood",
-        "chaves": ["computational thinking", "coding", "programming", "robot", "algorithm", "pensamento computacional", "pensamiento computacional", "scratch"],
+        "chaves": ["computational thinking", "computer programming", "coding education", "programming education", "educational robot", "robotics", "algorithmic thinking", "pensamento computacional", "pensamiento computacional", "scratch", "bee-bot"],
     },
     "socioemocional": {
         "nome": "Competências socioemocionais e inteligência emocional",
@@ -113,19 +113,19 @@ EIXOS.update({
         "nome": "Raciocínio lógico e matemática inicial",
         "pubmed": f'(("logical reasoning" OR "analogical reasoning" OR "early mathematics" OR "numeracy" OR "patterning" OR "number sense" OR "mathematical reasoning") AND {CRIANCA})',
         "crossref": "early mathematics reasoning patterning young children",
-        "chaves": ["reasoning", "mathemat", "numeracy", "pattern", "number sense", "raciocínio", "matemática", "razonamiento"],
+        "chaves": ["reasoning", "mathemat", "numeracy", "patterning", "number sense", "raciocínio", "matemática", "razonamiento"],
     },
     "educacao_financeira": {
         "nome": "Educação financeira infantil",
         "pubmed": f'(("financial literacy" OR "financial education" OR "economic socialization" OR "saving behavior" OR "delay of gratification") AND {CRIANCA})',
         "crossref": "financial literacy education children elementary school",
-        "chaves": ["financial", "saving", "money", "economic", "gratification", "financeira", "financiera", "dinheiro"],
+        "chaves": ["financial", "saving", "money", "gratification", "financeira", "financiera", "dinheiro"],
     },
     "aprendizagem_profunda": {
         "nome": "Aprendizagem profunda, compreensão e transferência",
         "pubmed": f'(("orthographic mapping" OR "self-teaching" OR "reading comprehension" OR "transfer of learning" OR "morphological awareness" OR "vocabulary instruction" OR metacognition OR "self-explanation") AND {CRIANCA})',
         "crossref": "reading comprehension vocabulary morphology transfer children",
-        "chaves": ["orthographic mapping", "self-teaching", "comprehension", "transfer", "morpholog", "vocabular", "metacogni", "self-explanation", "compreensão", "comprensión"],
+        "chaves": ["orthographic mapping", "self-teaching", "reading comprehension", "transfer of learning", "morpholog", "vocabular", "metacogni", "self-explanation", "compreensão", "comprensión"],
     },
 })
 EIXOS_BASE = ["metodo_fonico", "dislexia", "neuro_leitura", "neuro_aprendizagem", "motivacao_recompensa",

@@ -248,92 +248,92 @@ Reformular a meta do cliente como **"a criança quer voltar amanhã e sai feliz 
 
 ## 7. Tabela de fontes
 
-| # | Nome | URL | O que aproveitar |
-|---|---|---|---|
-| 1 | Khan Academy Kids — App Store | https://apps.apple.com/us/app/khan-academy-kids/id1378467217 | Gratuito, ONG, Kodi Bear, livros e jogos |
-| 2 | Khan Academy Kids — página oficial | https://learn.khanacademy.org/khan-academy-kids/ | "100% grátis, sem anúncios ou assinatura" |
-| 3 | Common Sense Media — Khan Academy Kids | https://www.commonsensemedia.org/app-reviews/khan-academy-kids | Avaliação de pais e crianças; aviso de privacidade |
-| 4 | Khan Academy Blog — Prototyping playful pre-K assessments | https://blog.khanacademy.org/prototyping-playful-and-nimble-pre-k-assessments/ | Estilo visual "whimsical"; avaliação lúdica |
-| 5 | TechCrunch — Duck Duck Moose joins Khan Academy | https://techcrunch.com/2016/08/26/kids-app-maker-duck-duck-moose-joins-khan-academy/ | Origem do estúdio |
-| 6 | Khan Academy (FAQ pt) | https://continueaprendendo.khanacademy.org | Khan Kids só em inglês |
-| 7 | Duolingo ABC — App Store | https://apps.apple.com/app/id1440502568 | 700+ lições, traçado, grátis sem anúncios |
-| 8 | Common Sense Media — Duolingo ABC | https://www.commonsensemedia.org/app-reviews/duolingo-abc-learn-to-read | "Melhor em pequenas doses" |
-| 9 | Duolingo ABC — Scope & Sequence (PDF) | https://lit-lessons-cdn.duolingo.com/resources/duolingo_abc_scope_and_sequence_english.pdf | Modelo de sequência fônica pública |
-| 10 | Teach Your Monster to Read | https://teachyourmonster.org/teachyourmonstertoread | Fantasia "ensinar o monstro"; grátis no PC |
-| 11 | TYM — What does each game cover | https://www.teachyourmonster.org/teachers/what-does-each-game-cover/ | Escopo por jogo |
-| 12 | Horn Book — TYM review | https://hbook.com/story/teach-your-monster-to-read-app-review | Crítica independente |
-| 13 | Reading Eggs — App Store / preços NZ | https://apps.apple.com/app/726696040 ; https://readingeggs.co.nz/pricing/ | Mapas, ovos de ouro, trial |
-| 14 | Homeschoolpicks — Reading Eggs review | https://homeschoolpicks.com/curriculum-reviews/language-arts/reading-eggs-review/ | Preços e estrutura |
-| 15 | Hooked on Phonics — App Store | https://apps.apple.com/US/app/id588868907 | Trial 7 dias, planos |
-| 16 | ThePricer — Hooked on Phonics | https://www.thepricer.org/how-much-does-hooked-on-phonics-cost/ | Preços 2026 |
-| 17 | Starfall — Membership | https://store.starfall.com/membership | 700+ atividades, modelo freemium |
-| 18 | Common Sense Media — Starfall | https://www.commonsensemedia.org/website-reviews/starfall | US$ 35/ano |
-| 19 | ABCmouse — Suporte (features) | https://support.abcmouse.com/hc/en-us/articles/1500005417641-What-are-the-main-features-and-benefits-of-ABCmouse | Learning Path, tickets |
-| 20 | Lingokids — Help (preço Plus) | https://help.lingokids.com/hc/en-us/articles/9522217000209-How-much-does-Plus-subscription-cost | Preços |
-| 21 | Homer — App Store / Modulo review | https://apps.apple.com/au/app/id601437586 ; https://modulo.app/all-resources/homer-early-learning-app-review | Preços, faixa 2–8 |
-| 22 | TechCrunch — Ello raises $15M | https://techcrunch.com/2023/09/07/ai-reading-coach-startup-ello-raises-15-million-to-bolster-child-literacy | ASR para fala infantil |
-| 23 | Read with Ello — App Store | https://apps.apple.com/us/app/read-with-ello/id1536720182 | Livros decodificáveis, assinatura |
-| 24 | TechCrunch — Ello story creation | https://techcrunch.com/2024/09/30/ai-reading-coach-startup-ello-launches-custom-story-creation-feature-for-kids | Histórias personalizadas |
-| 25 | Amira — How it works | https://amiralearning.com/how-it-works | Fluência, prosódia, análise de erros |
-| 26 | Tech & Learning — HMH + Amira | https://www.techlearning.com/news/houghton-mifflin-harcourt-partners-with-ai-powered-reading-startup | Canal B2B |
-| 27 | Readability — Literacy solution | https://www.readabilitytutor.com/literacy-solution-for-kids | Voz + compreensão oral + painel |
-| 28 | Nessy Reading & Spelling | https://nessy.com/en-us/product/nessy-reading-and-spelling-school | Orton-Gillingham, 10 ilhas |
-| 29 | Common Sense Media — Endless Reader | https://www.commonsensemedia.org/app-reviews/endless-reader | Mecânica de silhuetas; crítica de eficácia |
-| 30 | Norad — Feed the Monster | https://norad.no/en/front/thematic-areas/education/innovation/eduapp4syria/feed-the-monster-available-in-25-languages | Open source; pt-BR entre as línguas |
-| 31 | Digital Public Goods — Curious Learning | https://backlog.digitalpublicgoods.net/curiouslearning/ | Bem público digital; Unity → H5P |
-| 32 | Frontiers in Education (2020) — GraphoGame | https://www.frontiersin.org/articles/10.3389/feduc.2020.00132 | Meta-análise: efeito com apoio adulto |
-| 33 | Lexia Core5 — Efficacy research | https://www.lexialearning.com/resources/research/lexia-core5-reading-efficacy-research | ESSA "Strong" |
-| 34 | Motionographer — Toca Boca design process | https://motionographer.com/2016/04/27/the-design-process-behind-toca-bocas-infectious-apps/ | "Brinquedos, não jogos" |
-| 35 | Kidscreen — Toca talks | https://kidscreen.com/?p=49360 | Liberdade no design infantil |
-| 36 | Axios — Toca Boca muda para compras no app | https://www.axios.com/2018/11/21/toca-boca-in-app-purchases-toca-life-world | Evolução do modelo de negócio |
-| 37 | Screenwise — Pok Pok "Anti-Dopamine App" | https://screenwiseapp.com/media/pok-pok-app | Sem pontos ou timers, fim natural |
-| 38 | Joan Ganz Cooney Center — Q&A Sago Sago | https://joanganzcooneycenter.org/2014/11/14/qa-with-sago-sagos-jason-krogh/ | Playtest com 20–30 crianças |
-| 39 | Sago Mini — About | https://sagomini.com/about | Princípios: exploração, intuitivo, seguro |
-| 40 | PBS — PBS Parents Play & Learn | https://www.pbs.org/about/about-pbs/blogs/news/new-pbs-kids-app-provides-interactive-activities-to-help-parents-make-anytime-learning-time | Jogos pais + filhos |
-| 41 | Reading Rockets — Elmo Loves ABCs | https://www.readingrockets.org/resources/literacy-apps/elmo-loves-abcs | Traçado, achar escondidos |
-| 42 | GraphoGame Brasil — App Store | https://apps.apple.com/BR/app/id1540637587 | Pago após 3 mi downloads |
-| 43 | Diário do Nordeste — MEC adquire GraphoGame | https://diariodonordeste.verdesmares.com.br/educalab/jogo-de-alfabetizacao-e-adquirido-pelo-mec-para-diminuir-impactos-da-pandemia-veja-como-funciona-1.3014373 | Contexto Tempo de Aprender |
-| 44 | Elefante Letrado — App Store | https://apps.apple.com/BR/app/id1192489395 | Acesso só via escola |
-| 45 | Le Monde Diplomatique Brasil — "Um elefante nem tão letrado" | https://diplomatique.org.br/o-curioso-caso-de-uma-plataforma-de-leitura-que-transforma-a-literatura-em-caixas-quadradas/ | Crítica pedagógica |
-| 46 | ABC do ABC — SP: 52,3 mi livros lidos | https://abcdoabc.com.br/criancas-da-rede-de-ensino-de-sp-ja-leram-523-milhoes-de-livros-infantis-em-2024/ | Escala B2G |
-| 47 | Mobile Time — Árvore 1 milhão de estudantes | https://www.mobiletime.com.br/noticias/11/02/2021/arvore-plataforma-da-acesso-a-livros-digitais-para-1-milhao-de-estudantes-brasileiros/ | Acervo, alcance |
-| 48 | Escribo — JHU Hub / Computers & Education Open | https://hub.jhu.edu/magazine/2018/summer/idea-literacy-escribo-app/ ; https://doaj.org/article/5aaec3207c8647d2bb20fc0133de543b | Ensaio randomizado BR, d = 0,40 |
-| 49 | Mobile Time — EduEdu 550 mil alunos | https://www.mobiletime.com.br/noticias/30/04/2021/com-550-mil-alunos-cadastrados-app-eduedu-ajuda-no-reforco-escolar/ | ONG, grátis, adaptativo |
-| 50 | Educa Mais Brasil — 8 apps de alfabetização | https://www.educamaisbrasil.com.br/educacao/escolas/8-aplicativos-de-alfabetizacao-infantil-gratuitos | Panorama BR (ABC do Bita, EduEdu, 15 min) |
-| 51 | Mundo Bita Play — App Store | https://apps.apple.com/app/id1609236887 | Assinatura de marca musical |
-| 52 | Palavra Cantada Oficial — TouchArcade | https://toucharcade.com/games/palavra-cantada-oficial | Jogo LETRAS com música |
-| 53 | abcD+ (Lume) — App Store | https://apps.apple.com/us/app/abcd/id1604446742 | AR + cards |
-| 54 | Canaltech — Melhores apps de alfabetização | https://canaltech.com.br/apps/melhores-aplicativos-alfabetizacao/ | Panorama BR |
-| 55 | Radesky et al. 2022 — JAMA Netw Open (PMC) | https://pmc.ncbi.nlm.nih.gov/articles/PMC9206186/ | ~80% dos apps com design manipulativo |
-| 56 | Michigan Medicine — Design tricks | https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use | Exemplos de dark patterns |
-| 57 | 5Rights — Five key changes (AADC) | https://5rightsfoundation.com/five-key-changes-introduced-by-the-age-appropriate-design-code/ | Padrões de design para crianças |
-| 58 | ICO — Age Appropriate Design Code (PDF) | https://ico.org.uk/media/for-organisations/uk-gdpr-guidance-and-resources/childrens-information/childrens-code-guidance-and-resources/age-appropriate-design-a-code-of-practice-for-online-services-2-1.pdf | Padrão de "nudge" |
-| 59 | UNICEF — RITEC | https://www.unicef.org/innovation/responsible-innovation-technology-children-ritec | RITEC-8, Design Toolbox |
-| 60 | UNICEF — Designing digital play with well-being in mind | https://www.unicef.org/designing-digital-play-childrens-well-being-mind | Guia de design de bem-estar |
-| 61 | Google Play — Families / Teacher Approved | https://support.google.com/googleplay/android-developer/answer/9867159 ; https://play.google.com/console/about/programs/teacherapproved/ | Regras de anúncios, AD_ID, critérios |
-| 62 | Apple Developer News (2019) — Kids Category | https://developer.apple.com/news/?id=06032019j | Sem ads e analytics de terceiros |
-| 63 | Google — Building for Kids: designing engaging apps | https://developers.google.com/building-for-kids/designing-engaging-apps | Feedback positivo, retorno rápido |
-| 64 | SBP — Atualização orientações era digital | https://www.sbp.com.br/sociedade-brasileira-de-pediatria-atualiza-orientacoes-para-criancas-e-adolescentes-na-era-digital/ | Limites de tela por idade |
-| 65 | Active for Life — OMS 2019 | https://activeforlife.com/world-health-guidelines/ | ≤ 1 h para 1–4 anos |
-| 66 | AAP — 5 Cs | https://www.aap.org/5Cs | Plano de mídia familiar |
-| 67 | Mattos Filho / Agência Gov — ECA Digital | https://www.mattosfilho.com.br/unico/eca-digital-sancionada-lei/ ; https://agenciagov.ebc.com.br/noticias/202608/eca-digital-conheca-as-regras-de-protecao-de-criancas-e-adolescentes-no-ambiente-online | Loot box, publicidade, supervisão |
-| 68 | Deci, Koestner & Ryan 1999 (PDF) | https://leeds-faculty.colorado.edu/dahe7472/deci%201999.pdf | Recompensas x motivação intrínseca |
-| 69 | Sailer & Homner — Gamification meta-analysis | https://opus.bibliothek.uni-augsburg.de/opus4/frontdoor/index/index/docId/109056 | Efeitos da gamificação |
-| 70 | APS — Putting Education in "Educational" Apps | https://www.psychologicalscience.org/publications/educational-apps.html | 4 pilares |
-| 71 | Howard-Jones — Toward a Science of Learning Games / Reward, learning and games | https://research-information.bris.ac.uk/en/publications/toward-a-science-of-learning-games/ ; https://shura.shu.ac.uk/12203 | Recompensa incerta e cautelas |
-| 72 | Slavin 1987 — Mastery learning (PDF) | https://www.gwern.net/doc/psychology/1987-slavin.pdf | Efeitos reais de mastery learning |
-| 73 | Haebig et al. 2021 — Spaced retrieval | https://asha.figshare.com/articles/journal_contribution/Spaced_retrieval_supports_semantic_learning_Haebig_et_al_2021_/15063060 | Repetição espaçada em pré-escolares |
-| 74 | arXiv 2024 — Children's emotions in playful learning games | https://arxiv.org/pdf/2406.04794 | Flow e limites do ajuste dinâmico de dificuldade |
-| 75 | Design Week — Duolingo owl makeover / Duolingo Blog "Reshaping Duo" | https://www.designweek.co.uk/issues/2-6-january-2019/duolingo-owl-receives-makeover-as-app-becomes-more-gamified ; https://blog.duolingo.com/reshaping-duo/ | Construção de mascote |
-| 76 | UX Collective — "20 days of emotional blackmail from Duolingo" | https://uxdesign.cc/20-days-of-emotional-blackmail-from-duolingo-4f566523e3c5 | Crítica a streak e culpa |
-| 77 | Trademarkdir — SOFIA THE FIRST / AdoroCinema — Princesinha Sofia | https://trademarkdir.com/trademark/sofia-the-first-85322177 ; https://www.adorocinema.com/series/serie-16809/ | Conflito de nome |
-| 78 | Talking Sofia — App Store / Sofia (Dynseo) | https://apps.apple.com/bh/app/talking-sofia/id1160638442 ; https://appgoblin.info/apps/com.dynseo.stimart.sofia | Apps com nome Sofia |
-| 79 | Melhor Escola — Letra cursiva / UFRN — artigo sobre tipos de letra | https://www.melhorescola.com.br/artigos/letra-cursiva ; https://periodicos.ufrn.br/saberes/article/download/44743/22779/169603 | Bastão → cursiva; debate |
-| 80 | Dyslexia Scotland — Dyslexia-friendly typed formats | https://dyslexiascotland.org.uk/dyslexia-friendly-typed-formats | Espaçamento > fonte |
-| 81 | Agência Gov — Alfabetização 2024 / Band — 56% em 2023 | https://agenciagov.ebc.com.br/noticias/202507/58-dos-municipios-melhoraram-alfabetizacao ; https://www.band.com.br/educacao/alfabetizacao-de-criancas-no-2o-ano-do-fundamental-chega-a-56-em-2023-16693158 | Tamanho do problema no BR |
-| 82 | Horn Book — Endless Reader review | https://hbook.com/story/endless-reader-app-review | Mecânica de silhuetas |
-| 83 | Tempo de Aprender — apresentação Câmara (PDF) | https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-permanentes/ce/apresentacoes-em-eventos/eventos-2022-1/arquivos-2022/segundo-semestre-2022/MaurcioPrado.pdf | GraphoGame com 1,8 mi downloads no programa |
-| 84 | Comminit — Best practices touch-screen (Sesame) | https://sb.comminit.com/node/9311454 | Feedback sonoro no toque; erro encorajador |
+| # | Nome | URL | O que aproveitar | Validação E2 |
+|---|---|---|---|---|
+| 1 | Khan Academy Kids — App Store | https://apps.apple.com/us/app/khan-academy-kids/id1378467217 | Gratuito, ONG, Kodi Bear, livros e jogos | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 2 | Khan Academy Kids — página oficial | https://learn.khanacademy.org/khan-academy-kids/ | "100% grátis, sem anúncios ou assinatura" | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 3 | Common Sense Media — Khan Academy Kids | https://www.commonsensemedia.org/app-reviews/khan-academy-kids | Avaliação de pais e crianças; aviso de privacidade | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 4 | Khan Academy Blog — Prototyping playful pre-K assessments | https://blog.khanacademy.org/prototyping-playful-and-nimble-pre-k-assessments/ | Estilo visual "whimsical"; avaliação lúdica | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 5 | TechCrunch — Duck Duck Moose joins Khan Academy | https://techcrunch.com/2016/08/26/kids-app-maker-duck-duck-moose-joins-khan-academy/ | Origem do estúdio | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 6 | Khan Academy (FAQ pt) | https://continueaprendendo.khanacademy.org | Khan Kids só em inglês | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 7 | Duolingo ABC — App Store | https://apps.apple.com/app/id1440502568 | 700+ lições, traçado, grátis sem anúncios | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 8 | Common Sense Media — Duolingo ABC | https://www.commonsensemedia.org/app-reviews/duolingo-abc-learn-to-read | "Melhor em pequenas doses" | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 9 | Duolingo ABC — Scope & Sequence (PDF) | https://lit-lessons-cdn.duolingo.com/resources/duolingo_abc_scope_and_sequence_english.pdf | Modelo de sequência fônica pública | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 10 | Teach Your Monster to Read | https://teachyourmonster.org/teachyourmonstertoread | Fantasia "ensinar o monstro"; grátis no PC | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 11 | TYM — What does each game cover | https://www.teachyourmonster.org/teachers/what-does-each-game-cover/ | Escopo por jogo | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 12 | Horn Book — TYM review | https://hbook.com/story/teach-your-monster-to-read-app-review | Crítica independente | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 13 | Reading Eggs — App Store / preços NZ | https://apps.apple.com/app/726696040 ; https://readingeggs.co.nz/pricing/ | Mapas, ovos de ouro, trial | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 14 | Homeschoolpicks — Reading Eggs review | https://homeschoolpicks.com/curriculum-reviews/language-arts/reading-eggs-review/ | Preços e estrutura | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 15 | Hooked on Phonics — App Store | https://apps.apple.com/US/app/id588868907 | Trial 7 dias, planos | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 16 | ThePricer — Hooked on Phonics | https://www.thepricer.org/how-much-does-hooked-on-phonics-cost/ | Preços 2026 | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 17 | Starfall — Membership | https://store.starfall.com/membership | 700+ atividades, modelo freemium | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 18 | Common Sense Media — Starfall | https://www.commonsensemedia.org/website-reviews/starfall | US$ 35/ano | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 19 | ABCmouse — Suporte (features) | https://support.abcmouse.com/hc/en-us/articles/1500005417641-What-are-the-main-features-and-benefits-of-ABCmouse | Learning Path, tickets | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 20 | Lingokids — Help (preço Plus) | https://help.lingokids.com/hc/en-us/articles/9522217000209-How-much-does-Plus-subscription-cost | Preços | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 21 | Homer — App Store / Modulo review | https://apps.apple.com/au/app/id601437586 ; https://modulo.app/all-resources/homer-early-learning-app-review | Preços, faixa 2–8 | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 22 | TechCrunch — Ello raises $15M | https://techcrunch.com/2023/09/07/ai-reading-coach-startup-ello-raises-15-million-to-bolster-child-literacy | ASR para fala infantil | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 23 | Read with Ello — App Store | https://apps.apple.com/us/app/read-with-ello/id1536720182 | Livros decodificáveis, assinatura | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 24 | TechCrunch — Ello story creation | https://techcrunch.com/2024/09/30/ai-reading-coach-startup-ello-launches-custom-story-creation-feature-for-kids | Histórias personalizadas | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 25 | Amira — How it works | https://amiralearning.com/how-it-works | Fluência, prosódia, análise de erros | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 26 | Tech & Learning — HMH + Amira | https://www.techlearning.com/news/houghton-mifflin-harcourt-partners-with-ai-powered-reading-startup | Canal B2B | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 27 | Readability — Literacy solution | https://www.readabilitytutor.com/literacy-solution-for-kids | Voz + compreensão oral + painel | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 28 | Nessy Reading & Spelling | https://nessy.com/en-us/product/nessy-reading-and-spelling-school | Orton-Gillingham, 10 ilhas | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 29 | Common Sense Media — Endless Reader | https://www.commonsensemedia.org/app-reviews/endless-reader | Mecânica de silhuetas; crítica de eficácia | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 30 | Norad — Feed the Monster | https://norad.no/en/front/thematic-areas/education/innovation/eduapp4syria/feed-the-monster-available-in-25-languages | Open source; pt-BR entre as línguas | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 31 | Digital Public Goods — Curious Learning | https://backlog.digitalpublicgoods.net/curiouslearning/ | Bem público digital; Unity → H5P | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 32 | Frontiers in Education (2020) — GraphoGame | https://www.frontiersin.org/articles/10.3389/feduc.2020.00132 | Meta-análise: efeito com apoio adulto | VERIFICADA — Crossref; DOI confere |
+| 33 | Lexia Core5 — Efficacy research | https://www.lexialearning.com/resources/research/lexia-core5-reading-efficacy-research | ESSA "Strong" | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 34 | Motionographer — Toca Boca design process | https://motionographer.com/2016/04/27/the-design-process-behind-toca-bocas-infectious-apps/ | "Brinquedos, não jogos" | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 35 | Kidscreen — Toca talks | https://kidscreen.com/?p=49360 | Liberdade no design infantil | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 36 | Axios — Toca Boca muda para compras no app | https://www.axios.com/2018/11/21/toca-boca-in-app-purchases-toca-life-world | Evolução do modelo de negócio | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 37 | Screenwise — Pok Pok "Anti-Dopamine App" | https://screenwiseapp.com/media/pok-pok-app | Sem pontos ou timers, fim natural | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 38 | Joan Ganz Cooney Center — Q&A Sago Sago | https://joanganzcooneycenter.org/2014/11/14/qa-with-sago-sagos-jason-krogh/ | Playtest com 20–30 crianças | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 39 | Sago Mini — About | https://sagomini.com/about | Princípios: exploração, intuitivo, seguro | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 40 | PBS — PBS Parents Play & Learn | https://www.pbs.org/about/about-pbs/blogs/news/new-pbs-kids-app-provides-interactive-activities-to-help-parents-make-anytime-learning-time | Jogos pais + filhos | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 41 | Reading Rockets — Elmo Loves ABCs | https://www.readingrockets.org/resources/literacy-apps/elmo-loves-abcs | Traçado, achar escondidos | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 42 | GraphoGame Brasil — App Store | https://apps.apple.com/BR/app/id1540637587 | Pago após 3 mi downloads | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 43 | Diário do Nordeste — MEC adquire GraphoGame | https://diariodonordeste.verdesmares.com.br/educalab/jogo-de-alfabetizacao-e-adquirido-pelo-mec-para-diminuir-impactos-da-pandemia-veja-como-funciona-1.3014373 | Contexto Tempo de Aprender | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 44 | Elefante Letrado — App Store | https://apps.apple.com/BR/app/id1192489395 | Acesso só via escola | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 45 | Le Monde Diplomatique Brasil — "Um elefante nem tão letrado" | https://diplomatique.org.br/o-curioso-caso-de-uma-plataforma-de-leitura-que-transforma-a-literatura-em-caixas-quadradas/ | Crítica pedagógica | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 46 | ABC do ABC — SP: 52,3 mi livros lidos | https://abcdoabc.com.br/criancas-da-rede-de-ensino-de-sp-ja-leram-523-milhoes-de-livros-infantis-em-2024/ | Escala B2G | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 47 | Mobile Time — Árvore 1 milhão de estudantes | https://www.mobiletime.com.br/noticias/11/02/2021/arvore-plataforma-da-acesso-a-livros-digitais-para-1-milhao-de-estudantes-brasileiros/ | Acervo, alcance | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 48 | Escribo — JHU Hub / Computers & Education Open | https://hub.jhu.edu/magazine/2018/summer/idea-literacy-escribo-app/ ; https://doaj.org/article/5aaec3207c8647d2bb20fc0133de543b | Ensaio randomizado BR, d = 0,40 | VERIFICADA — Crossref · doi:10.1016/j.caeo.2021.100066 |
+| 49 | Mobile Time — EduEdu 550 mil alunos | https://www.mobiletime.com.br/noticias/30/04/2021/com-550-mil-alunos-cadastrados-app-eduedu-ajuda-no-reforco-escolar/ | ONG, grátis, adaptativo | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 50 | Educa Mais Brasil — 8 apps de alfabetização | https://www.educamaisbrasil.com.br/educacao/escolas/8-aplicativos-de-alfabetizacao-infantil-gratuitos | Panorama BR (ABC do Bita, EduEdu, 15 min) | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 51 | Mundo Bita Play — App Store | https://apps.apple.com/app/id1609236887 | Assinatura de marca musical | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 52 | Palavra Cantada Oficial — TouchArcade | https://toucharcade.com/games/palavra-cantada-oficial | Jogo LETRAS com música | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 53 | abcD+ (Lume) — App Store | https://apps.apple.com/us/app/abcd/id1604446742 | AR + cards | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 54 | Canaltech — Melhores apps de alfabetização | https://canaltech.com.br/apps/melhores-aplicativos-alfabetizacao/ | Panorama BR | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 55 | Radesky et al. 2022 — JAMA Netw Open (PMC) | https://pmc.ncbi.nlm.nih.gov/articles/PMC9206186/ | ~80% dos apps com design manipulativo | VERIFICADA — Crossref · doi:10.1001/jamanetworkopen.2022.17641 |
+| 56 | Michigan Medicine — Design tricks | https://www.michiganmedicine.org/health-lab/design-tricks-commonly-used-monetize-young-childrens-app-use | Exemplos de dark patterns | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 57 | 5Rights — Five key changes (AADC) | https://5rightsfoundation.com/five-key-changes-introduced-by-the-age-appropriate-design-code/ | Padrões de design para crianças | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 58 | ICO — Age Appropriate Design Code (PDF) | https://ico.org.uk/media/for-organisations/uk-gdpr-guidance-and-resources/childrens-information/childrens-code-guidance-and-resources/age-appropriate-design-a-code-of-practice-for-online-services-2-1.pdf | Padrão de "nudge" | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 59 | UNICEF — RITEC | https://www.unicef.org/innovation/responsible-innovation-technology-children-ritec | RITEC-8, Design Toolbox | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 60 | UNICEF — Designing digital play with well-being in mind | https://www.unicef.org/designing-digital-play-childrens-well-being-mind | Guia de design de bem-estar | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 61 | Google Play — Families / Teacher Approved | https://support.google.com/googleplay/android-developer/answer/9867159 ; https://play.google.com/console/about/programs/teacherapproved/ | Regras de anúncios, AD_ID, critérios | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 62 | Apple Developer News (2019) — Kids Category | https://developer.apple.com/news/?id=06032019j | Sem ads e analytics de terceiros | VERIFICADA — URL ativa, HTTP 200 |
+| 63 | Google — Building for Kids: designing engaging apps | https://developers.google.com/building-for-kids/designing-engaging-apps | Feedback positivo, retorno rápido | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 64 | SBP — Atualização orientações era digital | https://www.sbp.com.br/sociedade-brasileira-de-pediatria-atualiza-orientacoes-para-criancas-e-adolescentes-na-era-digital/ | Limites de tela por idade | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 65 | Active for Life — OMS 2019 | https://activeforlife.com/world-health-guidelines/ | ≤ 1 h para 1–4 anos | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 66 | AAP — 5 Cs | https://www.aap.org/5Cs | Plano de mídia familiar | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 67 | Mattos Filho / Agência Gov — ECA Digital | https://www.mattosfilho.com.br/unico/eca-digital-sancionada-lei/ ; https://agenciagov.ebc.com.br/noticias/202608/eca-digital-conheca-as-regras-de-protecao-de-criancas-e-adolescentes-no-ambiente-online | Loot box, publicidade, supervisão | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 68 | Deci, Koestner & Ryan 1999 (PDF) | https://leeds-faculty.colorado.edu/dahe7472/deci%201999.pdf | Recompensas x motivação intrínseca | VERIFICADA — Crossref · doi:10.1037/0033-2909.125.6.627 |
+| 69 | Sailer & Homner — Gamification meta-analysis | https://opus.bibliothek.uni-augsburg.de/opus4/frontdoor/index/index/docId/109056 | Efeitos da gamificação | VERIFICADA — Crossref · doi:10.1007/s10648-019-09498-w |
+| 70 | APS — Putting Education in "Educational" Apps | https://www.psychologicalscience.org/publications/educational-apps.html | 4 pilares | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 71 | Howard-Jones — Toward a Science of Learning Games / Reward, learning and games | https://research-information.bris.ac.uk/en/publications/toward-a-science-of-learning-games/ ; https://shura.shu.ac.uk/12203 | Recompensa incerta e cautelas | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 72 | Slavin 1987 — Mastery learning (PDF) | https://www.gwern.net/doc/psychology/1987-slavin.pdf | Efeitos reais de mastery learning | VERIFICADA — Crossref · doi:10.3102/00346543057002175 |
+| 73 | Haebig et al. 2021 — Spaced retrieval | https://asha.figshare.com/articles/journal_contribution/Spaced_retrieval_supports_semantic_learning_Haebig_et_al_2021_/15063060 | Repetição espaçada em pré-escolares | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 74 | arXiv 2024 — Children's emotions in playful learning games | https://arxiv.org/pdf/2406.04794 | Flow e limites do ajuste dinâmico de dificuldade | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 75 | Design Week — Duolingo owl makeover / Duolingo Blog "Reshaping Duo" | https://www.designweek.co.uk/issues/2-6-january-2019/duolingo-owl-receives-makeover-as-app-becomes-more-gamified ; https://blog.duolingo.com/reshaping-duo/ | Construção de mascote | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 76 | UX Collective — "20 days of emotional blackmail from Duolingo" | https://uxdesign.cc/20-days-of-emotional-blackmail-from-duolingo-4f566523e3c5 | Crítica a streak e culpa | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 77 | Trademarkdir — SOFIA THE FIRST / AdoroCinema — Princesinha Sofia | https://trademarkdir.com/trademark/sofia-the-first-85322177 ; https://www.adorocinema.com/series/serie-16809/ | Conflito de nome | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 78 | Talking Sofia — App Store / Sofia (Dynseo) | https://apps.apple.com/bh/app/talking-sofia/id1160638442 ; https://appgoblin.info/apps/com.dynseo.stimart.sofia | Apps com nome Sofia | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 79 | Melhor Escola — Letra cursiva / UFRN — artigo sobre tipos de letra | https://www.melhorescola.com.br/artigos/letra-cursiva ; https://periodicos.ufrn.br/saberes/article/download/44743/22779/169603 | Bastão → cursiva; debate | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 80 | Dyslexia Scotland — Dyslexia-friendly typed formats | https://dyslexiascotland.org.uk/dyslexia-friendly-typed-formats | Espaçamento > fonte | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 81 | Agência Gov — Alfabetização 2024 / Band — 56% em 2023 | https://agenciagov.ebc.com.br/noticias/202507/58-dos-municipios-melhoraram-alfabetizacao ; https://www.band.com.br/educacao/alfabetizacao-de-criancas-no-2o-ano-do-fundamental-chega-a-56-em-2023-16693158 | Tamanho do problema no BR | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 82 | Horn Book — Endless Reader review | https://hbook.com/story/endless-reader-app-review | Mecânica de silhuetas | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 83 | Tempo de Aprender — apresentação Câmara (PDF) | https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-permanentes/ce/apresentacoes-em-eventos/eventos-2022-1/arquivos-2022/segundo-semestre-2022/MaurcioPrado.pdf | GraphoGame com 1,8 mi downloads no programa | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
+| 84 | Comminit — Best practices touch-screen (Sesame) | https://sb.comminit.com/node/9311454 | Feedback sonoro no toque; erro encorajador | NÃO CHECÁVEL — site fora da rede liberada, HTTP 000 |
 
 **Total: 84 entradas, mais de 30 produtos distintos (internacionais e brasileiros) e cerca de 30 fontes de pesquisa, diretriz ou lei.**
 

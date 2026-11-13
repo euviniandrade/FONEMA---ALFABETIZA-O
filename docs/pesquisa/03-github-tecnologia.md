@@ -361,29 +361,29 @@ Premissas (ajustáveis): aluno ativo usa **20 min/dia, 20 dias/mês**; faz **~60
 
 ## 12. Fontes consultadas (web)
 
-- Azure — suporte de idiomas (pronunciation assessment pt-BR): https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-support ; release notes: https://docs.azure.cn/en-us/ai-services/speech-service/releasenotes ; GitHub docs: https://github.com/MicrosoftDocs/azure-ai-docs/blob/main/articles/ai-services/speech-service/includes/language-support/pronunciation-assessment.md
-- Azure — visemas: https://learn.microsoft.com/azure/ai-services/speech-service/how-to-speech-synthesis-viseme ; Q&A blend shapes: https://learn.microsoft.com/en-us/answers/questions/1644812/when-will-new-voices-support-blendshape-output
-- Azure — fonemas na saída do PA: https://learn.microsoft.com/en-us/answers/questions/1434363/pronunciation-assessment-the-phoneme-level-feedbac ; imprecisões: https://learn.microsoft.com/en-us/answers/questions/5707709/azure-speech-pronunciation-assessment-word-and-pho
-- Azure — preços: https://azure.microsoft.com/pricing/details/cognitive-services/speech-services ; https://www.developersdigest.tech/models/speech/azure
-- Azure — vozes pt-BR: https://techcommunity.microsoft.com/t5/azure-ai/cognitive-services-adds-brazilian-portuguese-to-neural-text-to/ba-p/1210471 ; https://docs.signalwire.com/voice/tts/azure ; versão das vozes: https://learn.microsoft.com/en-us/answers/questions/5771581/change-in-tts-voice
-- Amazon Polly — vozes neurais: https://docs.aws.amazon.com/polly/latest/dg/neural-voices.html ; preços: https://aws.amazon.com/polly/pricing/ ; histórico: https://docs.aws.amazon.com/polly/latest/dg/doc-history.html
-- Google TTS — preços: https://cloud.google.com/text-to-speech/pricing
-- ElevenLabs — preços: https://elevenlabs.io/pricing/api ; https://developer.puter.com/tutorials/elevenlabs-api-pricing/
-- OpenAI transcrição — preço: https://www.neowin.net/news/openai-announces-next-generation-audio-models-to-power-voice-agents/ ; https://costbench.com/software/ai-transcription-apis/openai-whisper/
-- XTTS-v2 (CPML): https://huggingface.co/coqui/XTTS-v2 ; https://coqui-tts.readthedocs.io/en/latest/models/xtts.html
-- Kokoro pt-BR: https://huggingface.co/msgflux/Kokoro-82M-streaming-onnx ; https://thomazrb.github.io/posts/python-tts-kokoro
-- F5-TTS pt-BR: https://huggingface.co/firstpixel/F5-TTS-pt-br
-- Piper vozes pt_BR: https://huggingface.co/rhasspy/piper-voices (pasta pt/pt_BR) ; MODEL_CARD faber: https://huggingface.co/rhasspy/piper-voices/blob/refs%2Fpr%2F11/pt/pt_BR/faber/medium/MODEL_CARD
-- wav2vec2 espeak: https://huggingface.co/facebook/wav2vec2-xlsr-53-espeak-cv-ft
-- MFA português: https://huggingface.co/MontrealCorpusTools/portuguese_mfa ; https://mfa-models.readthedocs.io/en/latest/dictionary/Portuguese/Portuguese%20(Brazil)%20MFA%20dictionary%20v2_0_0a.html
-- Vosk modelos: https://alphacephei.com/vosk/models
-- whisper.cpp WASM: https://github.com/ggml-org/whisper.cpp/tree/master/examples/whisper.wasm
-- MediaPipe Face Landmarker (web): https://developers.google.com/edge/mediapipe/solutions/vision/face_landmarker/web_js
-- Rhubarb (recognizer phonetic): https://github.com/DanielSWolf/rhubarb-lip-sync
-- SpeechSuper (8 idiomas): https://github.com/speechsuper/SpeechSuper-API-Samples
-- Feed the Monster: https://backlog.digitalpublicgoods.net/curiouslearning/ ; https://norad.no/en/front/thematic-areas/education/innovation/eduapp4syria/feed-the-monster-available-in-25-languages
-- ASR infantil: https://ojs.aaai.org/index.php/AIES/article/view/31618 (Kid-Whisper) ; https://doaj.org/article/0511c1c47cad47ab8ad278b14388fd9e (Jain et al.) ; https://arxiv.org/html/2404.17394v2
-- Corpora: https://arxiv.org/abs/2110.15731 (CORAA) ; https://talkbank.org/childes/access/Romance/Portuguese/Florianopolis.html
+- Azure — suporte de idiomas (pronunciation assessment pt-BR): https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-support ; release notes: https://docs.azure.cn/en-us/ai-services/speech-service/releasenotes ; GitHub docs: https://github.com/MicrosoftDocs/azure-ai-docs/blob/main/articles/ai-services/speech-service/includes/language-support/pronunciation-assessment.md — *Validação E2: VERIFICADA — URL ativa, HTTP 200*
+- Azure — visemas: https://learn.microsoft.com/azure/ai-services/speech-service/how-to-speech-synthesis-viseme ; Q&A blend shapes: https://learn.microsoft.com/en-us/answers/questions/1644812/when-will-new-voices-support-blendshape-output — *Validação E2: VERIFICADA — URL ativa, HTTP 200*
+- Azure — fonemas na saída do PA: https://learn.microsoft.com/en-us/answers/questions/1434363/pronunciation-assessment-the-phoneme-level-feedbac ; imprecisões: https://learn.microsoft.com/en-us/answers/questions/5707709/azure-speech-pronunciation-assessment-word-and-pho — *Validação E2: VERIFICADA — URL ativa, HTTP 200*
+- Azure — preços: https://azure.microsoft.com/pricing/details/cognitive-services/speech-services ; https://www.developersdigest.tech/models/speech/azure — *Validação E2: NÃO CHECÁVEL — site fora da rede liberada, HTTP 000*
+- Azure — vozes pt-BR: https://techcommunity.microsoft.com/t5/azure-ai/cognitive-services-adds-brazilian-portuguese-to-neural-text-to/ba-p/1210471 ; https://docs.signalwire.com/voice/tts/azure ; versão das vozes: https://learn.microsoft.com/en-us/answers/questions/5771581/change-in-tts-voice — *Validação E2: VERIFICADA — URL ativa, HTTP 200*
+- Amazon Polly — vozes neurais: https://docs.aws.amazon.com/polly/latest/dg/neural-voices.html ; preços: https://aws.amazon.com/polly/pricing/ ; histórico: https://docs.aws.amazon.com/polly/latest/dg/doc-history.html — *Validação E2: NÃO CHECÁVEL — site fora da rede liberada, HTTP 000*
+- Google TTS — preços: https://cloud.google.com/text-to-speech/pricing — *Validação E2: VERIFICADA — URL ativa, HTTP 200*
+- ElevenLabs — preços: https://elevenlabs.io/pricing/api ; https://developer.puter.com/tutorials/elevenlabs-api-pricing/ — *Validação E2: NÃO CHECÁVEL — site fora da rede liberada, HTTP 000*
+- OpenAI transcrição — preço: https://www.neowin.net/news/openai-announces-next-generation-audio-models-to-power-voice-agents/ ; https://costbench.com/software/ai-transcription-apis/openai-whisper/ — *Validação E2: NÃO CHECÁVEL — site fora da rede liberada, HTTP 000*
+- XTTS-v2 (CPML): https://huggingface.co/coqui/XTTS-v2 ; https://coqui-tts.readthedocs.io/en/latest/models/xtts.html — *Validação E2: VERIFICADA — URL ativa, HTTP 200*
+- Kokoro pt-BR: https://huggingface.co/msgflux/Kokoro-82M-streaming-onnx ; https://thomazrb.github.io/posts/python-tts-kokoro — *Validação E2: VERIFICADA — URL ativa, HTTP 200*
+- F5-TTS pt-BR: https://huggingface.co/firstpixel/F5-TTS-pt-br — *Validação E2: VERIFICADA — URL ativa, HTTP 200*
+- Piper vozes pt_BR: https://huggingface.co/rhasspy/piper-voices (pasta pt/pt_BR) ; MODEL_CARD faber: https://huggingface.co/rhasspy/piper-voices/blob/refs%2Fpr%2F11/pt/pt_BR/faber/medium/MODEL_CARD — *Validação E2: VERIFICADA — URL ativa, HTTP 200*
+- wav2vec2 espeak: https://huggingface.co/facebook/wav2vec2-xlsr-53-espeak-cv-ft — *Validação E2: VERIFICADA — URL ativa, HTTP 200*
+- MFA português: https://huggingface.co/MontrealCorpusTools/portuguese_mfa ; https://mfa-models.readthedocs.io/en/latest/dictionary/Portuguese/Portuguese%20(Brazil)%20MFA%20dictionary%20v2_0_0a.html — *Validação E2: VERIFICADA — URL ativa, HTTP 200*
+- Vosk modelos: https://alphacephei.com/vosk/models — *Validação E2: NÃO CHECÁVEL — site fora da rede liberada, HTTP 000*
+- whisper.cpp WASM: https://github.com/ggml-org/whisper.cpp/tree/master/examples/whisper.wasm — *Validação E2: NÃO CHECÁVEL — site fora da rede liberada, HTTP 403*
+- MediaPipe Face Landmarker (web): https://developers.google.com/edge/mediapipe/solutions/vision/face_landmarker/web_js — *Validação E2: NÃO CHECÁVEL — site fora da rede liberada, HTTP 000*
+- Rhubarb (recognizer phonetic): https://github.com/DanielSWolf/rhubarb-lip-sync — *Validação E2: NÃO CHECÁVEL — site fora da rede liberada, HTTP 403*
+- SpeechSuper (8 idiomas): https://github.com/speechsuper/SpeechSuper-API-Samples — *Validação E2: NÃO CHECÁVEL — site fora da rede liberada, HTTP 403*
+- Feed the Monster: https://backlog.digitalpublicgoods.net/curiouslearning/ ; https://norad.no/en/front/thematic-areas/education/innovation/eduapp4syria/feed-the-monster-available-in-25-languages — *Validação E2: NÃO CHECÁVEL — site fora da rede liberada, HTTP 000*
+- ASR infantil: https://ojs.aaai.org/index.php/AIES/article/view/31618 (Kid-Whisper) ; https://doaj.org/article/0511c1c47cad47ab8ad278b14388fd9e (Jain et al.) ; https://arxiv.org/html/2404.17394v2 — *Validação E2: NÃO CHECÁVEL — site fora da rede liberada, HTTP 000*
+- Corpora: https://arxiv.org/abs/2110.15731 (CORAA) ; https://talkbank.org/childes/access/Romance/Portuguese/Florianopolis.html — *Validação E2: NÃO CHECÁVEL — site fora da rede liberada, HTTP 000*
 
 ---
 
