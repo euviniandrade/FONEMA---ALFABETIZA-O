@@ -4,6 +4,11 @@
  * Títulos só mudam ao passar um PORTÃO de domínio (chefe de região).
  */
 
+import { FASE_POR_ID } from '@fonema/conteudo';
+
+/** Os desafios da primeira missão levam ao nível 1 (o nível 2 pede 2 desafios DEPOIS dela). */
+export const DESAFIOS_NIVEL_1 = FASE_POR_ID['R0-F01'].cenas.filter((c) => c.atividade).length;
+
 export const TITULOS = [
   { nome: 'Primeiros Sons', inicio: 1, sub: [1, 4, 6] },
   { nome: 'Caça às Sílabas', inicio: 7, sub: [7, 10, 13] },
@@ -68,7 +73,7 @@ export function calcularNivel(desafios: number, missaoInicialFeita: boolean, fas
     return { nivel: 0, titulo: null, sub: '', estrelas: 0, rotulo: 'Começando', desafiosNoNivel: 0, custoProximo: 0, faltam: 0 };
   }
   let nivel = 1;
-  let resto = desafios;
+  let resto = Math.max(0, desafios - DESAFIOS_NIVEL_1);
   let portao: InfoNivel['portao'];
   for (;;) {
     const n = nivel + 1;
