@@ -21,7 +21,7 @@ const srv = http.createServer((q, r) => {
     await p.goto(`${base}?mudo&cap&${query}`); await p.waitForFunction(() => window.DEMO); await p.waitForTimeout(2500);
     return p;
   };
-  const foto = async (p, nome, ms = 600) => { await p.waitForTimeout(ms); await p.screenshot({ path: path.join(CAP, nome + '.png') }); console.log('📷', nome); };
+  const foto = async (p, nome, ms = 600) => { await p.waitForTimeout(ms); await p.screenshot({ path: path.join(CAP, nome + '.png'), timeout: 120000 }); console.log('📷', nome); };
   const cenas = [
     ['01-frente-sofia-A', 'f=a&m=frente', 0], ['02-frente-tales-U', 'f=u&m=frente&p=tales', 0], ['03-frente-sofia-F', 'f=f&m=frente', 0], ['04-frente-sofia-L', 'f=l&m=frente', 0],
     ['05-raiox-sofia-M-nariz-e-voz', 'f=m&m=lado', 0], ['06-raiox-sofia-L-ponta-no-alveolo', 'f=l&m=lado', 0], ['07-raiox-tales-K-dorso-no-veu', 'f=k&m=lado&p=tales', 0],
@@ -47,7 +47,7 @@ const srv = http.createServer((q, r) => {
         await p.evaluate(([a, b, f]) => window.DEMO.esp.pose(a, b, f), [a, b, f]);
         await p.waitForTimeout(500);
         const el = await p.$('#vRaiox');
-        await el.screenshot({ path: path.join(CAP, 'transicoes', `${a}-${b}-${m}-${Math.round(f * 100)}.png`) });
+        await el.screenshot({ timeout: 120000, path: path.join(CAP, 'transicoes', `${a}-${b}-${m}-${Math.round(f * 100)}.png`) });
       }
       console.log('🎞️', a, '→', b, m); await p.close();
     }

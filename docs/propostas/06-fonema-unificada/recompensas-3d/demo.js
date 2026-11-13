@@ -12,7 +12,7 @@
   let seloNome = null;
   function montaSelo(animar = true) {
     $('#cenaSelo').innerHTML = '';
-    seloNome = R.selo({ arte: 'selo-meu-nome', letra: letra(), nivel: 'bronze', tamanho: 340, rotulo: `Selo Meu Nome com a letra ${letra()}, nível bronze` });
+    seloNome = R.selo({ arte: 'selo-meu-nome', letra: letra(), nivel: 'bronze', tamanho: 290, rotulo: `Selo Meu Nome com a letra ${letra()}, nível bronze` });
     $('#cenaSelo').appendChild(seloNome);
     if (animar) R.entrar(seloNome);
   }

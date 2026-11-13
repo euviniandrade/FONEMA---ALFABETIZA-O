@@ -587,6 +587,7 @@ export function criar(container, opts = {}) {
   /* ------------------------------------------------------------------ laço */
   function quadro() {
     if (parado) return;
+    if (opts.pausado && opts.pausado()) { ultimo = performance.now(); requestAnimationFrame(quadro); return; }
     const agora = performance.now(), dt = Math.min(opts.capturas ? 0.5 : 0.1, (agora - ultimo) / 1000); ultimo = agora; tempo += dt;
     const o = poseAgora();
     mand.rotation.x = THREE.MathUtils.degToRad(o.jaw); if (vis.casca > 0.02) cabeca.atualiza(o.jaw);

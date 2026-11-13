@@ -14,24 +14,25 @@ h1 small{display:block;font:600 14px Fredoka;color:#A8D5F2}
 .btn{border:0;border-radius:16px;padding:10px 16px;min-height:48px;background:#FFF8EA;color:#1B3160;font:700 16px Fredoka,sans-serif;box-shadow:0 4px 0 #0005}
 .btn.ouro{background:linear-gradient(#FFE08A,#F4B73C);box-shadow:0 4px 0 #C98A12;font-size:18px}
 .btn.mini{position:absolute;right:12px;bottom:10px;min-height:40px;padding:6px 12px;font-size:14px}
-.grade{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:380px 300px;gap:14px;padding:0 18px}
+.grade{display:grid;grid-template-columns:1.15fr 1fr 1fr;grid-template-rows:400px 290px;gap:14px;padding:0 18px}
 .cartao{position:relative;border-radius:26px;background:linear-gradient(#ffffff14,#ffffff08);border:2px solid #ffffff22;padding:10px 14px;overflow:hidden}
 .cartao h2{margin:0;font:700 19px Fredoka,sans-serif;color:#FFF3C4}
 .cartao h2 small{font:600 13px Fredoka;color:#A8D5F2;margin-left:6px}
 .cena{position:absolute;inset:42px 10px 46px;display:grid;place-items:center}
-.c-selo{grid-row:span 2}
-.c-selo .cena{inset:50px 10px 60px}
+.c-selo .cena{inset:40px 10px 50px}
+.c-colecao{grid-column:1;grid-row:2}
+.c-bau{grid-column:2;grid-row:2}.c-trofeu{grid-column:3;grid-row:2}
 .c-moedas .cena{display:flex;align-items:flex-end;justify-content:space-between;padding:0 6px}
 .pilha{width:44%;filter:drop-shadow(0 8px 8px #0006)}
 .cofre{width:52%;display:flex;flex-direction:column;align-items:center;gap:6px}
 .cofre .rc-cofrinho{width:100%;filter:drop-shadow(0 8px 8px #0006)}
 .cofre .rc-contador{font-size:30px;padding:4px 14px 4px 6px}.cofre .rc-contador img{width:34px}
 .regra{position:absolute;left:14px;bottom:4px;margin:0;font-size:12px;color:#A8D5F2;max-width:62%}
-.c-bau .rc-bau{width:200px}
-.c-trofeu .rc-trofeu{width:190px}
+.c-bau .rc-bau{width:180px}
+.c-trofeu .rc-trofeu{width:170px;margin-top:16px}
 .c-colecao .rc-colecao{position:absolute;inset:44px 14px 10px}
 .c-colecao figure{display:grid;place-items:center}
-.c-colecao img{max-height:108px;width:auto;max-width:100%}
+.c-colecao img{max-height:100px;width:auto;max-width:100%}
 .nota{text-align:center;font-size:12px;color:#A8D5F2;margin:10px 18px}
 .nota code{color:#FFE08A}
 @media (max-width:1000px){.grade{grid-template-columns:1fr;grid-template-rows:none}.cartao{min-height:320px}.c-selo{min-height:480px}}

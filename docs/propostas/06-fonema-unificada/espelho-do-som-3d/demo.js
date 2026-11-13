@@ -11,7 +11,7 @@
   const rx = EspelhoSVG.criar($('#vRaiox'), { fonema: q.get('f') || 'a', personagem: q.get('p') || 'sofia' });
   $('#vRaiox').classList.add('esp-palco');
   let e3 = null;
-  if (!q.has('2d')) { try { e3 = await EspelhoSom.criar($('#palco'), { fonema: q.get('f') || 'a', modo: 'frente', capturas: q.has('cap') }); if (e3.tipo !== '3d') { e3.destruir(); e3 = null; } } catch (e) { e3 = null; } }
+  if (!q.has('2d')) { try { e3 = await EspelhoSom.criar($('#palco'), { fonema: q.get('f') || 'a', modo: 'frente', capturas: q.has('cap'), pausado: () => !$('#palco').classList.contains('on') }); if (e3.tipo !== '3d') { e3.destruir(); e3 = null; } } catch (e) { e3 = null; } }
   let atual = q.get('f') || 'a', mudo = q.has('mudo'), lento = false, aba = 'explorar', vista = 'frente', pers = q.get('p') || 'sofia';
   const vista3d = () => ['frente3d', 'dentro', 'corpo'].includes(vista);
   const esp = { // fachada: as duas vistas mexem juntas
