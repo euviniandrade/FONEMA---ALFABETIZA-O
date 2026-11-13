@@ -96,7 +96,7 @@ export async function criarMundo(container, opts = {}) {
   }
   let cenaAtual = null, C = null;
   const LIMITES = {
-    vila: { min: 4, max: 190, polar: 1.48, caixa: 140, alvoY: [0, 45] },
+    vila: { min: 4, max: 190, polar: 1.68, caixa: 140, alvoY: [0, 45] },
     arquipelago: { min: 20, max: 520, polar: 1.25, caixa: 260, alvoY: [0, 60] },
   };
 
