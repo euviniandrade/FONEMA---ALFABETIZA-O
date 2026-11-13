@@ -21,10 +21,10 @@
   .idade { position: absolute; left: 32px; width: 120px; font-family: 'Fredoka'; font-weight: 600; font-size: 13px; line-height: 1.05; }
   .idade small { display: block; font-family: 'Andika'; font-weight: 400; font-size: 10.5px; color: var(--tinta2); }
   .tot { position: absolute; font-family: 'Fredoka'; font-weight: 700; font-size: 13px; }
-  .depois { position: absolute; top: 572px; height: 128px; border-radius: 14px; padding: 10px 12px; color: #fff; }
+  .depois { position: absolute; top: 572px; height: 166px; border-radius: 14px; padding: 10px 12px; color: #fff; }
   .depois h3 { font-size: 13.5px; display: flex; align-items: center; gap: 7px; margin-bottom: 4px; }
-  .depois p { font-size: 10.8px; line-height: 1.3; opacity: .96; }
-  .regras { position: absolute; top: 548px; left: 1008px; width: 240px; height: 210px; background: #fff; border-radius: 14px; padding: 10px 12px; box-shadow: 0 4px 12px rgba(60,40,10,.10); }
+  .depois p { font-size: 12px; line-height: 1.35; opacity: .96; }
+  .regras { position: absolute; top: 548px; left: 1008px; width: 240px; height: 190px; top: 548px; background: #fff; border-radius: 14px; padding: 10px 12px; box-shadow: 0 4px 12px rgba(60,40,10,.10); }
   .regras h3 { font-size: 13px; margin-bottom: 4px; }
   .regras li { font-size: 10.5px; line-height: 1.3; margin-left: 14px; }
 </style></head>
@@ -60,7 +60,7 @@ const F = [
   ['Pausa ativa', '20–90 s', PAU, 'Movimento que <b>também treina fonologia</b> (“pula quando ouvir /p/”); respirar com a Sofia é opcional. Zera a fadiga antes do 2º bloco.', ['N11','N1','N12']],
   ['Slot rotativo', '2–4 min', SLOT, 'Um por dia: <b>Hora da História</b> (CROWD, tema da região) · <b>Papo com a Sofia</b> · <b>Criar</b> (escrita inventada) · <b>missão transversal</b> (≤ 1, sempre via leitura).', ['N10','N9','N2']],
   ['Contraste', '45 s–1,5 min', NUC, '<b>Pares confusos intercalados</b> (b/d, p/b, f/v, R/RR…) só depois de ≥ 2 recuperações isoladas de cada. Itens “sanguessuga” vêm para cá. Em R0–R2a: jogo de rimas.', ['N7','N3','N8']],
-  ['Ritual de fim', '45 s–1 min', RIT, 'Aviso em 2 etapas; <b>última tarefa fácil</b> (fim em alta). Recapitula, <b>entrega as moedinhas em bloco</b>, ilumina o mapa, <b>planta o gancho</b> de amanhã e a ponte com o mundo real. Sem botão “continuar”.', ['N12','N10','N6','N4']],
+  ['Ritual de fim', '45 s–1 min', RIT, 'Aviso em 2 etapas; <b>última tarefa fácil</b> (fim em alta). Recapitula, <b>moedinhas em bloco</b>, mapa ilumina, <b>gancho</b> para amanhã. Sem botão “continuar”.', ['N12','N10','N6','N4']],
 ];
 const W = 230, gx = 16, x0 = 32, ys = [90, 246];
 let h = '';
@@ -91,7 +91,7 @@ Object.entries(T).forEach(([k, o], j) => {
   const av = bx + tot * 0.8 * esc;
   b += `<svg style="position:absolute;left:${av - 6}px;top:${y - 8}px" width="12" height="10"><path d="M1 1h10L6 9z" fill="#C23B6C"/></svg>`;
 });
-b += `<div style="position:absolute;left:${bx + 15 * esc}px;top:484px;width:250px;font-size:10.5px;line-height:1.3;color:var(--tinta2)"><svg width="10" height="9"><path d="M1 1h8L5 8z" fill="#C23B6C"/></svg> ~80% do tempo: “mais 2 desafios!”<br>Legenda: <b style="color:${NUC}">núcleo</b> · <b style="color:${LIC}">lição</b> · <b style="color:${PAU}">pausa</b> · <b style="color:${SLOT}">slot</b> · <b style="color:${RIT}">ritual</b></div>`;
+b += `<div style="position:absolute;left:900px;top:428px;width:330px;font-size:10.5px;line-height:1.3;color:var(--tinta2)"><svg width="10" height="9"><path d="M1 1h8L5 8z" fill="#C23B6C"/></svg> ~80% do tempo: “mais 2 desafios!”<br>Legenda: <b style="color:${NUC}">núcleo</b> · <b style="color:${LIC}">lição</b> · <b style="color:${PAU}">pausa</b> · <b style="color:${SLOT}">slot</b> · <b style="color:${RIT}">ritual</b></div>`;
 document.getElementById('barras').innerHTML = b;
 // depois da sessão
 const D = [

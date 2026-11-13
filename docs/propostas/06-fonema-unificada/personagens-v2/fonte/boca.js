@@ -25,7 +25,7 @@ const SHAPES = {
   b: { W: 88, top: 0, bot: 0, closed: true, press: 1 },
   f: { W: 100, top: -26, bot: 0, labio: true },
   v: { W: 100, top: -26, bot: 0, labio: true },
-  s: { W: 118, top: -15, bot: 15, teeth: 'both', gap: 3 },
+  s: { W: 116, top: -25, bot: 22, teeth: 'both', gap: 3 },
   l: { W: 100, top: -32, bot: 40, tongue: 'up' },
   a: { W: 96, top: -52, bot: 86, tongue: 'low', throat: true },
 };
@@ -110,6 +110,8 @@ function mouthBig(k) {
   } else if (!S.labio) {
     inner += `<ellipse cx="0" cy="${bot + 10}" rx="${W * 0.62}" ry="16" fill="${K.tongue}" opacity=".85"/>`;
   }
+  // sombra de oclusão sob o lábio de cima
+  inner += `<path d="M${-W},${top - 6} C${-W * 0.5},${top - 4} ${W * 0.5},${top - 4} ${W},${top - 6} V${top + 10} C${W * 0.5},${top + 12} ${-W * 0.5},${top + 12} ${-W},${top + 10}Z" fill="#2A0810" opacity=".3" filter="url(#bSoft)"/>`;
   // dentes
   if (S.labio) {
     inner += `<path d="M${-W},14 C${-W * 0.5},${-2} ${W * 0.5},${-2} ${W},14 V60 H${-W}Z" fill="url(#bLipLo)"/>`;
@@ -120,8 +122,6 @@ function mouthBig(k) {
     else if (S.tongue !== 'up') inner += `<g data-layer="dentesInf">${teethRow(W * 0.7, bot + 14, bot - 12, false)}</g>`;
     else inner += `<g data-layer="dentesInf">${teethRow(W * 0.7, bot + 14, bot - 8, false)}</g>`;
   }
-  // sombra de oclusão sob o lábio de cima
-  inner += `<path d="M${-W},${top - 6} C${-W * 0.5},${top - 4} ${W * 0.5},${top - 4} ${W},${top - 6} V${top + 10} C${W * 0.5},${top + 12} ${-W * 0.5},${top + 12} ${-W},${top + 10}Z" fill="#2A0810" opacity=".35" filter="url(#bSoft)"/>`;
   g += `<defs><clipPath id="${id}"><path d="${O}"/></clipPath></defs><g clip-path="url(#${id})">${inner}</g>`;
   // lábios
   if (S.labio) {
@@ -162,9 +162,8 @@ function frontal(k, w = 540, h = 480, o = {}) {
   g += `<path d="M${cx - 66},${ny - 40} C${cx - 50},${ny - 70} ${cx + 50},${ny - 70} ${cx + 66},${ny - 40}" fill="none" stroke="#C48A62" stroke-width="20" opacity=".5" filter="url(#bSoft)"/>`;
   g += `<ellipse cx="${cx - 34}" cy="${ny + 22}" rx="15" ry="8" fill="#4A2416" opacity=".75" transform="rotate(-14 ${cx - 34} ${ny + 22})"/><ellipse cx="${cx + 34}" cy="${ny + 22}" rx="15" ry="8" fill="#4A2416" opacity=".75" transform="rotate(14 ${cx + 34} ${ny + 22})"/>`;
   g += `<ellipse cx="${cx - 10}" cy="${ny - 14}" rx="26" ry="14" fill="#DDA27A" opacity=".8" filter="url(#bSoft)"/>`;
-  // filtro labial
-  g += `<path d="M${cx - 16},${ny + 46} L${cx - 22},${my + (S.top || 0) - 34} M${cx + 16},${ny + 46} L${cx + 22},${my + (S.top || 0) - 34}" stroke="${P.skinSh}" stroke-width="6" opacity=".18" stroke-linecap="round" filter="url(#bSoft)"/>`;
-  g += `<path d="M${cx - 130},${ny + 30} Q${cx - 150},${my - 10} ${cx - 140},${my + 60} M${cx + 130},${ny + 30} Q${cx + 150},${my - 10} ${cx + 140},${my + 60}" fill="none" stroke="${P.skinSh}" stroke-width="5" opacity="${S.teeth === 'both' ? .4 : 0}" stroke-linecap="round" filter="url(#bSoft)"/>`;
+  // filtro labial (sulco suave com luz no meio)
+  g += `<path d="M${cx},${ny + 50} L${cx},${my + (S.top || 0) - 46}" stroke="#7E4E33" stroke-width="30" opacity=".18" stroke-linecap="round" filter="url(#bBlur)"/><path d="M${cx - 18},${ny + 52} L${cx - 22},${my + (S.top || 0) - 44} M${cx + 18},${ny + 52} L${cx + 22},${my + (S.top || 0) - 44}" stroke="#C99169" stroke-width="7" opacity=".35" stroke-linecap="round" filter="url(#bSoft)"/>`;
   // queixo
   g += `<ellipse cx="${cx}" cy="${chin - 50}" rx="70" ry="22" fill="#C48A62" opacity=".5" filter="url(#bBlur)"/>`;
   // boca
@@ -278,7 +277,7 @@ function sagittal(k, o = {}) {
     g += `<path d="M556,272 q8,-6 16,0 t16,0 M556,240 q8,-6 16,0 t16,0" stroke="${K.airSoft}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
   } else if (F.air === 'lateral') {
     g += `<path data-layer="ar" d="${rise} Q262,244 340,${F.tongue === 'l' ? 262 : 244} Q420,290 470,296 Q520,300 592,${R([592, 296]).split(',')[1]}" ${A} opacity=".95"/>`;
-    g += `<text x="368" y="326" font-family="Andika" font-weight="700" font-size="18" fill="${K.air}">pelos lados da língua</text>`;
+    g += `<g transform="translate(330,352)"><rect width="190" height="30" rx="15" fill="#fff" opacity=".92"/><text x="95" y="21" text-anchor="middle" font-family="Andika" font-weight="700" font-size="16.5" fill="${K.air}">ar pelos lados da língua</text></g>`;
   } else g += `<path data-layer="ar" d="${rise} Q262,256 340,266 Q440,276 520,${f(rot([520, 280], J)[1])} L592,${f(rot([592, 290], J)[1])}" ${A}/>`;
   // ---- vibração (garganta)
   if (F.voice) g += `<g data-layer="vibracao" fill="none" stroke="${K.voice}" stroke-width="6" stroke-linecap="round">

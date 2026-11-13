@@ -31,10 +31,10 @@
   // ===== Turma 2º B: as mesmas 24 crianças da v1, com os mesmos níveis =====
   // g = grupo sugerido (próxima habilidade a ensinar), trava = onde está travada (habilidade · som · palavras)
   const GRUPOS=[
-    {id:'G1',nome:'Troca surda/sonora',foco:'P/B · T/D · F/V',por:'Trocam pares que só mudam a vibração da garganta',ativ:'Espelho do Som: mão no pescoço + pares mínimos pato/bato, faca/vaca (15 min com a professora)'},
-    {id:'G2',nome:'R forte e R fraco',foco:'RR · R inicial',por:'Leem RR como R brando: carro → “caro”',ativ:'Pares mínimos caro/carro, muro/murro + missão “Ponte do R forte” no tablet'},
-    {id:'G3',nome:'Encontros consonantais',foco:'PR · BR · TR · BL',por:'Omitem a 2ª consoante: prato → “pato”',ativ:'Trem de sílabas PR-BR-TR com letras móveis + leitura em dupla'},
-    {id:'G4',nome:'Frases e fluência',foco:'textos curtos',por:'Decodificam com precisão; foco em ritmo e compreensão',ativ:'Leitura de texto nível 8 + 2 perguntas (literal e inferencial)'}];
+    {id:'G1',nome:'Troca surda/sonora',foco:'P/B · T/D · F/V',por:'Trocam pares que só mudam a vibração da garganta',ativ:'Espelho do Som: mão no pescoço + pares pato/bato, faca/vaca'},
+    {id:'G2',nome:'R forte e R fraco',foco:'RR · R inicial',por:'Leem RR como R brando: carro → “caro”',ativ:'Pares caro/carro, muro/murro + missão “Ponte do R forte”'},
+    {id:'G3',nome:'Encontros consonantais',foco:'PR · BR · TR',por:'Omitem a 2ª consoante: prato → “pato”',ativ:'Trem de sílabas PR-BR-TR com letras móveis'},
+    {id:'G4',nome:'Frases e fluência',foco:'textos curtos',por:'Decodificam com precisão; foco em ritmo e compreensão',ativ:'Texto nível 8 + 2 perguntas (literal e inferencial)'}];
   const AL=[
     // nome, nível, grupo, habilidade travada, som, palavras (alvo→leitura), sinal, dose(min/sem)
     ['Luan K.',3,0,'Juntar sons CV','P/B','pato → “bato” · pipa → “biba”','alerta',52],

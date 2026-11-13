@@ -222,7 +222,7 @@ function grass(seed, n, x0, x1, y0, y1, cols, hmin = 8, hmax = 24, lean = 0, wid
   for (let i = 0; i < n; i++) {
     const x = x0 + r() * (x1 - x0), y = y0 + r() * (y1 - y0), k = (y - y0) / (y1 - y0 + .01), h = (hmin + r() * (hmax - hmin)) * (.6 + k * .6), c = cols[Math.floor(r() * cols.length)];
     const bl = 3 + Math.floor(r() * 3);
-    for (let j = 0; j < bl; j++) { const b = (r() - .5) * h * .7 + lean * h, w = wid * (.7 + k * .7); g += `<path d="M${f(x - w + j * 2)},${f(y)} Q${f(x + j * 2 + b * .3)},${f(y - h * .6)} ${f(x + j * 2 + b)},${f(y - h)} Q${f(x + j * 2 + b * .2 + w * .3)},${f(y - h * .5)} ${f(x + w + j * 2)},${f(y)}Z" fill="${c}"/>`; }
+    for (let j = 0; j < bl; j++) { const b = (r() - .5) * h * .8 + lean * h, w = wid * (.55 + k * .6), ox = (r() - .5) * 9 * (.5 + k), hh = h * (.6 + r() * .5); g += `<path d="M${f(x + ox - w)},${f(y)} Q${f(x + ox + b * .25)},${f(y - hh * .6)} ${f(x + ox + b)},${f(y - hh)} Q${f(x + ox + b * .2 + w * .2)},${f(y - hh * .5)} ${f(x + ox + w)},${f(y)}Z" fill="${c}"/>`; }
   }
   return g;
 }
@@ -413,7 +413,9 @@ function house(x, y, w, h, { wall = '#F2D8A8', roof = '#B5541E', door = '#6B3E22
   return g;
 }
 
+// sombra projetada longa (luz baixa)
+const castShadow = (s, x, y, len, wid, ang = 0, o = .28, c = '#4A2A14') => `<ellipse cx="${f(x + Math.cos(ang) * len / 2)}" cy="${f(y + Math.sin(ang) * len * .18)}" rx="${f(len / 2)}" ry="${f(wid)}" fill="${c}" opacity="${o}" filter="${s.blur(6)}"/>`;
 // sombra de contato genérica
 const contact = (x, y, rx, o = .3) => shadowE(x, y, rx, o);
 
-module.exports = { W, H, f, rng, mix, Scene, finish, sky, sunGlow, rays, cloud, ridge, mesa, canopy, trunkPath, tree, palm, fanPalm, treeFern, embauba, cactus, dryBush, grass, flowers, bigLeaves, bromelia, rock, shadowE, T, birdV, quad, boi, cavalo, jumento, lobo, capivara, tatu, ema, queroquero, tuiuiu, garca, seriema, coruja, arara, tucano, mico, jacare, boto, peixe, tartaruga, caranguejo, fragata, borboleta, jabuti, pato, gato, sapo, cachorro, asaBranca, calango, baleiaCauda, abelhas, particles, shimmer, reflection, house, contact };
+module.exports = { W, H, f, rng, mix, Scene, finish, sky, sunGlow, rays, cloud, ridge, mesa, canopy, trunkPath, tree, palm, fanPalm, treeFern, embauba, cactus, dryBush, grass, flowers, bigLeaves, bromelia, rock, shadowE, T, birdV, quad, boi, cavalo, jumento, lobo, capivara, tatu, ema, queroquero, tuiuiu, garca, seriema, coruja, arara, tucano, mico, jacare, boto, peixe, tartaruga, caranguejo, fragata, borboleta, jabuti, pato, gato, sapo, cachorro, asaBranca, calango, baleiaCauda, abelhas, particles, shimmer, reflection, house, contact, castShadow };

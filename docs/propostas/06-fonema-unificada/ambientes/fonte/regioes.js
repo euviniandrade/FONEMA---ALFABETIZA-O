@@ -7,14 +7,14 @@ function crooked(x, y, { h = 150, seed = 1, bark = '#4A3426', barkHi = '#7A5A40'
   const r = rng(seed); let g = ''; const tips = [];
   const branch = (bx, by, a, len, w, d) => {
     const pts = [[bx, by]]; let px = bx, py = by, aa = a;
-    for (let i = 0; i < 4; i++) { aa += (r() - .5) * .7; px += Math.cos(aa) * len / 4; py += Math.sin(aa) * len / 4; pts.push([px, py]); }
+    for (let i = 0; i < 3; i++) { aa += (r() - .5) * .8; aa = aa * .85 + (-Math.PI / 2) * .15; px += Math.cos(aa) * len / 3; py += Math.sin(aa) * len / 3; pts.push([px, py]); }
     g += `<path d="M${pts.map(p => `${f(p[0])},${f(p[1])}`).join(' L')}" stroke="${bark}" stroke-width="${f(w)}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
     g += `<path d="M${pts.map(p => `${f(p[0] - w * .2)},${f(p[1])}`).join(' L')}" stroke="${barkHi}" stroke-width="${f(w * .3)}" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".6"/>`;
-    if (d < 2) { const k = 2 + (r() < .5 ? 1 : 0); for (let i = 0; i < k; i++) branch(px, py, aa + (i - (k - 1) / 2) * .8 + (r() - .5) * .3, len * .62, w * .6, d + 1); }
+    if (d < 2) { const k = 2 + (r() < .5 ? 1 : 0); for (let i = 0; i < k; i++) branch(px, py, aa + (i - (k - 1) / 2) * 1.0 + (r() - .5) * .3, len * (d ? .5 : .6), w * .6, d + 1); }
     else tips.push([px, py]);
   };
   branch(x, y, -Math.PI / 2 + (r() - .5) * .3, h * .55, h * .085, 0);
-  tips.forEach(([tx, ty], i) => g += canopy(tx, ty - 6, crown * (.38 + r() * .12), crown * (.24 + r() * .08), cols, seed * 31 + i, { n, lx, ly }));
+  tips.forEach(([tx, ty], i) => g += canopy(tx, ty - 4, crown * (.42 + r() * .12), crown * (.26 + r() * .06), cols, seed * 31 + i, { n, lx, ly }));
   if (flowersCol) tips.forEach(([tx, ty], i) => g += particles(seed + i, 10, tx - crown * .35, tx + crown * .35, ty - crown * .3, ty + crown * .1, flowersCol, 2.4, .9));
   return g;
 }
@@ -30,7 +30,7 @@ function cerrado() {
   const sunX = 1000, sunY = 318;
   sky(s, [[0, '#5E93C2'], [.38, '#A9C3D6'], [.62, '#F4D7A2'], [.78, '#F8C98A']]);
   sunGlow(s, sunX, sunY, 34, '#FFF4D2', '#FFC874', 640, .7);
-  s.add('sky', cloud(s, 250, 150, 300, '#FFF4E6', '#E8C4B4', 3, .9) + cloud(s, 640, 90, 220, '#FFF6EA', '#E6CDC4', 5, .75) + cloud(s, 1180, 200, 160, '#FFEBD0', '#EBC0A4', 9, .8));
+  s.add('sky', cloud(s, 240, 170, 260, '#FFF4E6', '#D9B4B0', 3, .95) + cloud(s, 700, 110, 180, '#FFF6EA', '#D8C0C4', 5, .7) + cloud(s, 1170, 236, 150, '#FFEBD0', '#E8B49A', 9, .85));
   s.add('sky', birdV(560, 230, 1.1) + birdV(600, 250, .8) + birdV(530, 262, .7));
   // chapadas distantes
   const haze = '#E9C7A6';
@@ -41,14 +41,18 @@ function cerrado() {
   // vereda de buritis (faixa verde com brilho d'água)
   let ver = `<path d="M-20,470 Q300,452 640,462 Q960,472 1300,456 L1300,480 Q900,490 640,482 Q300,474 -20,490Z" fill="${mix('#5E8A3E', haze, .3)}"/>`;
   const rB = rng(7);
-  for (let i = 0; i < 26; i++) { const x = -10 + i * 52 + rB() * 30, y = 474 + rB() * 8, sc = .32 + rB() * .16; ver += `<g transform="translate(${f(x)},${f(y)}) scale(${f(sc)})">${fanPalm(0, 0, { h: 300 + rB() * 80, seed: i + 3, len: 90, col: [mix('#3B6B34', haze, .35), mix('#5E9447', haze, .35), mix('#9CC46A', haze, .3)], trunk: [mix('#6A5A48', haze, .35), '#8C7A62'], skirt: mix('#9C7A4A', haze, .3) })}</g>`; }
-  ver += `<path d="M600,478 Q760,472 980,478" stroke="#FFF0C8" stroke-width="2.5" opacity=".7" fill="none"/>`;
+  for (let i = 0; i < 22; i++) { const x = -10 + i * 62 + rB() * 40, y = 476 + rB() * 8, sc = .17 + rB() * .1; if (x > 560 && x < 700) continue; ver += `<g transform="translate(${f(x)},${f(y)}) scale(${f(sc)})">${fanPalm(0, 0, { h: 300 + rB() * 80, seed: i + 3, len: 90, col: [mix('#3B6B34', haze, .35), mix('#5E9447', haze, .35), mix('#9CC46A', haze, .3)], trunk: [mix('#6A5A48', haze, .35), '#8C7A62'], skirt: mix('#9C7A4A', haze, .3) })}</g>`; }
+  ver += `<path d="M560,484 Q700,478 860,482 Q980,486 1100,480" stroke="#FFE7B0" stroke-width="3" opacity=".75" fill="none" stroke-linecap="round" filter="${s.blur(.8)}"/>`;
   s.add('far', ver);
   // planície dourada (mid)
   const r2 = ridge(21, 500, 8, { fr: [1, 2.6], wt: [1, .4] });
   s.add('mid', `<path d="${r2.d}" fill="${s.lin([[0, '#D9B061'], [.35, '#C99A48'], [1, '#B07F38']])}"/>`);
   s.add('mid', `<path d="${r2.d}" fill="${s.rad([[0, '#FFE2A0', .55], [1, '#FFE2A0', 0]], .78, .0, .5)}"/>`);
   s.add('mid', grass(31, 160, 0, W, 492, 560, ['#E2BC6E', '#C9984A', '#EDCB84'], 6, 14));
+  // árvores distantes (névoa dourada)
+  [[60, 512, 40], [430, 508, 34], [520, 514, 26], [960, 506, 30], [1150, 512, 36], [640, 510, 22]].forEach(([x, y, c], i) => s.add('mid', crooked(x, y, { h: c * 1.3, seed: 60 + i, cols: [mix('#6E7A3E', '#E9C7A6', .45), mix('#8A9450', '#E9C7A6', .4), mix('#B8BC72', '#E9C7A6', .35)], crown: c * 1.6, n: 8 })));
+  // sombras longas (sol à direita)
+  s.add('mid', L.castShadow(s, 60, 550, 220, 10, Math.PI, .25) + L.castShadow(s, 700, 542, 200, 9, Math.PI, .22) + L.castShadow(s, 1030, 548, 160, 8, Math.PI, .22) + L.castShadow(s, 520, 566, 90, 6, Math.PI, .3) + L.castShadow(s, 950, 572, 70, 5, Math.PI, .3));
   // árvores médias
   s.add('mid', crooked(170, 548, { h: 120, seed: 4, cols: ['#4E6A2E', '#6E8A3A', '#A3B45A', '#D3D88A'], crown: 80 }));
   s.add('mid', cupinzeiro(320, 552, 46, 16) + cupinzeiro(860, 540, 34, 12) + cupinzeiro(1220, 548, 52, 18));
@@ -64,6 +68,7 @@ function cerrado() {
   s.add('near', `<path d="M520,${H} Q560,700 650,650" stroke="#E0905A" stroke-width="6" fill="none" opacity=".5" stroke-linecap="round"/>`);
   s.add('near', grass(41, 240, 0, 480, 590, 790, ['#D7A54E', '#B98636', '#E8C474', '#9A6A2A'], 12, 36) + grass(42, 240, 720, W, 580, 790, ['#D7A54E', '#B98636', '#E8C474', '#9A6A2A'], 12, 36));
   s.add('near', flowers(5, 30, 0, 460, 610, 780, ['#B98AD8', '#FFFFFF', '#F2C94C']) + flowers(6, 30, 760, W, 600, 780, ['#B98AD8', '#FFFFFF', '#F2C94C']));
+  s.add('near', L.castShadow(s, 30, 692, 330, 18, Math.PI, .3) + L.castShadow(s, 1000, 642, 300, 14, Math.PI, .26) + L.castShadow(s, 800, 670, 90, 6, Math.PI, .3));
   // pequizeiro com frutos (esquerda)
   s.add('near', crooked(260, 690, { h: 250, seed: 17, cols: ['#3E5A2A', '#5C7A34', '#8EAA4C', '#C8D67A'], crown: 130, n: 18 }));
   const pq = [[214, 436], [262, 452], [316, 440]];

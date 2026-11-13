@@ -122,7 +122,8 @@ T['academia-professores'] = () => {
         <div class="row" style="gap:8px"><span style="font-size:11.5px;font-weight:700;color:${C.slate}">M${i + 1}</span><span style="font-weight:700;font-size:15px;white-space:nowrap">${t}</span>${st === 'now' ? `<span class="pill" style="background:${col};color:#fff;font-size:11px;padding:2px 8px">continuar</span>` : ''}</div>
         <div class="row" style="gap:10px;font-size:12px;color:${C.slate}"><span style="white-space:nowrap">${sub}</span><div style="flex:1"></div>${st === 'now' ? `<div class="bar" style="width:90px"><i style="width:${p * 100}%;background:${col}"></i></div>` : ''}</div>
       </div>
-      <div style="width:56px;text-align:right;font-weight:700;font-size:14px;color:${st === 'next' ? C.slate : C.ink}">${h} h</div></div>`;
+      <div style="width:150px;font-size:12px;color:${C.slate};white-space:nowrap" class="row">${ic('play', 11, C.slate)}&nbsp;${[6, 8, 7, 7, 8, 5, 6, 9, 6][i]} vídeos · ${[2, 4, 4, 3, 3, 2, 3, 3, 3][i]} planos</div>
+      <div style="width:44px;text-align:right;font-weight:700;font-size:14px;color:${st === 'next' ? C.slate : C.ink}">${h} h</div></div>`;
   };
   const ring = (pct, sz, col) => { const r = sz / 2 - 7, c = 2 * Math.PI * r; return `<svg width="${sz}" height="${sz}"><circle cx="${sz / 2}" cy="${sz / 2}" r="${r}" fill="none" stroke="#E6DECF" stroke-width="10"/><circle cx="${sz / 2}" cy="${sz / 2}" r="${r}" fill="none" stroke="${col}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c * pct} ${c}" transform="rotate(-90 ${sz / 2} ${sz / 2})"/></svg>`; };
   const req = (ok, t, d) => `<div class="row" style="gap:10px;align-items:flex-start;margin-top:8px"><div style="width:20px;height:20px;border-radius:6px;flex:none;margin-top:1px;background:${ok ? C.green : '#fff'};border:2px solid ${ok ? C.green : '#CFC6B6'};display:flex;align-items:center;justify-content:center">${ok ? ic('check', 14, '#fff', 3) : ''}</div><div style="font-size:13px;line-height:1.3"><b>${t}</b><br><span style="color:${C.slate}">${d}</span></div></div>`;
@@ -152,7 +153,7 @@ T['academia-professores'] = () => {
     <div class="row" style="gap:10px;margin-top:10px;padding:10px 14px;border-radius:14px;background:#F3EEFC;font-size:12.5px;line-height:1.4">${ic('flask', 20, C.purple)}<div><b>Neurociência sem neuromito:</b> cada módulo explica o “porquê” com os 4 pilares (atenção, engajamento ativo, retorno do erro, consolidação) e traz o quadro “mito ou fato?”. Nada de “estilos de aprendizagem” ou “cérebro direito”.</div></div>
   </div>
 
-  <div class="abs card" style="left:836px;top:82px;width:420px;height:376px;border-radius:24px;padding:18px 20px">
+  <div class="abs card" style="left:836px;top:82px;width:420px;height:396px;border-radius:24px;padding:18px 20px">
     <div class="row" style="justify-content:space-between"><div class="fr" style="font-weight:700;font-size:19px">Seu certificado</div><span style="font-size:12px;font-weight:700;color:${C.slate}">liberado ao concluir 40 h</span></div>
     <div style="margin-top:10px;height:112px;border-radius:12px;background:#FFFDF7;border:2px solid #E9DFC8;position:relative;overflow:hidden">
       <div class="abs" style="left:6px;top:6px;right:6px;bottom:6px;border:1px solid #D8C79E;border-radius:8px"></div>
@@ -164,22 +165,23 @@ T['academia-professores'] = () => {
       <div class="abs row" style="left:52px;bottom:12px;gap:6px;font-size:10px;color:${C.slate}">${ic('qr', 12, C.slate)} código de verificação público</div>
     </div>
     ${req(true, 'Microvídeos e leituras', '31 de 62 assistidos · tempo estimado, não tempo de tela')}
-    ${req(true, 'Checagens de compreensão (≥ 70%)', '3 de 9 módulos · pode refazer quantas vezes quiser')}
+    ${req(true, 'Checagens de compreensão (≥ 70%)', '2 de 9 módulos · pode refazer quantas vezes quiser')}
     ${req(false, 'Prática na sua turma', '4 registros de aula (sem dados de alunos identificados)')}
     ${req(false, 'Encontro da comunidade de prática', '2 rodas on-line ou na escola, com formadora')}
+    <div style="margin-top:10px;font-size:11.5px;color:#7A5200;background:#FFF6DE;border-radius:10px;padding:6px 10px;line-height:1.35">A rede decide se as horas contam para a carreira. Proposta: certificar com IES parceira (extensão) e termo com a Secretaria.</div>
   </div>
 
-  <div class="abs card" style="left:836px;top:474px;width:420px;height:150px;border-radius:22px;padding:16px 18px;background:#EAF0FD">
+  <div class="abs card" style="left:836px;top:490px;width:420px;height:136px;padding-top:12px !important;border-radius:22px;padding:16px 18px;background:#EAF0FD">
     <div class="row" style="gap:8px"><span class="pill" style="background:${C.blue};color:#fff">${ic('doc', 13, '#fff')} PLANO DE AULA · HOJE</span><span style="font-size:12px;font-weight:700;color:${C.slate}">15 min · com e sem tela</span></div>
     <div style="font-weight:700;font-size:17px;margin-top:8px">Som /v/: eu faço, nós fazemos, você faz</div>
-    <div style="font-size:12.5px;color:${C.slate};margin-top:3px">Microvídeo de 2:40 para você + roteiro + fichas para a estação sem tela</div>
+    <div style="font-size:12.5px;color:${C.slate};margin-top:3px">Microvídeo de 2:40 + roteiro + fichas da estação sem tela</div>
     <div class="row" style="gap:8px;margin-top:10px"><span class="pill" style="background:${C.ink};color:#fff;padding:7px 12px">${ic('play', 12, '#fff')} Ver 2:40</span><span class="pill" style="background:#fff;color:${C.ink};padding:7px 12px">${ic('down', 13, C.ink)} Fichas PDF</span><span class="pill" style="background:#fff;color:${C.ink};padding:7px 12px">${ic('screen', 13, C.ink)} Abrir modo sala</span></div>
   </div>
 
   <div class="abs card" style="left:836px;top:640px;width:420px;height:142px;border-radius:22px;padding:14px 18px">
-    <div class="row" style="justify-content:space-between"><div class="row" style="gap:8px"><div style="font-weight:700;font-size:16px">Comunidade de prática</div><span style="font-size:12px;color:${C.slate};font-weight:700">Rede Municipal · 48 professoras</span></div>${ic('people', 20, C.navy)}</div>
+    <div class="row" style="justify-content:space-between"><div class="row" style="gap:8px"><div style="font-weight:700;font-size:16px;white-space:nowrap">Comunidade de prática</div><span style="font-size:12px;color:${C.slate};font-weight:700;white-space:nowrap">rede municipal · 48 professoras</span></div>${ic('people', 20, C.navy)}</div>
     <div class="row" style="gap:10px;margin-top:8px;align-items:flex-start"><div style="width:30px;height:30px;border-radius:50%;background:${C.coral};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none">MR</div><div style="font-size:12.5px;line-height:1.35"><b>Profa. Márcia (2º ano A):</b> “Fiz o grupo de 4 do R/RR com as fichas e a turma leu em coro. Funcionou!”<div style="color:${C.slate};margin-top:3px">12 professoras acharam útil · 5 respostas</div></div></div>
-    <div class="row" style="gap:6px;margin-top:6px;font-size:12px;font-weight:700;color:${C.navy}">${ic('calendar', 14, C.navy)} Próxima roda on-line: qui., 19h · tema “ditado sem medo”</div>
+    <div class="row" style="gap:6px;margin-top:6px;font-size:12px;font-weight:700;color:${C.navy}">${ic('calendar', 14, C.navy)} Próxima roda: qui., 19h · “ditado sem medo”</div>
   </div>`;
   return page(body);
 };
