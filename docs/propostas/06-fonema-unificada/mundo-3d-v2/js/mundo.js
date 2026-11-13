@@ -45,7 +45,7 @@ export function qualidadeAuto() {
 // ---------- vistas prontas (capturas, botões e vídeo) ----------
 export const VISTAS = {
   aerea: { cena: 'vila', cam: [64, 58, 92], alvo: [3, 0, 2] },
-  praca: { cena: 'vila', cam: [8.5, 1.65, 17.5], alvo: [-1, 3.2, 1] },
+  praca: { cena: 'vila', cam: [1.2, 1.75, 19.5], alvo: [0.5, 3.4, 1] },
   escola: { cena: 'vila', cam: [7.5, 3.2, -7], alvo: [0, 5.2, -29] },
   rio: { cena: 'vila', cam: [29, 3.0, 24], alvo: [45, 1.2, 5] },
   campinho: { cena: 'vila', cam: [-11, 7.5, 37], alvo: [-27, 0.5, 20] },

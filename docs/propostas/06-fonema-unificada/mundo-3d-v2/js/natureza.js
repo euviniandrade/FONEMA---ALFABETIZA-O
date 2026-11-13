@@ -34,9 +34,9 @@ export function criarArvores(U, q) {
     folha,
     /** árvore redonda: x,z, altura do chão y, escala s, cor da copa */
     add(x, y, z, s = 1, cor) {
-      const k = Math.floor(r() * 3), h = 2.2 * s, cs = 3.6 * s * (0.85 + r() * 0.3);
+      const k = Math.floor(r() * 3), h = 1.5 * s, cs = 4.6 * s * (0.85 + r() * 0.3);
       troncos.add(M(x, y - 0.2, z, (r() - 0.5) * 0.12, r() * 6, (r() - 0.5) * 0.12, s * 0.9, h + 0.6, s * 0.9), '#8A5A3A');
-      copas[k].add(M(x, y + h + cs * 0.32, z, 0, r() * 6, 0, cs, cs * (0.8 + r() * 0.2), cs), cor || VERDES[Math.floor(r() * VERDES.length)]);
+      copas[k].add(M(x, y + h + cs * 0.3, z, 0, r() * 6, 0, cs, cs * (0.8 + r() * 0.2), cs), cor || VERDES[Math.floor(r() * VERDES.length)]);
     },
     build(grupo, fator = 1) { [troncos, ...copas].forEach((c) => { if (c.l.length) grupo.add(c.build(fator)); }); },
   };

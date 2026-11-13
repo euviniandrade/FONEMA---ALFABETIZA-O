@@ -91,7 +91,7 @@ function pintarChao(S) {
     const cx = X(0), cz = Z(1), R = 14 * k;
     g.save(); g.beginPath(); g.arc(cx, cz, R, 0, 7); g.clip();
     g.fillStyle = '#F1E6D0'; g.fillRect(cx - R, cz - R, R * 2, R * 2);
-    g.strokeStyle = '#56658A'; g.lineWidth = 0.55 * k;
+    g.strokeStyle = '#8E9BB8'; g.lineWidth = 0.32 * k;
     for (let row = -16; row <= 16; row += 2.1) {
       g.beginPath();
       for (let xx = -15; xx <= 15; xx += 0.3) { const yy = row + Math.sin(xx * 0.55) * 0.9; xx === -15 ? g.moveTo(X(xx), Z(1 + yy)) : g.lineTo(X(xx), Z(1 + yy)); }
@@ -168,8 +168,7 @@ export async function criarVila({ U, q, renderer, estados = {} }) {
       for (let t = 0.12; t < 0.9; t += 0.11) {
         const p = new THREE.Vector3().lerpVectors(pa, pb, t); p.y += 0.25 - Math.sin(t * Math.PI) * 1.1 - 0.42;
         const ang = Math.atan2(pb.x - pa.x, pb.z - pa.z) + Math.PI / 2, capa = Math.round(t * 9) % 2 ? P.marinho : P.ipe;
-        for (const s of [-1, 1]) ctx.Fo.add(rbox(0.5, 0.62, 0.05, 0.02), capa, M(p.x, p.y, p.z, 0, ang + s * 0.5, 0), { jit: 0.04 });
-        ctx.Fo.add(rbox(0.04, 0.58, 0.5, 0.01), '#FFF6E3', M(p.x, p.y, p.z, 0, ang + Math.PI / 2, 0));
+        for (const s of [-1, 1]) ctx.Fo.add(rbox(0.34, 0.44, 0.04, 0.015), capa, M(p.x + Math.sin(ang + s * 0.5) * 0.15, p.y, p.z + Math.cos(ang + s * 0.5) * 0.15, 0, ang + s * 0.5 + Math.PI / 2, 0), { jit: 0.04 });
         livrosVaral.push(p);
       }
     }
@@ -304,14 +303,14 @@ export async function criarVila({ U, q, renderer, estados = {} }) {
     if (distRio(x, z) < RIO_W / 2 + 2.5) return false;
     return true;
   };
-  const nArv = q === 'alto' ? 1100 : q === 'medio' ? 750 : 380;
+  const nArv = q === 'alto' ? 1700 : q === 'medio' ? 1100 : 500;
   let tent = 0, postas = 0;
   while (postas < nArv && tent < nArv * 12) {
     tent++;
     const a = r() * Math.PI * 2, d = 18 + Math.pow(r(), 0.7) * 230, x = Math.cos(a) * d, z = Math.sin(a) * d + 4;
     if (!livre(x, z)) continue;
     const h = altura(x, z);
-    const dens = d < 50 ? 0.22 : d < 70 ? 0.7 : 1.0;
+    const dens = d < 50 ? 0.12 : d < 70 ? 0.55 : 1.0;
     if (r() > dens) continue;
     arv.add(x, h, z, (d < 60 ? 0.8 : 1.0) + r() * 0.5 + (d > 120 ? 0.4 : 0));
     postas++;
