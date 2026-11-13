@@ -27,7 +27,7 @@
     if (['f', 'v'].includes(id)) return ['ld', 'Dentes de cima no lábio de baixo!'];
     if (id === 'r') return ['sobe', 'A pontinha bate rapidinho!'];
     if (['t', 'd', 'n', 'l'].includes(id)) return ['sobe', id === 'l' ? 'A língua sobe! O ar passa pelos ladinhos.' : 'A ponta da língua sobe!'];
-    if (['s', 'z'].includes(id)) return ['sobe', 'A ponta chega pertinho… e o ar sai fininho!'];
+    if (['s', 'z'].includes(id)) return ['sorri', 'Dentes juntinhos… e o ar sai fininho!'];
     if (['x', 'j'].includes(id)) return ['bico', 'Biquinho, e a língua sobe um pouco!'];
     if (['nh', 'lh'].includes(id)) return ['meio', 'O meio da língua sobe!'];
     if (['k', 'g'].includes(id)) return ['fundo', 'O fundo da língua sobe lá atrás!'];
@@ -37,6 +37,10 @@
     if (f.vel > 0.5) return ['nariz', 'O som sai pela boca e pelo nariz!'];
     return ['deita', 'Boca aberta, a língua deitadinha!'];
   }
+
+  // forma dos lábios (visema) → ilustração: A = boca aberta (com a língua animada); U, O, M, F, I = bases prontas
+  const VISEMA = { U: 'u u~', O: 'o o~ O x j', M: 'p b m', F: 'f v', I: 'i i~ e e~ s z' };
+  function visema(id) { for (const [v, ids] of Object.entries(VISEMA)) if (ids.split(' ').includes(id)) return v; return 'A'; }
 
   function criar(container, opts = {}) {
     const svg = document.createElementNS(NS, 'svg');
@@ -60,13 +64,18 @@
         <filter id="fSombra" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#7A3A10" flood-opacity=".35"/></filter>
         <marker id="fPonta" viewBox="0 0 10 10" refX="4" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Q3,5 0,0z" fill="#F7B92E" stroke="#fff" stroke-width=".8"/></marker>
       </defs>
+      <g class="f-boca">
+      <g class="f-base" data-v="A">
       <image href="${BASE}recortes/frente-fundo.jpg" x="0" y="0" width="1376" height="768"/>
       <g class="f-lingua" filter="url(#fSombraIn)"><path class="f-corpo" fill="url(#fLing)"/><path class="f-ponta" fill="url(#fBaixo)"/></g>
       <path class="f-freio" fill="none" stroke="#E07070" stroke-width="4" stroke-linecap="round" opacity=".55"/>
       <path class="f-sulco" fill="none" stroke="#D45A5E" stroke-width="5" stroke-linecap="round" opacity=".35"/>
       <path class="f-brilho" fill="none" stroke="#FFF1EC" stroke-width="16" stroke-linecap="round" opacity=".7" filter="url(#fBorrao)"/>
       <image href="${BASE}recortes/frente-camada.png" x="0" y="0" width="1376" height="768"/>
-      <g clip-path="url(#fBoca)">
+      </g>
+      ${['U', 'O', 'M', 'F', 'I'].map((v) => `<image class="f-base" data-v="${v}" href="${BASE}estilos-opcoes/base-frente-${v}.png" x="0" y="0" width="1376" height="768"/>`).join('')}
+      </g>
+      <g clip-path="url(#fBoca)" display="none">
         <path class="f-anel" fill="url(#fLabC)" fill-rule="evenodd"/>
         <path class="f-lab-c" fill="url(#fLabC)"/><path class="f-lab-c-borda" fill="none" stroke="#C9606A" stroke-width="5" stroke-linecap="round"/>
         <path class="f-lab-b" fill="url(#fLabB)"/><path class="f-lab-b-borda" fill="none" stroke="#C9606A" stroke-width="5" stroke-linecap="round"/>
@@ -87,6 +96,7 @@
     const ouvintes = [];
     svg.addEventListener('click', (e) => { const el = e.target.closest('[data-zona]'); if (el) ouvintes.forEach((cb) => cb({ zona: el.dataset.zona })); });
 
+    let visAtual = null, trocaT = -9;
     let id = opts.fonema || 'a', lento = false, parado = false, congel = null, tempo = 0, t0 = 0, marcaT = -9, ultimo = performance.now();
     let de = P.pose(id), para = de, atual = de;
     const reduz = () => (global.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) || document.body.classList.contains('calmo');
@@ -122,6 +132,11 @@
       const k = congel ? (congel._k ?? 1) : Math.min(1, (tempo - t0) / (lento ? 1.7 : 0.55));
       const o = congel || P.mistura(de, para, P.suave(k)); if (!congel) atual = o; o._k = k;
       const f = P.F[id], T = alvo(o, f);
+      // VISEMA: troca a ilustração da boca (crossfade ~180 ms) com um "squash & stretch" pequenininho
+      const vis = visema(id);
+      if (vis !== visAtual) { visAtual = vis; trocaT = tempo; svg.querySelectorAll('.f-base').forEach((b) => b.classList.toggle('on', b.dataset.v === vis)); }
+      { const dtc = tempo - trocaT, a = reduz() ? 0 : Math.exp(-dtc * 7) * Math.sin(dtc * 22) * 0.035;
+        $('.f-boca').setAttribute('transform', `translate(${CX},${CY}) scale(${(1 - a).toFixed(4)},${(1 + a).toFixed(4)}) translate(${-CX},${-CY})`); }
       // molas: suaves e com um quique pequenininho; a ponta do "r" é mais rápida
       for (const c in T) {
         if (S[c] === undefined || congel || reduz()) { S[c] = T[c]; V[c] = 0; continue; }
@@ -171,10 +186,10 @@
       if (tipo === 'sobe' || tipo === 'meio') a1 = `M${CX + 190},${yb + 70} Q${CX + 150},${yT - 30} ${CX + wt + 30},${(tipo === 'meio' ? yb : yT) + 6}`;
       if (tipo === 'fundo' || tipo === 'garganta') a1 = `M${CX + 150},${yb + 110} Q${CX + 130},${yb - 10} ${CX + 40},${yb - 30}`;
       if (tipo === 'deita') a1 = `M${CX + 120},${yb - 110} Q${CX + 150},${yb - 40} ${CX + 90},${yb - 4}`;
-      if (tipo === 'sorri') a1 = `M${CX + 180},${yb + 60} Q${CX + 160},${yb - 10} ${CX + 90},${yb - 6}`;
-      if (tipo === 'labios') { a1 = `M${CX + 260},${CY - 150} Q${CX + 300},${CY - 60} ${CX + 250},${CY - 18}`; a2 = f.ar === 'nasal' ? `M${CX - 30},${CY - 120} Q${CX - 80},${CY - 250} ${CX + 20},${30}` : `M${CX + 260},${CY + 150} Q${CX + 300},${CY + 60} ${CX + 250},${CY + 18}`; }
-      if (tipo === 'ld') a1 = `M${CX + 270},${yL + 140} Q${CX + 290},${yL + 30} ${CX + 200},${yL - 4}`;
-      if (tipo === 'bico') { a1 = `M${CX + 330},${CY} Q${CX + 300},${CY - 40} ${CX + hrx + 20},${CY - 8}`; a2 = `M${CX - 330},${CY} Q${CX - 300},${CY - 40} ${CX - hrx - 20},${CY - 8}`; }
+      if (tipo === 'sorri') { a1 = `M${CX + 330},${CY + 60} Q${CX + 330},${CY - 30} ${CX + 270},${CY - 40}`; a2 = `M${CX - 330},${CY + 60} Q${CX - 330},${CY - 30} ${CX - 270},${CY - 40}`; }
+      if (tipo === 'labios') { a1 = `M${CX + 250},${CY - 120} Q${CX + 270},${CY - 50} ${CX + 220},${CY - 14}`; a2 = f.ar === 'nasal' ? `M${CX - 20},${CY - 110} Q${CX - 70},${CY - 230} ${CX + 20},${40}` : `M${CX + 250},${CY + 120} Q${CX + 270},${CY + 50} ${CX + 220},${CY + 14}`; }
+      if (tipo === 'ld') a1 = `M${CX + 250},${CY + 150} Q${CX + 270},${CY + 40} ${CX + 120},${CY + 10}`;
+      if (tipo === 'bico') { a1 = `M${CX + 300},${CY - 30} Q${CX + 260},${CY - 70} ${CX + 160},${CY - 20}`; a2 = `M${CX - 300},${CY - 30} Q${CX - 260},${CY - 70} ${CX - 160},${CY - 20}`; }
       if (tipo === 'nariz') a1 = `M${CX + 40},${yb - 60} Q${CX - 60},${140} ${CX + 20},${30}`;
       [[s1, s1b, a1], [s2, s2b, a2]].forEach(([w, y, d]) => { w.setAttribute('d', d); y.setAttribute('d', d); });
       const dash = 900, prog = reduz() ? 1 : clamp(((tempo - t0) * (lento ? 0.5 : 1.3)) % 2.4, 0, 1);

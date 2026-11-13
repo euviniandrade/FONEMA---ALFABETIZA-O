@@ -70,9 +70,9 @@
       Y = (y) => (y >= -2 ? C.y0 - y * C.k : C.y0 + 2 * C.k + (-2 - y) * C.k * C.gar);
       svg.setAttribute('viewBox', C.vb.join(' '));
       const s = (v) => (v * u).toFixed(2);
-      const dente = (cls, [z, w, h, t]) => {
+      const dente = (cls, [z, w, h, t], i = 0) => {
         const W = w * C.k, H = h * C.k;
-        return `<g class="${cls}"><path d="${formaDente(t, W, H)}" fill="url(#eDente)" stroke="#C7D3E3" stroke-width="${s(1.2)}"/>
+        return `<g class="${cls}" data-i="${i}"><path d="${formaDente(t, W, H)}" fill="url(#eDente)" stroke="#C7D3E3" stroke-width="${s(1.2)}"/>
           <path d="${formaDente(t, W * 0.42, H * 0.62)}" transform="translate(${(-W * 0.18).toFixed(1)},${(H * 0.14).toFixed(1)})" fill="url(#eDenteBrilho)"/>
           <ellipse cx="${(-W * 0.2).toFixed(1)}" cy="${(H * 0.42).toFixed(1)}" rx="${(W * 0.08).toFixed(1)}" ry="${(H * 0.16).toFixed(1)}" fill="#fff" opacity=".95"/></g>`;
       };
@@ -110,10 +110,11 @@
       <g class="e-cima" filter="url(#eContato)">${CIMA.map((d) => dente('e-dc', d)).join('')}</g>
       <path class="e-gengiva-c" fill="none" stroke="#F8BFCB" stroke-width="${s(14)}" stroke-linecap="round"/>
       <path class="e-chao" fill="url(#eChao)" opacity=".85"/>
+      <g class="e-baixo-tras" filter="url(#eContato)">${BAIXO.map((d, i) => (i >= 2 ? dente('e-db', d, i) : '')).join('')}</g>
       <g class="e-lingua-g" filter="url(#eSombraIn)"><path class="e-lingua" fill="url(#eLing)"/></g>
       <path class="e-lingua-sulco" fill="none" stroke="#D45A5E" stroke-opacity=".35" stroke-width="${s(2.5)}" stroke-linecap="round"/>
       <path class="e-lingua-brilho" fill="none" stroke="#FFF3EE" stroke-opacity=".8" stroke-width="${s(9)}" stroke-linecap="round" filter="url(#eBorrao)"/>
-      <g class="e-baixo" filter="url(#eContato)">${BAIXO.map((d) => dente('e-db', d)).join('')}</g>
+      <g class="e-baixo" filter="url(#eContato)">${BAIXO.map((d, i) => (i < 2 ? dente('e-db', d, i) : '')).join('')}</g>
       <path class="e-gengiva-b" fill="none" stroke="#F4AFBE" stroke-width="${s(14)}" stroke-linecap="round"/>
       </g>
       ${C.pele ? '<path class="e-pele" fill="url(#ePele)"/>' : ''}
@@ -201,7 +202,7 @@
       $('.e-boca-fundo').setAttribute('d', suave([[-0.45, 0.25], ...P.CEU.slice(1), [-4.4, 1.38], [-5.0, 0.9], [-5.05, -1.8], [-4.6, -2.3], ...baixo.slice(0, 4), gj([-1.0, -1.0]), gj([-0.3, -0.7])].map(scr), true));
       // dentes de cima (fixos) e de baixo (giram com a mandíbula) + gengivas
       $$('.e-dc').forEach((g, i) => { const [z, , , t, gy] = CIMA[i]; g.setAttribute('transform', `translate(${X(z).toFixed(1)},${Y(gy).toFixed(1)}) scale(${C.dir || 1},1)${t === 'i' ? ' rotate(-12)' : ''}`); });
-      $$('.e-db').forEach((g, i) => { const [z, , , t, gy] = BAIXO[i], p = gj([z, gy]); g.setAttribute('transform', `translate(${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}) scale(${C.dir || 1},1) rotate(${(180 - jaw + (t === 'i' ? 12 : 0)).toFixed(1)})`); });
+      $$('.e-db').forEach((g) => { const [z, , , t, gy] = BAIXO[+g.dataset.i], p = gj([z, gy]); g.setAttribute('transform', `translate(${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}) scale(${C.dir || 1},1) rotate(${(180 - jaw + (t === 'i' ? 12 : 0)).toFixed(1)})`); });
       $('.e-gengiva-c').setAttribute('d', suave([[-0.08, 0.66], ...CIMA.map(([z, , , , gy]) => [z, gy + 0.04]), [-2.42, 0.6]].map(scr)));
       const gb = [[-0.25, -0.66], ...BAIXO.map(([z, , , , gy]) => [z, gy - 0.04]), [-2.5, -0.42]].map(gj);
       $('.e-gengiva-b').setAttribute('d', suave(gb.map(scr)));

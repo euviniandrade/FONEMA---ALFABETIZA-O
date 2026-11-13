@@ -28,3 +28,6 @@
 .esp-svg .e-rot:hover rect{fill:#FFE9A8}
 .esp-svg.sem-rotulos .e-rotulos{display:none}
 .esp-svg .e-ar-boca,.esp-svg .e-ar-nariz{transition:opacity .35s}
+
+.esp-frente .f-base{opacity:0;transition:opacity .18s ease}
+.esp-frente .f-base.on{opacity:1}
