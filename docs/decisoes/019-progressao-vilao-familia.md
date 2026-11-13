@@ -9,7 +9,7 @@
   - **Depois**, cada fase pede **mais desafios** para passar, o que aumenta a **vontade de chegar ao próximo nível**.
   - A dificuldade acompanha o domínio real: nunca trava a criança por tempo ou sorte.
 - **Metas visíveis:** "Ao chegar ao nível X, você ganha Y". Na tela sempre aparece o próximo objetivo e quanto falta, por exemplo "faltam 3 desafios para virar Explorador da Mata".
-- **Status de conquista (títulos):** a criança "fica mais preparada" e ganha um título a cada etapa. Exemplos: Aprendiz dos Sons → Caçador de Sílabas → Explorador das Palavras → Leitor da Vila → Contador de Histórias → Guardião dos Livros → Mestre Leitor. Cada título traz:
+- **Status de conquista (títulos):** a criança "fica mais preparada" e ganha um título a cada etapa. Exemplos: Aprendiz dos Sons → Caçador de Sílabas → Explorador das Palavras → Leitor da Vila → Contador de Histórias → Guardião dos Livros → Mestre Leitor. *(Atualizado pela [D022](022-titulos-neutros-curva.md): títulos neutros pela ação, de "Primeiros Sons" a "Maestria da Leitura".)* Cada título traz:
   - um item de avatar;
   - um selo;
   - uma área nova do mundo;

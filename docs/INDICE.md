@@ -13,7 +13,7 @@ Mapa navegável de todas as pastas e documentos principais. Comece pelo [README 
 ## 2. Decisões do dono (`decisoes/`) — fonte de verdade
 | Documento | O que é |
 |---|---|
-| [decisoes/README.md](decisoes/README.md) | Tabela 001–019 com status, resumo e quadro de conflitos entre decisões |
+| [decisoes/README.md](decisoes/README.md) | Tabela 001–022 com status, resumo e quadro de conflitos entre decisões |
 | [001](decisoes/001-jornada-e-modelo-de-precos.md) | Jornada de 2 anos e modelo de preços mensal |
 | [002](decisoes/002-economia-virtual-avatar-educacao-financeira.md) | Cadastro pelo adulto, economia de moedinhas, avatar e educação financeira |
 | [003](decisoes/003-formacao-integral-e-aprendizagem-profunda.md) | Formação integral e aprendizagem profunda (não decoreba) |
@@ -33,6 +33,9 @@ Mapa navegável de todas as pastas e documentos principais. Comece pelo [README 
 | [017](decisoes/017-roteiro-de-expansao-educativa.md) | Expansão educativa (mais inteligência, novas áreas e novos idiomas) |
 | [018](decisoes/018-professor-familia-selos-online.md) | Professor e família participando, selos de conquista, competição saudável e futuro online |
 | [019](decisoes/019-progressao-vilao-familia.md) | Fases quase infinitas, níveis com conquistas, novo "vilão leve", capoeira e foco das primeiras fases |
+| [020](decisoes/020-espelho-do-som-prioridade.md) | Espelho do Som (formato da boca) como prioridade máxima |
+| [021](decisoes/021-lojinha-conquistas-nivelamento-maternal.md) | Lojinha e Conquistas por fase, sem pular fases, nivelamento inicial e Maternal |
+| [022](decisoes/022-titulos-neutros-curva.md) | Títulos neutros pela ação e curva de desafios |
 
 ## 3. Universo (`universo/`) — Bíblia canônica (D016)
 | Documento | O que é |

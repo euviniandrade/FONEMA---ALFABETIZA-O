@@ -121,7 +121,7 @@ Situação verificada por busca nesta sessão. Os itens marcados **[conferir]** 
 
 | Tema | O que se sabe | Consequência para a Academia |
 |---|---|---|
-| Dever de formar | A LDB (Lei 9.394/1996) atribui à União, aos estados e aos municípios a formação continuada dos profissionais do magistério (art. 62) e prevê aperfeiçoamento continuado e tempo de estudo na carga de trabalho (art. 67) **[conferir redação vigente]** | A Roda deve se apresentar como **ferramenta da rede**, não como concorrente da formação oficial (rel. 26 §3.5.5) |
+| Dever de formar | A LDB (Lei 9.394/1996) atribui à União, aos estados e aos municípios a formação continuada dos profissionais do magistério (art. 62) e prevê aperfeiçoamento continuado e tempo de estudo na carga de trabalho (art. 67) **[conferir redação vigente]** | A Academia deve se apresentar como **ferramenta da rede**, não como concorrente da formação oficial (rel. 26 §3.5.5) |
 | Diretriz nacional | A **BNC-Formação Continuada** (Res. CNE/CP 1/2020) foi **revogada** pela Res. CNE/CP 4/2024, e analistas apontam que a formação continuada ficou sem orientação nacional específica [fonte: nota técnica da ANDES-SN; artigos de 2024–2025] **[conferir no DOU]** | Não há currículo nacional obrigatório a seguir. Alinhar à BNCC, ao Compromisso Nacional Criança Alfabetizada e aos referenciais estaduais (por exemplo, o PAIC) |
 | Curso livre | Uma empresa pode emitir certificado de curso livre, sem autorização do MEC. O certificado comprova participação e carga horária | **O FONEMA pode certificar sozinho**, mas isso **não garante** que as horas contem para progressão na carreira |
 | Progressão na carreira | Cada rede define no seu **plano de carreira/estatuto** quais cursos contam. É comum exigir instituição credenciada ou curso homologado pela Secretaria, além de carga mínima e período **[conferir rede a rede]** | **Precisa de parceria/validação:** termo de cooperação com a Secretaria (homologação da trilha) e/ou certificação por IES |
@@ -235,7 +235,7 @@ Legenda de formato: **V16** = vídeo 16:9 · **V9** = vídeo 9:16 (WhatsApp) · 
 | P29 | M9: Como registrar sua prática (sem dados de alunos) | Professores | 2 min | Registro em 3 linhas que vale para o certificado | V16 · CC |
 | P30 | Roda on-line mensal da comunidade de prática | Professores e coordenação | 60 min | Trocar práticas, com formadora; vale horas de comunidade | Ao vivo + gravação · CC · L |
 
-**Total:** 26 + 24 + 30 = **80 itens no catálogo** (P11 e F23 são séries: 33 e ≈ 40 peças). Os itens que já estão na biblioteca de vídeos (tipos a–f) **não são produzidos de novo**: a Roda é a vitrine e a trilha. Os itens **novos** são os microcursos de família em partes (F02–F20, F24), os vídeos de ciência e de inclusão (P02–P06, P25–P28), as checagens, os planos de aula em PDF e a comunidade.
+**Total:** 26 + 24 + 30 = **80 itens no catálogo** (P11 e F23 são séries: 33 e ≈ 40 peças). Os itens que já estão na biblioteca de vídeos (tipos a–f) **não são produzidos de novo**: a Academia é a vitrine e a trilha. Os itens **novos** são os microcursos de família em partes (F02–F20, F24), os vídeos de ciência e de inclusão (P02–P06, P25–P28), as checagens, os planos de aula em PDF e a comunidade.
 
 ---
 
@@ -243,7 +243,7 @@ Legenda de formato: **V16** = vídeo 16:9 · **V9** = vídeo 9:16 (WhatsApp) · 
 
 | Peça | Integração |
 |---|---|
-| **Biblioteca de vídeos** (`../videos/`) | Mesma esteira (roteiro YAML → linter → TTS/ElevenLabs para falas e fonemas gravados por fonoaudióloga → render determinístico → CC/Libras → R2/CDN). A Roda é a **camada de catálogo e trilha** sobre os mesmos arquivos: um vídeo, vários lugares. Cada vídeo ganha metadados `publico`, `trilha`, `modulo`, `pilar`, `pratica_id` e `carga_estimada_min` |
+| **Biblioteca de vídeos** (`../videos/`) | Mesma esteira (roteiro YAML → linter → TTS/ElevenLabs para falas e fonemas gravados por fonoaudióloga → render determinístico → CC/Libras → R2/CDN). A Academia é a **camada de catálogo e trilha** sobre os mesmos arquivos: um vídeo, vários lugares. Cada vídeo ganha metadados `publico`, `trilha`, `modulo`, `pilar`, `pratica_id` e `carga_estimada_min` |
 | **Voz** (Decisão 006) | O ElevenLabs entra nas falas dos microcursos de família (voz calorosa e pausada) e nas narrações dos módulos do professor (voz de formadora). **Fonemas isolados continuam gravados por fonoaudióloga** |
 | **Trilha da criança** | O som novo abre o vídeo (a) no passo "ouvir → ver". O selo da Academia é **o mesmo evento** da prática concluída na lição: não há sistema paralelo de pontos |
 | **WhatsApp** (frente `../whatsapp/`) | Os microcursos da família são enviados em partes de 1 min (áudio + 1 imagem + link). Máximo de 3 mensagens por semana, horário escolhido, opt-in e SAIR. Os microvídeos de professor vão em trechos 9:16 para o WhatsApp da rede, com consentimento da Secretaria |
