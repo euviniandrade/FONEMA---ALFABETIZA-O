@@ -4,23 +4,27 @@ O dono pediu que o Espelho do Som use **a boca dos próprios personagens**, com 
 
 > ⚠️ **Posições simplificadas — validar com fonoaudióloga** antes de ir para o produto.
 
-![Raio-X da Sofia fazendo M](capturas/05-raiox-sofia-M-nariz-e-voz.png)
+![De frente: a ponta da língua sobe no L](capturas/02-frente-L-ponta-sobe.png)
+
+![De lado: Sofia 3D fofinha, dorso da língua no véu no K](capturas/06-lado-K-dorso-no-veu.png)
 
 ## Como abrir
 
 - **Completo (com 3D):** sirva a pasta `06-fonema-unificada/` com qualquer servidor estático (módulos ES não funcionam em `file://`):
   `python3 -m http.server 8931` e abra `http://localhost:8931/espelho-do-som-3d/demo.html`.
-- **Direto do disco:** `demo.html` também abre em `file://`; aí aparecem a frente ilustrada e o raio-X (sem os modos 3D).
+- **Direto do disco:** `demo.html` também abre em `file://`; aí aparecem a boca gigante de frente e a Sofia de lado (sem os modos 3D).
 - **Capturas:** `node ferramentas/capturar.js` (Playwright, Chromium com WebGL em software, 1280×800, `deviceScaleFactor 2`).
 - **Imagens:** `python3 recortar.py` recria os recortes (`recortes/`).
 
-## As três vistas (mexem juntas)
+## As vistas (mexem juntas) — estilos escolhidos pelo dono (D020)
 
 | Vista | O que é | Arquivos |
 |---|---|---|
-| **De frente** (padrão) | Rosto ilustrado da Sofia ou do Tales com **lupa de zoom na boca**. Só existem algumas bocas prontas (Sofia: M, A, O, S, F, L, CH, E; Tales: M, O, U, I, E, A); para os outros sons aparece a mais parecida, com o aviso "parecido" | `recortes/rosto-*.jpg`, `recortes/boca-*.jpg` |
-| **Raio-X** (híbrido) | A cabeça de "vidro" da Sofia ou do Tales (imagens v2) com a boca e a garganta **apagadas** por `recortar.py`; por cima, alinhado ao perfil, um **boneco 2D animado e fiel**: língua coral lisa e gordinha, dentes brancos arredondados em 2 fileiras, lábios macios, céu da boca e véu que sobe e desce, setinhas de ar (boca/nariz) e ondinhas douradas de voz | `espelho-svg.js`, `recortes/raiox-*-limpo.jpg` |
-| **3D** (opção) | Boca 3D fofa em Three.js (dentinhos de brinquedo, língua em malha que muda de forma, lábios em anel): **boca 3D** de frente, **dentro da boca** (voo da câmera para dentro), **do pulmão à boca** e **girar 360°** (OrbitControls) | `espelho3d.js`, `vendor/` (Three.js r187) |
+| **De frente** (padrão) — "Boca gigante" | A boca grande e fofa com a Sofia e o Tales apontando (`estilos-opcoes/base-frente-boca-vazia.png`). A **língua animada** é desenhada entre o fundo e a camada da frente (dentes e lábios ficam na frente dela): ponta sobe atrás dos dentes de cima no T/D/N/L, bate no R, fica deitada e larga no A, sobe na frente no I/E, "embola" para trás no K/G. Os **lábios também mexem**: fecham no M/P/B, fazem biquinho no U/O, o lábio de baixo encosta nos dentes no F/V. Seta amarela curva + frase curtinha ("A ponta da língua sobe!"). Transições com mola | `espelho-frente.js`, `recortes/frente-*.{jpg,png}` |
+| **De lado** — "3D fofinho" | A Sofia de perfil, estilo filme 3D, com a janelinha na bochecha (`estilos-opcoes/base-lado-3d-vazia.png`; o interior de IA foi apagado por `recortar.py`). Dentro dela, o **boneco fiel**: dentes de perfil arredondados com gengiva, céu da boca, véu que sobe e desce, língua coral com brilho, setinhas de ar (boca/nariz) e ondinhas douradas de voz. Os lábios de fora são os da ilustração; o movimento dos lábios aparece na vista de frente | `espelho-svg.js` (personagem `lado3d`), `recortes/lado3d-sofia-limpo.jpg` |
+| **3D** (opção) | Boca 3D em Three.js: boca de frente, **dentro da boca**, **do pulmão à boca** (usado em "Conheça seu corpo") e **girar 360°** | `espelho3d.js`, `vendor/` |
+
+O raio-X escuro de "vidro" (Sofia/Tales, `espelho-svg.js` personagens `sofia`/`tales`) saiu da lição; o código continua disponível para "Conheça seu corpo".
 
 Animações por som: a língua sobe e toca o lugar certo; o **"r" fraco bate** rapidinho no alvéolo; **p/b/t/d/k/g** fecham e soltam o ar de uma vez; no **m/n/nh** o véu desce e o ar sai pelo nariz; o **rr** raspa no fundo; nas **vogais nasais** o ar sai pela boca e pelo nariz; a voz liga e desliga (ex.: **f × v**, **s × z**, **p × b**). Há **câmera lenta** e sequências (M→A, L→A, T→A, A-R-A, F×V, A E I O U).
 
@@ -77,11 +81,11 @@ Notas: o "rr" (/ʁ/) varia muito entre sotaques (pode soar como [h] ou [χ]); fi
 
 | Arquivo | O quê |
 |---|---|
-| `capturas/01..04-frente-*` | Frente ilustrada com lupa na boca (Sofia A, Tales U, Sofia F, Sofia L) |
-| `capturas/05..09-raiox-*` | Raio-X híbrido: M (nariz e voz), L (ponta no alvéolo), K (dorso no véu, Tales), S (ar fininho, Tales), A |
+| `capturas/01..04c-frente-*` | Boca gigante: A (língua deitada), L (ponta sobe), M (lábios fecham), U (biquinho), K (fundo sobe), F (dente no lábio) |
+| `capturas/05..09-lado-*` | Sofia 3D de lado: L (ponta no alvéolo, ar pelos lados), K (dorso no véu), M (nariz e voz), S (ar fininho), A |
 | `capturas/10..13-3d-*` | 3D: boca de frente, dentro da boca (T e K), do pulmão à boca |
 | `capturas/14..17-ex-*` | Exercícios |
-| `capturas/transicoes/` e `capturas/transicao-*.png` | Quadros de M→A, L→A e T→A (0, 33, 66 e 100%) |
+| `capturas/transicao-frente-*.png`, `capturas/transicao-lado-*.png` | Quadros de M→A, L→A e T→A (0, 33, 66 e 100%); quadros soltos em `capturas/transicoes/` |
 
 ## Imagens de origem (`imagens/`)
 
@@ -90,3 +94,4 @@ Notas: o "rr" (/ʁ/) varia muito entre sotaques (pode soar como [h] ou [χ]); fi
 | `v2-raio-x-sofia.png`, `v2-raio-x-tales-L.png` | Fundo do raio-X (exterior); o interior da boca é apagado e redesenhado |
 | `sofia-bocas-M-A-O-S.png`, `v2-sofia-bocas-F-L-CH-E.png`, `v2-tales-bocas-M-U-I-K.png` | Rostos de frente |
 | `raio-x-boca-partes.png`, `raio-x-sons-M-L-R-S.png` | Só referência de estilo (posições erradas; não usadas) |
+| `estilos-opcoes/base-frente-boca-vazia.png`, `estilos-opcoes/base-lado-3d-vazia.png` | Bases dos estilos escolhidos (D020) |

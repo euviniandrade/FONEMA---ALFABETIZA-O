@@ -8,20 +8,22 @@
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const q = new URLSearchParams(location.search);
   // três vistas sincronizadas: rosto ilustrado de frente (zoom na boca), raio-X híbrido (Sofia/Tales) e 3D (opcional)
-  const rx = EspelhoSVG.criar($('#vRaiox'), { fonema: q.get('f') || 'a', personagem: q.get('p') || 'sofia' });
-  $('#vRaiox').classList.add('esp-palco');
+  // De frente: "Boca gigante" (D020) · De lado: "3D fofinho" (Sofia de perfil com a janelinha na bochecha)
+  const fr = EspelhoFrente.criar($('#vFrente'), { fonema: q.get('f') || 'a' });
+  const rx = EspelhoSVG.criar($('#vRaiox'), { fonema: q.get('f') || 'a', personagem: q.get('p') || 'lado3d' });
+  $('#vRaiox').classList.add('esp-palco', 'claro'); $('#vFrente').classList.add('claro');
   let e3 = null;
   if (!q.has('2d')) { try { e3 = await EspelhoSom.criar($('#palco'), { fonema: q.get('f') || 'a', modo: 'frente', capturas: q.has('cap'), pausado: () => !$('#palco').classList.contains('on') }); if (e3.tipo !== '3d') { e3.destruir(); e3 = null; } } catch (e) { e3 = null; } }
-  let atual = q.get('f') || 'a', mudo = q.has('mudo'), lento = false, aba = 'explorar', vista = 'frente', pers = q.get('p') || 'sofia';
+  let atual = q.get('f') || 'a', mudo = q.has('mudo'), lento = false, aba = 'explorar', vista = 'frente', pers = 'sofia';
   const vista3d = () => ['frente3d', 'dentro', 'corpo'].includes(vista);
   const esp = { // fachada: as duas vistas mexem juntas
-    fonema: (id, o) => { rx.fonema(id, o); if (e3) e3.fonema(id, o); },
-    lento: (v) => { rx.lento(v); if (e3) e3.lento(v); },
-    destacar: (z, ok) => { (vista3d() && e3 ? e3 : rx).destacar(z, ok); },
+    fonema: (id, o) => { fr.fonema(id, o); rx.fonema(id, o); if (e3) e3.fonema(id, o); },
+    lento: (v) => { fr.lento(v); rx.lento(v); if (e3) e3.lento(v); },
+    destacar: (z, ok) => { (vista3d() && e3 ? e3 : vista === 'frente' ? fr : rx).destacar(z, ok); },
     rotulos: (v) => { rx.rotulos(v); if (e3) e3.rotulos(v); },
     girar: (v) => { if (e3) e3.girar(v); },
-    onToque: (cb) => { rx.onToque(cb); if (e3) e3.onToque(cb); },
-    pose: (a, b, f) => { rx.pose(a, b, f); if (e3) e3.pose(a, b, f); }
+    onToque: (cb) => { fr.onToque(cb); rx.onToque(cb); if (e3) e3.onToque(cb); },
+    pose: (a, b, f) => { fr.pose(a, b, f); rx.pose(a, b, f); if (e3) e3.pose(a, b, f); }
   };
   window.ESPELHO_MUDO = mudo;
   const falar = (t, o) => (mudo ? Promise.resolve() : P.falar(t, Object.assign({ lento }, o)));
@@ -35,12 +37,8 @@
   const EXATO = { sofia: 'p b m a o s z f v l x j e', tales: 'p b m u i a' };
   const rostoDe = (p, id) => { for (const [k, ids] of Object.entries(ROSTO[p])) if (ids.split(' ').includes(id)) return k; return 'A'; };
   function poeRosto() {
-    const k = rostoDe(pers, atual), nome = pers === 'sofia' ? 'Sofia' : 'Tales';
-    const boca = $('#fBoca'), src = `recortes/boca-${pers}-${k}.jpg`;
-    $('#fRosto').src = `recortes/rosto-${pers}-${k}.jpg`; $('#fNome').textContent = nome;
-    if (!boca.src.endsWith(src)) { boca.src = src; boca.classList.remove('troca'); void boca.offsetWidth; boca.classList.add('troca'); }
-    const ex = EXATO[pers].split(' ').includes(atual);
-    $('#sofiaLeg').innerHTML = ex ? `${nome} faz assim <small>a boca de frente, bem de perto</small>` : `Parecido com a boca ${pers === 'sofia' ? 'da Sofia' : 'do Tales'} <small>o raio-X mostra a língua certinha</small>`;
+    const f = F[atual];
+    $('#sofiaLeg').innerHTML = `A Sofia e o Tales mostram <small>${f.dica.split(':')[0]}</small>`;
   }
 
   /* ---------- teclado de sons ---------- */
@@ -62,8 +60,7 @@
   }
   function ouvir() { const f = F[atual]; return falar(`${f.fala}... ${f.ex.replace(/\(.*\)/, '')}`); }
   $('#bOuvir').addEventListener('click', ouvir);
-  $$('.quem button').forEach((b) => b.addEventListener('click', () => trocaPers(b.dataset.p)));
-  function trocaPers(p) { pers = p; $$('.quem button').forEach((x) => x.classList.toggle('on', x.dataset.p === p)); rx.personagem(p); rx.fonema(atual, { instantaneo: true }); poeRosto(); }
+  function trocaPers(p) { pers = p; } // no Imite: bocas de frente ilustradas da Sofia ou do Tales
 
   /* ---------- vistas ---------- */
   function modo(m) {
@@ -73,7 +70,6 @@
     $('#palco').classList.toggle('on', vista3d());
     if (e3 && vista3d()) e3.modo(m === 'frente3d' ? 'frente' : m);
     $$('.modos [data-modo]').forEach((b) => b.classList.toggle('on', b.dataset.modo === m));
-    $('.quem').style.display = ['frente', 'lado'].includes(m) ? '' : 'none';
   }
   $$('.modos [data-modo]').forEach((b) => b.addEventListener('click', () => modo(b.dataset.modo)));
   $('#bGirar').addEventListener('click', (e) => { const v = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', v); if (v && !vista3d()) modo('frente3d'); esp.girar(v); });
@@ -220,6 +216,5 @@
   selecionar(atual, { instantaneo: true });
   abrirAba(q.get('aba') || 'explorar');
   if (q.get('m')) modo(q.get('m'));
-  if (q.get('p')) trocaPers(q.get('p'));
-  window.DEMO = { esp, rx, e3, selecionar, abrirAba, modo, trocaPers, sequencia };
+  window.DEMO = { esp, fr, rx, e3, selecionar, abrirAba, modo, trocaPers, sequencia };
 })();

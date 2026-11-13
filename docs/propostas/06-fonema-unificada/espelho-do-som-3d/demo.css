@@ -101,3 +101,5 @@ button{font:inherit;cursor:pointer}
 .modos{z-index:3}
 .modos .sep{align-self:center;font:700 14px Fredoka,sans-serif;color:#fff;background:#1B316099;border-radius:10px;padding:4px 8px}
 .modos button{padding:8px 12px;min-height:48px;font-size:15px}
+
+.palco.claro{background:#EAF5FD}.palco.claro::before{display:none}

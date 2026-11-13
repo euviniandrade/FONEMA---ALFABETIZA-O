@@ -41,12 +41,12 @@
   function criar(container, opts = {}) {
     const svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('class', 'esp-svg esp-frente'); svg.setAttribute('role', 'img');
-    svg.setAttribute('viewBox', '96 0 1184 768'); svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+    svg.setAttribute('viewBox', opts.viewBox || '96 0 1184 768'); svg.setAttribute('preserveAspectRatio', opts.viewBox ? 'xMidYMid meet' : 'xMidYMid slice');
     svg.setAttribute('aria-label', 'Boca gigante de frente, com a língua mostrando a posição do som');
     svg.innerHTML = `
       <defs>
         <radialGradient id="fLing" cx="50%" cy="30%" r="75%"><stop offset="0" stop-color="#FFA79B"/><stop offset=".45" stop-color="#FB8576"/><stop offset=".85" stop-color="#EE6A60"/><stop offset="1" stop-color="#D9534F"/></radialGradient>
-        <linearGradient id="fBaixo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFA99F"/><stop offset=".6" stop-color="#F98B80"/><stop offset="1" stop-color="#EE776E"/></linearGradient>
+        <linearGradient id="fBaixo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB2A8"/><stop offset=".35" stop-color="#FC9183"/><stop offset="1" stop-color="#F3786C"/></linearGradient>
         <linearGradient id="fLabC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3A3A0"/><stop offset=".7" stop-color="#EE8E8B"/><stop offset="1" stop-color="#E27C7E"/></linearGradient>
         <linearGradient id="fLabB" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F3A3A0"/><stop offset=".7" stop-color="#EF9290"/><stop offset="1" stop-color="#E27C7E"/></linearGradient>
         <clipPath id="fBoca"><ellipse cx="${CX}" cy="${CY}" rx="${IRX}" ry="${IRY}"/></clipPath>
@@ -127,12 +127,13 @@
       const yS = yb + lado + 30, base = 640;
       $('.f-corpo').setAttribute('d', `M${CX - hw - 20},${base} C${CX - hw - 25},${yS + 60} ${CX - hw * 0.8},${yS - 4} ${CX - hw * 0.45},${yb + 8} C${CX - hw * 0.2},${yb - 4} ${CX + hw * 0.2},${yb - 4} ${CX + hw * 0.45},${yb + 8} C${CX + hw * 0.8},${yS - 4} ${CX + hw + 25},${yS + 60} ${CX + hw + 20},${base} Z`);
       // ponta que sobe (vê-se a parte de baixo, mais clarinha, com o "freio")
-      const wb = 105, wt = 62;
+      const wb = hw * 0.86, wt = 58;
       if (sobe > 0.04) {
-        const baseP = yb + 70;
-        $('.f-ponta').setAttribute('d', `M${CX - wb},${baseP} C${CX - wb + 6},${lerp(baseP, yT, 0.5)} ${CX - wt - 8},${yT + 34} ${CX - wt + 6},${yT + 14} Q${CX},${yT - 14} ${CX + wt - 6},${yT + 14} C${CX + wt + 8},${yT + 34} ${CX + wb - 6},${lerp(baseP, yT, 0.5)} ${CX + wb},${baseP} Z`);
+        const baseP = yb + 46, mid = lerp(baseP, yT, 0.55);
+        // a ponta sobe afinando (lados curvos), como uma gota de cabeça para cima
+        $('.f-ponta').setAttribute('d', `M${CX - wb},640 L${CX - wb},${baseP + 30} C${CX - wb * 0.62},${baseP - 4} ${CX - wt - 24},${mid + 20} ${CX - wt},${yT + 26} Q${CX - wt + 4},${yT - 10} ${CX},${yT - 12} Q${CX + wt - 4},${yT - 10} ${CX + wt},${yT + 26} C${CX + wt + 24},${mid + 20} ${CX + wb * 0.62},${baseP - 4} ${CX + wb},${baseP + 30} L${CX + wb},640 Z`);
         $('.f-ponta').setAttribute('opacity', clamp(sobe * 2, 0, 1));
-        $('.f-freio').setAttribute('d', `M${CX},${baseP - 6} Q${CX - 6},${lerp(baseP, yT, 0.45)} ${CX},${lerp(baseP, yT, 0.62)}`); $('.f-freio').setAttribute('opacity', 0.55 * clamp(sobe * 2, 0, 1));
+        $('.f-freio').setAttribute('d', `M${CX},${baseP + 10} Q${CX - 5},${lerp(baseP, yT, 0.4)} ${CX},${lerp(baseP, yT, 0.6)}`); $('.f-freio').setAttribute('opacity', 0.5 * clamp(sobe * 2, 0, 1));
       } else { $('.f-ponta').setAttribute('d', ''); $('.f-freio').setAttribute('d', ''); }
       $('.f-sulco').setAttribute('d', sobe > 0.5 ? '' : `M${CX},${yb + 20} Q${CX - 4},${yb + 70} ${CX},${yb + 120}`);
       $('.f-brilho').setAttribute('d', `M${CX - hw * 0.5},${yb + 34} Q${CX - hw * 0.15},${yb + 14} ${CX + hw * 0.1},${yb + 18}`);

@@ -125,8 +125,7 @@ def lado_3d():
     suave a partir da borda). O boneco fiel (espelho-svg.js, personagem 'lado3d') é desenhado por cima."""
     arq = 'base-lado-3d-vazia.png'
     polis = [[(610, 215), (660, 182), (760, 168), (880, 168), (960, 196), (985, 250), (990, 330), (975, 400), (930, 450), (840, 472), (720, 466), (640, 430), (606, 360), (600, 280)],
-             [(565, 538), (705, 538), (705, 628), (565, 628)],
-             [(985, 258), (1040, 258), (1072, 286), (1070, 318), (1062, 348), (1028, 358), (992, 350)]]  # lábios (o boneco desenha os seus)
+             [(565, 538), (705, 538), (705, 628), (565, 628)]]
     im = Image.open(os.path.join(OPC, arq)).convert('RGB')
     W, H = im.size
     m = Image.new('L', (W, H), 0); d = ImageDraw.Draw(m)
