@@ -49,3 +49,39 @@ function sofiaFolhaModelo() {
 }
 
 module.exports = { 'sofia-folha-modelo': sofiaFolhaModelo };
+
+function sofiaExpressoes() {
+  const W = 1800, H = 1160;
+  const list = [
+    ['alegre', 'Alegre', 'abertura, "que bom te ver!"', {}],
+    ['orgulhosa', 'Orgulhosa do esforço', '"foi devagarinho e deu certo!"', { armR: { t: [60, 470], hand: 'thumb', bend: 'out', hrot: 90, flip: -1 } }],
+    ['curiosa', 'Curiosa', 'apresenta um som novo', {}],
+    ['pensativa', 'Pensativa', '"hmm, deixa eu pensar…"', { armR: { t: [52, 410], hand: 'fist', hrot: 200 } }],
+    ['surpresa', 'Surpresa alegre', 'acerto inesperado', { armL: { t: [-120, 470], hand: 'open', hrot: 250 }, armR: { t: [120, 470], hand: 'open', hrot: -70 } }],
+    ['encorajadora', 'Encorajadora', '"vamos tentar juntas?"', { armR: { t: [150, 500], hand: 'open', hrot: -40 } }],
+    ['calma', 'Calma · respirando', 'pausa, regulação, fim de sessão', { armL: { t: [-40, 560], hand: 'relax', hrot: 20 }, armR: { t: [40, 560], hand: 'relax', hrot: 160 } }],
+    ['empatica', 'Empática (triste leve)', '"esse som é difícil mesmo"', { armR: { t: [30, 520], hand: 'relax', hrot: 150 } }],
+    ['rindo', 'Rindo', 'humor leve, nunca da criança', {}],
+    ['concentrada', 'Concentrada', 'escrevendo / traçando letra', {}],
+    ['escutando', 'Escutando', 'espera 3–5 s pela criança', { armL: { t: [-140, 300], hand: 'open', hrot: 200, bend: 'out' } }],
+    ['comemorando', 'Comemorando', 'só no fim do bloco', { armL: { t: [-170, 230], hand: 'open', hrot: 160 }, armR: { t: [170, 230], hand: 'open', hrot: 200 } }],
+  ];
+  const cw = 280, ch = 470, x0 = 60, y0 = 150;
+  let g = '';
+  list.forEach(([k, name, use, extra], i) => {
+    const c = i % 6, r = Math.floor(i / 6);
+    const x = x0 + c * (cw + 16), y = y0 + r * (ch + 22);
+    const id = 'ex' + i;
+    g += `<g transform="translate(${x},${y})"><rect width="${cw}" height="${ch}" rx="26" fill="${i % 2 ? '#FFF4E4' : '#FFFBF4'}" stroke="${P.line}" stroke-opacity=".1" stroke-width="2"/>
+      <defs><clipPath id="${id}"><rect width="${cw}" height="${ch - 92}" rx="26"/></clipPath></defs>
+      <g clip-path="url(#${id})"><circle cx="${cw / 2}" cy="190" r="118" fill="${[P.sky, P.mint, P.peach][i % 3]}"/><g transform="translate(${cw / 2},${12}) scale(.58)">${S.sofia({ expr: k, letter: '', ...extra })}</g></g>
+      <text x="${cw / 2}" y="${ch - 54}" text-anchor="middle" font-family="Fredoka" font-weight="600" font-size="21" fill="${P.ink}">${i + 1}. ${name}</text>
+      <text x="${cw / 2}" y="${ch - 26}" text-anchor="middle" font-size="15.5" fill="${P.slate}">${use}</text></g>`;
+  });
+  const body = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${defs()}<rect width="${W}" height="${H}" fill="${P.cream}"/>
+   ${header(W, 'Sofia · 12 expressões', 'Elogia esforço e estratégia · nunca chantagem emocional ("fiquei triste porque você saiu"), nunca decepção, nunca comparação')}
+   ${g}
+   <text x="60" y="${H - 22}" font-size="16" fill="${P.slate}">Regra: a Sofia fica parada e atenta enquanto a criança responde (sem animação de fundo). "Empática" acolhe a dificuldade da tarefa — nunca culpa a criança nem pede que ela fique por causa da Sofia.</text></svg>`;
+  return { w: W, h: H, html: page(W, H, body) };
+}
+module.exports['sofia-expressoes'] = sofiaExpressoes;
