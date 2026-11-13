@@ -1,14 +1,16 @@
 /* FONEMA · Espelho do Som — RAIO-X HÍBRIDO (de lado), com a cara da Sofia ou do Tales.
  *
  * Fundo: a cabeça de "vidro" da Sofia/Tales (imagens/v2-raio-x-*.png) com a boca e a garganta apagadas
- * por recortar.py (recortes/raiox-*-limpo.jpg). Por cima, alinhado ao perfil, este boneco 2D animado e fiel:
- * língua coral lisa e gordinha, poucos dentes brancos arredondados em 2 fileiras, lábios macios, céu da boca
- * e véu, setinhas de ar (boca/nariz) e ondinhas douradas de voz na garganta.
- * As posições vêm de fonemas.js (FonemasPT) — simplificadas, VALIDAR COM FONOAUDIÓLOGA.
+ * por recortar.py (recortes/raiox-*-limpo.jpg). Por cima, alinhado ao perfil, este boneco 2D animado e fiel.
+ * Arte (alvo: imagens/referencia-estilo-raiox-bonito.png): dentes com silhueta de verdade (incisivo em pá,
+ * canino, molares de 2 cúspides) em branco→marfim com brilho, gengiva rosa-clara fina; língua gordinha com
+ * gradiente coral, brilho longo no dorso, sulco sutil e sombra interna; boca rosa-escura com profundidade;
+ * lábios volumosos com brilho; céu da boca rosa-pálido; véu com gradiente; voz dourada com brilho; ar em
+ * setinhas translúcidas. As POSIÇÕES vêm de fonemas.js (FonemasPT) — simplificadas, VALIDAR COM FONOAUDIÓLOGA.
  * Também é a versão usada sem WebGL ou em file:// (não depende de módulos ES).
  *
  *   const rx = EspelhoSVG.criar(div, { fonema: 'm', personagem: 'sofia' });
- *   rx.fonema('a'); rx.personagem('tales'); rx.lento(true); rx.onToque(({ zona }) => …); rx.destacar('alveolo');
+ *   rx.fonema('a'); rx.personagem('tales'); rx.lento(true); rx.rotulos(false); rx.onToque(({ zona }) => …);
  */
 (function (global) {
   'use strict';
@@ -19,9 +21,9 @@
   // Encaixe do boneco (unidades ≈ cm, rosto para +z) em cada imagem (pixels de 1376×768)
   const PERS = {
     sofia: { img: 'recortes/raiox-sofia-limpo.jpg', x0: 638, y0: 385, k: 54.5, gar: 0.45, vb: [430, 150, 760, 490],
-      rot: { nariz: [520, 250], labios: [520, 420], dentes: [520, 335], palato: [745, 225], veu: [990, 300], lingua: [985, 455], garganta: [1060, 560] } },
+      rot: { nariz: [530, 255], labios: [520, 440], dentes: [525, 345], palato: [760, 228], veu: [990, 300], lingua: [985, 470], garganta: [1060, 565] } },
     tales: { img: 'recortes/raiox-tales-limpo.jpg', x0: 530, y0: 432, k: 36.7, gar: 0.5, vb: [372, 228, 690, 445],
-      rot: { nariz: [430, 330], labios: [425, 470], dentes: [425, 405], palato: [600, 305], veu: [800, 360], lingua: [790, 500], garganta: [840, 560] } }
+      rot: { nariz: [440, 335], labios: [432, 485], dentes: [432, 412], palato: [610, 312], veu: [800, 368], lingua: [800, 505], garganta: [845, 565] } }
   };
   const ROTULOS = { nariz: 'nariz', labios: 'lábios', dentes: 'dentes', palato: 'céu da boca', veu: 'véu (céu mole)', lingua: 'língua', garganta: 'garganta (voz)' };
 
@@ -36,8 +38,16 @@
     return d + (fechada ? 'Z' : '');
   }
 
-  // dentes laterais (fora do meio): ficam atrás da língua, um pouco transparentes
-  const LATERAIS = [[-0.74, 0.36, 0.46, 0.0], [-1.16, 0.4, 0.44, 0.08], [-1.64, 0.5, 0.42, 0.14], [-2.2, 0.54, 0.42, 0.16]]; // z, largura, altura, ponta
+  // Dentes de perfil: [z da gengiva, largura, altura, tipo, y da gengiva] (de cima: crescem para baixo; de baixo: para cima)
+  const CIMA = [[-0.27, 0.3, 0.64, 'i', 0.6], [-0.57, 0.28, 0.57, 'i', 0.58], [-0.88, 0.31, 0.6, 'c', 0.58], [-1.24, 0.36, 0.47, 'm', 0.58], [-1.66, 0.44, 0.44, 'm', 0.57], [-2.13, 0.46, 0.42, 'm', 0.56]];
+  const BAIXO = [[-0.43, 0.26, 0.62, 'i', -0.62], [-0.7, 0.26, 0.57, 'i', -0.6], [-0.99, 0.29, 0.56, 'c', -0.56], [-1.32, 0.35, 0.5, 'm', -0.44], [-1.74, 0.44, 0.47, 'm', -0.39], [-2.2, 0.46, 0.45, 'm', -0.37]];
+  // silhueta de um dente apontando para BAIXO, gengiva em y=0 (w, h em pixels)
+  function formaDente(t, w, h) {
+    const a = w / 2;
+    if (t === 'i') return `M${-a},0 C${-a * 1.05},${h * 0.45} ${-a * 0.55},${h * 0.98} ${-a * 0.05},${h} C${a * 0.45},${h * 1.01} ${a * 0.95},${h * 0.6} ${a * 0.92},0 Z`;
+    if (t === 'c') return `M${-a},0 C${-a},${h * 0.55} ${-a * 0.35},${h} 0,${h} C${a * 0.35},${h} ${a},${h * 0.55} ${a},0 Z`;
+    return `M${-a},0 C${-a * 1.02},${h * 0.62} ${-a * 0.9},${h} ${-a * 0.45},${h} C${-a * 0.15},${h} ${-a * 0.08},${h * 0.9} 0,${h * 0.9} C${a * 0.08},${h * 0.9} ${a * 0.15},${h} ${a * 0.45},${h} C${a * 0.9},${h} ${a * 1.02},${h * 0.62} ${a},0 Z`;
+  }
 
   function criar(container, opts = {}) {
     const svg = document.createElementNS(NS, 'svg');
@@ -53,41 +63,62 @@
       X = (z) => C.x0 + (0.2 - z) * C.k;
       Y = (y) => (y >= -2 ? C.y0 - y * C.k : C.y0 + 2 * C.k + (-2 - y) * C.k * C.gar);
       svg.setAttribute('viewBox', C.vb.join(' '));
-      const s = (v) => (v * u).toFixed(1);
-      const lat = (cls) => LATERAIS.map(() => `<rect class="${cls}" rx="${s(14)}" fill="url(#eDente)" stroke="#BCD3EA" stroke-width="${s(2)}"/>`).join('');
+      const s = (v) => (v * u).toFixed(2);
+      const dente = (cls, [z, w, h, t]) => {
+        const W = w * C.k, H = h * C.k;
+        return `<g class="${cls}"><path d="${formaDente(t, W, H)}" fill="url(#eDente)" stroke="#C7D3E3" stroke-width="${s(1.2)}"/>
+          <path d="${formaDente(t, W * 0.42, H * 0.62)}" transform="translate(${(-W * 0.18).toFixed(1)},${(H * 0.14).toFixed(1)})" fill="url(#eDenteBrilho)"/>
+          <ellipse cx="${(-W * 0.2).toFixed(1)}" cy="${(H * 0.42).toFixed(1)}" rx="${(W * 0.08).toFixed(1)}" ry="${(H * 0.16).toFixed(1)}" fill="#fff" opacity=".95"/></g>`;
+      };
       svg.innerHTML = `
       <defs>
-        <radialGradient id="eLing" cx="42%" cy="28%" r="80%"><stop offset="0" stop-color="#FFC2B5"/><stop offset=".45" stop-color="#FF8A72"/><stop offset="1" stop-color="#E9606A"/></radialGradient>
-        <linearGradient id="eDente" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".7" stop-color="#F3F8FF"/><stop offset="1" stop-color="#D5E5F7"/></linearGradient>
-        <radialGradient id="eLab" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#F7A2A6"/><stop offset="1" stop-color="#D2646F"/></radialGradient>
-        <radialGradient id="eBoca" cx="50%" cy="50%" r="60%"><stop offset="0" stop-color="#5E2A4E" stop-opacity=".75"/><stop offset="1" stop-color="#3B2A5E" stop-opacity=".35"/></radialGradient>
-        <filter id="eSuave"><feGaussianBlur stdDeviation="${s(5)}"/></filter>
-        <filter id="eBrilho" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="${s(3)}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <marker id="eSeta" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C8F4FF"/></marker>
+        <radialGradient id="eLing" cx="45%" cy="25%" r="78%"><stop offset="0" stop-color="#FFA494"/><stop offset=".3" stop-color="#FF8A7A"/><stop offset=".68" stop-color="#F26B5B"/><stop offset="1" stop-color="#D9534F"/></radialGradient>
+        <linearGradient id="eDente" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F1E8D8"/><stop offset=".28" stop-color="#FFFDF8"/><stop offset=".8" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E4EEF9"/></linearGradient>
+        <linearGradient id="eDenteBrilho" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        <radialGradient id="eLab" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FFC0C4"/><stop offset=".45" stop-color="#F49AA3"/><stop offset="1" stop-color="#D2697A"/></radialGradient>
+        <radialGradient id="eBoca" cx="55%" cy="45%" r="62%"><stop offset="0" stop-color="#4A1630" stop-opacity=".92"/><stop offset=".7" stop-color="#7A2E4E" stop-opacity=".82"/><stop offset="1" stop-color="#9C4766" stop-opacity=".55"/></radialGradient>
+        <linearGradient id="eVeu" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBC2CF"/><stop offset="1" stop-color="#E37D97"/></linearGradient>
+        <linearGradient id="eChao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3A6B5"/><stop offset="1" stop-color="#C9677F"/></linearGradient>
+        <radialGradient id="eVozBrilho"><stop offset="0" stop-color="#FFE38A" stop-opacity=".95"/><stop offset=".45" stop-color="#FFC94A" stop-opacity=".45"/><stop offset="1" stop-color="#FFC94A" stop-opacity="0"/></radialGradient>
+        <filter id="eSuave"><feGaussianBlur stdDeviation="${s(6)}"/></filter>
+        <filter id="eBorrao"><feGaussianBlur stdDeviation="${s(2.2)}"/></filter>
+        <filter id="eBrilho" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="${s(3.5)}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="eSombraIn" x="-5%" y="-5%" width="110%" height="110%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="${s(7)}" result="b"/>
+          <feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="borda"/>
+          <feFlood flood-color="#A9343F" flood-opacity=".8"/><feComposite in2="borda" operator="in" result="sombra"/>
+          <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="sombra"/></feMerge></filter>
+        <filter id="eContato" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="${s(1.5)}" stdDeviation="${s(1.6)}" flood-color="#5A1E35" flood-opacity=".45"/></filter>
+        <marker id="eSeta" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="2.6" markerHeight="2.6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Q3,5 1,1 z" fill="#E4F9FF" fill-opacity=".85"/></marker>
       </defs>
       <image href="${BASE}${C.img}" x="0" y="0" width="1376" height="768"/>
       <path class="e-boca-fundo" fill="url(#eBoca)" filter="url(#eSuave)"/>
-      <g class="e-lat-c" opacity=".55">${lat('e-lc')}</g><g class="e-lat-b" opacity=".55">${lat('e-lb')}</g>
-      <path class="e-ceu" fill="none" stroke="#F6A9BD" stroke-width="${s(22)}" stroke-linecap="round"/>
-      <path class="e-osso" fill="none" stroke="#FBEAD0" stroke-width="${s(12)}" stroke-linecap="round"/>
-      <path class="e-veu" fill="#F28CA6" stroke="#E07090" stroke-width="${s(2)}"/>
-      <path class="e-lingua" fill="url(#eLing)" stroke="#E0606E" stroke-width="${s(2.5)}"/>
-      <path class="e-lingua-brilho" fill="none" stroke="#FFE3DC" stroke-opacity=".75" stroke-width="${s(7)}" stroke-linecap="round"/>
-      <rect class="e-dente-c" width="${s(34)}" height="${s(56)}" rx="${s(15)}" fill="url(#eDente)" stroke="#BCD3EA" stroke-width="${s(2)}"/>
-      <rect class="e-dente-b" width="${s(30)}" height="${s(50)}" rx="${s(14)}" fill="url(#eDente)" stroke="#BCD3EA" stroke-width="${s(2)}"/>
-      <ellipse class="e-labio-c" fill="url(#eLab)"/><ellipse class="e-labio-b" fill="url(#eLab)"/>
-      <path class="e-ar-boca" fill="none" stroke="#C8F4FF" stroke-width="${s(9)}" stroke-linecap="round" stroke-dasharray="${s(26)} ${s(22)}" marker-end="url(#eSeta)" filter="url(#eBrilho)"/>
-      <path class="e-ar-nariz" fill="none" stroke="#C8F4FF" stroke-width="${s(9)}" stroke-linecap="round" stroke-dasharray="${s(26)} ${s(22)}" marker-end="url(#eSeta)" filter="url(#eBrilho)"/>
-      <g class="e-laringe"><ellipse rx="${s(30)}" ry="${s(11)}" fill="none" stroke="#F3A0B0" stroke-width="${s(9)}"/>
-        <path class="e-pregas" d="M${s(-22)},0 Q0,${s(-9)} ${s(22)},0 M${s(-22)},0 Q0,${s(9)} ${s(22)},0" stroke="#FFF0F3" stroke-width="${s(5)}" fill="none"/>
-        <g class="e-ondas" stroke="#FFD04A" stroke-width="${s(7)}" fill="none" stroke-linecap="round" filter="url(#eBrilho)">
-        ${[0, 1, 2].map((i) => `<path class="e-onda" style="--i:${i}" d="M${s(48 + i * 24)},${s(-26)} q${s(20)},${s(26)} 0,${s(52)}"/><path class="e-onda" style="--i:${i}" d="M${s(-48 - i * 24)},${s(-26)} q${s(-20)},${s(26)} 0,${s(52)}"/>`).join('')}</g></g>
-      <circle class="e-marca" r="${s(36)}" fill="rgba(255,224,138,.65)" opacity="0" filter="url(#eBrilho)"/>
-      <text class="e-lateral" font-family="Fredoka,sans-serif" font-weight="700" font-size="${s(26)}" fill="#C8F4FF" opacity="0">↕ ar pelos lados</text>
-      <g class="e-rotulos">${Object.entries(C.rot).map(([z, [x, y]]) => `<g class="e-rot" data-zona="${z}" transform="translate(${x},${y})"><line class="e-rot-l"/><rect x="${s(-80)}" y="${s(-22)}" width="${s(160)}" height="${s(44)}" rx="${s(14)}"/><text text-anchor="middle" y="${s(9)}" font-size="${s(24)}">${ROTULOS[z]}</text></g>`).join('')}</g>
+      <path class="e-ceu" fill="none" stroke="#F9CCD6" stroke-width="${s(24)}" stroke-linecap="round"/>
+      <path class="e-ceu-luz" fill="none" stroke="#FFE7EC" stroke-width="${s(6)}" stroke-linecap="round" opacity=".8"/>
+      <path class="e-osso" fill="none" stroke="#FBEAD0" stroke-width="${s(9)}" stroke-linecap="round"/>
+      <path class="e-veu" fill="url(#eVeu)"/>
+      <g class="e-cima" filter="url(#eContato)">${CIMA.map((d) => dente('e-dc', d)).join('')}</g>
+      <path class="e-gengiva-c" fill="none" stroke="#F8BFCB" stroke-width="${s(14)}" stroke-linecap="round"/>
+      <path class="e-chao" fill="url(#eChao)" opacity=".85"/>
+      <g class="e-lingua-g" filter="url(#eSombraIn)"><path class="e-lingua" fill="url(#eLing)"/></g>
+      <path class="e-lingua-sulco" fill="none" stroke="#D45A5E" stroke-opacity=".35" stroke-width="${s(2.5)}" stroke-linecap="round"/>
+      <path class="e-lingua-brilho" fill="none" stroke="#FFF3EE" stroke-opacity=".8" stroke-width="${s(9)}" stroke-linecap="round" filter="url(#eBorrao)"/>
+      <g class="e-baixo" filter="url(#eContato)">${BAIXO.map((d) => dente('e-db', d)).join('')}</g>
+      <path class="e-gengiva-b" fill="none" stroke="#F4AFBE" stroke-width="${s(14)}" stroke-linecap="round"/>
+      <path class="e-labio-c" fill="url(#eLab)"/><path class="e-labio-b" fill="url(#eLab)"/>
+      <ellipse class="e-labio-luz" fill="#fff" opacity=".7" filter="url(#eBorrao)"/>
+      <path class="e-ar-boca" fill="none" stroke="#E4F9FF" stroke-opacity=".7" stroke-width="${s(7)}" stroke-linecap="round" stroke-dasharray="${s(20)} ${s(26)}" marker-end="url(#eSeta)"/>
+      <path class="e-ar-nariz" fill="none" stroke="#E4F9FF" stroke-opacity=".7" stroke-width="${s(7)}" stroke-linecap="round" stroke-dasharray="${s(20)} ${s(26)}" marker-end="url(#eSeta)"/>
+      <g class="e-laringe"><ellipse class="e-voz-brilho" rx="${s(90)}" ry="${s(70)}" fill="url(#eVozBrilho)"/>
+        <ellipse rx="${s(26)}" ry="${s(9)}" fill="none" stroke="#F6B3C0" stroke-width="${s(7)}"/>
+        <path class="e-pregas" d="M${s(-18)},0 Q0,${s(-8)} ${s(18)},0 M${s(-18)},0 Q0,${s(8)} ${s(18)},0" stroke="#FFF0F3" stroke-width="${s(4)}" fill="none"/>
+        <g class="e-ondas" stroke="#FFD458" stroke-width="${s(5)}" fill="none" stroke-linecap="round" filter="url(#eBrilho)">
+        ${[0, 1, 2].map((i) => `<path class="e-onda" style="--i:${i}" d="M${s(40 + i * 20)},${s(-22)} q${s(16)},${s(22)} 0,${s(44)}"/><path class="e-onda" style="--i:${i}" d="M${s(-40 - i * 20)},${s(-22)} q${s(-16)},${s(22)} 0,${s(44)}"/>`).join('')}</g></g>
+      <circle class="e-marca" r="${s(34)}" fill="rgba(255,224,138,.65)" opacity="0" filter="url(#eBrilho)"/>
+      <text class="e-lateral" font-family="Fredoka,sans-serif" font-weight="700" font-size="${s(22)}" fill="#E4F9FF" opacity="0">↕ ar pelos lados</text>
+      <g class="e-rotulos">${Object.entries(C.rot).map(([z, [x, y]]) => `<g class="e-rot" data-zona="${z}" transform="translate(${x},${y})"><line/><circle class="e-rot-p" r="${s(3.5)}"/><rect y="${s(-15)}" height="${s(30)}" rx="${s(15)}"/><text text-anchor="middle" y="${s(6)}" font-size="${s(17)}">${ROTULOS[z]}</text></g>`).join('')}</g>
       <g class="e-alvos"></g>`;
-      // rótulos com largura do texto
-      svg.querySelectorAll('.e-rot').forEach((g) => { const t = g.querySelector('text'), w = ROTULOS[g.dataset.zona].length * 12.5 * u + 30 * u; const r = g.querySelector('rect'); r.setAttribute('x', -w / 2); r.setAttribute('width', w); });
+      svg.querySelectorAll('.e-rot').forEach((g) => { const w = ROTULOS[g.dataset.zona].length * 8.6 * u + 24 * u, r = g.querySelector('rect'); r.setAttribute('x', -w / 2); r.setAttribute('width', w); });
       const ALV = { labios: [0.35, -0.05, 44], dentes: [-0.32, 0.22, 30], alveolo: [-0.85, 0.55, 30], palato: [-2.2, 1.25, 50], veu: [-4.25, 1.25, 42], garganta: [-5.0, -1.0, 50], nariz: [0.9, 1.5, 44], lingua: [-2.6, 0.0, 66], pregas: [-4.9, -4.2, 44], baixo: [-1.6, -0.6, 40] };
       const g = svg.querySelector('.e-alvos');
       for (const [z, [zz, y, r]] of Object.entries(ALV)) {
@@ -95,9 +126,11 @@
         c.setAttribute('fill', 'transparent'); c.dataset.zona = z; c.style.cursor = 'pointer'; g.appendChild(c);
       }
       svg._alv = ALV;
-      // linhas dos rótulos até a parte
-      const anc = { nariz: [0.9, 1.4], labios: [0.3, -0.25], dentes: [-0.3, 0.2], palato: [-2.2, 1.35], veu: [-4.3, 1.3], lingua: [-2.4, 0.1], garganta: [-4.9, -4.2] };
-      svg.querySelectorAll('.e-rot').forEach((gr) => { const [x, y] = C.rot[gr.dataset.zona], [az, ay] = anc[gr.dataset.zona], l = gr.querySelector('line'); l.setAttribute('x1', 0); l.setAttribute('y1', 0); l.setAttribute('x2', X(az) - x); l.setAttribute('y2', Y(ay) - y); });
+      const anc = { nariz: [0.9, 1.4], labios: [0.35, -0.3], dentes: [-0.28, 0.25], palato: [-2.2, 1.38], veu: [-4.3, 1.3], lingua: [-2.4, 0.15], garganta: [-4.9, -4.2] };
+      svg.querySelectorAll('.e-rot').forEach((gr) => {
+        const [x, y] = C.rot[gr.dataset.zona], [az, ay] = anc[gr.dataset.zona], l = gr.querySelector('line'), p = gr.querySelector('.e-rot-p');
+        l.setAttribute('x1', 0); l.setAttribute('y1', 0); l.setAttribute('x2', X(az) - x); l.setAttribute('y2', Y(ay) - y); p.setAttribute('cx', X(az) - x); p.setAttribute('cy', Y(ay) - y);
+      });
     }
     svg.addEventListener('click', (e) => { const el = e.target.closest('[data-zona]'); if (el) ouvintes.forEach((cb) => cb({ zona: el.dataset.zona, rotulo: el.classList.contains('e-rot') })); });
     monta(opts.personagem || 'sofia');
@@ -107,6 +140,11 @@
     let ultimo = performance.now();
     const reduz = () => (global.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) || document.body.classList.contains('calmo');
     const scr = ([z, y]) => [X(z), Y(y)];
+    // desloca uma linha de pontos (z,y) ao longo da normal "para dentro" da língua
+    const desloca = (pts, d) => pts.map((p, i) => {
+      const a = pts[Math.max(0, i - 1)], b = pts[Math.min(pts.length - 1, i + 1)], tz = b[0] - a[0], ty = b[1] - a[1], L = Math.hypot(tz, ty) || 1;
+      return [p[0] - (ty / L) * d, p[1] + (tz / L) * d];
+    });
 
     function desenha() {
       if (parado) return;
@@ -121,8 +159,9 @@
       if (f.modo === 'plosiva' && !rz) { const ph = ((tempo * vel) % 1.8) / 1.8; solta = ph > 0.62 ? Math.sin(((ph - 0.62) / 0.38) * Math.PI) * pronto : 0; if (['t', 'd'].includes(id)) { lin[0][1] -= 0.45 * solta; lin[1][1] -= 0.25 * solta; } if (['k', 'g'].includes(id)) { lin[3][1] -= 0.5 * solta; lin[2][1] -= 0.15 * solta; } }
       if (f.modo === 'vibrante' && !rz) lin[4][1] += Math.sin(tempo * 55 * vel) * 0.035 * pronto;
       const jaw = o.jaw + (f.modo === 'plosiva' ? 2.5 * solta : 0);
-      // língua: superfície de cima + corpo para dentro
-      const sup = lin.map((p) => { const g = P.giraMand(p, jaw); return [p[0] + (g[0] - p[0]) * o.tj, p[1] + (g[1] - p[1]) * o.tj]; });
+      const gj = (p) => P.giraMand(p, jaw);
+      // língua: superfície de cima + corpo para dentro, ponta redondinha
+      const sup = lin.map((p) => { const g = gj(p); return [p[0] + (g[0] - p[0]) * o.tj, p[1] + (g[1] - p[1]) * o.tj]; });
       sup[5] = [sup[5][0] + 0.1, Math.max(sup[5][1], -1.25)];
       sup.push(P.giraMand([-4.05, -1.75], jaw * 0.5));
       const D = [0.42, 0.85, 1.25, 1.45, 1.1, 0.7, 0.35], baixo = [];
@@ -130,40 +169,45 @@
         const a = sup[Math.max(0, i - 1)], b = sup[Math.min(sup.length - 1, i + 1)], tz = b[0] - a[0], ty = b[1] - a[1], L = Math.hypot(tz, ty) || 1;
         baixo.push([sup[i][0] - (ty / L) * D[i], sup[i][1] + (tz / L) * D[i]]);
       }
-      const ponta = [sup[0][0] + 0.13, sup[0][1] - 0.13];
-      $('.e-lingua').setAttribute('d', suave([ponta, ...sup, ...baixo].map(scr), true));
-      $('.e-lingua-brilho').setAttribute('d', suave(sup.slice(1, 4).map(([z, y]) => scr([z, y - 0.16]))));
+      const t0p = sup[0], t1p = baixo[baixo.length - 1];
+      const ponta = [[t0p[0] + 0.12, t0p[1] - 0.08], [(t0p[0] + t1p[0]) / 2 + 0.2, (t0p[1] + t1p[1]) / 2], [t1p[0] + 0.12, t1p[1] + 0.08]];
+      $('.e-lingua').setAttribute('d', suave([...ponta.slice(0, 2), ...sup, ...baixo, ponta[2]].map(scr), true));
+      $('.e-lingua-brilho').setAttribute('d', suave(desloca(sup.slice(1, 4), 0.2).map(scr)));
+      $('.e-lingua-sulco').setAttribute('d', suave(desloca(sup.slice(1, 5), 0.42).map(scr)));
       // céu da boca e véu
-      $('.e-ceu').setAttribute('d', suave(P.CEU.slice(1).map(([z, y]) => scr([z, y + 0.06]))));
-      $('.e-osso').setAttribute('d', suave(P.CEU.slice(1).map(([z, y]) => scr([z - 0.04, y + 0.22]))));
+      $('.e-ceu').setAttribute('d', suave(P.CEU.slice(1).map(([z, y]) => scr([z, y + 0.08]))));
+      $('.e-ceu-luz').setAttribute('d', suave(P.CEU.slice(2).map(([z, y]) => scr([z, y + 0.02]))));
+      $('.e-osso').setAttribute('d', suave(P.CEU.slice(1).map(([z, y]) => scr([z - 0.04, y + 0.25]))));
       const v = o.vel, uv = f.modo === 'vibrante' && !rz ? Math.sin(tempo * 50 * vel) * 0.06 : 0;
-      const A = [[-3.72, 1.3], [-4.38, 1.52], [-4.98, 1.47]], B = [[-3.72, 1.3], [-4.22, 1.06], [-4.5, 0.58]];
+      const A = [[-3.72, 1.32], [-4.38, 1.52], [-4.98, 1.47]], B = [[-3.72, 1.32], [-4.22, 1.06], [-4.5, 0.58]];
       const vp = A.map((a, i) => [a[0] + (B[i][0] - a[0]) * v, a[1] + (B[i][1] - a[1]) * v + (i === 2 ? uv : 0)]);
-      const vb = vp.map(([z, y], i) => [z + (i ? 0.1 : 0), y - [0.34, 0.36, 0.2][i]]).reverse();
-      $('.e-veu').setAttribute('d', suave([...vp, [vp[2][0] - 0.12, vp[2][1] - 0.15], ...vb].map(scr), true));
-      $('.e-boca-fundo').setAttribute('d', suave([[-0.5, 0.2], ...P.CEU.slice(1), [-4.4, 1.35], [-5.0, 0.9], [-5.05, -1.8], [-4.6, -2.3], ...baixo.slice(0, 4), [-0.5, -0.4]].map(scr), true));
-      // dentes: incisivos (no meio, opacos) e laterais (atrás)
-      const ic = [X(-0.27), Y(0.24)], dc = $('.e-dente-c');
-      dc.setAttribute('x', ic[0] - 17 * u); dc.setAttribute('y', Y(0.58)); dc.setAttribute('transform', `rotate(-10 ${ic[0]} ${ic[1]})`);
-      const li = P.giraMand([-0.45, -0.12], jaw), db = $('.e-dente-b');
-      db.setAttribute('x', X(li[0]) - 15 * u); db.setAttribute('y', Y(li[1])); db.setAttribute('transform', `rotate(${10 + jaw} ${X(li[0])} ${Y(li[1])})`);
-      $$('.e-lc').forEach((r, i) => { const [z, w, h, pt] = LATERAIS[i]; r.setAttribute('x', X(z) - (w * C.k) / 2); r.setAttribute('y', Y(pt + h)); r.setAttribute('width', w * C.k * 0.92); r.setAttribute('height', h * C.k); });
-      $$('.e-lb').forEach((r, i) => { const [z, w, h, pt] = LATERAIS[i], p = P.giraMand([z, pt - 0.1], jaw); r.setAttribute('x', X(p[0]) - (w * C.k) / 2); r.setAttribute('y', Y(p[1])); r.setAttribute('width', w * C.k * 0.92); r.setAttribute('height', h * C.k * 0.9); r.setAttribute('transform', `rotate(${jaw} ${X(p[0])} ${Y(p[1])})`); });
-      // lábios
-      const ab = o.ab + (['p', 'b'].includes(id) ? 0.42 * solta : 0), zb = 0.22 + o.arr * 0.4;
-      let yU = 0.05 + ab * 0.3 + 0.28, yL = P.giraMand([0.15, -0.06], jaw)[1] - ab * 0.22 - 0.31;
-      const junta = 1 - Math.min(1, ab / 0.14), m = (yU - 0.28 + yL + 0.31) / 2; yU += (m + 0.28 - yU) * junta; yL += (m - 0.31 - yL) * junta;
-      let zL = zb; if (o.ld > 0) { yL += (-0.36 - yL) * o.ld; zL += (-0.1 - zL) * o.ld; }
-      const lc = $('.e-labio-c'), lb = $('.e-labio-b');
-      lc.setAttribute('cx', X(zb)); lc.setAttribute('cy', Y(yU)); lc.setAttribute('rx', (0.3 + o.arr * 0.12) * C.k); lc.setAttribute('ry', 0.3 * C.k);
-      lb.setAttribute('cx', X(zL)); lb.setAttribute('cy', Y(yL)); lb.setAttribute('rx', (0.32 + o.arr * 0.12) * C.k); lb.setAttribute('ry', 0.33 * C.k);
+      const vb = vp.map(([z, y], i) => [z + (i ? 0.1 : 0), y - [0.36, 0.38, 0.2][i]]).reverse();
+      $('.e-veu').setAttribute('d', suave([...vp, [vp[2][0] - 0.14, vp[2][1] - 0.16], ...vb].map(scr), true));
+      $('.e-boca-fundo').setAttribute('d', suave([[-0.45, 0.25], ...P.CEU.slice(1), [-4.4, 1.38], [-5.0, 0.9], [-5.05, -1.8], [-4.6, -2.3], ...baixo.slice(0, 4), gj([-1.0, -1.0]), gj([-0.3, -0.7])].map(scr), true));
+      // dentes de cima (fixos) e de baixo (giram com a mandíbula) + gengivas
+      $$('.e-dc').forEach((g, i) => { const [z, , , t, gy] = CIMA[i]; g.setAttribute('transform', `translate(${X(z).toFixed(1)},${Y(gy).toFixed(1)})${t === 'i' ? ' rotate(-12)' : ''}`); });
+      $$('.e-db').forEach((g, i) => { const [z, , , t, gy] = BAIXO[i], p = gj([z, gy]); g.setAttribute('transform', `translate(${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}) rotate(${(180 - jaw + (t === 'i' ? 12 : 0)).toFixed(1)})`); });
+      $('.e-gengiva-c').setAttribute('d', suave([[-0.08, 0.66], ...CIMA.map(([z, , , , gy]) => [z, gy + 0.04]), [-2.42, 0.6]].map(scr)));
+      const gb = [[-0.25, -0.66], ...BAIXO.map(([z, , , , gy]) => [z, gy - 0.04]), [-2.5, -0.42]].map(gj);
+      $('.e-gengiva-b').setAttribute('d', suave(gb.map(scr)));
+      $('.e-chao').setAttribute('d', suave([...gb, gj([-2.7, -0.9]), gj([-1.6, -1.15]), gj([-0.5, -1.0]), gj([-0.15, -0.8])].map(scr), true));
+      // lábios volumosos (contorno de "gomo"), o de baixo acompanha a mandíbula
+      const ab = o.ab + (['p', 'b'].includes(id) ? 0.42 * solta : 0), zb = 0.24 + o.arr * 0.4;
+      let uIn = 0.05 + ab * 0.3, lIn = gj([0.15, -0.06])[1] - ab * 0.22;
+      const junta = 1 - Math.min(1, ab / 0.14), m = (uIn + lIn) / 2; uIn += (m - uIn) * junta; lIn += (m - lIn) * junta;
+      let zL = zb; if (o.ld > 0) { lIn += (-0.06 - lIn) * o.ld; zL += (-0.12 - zL) * o.ld; }
+      const pr = 1 + o.arr * 0.35;
+      $('.e-labio-c').setAttribute('d', suave([[zb - 0.38, uIn + 0.04], [zb + 0.02, uIn - 0.05], [zb + 0.2 * pr, uIn + 0.16], [zb + 0.08 * pr, uIn + 0.44], [zb - 0.3, uIn + 0.5]].map(scr), true));
+      $('.e-labio-b').setAttribute('d', suave([[zL - 0.38, lIn - 0.04], [zL + 0.02, lIn + 0.05], [zL + 0.22 * pr, lIn - 0.2], [zL + 0.06 * pr, lIn - 0.52], [zL - 0.32, lIn - 0.5]].map(scr), true));
+      const ll = $('.e-labio-luz'); ll.setAttribute('cx', X(zb + 0.1 * pr)); ll.setAttribute('cy', Y(uIn + 0.27)); ll.setAttribute('rx', 0.05 * C.k); ll.setAttribute('ry', 0.1 * C.k);
       // voz e ar
       const lar = [X(-4.9), Y(-4.2)]; $('.e-laringe').setAttribute('transform', `translate(${lar[0]},${lar[1]})`);
       const voz = o.voz > 0.5 && k > 0.5;
       svg.classList.toggle('com-voz', voz); svg.classList.toggle('lento', lento);
+      $('.e-voz-brilho').setAttribute('opacity', voz ? (0.55 + 0.35 * Math.abs(Math.sin(tempo * (lento ? 2 : 5)))).toFixed(2) : 0);
       $('.e-pregas').setAttribute('transform', voz && !rz ? `scale(1,${(0.4 + 0.6 * Math.abs(Math.sin(tempo * (lento ? 12 : 30)))).toFixed(2)})` : 'scale(1,.15)');
       const ar = k > 0.6 ? f.ar : 'nenhum', meio = (i) => [sup[i][0], (sup[i][1] + Math.max(P.ceuY(sup[i][0]), sup[i][1] + 0.05)) / 2 + 0.05];
-      const yb = (yU - 0.28 + yL + 0.31) / 2;
+      const yb = (uIn + lIn) / 2;
       const boca = ['oral', 'oral+nasal', 'lateral'].includes(ar) && !(f.modo === 'plosiva' && solta < 0.05);
       const nariz = ar === 'nasal' || ar === 'oral+nasal';
       $('.e-ar-boca').setAttribute('d', suave([[-4.85, -1.2], [-4.82, 0.4], meio(3), meio(2), meio(1), [-0.3, yb], [0.9, yb], [2.0, yb - 0.2]].map(scr)));
@@ -171,7 +215,7 @@
       $('.e-ar-boca').style.opacity = boca ? 1 : 0; $('.e-ar-nariz').style.opacity = nariz ? 1 : 0;
       const off = -(tempo * (lento ? 25 : 70) * (f.modo === 'fricativa' ? 1.8 : 1) * u * (solta > 0.05 ? 3 : 1));
       $('.e-ar-boca').style.strokeDashoffset = off; $('.e-ar-nariz').style.strokeDashoffset = off;
-      const lt = $('.e-lateral'); lt.setAttribute('x', X(-1.6)); lt.setAttribute('y', Y(-1.05)); lt.setAttribute('opacity', ar === 'lateral' ? 1 : 0);
+      const lt = $('.e-lateral'); lt.setAttribute('x', X(-1.6)); lt.setAttribute('y', Y(-1.15)); lt.setAttribute('opacity', ar === 'lateral' ? 1 : 0);
       const mt = tempo - marcaT; $('.e-marca').setAttribute('opacity', mt < 2.2 ? (1 - mt / 2.2) : 0);
       requestAnimationFrame(desenha);
     }
