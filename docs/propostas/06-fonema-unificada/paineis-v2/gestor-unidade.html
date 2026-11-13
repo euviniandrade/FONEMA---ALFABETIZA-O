@@ -23,7 +23,7 @@
 .heroi{display:grid;grid-template-columns:1.08fr 1fr;gap:16px}
 .cab3d{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 #g3d{height:520px;margin-top:10px;position:relative}
-.ex th{text-align:center;font-size:11px;padding:5px 2px}.ex th:first-child{text-align:left}
+.ex th{text-align:center;font-size:11px;padding:5px 2px;width:31px}.ex th:first-child,.ex th:nth-child(2){width:auto}.ex th:first-child{text-align:left}
 .ex td{padding:0 2px;height:36px;text-align:center;font-size:13px;font-variant-numeric:tabular-nums}
 .ex td:first-child{text-align:left;font-weight:700;padding-left:4px;white-space:nowrap}
 .ex .cel{display:grid;place-items:center;height:28px;border-radius:5px;font-weight:700;font-size:12.5px}
@@ -54,13 +54,13 @@
 .form td{font-size:13px;padding:6px 5px}.form th{font-size:11px}
 .mods{display:flex;gap:3px}.mods i{width:12px;height:12px;border-radius:3px;background:var(--fundo-2);border:1px solid var(--linha)}.mods i.f{background:var(--n7);border-color:transparent}
 .trilhas{display:grid;gap:10px;margin-top:10px}
-.tr{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center}
+.tr{display:grid;grid-template-columns:190px 1fr;gap:12px;align-items:center}
 .tr .vid{aspect-ratio:16/9}
-.tr .vid .vt{font-size:12.5px;max-width:60%}
-.tr .vid img{height:170%;bottom:-62%;right:-14%}
+.tr .vid .vt{font-size:13px;max-width:48%;top:14%;left:7%}
+.tr .vid img{height:175%;bottom:-70%;right:-16%}
 .tr .vid .play{width:22px;height:22px}
 .tr b{font-size:13.5px;display:block}.tr span{font-size:12px;color:var(--tinta-3)}
-.exp{position:relative}
+.exp{display:flex;align-items:center;gap:6px;padding-left:10px;border-left:1px solid var(--linha)}.exp-l{font-size:12px;color:var(--tinta-3);font-weight:700;margin-right:2px}.exp .botao{display:inline-flex;align-items:center;gap:6px}.fmt{font-style:normal;font-size:9.5px;font-weight:700;color:#fff;background:#C53030;border-radius:4px;padding:2px 4px}
 .menu{position:absolute;right:0;top:40px;z-index:5;background:var(--cartao);border:1px solid var(--linha);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.14);padding:6px;width:270px}
 .menu div{display:grid;grid-template-columns:28px 1fr;gap:8px;padding:8px;border-radius:8px;font-size:13px;color:var(--tinta-2);align-items:center}
 .menu div:first-child{background:var(--info-fundo)}
@@ -79,9 +79,8 @@
 <main class="pagina">
   <div class="cab">
     <div><h1>EM Jardim das Flores · alfabetização 2026</h1><div class="sub">8 turmas de 1º e 2º ano · escala FONEMA por critério 0–10 · dados até 12/11/2026, 23h · fonte única com os painéis das professoras e da secretaria</div></div>
-    <div class="filtros"><span class="chip">Período <b>fev → nov 2026</b></span><span class="chip">Turmas <b>todas (8)</b></span><span class="chip">Comparar com <b>fevereiro</b></span><button class="botao">Pauta da reunião</button>
-      <div class="exp"><button class="botao prim">Exportar relatório ▾</button>
-        <div class="menu"><div><i style="background:#C53030">PDF</i><span><b>Relatório ao Conselho Escolar</b>12 páginas · 2D + capturas 3D</span></div><div><i style="background:#2F855A">CSV</i><span><b>Planilha por turma e nível</b>sem nomes de crianças</span></div><div><i style="background:#975A16">PPT</i><span><b>Apresentação da reunião</b>8 slides com a pauta</span></div></div></div></div>
+    <div class="filtros"><span class="chip">Período <b>fev → nov</b></span><span class="chip">Turmas <b>todas</b></span><span class="chip">Comparar <b>fev</b></span><button class="botao">Pauta da reunião</button>
+      <div class="exp"><span class="exp-l">Exportar relatório</span><button class="botao prim"><i class="fmt">PDF</i>Conselho</button><button class="botao"><i class="fmt" style="background:#2F855A">CSV</i>Planilha</button><button class="botao"><i class="fmt" style="background:#975A16">PPT</i>Reunião</button></div></div>
   </div>
 
   <section class="grade kpis" id="kpis"></section>
@@ -162,8 +161,8 @@ g3.setOption({...F.base(),tooltip:F.tooltip({formatter:p=>`<b>${T[p.value[0]].t}
  xAxis3D:{...eixo,type:'category',name:'',data:T.map(t=>t.t),axisLabel:{...eixo.axisLabel,interval:0,textStyle:{...eixo.axisLabel.textStyle,fontWeight:'bold',color:c('--tinta')}}},
  yAxis3D:{...eixo,type:'category',name:'nível',nameTextStyle:{color:c('--tinta-3'),fontSize:12},data:cor.map((_,i)=>String(i)),axisLabel:{...eixo.axisLabel,interval:0,textStyle:{...eixo.axisLabel.textStyle,fontSize:12}}},
  zAxis3D:{...eixo,type:'value',name:'',max:8,interval:2,axisLabel:{...eixo.axisLabel,textStyle:{...eixo.axisLabel.textStyle,fontSize:11.5}}},
- grid3D:{boxWidth:190,boxDepth:160,boxHeight:58,top:-8,left:0,environment:'none',axisPointer:{show:false},
-  viewControl:{projection:'orthographic',orthographicSize:168,alpha:26,beta:28,animation:false,rotateMouseButton:'right',panMouseButton:'left'},
+ grid3D:{boxWidth:190,boxDepth:160,boxHeight:58,top:6,left:10,environment:'none',axisPointer:{show:false},
+  viewControl:{projection:'orthographic',orthographicSize:196,alpha:24,beta:30,animation:false,rotateMouseButton:'right',panMouseButton:'left'},
   light:{main:{intensity:1.2,shadow:true,shadowQuality:'high',alpha:50,beta:20},ambient:{intensity:F.escuro?.45:.58}},
   postEffect:{enable:true,FXAA:{enable:true}},temporalSuperSampling:{enable:true}},
  series:[{type:'bar3D',data:dd,shading:'lambert',barSize:[11,8],bevelSize:.3,bevelSmoothness:4}]});
@@ -175,11 +174,11 @@ const linha=(nome,cc,cls='')=>{const n=soma(cc);return `<tr class="${cls}"><td>$
 document.getElementById('ex').innerHTML=T.slice(0,4).map(t=>linha(t.t,t.c)).join('')+linha('1º ano',a1,'tot')+T.slice(4).map(t=>linha(t.t,t.c)).join('')+linha('2º ano',a2,'tot')+linha('Escola',a1.map((v,i)=>v+a2[i]),'tot');
 // ===== evolução =====
 const ge=F.registrar(echarts.init(document.getElementById('evol'),null,{renderer:'svg'}));
-const ser=(nome,d,cr,sym)=>({name:nome,type:'line',data:d,symbol:sym,symbolSize:7,lineStyle:{width:2.6,color:cr},itemStyle:{color:cr},endLabel:{show:true,formatter:p=>`${p.value}%  ${nome}`,color:c('--tinta'),fontWeight:'bold',fontSize:12}});
+const ser=(nome,d,cr,sym,off)=>({name:nome,type:'line',data:d,symbol:sym,symbolSize:7,lineStyle:{width:2.6,color:cr},itemStyle:{color:cr},endLabel:{show:true,offset:off||[0,0],formatter:p=>`${p.value}%  ${nome}`,color:c('--tinta'),fontWeight:'bold',fontSize:12}});
 ge.setOption({...F.base(),grid:{left:34,right:160,top:16,bottom:26},tooltip:F.tooltip({trigger:'axis',valueFormatter:v=>v+'%'}),
  xAxis:{type:'category',data:E.meses,boundaryGap:false,axisTick:{show:false},axisLine:{lineStyle:{color:c('--linha-forte')}},axisLabel:{color:c('--tinta-3'),fontSize:12}},
  yAxis:{type:'value',max:80,interval:20,axisLabel:{color:c('--tinta-3'),fontSize:12,formatter:'{value}%'},splitLine:{lineStyle:{color:c('--linha')}}},
- series:[ser('1º ano · nível 3+',E.ev1_3,c('--g4'),'triangle'),ser('2º ano · nível 7+',E.ev2_7,cor[6],'diamond'),ser('2º ano · nível 10',E.ev2_10,cor[10],'circle')]});
+ series:[ser('1º ano · nível 3+',E.ev1_3,c('--g4'),'triangle',[0,-9]),ser('2º ano · nível 7+',E.ev2_7,cor[6],'diamond',[0,9]),ser('2º ano · nível 10',E.ev2_10,cor[10],'circle')]});
 // ===== antes/depois =====
 const ga=F.registrar(echarts.init(document.getElementById('antes'),null,{renderer:'svg'}));
 ga.setOption({...F.base(),grid:{left:44,right:30,top:12,bottom:30},
