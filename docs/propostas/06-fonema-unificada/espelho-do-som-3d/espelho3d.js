@@ -152,7 +152,8 @@ function texBolinha() {
 const CAMS = {
   frente: { pos: V3(0, 0.02, 5.4), alvo: V3(0, -0.12, 0), fov: 30 },
   lado: { pos: V3(15.2, -0.6, -2.3), alvo: V3(0, -0.75, -2.3), fov: 32 },
-  dentro: { pos: V3(0.05, 1.04, -3.05), alvo: V3(0, 0.25, -0.5), fov: 74 },
+  dentro: { pos: V3(3.3, 0.75, -1.2), alvo: V3(0, 0.3, -2.15), fov: 52 },
+  dentroFundo: { pos: V3(0.05, 0.66, -0.8), alvo: V3(0, 0.95, -4.1), fov: 72 },
   corpo: { pos: V3(31, -5.6, -2.8), alvo: V3(0, -5.6, -2.8), fov: 32 }
 };
 // quanto cada camada aparece em cada modo
@@ -269,6 +270,7 @@ export function criar(container, opts = {}) {
   add(grupos.cavidade, esf(1, 48), M.cavidade, 0, -0.25, -2.5, 1.6, 1.95, 3.1);
 
   /* -------- céu da boca (metade do fundo, para o raio-X não esconder a língua) + "ossinho" do meio -------- */
+  const tubosCeu = [];
   const arcoX = (z) => THREE.MathUtils.clamp(0.25 + Math.sqrt(Math.max(0, -z - 0.2)) * 0.68, 0.25, 1.25);
   {
     const NZ = 30, NX = 14, pos = [], idx = [];
@@ -279,8 +281,9 @@ export function criar(container, opts = {}) {
     for (let i = 0; i < NZ; i++) for (let j = 0; j < NX; j++) { const a = i * (NX + 1) + j, b = a + 1, c = a + NX + 1, d = c + 1; idx.push(a, c, b, b, c, d); }
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
     add(raiz, g, M.ceu, 0, 0, 0).renderOrder = 2;
-    tubo(P.CEU.map(([z, y]) => [z, y + 0.2]), 0.1, M.osso, raiz);
-    tubo(P.CEU.map(([z, y]) => [z, y + 0.06]), 0.11, M.veu, raiz);
+    const ceuT = [[-0.72, 0.42], ...P.CEU.slice(2)];
+    tubosCeu.push(tubo(ceuT.map(([z, y]) => [z - 0.04, y + 0.2]), 0.1, M.osso, raiz));
+    tubosCeu.push(tubo(ceuT.map(([z, y]) => [z, y + 0.06]), 0.11, M.veu, raiz));
   }
 
   /* -------- dentinhos (blocos brancos arredondados), arco de cima fixo, de baixo na mandíbula -------- */
@@ -336,14 +339,18 @@ export function criar(container, opts = {}) {
 
   function fonema(id, { instantaneo = false } = {}) {
     if (!P.F[id]) return;
+    const zAntes = camDentro();
     de = atual; para = P.pose(id); idPara = id; tIni = tempo; dur = instantaneo ? 0.0001 : (lento ? 1.7 : 0.55); congelada = null;
+    if (modoAtual === 'dentro' && camDentro() !== zAntes) { const fim = camDentro(); camVoo = { ini: { pos: cam.position.clone(), alvo: ctl.target.clone(), fov: cam.fov }, fim, via: null, t0: tempo, dur: 1.4 }; }
   }
+  // dentro da boca, a câmera fica atrás (sons da frente) ou na frente olhando para o fundo (sons do fundo)
+  const camDentro = () => CAMS.dentro;
   function modo(m, { instantaneo = false } = {}) {
-    if (!CAMS[m]) return;
-    const fim = CAMS[m], ini = { pos: cam.position.clone(), alvo: ctl.target.clone(), fov: cam.fov };
+    if (!CAMS[m] || m === 'dentroFundo') return;
+    const fim = m === 'dentro' ? camDentro() : CAMS[m], ini = { pos: cam.position.clone(), alvo: ctl.target.clone(), fov: cam.fov };
     let via = null;
-    if (m === 'dentro' && modoAtual !== 'dentro') via = [V3(0.0, 0.1, 3.4), V3(0.0, 0.1, 1.1), V3(0.0, 0.55, -0.7), V3(0.03, 0.95, -1.9)];
-    if (modoAtual === 'dentro' && m !== 'dentro') via = [V3(0.03, 0.95, -1.9), V3(0.0, 0.55, -0.7), V3(0.0, 0.1, 1.4)];
+    if (m === 'dentro' && modoAtual !== 'dentro') via = [V3(0.0, 0.1, 3.4), V3(0.0, 0.15, 1.0), V3(0.2, 0.4, -0.9), V3(1.6, 0.6, -1.3)];
+    if (modoAtual === 'dentro' && m !== 'dentro') via = [V3(1.6, 0.6, -1.3), V3(0.2, 0.4, -0.9), V3(0.0, 0.15, 1.2)];
     camVoo = { ini, fim, via, t0: tempo, dur: instantaneo ? 0.0001 : (via ? 3.0 : 1.5) };
     modoAtual = m;
     ctl.minDistance = m === 'dentro' ? 0.2 : 0.6;
@@ -482,7 +489,7 @@ export function criar(container, opts = {}) {
       corAr[o3] = 0.62 * fade; corAr[o3 + 1] = 0.93 * fade; corAr[o3 + 2] = 1.0 * fade;
     }
     geoAr.attributes.position.needsUpdate = true; geoAr.attributes.color.needsUpdate = true;
-    matAr.size = f.modo === 'fricativa' ? 0.19 : 0.26;
+    matAr.size = (f.modo === 'fricativa' ? 0.19 : 0.26) * (modoAtual === 'dentro' ? 0.3 : 1);
   }
 
   function aplicaCamadas(dt) {
@@ -494,7 +501,10 @@ export function criar(container, opts = {}) {
     grupos.cavidade.visible = vis.cavidade > 0.02; op(M.cavidade, vis.cavidade);
     grupos.tubos.visible = vis.tubos > 0.02; tuboNariz.uniforms.opac.value = vis.tubos * 0.8; tuboGarg.uniforms.opac.value = vis.tubos * 0.7;
     grupos.corpo.visible = vis.corpo > 0.02; torso.uniforms.opac.value = vis.corpo * 0.6; M.pulmao.opacity = vis.corpo * 0.92;
+    { const lat = modoAtual === 'dentro' && camDentro() === CAMS.dentro ? 1 : 0; vis.corte = (vis.corte || 0) + (lat - (vis.corte || 0)) * Math.min(1, dt * 3); corte.constant = 9; }
     { const v = Math.max(vis.rosto, vis.cavidade); M.ceu.opacity = v; M.ceu.transparent = v < 0.999; M.ceu.depthWrite = v > 0.9; M.ceu.visible = v > 0.05; }
+    tubosCeu.forEach((t) => (t.visible = !(modoAtual === 'dentro' && camDentro() !== CAMS.dentro)));
+    pontosAr.visible = modoAtual !== 'dentro' || camVoo !== null && false;
     olhos.visible = vis.casca > 0.3 || modoAtual === 'frente';
     olhos.children.forEach((o) => { o.visible = tmp.copy(cam.position).sub(ctl.target).normalize().x * o.userData.s > -0.5; });
     // dentes do lado de perto da câmera somem quando a câmera está de lado (para ver a língua)
@@ -589,7 +599,7 @@ export function criar(container, opts = {}) {
   const ro = new ResizeObserver(() => { renderer.setSize(W0(), H0()); cam.aspect = W0() / H0(); cam.updateProjectionMatrix(); });
   ro.observe(container);
   // começa já no lugar
-  { const c = CAMS[modoAtual]; cam.position.copy(c.pos); ctl.target.copy(c.alvo); cam.fov = c.fov; cam.updateProjectionMatrix(); }
+  { const c = modoAtual === 'dentro' ? camDentro() : CAMS[modoAtual]; cam.position.copy(c.pos); ctl.target.copy(c.alvo); cam.fov = c.fov; cam.updateProjectionMatrix(); }
   quadro();
 
   return {
