@@ -280,3 +280,79 @@
 - Coletar latências, tipo de erro e horário da sessão para validar os efeitos com crianças brasileiras.
 
 ---
+
+## 08 — Neurociência: dopamina, recompensa e motivação
+
+**(a) Achados mais fortes**
+1. **Dopamina sinaliza erro de predição de recompensa** (melhor que o esperado), não "prazer" (Schultz, Dayan & Montague, 1997, doi:10.1126/science.275.5306.1593); é mais "querer" (saliência de incentivo) que "gostar" (Berridge & Robinson, 1998, doi:10.1016/S0165-0173(98)00019-8). Recompensa 100% previsível perde sinal; a incerteza tem pico a 50% (Fiorillo et al., 2003, doi:10.1126/science.1077349) — por isso recompensas variáveis "prendem". — **C** (neurofisiologia/revisões).
+2. **Novidade e curiosidade abrem a porta da memória** via loop hipocampo–VTA (Lisman & Grace, 2005, doi:10.1016/j.neuron.2005.05.002); curiosidade melhora a memória do conteúdo e até de material incidental (Gruber, Gelman & Ranganath, 2014, doi:10.1016/j.neuron.2014.08.060; Kang et al., 2009, doi:10.1111/j.1467-9280.2009.02402.x); curiosidade = **lacuna de informação pequena e fechável** (Loewenstein, 1994, doi:10.1037/0033-2909.116.1.75); o "acertei!" interno já ativa o circuito (Ripollés et al., 2016, doi:10.7554/eLife.17441). — **B/C**.
+3. **Superjustificação**: recompensas tangíveis, esperadas e contingentes reduzem a motivação intrínseca (d ≈ −0,40 engajamento; −0,36 conclusão; −0,28 desempenho), **mais em crianças**; **feedback verbal positivo aumenta** (d ≈ 0,33/0,31) (Deci, Koestner & Ryan, 1999); prêmio *esperado* reduziu o desenho espontâneo de pré-escolares, o *inesperado* não (Lepper, Greene & Nisbett, 1973; E2 verificada); correlato estriatal (Murayama et al., 2010, doi:10.1073/pnas.1013305107). Contraponto: Cameron & Pierce. — **A**.
+4. **Teoria da Autodeterminação**: competência, autonomia e vínculo (Ryan & Deci, 2000, doi:10.1037/0003-066X.55.1.68). Elogiar **processo/esforço**, não inteligência (Mueller & Dweck, 1998, doi:10.1037/0022-3514.75.1.33). — **A/B**.
+5. **Brincar guiado é via eficaz de aprendizagem acadêmica** (Zosh et al., 2018, doi:10.3389/fpsyg.2018.01124; LEGO Foundation 2017: alegre, significativo, ativo, iterativo, social). Taxa de acerto ~85% otimiza o aprendizado em vários modelos (Wilson et al., 2019, doi:10.1038/s41467-019-12552-4). — **B/C** (teórico/computacional para os 85%).
+6. **Design manipulativo é comum** em apps infantis (Radesky et al., 2022) e inclui **personagem que chora** quando a criança sai (Meyer et al., 2019, doi:10.1097/DBP.0000000000000622). — **B**.
+
+**(b) Regras de design/produto**
+- Reformular "vício positivo" como **"apetite de aprender" / "vontade de voltar"**: a criança volta por competência, curiosidade e vínculo e **consegue parar sem sofrimento**.
+- **P1 A leitura é a recompensa principal**: decodificar *produz algo* (a palavra vira imagem, animação, parte da história). **P2** curiosidade antes, revelação depois. **P3 Surpresa no conteúdo, previsibilidade nas regras** — nunca sortear prêmios. **P4** feedback informativo > prêmio tangível. **P5** desafio ~80–85%. **P6** autonomia real (2–3 escolhas). **P7** vínculo sem chantagem. **P8** fim de sessão planejado e celebrado.
+- Recompensar **esforço e estratégia**, **marcos de domínio** (primeira letra, sílaba, palavra, frase, livrinho), exploração e leitura compartilhada; nunca "você é inteligente"; nunca tempo de uso.
+- Quando: microciclo imediato e informativo (< 1 s + fala variada da Sofia); mesociclo **inesperado** (surpresa é conteúdo, não item raro); macrociclo previsível e **simbólico** (Livro das Conquistas, mapa que se ilumina). **Evitar contingências anunciadas** ("leia 10 palavras e ganhe um chapéu").
+- Camadas de recompensa: intrínseca/funcional (sempre) → verbal informativa (sempre, variada) → simbólica de progresso (marcos) → customização por marcos de domínio, **nunca à venda**, sem raridade/aleatoriedade (moderado) → **tangível/econômica (moedas, lojas, baús, rankings): "Não usar"** no relatório (ver conflito com a Decisão 002 na seção final).
+- Lista vermelha: baús/roletas/itens raros; streaks punitivos e push para a criança; personagem que chora/implora; autoplay e "só mais uma"; rankings; compras e anúncios; confete longo e idêntico a cada acerto.
+- **Ritual de encerramento** (30–60 s): recapitula o aprendido, mostra o mapa, **planta curiosidade para amanhã**; ponte para o mundo real ("procure algo que começa com /m/"); sair no meio salva sem mensagem de perda; relatório para os pais, não para a criança.
+- Métricas éticas: retorno voluntário + encerramento tranquilo (questionário aos pais), progresso fônico real, % de sessões encerradas pelo ritual; **não otimizar** tempo de tela, sessões/dia ou toques/minuto.
+
+**(c) Números operacionais**
+- Taxa de acerto-alvo **~80–85%**.
+- Feedback de microciclo **< 1 s**; ritual de despedida **30–60 s**.
+- Sessão **10–15 min (4–5 anos); 15–20 min (6–7 anos)**, configurável pelos pais (validar com a frente pedagógica).
+
+**(d) Riscos, limites, pendências**
+- Relatório original separava 19 fontes verificadas (5A) e 26 "de memória" (5B); na E2, 41 de 45 verificadas e 4 não checáveis (incl. OMS 2019, ISBN a confirmar; Panksepp 1998, livro).
+- Evidência sobre telas e desenvolvimento é **correlacional** (contraponto "Cachinhos Dourados", Przybylski & Weinstein); "dopamina detox" não tem base.
+- Estudos de incerteza em jogos de aprendizagem (Howard-Jones & Demetriou, 2009, doi:10.1007/s11251-008-9073-6) são pequenos; risco alto em crianças pequenas.
+- Texto exato do ECA Digital e da Resolução CONANDA 163/2014 a confirmar pela frente jurídica.
+
+---
+
+## 09 — Neurociência: funções executivas, atenção e carga cognitiva
+
+**(a) Achados mais fortes**
+1. **Funções executivas** (inibição, memória de trabalho, flexibilidade) preveem leitura e matemática e melhoram com prática **em contextos significativos com desafio crescente**; os mais atrasados ganham mais (Diamond, 2013, doi:10.1146/annurev-psych-113011-143750). **"Treino cerebral" (Cogmed) não transfere** para leitura/matemática (Melby-Lervåg & Hulme, 2013; Roberts et al., 2016, ECR, doi:10.1001/jamapediatrics.2015.4568; Simons et al., 2016, doi:10.1177/1529100616661983). — **A**.
+2. **Atenção sustentada é imatura até 8 anos e cai com tempo e carga** (Betts et al., 2006, doi:10.1080/09297040500488522); **a regra "2–3 min por ano de idade" não tem base empírica**. — **B**.
+3. **Carga cognitiva e princípios de Mayer** com mais evidência: coerência, sinalização, contiguidade, **modalidade** (fala + imagem > texto + imagem; Ginns, 2005, doi:10.1016/j.learninstruc.2005.07.001), redundância, personalização, voz (Sweller, 1988, doi:10.1207/s15516709cog1202_4; Mayer, 3ª ed. 2020, doi:10.1017/9781316941355). Leitura é conhecimento **biologicamente secundário** → exige ensino explícito. TTS moderno pode igualar voz humana (Craig & Schroeder, 2017, doi:10.1016/j.compedu.2017.07.003); agentes pedagógicos têm efeito pequeno-moderado pelo papel instrucional, não pela aparência (Schroeder et al., 2013, doi:10.2190/ec.49.1.a). — **A**.
+4. **Detalhes sedutores atrapalham**: g ≈ −0,33 (Sundararajan & Adesope, 2020, doi:10.1007/s10648-020-09522-4); sala muito decorada → **38,6% vs 28,4%** do tempo fora da tarefa e **42% vs 55%** de acerto (Fisher, Godwin & Seltman, 2014, doi:10.1177/0956797614533801). — **A/B**.
+5. **Ritmo rápido + conteúdo fantástico** piora FE de crianças de 4 anos logo após 9 min (Lillard & Peterson, 2011, doi:10.1542/peds.2010-1919; Lillard et al., 2015, doi:10.1037/a0039097 — a fantasia pesa mais que os cortes). — **B** (amostra pequena, curto prazo).
+6. **Livros digitais**: recursos multimídia **congruentes** (narração, animação, música) ajudam; **hotspots, jogos e dicionários embutidos prejudicam** (Takacs, Swart & Bus, 2015, doi:10.3102/0034654314566989; Furenes et al., 2021, doi:10.3102/0034654321998074); e-books "turbinados" reduzem o diálogo pais-criança (Parish-Morris et al., 2013). **Atenção conjunta** é motor de linguagem; apps devem **convidar o adulto** (Hirsh-Pasek et al., 2015, doi:10.1177/1529100615569721). — **A/B**.
+
+**(b) Regras de design/produto** (checklist obrigatório por atividade)
+- **Um foco por tela** (alvo central, grande, alto contraste); fundo calmo, sem movimento durante a decodificação; estética acolhedora ≠ enfeite que distrai.
+- **Sinalização sincronizada**: grafema ativo destacado no instante em que a Sofia diz o som; demais elementos esmaecidos; contiguidade imagem-palavra-som.
+- **Modalidade para pré-leitores**: toda instrução **falada**; texto na tela só o conteúdo-alvo; **não legendar as falas da Sofia** com texto longo redundante (ver conflito com rel. 05 na seção final).
+- **Instrução curta e repetível**: 1 ação por instrução; botão "ouvir de novo" sempre visível; nada de instrução multietapas.
+- **Sem hotspots irrelevantes** durante histórias e decodificação; Sofia parada/discreta enquanto a criança pensa.
+- Andaimes que **somem** com o domínio (reversão pela expertise); *I do / we do / you do*; pré-treino do som e da imagem-chave antes do jogo; 1 fonema novo por vez, intercalado com revisão.
+- **Animação só quando ensina** (boca articulando, letras deslizando na fusão); sem música de fundo durante tarefas fonológicas; erro sem som punitivo; **celebração depois da resposta, ≤ 2–3 s**, animações longas só no fim do bloco; jogos-prêmio nunca interrompem a história.
+- Sinais de sobrecarga (3 erros seguidos, salto no tempo de resposta, toques aleatórios rápidos, inatividade > 20–30 s) → Sofia oferece ajuda, reduz alternativas ou propõe pausa.
+- Fim previsível (contador "mais 2 atividades") e ritualizado; sem "só mais uma", autoplay ou streak punitivo.
+- **Modo família**: perguntas para o adulto ao fim das histórias (leitura dialógica, atenção conjunta).
+- **Não incluir mini-jogos genéricos de memória de trabalho** esperando melhorar a leitura.
+
+**(c) Números operacionais** (heurísticas a calibrar com telemetria)
+
+| Idade | Microatividade | Bloco antes de pausa | Sessão total | Alternativas |
+|---|---|---|---|---|
+| 3–4 anos | 1–2 min | 3–5 min | 5–10 min | (oral, adulto junto) |
+| 5 anos | 2–3 min | 5–7 min | 10–15 min | 2–3 |
+| 6 anos | 3–4 min | 7–10 min | 15–20 min | 3–4 |
+| 7–8 anos | 4–6 min | 10–12 min | 20–25 min | 3–4 |
+
+- Pausa ativa **20–60 s** entre blocos; instrução ≤ **1 frase de ~10 palavras**; transições ≥ **1 s**, ≤ 1 evento animado simultâneo na tarefa.
+- Vídeos da Sofia: até **~2–3 min (4–5 anos)**, **~4–5 min (6–8 anos)**, um conceito por vídeo, seguidos de prática ativa.
+- Limite diário: **1 sessão principal (≤ 15 min) para 3–5 anos**; até 2 sessões curtas para 6–8 anos. Telas: AAP ≤ ~1 h/dia (2–5 anos, com coassistência); OMS ≤ 1 h (2–4 anos); SBP 1 h (2–5) e 1–2 h (6–10).
+
+**(d) Riscos, limites, pendências**
+- E2: 68 de 74 verificadas; 1 corrigida (Mayer, 3ª ed. = 2020); **PIAFEx (Dias & Seabra, 2013) não encontrado** (o artigo do mesmo grupo foi verificado).
+- Godwin et al. (2022, *Cognitive Science*) sobre habituação a salas decoradas: metadados não confirmados.
+- Tabela de durações = heurística de design, não resultado de estudo único; efeitos de ritmo são de curto prazo e amostras pequenas.
+
+---
