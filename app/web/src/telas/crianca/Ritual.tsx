@@ -78,7 +78,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
                   </div>
                   {relatorio.conquistasNovas.length > 4 ? <p>+{relatorio.conquistasNovas.length - 4} no Álbum</p> : null}
                 </>
-              ) : passo >= 2 ? <p className="ritual-sem">Cada desafio deixa você mais {crianca.genero === 'n' ? 'preparado para ler' : crianca.genero === 'f' ? 'preparada' : 'preparado'}.</p> : null}
+              ) : passo >= 2 ? <p className="ritual-sem">Cada desafio é um passo a mais na leitura.</p> : null}
               {passo >= 2 && relatorio.surpresas.length ? (
                 <div className="surpresas">
                   {relatorio.surpresas.map((s) => (

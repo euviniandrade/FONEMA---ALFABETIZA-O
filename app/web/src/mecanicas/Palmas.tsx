@@ -76,7 +76,7 @@ export function Palmas({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
       <div className="palmas-palavra">
         <button className="btn ouvir-texto" onClick={() => voz.falar(falaPalavra, { quem: 'tales' })}>🔊 <span>{ehNome ? crianca.nome : palavra}</span></button>
       </div>
-      <div className={`lampadas ${estilo === 'amarelinha' ? 'amarelinha' : ''}`} aria-live="polite" aria-label={`${palmas} palmas`}>
+      <div className={`lampadas ${estilo === 'amarelinha' ? 'amarelinha' : ''}`} data-silabas={sil.length} aria-live="polite" aria-label={`${palmas} palmas`}>
         {Array.from({ length: nLuz }, (_, k) => (
           <span key={k} className={`lampada ${k < palmas || k === mostrando || ok ? 'acesa' : ''} ${k >= sil.length ? 'extra' : ''}`}>
             {(k < palmas || k === mostrando || ok) && k < sil.length ? <small>{sil[k]}</small> : null}

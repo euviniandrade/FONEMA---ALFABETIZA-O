@@ -38,7 +38,7 @@ export function Ditado({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
   };
 
   return (
-    <div className="mec mec-ditado">
+    <div className="mec mec-ditado" data-palavra={palavra}>
       <Balao fala={atividade.enunciado} crianca={crianca} />
       <Progressinho atual={i} total={atividade.palavras.length} />
       <div className="pergunta"><BotaoOuvir onClick={() => voz.falar(palavra.toLowerCase(), { quem: 'sofia', rate: 0.75 })} rotulo="Ouvir a palavra" /><span className="dica-ouvir">Escuta a palavra e escreve</span></div>

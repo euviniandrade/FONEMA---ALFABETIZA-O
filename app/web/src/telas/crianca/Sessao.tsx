@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { FASE_POR_ID, type Atividade } from '@fonema/conteudo';
 import { aplicarAtividade, fecharSessao, montarSessao, podeEntrar, type Progresso, type RelatorioSessao, type Sessao as TSessao, type Tentativa } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
@@ -33,6 +33,7 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
   const prog = useRef<Progresso | undefined>(undefined);
   const tentativas = useRef<Tentativa[]>([]);
   const atividades = useRef(0);
+  const fechando = useRef(false);
   const fase = FASE_POR_ID[faseId];
 
   useEffect(() => {
@@ -47,7 +48,8 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
   const etapa = sessao?.etapas[idx];
 
   const fecharRitual = useCallback(async () => {
-    if (!sessao || !prog.current || relatorio) return;
+    if (!sessao || !prog.current || relatorio || fechando.current) return;
+    fechando.current = true;
     const demonstracoes = await repo.listarDemonstracoes(criancaId);
     const agora = Date.now();
     const r = fecharSessao(prog.current, { faseId, sessao: sessao.id, atividades: atividades.current, tentativasDaSessao: tentativas.current, expressa: sessao.expressa, demonstracoes }, config, agora);

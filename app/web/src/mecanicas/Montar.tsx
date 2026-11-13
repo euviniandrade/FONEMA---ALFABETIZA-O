@@ -73,7 +73,7 @@ export function Montar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
       <Balao fala={atividade.enunciado} crianca={crianca} />
       <Progressinho atual={i} total={atividade.palavras.length} />
       {atividade.mostrarModelo ? <div className="modelo-palavra" aria-label={`Modelo: ${palavra}`}>{alvo.map((t, k) => <span key={k} className={k < pos ? 'feito' : k === pos ? 'agora' : ''}>{t}</span>)}</div> : null}
-      <div className="espacos" data-testid="espacos">
+      <div className="espacos" data-testid="espacos" data-alvo={alvo.join('|')}>
         {alvo.map((t, k) => <span key={k} className={`espaco ${k < pos ? 'cheio' : ''} ${atividade.porSilaba ? 'silaba' : ''}`}>{k < pos ? t : ''}</span>)}
         {pronto ? <Brilho ativo /> : null}
       </div>
