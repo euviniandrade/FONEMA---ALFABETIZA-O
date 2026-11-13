@@ -330,3 +330,9 @@ function elenco() {
   return { w: W, h: H, html: page(W, H, body) };
 }
 module.exports['elenco-vila'] = elenco;
+
+const ENV = require('./env');
+const envPage = fn => () => { const W = 1280, H = 800; return { w: W, h: H, html: page(W, H, `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${defs()}${fn()}</svg>`) }; };
+module.exports['ambiente-casa-sofia'] = envPage(ENV.casa);
+module.exports['ambiente-praca-vila'] = envPage(ENV.praca);
+module.exports['ambiente-bioma-cerrado'] = envPage(ENV.cerrado);
