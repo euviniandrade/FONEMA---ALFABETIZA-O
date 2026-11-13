@@ -1,3 +1,2 @@
-tools/bibliografia/data/raw/
-tools/bibliografia/data/*.log
+tools/bibliografia/data/
 __pycache__/
