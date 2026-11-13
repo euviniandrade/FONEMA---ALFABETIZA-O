@@ -51,7 +51,7 @@ html[data-tema="escuro"] .missao{background:linear-gradient(135deg,#2A2212,#3327
 .passos i{width:24px;height:24px;border-radius:8px;background:#FFC94A;color:#2B2340;font-style:normal;font-weight:700;display:grid;place-items:center;font-size:13px}
 .mbtn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:12px;background:#2B2340;color:#FFF6E5;font-family:inherit;font-weight:700;font-size:14px;padding:9px 14px;margin-top:12px}
 .vid{margin-top:10px}
-.vid .vt{font-size:21px}
+.vid .vt{font-size:18px}
 .vid .tag{position:absolute;left:8%;bottom:10%;margin-left:40px;background:rgba(255,255,255,.92);color:#2B2A4C;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:6px}
 .acad{display:flex;gap:8px;margin-top:10px}
 .acad div{flex:1;border:1px solid var(--linha);border-radius:10px;padding:7px 9px;font-size:12px;color:var(--tinta-2);background:var(--cartao-2)}
@@ -70,8 +70,8 @@ html[data-tema="escuro"] .missao{background:linear-gradient(135deg,#2A2212,#3327
   body{background:var(--fundo)}
   .web-topo{display:flex}
   .barra,.abas{display:none}
-  .app{padding:14px 20px 0;display:grid;grid-template-columns:400px 1fr 330px;grid-template-rows:auto auto 1fr;gap:12px;
-    grid-template-areas:"heroi traj missao" "heroi sabe video" "heroi palavras dias";height:calc(800px - 52px - 30px)}
+  .app{padding:14px 20px 0;display:grid;grid-template-columns:400px 1fr 330px;grid-template-rows:auto 1fr auto;gap:12px;
+    grid-template-areas:"heroi traj missao" "heroi sabe missao" "dias palavras video";height:calc(800px - 52px - 30px)}
   .bloco{margin-top:0;padding:14px 16px}
   #b-heroi{grid-area:heroi;grid-template-columns:150px 1fr;align-content:start;row-gap:10px}
   #b-traj{grid-area:traj}#b-sabe{grid-area:sabe}#b-pal{grid-area:palavras}#b-missao{grid-area:missao}#b-video{grid-area:video}#b-dias{grid-area:dias}
@@ -79,11 +79,15 @@ html[data-tema="escuro"] .missao{background:linear-gradient(135deg,#2A2212,#3327
   .heroi .grande{font-size:44px}
   .nota{position:absolute;left:20px;bottom:6px;padding:0;font-size:11.5px}
   .missao .sofia{width:104px;bottom:-52px}
-  .vid{aspect-ratio:auto;height:132px}
+  .vid{aspect-ratio:auto;height:122px}
+  .vid img{right:-10%;bottom:-60%;height:175%}
+  .missao .sofia{width:120px!important;bottom:-40px!important}
+  .passos{padding-right:96px}
   .acad{margin-top:8px}
   .extra{display:block!important}
 }
 .extra{display:none}
+.alem{display:grid;grid-template-columns:22px 1fr;gap:6px;margin-top:5px}
 </style>
 </head>
 <body>
@@ -106,6 +110,10 @@ html[data-tema="escuro"] .missao{background:linear-gradient(135deg,#2A2212,#3327
     <button class="ouvir"><span class="pl"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span><span>Ouvir o resumo da semana<small>40 s · voz da Sofia · também no WhatsApp</small></span><span class="onda" id="onda"></span></button>
     <div class="extra" style="grid-column:1/-1;font-size:12.5px;color:var(--tinta-2);border-top:1px dashed var(--linha);padding-top:10px">
       <b style="color:var(--tinta)">Recado da Prof.ª Helena</b> · “A Iris está lendo com muita vontade! Esta semana vamos treinar o R forte com pares como caro/carro. Em casa, a missão ao lado ajuda muito.”
+      <div style="margin-top:10px"><b style="color:var(--tinta)">Além da leitura, esta semana a Iris…</b>
+      <div class="alem"><span>🧩</span>ordenou 4 passos para o robô da vila chegar à horta;</div>
+      <div class="alem"><span>🪙</span>guardou moedinhas para comprar o regador da horta;</div>
+      <div class="alem"><span>💬</span>disse como se sentiu ao errar e tentou de novo.</div></div>
     </div>
   </section>
   <section class="bloco" id="b-traj"><h2>O caminho da Iris <small>só ela com ela mesma</small></h2><div id="traj"></div></section>
@@ -176,7 +184,7 @@ gtj.setOption({...F.base(),grid:{left:24,right:10,top:16,bottom:22},
  series:[
   {type:'line',data:lo,stack:'f',symbol:'none',lineStyle:{width:0},silent:true},
   {type:'line',data:hi.map((v,i)=>v==null?null:+(v-lo[i]).toFixed(2)),stack:'f',symbol:'none',lineStyle:{width:0},areaStyle:{color:c('--estimativa-fundo'),opacity:1},silent:true,
-   markArea:{silent:true,itemStyle:{color:'transparent'},label:{show:true,position:'insideTop',color:c('--estimativa'),fontSize:11,fontWeight:'bold',formatter:'faixa provável'},data:[[{xAxis:'jan'},{xAxis:'abr'}]]}},
+   markPoint:{symbol:'rect',symbolSize:1,label:{show:true,position:'left',color:c('--estimativa'),fontSize:11,fontWeight:'bold',formatter:'faixa provável\n(não é promessa)',align:'right'},data:[{coord:['abr',7.6]}]}},
   {type:'line',data:lo,symbol:'none',lineStyle:{width:1.3,type:'dashed',color:c('--estimativa')},silent:true},
   {type:'line',data:hi,symbol:'none',lineStyle:{width:1.3,type:'dashed',color:c('--estimativa')},silent:true},
   {type:'line',step:'end',data:real,symbol:'none',lineStyle:{width:3,color:c('--n8')},areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:c('--n6')+'66'},{offset:1,color:c('--n6')+'05'}])},
