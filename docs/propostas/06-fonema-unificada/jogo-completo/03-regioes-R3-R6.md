@@ -19,7 +19,7 @@
 ### Como a aprendizagem é medida e acompanhada em R3
 | O quê | Como se mede | Quem vê |
 |---|---|---|
-| P, T, B, D | 4 condições por som; pseudopalavras ≥ 2 nas últimas 5 | Família: "Mestre do P"…; selos P T B D aparecem na Biblioteca |
+| P, T, B, D | 4 condições por som; pseudopalavras ≥ 2 nas últimas 5 | Família: "Maestria do P"…; selos P T B D aparecem na Biblioteca |
 | Surdo × sonoro | Taxa de troca P/B e T/D em leitura e ditado; troca sistemática bloqueia a provinha de letra | Professor: ⚑ sanguessuga e grupo sugerido "pares surdo/sonoro" |
 | Escrita inventada | Comparação "assim você escreveu / assim os adultos escrevem" (sem nota) | Família: amostras de escrita no painel |
 | Termômetro | Provinha com pseudopalavras ≥ 85% → **nível 4** | Família: "Nível 4 de 10 · faltam 6" |
@@ -90,13 +90,13 @@
 | R3-F10-C4 | Campo com ventania · todos | Provinha de fase R3 (pares mínimos, pseudopalavras, ditado) | O Zum-Zum pega carona na ventania e embaralha as placas; ler para devolver cada uma ao lugar. A criança vence **ouvindo o par com atenção** (P ou B? mão na garganta) antes de tocar | Tales: "Errei. Bora de novo! E você, [NOME], vai devagar e dá certo" | N6, N7 | ≥ 85% / ≥ 75% → **nível 4**. Não passou: reforço curto | Vento só no cenário, sem pressão de tempo |
 | R3-F10-C9 | Moinho · os dois + morador | Gancho | Nuvens viajam para o norte | Sofia: "Para onde vai essa chuva, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** **Mestre do P, T, B, D**; selos P T B D abrem a **Biblioteca** da vila; **Leitor do Pampa**; título **Leitor da Vila I** ([07](07-progressao-niveis-e-titulos.md)). **Zum-Zum vira amigo:** ele ajuda a reconstruir a torre de blocos e aprende, como a dupla, a pedir desculpas e reparar. **Em casa:** "Diário do tempo" de verdade: 1 palavra por dia num papel na geladeira.
+**Fecha a região:** **Maestria do P, T, B, D**; selos P T B D abrem a **Biblioteca** da vila; **Leitura do Pampa**; título **Leitura da Vila I** ([07](07-progressao-niveis-e-titulos.md)). **Zum-Zum vira amigo:** ele ajuda a reconstruir a torre de blocos e aprende, como a dupla, a pedir desculpas e reparar. **Em casa:** "Diário do tempo" de verdade: 1 palavra por dia num papel na geladeira.
 
 **Professor e família junto (D018) em R3:**
 | Item | Como funciona aqui |
 |---|---|
 | Mostra pro professor | Pontos de demonstração: P, T, B, D e cada par (P/B, T/D, b/d): a criança mostra o som com a mão no pescoço e lê 3 pares. O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
-| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do Som P, T, B, D**, **Detetive dos Pares**, **Leitor do Pampa**; valores: **Pede Desculpas** (a torre derrubada), **Amigo que Inclui** (queimada); esporte: **Queimada da Inclusão** |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Maestria do Som P, T, B, D**, **Detetive dos Pares**, **Leitura do Pampa**; valores: **Pede Desculpas** (a torre derrubada), **Amizade que Inclui** (queimada); esporte: **Queimada da Inclusão** |
 | Ensinar junto (roteiro com áudio da dupla) | "Mão na garganta: vibrou ou não?" (3 min, áudio do Tales) |
 | Competição saudável (desligável) | Torneio de queimada com times misturados pelo professor e cumprimento no fim. Nunca ranking por nível de leitura |
 
@@ -117,7 +117,7 @@
 ### Como a aprendizagem é medida e acompanhada em R4
 | O quê | Como se mede | Quem vê |
 |---|---|---|
-| Dígrafos (CH, NH, LH) | Ler o dígrafo como 1 som com pista retirável; o domínio só conta **sem** a pista | Família: "Mestre do NH"; professor: uso da pista ao longo do tempo |
+| Dígrafos (CH, NH, LH) | Ler o dígrafo como 1 som com pista retirável; o domínio só conta **sem** a pista | Família: "Maestria do NH"; professor: uso da pista ao longo do tempo |
 | S × Z, CH × J | Pares intercalados | Professor: ⚑ quando persistir |
 | Frases | Compreensão literal: agir conforme a frase (1 instrução) | Família: "[NOME] já lê frases curtas"; amostra de leitura no app ("Ouça [NOME] ler", consentimento específico) |
 | Termômetro | Domínio dos dígrafos = parte do nível 5 (◐) | Família: "Nível 5 em construção" (texto explicado) |
@@ -172,13 +172,13 @@
 | R4-F08-C4 | Pantanal subindo · todos | Provinha de fase R4 (dígrafos + frases) | Ler instruções para levar cada bicho ao lugar seguro; cada bicho salvo vai para o mapa. O Zum-Zum zune "olha ali!" entre os bilhetes; a criança vence **lendo o bilhete inteiro antes de agir** | Veterinária: "Esse bilhete diz para onde vai a capivara. Lê, [NOME]" | N6, N2 | ≥ 85% / ≥ 75% | Modo calmo: água parada |
 | R4-F08-C9 | Mapa da cheia · os dois | Momento uau + gancho | Os bichos salvos visitam a vila; a capivara conta do ipê na seca | Sofia: "Um ipê que floresce na seca? Por quê, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** **Mestre do J, Z, CH, X, NH, LH**; **Leitor do Pantanal**; **Zum-Zum vira amigo** (ajuda a guiar o tuiuiú lendo junto: "primeiro leio, depois faço"); a vila ganha o **viveiro**. **Em casa:** ler uma frase curta escrita pelo adulto e fazer o que ela manda ("PEGA A FOLHA").
+**Fecha a região:** **Maestria do J, Z, CH, X, NH, LH**; **Leitura do Pantanal**; **Zum-Zum vira amigo** (ajuda a guiar o tuiuiú lendo junto: "primeiro leio, depois faço"); a vila ganha o **viveiro**. **Em casa:** ler uma frase curta escrita pelo adulto e fazer o que ela manda ("PEGA A FOLHA").
 
 **Professor e família junto (D018) em R4:**
 | Item | Como funciona aqui |
 |---|---|
 | Mostra pro professor | Pontos de demonstração: cada dígrafo (CH, NH, LH) e a 1ª frase lida para agir: a criança explica "duas letras, um som". O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
-| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do Som J, Z, CH, X, NH, LH**, **Leitor de Frases**, **Leitor do Pantanal**; valores: **Cuidador dos Animais** (resgate), **Guardião do Meio Ambiente** (rio sem lixo); esporte: **Canoagem das Sílabas** |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Maestria do Som J, Z, CH, X, NH, LH**, **Leitura de Frases**, **Leitura do Pantanal**; valores: **Cuidado com os Animais** (resgate), **Guarda do Meio Ambiente** (rio sem lixo); esporte: **Canoagem das Sílabas** |
 | Ensinar junto (roteiro com áudio da dupla) | "Leia a frase e faça": bilhetes de 1 instrução na geladeira (5 min) |
 | Competição saudável (desligável) | Turma contra a Cheia: cada frase lida pela turma salva um bicho no mapa coletivo. Nunca ranking por nível de leitura |
 
@@ -247,13 +247,13 @@
 | R5-F07-C4 | Ipê no alto da chapada · todos | Provinha de fase R5 (regras de contexto) | Cada regra lida e explicada "acorda" um galho do ipê. O Zum-Zum troca as regras de galho; a criança vence **explicando a regra em voz alta** antes de escolher | Sofia: "Um galho para cada regra, [NOME]" | N6, N9 | ≥ 85% / ≥ 75% | — |
 | R5-F07-C9 | Ipê florido · os dois + lobo-guará | Momento uau + gancho | O ipê floresce inteiro de amarelo; o lobo-guará fala do sertão | Tales: "Palavras que soam pelo nariz? E se a gente for ver, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** **Mestre do QU, GU, RR, SS, Ç**; **Leitor do Cerrado**; **Zum-Zum vira amigo** (pousa no ipê florido e ouve o lobo-guará até o fim da história); a vila ganha a **horta comunitária, o mercado e o coreto** ★. **Em casa:** ler 3 etiquetas no mercado e comparar 2 preços.
+**Fecha a região:** **Maestria do QU, GU, RR, SS, Ç**; **Leitura do Cerrado**; **Zum-Zum vira amigo** (pousa no ipê florido e ouve o lobo-guará até o fim da história); a vila ganha a **horta comunitária, o mercado e o coreto** ★. **Em casa:** ler 3 etiquetas no mercado e comparar 2 preços.
 
 **Professor e família junto (D018) em R5:**
 | Item | Como funciona aqui |
 |---|---|
 | Mostra pro professor | Pontos de demonstração: cada regra de contexto: a criança lê e **explica a regra com as próprias palavras** (o 🎤 "me explicou certinho" tem peso especial aqui). O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
-| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre das Regras** (C/QU, G/GU, R/RR, S/SS, Ç), **Explicador** (protégé), **Leitor do Cerrado**; valores: **Amigo que Respeita** (perder a corrida), **Guardião do Meio Ambiente** (fogo no Cerrado); esporte: **Corrida de Saco** |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Maestria das Regras** (C/QU, G/GU, R/RR, S/SS, Ç), **Explicação** (protégé), **Leitura do Cerrado**; valores: **Amizade que Respeita** (perder a corrida), **Guarda do Meio Ambiente** (fogo no Cerrado); esporte: **Corrida de Saco** |
 | Ensinar junto (roteiro com áudio da dupla) | "Por que CASA tem som de Z?": descobrir juntos com 4 palavras (4 min) |
 | Competição saudável (desligável) | Feira entre equipes: cada equipe monta uma banca lendo etiquetas; vencem todas que completarem a lista. Nunca ranking por nível de leitura |
 
@@ -274,7 +274,7 @@
 ### Como a aprendizagem é medida e acompanhada em R6
 | O quê | Como se mede | Quem vê |
 |---|---|---|
-| Nasais | 4 condições; ícone "nariz" como pista retirável | Família: "Mestre do ÃO" |
+| Nasais | 4 condições; ícone "nariz" como pista retirável | Família: "Maestria do ÃO" |
 | **Fechamento do Ano 1** | Provinha de fase + **retenção** de sons de meses atrás + benchmark trimestral | Família: relatório do Ano 1 (antes/depois); professor e escola: distribuição 0–10 da turma |
 | Leitura em público | O adulto confirma no app que ouviu a criança ler (sem gravação enviada) | Família participa do chefe |
 
@@ -327,12 +327,12 @@
 | R6-F08-C7 | Sala de casa (mundo real) · família | Público real | A criança lê o cordel para a família; o adulto confirma com 1 toque | Tales: "Lê pra alguém da sua casa, [NOME]!" | N12 | Confirmação do adulto | — |
 | R6-F08-C9 | Coreto à noite · todos | Momento uau + gancho | Noite de cordel no coreto; a xilogravura da criança vira painel; chega a carta do barco-escola | Os dois: "Um rio que parece mar, [NOME]!" | N10 | — | — |
 
-**Fecha o Ano 1:** **Mestre do Ã/AM/EM**; título **Contador de Histórias I** ([07](07-progressao-niveis-e-titulos.md)); **Zum-Zum vira amigo** e pede para ler um verso do cordel da criança; **Leitor do Sertão** (prata) e **Álbum do Ano 1**; a vila ganha a **praça do cordel e a cisterna**; meta de poupança do Ano 1 no cofrinho. **Em casa:** a família ouve o cordel e conta um verso de memória junto com a criança.
+**Fecha o Ano 1:** **Maestria do Ã/AM/EM**; título **Contação de Histórias I** ([07](07-progressao-niveis-e-titulos.md)); **Zum-Zum vira amigo** e pede para ler um verso do cordel da criança; **Leitura do Sertão** (prata) e **Álbum do Ano 1**; a vila ganha a **praça do cordel e a cisterna**; meta de poupança do Ano 1 no cofrinho. **Em casa:** a família ouve o cordel e conta um verso de memória junto com a criança.
 
 **Professor e família junto (D018) em R6:**
 | Item | Como funciona aqui |
 |---|---|
 | Mostra pro professor | Pontos de demonstração: nasais, -ÃO × -AM e a leitura do cordel (gravação ouvida pelo professor, dentro do app). O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
-| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do Som Nasal**, **Cordelista**, **Leitor do Sertão**, **Ano 1 Completo**; valores: **Amigo que Inclui** (roteiro 14), **Guardião da Água** (cisterna); esporte: **Pião e Corrida de Saco da feira da colheita** |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Maestria do Som Nasal**, **Cordelista**, **Leitura do Sertão**, **Ano 1 Completo**; valores: **Amizade que Inclui** (roteiro 14), **Guarda da Água** (cisterna); esporte: **Pião e Corrida de Saco da feira da colheita** |
 | Ensinar junto (roteiro com áudio da dupla) | "Ler para alguém": como ouvir a criança ler sem corrigir cada palavra (5 min) |
 | Competição saudável (desligável) | Festival de cordel da turma: cada criança lê seu verso; aplauso para todos, sem placar. Nunca ranking por nível de leitura |

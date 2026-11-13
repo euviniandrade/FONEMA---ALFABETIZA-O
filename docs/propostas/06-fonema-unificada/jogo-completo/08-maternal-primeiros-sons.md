@@ -116,7 +116,7 @@ As estações voltam em espiral, com novas cantigas e bichos, até a criança pa
 | Quando | O que acontece |
 |---|---|
 | Por volta dos **4 anos** (ano de nascimento do cadastro) **e** com o adulto de acordo | A plataforma sugere ao adulto a passagem para o Pré |
-| Ritual de passagem | A Sofia e o Tales levam o Bolota até a porta do **Quintal da Sofia**: "Agora você vai descobrir o som do seu nome, [NOME]!" O "Álbum dos Primeiros Sons" vira a primeira página do Álbum de Selos |
+| Ritual de passagem | A Sofia e o Tales levam o Bolota até a porta do **Quintal da Sofia**: "Agora você vai descobrir o som do seu nome, [NOME]!" O "Álbum dos Primeiros Sons" vira a primeira página do Álbum de Selos. Ao terminar a primeira missão, a criança conquista o título **Primeiros Sons I** ([07](07-progressao-niveis-e-titulos.md) §4; D022), continuação natural do que viveu no Maternal |
 | Primeira missão | **R0-F01 · "O som do meu nome"** ([01](01-primeira-experiencia.md) §2), como para todo mundo. O que a criança viveu no Maternal (palmas no nome, rimas, sons de bichos) aparece como **revisão em êxito** |
 | Sondagem | A sondagem lúdica ([01](01-primeira-experiencia.md) §5) começa nos degraus 1–2; quem já domina rimas e palmas passa pelas primeiras fases de R0 em **Trilha Expressa**, uma por vez |
 | Zum-Zum | Aparece pela primeira vez como "vilão leve" só no R0, já como personagem conhecido e simpático |

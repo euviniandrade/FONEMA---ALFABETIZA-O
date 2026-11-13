@@ -4,7 +4,7 @@
 >
 > Este documento detalha **a jornada inteira, região a região, fase a fase e cena a cena**: da primeira tela do cadastro até a formatura da alfabetização, com a neurociência da aprendizagem aplicada em cada cena e **o fonema no centro de tudo**.
 >
-> **Base (não contradiz):** decisões [001–021](../../../decisoes/), a [jornada](../jornada/README.md) (R0–R10, N1–N12, sessão e semana), a [série Sofia e Tales](../serie-sofia-e-tales/README.md), [esporte, respeito e ambiente](../esporte-respeito-ambiente/README.md), [imersivo](../imersivo/README.md), [Academia](../academia/README.md), [lojinha e emblemas](../lojinha-emblemas/README.md), [avatar 3D](../avatar-3d/README.md) e o [documento mestre](../../../sintese/00-documento-mestre.md) §4.2–4.8. Tudo aqui é **[proposta de roteiro]**: tempos, contagens e limiares são hipóteses a calibrar no piloto. O avanço é **por domínio, nunca por tempo**.
+> **Base (não contradiz):** decisões [001–022](../../../decisoes/), a [jornada](../jornada/README.md) (R0–R10, N1–N12, sessão e semana), a [série Sofia e Tales](../serie-sofia-e-tales/README.md), [esporte, respeito e ambiente](../esporte-respeito-ambiente/README.md), [imersivo](../imersivo/README.md), [Academia](../academia/README.md), [lojinha e emblemas](../lojinha-emblemas/README.md), [avatar 3D](../avatar-3d/README.md) e o [documento mestre](../../../sintese/00-documento-mestre.md) §4.2–4.8. Tudo aqui é **[proposta de roteiro]**: tempos, contagens e limiares são hipóteses a calibrar no piloto. O avanço é **por domínio, nunca por tempo**.
 
 ## Arquivos desta pasta
 
@@ -17,7 +17,7 @@
 | [04-regioes-R7-R10.md](04-regioes-R7-R10.md) | R7 Amazônia, R8 Litoral e Mar, R9 Cidade das Letras, R10 Arquipélago dos Livros e pós-jornada, com as cenas de **conhecimento de base para a vida** (D017 §5) |
 | [05-imersao-e-ritmo.md](05-imersao-e-ritmo.md) | Camadas da tela, transições, música por região, câmera, momentos uau, proteção contra sobrecarga |
 | [06-familia-e-escola-acompanham.md](06-familia-e-escola-acompanham.md) | O que a família vê em cada etapa, mensagens com o nome, missões de 5 min em casa, quem vê o quê |
-| [07-progressao-niveis-e-titulos.md](07-progressao-niveis-e-titulos.md) | Progressão quase infinita (fase → subfases → bônus → versão mestre → eventos semanais), curva de dificuldade, **níveis e títulos** (Aprendiz dos Sons → Mestre Leitor), barra "próximo objetivo", revisão procedural e salvaguardas (D019) |
+| [07-progressao-niveis-e-titulos.md](07-progressao-niveis-e-titulos.md) | Progressão quase infinita (fase → subfases → bônus → versão mestre → eventos semanais), curva de dificuldade, **níveis e títulos** (Primeiros Sons → Maestria da Leitura), barra "próximo objetivo", revisão procedural e salvaguardas (D019) |
 | [08-maternal-primeiros-sons.md](08-maternal-primeiros-sons.md) | Módulo **Maternal "Primeiros Sons"** (2–3 anos): escuta, cantigas, rimas, sons dos bichos, nome próprio, vocabulário, atenção e convivência, sem cobrar leitura; sessões de 5–10 min com o adulto, propostas fora da tela, tempo de tela e passagem para R0 (D021 §4) |
 
 ---
@@ -182,7 +182,7 @@ Se TEA e TDAH estiverem ligados, a previsibilidade vence a novidade.
 
 ## 6. Selos, competição saudável e futuro online (Decisão 018)
 
-- **Selos infinitos** (amplia os emblemas da lojinha): por som ("Mestre do Som M"), por região ("Leitor do Pampa"), por valores ("Guardião do Meio Ambiente", "Amigo que Inclui", "Leitor Gentil", "Pede Desculpas", "Cuidador dos Animais"), por esporte e fair play e pela **validação do professor ou da família**. Níveis **bronze → prata → ouro → diamante**, com novos desafios a cada volta. Ficam no **Álbum de Selos** e no painel da família. Só por esforço e aprendizagem. Cada região lista os seus selos.
+- **Selos infinitos** (amplia os emblemas da lojinha): por som ("Maestria do Som M"), por região ("Leitura do Pampa"), por valores ("Guarda do Meio Ambiente", "Amizade que Inclui", "Leitura Gentil", "Pede Desculpas", "Cuidado com os Animais"), por esporte e fair play e pela **validação do professor ou da família**. Níveis **bronze → prata → ouro → diamante**, com novos desafios a cada volta. Ficam no **Álbum de Selos** e no painel da família. Só por esforço e aprendizagem. Cada região lista os seus selos.
 - **"Mostra pro professor":** ao fechar um assunto, uma demonstração lúdica vai para o professor (ou família), que corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais", 🎤 "Me explicou certinho". A criança ouve "Parabéns, [NOME]!". Fila em lote (10 respostas em ~2 min); sem resposta em 72 h, vale o critério de domínio.
 - **Competição saudável:** turma contra o Zum-Zum (meta coletiva de atenção, §6.1); Copa das Letras com equipes misturadas; recordes pessoais; torneios esportivos com fair play; ranking **só por esforço e coleção** (missões e selos da semana), **nunca por nível de leitura**; desligável por criança.
 - **Preparado para o online futuro:** perfis com pseudônimo; **salas por turma, escola e país**; eventos em tempo real; textos, vozes e fonemas por idioma; fuso horário; moderação. Interação **só com frases e símbolos prontos**, ações cooperativas (construir juntos, missão em dupla, torcida) e cartões de amizade aprovados pelo adulto. **Sem chat livre.** Contato com outras escolas ou países só com autorização da escola e da família; denúncia, bloqueio e registro para auditoria. ⚖️ verificar com advogado.
@@ -217,18 +217,18 @@ Sempre por uma situação da dupla, com vocabulário novo para ler, pergunta de 
 
 | Região | Fonemas / grafemas | Semanas | Fases | Cenas detalhadas | Chefe | Selo da região | Nível 0–10 |
 |---|---|---|---|---|---|---|---|
-| R0 Quintal | Rima, sílaba, fonema inicial, síntese oral | 1–3 | 6 | 24 | Festa das Rimas | Leitor do Quintal | 0 → 0 |
-| R1 Ilha das Vogais | A, E (é/ê), I, O (ó/ô), U | 3–6 | 7 | 24 | O Farol Apagado | Leitor da Ilha | 0 → 1 |
-| R2a Mata, M-L-F | M, L, F + CV | 6–10 | 5 | 18 | Cachoeira das Sílabas | Leitor da Mata (bronze) | 1 → 2 |
-| R2b Mata, V-S-N | V, S, N + CV.CV; F × V | 10–16 | 6 | 17 | Ninho do Tucano | Leitor da Mata (prata) | 2 → 3 |
-| R3 Pampa | P, T, B, D; P/B, T/D, b/d | 16–26 | 10 | 24 | Ventania que Embaralha | Leitor do Pampa | 3 → 4 |
-| R4 Pantanal | J, Z, CH, X, NH, LH + frases | 26–36 | 8 | 18 | A Cheia | Leitor do Pantanal | 4 → 5◐ |
-| R5 Cerrado | C/QU, G/GU, CE/GE, R/RR, S/SS, Ç | 36–48 | 7 | 16 | Ipê sem Flores | Leitor do Cerrado | 5◐ → 6◐ |
-| R6 Caatinga/Sertão | Ã, AM/AN, EM/EN, IM, OM, UM; M antes de P/B; -ÃO × -AM | 48–58 | 8 | 17 | Feira do Cordel (chefe do Ano 1) | Leitor do Sertão + Ano 1 Completo | 6◐ → 5● |
-| R7 Amazônia | CVC (R, S, L finais), ditongos, vogais átonas finais | 58–70 | 7 | 17 | Rio que Esqueceu as Palavras | Leitor da Amazônia | 5 → 7 |
-| R8 Litoral e Mar | PR, BR, TR, DR, CR, GR, FR, VR; PL, BL, CL, GL, FL | 70–82 | 7 | 18 | Trem dos Encontros | Leitor do Litoral | 7 → 6●–7 |
-| R9 Cidade das Letras | H, X, CH × X, J × G, S/Z/X; -OU, -ÃO/-AM, -INHO | 82–94 | 8 | 18 | Jornal da Cidade | Cidadão da Vila + Criador | 7 → 8 |
-| R10 Arquipélago dos Livros | Palavras frequentes, fluência, inferência, texto | 94–104+ | 10 | 22 | Festival de Leitura (chefe final) | Leitor (ouro/diamante) + Alfabetizado(a) | 8 → 9–10 |
+| R0 Quintal | Rima, sílaba, fonema inicial, síntese oral | 1–3 | 6 | 24 | Festa das Rimas | Leitura do Quintal | 0 → 0 |
+| R1 Ilha das Vogais | A, E (é/ê), I, O (ó/ô), U | 3–6 | 7 | 24 | O Farol Apagado | Leitura da Ilha | 0 → 1 |
+| R2a Mata, M-L-F | M, L, F + CV | 6–10 | 5 | 18 | Cachoeira das Sílabas | Leitura da Mata (bronze) | 1 → 2 |
+| R2b Mata, V-S-N | V, S, N + CV.CV; F × V | 10–16 | 6 | 17 | Ninho do Tucano | Leitura da Mata (prata) | 2 → 3 |
+| R3 Pampa | P, T, B, D; P/B, T/D, b/d | 16–26 | 10 | 24 | Ventania que Embaralha | Leitura do Pampa | 3 → 4 |
+| R4 Pantanal | J, Z, CH, X, NH, LH + frases | 26–36 | 8 | 18 | A Cheia | Leitura do Pantanal | 4 → 5◐ |
+| R5 Cerrado | C/QU, G/GU, CE/GE, R/RR, S/SS, Ç | 36–48 | 7 | 16 | Ipê sem Flores | Leitura do Cerrado | 5◐ → 6◐ |
+| R6 Caatinga/Sertão | Ã, AM/AN, EM/EN, IM, OM, UM; M antes de P/B; -ÃO × -AM | 48–58 | 8 | 17 | Feira do Cordel (chefe do Ano 1) | Leitura do Sertão + Ano 1 Completo | 6◐ → 5● |
+| R7 Amazônia | CVC (R, S, L finais), ditongos, vogais átonas finais | 58–70 | 7 | 17 | Rio que Esqueceu as Palavras | Leitura da Amazônia | 5 → 7 |
+| R8 Litoral e Mar | PR, BR, TR, DR, CR, GR, FR, VR; PL, BL, CL, GL, FL | 70–82 | 7 | 18 | Trem dos Encontros | Leitura do Litoral | 7 → 6●–7 |
+| R9 Cidade das Letras | H, X, CH × X, J × G, S/Z/X; -OU, -ÃO/-AM, -INHO | 82–94 | 8 | 18 | Jornal da Cidade | Cidadania da Vila + Criação | 7 → 8 |
+| R10 Arquipélago dos Livros | Palavras frequentes, fluência, inferência, texto | 94–104+ | 10 | 22 | Festival de Leitura (chefe final) | Leitura (ouro/diamante) + Alfabetização Plena | 8 → 9–10 |
 | **Total** | **~33 fonemas, regras e padrões da ordem do PB** | **~104** | **89** | **233** | **12 chefes** | | **0 → 10** |
 
 Além das 233 cenas detalhadas, cada sessão usa as cenas-padrão C0, C1, C6, C7 e C9 com o conteúdo da fase. Com 5 sessões por semana, a jornada tem cerca de **500 sessões**; as missões paralelas procedurais (mesmos sons, linter de decodificabilidade) e o modo infinito de revisão garantem que ela não acabe. Os **níveis e títulos** que acompanham esse caminho estão em [07](07-progressao-niveis-e-titulos.md).
@@ -252,5 +252,5 @@ Além das 233 cenas detalhadas, cada sessão usa as cenas-padrão C0, C1, C6, C7
 7. **Cidadania (R9–R10):** prefeita e vereadores da vila são personagens fictícios. Validar textos com um pedagogo de Ciências Humanas para garantir neutralidade.
 8. **Competição:** ranking por esforço vem **desligado por padrão** na educação infantil (4–5 anos) e ligado a partir de 6? Ou desligado sempre até o professor ligar?
 9. **Selos diamante:** definir a regra geral (sugestão: ouro + retenção após 60 dias + validação do professor ou da família).
-10. **Títulos no feminino:** usar "Caçadora de Sílabas", "Mestra Leitora" etc. pela escolha de gênero do cadastro, ou manter os títulos iguais para todos, como nome de equipe ([07](07-progressao-niveis-e-titulos.md) §4)?
-11. **Números da curva** (desafios por nível, [07](07-progressao-niveis-e-titulos.md) §3 e §5): aprovar como ponto de partida para calibrar no piloto?
+10. ✅ **Títulos e selos neutros, pela ação** ([Decisão 022](../../../decisoes/022-titulos-neutros-curva.md)): Primeiros Sons → Caça às Sílabas → Exploração das Palavras → Leitura da Vila → Contação de Histórias → Guarda dos Livros → Maestria da Leitura, com I-II-III ([07](07-progressao-niveis-e-titulos.md) §4).
+11. ✅ **Curva** (D022): 2–6 desafios por nível no começo, 8–14 no meio e até 24 nos níveis finais, expansível no futuro ([07](07-progressao-niveis-e-titulos.md) §3 e §5); números exatos a calibrar no piloto.

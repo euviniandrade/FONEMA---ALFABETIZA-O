@@ -1,6 +1,6 @@
 # Parte 7 · Progressão quase infinita: fases, níveis, títulos e próximo objetivo
 
-> Base: [Decisão 019](../../../decisoes/019-progressao-vilao-familia.md) §1 (fases quase infinitas, curva, metas visíveis, títulos), [D002](../../../decisoes/002-economia-virtual-avatar-educacao-financeira.md) (economia sem sorte nem perda), [D004](../../../decisoes/004-termometro-alfabetizacao-e-proxima-fase.md) (termômetro 0–10), [D018](../../../decisoes/018-professor-familia-selos-online.md) (selos infinitos, competição saudável) e o [README](README.md) desta pasta (cena-padrão, domínio, recompensas). Tudo aqui é **[proposta de roteiro]**: números de desafios por nível são hipóteses a calibrar no piloto.
+> Base: [Decisão 019](../../../decisoes/019-progressao-vilao-familia.md) §1 (fases quase infinitas, curva, metas visíveis, títulos), [Decisão 022](../../../decisoes/022-titulos-neutros-curva.md) (títulos e selos neutros pela ação; curva 2–6 → 8–14 → até 24), [Decisão 021](../../../decisoes/021-lojinha-conquistas-nivelamento-maternal.md) (Lojinha, Conquistas, sem pular fases), [D002](../../../decisoes/002-economia-virtual-avatar-educacao-financeira.md) (economia sem sorte nem perda), [D004](../../../decisoes/004-termometro-alfabetizacao-e-proxima-fase.md) (termômetro 0–10), [D018](../../../decisoes/018-professor-familia-selos-online.md) (selos infinitos, competição saudável) e o [README](README.md) desta pasta (cena-padrão, domínio, recompensas). Tudo aqui é **[proposta de roteiro]**: números de desafios por nível são hipóteses a calibrar no piloto.
 >
 > **Regra de ouro:** a vontade de passar de fase vem de **objetivos claros e progresso visível**. Nunca de punição, perda de itens, contagem regressiva, sequência diária ("streak") ou sorte (rels. 12 e 38).
 
@@ -12,7 +12,7 @@
 |---|---|---|---|---|
 | **Termômetro de leitura 0–10** (D004) | O que a criança **sabe ler** | Só por provinha de fase e critério de domínio | Não na tela da criança; a plataforma só ajusta a revisão | Família, professor, escola |
 | **Nível da jornada** (1, 2, 3… sem fim) | O **caminho percorrido**: desafios feitos com esforço | Desafios concluídos + portões de domínio | **Nunca** | Criança (com título e barra), família |
-| **Título** (Aprendiz dos Sons → Mestre Leitor, com I-II-III) | Etapa da jornada, ligada a domínio real | Só ao passar um **portão de domínio** (chefe de região) | **Nunca** | Criança, família, professor |
+| **Título** (Primeiros Sons → Maestria da Leitura, com I-II-III) | Etapa da jornada, ligada a domínio real | Só ao passar um **portão de domínio** (chefe de região) | **Nunca** | Criança, família, professor |
 | **Selos** (D018, bronze → diamante) | Conquistas específicas (som, região, valor, esporte, validação) | Depois do fato | Nunca | Álbum de Selos, painel da família |
 
 O nível da jornada dá a sensação de "estou ficando mais preparado". O termômetro diz, com honestidade, o que já foi aprendido. Os **títulos** fazem a ponte: só mudam quando a criança prova o domínio (chefe de região), por isso nunca prometem uma leitura que ela ainda não tem.
@@ -51,7 +51,7 @@ Ao entrar em qualquer fase (e no ritual de fim), a criança vê dois botões gra
 **Exemplo · R2a-F01 (M):**
 | Conquista | Estado no começo da fase | Dica no cadeado |
 |---|---|---|
-| Selo **Mestre do Som M** (bronze) | 🔒 apagado | "Leia 5 palavras com M para desbloquear" |
+| Selo **Maestria do Som M** (bronze) | 🔒 apagado | "Leia 5 palavras com M para desbloquear" |
 | Medalha **Primeira Sílaba** | 🔒 apagado | "Junte o M com uma vogal: MA, MO, MU" |
 | Troféu **Ouvido de Mico** (bônus) | 🔒 apagado | "Depois do M: ache 3 coisas com /mmm/ na trilha" |
 | Selo **mistério** | silhueta "?" | "Continue a trilha para descobrir!" |
@@ -65,10 +65,10 @@ Ao entrar em qualquer fase (e no ritual de fim), a criança vê dois botões gra
 | Etapa da jornada | Desafios para subir 1 nível | Ritmo esperado | Por quê |
 |---|---|---|---|
 | **Começo (R0, níveis 1–6)** | 2 → 6 (sobe 1 por nível) | 1 nível a cada 1–3 sessões | Vitórias rápidas: a criança **sente que consegue** (N12) |
-| **Ano 1, primeiras letras (R1–R2b, níveis 7–24)** | 8–10 | 1 nível por semana, mais ou menos | Hábito e confiança; ainda muitas conquistas |
-| **Ano 1, fim (R3–R6, níveis 25–33)** | 10–12 | 1 nível a cada 1–2 semanas | Mais desafios por fase, mais vontade de chegar ao próximo |
-| **Ano 2 (R7–R10, níveis 34–51)** | 12–14 | 1 nível a cada 1–2 semanas | Textos maiores; o título novo é o grande marco |
-| **Pós-jornada (nível 52 em diante)** | 15 (teto fixo) | 1 nível a cada 2 semanas | Manutenção sem fim, sem cansar |
+| **Ano 1, primeiras letras (R1–R2b, níveis 7–24)** | 8–10 (meio da curva) | 1 nível por semana, mais ou menos | Hábito e confiança; ainda muitas conquistas |
+| **Ano 1, fim (R3–R6, níveis 25–33)** | 10–12 (meio) | 1 nível a cada 1–2 semanas | Mais desafios por fase, mais vontade de chegar ao próximo |
+| **Ano 2 (R7–R10, níveis 34–51)** | 12–14 (meio) | 1 nível a cada 1–2 semanas | Textos maiores; o título novo é o grande marco |
+| **Níveis finais (nível 52 em diante)** | 16 → **24** (sobe 1 a cada 2 níveis até o teto de 24) | 1 nível a cada 2–4 semanas | Manutenção sem fim, sem cansar; o teto pode crescer no futuro (D022) |
 
 **Regras da curva:**
 1. **Ligada ao domínio real.** Um desafio só conta quando a criança **tentou de verdade** (resposta dada, não pulada). Itens de revisão, bônus e versão mestre contam igual a itens novos.
@@ -83,17 +83,17 @@ Ao entrar em qualquer fase (e no ritual de fim), a criança vê dois botões gra
 
 | Título | Sub-níveis | Níveis | Portão para chegar (domínio real) | Regiões em que a criança costuma estar | Termômetro (D004), em geral |
 |---|---|---|---|---|---|
-| **Aprendiz dos Sons** | I · II · III | 1–6 | Primeira missão (R0-F01) | R0 Quintal | 0 |
-| **Caçador de Sílabas** | I · II · III | 7–15 | Vencer a **Festa das Rimas** (R0-F06) | R1 Ilha, R2a Mata | 0 → 2 |
-| **Explorador das Palavras** | I · II · III | 16–24 | Vencer a **Cachoeira das Sílabas** (R2a-F05: primeira palavra) | R2b Mata, R3 Pampa | 2 → 4 |
-| **Leitor da Vila** | I · II · III | 25–33 | Vencer a **Ventania que Embaralha** (R3-F10) | R4 Pantanal, R5 Cerrado, R6 Sertão | 4 → 5● |
-| **Contador de Histórias** | I · II · III | 34–42 | Vencer a **Feira do Cordel** (chefe do Ano 1, R6-F08) | R7 Amazônia, R8 Litoral | 5 → 7 |
-| **Guardião dos Livros** | I · II · III | 43–51 | Vencer o **Trem dos Encontros** (R8-F07) | R9 Cidade, R10 Arquipélago | 7 → 8 |
-| **Mestre Leitor** | I · II · III, depois ★1, ★2, ★3… sem fim | 52 em diante | Vencer o **Festival de Leitura** (R10-F09, formatura) | Pós-jornada | 9–10 |
+| **Primeiros Sons** | I · II · III | 1–6 | Primeira missão (R0-F01) | R0 Quintal | 0 |
+| **Caça às Sílabas** | I · II · III | 7–15 | Vencer a **Festa das Rimas** (R0-F06) | R1 Ilha, R2a Mata | 0 → 2 |
+| **Exploração das Palavras** | I · II · III | 16–24 | Vencer a **Cachoeira das Sílabas** (R2a-F05: primeira palavra) | R2b Mata, R3 Pampa | 2 → 4 |
+| **Leitura da Vila** | I · II · III | 25–33 | Vencer a **Ventania que Embaralha** (R3-F10) | R4 Pantanal, R5 Cerrado, R6 Sertão | 4 → 5● |
+| **Contação de Histórias** | I · II · III | 34–42 | Vencer a **Feira do Cordel** (chefe do Ano 1, R6-F08) | R7 Amazônia, R8 Litoral | 5 → 7 |
+| **Guarda dos Livros** | I · II · III | 43–51 | Vencer o **Trem dos Encontros** (R8-F07) | R9 Cidade, R10 Arquipélago | 7 → 8 |
+| **Maestria da Leitura** | I · II · III, depois ★1, ★2, ★3… sem fim | 52 em diante | Vencer o **Festival de Leitura** (R10-F09, formatura) | Pós-jornada | 9–10 |
 
-**Sub-níveis I-II-III:** cada título tem 3 degraus de 3 níveis (ex.: Caçador de Sílabas I = níveis 7–9, II = 10–12, III = 13–15). Se a criança chega ao fim do III antes de vencer o chefe, os níveis seguem como **III ★1, III ★2…**, e o título novo espera pelo portão sem pressa.
+**Sub-níveis I-II-III:** cada título tem 3 degraus de 3 níveis (ex.: Caça às Sílabas I = níveis 7–9, II = 10–12, III = 13–15). Se a criança chega ao fim do III antes de vencer o chefe, os níveis seguem como **III ★1, III ★2…**, e o título novo espera pelo portão sem pressa.
 
-**Concordância (D013):** os títulos ficam iguais para todos ("Caçador de Sílabas", "Mestre Leitor"), como nome de equipe. Nas falas, a dupla usa frase neutra: "Agora você é **Caçador de Sílabas**, [NOME]!" Se o dono preferir, as formas femininas ("Caçadora de Sílabas", "Exploradora das Palavras", "Leitora da Vila", "Contadora de Histórias", "Guardiã dos Livros", "Mestra Leitora") entram pela escolha de gênero do cadastro; com "prefiro não informar", fica a forma do título como nome de equipe.
+**Títulos neutros pela ação ([Decisão 022](../../../decisoes/022-titulos-neutros-curva.md)):** os títulos nomeiam **a ação ou a conquista**, não a pessoa, e valem para todas as crianças, sem depender do gênero do cadastro (D013). A frase de conquista é sempre neutra: "Você conquistou **Caça às Sílabas II**, [NOME]!" O mesmo vale para os selos ("Guarda do Meio Ambiente", "Amizade que Inclui", "Leitura Gentil", "Maestria do Som M", "Cuidado com os Animais", "Fair Play").
 
 ---
 
@@ -107,31 +107,31 @@ Ao entrar em qualquer fase (e no ritual de fim), a criança vê dois botões gra
 
 | Nível | Meta para chegar (a partir do nível anterior) | Título | Ao chegar, você ganha |
 |---|---|---|---|
-| **1** | Terminar a primeira missão (som do próprio nome) | Aprendiz dos Sons I | Selo **Meu Nome**; placa da porta com a sua letra (área); comemoração "Oi, Aprendiz dos Sons!" |
-| **2** | 2 desafios | Aprendiz dos Sons I | Item: boné da vila (azul-marinho e branco) |
-| **3** | 3 desafios | Aprendiz dos Sons I | Área: varal de rimas no quintal |
-| **4** | 4 desafios | Aprendiz dos Sons II | Selo de título **Aprendiz dos Sons II**; item: tênis de corrida |
-| **5** | 5 desafios | Aprendiz dos Sons II | Área: casinha do Bolota no quintal |
-| **6** | 6 desafios | Aprendiz dos Sons III | Item: mochila escolar; comemoração com o Paçoca |
-| **7** | 6 desafios **+ vencer a Festa das Rimas** | **Caçador de Sílabas I** | Título novo: **lupa de caçador** (item), selo **Caçador de Sílabas**, área **cais e barco do Bolota**, comemoração com a dupla no coreto |
-| 8–9 | 8 desafios por nível | Caçador de Sílabas I | Item de praia (chapéu de sol, camiseta de vôlei); figurinhas da Ilha |
-| 10 | 8 desafios | Caçador de Sílabas II | Selo de título II; área: farol por dentro |
-| 11–12 | 9 desafios por nível | Caçador de Sílabas II | Item: uniforme de futebol da vila; livro novo na estante |
-| 13 | 9 desafios | Caçador de Sílabas III | Selo de título III; área: trilha da mata |
-| 14–15 | 10 desafios por nível | Caçador de Sílabas III | Item: bota de trilha; comemoração com o mico Faísca |
-| **16** | 10 desafios **+ vencer a Cachoeira das Sílabas** | **Explorador das Palavras I** | Título novo: **mochila de explorador** (item), selo, área **Árvore das Palavras**, comemoração na ponte |
-| 17–24 | 10–11 desafios por nível | Explorador I → II (19) → III (22) | A cada nível, 1 item **ou** 1 área (correio, biblioteca, moinho, morro da pipa); selo de título em 19 e 22 |
-| **25** | 11 desafios **+ vencer a Ventania que Embaralha** | **Leitor da Vila I** | Título novo: **crachá de leitor da vila** (item de função), selo, área **biblioteca com estante própria**, comemoração na praça |
-| 26–33 | 11–12 desafios por nível | Leitor da Vila I → II (28) → III (31) | Itens de esporte (basquete, handebol, natação, atletismo, abadá branco da capoeira-esporte); áreas: viveiro, horta, mercado, coreto; selo de título em 28 e 31 |
-| **34** | 12 desafios **+ vencer a Feira do Cordel** | **Contador de Histórias I** | Título novo: **caderno de histórias** (item), selo, área **barco-escola**, comemoração com a família (Álbum do Ano 1) |
-| 35–42 | 12–13 desafios por nível | Contador I → II (37) → III (40) | Itens e áreas do Ano 2 (estação de trem, teatro, praia do Litoral); selo de título em 37 e 40 |
-| **43** | 13 desafios **+ vencer o Trem dos Encontros** | **Guardião dos Livros I** | Título novo: **capa de guardião da biblioteca** (lisa, 2 cores), selo, área **jornal da vila**, comemoração no trem |
-| 44–51 | 13–14 desafios por nível | Guardião I → II (46) → III (49) | Áreas: ponte, observatório, editora; itens de função (avental da oficina, óculos de proteção); selo de título em 46 e 49 |
-| **52** | 14 desafios **+ vencer o Festival de Leitura** | **Mestre Leitor I** | Título novo: **capa dourada do Leitor** (item de domínio), selo **Alfabetizado(a)**, o livro da criança na estante da vila, formatura com a família |
-| 53–60 | 15 desafios por nível | Mestre Leitor I → II (55) → III (58) | Livros novos, áreas de temporada, itens de eventos semanais |
-| **61, 62, 63…** | 15 desafios por nível (teto) | **Mestre Leitor ★1, ★2, ★3…** | 1 estrela no título + 1 item de temporada ou 1 livro novo. **Sem fim** |
+| **1** | Terminar a primeira missão (som do próprio nome) | Primeiros Sons I | Selo **Meu Nome**; placa da porta com a sua letra (área); comemoração "Você conquistou Primeiros Sons, [NOME]!" |
+| **2** | 2 desafios | Primeiros Sons I | Item: boné da vila (azul-marinho e branco) |
+| **3** | 3 desafios | Primeiros Sons I | Área: varal de rimas no quintal |
+| **4** | 4 desafios | Primeiros Sons II | Selo de título **Primeiros Sons II**; item: tênis de corrida |
+| **5** | 5 desafios | Primeiros Sons II | Área: casinha do Bolota no quintal |
+| **6** | 6 desafios | Primeiros Sons III | Item: mochila escolar; comemoração com o Paçoca |
+| **7** | 6 desafios **+ vencer a Festa das Rimas** | **Caça às Sílabas I** | Título novo: **lupa da caça às sílabas** (item), selo **Caça às Sílabas**, área **cais e barco do Bolota**, comemoração com a dupla no coreto |
+| 8–9 | 8 desafios por nível | Caça às Sílabas I | Item de praia (chapéu de sol, camiseta de vôlei); figurinhas da Ilha |
+| 10 | 8 desafios | Caça às Sílabas II | Selo de título II; área: farol por dentro |
+| 11–12 | 9 desafios por nível | Caça às Sílabas II | Item: uniforme de futebol da vila; livro novo na estante |
+| 13 | 9 desafios | Caça às Sílabas III | Selo de título III; área: trilha da mata |
+| 14–15 | 10 desafios por nível | Caça às Sílabas III | Item: bota de trilha; comemoração com o mico Faísca |
+| **16** | 10 desafios **+ vencer a Cachoeira das Sílabas** | **Exploração das Palavras I** | Título novo: **mochila da exploração** (item), selo, área **Árvore das Palavras**, comemoração na ponte |
+| 17–24 | 10–11 desafios por nível | Exploração I → II (19) → III (22) | A cada nível, 1 item **ou** 1 área (correio, biblioteca, moinho, morro da pipa); selo de título em 19 e 22 |
+| **25** | 11 desafios **+ vencer a Ventania que Embaralha** | **Leitura da Vila I** | Título novo: **crachá da Leitura da Vila** (item de função), selo, área **biblioteca com estante própria**, comemoração na praça |
+| 26–33 | 11–12 desafios por nível | Leitura da Vila I → II (28) → III (31) | Itens de esporte (basquete, handebol, natação, atletismo, abadá branco da capoeira-esporte); áreas: viveiro, horta, mercado, coreto; selo de título em 28 e 31 |
+| **34** | 12 desafios **+ vencer a Feira do Cordel** | **Contação de Histórias I** | Título novo: **caderno de histórias** (item), selo, área **barco-escola**, comemoração com a família (Álbum do Ano 1) |
+| 35–42 | 12–13 desafios por nível | Contação I → II (37) → III (40) | Itens e áreas do Ano 2 (estação de trem, teatro, praia do Litoral); selo de título em 37 e 40 |
+| **43** | 13 desafios **+ vencer o Trem dos Encontros** | **Guarda dos Livros I** | Título novo: **capa da Guarda dos Livros** (lisa, 2 cores), selo, área **jornal da vila**, comemoração no trem |
+| 44–51 | 13–14 desafios por nível | Guarda I → II (46) → III (49) | Áreas: ponte, observatório, editora; itens de função (avental da oficina, óculos de proteção); selo de título em 46 e 49 |
+| **52** | 14 desafios **+ vencer o Festival de Leitura** | **Maestria da Leitura I** | Título novo: **capa dourada da Leitura** (item de domínio), selo **Alfabetização Plena**, o livro da criança na estante da vila, formatura com a família |
+| 53–60 | 16 → 19 desafios por nível | Maestria da Leitura I → II (55) → III (58) | Livros novos, áreas de temporada, itens de eventos semanais |
+| **61, 62, 63…** | 20 → 24 desafios por nível (teto de 24; expansível no futuro, D022) | **Maestria da Leitura ★1, ★2, ★3…** | 1 estrela no título + 1 item de temporada ou 1 livro novo. **Sem fim** |
 
-**Total aproximado:** o Ano 1 leva até cerca do nível 33; o Ano 2, até o 52. Depois, cada estrela de Mestre Leitor leva cerca de 2 semanas.
+**Total aproximado:** o Ano 1 leva até cerca do nível 33; o Ano 2, até o 52. Depois, cada estrela de Maestria da Leitura leva de 3 a 4 semanas.
 
 ---
 
@@ -141,9 +141,9 @@ Ao entrar em qualquer fase (e no ritual de fim), a criança vê dois botões gra
 |---|---|---|
 | **Vila e mapa** (canto da tela) | Título atual + barra curta + frase: "Próximo objetivo: **faltam 3 desafios** para o nível 8" | Nunca na tela de lição (fundo limpo, README §1 princípio 7) |
 | **Ritual de fim (C9)** | A Sofia lê a barra em voz alta: "Hoje você fez 4 desafios. Faltam 3 para o nível 8, [NOME]!" | Junto com o gancho; sem botão "continuar" |
-| **Perto de um título novo** | Segunda linha: "Rumo a **Caçador de Sílabas**: faltam 9 desafios e a **Festa das Rimas**" | O portão aparece com nome e figura do chefe |
+| **Perto de um título novo** | Segunda linha: "Rumo a **Caça às Sílabas**: faltam 9 desafios e a **Festa das Rimas**" | O portão aparece com nome e figura do chefe |
 | **Álbum de Selos** | Selos do título atual e os "em breve" do próximo | Só os próximos 2–3, para não sobrecarregar |
-| **Painel da família** | "Nível 12 · Caçador de Sílabas II · faltam 4 desafios para o próximo nível" ao lado do termômetro | Sempre explicando a diferença entre nível (esforço) e termômetro (leitura) |
+| **Painel da família** | "Nível 12 · Caça às Sílabas II · faltam 4 desafios para o próximo nível" ao lado do termômetro | Sempre explicando a diferença entre nível (esforço) e termômetro (leitura) |
 
 **Para 4–5 anos:** a barra usa **bolinhas para preencher** (no máximo 6–8 visíveis) em vez de número; a Sofia fala o número. **TEA (modo Previsível):** a barra mostra também o que vem depois ("depois do nível 8 vem a casinha do farol"), sem surpresa. **TDAH (Foco curto):** meta curta visível dentro da sessão ("faltam 2 tábuas"), além da barra do nível.
 
@@ -186,7 +186,7 @@ O conteúdo novo (fases das regiões) é roteirizado à mão. A **revisão sem f
 
 ## 9. Ligação com o termômetro e os selos (D004, D018)
 
-- **Títulos acompanham o termômetro** porque os portões são os chefes de região, que também são as provinhas de fase do termômetro. Exemplo: vencer a Cachoeira das Sílabas dá o título **Explorador das Palavras** e sobe o termômetro para **2**.
-- **Selos de título** (Aprendiz dos Sons I, II, III…) entram no Álbum de Selos ao lado dos selos de som, região, valores e esporte. Os níveis de cada selo (bronze → prata → ouro → diamante) continuam valendo como na D018.
-- **Mensagem para a família** (WhatsApp, até 3 por semana): título novo é um **marco** ("A Ana agora é **Exploradora das Palavras**: ela leu a primeira palavra sozinha!"); nível comum **não** gera mensagem, só aparece no painel.
+- **Títulos acompanham o termômetro** porque os portões são os chefes de região, que também são as provinhas de fase do termômetro. Exemplo: vencer a Cachoeira das Sílabas dá o título **Exploração das Palavras** e sobe o termômetro para **2**.
+- **Selos de título** (Primeiros Sons I, II, III…) entram no Álbum de Selos ao lado dos selos de som, região, valores e esporte. Os níveis de cada selo (bronze → prata → ouro → diamante) continuam valendo como na D018.
+- **Mensagem para a família** (WhatsApp, até 3 por semana): título novo é um **marco** ("A Ana conquistou **Exploração das Palavras**: ela leu a primeira palavra sozinha!"); nível comum **não** gera mensagem, só aparece no painel.
 - **Professor:** vê o título e o nível de cada aluno ao lado do termômetro, como sinal de **engajamento**, nunca como nota.

@@ -8,7 +8,7 @@
 > - **amigos e colegas**, **escola** e **dia a dia** (quintal, praça, correio, biblioteca, hora do lanche);
 > - **esportes**: amarelinha, corrida, futebol, vôlei, basquete, handebol, natação (braçada no lugar, na pausa ativa), atletismo e **capoeira como esporte** (ginga, equilíbrio, palmas, roda de respeito; sem cantigas, rituais ou política). Os esportes que não têm cena própria entram nas pausas ativas (C6) em rodízio;
 > - **natureza e cuidado com os animais** (Paçoca, Nina, tartaruga, mico, tucano);
-> - **selos e conquistas**, com o título **Aprendiz dos Sons** e depois **Caçador de Sílabas** ([07](07-progressao-niveis-e-titulos.md)).
+> - **selos e conquistas**, com o título **Primeiros Sons** e depois **Caça às Sílabas** ([07](07-progressao-niveis-e-titulos.md)).
 >
 > Temas sensíveis (política, religião além dos valores da D012, conflitos, perdas, medos) ficam fora. O vilão leve é o **Zum-Zum, o besouro barulhento** ([README §6.1](README.md)): ele só distrai, nunca assusta, e no fim de cada região vira amigo.
 
@@ -90,13 +90,13 @@
 | R0-F06-C7 | Mesa da praça · Sofia | Sílabas e som inicial de palavras da família | Álbum: escolher figuras (MAMÃE, PAPAI, VOVÓ, irmão…), bater as sílabas | Sofia: "Quem mora com você, [NOME]? Bate as palmas do nome" | N9 | — | Nada é gravado; a pergunta pessoal vai para a família |
 | R0-F06-C9 | Beira do quintal · os dois + Bolota | Gancho → R1 | A garrafa chega com o mapa de 5 sinais | Tales: "Cinco sinais! E se forem letras, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** emblema **Leitor do Quintal** (prata ao vencer a festa); título **Caçador de Sílabas I** ([07](07-progressao-niveis-e-titulos.md)); a vila ganha o varal de lâmpadas e o cais. **Zum-Zum vira amigo:** ele ouve a festa inteira quietinho, aprende que "quem escuta até o fim descobre a rima", pede desculpas pela bagunça e ajuda a pendurar as lâmpadas. A Sofia: "Todo mundo merece outra chance, né, [NOME]?" **Em casa:** ver o "Álbum da minha família" juntos (vai ao painel da família).
+**Fecha a região:** emblema **Leitura do Quintal** (prata ao vencer a festa); título **Caça às Sílabas I** ([07](07-progressao-niveis-e-titulos.md)); a vila ganha o varal de lâmpadas e o cais. **Zum-Zum vira amigo:** ele ouve a festa inteira quietinho, aprende que "quem escuta até o fim descobre a rima", pede desculpas pela bagunça e ajuda a pendurar as lâmpadas. A Sofia: "Todo mundo merece outra chance, né, [NOME]?" **Em casa:** ver o "Álbum da minha família" juntos (vai ao painel da família).
 
 **Professor e família junto (D018) em R0:**
 | Item | Como funciona aqui |
 |---|---|
 | Mostra pro professor | Pontos de demonstração: fim de F02 (rima), F03 (sílabas do nome) e F04 (som inicial): a criança bate as palmas do próprio nome e fala o primeiro som. O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
-| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do Som Inicial**, **Ouvido Atento** (rimas), **Palmas Certeiras**; valores: **Cuidador dos Animais** (Paçoca e Nina), **Guardião do Meio Ambiente** (lixo no lugar); esporte: **Amarelinha das Sílabas**, **Roda de Respeito** (capoeira como esporte) |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Maestria do Som Inicial**, **Ouvido Atento** (rimas), **Palmas Certeiras**; valores: **Cuidado com os Animais** (Paçoca e Nina), **Guarda do Meio Ambiente** (lixo no lugar); esporte: **Amarelinha das Sílabas**, **Roda de Respeito** (capoeira como esporte) |
 | Ensinar junto (roteiro com áudio da dupla) | "Como fazer o som com a criança": /mmm/, /sss/, /fff/ esticados, sem dizer o nome da letra (3 min, com áudio da Sofia) |
 | Competição saudável (desligável) | Turma contra o Zum-Zum: cada rima achada pela turma devolve uma lâmpada que ele apagou no varal da praça (meta coletiva). Nunca ranking por nível de leitura |
 
@@ -181,13 +181,13 @@
 | R1-F07-C4 | Escada do farol (4 andares) · os dois | Provinha de letra das vogais (10 itens, ouvir/tocar e ver/falar) | Cada andar = 2–3 vogais; o farol acende andar por andar. O Zum-Zum zune na janela do farol; a criança vence **olhando a boca da Sofia** antes de responder | Tales: "Mais um andar, [NOME]! Você vai devagar e dá certo" | N6, N12 | ≥ 8/10. Não passou: reforço curto na praia; o farol fica meio aceso, sem perda | Sem cronômetro |
 | R1-F07-C9 | Topo do farol · os dois | Momento uau + gancho | A luz varre o mar e chega à mata; ouve-se /mmm/ | Sofia: "Você acendeu o farol, [NOME]. Ouviu? /mmm/…" | N10 | — | Modo calmo: luz sem varredura |
 
-**Fecha a região:** emblemas **Mestre do A … Mestre do U** (bronze → prata) e **Leitor da Ilha** (prata). Termômetro sobe para 1. A vila ganha o barco e o cais. **Zum-Zum vira amigo:** ele tenta fazer as vogais olhando a boca da criança e descobre que "olhar a boca ajuda a ouvir"; ganha um lugar no barco do Bolota. **Em casa:** "Caça às vogais" no rótulo de um alimento (o adulto aponta, a criança faz o som).
+**Fecha a região:** emblemas **Maestria do A … Maestria do U** (bronze → prata) e **Leitura da Ilha** (prata). Termômetro sobe para 1. A vila ganha o barco e o cais. **Zum-Zum vira amigo:** ele tenta fazer as vogais olhando a boca da criança e descobre que "olhar a boca ajuda a ouvir"; ganha um lugar no barco do Bolota. **Em casa:** "Caça às vogais" no rótulo de um alimento (o adulto aponta, a criança faz o som).
 
 **Professor e família junto (D018) em R1:**
 | Item | Como funciona aqui |
 |---|---|
 | Mostra pro professor | Pontos de demonstração: cada vogal dominada (5 pontos) + é/ê e ó/ô: a criança fala o som e toca a letra; grava "VOVÓ ou VOVÔ?". O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
-| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do Som A, E, I, O, U**, **Farol Aceso** (região); valores: **Guardião do Meio Ambiente** (praia limpa), **Leitor Gentil**; esporte: **Corrida na Areia** |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Maestria do Som A, E, I, O, U**, **Farol Aceso** (região); valores: **Guarda do Meio Ambiente** (praia limpa), **Leitura Gentil**; esporte: **Corrida na Areia** |
 | Ensinar junto (roteiro com áudio da dupla) | "Boca de bocejo, boca redonda, sorriso e biquinho" no espelho do banheiro (2 min) |
 | Competição saudável (desligável) | Recorde pessoal: "hoje acendi 8 anéis do farol; ontem, 6". Nunca ranking por nível de leitura |
 
@@ -206,7 +206,7 @@
 ### Como a aprendizagem é medida e acompanhada em R2a
 | O quê | Como se mede | Quem vê |
 |---|---|---|
-| M, L, F (letra ↔ som) | 4 condições de domínio, com pseudopalavras ("nomes de bichinhos da mata": MOFA, LIFU) | Família: "Mestre do M" anunciado depois do fato |
+| M, L, F (letra ↔ som) | 4 condições de domínio, com pseudopalavras ("nomes de bichinhos da mata": MOFA, LIFU) | Família: "Maestria do M" anunciado depois do fato |
 | Síntese CV e 1ª palavra decodificada | Ler MALA sem ajuda, em 2 dias, + 1 pseudopalavra | Família: mensagem de marco "[NOME] leu a primeira palavra!" |
 | Relatório antes/depois | Diagnóstico de entrada × provinha de fase R2a | **Só o adulto**: relatório de fim da parte gratuita (D001) |
 
@@ -254,13 +254,13 @@
 | R2a-F05-C7 | Trilha · Bolota | Projeto: figurinhas que falam | Criar o guia: escolher bichos e ler 1 palavra de cada figurinha | Bolota: "Agora eu sei a mata!" | N9, N2 | — | — |
 | R2a-F05-C9 | Ponte em obras · todos | Gancho (fim da parte gratuita) | A ponte em obras, sem cadeado; o tucano espia do outro lado | Tales: "Tem alguém chamando lá do outro lado, [NOME]!" | N10 | — | Sem oferta de compra à criança |
 
-**Fecha a região:** **Mestre do M, L, F**; **Leitor da Mata** (bronze); título **Explorador das Palavras I** ([07](07-progressao-niveis-e-titulos.md)); **Zum-Zum vira amigo** (aprende que "devagar e até o fim, a palavra aparece" e ajuda a carregar as letras do guia); a vila ganha a horta e a **Árvore das Palavras**. Relatório antes/depois **só para o adulto**. Sem assinatura, a criança continua com revisão, vila e estante de R0–R2a. **Em casa:** ler o Guia da mata para alguém da família.
+**Fecha a região:** **Maestria do M, L, F**; **Leitura da Mata** (bronze); título **Exploração das Palavras I** ([07](07-progressao-niveis-e-titulos.md)); **Zum-Zum vira amigo** (aprende que "devagar e até o fim, a palavra aparece" e ajuda a carregar as letras do guia); a vila ganha a horta e a **Árvore das Palavras**. Relatório antes/depois **só para o adulto**. Sem assinatura, a criança continua com revisão, vila e estante de R0–R2a. **Em casa:** ler o Guia da mata para alguém da família.
 
 **Professor e família junto (D018) em R2a:**
 | Item | Como funciona aqui |
 |---|---|
 | Mostra pro professor | Pontos de demonstração: M, L, F e a 1ª palavra (MALA): a criança lê em voz alta e explica "juntei o /m/ com o /a/". O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
-| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do Som M, L, F**, **Primeira Palavra**, **Leitor da Mata**; valores: **Guardião do Meio Ambiente** (muda na mata); esporte: **Futebol de Sílabas** |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Maestria do Som M, L, F**, **Primeira Palavra**, **Leitura da Mata**; valores: **Guarda do Meio Ambiente** (muda na mata); esporte: **Futebol de Sílabas** |
 | Ensinar junto (roteiro com áudio da dupla) | "Brinquem de caçar o som no mercado": achar 3 produtos com /m/ (5 min) |
 | Competição saudável (desligável) | Copa das Letras em equipes misturadas: cada gol só vale com a palavra lida. Nunca ranking por nível de leitura |
 
@@ -280,7 +280,7 @@
 ### Como a aprendizagem é medida e acompanhada em R2b
 | O quê | Como se mede | Quem vê |
 |---|---|---|
-| V, S, N | 4 condições; S inicial = /s/ | Família: "Mestre do V/S/N" |
+| V, S, N | 4 condições; S inicial = /s/ | Família: "Maestria do V/S/N" |
 | F × V (surdo × sonoro) | Acerto em pares intercalados sem troca sistemática | Professor: marcador ⚑ se a troca persistir; família: dica "mão na garganta" |
 | Bilhetes (2–3 palavras) | Compreensão: agir conforme o bilhete | Família: "[NOME] já lê bilhetes curtos" |
 | Termômetro | Provinha de fase R2b → **nível 3** | Família e professor |
@@ -328,12 +328,12 @@
 | R2b-F06-C4 | Galhos até o ninho · os dois + tucano | Provinha de fase R2b (10 palavras + 10 pseudopalavras + 4 escrita) | Cada galho = 1 grupo; o tucano chega mais perto a cada galho. O Zum-Zum troca bilhetes de galho; a criança vence **terminando um galho antes de olhar o próximo** | Sofia: "Um galho de cada vez, [NOME]" | N6, N12 | ≥ 85% leitura e ≥ 75% escrita → **nível 3** | Sem cronômetro |
 | R2b-F06-C9 | Ninho · todos | Gancho | O bilhete do sul chega no bico do tucano | Tales: "O vento trocou o P e o T? Por quê, [NOME]?" | N10 | — | — |
 
-**Fecha a região:** **Mestre do V, S, N**; **Leitor da Mata** (prata); **Zum-Zum vira amigo** (entrega o bilhete do sul no lugar certo: "uma coisa de cada vez"); a vila ganha o **correio**; termômetro **3**. **Em casa:** deixar um bilhete de 2 palavras para a criança achar e ler, só com letras já aprendidas (ex.: "SOFÁ NOVO", "NINA VIVA").
+**Fecha a região:** **Maestria do V, S, N**; **Leitura da Mata** (prata); **Zum-Zum vira amigo** (entrega o bilhete do sul no lugar certo: "uma coisa de cada vez"); a vila ganha o **correio**; termômetro **3**. **Em casa:** deixar um bilhete de 2 palavras para a criança achar e ler, só com letras já aprendidas (ex.: "SOFÁ NOVO", "NINA VIVA").
 
 **Professor e família junto (D018) em R2b:**
 | Item | Como funciona aqui |
 |---|---|
 | Mostra pro professor | Pontos de demonstração: V, S, N, contraste F × V (mão na garganta) e leitura de SOFIA. O professor (ou a família, no uso em casa) corrige em 1 toque: ✓ "Aprendeu!", ↺ "Vamos treinar mais" ou 🎤 "Me explicou certinho"; a criança ouve "Parabéns, [NOME]!" na voz da dupla. Sem resposta em 72 h, vale o critério de domínio |
-| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Mestre do Som V, S, N**, **Garganta que Vibra** (F × V), **Carteiro da Vila** (bilhetes); valores: **Amigo que Ajuda** (bilhete triste), **Leitor Gentil** |
+| Selos da região (bronze → prata → ouro → diamante, no Álbum de Selos) | **Maestria do Som V, S, N**, **Garganta que Vibra** (F × V), **Correio da Vila** (bilhetes); valores: **Amizade que Ajuda** (bilhete triste), **Leitura Gentil** |
 | Ensinar junto (roteiro com áudio da dupla) | "Pergunte isso no jantar": "o que tem na sala que começa com /sss/?" (2 min) |
 | Competição saudável (desligável) | Turma: correio da turma, meta de bilhetes lidos por todos na semana. Nunca ranking por nível de leitura |
