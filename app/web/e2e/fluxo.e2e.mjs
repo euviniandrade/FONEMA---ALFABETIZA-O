@@ -224,7 +224,7 @@ async function main() {
   console.log('6. Vila, recado do professor, lojinha e álbum');
   await page.goto(BASE + '#/');
   await page.locator('[data-perfil="Mariana"]').click();
-  await page.waitForURL(/\/c\/[^/]+\/(mundo|vila)/);
+  await page.locator('iframe.mundo3d, [data-testid="vila"]').first().waitFor();
   const id = page.url().split('/c/')[1].split('/')[0];
   if (await page.locator('iframe.mundo3d').count()) {
     await page.waitForTimeout(CAPTURAS ? 6000 : 500);
@@ -242,7 +242,7 @@ async function main() {
   await page.locator('[data-item="caderno"] button').click();
   await page.getByTestId('confirmar-troca').click();
   await page.locator('[data-item="caderno"].tem').waitFor();
-  ok((await page.getByTestId('moedinhas').first().innerText()).trim() === '0', 'troca de 4 moedinhas pelo caderno (saldo 0)');
+  ok((await page.getByTestId('moedinhas').first().innerText()).match(/\d+/)[0] === '0', 'troca de 4 moedinhas pelo caderno (saldo 0)');
   await page.goto(BASE + `#/c/${id}/album`);
   await page.getByTestId('album').waitFor();
   await cap(page, 'album-conquistas');

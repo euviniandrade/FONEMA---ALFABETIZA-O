@@ -39,14 +39,14 @@
   }
 
   // Dentes de perfil: [z da gengiva, largura, altura, tipo, y da gengiva] (de cima: crescem para baixo; de baixo: para cima)
-  const CIMA = [[-0.27, 0.3, 0.64, 'i', 0.6], [-0.57, 0.28, 0.57, 'i', 0.58], [-0.88, 0.31, 0.6, 'c', 0.58], [-1.24, 0.36, 0.47, 'm', 0.58], [-1.66, 0.44, 0.44, 'm', 0.57], [-2.13, 0.46, 0.42, 'm', 0.56]];
-  const BAIXO = [[-0.43, 0.26, 0.62, 'i', -0.62], [-0.7, 0.26, 0.57, 'i', -0.6], [-0.99, 0.29, 0.56, 'c', -0.56], [-1.32, 0.35, 0.5, 'm', -0.44], [-1.74, 0.44, 0.47, 'm', -0.39], [-2.2, 0.46, 0.45, 'm', -0.37]];
+  const CIMA = [[-0.27, 0.34, 0.64, 'i', 0.6], [-0.6, 0.33, 0.56, 'i', 0.58], [-0.93, 0.34, 0.56, 'c', 0.58], [-1.3, 0.4, 0.47, 'm', 0.58], [-1.74, 0.46, 0.44, 'm', 0.57], [-2.21, 0.46, 0.42, 'm', 0.56]];
+  const BAIXO = [[-0.43, 0.3, 0.6, 'i', -0.6], [-0.74, 0.3, 0.55, 'i', -0.58], [-1.05, 0.32, 0.54, 'c', -0.54], [-1.41, 0.38, 0.5, 'm', -0.44], [-1.84, 0.46, 0.47, 'm', -0.39], [-2.3, 0.46, 0.45, 'm', -0.37]];
   // silhueta de um dente apontando para BAIXO, gengiva em y=0 (w, h em pixels)
   function formaDente(t, w, h) {
-    const a = w / 2;
-    if (t === 'i') return `M${-a},0 C${-a * 1.05},${h * 0.45} ${-a * 0.55},${h * 0.98} ${-a * 0.05},${h} C${a * 0.45},${h * 1.01} ${a * 0.95},${h * 0.6} ${a * 0.92},0 Z`;
-    if (t === 'c') return `M${-a},0 C${-a},${h * 0.55} ${-a * 0.35},${h} 0,${h} C${a * 0.35},${h} ${a},${h * 0.55} ${a},0 Z`;
-    return `M${-a},0 C${-a * 1.02},${h * 0.62} ${-a * 0.9},${h} ${-a * 0.45},${h} C${-a * 0.15},${h} ${-a * 0.08},${h * 0.9} 0,${h * 0.9} C${a * 0.08},${h * 0.9} ${a * 0.15},${h} ${a * 0.45},${h} C${a * 0.9},${h} ${a * 1.02},${h * 0.62} ${a},0 Z`;
+    // coroas gordinhas e arredondadas (estilo brinquedo), sem pontas
+    const a = w / 2, r = a * (t === 'm' ? 0.75 : 0.95), e = t === 'i' ? 0.12 : 0;
+    if (t === 'm') return `M${-a},0 L${-a},${h - r} Q${-a},${h} ${-a + r},${h} Q0,${h * 0.94} ${a - r},${h} Q${a},${h} ${a},${h - r} L${a},0 Z`;
+    return `M${-a * (1 - e)},0 C${-a * 1.04},${h * 0.35} ${-a},${h - r} ${-a + r * 0.15},${h - r * 0.35} Q${-a + r * 0.55},${h} 0,${h} Q${a - r * 0.55},${h} ${a - r * 0.15},${h - r * 0.35} C${a},${h - r} ${a * 1.04},${h * 0.35} ${a * (1 - e)},0 Z`;
   }
 
   function criar(container, opts = {}) {
@@ -197,9 +197,9 @@
       const junta = 1 - Math.min(1, ab / 0.14), m = (uIn + lIn) / 2; uIn += (m - uIn) * junta; lIn += (m - lIn) * junta;
       let zL = zb; if (o.ld > 0) { lIn += (-0.06 - lIn) * o.ld; zL += (-0.12 - zL) * o.ld; }
       const pr = 1 + o.arr * 0.35;
-      $('.e-labio-c').setAttribute('d', suave([[zb - 0.38, uIn + 0.04], [zb + 0.02, uIn - 0.05], [zb + 0.2 * pr, uIn + 0.16], [zb + 0.08 * pr, uIn + 0.44], [zb - 0.3, uIn + 0.5]].map(scr), true));
-      $('.e-labio-b').setAttribute('d', suave([[zL - 0.38, lIn - 0.04], [zL + 0.02, lIn + 0.05], [zL + 0.22 * pr, lIn - 0.2], [zL + 0.06 * pr, lIn - 0.52], [zL - 0.32, lIn - 0.5]].map(scr), true));
-      const ll = $('.e-labio-luz'); ll.setAttribute('cx', X(zb + 0.1 * pr)); ll.setAttribute('cy', Y(uIn + 0.27)); ll.setAttribute('rx', 0.05 * C.k); ll.setAttribute('ry', 0.1 * C.k);
+      $('.e-labio-c').setAttribute('d', suave([[zb - 0.5, uIn + 0.05], [zb - 0.1, uIn - 0.04], [zb + 0.16 * pr, uIn + 0.06], [zb + 0.24 * pr, uIn + 0.3], [zb + 0.08, uIn + 0.62], [zb - 0.25, uIn + 0.72], [zb - 0.45, uIn + 0.5]].map(scr), true));
+      $('.e-labio-b').setAttribute('d', suave([[zL - 0.5, lIn - 0.05], [zL - 0.1, lIn + 0.04], [zL + 0.18 * pr, lIn - 0.08], [zL + 0.26 * pr, lIn - 0.34], [zL + 0.08, lIn - 0.66], [zL - 0.25, lIn - 0.74], [zL - 0.45, lIn - 0.5]].map(scr), true));
+      const ll = $('.e-labio-luz'); ll.setAttribute('cx', X(zb + 0.12 * pr)); ll.setAttribute('cy', Y(uIn + 0.3)); ll.setAttribute('rx', 0.05 * C.k); ll.setAttribute('ry', 0.13 * C.k);
       // voz e ar
       const lar = [X(-4.9), Y(-4.2)]; $('.e-laringe').setAttribute('transform', `translate(${lar[0]},${lar[1]})`);
       const voz = o.voz > 0.5 && k > 0.5;
