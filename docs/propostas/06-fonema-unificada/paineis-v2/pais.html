@@ -12,7 +12,9 @@
 <style>
 body{background:linear-gradient(180deg,#E6F0F5 0,#F2F5F8 420px)}
 .web-topo{display:none}
-.app{padding:0 16px 0}
+.app{padding:0 16px 0;display:flex;flex-direction:column}
+.c1,.c2,.c3{display:contents}
+.barra{order:0}#b-heroi{order:1}#b-traj{order:2}#b-sabe{order:3}#b-pal{order:4}#b-missao{order:5}#b-video{order:6}#b-dias{order:7}.nota{order:8}.abas{order:9}
 .barra{display:flex;align-items:center;gap:10px;padding:14px 0 10px}
 .foto{width:42px;height:42px;border-radius:50%;background:linear-gradient(145deg,#FFC94A,#F28C28);display:grid;place-items:center;color:#2B2340;font-weight:700;font-size:17px;box-shadow:0 2px 6px rgba(0,0,0,.1)}
 .barra b{display:block;font-size:17px}.barra span{font-size:13px;color:var(--tinta-3)}
@@ -52,6 +54,8 @@ html[data-tema="escuro"] .missao{background:linear-gradient(135deg,#2A2212,#3327
 .mbtn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:12px;background:#2B2340;color:#FFF6E5;font-family:inherit;font-weight:700;font-size:14px;padding:9px 14px;margin-top:12px}
 .vid{margin-top:10px}
 .vid .vt{font-size:18px}
+.vid .vt{max-width:52%}
+.vid img{right:-12%!important}
 .vid .tag{position:absolute;left:8%;bottom:10%;margin-left:40px;background:rgba(255,255,255,.92);color:#2B2A4C;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:6px}
 .acad{display:flex;gap:8px;margin-top:10px}
 .acad div{flex:1;border:1px solid var(--linha);border-radius:10px;padding:7px 9px;font-size:12px;color:var(--tinta-2);background:var(--cartao-2)}
@@ -61,7 +65,8 @@ html[data-tema="escuro"] .missao{background:linear-gradient(135deg,#2A2212,#3327
 .dias span{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:2px dashed var(--linha-forte)}
 .dias span.f{border:0;background:var(--n6);color:#fff}
 .nota{font-size:12.5px;color:var(--tinta-3);margin-top:14px;display:flex;gap:8px;line-height:1.4;padding-bottom:14px}
-.abas{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);background:var(--cartao);border-top:1px solid var(--linha);padding:8px 6px 16px;margin:0 -16px}
+.abas{position:fixed;left:0;right:0;bottom:0;z-index:5;display:grid;grid-template-columns:repeat(5,1fr);background:var(--cartao);border-top:1px solid var(--linha);padding:8px 6px 16px;margin:0 -16px}
+@media (max-width:999px){.app{padding-bottom:76px}}
 .abas div{display:grid;justify-items:center;font-size:11px;color:var(--tinta-3);gap:3px}
 .abas div.on{color:var(--lousa);font-weight:700}
 .abas svg{width:22px;height:22px}
@@ -70,16 +75,21 @@ html[data-tema="escuro"] .missao{background:linear-gradient(135deg,#2A2212,#3327
   body{background:var(--fundo)}
   .web-topo{display:flex}
   .barra,.abas{display:none}
-  .app{padding:14px 20px 0;display:grid;grid-template-columns:400px 1fr 330px;grid-template-rows:auto 1fr auto;gap:12px;
-    grid-template-areas:"heroi traj missao" "heroi sabe missao" "dias palavras video";height:calc(800px - 52px - 30px)}
+  .app{padding:14px 20px 0;display:grid;grid-template-columns:400px 1fr 330px;gap:12px;height:calc(800px - 52px - 26px)}
+  .c1,.c2,.c3{display:flex;flex-direction:column;gap:12px;min-height:0}
+  #b-heroi{flex:1}#b-sabe{flex:1}#b-video{flex:1}#b-missao{flex:none}
   .bloco{margin-top:0;padding:14px 16px}
-  #b-heroi{grid-area:heroi;grid-template-columns:150px 1fr;align-content:start;row-gap:10px}
-  #b-traj{grid-area:traj}#b-sabe{grid-area:sabe}#b-pal{grid-area:palavras}#b-missao{grid-area:missao}#b-video{grid-area:video}#b-dias{grid-area:dias}
-  #traj{height:168px}
+  #b-heroi{grid-template-columns:150px 1fr;align-content:start;row-gap:10px}
+  #traj{height:150px}
+  .chip2{padding:5px 10px;font-size:13.5px}.chips{margin-top:8px}.sub2{margin-top:9px}
+  .palavras span{font-size:15px;padding:2px 9px}
+  .palavras span:nth-child(n+13):not(.mais){display:none}
+  #b-sabe,#b-pal{flex:none}
   .heroi .grande{font-size:44px}
   .nota{position:absolute;left:20px;bottom:6px;padding:0;font-size:11.5px}
   .missao .sofia{width:104px;bottom:-52px}
-  .vid{aspect-ratio:auto;height:122px}
+  .vid{aspect-ratio:auto;height:170px}
+  .vid .vt{font-size:21px!important}
   .vid img{right:-10%;bottom:-60%;height:175%}
   .missao .sofia{width:120px!important;bottom:-40px!important}
   .passos{padding-right:96px}
@@ -87,7 +97,7 @@ html[data-tema="escuro"] .missao{background:linear-gradient(135deg,#2A2212,#3327
   .extra{display:block!important}
 }
 .extra{display:none}
-.alem{display:grid;grid-template-columns:22px 1fr;gap:6px;margin-top:5px}
+.alem{display:grid;grid-template-columns:22px 1fr;gap:6px;margin-top:4px}
 </style>
 </head>
 <body>
@@ -98,6 +108,7 @@ html[data-tema="escuro"] .missao{background:linear-gradient(135deg,#2A2212,#3327
 </header>
 <div class="app">
   <div class="barra"><div class="foto">I</div><div><b>Iris · 2º B</b><span>EM Jardim das Flores · semana de 10/11</span></div><div class="sino"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--tinta-2)"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21h4"/></svg></div></div>
+  <div class="c1">
   <section class="bloco heroi" id="b-heroi">
     <svg id="tubo" viewBox="0 0 132 360" width="118" height="322" role="img" aria-label="Termômetro: nível 6 de 10, faltam 4"></svg>
     <div>
@@ -110,17 +121,19 @@ html[data-tema="escuro"] .missao{background:linear-gradient(135deg,#2A2212,#3327
     <button class="ouvir"><span class="pl"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg></span><span>Ouvir o resumo da semana<small>40 s · voz da Sofia · também no WhatsApp</small></span><span class="onda" id="onda"></span></button>
     <div class="extra" style="grid-column:1/-1;font-size:12.5px;color:var(--tinta-2);border-top:1px dashed var(--linha);padding-top:10px">
       <b style="color:var(--tinta)">Recado da Prof.ª Helena</b> · “A Iris está lendo com muita vontade! Esta semana vamos treinar o R forte com pares como caro/carro. Em casa, a missão ao lado ajuda muito.”
-      <div style="margin-top:10px"><b style="color:var(--tinta)">Além da leitura, esta semana a Iris…</b>
-      <div class="alem"><span>🧩</span>ordenou 4 passos para o robô da vila chegar à horta;</div>
-      <div class="alem"><span>🪙</span>guardou moedinhas para comprar o regador da horta;</div>
-      <div class="alem"><span>💬</span>disse como se sentiu ao errar e tentou de novo.</div></div>
     </div>
   </section>
+  <section class="bloco" id="b-dias"><h2>Dias de leitura <small>não é sequência: nada se perde</small></h2><div class="dias" id="dias"></div></section>
+  </div><div class="c2">
   <section class="bloco" id="b-traj"><h2>O caminho da Iris <small>só ela com ela mesma</small></h2><div id="traj"></div></section>
   <section class="bloco" id="b-sabe"><h2>O que a Iris já sabe <small>esta semana</small></h2>
     <div class="chips" id="sabe"></div>
-    <div class="sub2">ESTÁ APRENDENDO</div><div class="chips" id="aprende"></div></section>
+    <div class="sub2">ESTÁ APRENDENDO</div><div class="chips" id="aprende"></div>      <div class="sub2">ALÉM DA LEITURA, ESTA SEMANA A IRIS…</div><div style="font-size:13.5px;color:var(--tinta-2)">
+      <div class="alem"><span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#6250d6" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/><path d="M11 7.5h4v5.5"/></svg></span>ordenou 4 passos para o robô da vila chegar à horta;</div>
+      <div class="alem"><span><svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="8" fill="#F4B400" stroke="#B4561A" stroke-width="1.6"/><path d="M12 8v8M9.5 10.5h5" stroke="#B4561A" stroke-width="1.6" stroke-linecap="round"/></svg></span>guardou moedinhas para comprar o regador da horta;</div>
+      <div class="alem"><span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2a78d6" stroke-width="2"><path d="M4 5h16v10H9l-5 4z"/></svg></span>disse como se sentiu ao errar e tentou de novo.</div></div></section>
   <section class="bloco" id="b-pal"><h2>Palavras que a Iris leu esta semana <small>sozinha, no app</small></h2><div class="palavras" id="palavras"></div></section>
+  </div><div class="c3">
   <section class="bloco missao" id="b-missao"><h2>Missão da semana <small>5 min · sem tela</small></h2>
     <div style="font-size:15px;margin-top:6px;padding-right:86px"><b>Caça-palavras com R forte</b> nos rótulos da cozinha.</div>
     <div class="passos"><div><i>1</i><span>Peguem 3 embalagens (arroz, sabonete, macarrão).</span></div><div><i>2</i><span>A Iris procura <b>rr</b> ou <b>r</b> no começo e lê em voz alta.</span></div><div><i>3</i><span>Batam palma no som forte. Errou? Leiam juntas de novo.</span></div></div>
@@ -129,7 +142,7 @@ html[data-tema="escuro"] .missao{background:linear-gradient(135deg,#2A2212,#3327
   <section class="bloco" id="b-video"><h2>Academia FONEMA <small>vídeo da semana para a família</small></h2>
     <div class="vid"><img src="img/sofia-busto-explica.svg" alt=""><div class="vt">Por que o <span style="color:#1D4ED8">r</span><br>muda de som?</div><div class="play"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="#fff"/></svg></div><span class="tag">legenda · Libras</span><span class="dur">1:40</span></div>
     <div class="acad"><div><b>Ler junto em 5 min</b>2:10 · família</div><div><b>Como elogiar o esforço</b>1:30 · família</div></div></section>
-  <section class="bloco" id="b-dias"><h2>Dias de leitura <small>não é sequência: nada se perde</small></h2><div class="dias" id="dias"></div></section>
+  </div>
   <div class="nota"><span id="cad"></span><span>Aqui a Iris só é comparada com ela mesma. O FONEMA não mostra ranking, nota de outras crianças nem percentil.</span></div>
   <nav class="abas">
     <div class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9H3z"/></svg>Início</div>
@@ -183,8 +196,8 @@ gtj.setOption({...F.base(),grid:{left:24,right:10,top:16,bottom:22},
  yAxis:{type:'value',min:0,max:10,interval:2,axisLabel:{color:c('--tinta-3'),fontSize:10.5},splitLine:{lineStyle:{color:c('--linha')}}},
  series:[
   {type:'line',data:lo,stack:'f',symbol:'none',lineStyle:{width:0},silent:true},
-  {type:'line',data:hi.map((v,i)=>v==null?null:+(v-lo[i]).toFixed(2)),stack:'f',symbol:'none',lineStyle:{width:0},areaStyle:{color:c('--estimativa-fundo'),opacity:1},silent:true,
-   markPoint:{symbol:'rect',symbolSize:1,label:{show:true,position:'left',color:c('--estimativa'),fontSize:11,fontWeight:'bold',formatter:'faixa provável\n(não é promessa)',align:'right'},data:[{coord:['abr',7.6]}]}},
+  {type:'line',data:hi.map((v,i)=>v==null?null:+(v-lo[i]).toFixed(2)),stack:'f',symbol:'none',lineStyle:{width:0},areaStyle:{color:F.escuro?'rgba(233,182,90,.18)':'rgba(217,142,0,.16)'},silent:true,
+   markPoint:{symbol:'rect',symbolSize:1,label:{show:true,position:'right',color:c('--estimativa'),fontSize:11,fontWeight:'bold',formatter:innerWidth<1000?'faixa\nprovável':'faixa provável\nnão é promessa',align:'left'},data:[{coord:['fev',6.3]}]}},
   {type:'line',data:lo,symbol:'none',lineStyle:{width:1.3,type:'dashed',color:c('--estimativa')},silent:true},
   {type:'line',data:hi,symbol:'none',lineStyle:{width:1.3,type:'dashed',color:c('--estimativa')},silent:true},
   {type:'line',step:'end',data:real,symbol:'none',lineStyle:{width:3,color:c('--n8')},areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:c('--n6')+'66'},{offset:1,color:c('--n6')+'05'}])},
@@ -196,7 +209,7 @@ document.getElementById('sabe').innerHTML=I.sabe.map(t=>`<span class="chip2">${o
 document.getElementById('aprende').innerHTML=I.aprende.map(t=>`<span class="chip2 apr"><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 1.5A6.5 6.5 0 018 14.5z"/></svg>${t}</span>`).join('');
 // ===== palavras lidas (destaca o som novo) =====
 const alvo=/(pr|br|tr|bl|cl|fl|cr|pl|ch|lh|nh|rr|ão)/;
-document.getElementById('palavras').innerHTML=I.leu.map(w=>`<span>${w.replace(alvo,'<u>$1</u>')}</span>`).join('')+`<span class="mais">+ ${I.leuTotal-I.leu.length} palavras · ${I.leuTotal} no total</span>`;
+document.getElementById('palavras').innerHTML=I.leu.map(w=>`<span>${w.replace(alvo,'<u>$1</u>')}</span>`).join('')+`<span class="mais">+ ${I.leuTotal-(innerWidth>=1000?12:I.leu.length)} palavras · ${I.leuTotal} no total</span>`;
 // ===== dias =====
 const d=['seg','ter','qua','qui','sex','sáb','dom'];
 document.getElementById('dias').innerHTML=d.map((x,i)=>`<div><span class="${I.dias[i]?'f':''}">${I.dias[i]?ok.replace('<svg','<svg width="16" height="16"'):''}</span>${x}</div>`).join('');

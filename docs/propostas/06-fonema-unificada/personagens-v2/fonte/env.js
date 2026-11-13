@@ -170,7 +170,7 @@ function casinha(x, w, h, col, door = 'arch', sg = '') {
 }
 function lamp(x, y) { return `<g><path d="M${x},${y} V${y - 150}" stroke="#2F4F3F" stroke-width="7"/><path d="M${x - 16},${y - 150} h32 l-6,-30 h-20z" fill="#FFF2C4" stroke="#2F4F3F" stroke-width="4"/><path d="M${x - 20},${y - 182} h40 l-20,-14z" fill="#2F4F3F"/><ellipse cx="${x}" cy="${y}" rx="18" ry="5" fill="#000" opacity=".15"/></g>`; }
 function bench(x, y, s = 1) { return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-70" y="-60" width="140" height="12" rx="4" fill="#B5793F"/><rect x="-70" y="-44" width="140" height="12" rx="4" fill="#B5793F"/><rect x="-72" y="-26" width="144" height="12" rx="4" fill="#C98D58"/><path d="M-60,-14 V8 M60,-14 V8 M-62,-60 V-14 M62,-60 V-14" stroke="#2F4F3F" stroke-width="7"/></g>`; }
-function praca() {
+function praca(castFn) {
   let g = `<defs><linearGradient id="skyP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FCBEF"/><stop offset="1" stop-color="#E7F5FA"/></linearGradient>
     <linearGradient id="houseShade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".12"/><stop offset=".8" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".12"/></linearGradient>
     <pattern id="ondas" width="64" height="32" patternUnits="userSpaceOnUse"><rect width="64" height="32" fill="#F1E4CC"/><path d="M0,16 Q16,4 32,16 T64,16 V22 Q48,10 32,22 T0,22Z" fill="#9C7A5E"/></pattern>
@@ -210,6 +210,7 @@ function praca() {
   g += lamp(40, 660) + lamp(820, 640) + bench(150, 640, .8) + bench(930, 620, .7);
   // pétalas de ipê no chão
   { const r = rng(9); for (let i = 0; i < 60; i++) g += `<ellipse cx="${f(480 + r() * 300)}" cy="${f(560 + r() * 100)}" rx="4" ry="2.4" fill="${P.ipe}" transform="rotate(${f(r() * 180)} 0 0)" opacity=".85"/>`; }
+  if (castFn) { g += castFn(); g += `<rect width="1280" height="800" fill="url(#vign2)"/>`; return g; }
   // moradores
   const pp = (k, x, y, s) => groundShadow(x, y, 120 * s, 18 * s) + `<g transform="translate(${x},${y - 1000 * s}) scale(${s})">${PE.ELENCO[k]()}</g>`;
   g += pp('kenji', 245, 486, .19);

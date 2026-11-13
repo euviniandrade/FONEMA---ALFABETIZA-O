@@ -238,10 +238,10 @@ function flowers(seed, n, x0, x1, y0, y1, cols, r0 = 2.2) {
   return g;
 }
 // folhagem grande de primeiro plano (silhueta para enquadrar)
-function bigLeaves(x, y, s, seed, cols = ['#1F3D2A', '#2B5236'], dir = 1, n = 6) {
+function bigLeaves(x, y, s, seed, cols = ['#1F3D2A', '#2B5236'], dir = 1, n = 6, a0 = -15, a1 = 80) {
   const r = rng(seed); let g = '';
   for (let i = 0; i < n; i++) {
-    const a = (-80 + i * (100 / n) + (r() - .5) * 18) * dir, L = (140 + r() * 90) * s, wd = L * (.26 + r() * .08), c = cols[i % cols.length];
+    const a = (a0 + i * ((a1 - a0) / Math.max(1, n - 1)) + (r() - .5) * 14) * dir, L = (140 + r() * 90) * s, wd = L * (.26 + r() * .08), c = cols[i % cols.length];
     g += `<g transform="translate(${x},${y}) rotate(${f(a)})"><path d="M0,0 Q${f(wd)},${f(-L * .45)} 0,${f(-L)} Q${f(-wd)},${f(-L * .45)} 0,0Z" fill="${c}"/><path d="M0,0 Q${f(wd * .06)},${f(-L * .5)} 0,${f(-L * .96)}" stroke="${mix(c, '#000000', .25)}" stroke-width="${f(2 * s)}" fill="none" opacity=".7"/>${[.25, .4, .55, .7].map(t => `<path d="M0,${f(-L * t)} q${f(wd * .5)},${f(-L * .05)} ${f(wd * .75)},${f(-L * .12)} M0,${f(-L * t)} q${f(-wd * .5)},${f(-L * .05)} ${f(-wd * .75)},${f(-L * .12)}" stroke="${mix(c, '#000000', .2)}" stroke-width="${f(1.4 * s)}" fill="none" opacity=".5"/>`).join('')}</g>`;
   }
   return g;

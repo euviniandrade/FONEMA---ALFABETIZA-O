@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FONEMA Gestão · EM Jardim das Flores (dados fictícios)</title>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="v2.css">
+<script src="comum.js"></script>
+<script src="dados-escola.js"></script>
+<script src="vendor/echarts.min.js"></script>
+<script src="vendor/echarts-gl.min.js"></script>
+<style>
+.pagina{padding:20px 28px 24px}
+.kpis{grid-template-columns:repeat(7,1fr);gap:12px}
+.kpi{padding:14px 16px}
+.kpi .val{font-size:30px}
+.kpi .rot{font-size:12.5px}
+.kpi .det{font-size:12px}
+.sec{display:flex;align-items:baseline;gap:12px;margin:22px 0 10px}
+.sec h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-3)}
+.sec:after{content:"";flex:1;border-top:1px solid var(--linha);transform:translateY(-4px)}
+.heroi{display:grid;grid-template-columns:1.08fr 1fr;gap:16px}
+.cab3d{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+#g3d{height:520px;margin-top:10px;position:relative}
+.ex th{text-align:center;font-size:11px;padding:5px 2px}.ex th:first-child{text-align:left}
+.ex td{padding:0 2px;height:36px;text-align:center;font-size:13px;font-variant-numeric:tabular-nums}
+.ex td:first-child{text-align:left;font-weight:700;padding-left:4px;white-space:nowrap}
+.ex .cel{display:grid;place-items:center;height:28px;border-radius:5px;font-weight:700;font-size:12.5px}
+.ex .z{color:var(--tinta-3);font-weight:400}
+.ex .n10{font-weight:700;text-align:right;white-space:nowrap}
+.ex .n10 small{font-weight:400;color:var(--tinta-3);font-size:11.5px}
+.ex tr.tot td{border-top:2px solid var(--linha-forte);background:var(--cartao-2)}
+.ex tr.ano td:first-child{padding-top:0}
+.l3{display:grid;grid-template-columns:1.25fr 1fr 0.8fr;gap:16px}
+#evol,#antes,#faixas{height:300px}
+.l4{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:16px}
+#dose{height:320px}
+.fid td{text-align:center;padding:6px 3px}.fid td:first-child{text-align:left;font-weight:700}
+.fid th{text-align:center;white-space:normal;font-size:11px;line-height:1.2;vertical-align:bottom}.fid th:first-child{text-align:left}
+.ponto{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px}
+.ponto svg{width:13px;height:13px}
+.ponto.ok{background:var(--ok-fundo);color:var(--ok)}.ponto.aviso{background:var(--aviso-fundo);color:var(--aviso)}.ponto.alerta{background:var(--alerta-fundo);color:var(--alerta)}
+.apoio{display:grid;gap:10px;margin-top:10px}
+.ap{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:10px 12px;border:1px solid var(--linha);border-radius:12px;background:var(--cartao-2)}
+.ap .t{font-size:15px;font-weight:700;display:grid;place-items:center;border-radius:10px;height:44px;background:var(--fundo-2)}
+.ap b{font-size:14px}.ap p{font-size:12.5px;color:var(--tinta-2);margin-top:3px;line-height:1.35}
+.ap .st{margin-top:5px}
+.l5{display:grid;grid-template-columns:1fr 1.2fr 0.9fr;gap:16px}
+.dif{display:grid;gap:10px;margin-top:12px}
+.dif div{display:grid;grid-template-columns:1fr 110px;gap:4px 12px;align-items:center}
+.dif .t{font-size:13.5px;font-weight:700}.dif .v{text-align:right;font-size:13.5px;font-weight:700;font-variant-numeric:tabular-nums}.dif .v small{font-weight:400;color:var(--tinta-3);font-size:11.5px}
+.dif .barra-h{grid-column:1/-1;height:9px}
+.form td{font-size:13px;padding:6px 5px}.form th{font-size:11px}
+.mods{display:flex;gap:3px}.mods i{width:12px;height:12px;border-radius:3px;background:var(--fundo-2);border:1px solid var(--linha)}.mods i.f{background:var(--n7);border-color:transparent}
+.trilhas{display:grid;gap:10px;margin-top:10px}
+.tr{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center}
+.tr .vid{aspect-ratio:16/9}
+.tr .vid .vt{font-size:12.5px;max-width:60%}
+.tr .vid img{height:170%;bottom:-62%;right:-14%}
+.tr .vid .play{width:22px;height:22px}
+.tr b{font-size:13.5px;display:block}.tr span{font-size:12px;color:var(--tinta-3)}
+.exp{position:relative}
+.menu{position:absolute;right:0;top:40px;z-index:5;background:var(--cartao);border:1px solid var(--linha);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.14);padding:6px;width:270px}
+.menu div{display:grid;grid-template-columns:28px 1fr;gap:8px;padding:8px;border-radius:8px;font-size:13px;color:var(--tinta-2);align-items:center}
+.menu div:first-child{background:var(--info-fundo)}
+.menu b{display:block;color:var(--tinta);font-size:13.5px}
+.menu i{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:10px;color:#fff}
+.legn{display:flex;align-items:center;gap:0;font-size:11.5px;color:var(--tinta-3)}
+.legn i{width:20px;height:10px;display:block}
+</style>
+</head>
+<body>
+<header class="topo">
+  <div class="marca"><i>F</i>FONEMA Gestão</div>
+  <nav class="nav"><a class="ativo">Visão da unidade</a><a>Turmas</a><a>Implantação</a><a>Formação</a><a>Famílias</a><a>Aparelhos</a><a>Relatórios</a></nav>
+  <div class="usuario"><div><b>Direção · Márcia Lopes (fictícia)</b>EM Jardim das Flores · Rede Municipal de Vale Verde</div><div class="avatar">ML</div></div>
+</header>
+<main class="pagina">
+  <div class="cab">
+    <div><h1>EM Jardim das Flores · alfabetização 2026</h1><div class="sub">8 turmas de 1º e 2º ano · escala FONEMA por critério 0–10 · dados até 12/11/2026, 23h · fonte única com os painéis das professoras e da secretaria</div></div>
+    <div class="filtros"><span class="chip">Período <b>fev → nov 2026</b></span><span class="chip">Turmas <b>todas (8)</b></span><span class="chip">Comparar com <b>fevereiro</b></span><button class="botao">Pauta da reunião</button>
+      <div class="exp"><button class="botao prim">Exportar relatório ▾</button>
+        <div class="menu"><div><i style="background:#C53030">PDF</i><span><b>Relatório ao Conselho Escolar</b>12 páginas · 2D + capturas 3D</span></div><div><i style="background:#2F855A">CSV</i><span><b>Planilha por turma e nível</b>sem nomes de crianças</span></div><div><i style="background:#975A16">PPT</i><span><b>Apresentação da reunião</b>8 slides com a pauta</span></div></div></div></div>
+  </div>
+
+  <section class="grade kpis" id="kpis"></section>
+
+  <div class="sec"><h3>Onde cada turma está no termômetro</h3></div>
+  <section class="heroi">
+    <div class="cartao" style="box-shadow:var(--sombra-heroi)">
+      <div class="cab3d"><div><h2>Turmas × níveis em 3D <small>altura = nº de crianças · cada barra com o número exato</small></h2><div class="pergunta">Onde a escola se concentra e qual o “degrau” entre 1º e 2º ano? Projeção ortográfica: barras iguais têm a mesma altura em qualquer ponto.</div></div>
+        <div class="alterna"><span class="on">3D</span><span>2D</span><span>Tabela</span></div></div>
+      <div id="g3d" class="palco"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><div class="legn" id="legn"></div><span style="font-size:12px;color:var(--tinta-3)">Arraste com o botão direito para girar · a vista sempre abre calibrada</span></div>
+    </div>
+    <div class="cartao">
+      <h2>Números exatos <small>nº de crianças por nível · a mesma base do 3D</small></h2>
+      <div class="pergunta">Decisões se tomam por aqui. Cor da célula = nível (mesma escala); vazio = nenhuma criança.</div>
+      <table class="ex" style="margin-top:8px"><thead><tr><th>Turma</th><th>n</th><th id="hn" colspan="11"></th><th>Mediana</th><th style="text-align:right">Nível 10</th></tr></thead><tbody id="ex"></tbody></table>
+    </div>
+  </section>
+
+  <div class="sec"><h3>Evolução e comparação antes/depois</h3></div>
+  <section class="l3">
+    <div class="cartao"><h2>Evolução mês a mês <small>% das crianças · fev → nov</small></h2><div id="evol"></div></div>
+    <div class="cartao"><h2>Antes e depois por turma <small>nível mediano · fevereiro ○ → novembro ◆</small></h2><div id="antes"></div></div>
+    <div class="cartao"><h2>2º ano por faixa <small>% · fev × nov</small></h2><div id="faixas"></div></div>
+  </section>
+
+  <div class="sec"><h3>Implementação: o programa está rodando como previsto?</h3></div>
+  <section class="l4">
+    <div class="cartao"><h2>Dose de prática fônica <small>min/semana · média de 4 semanas</small></h2><div id="dose"></div></div>
+    <div class="cartao"><h2>Fidelidade de implementação <small>últimas 4 semanas · mede o programa, não pessoas</small></h2>
+      <table class="fid" style="margin-top:8px"><thead><tr><th>Turma</th><th>Dose ≥ 45 min</th><th>Sessões até o fim</th><th>Grupos aplicados</th><th>Rotação por estações</th><th>Formação em dia</th><th>Índice</th></tr></thead><tbody id="fid"></tbody></table>
+      <div style="display:flex;gap:14px;font-size:12px;color:var(--tinta-2);margin-top:10px;align-items:center" id="legf"></div></div>
+    <div class="cartao"><h2>Turmas que precisam de apoio <small>esta semana · regras transparentes</small></h2><div class="apoio" id="apoio"></div></div>
+  </section>
+
+  <div class="sec"><h3>Habilidades e formação</h3></div>
+  <section class="l5">
+    <div class="cartao"><h2>Habilidades mais difíceis da escola <small>% das crianças que já deveriam dominar e ainda não dominam</small></h2><div class="dif" id="dif"></div>
+      <div style="font-size:12px;color:var(--tinta-3);margin-top:12px">Base: crianças cujo nível já passou pela habilidade. Agregado da escola; o detalhe por criança fica com a professora.</div></div>
+    <div class="cartao"><h2>Formação das professoras · Academia FONEMA <small>8 módulos curtos · ordem por turma</small></h2>
+      <table class="form" style="margin-top:6px"><thead><tr><th>Turma</th><th>Professora/professor</th><th>Módulos</th><th></th><th>Situação</th></tr></thead><tbody id="form"></tbody></table></div>
+    <div class="cartao"><h2>Trilhas sugeridas da Academia <small>pela dificuldade da escola</small></h2><div class="trilhas" id="trilhas"></div></div>
+  </section>
+
+  <div class="rodape">
+    <div><span id="cad"></span><span>A direção vê turmas e, quando precisa, crianças da própria escola. Sem ranking de crianças nem de professoras; n &lt; 10 suprimido nos relatórios externos.</span></div>
+    <div><span>Fidelidade e formação explicam resultados; não avaliam pessoas. A projeção é estimativa, não resultado oficial nem equivalência com o Saeb.</span></div>
+    <div><span>Termômetros socioemocionais ficam com professora e família: não entram neste painel nem no da secretaria.</span></div>
+  </div>
+</main>
+<script>
+const F=FONEMA,c=F.css,cor=F.niveis(),D=FONEMA_DADOS,T=D.TURMAS,E=D.ESCOLA;
+document.getElementById('cad').innerHTML=F.ic.cadeado;
+const soma=a=>a.reduce((x,y)=>x+y,0);
+const ano=k=>T.filter(t=>t.t.startsWith(k));
+const agr=k=>{const ts=ano(k);return Array.from({length:11},(_,i)=>soma(ts.map(t=>t.c[i])));};
+const med=c=>{const n=soma(c);let a=0;for(let i=0;i<11;i++){a+=c[i];if(a>=n/2)return i;}};
+const a1=agr('1º'),a2=agr('2º'),n1=soma(a1),n2=soma(a2);
+const doseM=Math.round(soma(T.map(t=>t.dose*t.n))/soma(T.map(t=>t.n)));
+const fidIx=t=>Math.round([...t.fid].reduce((a,k)=>a+(k==='o'?1:k==='a'?.5:0),0)/5*100);
+const fidM=Math.round(soma(T.map(fidIx))/T.length);
+const formOk=T.filter(t=>t.form>=7).length,formMods=soma(T.map(t=>t.form));
+// ===== KPIs =====
+const K=[['Crianças acompanhadas',`${n1+n2}`,`1º ano: ${n1} · 2º ano: ${n2}`],
+ ['2º ano no nível 10',`${Math.round(a2[10]*100/n2)}%`,`<b>${a2[10]} de ${n2}</b> · fev: 8% (+16 p.p.)`],
+ ['Nível mediano 1º / 2º',`${med(a1)} <small>/</small> ${med(a2)}`,'fevereiro: 1 / 4'],
+ ['2º ano no nível 7 ou mais',`${Math.round((a2[7]+a2[8]+a2[9]+a2[10])*100/n2)}%`,`<b>${a2[7]+a2[8]+a2[9]+a2[10]} de ${n2}</b> · fev: 14%`],
+ ['Dose média de prática',`${doseM} <small>min/sem</small>`,`${T.filter(t=>t.dose>=45).length} de 8 turmas na faixa 45–60`],
+ ['Fidelidade de implementação',`${fidM}%`,`média das 8 turmas · 5 critérios`]];
+document.getElementById('kpis').innerHTML=K.map(([r,v,d])=>`<div class="cartao kpi"><div class="rot">${r}</div><div class="val num">${v}</div><div class="det">${d}</div></div>`).join('')
+ +`<div class="cartao kpi estim"><div class="rot">Projeção 2º ano no nível 10 · dez <span class="selo">ESTIMATIVA</span></div><div class="val num">31–38%</div><div class="det">faixa pelo ritmo atual; não é resultado oficial nem Saeb</div></div>`;
+// ===== 3D =====
+const g3=F.registrar(echarts.init(document.getElementById('g3d')));
+const dd=[];T.forEach((t,x)=>t.c.forEach((v,y)=>dd.push({value:[x,y,v],itemStyle:{color:cor[y],opacity:v?1:.0},label:{show:v>0,formatter:String(v),distance:2,
+  textStyle:{fontSize:12,fontWeight:'bold',fontFamily:F.fonte,color:F.escuro?'#0C131B':'#FFFFFF',backgroundColor:y>=5?cor[y]:(F.escuro?'#9CC3F0':'#1E3A5F'),padding:[2,5],borderRadius:4,borderWidth:0}}})));
+const eixo={axisLine:{lineStyle:{color:c('--linha-forte')}},axisTick:{show:false},splitLine:{show:true,lineStyle:{color:c('--linha')}},axisLabel:{textStyle:{color:c('--tinta-2'),fontSize:13,fontFamily:F.fonte}}};
+g3.setOption({...F.base(),tooltip:F.tooltip({formatter:p=>`<b>${T[p.value[0]].t}</b> · nível ${p.value[1]}: <b>${p.value[2]}</b> criança(s)`}),
+ xAxis3D:{...eixo,type:'category',name:'',data:T.map(t=>t.t),axisLabel:{...eixo.axisLabel,interval:0,textStyle:{...eixo.axisLabel.textStyle,fontWeight:'bold',color:c('--tinta')}}},
+ yAxis3D:{...eixo,type:'category',name:'nível',nameTextStyle:{color:c('--tinta-3'),fontSize:12},data:cor.map((_,i)=>String(i)),axisLabel:{...eixo.axisLabel,interval:0,textStyle:{...eixo.axisLabel.textStyle,fontSize:12}}},
+ zAxis3D:{...eixo,type:'value',name:'',max:8,interval:2,axisLabel:{...eixo.axisLabel,textStyle:{...eixo.axisLabel.textStyle,fontSize:11.5}}},
+ grid3D:{boxWidth:190,boxDepth:160,boxHeight:58,top:-8,left:0,environment:'none',axisPointer:{show:false},
+  viewControl:{projection:'orthographic',orthographicSize:168,alpha:26,beta:28,animation:false,rotateMouseButton:'right',panMouseButton:'left'},
+  light:{main:{intensity:1.2,shadow:true,shadowQuality:'high',alpha:50,beta:20},ambient:{intensity:F.escuro?.45:.58}},
+  postEffect:{enable:true,FXAA:{enable:true}},temporalSuperSampling:{enable:true}},
+ series:[{type:'bar3D',data:dd,shading:'lambert',barSize:[11,8],bevelSize:.3,bevelSmoothness:4}]});
+document.getElementById('legn').innerHTML='<span style="margin-right:8px">Nível</span>'+cor.map((k,i)=>`<i style="background:${k}"></i>`).join('')+'<span style="margin-left:8px">0 → 10 · rótulo = nº exato de crianças</span>';
+// ===== tabela exata =====
+document.getElementById('hn').outerHTML=cor.map((_,i)=>`<th${i===10?' style="color:var(--tinta)"':''}>${i}</th>`).join('');
+const txt=i=>F.escuro?(i>=5?'#0C131B':'#E8EEF4'):(i>=5?'#fff':'#152232');
+const linha=(nome,cc,cls='')=>{const n=soma(cc);return `<tr class="${cls}"><td>${nome}</td><td class="num">${n}</td>${cc.map((v,i)=>`<td>${v?`<span class="cel" style="background:${cor[i]};color:${txt(i)}">${v}</span>`:'<span class="z">·</span>'}</td>`).join('')}<td class="num"><b>${med(cc)}</b></td><td class="n10">${cc[10]} <small>(${Math.round(cc[10]*1000/n)/10}%)</small></td></tr>`;};
+document.getElementById('ex').innerHTML=T.slice(0,4).map(t=>linha(t.t,t.c)).join('')+linha('1º ano',a1,'tot')+T.slice(4).map(t=>linha(t.t,t.c)).join('')+linha('2º ano',a2,'tot')+linha('Escola',a1.map((v,i)=>v+a2[i]),'tot');
+// ===== evolução =====
+const ge=F.registrar(echarts.init(document.getElementById('evol'),null,{renderer:'svg'}));
+const ser=(nome,d,cr,sym)=>({name:nome,type:'line',data:d,symbol:sym,symbolSize:7,lineStyle:{width:2.6,color:cr},itemStyle:{color:cr},endLabel:{show:true,formatter:p=>`${p.value}%  ${nome}`,color:c('--tinta'),fontWeight:'bold',fontSize:12}});
+ge.setOption({...F.base(),grid:{left:34,right:160,top:16,bottom:26},tooltip:F.tooltip({trigger:'axis',valueFormatter:v=>v+'%'}),
+ xAxis:{type:'category',data:E.meses,boundaryGap:false,axisTick:{show:false},axisLine:{lineStyle:{color:c('--linha-forte')}},axisLabel:{color:c('--tinta-3'),fontSize:12}},
+ yAxis:{type:'value',max:80,interval:20,axisLabel:{color:c('--tinta-3'),fontSize:12,formatter:'{value}%'},splitLine:{lineStyle:{color:c('--linha')}}},
+ series:[ser('1º ano · nível 3+',E.ev1_3,c('--g4'),'triangle'),ser('2º ano · nível 7+',E.ev2_7,cor[6],'diamond'),ser('2º ano · nível 10',E.ev2_10,cor[10],'circle')]});
+// ===== antes/depois =====
+const ga=F.registrar(echarts.init(document.getElementById('antes'),null,{renderer:'svg'}));
+ga.setOption({...F.base(),grid:{left:44,right:30,top:12,bottom:30},
+ tooltip:F.tooltip({trigger:'axis',axisPointer:{type:'none'},formatter:ps=>{const t=T[ps[0].dataIndex];return `<b>${t.t}</b><br>fevereiro: nível ${t.fev}<br>novembro: nível ${t.med} (+${t.med-t.fev})`}}),
+ xAxis:{type:'value',min:0,max:10,interval:1,axisLabel:{color:c('--tinta-3'),fontSize:12},splitLine:{lineStyle:{color:c('--linha')}}},
+ yAxis:{type:'category',data:T.map(t=>t.t),inverse:true,axisTick:{show:false},axisLine:{show:false},axisLabel:{color:c('--tinta'),fontSize:13,fontWeight:'bold'}},
+ series:[{type:'custom',renderItem:(p,api)=>{const a=api.coord([api.value(0),p.dataIndex]),b=api.coord([api.value(1),p.dataIndex]);return{type:'line',shape:{x1:a[0],y1:a[1],x2:b[0],y2:b[1]},style:{stroke:c('--linha-forte'),lineWidth:5,lineCap:'round'}}},data:T.map(t=>[t.fev,t.med]),silent:true,z:1},
+  {type:'scatter',data:T.map(t=>t.fev),symbol:'circle',symbolSize:12,itemStyle:{color:c('--cartao'),borderColor:cor[5],borderWidth:2.5},z:3},
+  {type:'scatter',data:T.map(t=>t.med),symbol:'diamond',symbolSize:16,itemStyle:{color:cor[10],borderColor:c('--cartao'),borderWidth:1.5},z:4,
+   label:{show:true,position:'right',distance:8,formatter:p=>'+'+(T[p.dataIndex].med-T[p.dataIndex].fev),color:c('--tinta'),fontWeight:'bold',fontSize:12.5}}]});
+// ===== faixas 2º ano =====
+const fx=['0–3','4–6','7–9','10'],fCor=[cor[2],cor[5],cor[8],cor[10]];
+const nov=[a2[0]+a2[1]+a2[2]+a2[3],a2[4]+a2[5]+a2[6],a2[7]+a2[8]+a2[9],a2[10]],novP=F.para100(nov),fevP=fx.map(k=>E.faixasFev2[k]);
+const gf=F.registrar(echarts.init(document.getElementById('faixas'),null,{renderer:'svg'}));
+gf.setOption({...F.base(),grid:{left:8,right:8,top:30,bottom:26},legend:{top:0,left:0,itemWidth:10,itemHeight:10,textStyle:{color:c('--tinta-2'),fontSize:11.5},data:fx.map(f=>'níveis '+f)},
+ tooltip:F.tooltip({trigger:'item',formatter:p=>`${p.name} · ${p.seriesName}: <b>${p.value}%</b>`}),
+ xAxis:{type:'category',data:['fevereiro','novembro'],axisTick:{show:false},axisLine:{show:false},axisLabel:{color:c('--tinta'),fontWeight:'bold',fontSize:12.5}},
+ yAxis:{type:'value',max:100,show:false},
+ series:fx.map((f,i)=>({name:'níveis '+f,type:'bar',stack:'s',barWidth:'58%',data:[fevP[i],novP[i]],itemStyle:{color:fCor[i],borderColor:c('--cartao'),borderWidth:1.5},
+  label:{show:true,formatter:p=>p.value>=6?p.value+'%':'',color:i>=1?(F.escuro?'#0C131B':'#fff'):c('--tinta'),fontWeight:'bold',fontSize:12.5}}))});
+// ===== dose =====
+const gd=F.registrar(echarts.init(document.getElementById('dose'),null,{renderer:'svg'}));
+gd.setOption({...F.base(),grid:{left:44,right:34,top:30,bottom:24},
+ tooltip:F.tooltip({trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:v=>v+' min/semana'}),
+ xAxis:{type:'value',max:70,interval:15,axisLabel:{color:c('--tinta-3'),fontSize:12},splitLine:{lineStyle:{color:c('--linha')}}},
+ yAxis:{type:'category',data:T.map(t=>t.t),inverse:true,axisTick:{show:false},axisLine:{show:false},axisLabel:{color:c('--tinta'),fontSize:13,fontWeight:'bold'}},
+ series:[{type:'bar',data:T.map(t=>({value:t.dose,itemStyle:{color:t.dose<45?c('--aviso'):cor[7],borderRadius:[0,4,4,0]}})),barWidth:17,
+   label:{show:true,position:'right',color:c('--tinta'),fontWeight:'bold',fontSize:12.5,formatter:p=>(p.value<45?'▼ ':'')+p.value},
+   markArea:{silent:true,itemStyle:{color:F.escuro?'rgba(92,196,138,.10)':'rgba(47,133,90,.08)'},label:{show:true,position:'insideTop',offset:[0,-22],color:c('--ok'),fontSize:12,fontWeight:'bold',formatter:'faixa-alvo 45–60'},data:[[{xAxis:45},{xAxis:60}]]}}]});
+// ===== fidelidade =====
+const mp={o:'ok',a:'aviso',x:'alerta'},tt={o:'cumprido',a:'parcial',x:'não cumprido'};
+document.getElementById('fid').innerHTML=T.map(t=>`<tr><td>${t.t}</td>${[...t.fid].map(k=>`<td><span class="ponto ${mp[k]}" title="${tt[k]}">${F.ic[mp[k]]}</span></td>`).join('')}<td class="num" style="font-weight:700">${fidIx(t)}%</td></tr>`).join('');
+document.getElementById('legf').innerHTML=['o','a','x'].map(k=>`<span style="display:inline-flex;gap:6px;align-items:center"><span class="ponto ${mp[k]}">${F.ic[mp[k]]}</span>${tt[k]}</span>`).join('')+'<span style="color:var(--tinta-3)">parcial = meio ponto</span>';
+// ===== apoio =====
+document.getElementById('apoio').innerHTML=[
+ ['1º C','alerta','uso baixo','Aparelhos antes de pedagogia','Dose de 31 min/sem: 3 de 6 tablets sem sincronizar. Pedir carregadores à secretaria.'],
+ ['2º D','aviso','grupos','Retomar os grupos semanais','Grupos aplicados em 1 de 4 semanas; dose 47. Planejar com a Prof.ª Helena (2º B).'],
+ ['1º A','info','formação','Concluir a formação','5 de 8 módulos. Sugerir “Grupos e estações” (12 min) na Academia.'],
+ ['2º B','ok','destaque','Compartilhar a prática','Fidelidade 100% e grupos em dia. Levar o plano de estações à reunião de sexta.']]
+ .map(([t,k,r,b,p])=>`<div class="ap"><span class="t">${t}</span><div><b>${b}</b><p>${p}</p>${F.st(k,r)}</div></div>`).join('');
+// ===== habilidades difíceis =====
+const DF=E.dificeis,mx=Math.max(...DF.map(d=>d[1]));
+document.getElementById('dif').innerHTML=DF.map(([h,p,n],i)=>`<div><span class="t">${h}</span><span class="v">${p}% <small>· ${n} crianças</small></span><span class="barra-h"><i style="width:${p/40*100}%;background:${i<3?cor[9]:cor[6]}"></i></span></div>`).join('');
+// ===== formação =====
+document.getElementById('form').innerHTML=T.map(t=>`<tr><td><b>${t.t}</b></td><td>${t.prof}</td><td><span class="mods">${Array.from({length:8},(_,i)=>`<i class="${i<t.form?'f':''}"></i>`).join('')}</span></td><td class="num" style="font-weight:700">${t.form}/8</td><td>${t.form>=7?F.st('ok','em dia'):F.st('aviso','parcial')}</td></tr>`).join('')
+ +`<tr><td colspan="5" style="font-size:12px;color:var(--tinta-3)">${formOk} de 8 em dia · ${formMods} de 64 módulos concluídos · tempo médio por módulo: 11 min</td></tr>`;
+// ===== trilhas =====
+document.getElementById('trilhas').innerHTML=[
+ ['R forte e R fraco na sala','sofia-busto-explica.svg','O <span style="color:#1D4ED8">rr</span> na sala','6 min · pares mínimos e gesto · para 30% da escola'],
+ ['Encontros PR, BR, TR','sofia-busto.svg','Trem das<br>sílabas','5 min · letras móveis · 1º e 2º ano'],
+ ['Ler o painel sem rotular','sofia-busto-explica.svg','Painel<br>sem rótulo','7 min · para toda a equipe']]
+ .map(([t,img,vt,d])=>`<div class="tr"><div class="vid"><img src="img/${img}" alt=""><div class="vt">${vt}</div><div class="play"><svg width="9" height="9" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="#fff"/></svg></div></div><div><b>${t}</b><span>${d}</span></div></div>`).join('')
+ +`<button class="botao" style="margin-top:2px">Enviar trilha às professoras</button>`;
+addEventListener('resize',()=>[g3,ge,ga,gf,gd].forEach(x=>x.resize()));
+</script>
+</body>
+</html>

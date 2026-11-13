@@ -268,7 +268,7 @@ function sagittal(k, o = {}) {
   else if (F.air === 'burst') {
     g += `<path data-layer="ar" d="${rise} Q262,246 340,244 Q440,244 496,252" ${A}/>`;
     g += [[470, 250], [456, 238], [440, 252], [484, 262]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="${K.air}" opacity=".45"/>`).join('');
-    g += `<g stroke="${K.air}" stroke-width="5" stroke-linecap="round" opacity=".9"><path d="M568,250 l18,-8 M570,268 l22,0 M568,286 l18,8"/></g><text x="560" y="236" font-family="Andika" font-weight="700" font-size="22" fill="${K.air}">puf!</text>`;
+    g += `<g stroke="${K.air}" stroke-width="5" stroke-linecap="round" opacity=".9"><path d="M568,250 l18,-8 M570,268 l22,0 M568,286 l18,8"/></g><text x="540" y="220" font-family="Andika" font-weight="700" font-size="22" fill="${K.air}">puf!</text>`;
   } else if (F.air === 'fric-lab') {
     g += `<path data-layer="ar" d="${rise} Q262,246 340,244 Q450,244 512,262 L592,282" ${A}/>`;
     g += `<path d="M560,296 q10,-4 20,0 M560,306 q12,-4 24,0" stroke="${K.airSoft}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
@@ -277,7 +277,7 @@ function sagittal(k, o = {}) {
     g += `<path d="M556,272 q8,-6 16,0 t16,0 M556,240 q8,-6 16,0 t16,0" stroke="${K.airSoft}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
   } else if (F.air === 'lateral') {
     g += `<path data-layer="ar" d="${rise} Q262,244 340,${F.tongue === 'l' ? 262 : 244} Q420,290 470,296 Q520,300 592,${R([592, 296]).split(',')[1]}" ${A} opacity=".95"/>`;
-    g += `<g transform="translate(330,352)"><rect width="190" height="30" rx="15" fill="#fff" opacity=".92"/><text x="95" y="21" text-anchor="middle" font-family="Andika" font-weight="700" font-size="16.5" fill="${K.air}">ar pelos lados da língua</text></g>`;
+    g += `<g transform="translate(300,402)"><rect width="190" height="30" rx="15" fill="#fff" opacity=".92"/><text x="95" y="21" text-anchor="middle" font-family="Andika" font-weight="700" font-size="16.5" fill="${K.air}">ar pelos lados da língua</text></g>`;
   } else g += `<path data-layer="ar" d="${rise} Q262,256 340,266 Q440,276 520,${f(rot([520, 280], J)[1])} L592,${f(rot([592, 290], J)[1])}" ${A}/>`;
   // ---- vibração (garganta)
   if (F.voice) g += `<g data-layer="vibracao" fill="none" stroke="${K.voice}" stroke-width="6" stroke-linecap="round">

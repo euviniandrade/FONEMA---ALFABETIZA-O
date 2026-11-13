@@ -1,11 +1,11 @@
 // Renderiza as folhas: node render.js [nome...]
 const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path');
-const pages = require('./pages2');
+const pages = require('./pages');
 (async () => {
   const want = process.argv.slice(2);
   const b = await chromium.launch();
-  for (const [name, fn] of Object.entries(pages)) {
+  for (const [name, fn] of Object.entries(pages)) { if (typeof fn !== 'function' || name === name.toUpperCase()) continue;
     if (want.length && !want.includes(name)) continue;
     const { w, h, html } = fn();
     const file = path.join(__dirname, `_${name}.html`);
