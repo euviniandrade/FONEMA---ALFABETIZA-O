@@ -92,6 +92,7 @@ export function buildVila(ctx) {
   // ---------- caminhos ----------
   function path(a, b, wdt = 2.3) {
     const dx = b.x - a.x, dz = b.z - a.z, len = Math.hypot(dx, dz), ang = Math.atan2(dx, dz);
+    for (let k = 0; k <= Math.floor(Math.hypot(b.x - a.x, b.z - a.z) / 1.5); k++) { const t = k / Math.max(1, Math.floor(Math.hypot(b.x - a.x, b.z - a.z) / 1.5)); occupy(a.x + (b.x - a.x) * t, a.z + (b.z - a.z) * t, wdt * 0.6); }
     m.add(G.box, '#E8D2A6', M((a.x + b.x) / 2, GY + 0.06, (a.z + b.z) / 2, 0, ang, 0, wdt, 0.12, len), { jitter: 0.03 });
     const n = Math.floor(len / 0.95);
     for (let i = 0; i < n; i++) {
@@ -211,11 +212,14 @@ export function buildVila(ctx) {
     const pz = bib.dep / 2 + 1.6;
     m.add(G.box, '#E9DCC4', L(0, 0.25, pz - 0.2, 0, 0, 0, 9.4, 0.5, 3.8));
     for (let i = 0; i < 3; i++) m.add(G.box, '#E9DCC4', L(0, 0.08 + i * 0.0, pz + 1.9 + i * 0.45, 0, 0, 0, 7 - i * 0.6, 0.5 - i * 0.16, 0.5));
-    [-4.3, -2.5, 2.5, 4.3].forEach((xx) => { m.add(G.cyl12, '#FFFBF4', L(xx, 0.5 + 2.6, pz + 0.9, 0, 0, 0, 0.62, 5.2, 0.62)); m.add(G.box, '#FFFBF4', L(xx, 5.85, pz + 0.9, 0, 0, 0, 0.9, 0.3, 0.9)); m.add(G.box, '#FFFBF4', L(xx, 0.62, pz + 0.9, 0, 0, 0, 0.9, 0.3, 0.9)); });
+    [-4.5, -2.75, 2.75, 4.5].forEach((xx) => { m.add(G.cyl12, '#FFFBF4', L(xx, 0.5 + 2.6, pz + 0.9, 0, 0, 0, 0.62, 5.2, 0.62)); m.add(G.box, '#FFFBF4', L(xx, 5.85, pz + 0.9, 0, 0, 0, 0.9, 0.3, 0.9)); m.add(G.box, '#FFFBF4', L(xx, 0.62, pz + 0.9, 0, 0, 0, 0.9, 0.3, 0.9)); });
     m.add(G.box, '#FFFBF4', L(0, 6.2, pz + 0.2, 0, 0, 0, 9.4, 0.5, 3.6));
     m.add(G.prism, '#1F6E82', L(0, 6.45, pz + 0.2, 0, 0, 0, 9.8, 1.9, 3.8), { grad: 0.2 });
     m.add(G.prism, '#FFFBF4', L(0, 6.5, pz + 2.12, 0, 0, 0, 8.6, 1.55, 0.08));
-    sign('LIVRO', 'livro', L(0, 4.55, bib.dep / 2 + 0.12), 4.4, 1.5, PAL.mar);
+    sign('LIVRO', 'livro', L(0, 4.55, bib.dep / 2 + 0.12), 3.7, 1.4, PAL.mar);
+    // friso de lombadas coloridas sob a cornija + vasos na escada
+    for (let i = 0; i < 26; i++) m.add(G.box, ['#B23C62', '#1F6E82', '#F2B33D', '#2F8A49', '#6B5BA8', '#E07F62'][i % 6], L(-6.25 + i * 0.5, 6.35, bib.dep / 2 + 0.06, 0, 0, 0, 0.42, 0.62 + (i % 3) * 0.08, 0.1), { jitter: 0.03 });
+    [-3.9, 3.9].forEach((xx) => { m.add(G.cyl8, '#C2552F', L(xx, 0.85, bib.dep / 2 + 4.3, 0, 0, 0, 0.9, 0.7, 0.9)); m.add(G.ico1, '#4FA350', L(xx, 1.5, bib.dep / 2 + 4.3, 0, 0, 0, 1.1)); for (let k = 0; k < 4; k++) d.add(G.ico0, '#E8547A', L(xx + Math.cos(k * 1.6) * 0.45, 1.75, bib.dep / 2 + 4.3 + Math.sin(k * 1.6) * 0.45, 0, 0, 0, 0.26)); });
     // janela redonda no frontão
     w.add(G.cyl16, '#F7D38A', L(0, 7.15, pz + 2.17, Math.PI / 2, 0, 0, 1.0, 0.06, 1.0), { jitter: 0 });
     // pilhas de livros gigantes (escultura) + cantinho de leitura
@@ -464,7 +468,7 @@ export function buildVila(ctx) {
     m.add(G.ico1, '#5DAA4E', M(fx, GY + 0.45, fz, 0, 0, 0, 0.7, 0.45, 0.6));
     m.add(G.ico0, '#5DAA4E', M(fx - 0.2, GY + 0.72, fz + 0.15, 0, 0, 0, 0.26)); m.add(G.ico0, '#5DAA4E', M(fx + 0.2, GY + 0.72, fz + 0.15, 0, 0, 0, 0.26));
     m.add(G.ico0, '#2B1B12', M(fx - 0.2, GY + 0.78, fz + 0.26, 0, 0, 0, 0.1)); m.add(G.ico0, '#2B1B12', M(fx + 0.2, GY + 0.78, fz + 0.26, 0, 0, 0, 0.1));
-    standingSign('SAPO', 'sapo', lx + 4.3, lz - 4.5, 0.4, PAL.folha);
+    standingSign('SAPO', 'sapo', lx - 6.4, lz - 2.0, 0.7, PAL.folha);
     for (let i = 0; i < 10; i++) { const a = rnd() * 6.28; N.tuft(d, lx + Math.cos(a) * 4.3, GY, lz + Math.sin(a) * 3.3, 1.2, '#4E9A48', rnd); }
   }
 
@@ -530,11 +534,11 @@ export function buildVila(ctx) {
   N.person(m, 6.5, GY + 0.1, -3.2, -2.2, rnd, { shirt: '#E07F62', dress: true, hair: '#4A2E1E', curly: true });
   N.person(m, -6.8, GY + 0.1, 6.5, 2.4, rnd, { shirt: '#2F5A70', hat: '#E3C548', hair: '#D8D2C8' });
   N.person(m, -4.0, GY + 0.1, -5.5, 0.4, rnd, { s: 0.75, shirt: '#B23C62', dress: true });
-  N.dog(m, 7.6, GY + 0.45, 6.3, -0.6, '#C98A4A');
+  N.dog(m, 12.5, GY + 0.35, 4.5, -0.9, '#C98A4A');
 
   return {
     PC, chimney, robotEye, lampTops, bibFront: bib.front, bib,
-    sofia: new THREE.Vector3(3.2, GY + 0.1, 10.6), bolota: new THREE.Vector3(5.0, GY + 0.1, 11.3),
+    sofia: new THREE.Vector3(1.4, GY + 0.12, 7.9), bolota: new THREE.Vector3(3.1, GY + 0.12, 8.5),
     edgeToward: (tx, tz) => { const v = new THREE.Vector2(tx, tz).normalize(); return new THREE.Vector3(v.x * (VILA.r - 0.5), GY, v.y * (VILA.r - 0.5)); },
   };
 }

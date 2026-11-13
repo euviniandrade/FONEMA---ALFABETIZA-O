@@ -28,9 +28,9 @@ function autoQuality() {
   return 'alto';
 }
 const QCFG = {
-  alto: { dpr: 2, shadow: 2048, post: 'full', petals: 700, flies: 260, confetti: 500, clouds: 16, detail: true },
-  medio: { dpr: 1.5, shadow: 1024, post: 'bloom', petals: 260, flies: 110, confetti: 220, clouds: 12, detail: true },
-  leve: { dpr: 1, shadow: 0, post: 'none', petals: 80, flies: 40, confetti: 90, clouds: 7, detail: false },
+  alto: { dpr: 2, shadow: 2048, post: 'full', petals: 220, flies: 90, confetti: 500, clouds: 16, detail: true },
+  medio: { dpr: 1.5, shadow: 1024, post: 'bloom', petals: 110, flies: 50, confetti: 220, clouds: 12, detail: true },
+  leve: { dpr: 1, shadow: 0, post: 'none', petals: 40, flies: 20, confetti: 90, clouds: 7, detail: false },
 };
 
 await loadFonts();
@@ -98,11 +98,12 @@ flush(LV, 'vila');
 const LA = layerSet(200);
 buildIslands({ ...LA, group: world, renderer, dyn, labelSprites, flagMat: MAT.flag });
 buildRoutes(LA.m, LA.d);
-flush(LA, 'arquipelago');
+const archMeshes = flush(LA, 'arquipelago');
 
 // céu, mar, estrelas
 const sky = makeSky(); scene.add(sky.mesh);
 const sea = makeSea([...ISLANDS, ...EXTRA_ISLETS]); scene.add(sea.mesh);
+const seaGeo = { hi: sea.mesh.geometry, lo: new THREE.PlaneGeometry(2600, 2600, 64, 64).rotateX(-Math.PI / 2) };
 const stars = (() => {
   const n = 900, pos = new Float32Array(n * 3);
   for (let i = 0; i < n; i++) { const u = Math.random(), v = Math.random() * 0.9 + 0.08, th = u * Math.PI * 2, ph = Math.asin(v); pos.set([Math.cos(th) * Math.cos(ph) * 2000, Math.sin(ph) * 2000, Math.sin(th) * Math.cos(ph) * 2000], i * 3); }
@@ -159,18 +160,18 @@ const ptsFrag = `varying vec3 vCol; varying float vA;
   void main(){ vec2 c = gl_PointCoord - 0.5; float d = length(c); if (d > 0.5) discard; float a = smoothstep(0.5, 0.25, d) * vA; gl_FragColor = vec4(vCol, a); }`;
 const petalPts = (n) => points(n,
   [['seed', 4, () => [R() * 2 - 1, R() * 2 - 1, R(), R()]], ['col', 3, (i) => (i % 2 ? [0.93, 0.5, 0.7] : [0.97, 0.8, 0.3])]],
-  `attribute vec4 seed; attribute vec3 col; uniform float uTime, uScale; varying vec3 vCol; varying float vA;
+  `attribute vec4 seed; attribute vec3 col; uniform float uTime, uScale, uNight; varying vec3 vCol; varying float vA;
    void main(){ float t = uTime*0.35 + seed.z*20.0; float fall = fract(t*0.08 + seed.w);
-     vec3 p = vec3(seed.x*34.0 + sin(t*1.3+seed.w*9.)*2.5 + fall*14.0, 2.6 + (1.0-fall)*11.0, seed.y*34.0 + cos(t*1.1+seed.z*7.)*2.0 + fall*6.0);
-     vec4 mv = modelViewMatrix*vec4(p,1.); gl_Position = projectionMatrix*mv; gl_PointSize = clamp(0.32*uScale/-mv.z, 1.0, 22.0);
-     vCol = col; vA = smoothstep(0.0,0.08,fall)*smoothstep(1.0,0.9,fall); }`, ptsFrag);
+     vec3 p = vec3(seed.x*20.0 + sin(t*1.3+seed.w*9.)*2.0 + fall*8.0, 2.7 + (1.0-fall)*8.0, 2.0 + seed.y*20.0 + cos(t*1.1+seed.z*7.)*1.6 + fall*4.0);
+     vec4 mv = modelViewMatrix*vec4(p,1.); gl_Position = projectionMatrix*mv; gl_PointSize = clamp(0.42*uScale/-mv.z, 0.0, 26.0); if (-mv.z > 120.0) gl_PointSize = 0.0;
+     vCol = col; vA = (1.0-uNight)*smoothstep(0.0,0.08,fall)*smoothstep(1.0,0.9,fall); }`, ptsFrag);
 const fireflyPts = (n) => points(n,
   [['seed', 4, () => [R() * 2 - 1, R() * 2 - 1, R(), R()]]],
   `attribute vec4 seed; uniform float uTime, uScale, uNight; varying vec3 vCol; varying float vA;
    void main(){ float t = uTime*0.5 + seed.w*30.0; float rr = 8.0 + seed.z*30.0; float a = atan(seed.y, seed.x)*3.0;
      vec3 p = vec3(cos(a)*rr + sin(t*0.7)*2.0, 3.0 + seed.z*3.5 + sin(t*1.3+seed.x*5.)*0.8, sin(a)*rr + cos(t*0.6)*2.0);
-     vec4 mv = modelViewMatrix*vec4(p,1.); gl_Position = projectionMatrix*mv; gl_PointSize = clamp(0.55*uScale/-mv.z, 1.5, 30.0);
-     vCol = vec3(1.0, 0.92, 0.45)*3.0; vA = uNight * (0.35 + 0.65*pow(0.5+0.5*sin(t*3.1+seed.x*20.), 3.0)); }`, ptsFrag, { blending: THREE.AdditiveBlending });
+     vec4 mv = modelViewMatrix*vec4(p,1.); gl_Position = projectionMatrix*mv; gl_PointSize = clamp(0.2*uScale/-mv.z, 1.5, 14.0);
+     vCol = vec3(0.95, 1.0, 0.5)*1.7; vA = uNight * uNight * pow(0.5+0.5*sin(t*3.1+seed.x*20.), 4.0); }`, ptsFrag, { blending: THREE.AdditiveBlending });
 const lampPts = points(V.lampTops.length,
   [['p0', 3, (i) => V.lampTops[i].toArray()]],
   `attribute vec3 p0; uniform float uScale, uNight; varying vec3 vCol; varying float vA;
@@ -246,6 +247,7 @@ function applyQuality(q) {
   const sm = CAPTURE && cfg.shadow ? 4096 : cfg.shadow || 512;
   if (sun.shadow.mapSize.x !== sm) { sun.shadow.mapSize.set(sm, sm); sun.shadow.map?.dispose(); sun.shadow.map = null; }
   detailMeshes.forEach((m) => (m.visible = cfg.detail));
+  sea.mesh.geometry = q === 'leve' ? seaGeo.lo : seaGeo.hi;
   clouds.forEach((c, i) => (c.visible = i < cfg.clouds));
   praçaLights.forEach((l) => (l.visible = q !== 'leve'));
   scene.traverse((o) => { if (o.material) o.material.needsUpdate = true; });
@@ -256,12 +258,12 @@ function applyQuality(q) {
 
 // ---------------- DIA / ENTARDECER / NOITE ----------------
 const TOD = [
-  { top: '#4EA6DF', mid: '#A2D5EE', hor: '#FCEBCB', sun: [-0.52, 0.72, 0.46], sunCol: '#FFF0D6', sunI: 2.7, glow: 0.35, hemiS: '#D2E8FF', hemiG: '#E9CDA4', hemiI: 1.15, fog: '#F6E6CC',
+  { top: '#3F9BDB', mid: '#8FCDEE', hor: '#EAF1E6', sun: [-0.52, 0.72, 0.46], sunCol: '#FFF0D6', sunI: 2.7, glow: 0.35, hemiS: '#D2E8FF', hemiG: '#E9CDA4', hemiI: 1.15, fog: '#DCEDEA',
     deep: '#1B8DB3', mid2: '#2BB0C6', shallow: '#73DED3', foam: '#F4FFF8', win: 0.0, night: 0, exp: 1.0, tint: '#FFFFFF', warm: 0.035, glint: 1 },
-  { top: '#5468A8', mid: '#E39AA0', hor: '#FFB46E', sun: [-0.86, 0.2, -0.12], sunCol: '#FF9E5E', sunI: 2.2, glow: 0.9, hemiS: '#9DA2DA', hemiG: '#D49070', hemiI: 0.95, fog: '#F2AE86',
+  { top: '#5468A8', mid: '#E39AA0', hor: '#FFB46E', sun: [-0.86, 0.2, -0.12], sunCol: '#FF9E5E', sunI: 2.2, glow: 0.9, hemiS: '#A9ACE0', hemiG: '#D8987A', hemiI: 1.15, fog: '#F2AE86',
     deep: '#35609A', mid2: '#5E86B0', shallow: '#E9A485', foam: '#FFE8D2', win: 1.4, night: 0.45, exp: 1.02, tint: '#FFE2CC', warm: 0.07, glint: 1.2 },
-  { top: '#0D1838', mid: '#22305E', hor: '#4A4C7A', sun: [0.35, 0.62, -0.5], sunCol: '#BFD0FF', sunI: 0.55, glow: 0.15, hemiS: '#3A4C8A', hemiG: '#2E2A40', hemiI: 0.55, fog: '#2A3258',
-    deep: '#0F2848', mid2: '#173A60', shallow: '#2F6C84', foam: '#B9D6F0', win: 2.4, night: 1, exp: 1.08, tint: '#B9C4F0', warm: -0.01, glint: 0.4 },
+  { top: '#0D1838', mid: '#22305E', hor: '#4A4C7A', sun: [0.35, 0.62, -0.5], sunCol: '#BFD0FF', sunI: 0.8, glow: 0.15, hemiS: '#3A4C8A', hemiG: '#2E2A40', hemiI: 0.55, fog: '#2A3258',
+    deep: '#0F2848', mid2: '#173A60', shallow: '#2F6C84', foam: '#B9D6F0', win: 1.8, night: 1, exp: 1.08, tint: '#B9C4F0', warm: -0.01, glint: 0.4 },
 ];
 let todNow = Number(P.get('tod') || 0), todTarget = todNow;
 const _ca = new THREE.Color(), _cb = new THREE.Color();
@@ -283,24 +285,24 @@ function applyTOD(v) {
   MAT.cloud.emissiveIntensity = 0.12 * (1 - night) + 0.03;
   stars.material.opacity = smooth(clamp((v - 1.2) / 0.8, 0, 1));
   moon.material.opacity = stars.material.opacity; moon.position.copy(sd).multiplyScalar(1800);
-  praçaLights.forEach((l) => (l.intensity = night * 60));
+  praçaLights.forEach((l) => (l.intensity = night * 16));
   renderer.toneMappingExposure = n('exp');
   charSprites.forEach((s) => s.material.color.copy(c('tint')));
   if (passes.grade) passes.grade.uniforms.uWarm.value = n('warm');
-  if (passes.bloom) { passes.bloom.strength = 0.26 + night * 0.5; passes.bloom.threshold = 1.0 - night * 0.3; }
+  if (passes.bloom) { passes.bloom.strength = 0.26 + night * 0.22; passes.bloom.threshold = 1.0 - night * 0.12; }
   document.querySelectorAll('#g-tod button').forEach((b) => b.classList.toggle('on', Math.round(v) === Number(b.dataset.tod)));
 }
 
 // ---------------- CÂMERA: vistas e voos ----------------
 const VIEWS = {
   arquipelago: { pos: [38, 172, 228], target: [36, 0, -108] },
-  voo: { pos: [44, 44, 30], target: [112, 6, -38] },
+  voo: { pos: [66, 30, 26], target: [110, 7, -34] },
   vila: { pos: [64, 50, 80], target: [0, 1, -3] },
   vila34: { pos: [-56, 27, 46], target: [2, 3, -5] },
-  praca: { pos: [13.5, 8.5, 25], target: [0.5, 3.8, 2.5] },
-  biblioteca: { pos: [10.5, 6.2, -2.5], target: [-0.5, 5.2, -18.5] },
+  praca: { pos: [-4.5, 6.6, 22.5], target: [2.2, 3.9, 5.0] },
+  biblioteca: { pos: [2.8, 6.4, -3.2], target: [-0.4, 5.7, -17.4] },
   entardecer: { pos: [52, 24, 54], target: [0, 3, -6], tod: 1 },
-  noite: { pos: [30, 15, 36], target: [0, 4, -2], tod: 2 },
+  noite: { pos: [-15, 13, 33], target: [2, 4, -4], tod: 2 },
 };
 for (const I of ISLANDS) if (!VILA_ID(I)) VIEWS[I.id] = { pos: [I.x + I.r * 0.9, I.H + I.r * 1.3 + 10, I.z + I.r * 1.9 + 12], target: [I.x, I.H + 1, I.z] };
 function VILA_ID(I) { return I.id === 'vila'; }
@@ -333,9 +335,9 @@ const SCRIPT = [
   [16, [0, 16, 36], [0, 3.5, 2]],
   [18, [20, 11, 22], [0.5, 3.8, 2]],
   [20, [21, 10, -8], [0, 4, 0]],
-  [22, [6, 9, -1], [0, 4.6, -10]],
-  [24.5, [9.5, 6.4, -3.5], [-0.5, 5.2, -18]],
-  [26, [9.0, 6.3, -4.6], [-0.5, 5.2, -18.5]],
+  [22, [9, 8, -3.5], [0, 4.8, -12]],
+  [24.5, [2.8, 5.3, -4.4], [-0.5, 4.5, -17.4]],
+  [26, [2.2, 5.0, -5.6], [-0.5, 4.5, -17.4]],
 ];
 const curP = new THREE.CatmullRomCurve3(SCRIPT.map((s) => new THREE.Vector3(...s[1])), false, 'centripetal');
 const curT = new THREE.CatmullRomCurve3(SCRIPT.map((s) => new THREE.Vector3(...s[2])), false, 'centripetal');
@@ -354,7 +356,7 @@ function animateWorld(t) {
   clouds.forEach((c) => { const d = c.userData; c.position.set(((d.x0 + t * d.v + 300) % 620) - 300, d.y, d.z0); });
   { const a = t * 0.05; boat.position.set(Math.cos(a) * 68 + 10, 0.1, Math.sin(a) * 68 - 5); boat.rotation.set(Math.sin(t * 1.3) * 0.05, -a, Math.sin(t) * 0.06); }
   { const a = -t * 0.04 + 2; boat2.position.set(Math.cos(a) * 30 - 6, 0.1, Math.sin(a) * 30 - 214); boat2.rotation.set(0, -a + Math.PI, Math.sin(t * 1.1) * 0.06); }
-  balloon.position.set(-38 + Math.sin(t * 0.1) * 12, 44 + Math.sin(t * 0.7) * 1.5, -10 + Math.cos(t * 0.08) * 8); balloon.rotation.y = t * 0.1;
+  balloon.position.set(79 + Math.sin(t * 0.1) * 2, 26 + Math.sin(t * 0.7) * 1.5, -12 + Math.cos(t * 0.08) * 2); balloon.rotation.y = t * 0.1;
   birds.forEach((b) => { const d = b.userData, a = t * 0.35 + d.ph; b.position.set(Math.cos(a) * d.r + 4, d.h + Math.sin(t * 2 + d.ph) * 0.8, Math.sin(a) * d.r - 2); b.rotation.set(0, -a, Math.sin(t * 9 + d.ph) * 0.35); b.scale.setScalar(1); });
   dyn.windmills.forEach((w) => (w.rotation.z = t * 1.2));
   dyn.flags.forEach((f, i) => (f.rotation.y = Math.sin(t * 1.4 + i) * 0.25));
@@ -373,9 +375,11 @@ function updateCameraDeps() {
   sun.position.copy(center).addScaledVector(sd, 400); sun.target.position.copy(center);
   const sc = sun.shadow.camera; sc.left = -S2; sc.right = S2; sc.top = S2; sc.bottom = -S2; sc.near = 50; sc.far = 900; sc.updateProjectionMatrix();
   scene.fog.near = dist * 1.1 + 60; scene.fog.far = dist * 3.4 + 520; sea.u.uFogNear.value = scene.fog.near; sea.u.uFogFar.value = scene.fog.far;
-  const lab = smooth(clamp((dist - 110) / 60, 0, 1)); labelSprites.forEach((s) => { s.material.opacity = lab; s.visible = lab > 0.01; });
+  const lab = smooth(clamp((dist - 170) / 50, 0, 1)); labelSprites.forEach((s) => { s.material.opacity = lab; s.visible = lab > 0.01; });
   pins.forEach((p) => (p.visible = dist > 60));
-  if (passes.dof) { const close = dist < 45; passes.dof.enabled = close; if (close) { passes.dof.uniforms.focus.value = dist; passes.dof.uniforms.aperture.value = 0.0009 * (30 / Math.max(12, dist)); } }
+  // nível leve: só a ilha atual fica desenhada quando a câmera está dentro da vila
+  const onlyVila = Q === 'leve' && dist < 120; archMeshes.forEach((m) => (m.visible = (QCFG[Q].detail || m.material !== MAT.detail) && !(onlyVila && m.material === MAT.foliage)));
+  if (passes.dof) { const close = dist < 45; passes.dof.enabled = close; if (close) { passes.dof.uniforms.focus.value = dist; passes.dof.uniforms.aperture.value = 0.00045 * (30 / Math.max(12, dist)); } }
   PU.uScale.value = renderer.getDrawingBufferSize(new THREE.Vector2()).y / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
   sky.mesh.position.copy(camera.position);
 }
@@ -463,7 +467,9 @@ window.FONEMA = {
     if (opts.celebrate !== undefined) PU.uCel.value = opts.celebrate;
     animateWorld(t + 3); render();
   },
+  layers() { const out = []; world.traverse((o) => { if (o.isMesh && o.geometry.attributes.position.count > 3000) out.push(o.name + ':' + o.material.type + (o.material.side === 2 ? '2' : '') + ':' + (o.geometry.attributes.position.count / 3 | 0)); }); return out.join(' | ') + ' | sea:' + (sea.mesh.geometry.index.count / 3); },
   celebrate(t0) { PU.uCel.value = t0; },
+  stats() { const c = composer; composer = null; renderer.info.reset(); render(); const i = renderer.info; const r = { calls: i.render.calls, triangles: i.render.triangles, points: i.render.points, geometries: i.memory.geometries, textures: i.memory.textures, q: Q }; composer = c; return r; },
   setQuality(q) { applyQuality(q); applyTOD(todNow); },
   setCamera(pos, target) { camera.position.set(...pos); controls.target.set(...target); controls.update(); },
 };

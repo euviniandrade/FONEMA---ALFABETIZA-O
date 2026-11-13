@@ -30,7 +30,7 @@ export function makeSky() {
     vertexShader: `varying vec3 vDir; void main(){ vDir = normalize(position); vec4 p = modelViewMatrix*vec4(position,1.); gl_Position = projectionMatrix*p; gl_Position.z = gl_Position.w; }`,
     fragmentShader: `uniform vec3 top, mid, hor, sunDir, sunCol; uniform float sunGlow; varying vec3 vDir;
       void main(){ float h = vDir.y;
-        vec3 c = mix(hor, mid, smoothstep(0.0, 0.18, h)); c = mix(c, top, smoothstep(0.18, 0.7, h));
+        vec3 c = mix(hor, mid, smoothstep(0.0, 0.07, h)); c = mix(c, top, smoothstep(0.07, 0.55, h));
         c = mix(c, hor*0.98, smoothstep(0.0, -0.2, h));
         float s = max(dot(normalize(vDir), normalize(sunDir)), 0.0);
         c += sunCol * (pow(s, 6.0) * sunGlow + pow(s, 900.0) * 1.2);
@@ -91,7 +91,7 @@ export function makeSea(islands) {
         #include <colorspace_fragment>
       }`,
   });
-  const g = new THREE.PlaneGeometry(2600, 2600, 300, 300); g.rotateX(-Math.PI / 2);
+  const g = new THREE.PlaneGeometry(2600, 2600, 140, 140); g.rotateX(-Math.PI / 2);
   const mesh = new THREE.Mesh(g, mat); mesh.position.set(30, 0, -90); mesh.receiveShadow = false;
   return { mesh, u };
 }
@@ -186,11 +186,11 @@ const BIOMES = {
     m.add(G.cone8, '#8E8A80', M(mx, GY + 11.8, mz, 0, 0.3, 0, 6.8, 3.6, 6.2), { grad: 0.3 });
     m.add(G.cone5, '#4C9A5A', M(mx + 7, GY + 4, mz + 2, 0, 0.8, 0, 11, 8, 10), { grad: 0.35 });
     // cachoeira
-    const wf = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 9), new THREE.MeshStandardMaterial({ color: '#CFF3F7', emissive: '#7FD3E0', emissiveIntensity: 0.2, roughness: 0.3 }));
-    wf.position.set(mx + 2.5, GY + 4.6, mz + 7.2); wf.rotation.x = -0.48; group.add(wf);
-    m.add(G.cyl16, '#8FE0E8', M(mx + 2.8, GY + 0.1, mz + 10.5, 0, 0, 0, 6, 0.2, 4), { jitter: 0.02 });
-    d.add(G.ico1, '#F4FFF8', M(mx + 2.7, GY + 0.35, mz + 9.2, 0, 0, 0, 2.4, 0.6, 1.2));
-    occ.push([mx + 2.8, mz + 10.5, 3.2]);
+    // cachoeira descendo a encosta (faixas azul-claras) + lago ao pé
+    for (let k = 0; k < 3; k++) m.add(G.box, ['#BDEFF4', '#9FE3EC', '#D8F7F9'][k], M(mx + 1.2 + (k - 1) * 0.55, GY + 4.75, mz + 6.0, 0.96, 0, 0, 0.55, 0.3, 10.4), { jitter: 0.02 });
+    m.add(G.cyl16, '#7FD6E2', M(mx + 1.2, GY + 0.08, mz + 11.2, 0, 0, 0, 6.4, 0.16, 4.2), { jitter: 0.02 });
+    for (let k = 0; k < 4; k++) m.add(G.ico1, '#F4FFF8', M(mx + 0.4 + k * 0.55, GY + 0.3, mz + 9.9, 0, k, 0, 0.9, 0.5, 0.7));
+    occ.push([mx + 1.2, mz + 11.2, 3.4]);
     scatter(34, 1.8, (x, z, k) => N.treeRound(f, x, GY, z, 0.9 + rnd() * 0.6, ['#2F8A49', '#3B9A52', '#2A7E43'][k % 3], '#2F7D45', rnd));
     scatter(10, 1.5, (x, z) => N.palm(f, x, GY, z, 1.0 + rnd() * 0.3, rnd, 0.15));
     scatter(30, 0.4, (x, z) => { d.add(G.cone5, '#E04A5A', M(x, GY + 0.4, z, 0, rnd(), 0, 0.5, 0.8, 0.5)); d.add(G.cone5, '#4F9A48', M(x, GY + 0.3, z, 0, rnd(), 0, 0.8, 0.5, 0.8)); });
@@ -397,7 +397,7 @@ export function makeBirds(mat, n = 7) {
     const b = new Merger(20 + i);
     b.add(G.box, '#FFFBF4', M(-0.55, 0, 0, 0, 0, 0.35, 1.2, 0.08, 0.35), { jitter: 0 });
     b.add(G.box, '#FFFBF4', M(0.55, 0, 0, 0, 0, -0.35, 1.2, 0.08, 0.35), { jitter: 0 });
-    const m = b.build(mat, { cast: false }); m.userData = { ph: i * 0.9, r: 30 + i * 6, h: 22 + i * 2.2 }; list.push(m);
+    const m = b.build(mat, { cast: false }); m.userData = { ph: i * 0.9, r: 30 + i * 6, h: 40 + i * 2.5 }; list.push(m);
   }
   return list;
 }

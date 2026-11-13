@@ -40,10 +40,10 @@ export function signTexture(word, renderer, { w = 512, h = 220, color = PAL.tint
   // pregos
   x.fillStyle = '#7A4B2E'; [[34, 34], [w - 34, 34], [34, h - 34], [w - 34, h - 34]].forEach(([a, b]) => { x.beginPath(); x.arc(a, b, 7, 0, 7); x.fill(); });
   let tx = w / 2;
-  if (icon) { icon(x, 70, h / 2, h * 0.36); tx = w / 2 + 34; }
+  if (icon) { const s = h * 0.24; icon(x, 44 + s, h / 2, s); tx = w / 2 + 44; }
   x.fillStyle = color; x.textAlign = 'center'; x.textBaseline = 'middle';
   let fs = h * 0.56; x.font = `700 ${fs}px Andika`;
-  const maxW = (icon ? w - 170 : w - 110);
+  const maxW = (icon ? w - 200 : w - 110);
   while (x.measureText(word).width > maxW) { fs -= 4; x.font = `700 ${fs}px Andika`; }
   x.fillText(word, tx, h / 2 + fs * 0.04);
   return tex(c, renderer);
