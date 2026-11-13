@@ -14,3 +14,18 @@
 1. Definir o nome do menino (sugestões que remetem à sabedoria e inteligência: Tales, Hugo, Daniel, Salomão; ver conversa).
 2. Gerar folha-modelo (frente, perfil, costas), expressões, poses de ensino, versão com o blusão de capuz e close da boca para o Espelho do Som, mantendo os personagens consistentes.
 3. Substituir a Sofia antiga em todas as telas (mundo 3D, painéis, lojinha, academia, vídeos e ambientes).
+
+## Rodada 2: pacote da dupla (Sofia e Tales), referência = opção 1
+Modelo `gemini-3-pro-image` com a opção 1 como referência, para manter os personagens consistentes. Custo: **≈1.827 créditos por imagem**. As próximas rodadas usam `gpt-image-2.5-sunburst` com referência (≈190 por imagem), com estimativa antes.
+
+| Arquivo | Cena | Neurociência / pedagogia |
+|---|---|---|
+| `01-folha-modelo.png` | Sofia de frente; Tales de lado, de costas e em close | Referência de produção (incompleta: refazer com Sofia em todas as vistas) |
+| `02-expressoes.png` | Expressões dos dois | Emoções nomeáveis (rel. 33) |
+| `03-blusao-capuz.png` | Dupla de blusão azul-claro de capuz | Variação de uniforme |
+| `04-amizade-erro-tentar-de-novo.png` | Tales erra, Sofia encoraja com o bloco de letra | Retorno do erro + emoção segura (rels. 13 e 15) |
+| `05-aventura-barco-mata-atlantica.png` | Dupla e Bolota de barco na Mata Atlântica | Curiosidade e exploração (rel. 08); região R2 |
+| `06-leitura-juntos-praca.png` | Leitura compartilhada sob o ipê, com o cachorro caramelo | Leitura dialógica (rel. 41) |
+| `07-jogo-cooperativo-ponte.png` | Dupla monta a ponte de sílabas | Engajamento ativo e cooperação (rel. 30) |
+
+O **close da boca** (criança fazendo "mmm") foi **bloqueado pelo filtro de segurança** do gerador. Não insistimos. O zoom da boca continua nas pranchas ilustradas com corte lateral (`personagens-v2/boca-zoom-*.png`), que são mais didáticas.
