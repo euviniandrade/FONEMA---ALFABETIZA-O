@@ -95,6 +95,42 @@ CONSULTAS_LOCAIS = {
 LINGUA_PAIS = {"BR": "pt", "PT": "pt", "MZ": "pt", "AO": "pt", "ES": "es", "MX": "es", "AR": "es",
                "CL": "es", "CO": "es", "UY": "es", "PE": "es"}
 
+# Eixos da 2ª rodada (Decisão 003 — formação integral)
+EIXOS.update({
+    "pensamento_computacional": {
+        "nome": "Pensamento computacional na infância",
+        "pubmed": f'(("computational thinking" OR "coding" OR "programming" OR "robotics" OR "algorithmic thinking") AND {CRIANCA})',
+        "crossref": "computational thinking young children coding early childhood",
+        "chaves": ["computational thinking", "coding", "programming", "robot", "algorithm", "pensamento computacional", "pensamiento computacional", "scratch"],
+    },
+    "socioemocional": {
+        "nome": "Competências socioemocionais e inteligência emocional",
+        "pubmed": f'(("social-emotional learning" OR "social and emotional learning" OR "emotional intelligence" OR "emotion regulation" OR "emotion knowledge" OR "emotional competence" OR "self-regulation") AND {CRIANCA})',
+        "crossref": "social emotional learning children emotion regulation program",
+        "chaves": ["social-emotional", "social and emotional", "emotional intelligence", "emotion", "self-regulation", "socioemocion", "emocion"],
+    },
+    "raciocinio_matematica": {
+        "nome": "Raciocínio lógico e matemática inicial",
+        "pubmed": f'(("logical reasoning" OR "analogical reasoning" OR "early mathematics" OR "numeracy" OR "patterning" OR "number sense" OR "mathematical reasoning") AND {CRIANCA})',
+        "crossref": "early mathematics reasoning patterning young children",
+        "chaves": ["reasoning", "mathemat", "numeracy", "pattern", "number sense", "raciocínio", "matemática", "razonamiento"],
+    },
+    "educacao_financeira": {
+        "nome": "Educação financeira infantil",
+        "pubmed": f'(("financial literacy" OR "financial education" OR "economic socialization" OR "saving behavior" OR "delay of gratification") AND {CRIANCA})',
+        "crossref": "financial literacy education children elementary school",
+        "chaves": ["financial", "saving", "money", "economic", "gratification", "financeira", "financiera", "dinheiro"],
+    },
+    "aprendizagem_profunda": {
+        "nome": "Aprendizagem profunda, compreensão e transferência",
+        "pubmed": f'(("orthographic mapping" OR "self-teaching" OR "reading comprehension" OR "transfer of learning" OR "morphological awareness" OR "vocabulary instruction" OR metacognition OR "self-explanation") AND {CRIANCA})',
+        "crossref": "reading comprehension vocabulary morphology transfer children",
+        "chaves": ["orthographic mapping", "self-teaching", "comprehension", "transfer", "morpholog", "vocabular", "metacogni", "self-explanation", "compreensão", "comprensión"],
+    },
+})
+EIXOS_BASE = ["metodo_fonico", "dislexia", "neuro_leitura", "neuro_aprendizagem", "motivacao_recompensa",
+              "fala_fonologia", "tecnologia_jogos", "neurodivergencia"]
+
 # ---------------------------------------------------------------- países
 # código: (nome PT, termos PubMed [ad], padrões de validação na afiliação)
 PAISES = {
@@ -325,16 +361,17 @@ def main():
     paises = a.paises.split(",") if a.paises else list(PAISES)
     contagens = {}
 
+    cont_path = os.path.join(DATA, "contagens_brutas.json")
+    contagens = json.load(open(cont_path)) if os.path.exists(cont_path) else {}
     for cod in paises:
         nome_pt, termos_ad, _ = PAISES[cod]
-        raw_path = os.path.join(DATA, "raw", f"{cod}.jsonl")
-        if os.path.exists(raw_path):
-            print(f"[{cod}] já coletado, pulando coleta")
-            continue
+        legado = os.path.exists(os.path.join(DATA, "raw", f"{cod}.jsonl"))
         filtro_ad = "(" + " OR ".join(f'"{t}"[ad]' for t in termos_ad) + ")"
-        registros = []
-        contagens[cod] = {}
+        contagens.setdefault(cod, {})
         for eixo, e in EIXOS.items():
+            raw_path = os.path.join(DATA, "raw", f"{cod}__{eixo}.jsonl")
+            if os.path.exists(raw_path) or (legado and eixo in EIXOS_BASE):
+                continue
             total, ids = pubmed_buscar(f"{e['pubmed']} AND {filtro_ad}", a.pubmed_por_eixo)
             det = pubmed_detalhes(ids) if ids else []
             pais_en = termos_ad[-1] if cod != "US" else "United States"
@@ -343,23 +380,23 @@ def main():
             if lingua and eixo in CONSULTAS_LOCAIS[lingua]:
                 cr += crossref_buscar(CONSULTAS_LOCAIS[lingua][eixo], pais_en, a.crossref_por_eixo)
             contagens[cod][eixo] = {"pubmed_total": total, "pubmed_baixados": len(det), "crossref": len(cr)}
-            for r in det + cr:
-                r["eixo"], r["pais"] = eixo, cod
-                registros.append(r)
+            with open(raw_path, "w") as f:
+                for r in det + cr:
+                    r["eixo"], r["pais"] = eixo, cod
+                    f.write(json.dumps(r, ensure_ascii=False) + "\n")
             print(f"[{cod}] {eixo}: PubMed {total} (baixados {len(det)}), Crossref {len(cr)}", flush=True)
-        with open(raw_path, "w") as f:
-            for r in registros:
-                f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    json.dump(contagens, open(os.path.join(DATA, "contagens_brutas.json"), "w"), ensure_ascii=False, indent=1)
+            json.dump(contagens, open(cont_path, "w"), ensure_ascii=False, indent=1)
 
     # -------- etapa 2: validação e filtro
     aprovados, rejeitados, stats = [], {}, {}
     for cod in PAISES:
-        p = os.path.join(DATA, "raw", f"{cod}.jsonl")
-        if not os.path.exists(p):
+        import glob
+        arquivos = sorted(glob.glob(os.path.join(DATA, "raw", f"{cod}.jsonl")) + glob.glob(os.path.join(DATA, "raw", f"{cod}__*.jsonl")))
+        if not arquivos:
             continue
         vistos, bons, rej = {}, [], {}
-        for linha in open(p):
+        linhas = (l for arq in arquivos for l in open(arq))
+        for linha in linhas:
             r = json.loads(linha)
             ok, motivo = validar(r, r["eixo"], cod)
             if not ok:
@@ -384,7 +421,7 @@ def main():
         # garante diversidade: primeiro os 40 melhores de cada eixo, depois completa
         escolhidos, ids = [], set()
         for eixo in EIXOS:
-            for r in [x for x in bons if eixo in x["eixos"]][:40]:
+            for r in [x for x in bons if eixo in x["eixos"]][:30]:
                 if id(r) not in ids:
                     escolhidos.append(r); ids.add(id(r))
         for r in bons:
