@@ -353,7 +353,7 @@ export async function criarVila({ U, q, renderer, estados = {} }) {
 
   // ---------- personagens ----------
   const dupla = await criarSprite('dupla.png', 1.95, { fase: 0 }); dupla.position.set(-1.6, 0.05, 14.2); grupo.add(dupla);
-  const sofia = await criarSprite('sofia.png', 1.8, { fase: 1.3 }); sofia.position.set(-2.6, 0.05, -18.2); grupo.add(sofia);
+  const sofia = await criarSprite('sofia.png', 1.8, { fase: 1.3 }); sofia.position.set(2.2, 0.05, -18.6); grupo.add(sofia);
   const tales = await criarSprite('tales.png', 1.85, { fase: 2.1 }); tales.position.set(-24.2, 0.05, 22.6); grupo.add(tales);
   const bolota = criarBolota(); bolota.position.set(0.9, 0.05, 14.6); bolota.rotation.y = -2.5; grupo.add(bolota);
   const zum = criarZumZum(); grupo.add(zum);
