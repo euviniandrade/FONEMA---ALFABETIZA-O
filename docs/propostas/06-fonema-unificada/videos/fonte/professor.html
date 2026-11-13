@@ -1,0 +1,166 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="base.css">
+<script src="engine.js"></script><script src="chars.js"></script><script src="parts.js"></script>
+<style>
+#bg{position:absolute;inset:0;background:#F4F2FB}
+#panel{position:absolute;left:40px;top:76px;width:830px;height:540px;background:#fff;border:3px solid #D9D5EC;border-radius:26px;box-shadow:0 18px 40px rgba(31,29,61,.12);padding:16px 18px;opacity:0}
+.ph{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.ph .t{font-family:Fredoka;font-weight:700;font-size:24px}
+.ph .m{font-size:17px;color:var(--apoio);font-weight:700}
+.w{position:absolute;border:2.5px solid #E3E0F0;border-radius:18px;background:#FCFBFF;padding:12px 14px;transition:none}
+.w h4{font-family:Fredoka;font-weight:600;font-size:18px;color:var(--noite);margin-bottom:6px;display:flex;gap:8px;align-items:center}
+.w h4 i{font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--noite);color:#fff;font-size:14px;display:grid;place-items:center}
+#w1{left:18px;top:58px;width:790px;height:196px}
+#w2{left:18px;top:264px;width:388px;height:262px}
+#w3{left:420px;top:264px;width:388px;height:262px}
+.hist{position:absolute;left:24px;right:24px;bottom:34px;height:118px;display:flex;gap:10px;align-items:flex-end}
+.hist .b{flex:1;background:var(--noite);border-radius:8px 8px 3px 3px;position:relative}
+.hist .b span{position:absolute;top:-24px;left:0;right:0;text-align:center;font-family:Fredoka;font-weight:700;font-size:17px;color:var(--tinta)}
+.hx{position:absolute;left:24px;right:24px;bottom:10px;display:flex;gap:10px}
+.hx span{flex:1;text-align:center;font-family:Fredoka;font-weight:600;font-size:15px;color:var(--apoio)}
+#band{position:absolute;bottom:28px;height:146px;border:3px dashed var(--mata);border-radius:14px;background:rgba(47,184,102,.08)}
+#bandl{position:absolute;top:44px;left:calc(100% + 10px) !important;font-family:Fredoka;font-weight:700;font-size:16px;color:#17864A;background:#E6F8EC;border-radius:99px;padding:2px 10px;white-space:nowrap}
+#lowl{position:absolute;top:10px;font-family:Fredoka;font-weight:700;font-size:16px;color:#9A5B00;background:#FFF0C2;border-radius:99px;padding:2px 10px;white-space:nowrap}
+.hm{display:grid;grid-template-columns:72px repeat(3,1fr);gap:4px;font-size:15px}
+.hm .hd{font-family:Fredoka;font-weight:600;font-size:13px;color:var(--apoio);text-align:center;line-height:1.1}
+.hm .rl{font-family:Andika;font-weight:700;font-size:17px;display:flex;align-items:center}
+.hm .c{height:27px;border-radius:7px;display:grid;place-items:center;font-family:Fredoka;font-weight:600;font-size:15px}
+#rowhl{position:absolute;left:8px;right:8px;height:39px;border:4px solid var(--urucum);border-radius:10px}
+.grp{border:2.5px solid #E3E0F0;border-radius:14px;padding:10px 10px;margin-bottom:10px;background:#fff;display:flex;align-items:center;gap:10px}
+.grp .nm{font-family:Fredoka;font-weight:700;font-size:17px}
+.grp .ds{font-size:14px;color:var(--apoio);font-weight:700}
+.av{display:flex}
+.av i{width:26px;height:26px;border-radius:50%;border:2px solid #fff;margin-left:-6px;font-style:normal;font-family:Fredoka;font-weight:600;font-size:10px;color:#fff;display:grid;place-items:center}
+.go{margin-left:auto;font-family:Fredoka;font-weight:700;font-size:14px;background:var(--urucum);color:#fff;border-radius:10px;padding:6px 10px;border:2.5px solid var(--tinta);white-space:nowrap}
+/* perguntas */
+#qs{position:absolute;left:900px;top:84px;width:340px}
+.q{display:flex;gap:14px;align-items:flex-start;background:#fff;border:3px solid #D9D5EC;border-radius:22px;padding:16px 16px;margin-bottom:16px;opacity:.5}
+.q .n{width:46px;height:46px;flex:none;border-radius:50%;display:grid;place-items:center;font-family:Fredoka;font-weight:700;font-size:24px;background:#EAE7FF;color:var(--noite);border:3px solid var(--noite)}
+.q .tx{font-family:Fredoka;font-weight:700;font-size:25px;line-height:1.12}
+.q .sb{font-size:17px;color:var(--apoio);font-weight:700;margin-top:6px;line-height:1.25}
+.q.on{opacity:1;border-color:var(--tinta);background:#FFF6DA;box-shadow:6px 6px 0 var(--tinta)}
+.q.on .n{background:var(--sol);color:var(--tinta);border-color:var(--tinta)}
+.q.done{opacity:.85}
+.q.done .n{background:var(--mata);color:#fff;border-color:var(--tinta)}
+/* abertura e fecho */
+#intro{position:absolute;left:70px;top:150px;width:640px}
+#intro .k{font-family:Fredoka;font-weight:600;font-size:22px;color:var(--noite);letter-spacing:1px}
+#intro h1{font-family:Fredoka;font-weight:700;font-size:60px;line-height:1.02;margin:10px 0 18px}
+#intro .s{font-size:26px;font-weight:700;color:var(--apoio)}
+#nums3{display:flex;gap:14px;margin-top:26px}
+#nums3 div{width:74px;height:74px;border-radius:22px;background:var(--sol);border:4px solid var(--tinta);display:grid;place-items:center;font-family:Fredoka;font-weight:700;font-size:38px;box-shadow:0 6px 0 var(--tinta)}
+#outro{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;opacity:0}
+#outro .card{width:900px;padding:36px 44px;display:flex;gap:30px;align-items:center}
+#outro h2{font-family:Fredoka;font-weight:700;font-size:48px;line-height:1.05}
+#outro .nx{margin-top:18px;display:flex;align-items:center;gap:14px;background:#EAE7FF;border:3px solid var(--noite);border-radius:18px;padding:12px 16px;font-size:23px;font-weight:700;color:var(--noite)}
+#outro .nx .pl{width:46px;height:46px;border-radius:50%;background:var(--noite);display:grid;place-items:center;flex:none}
+#sofiaP{position:absolute;width:250px;left:0;top:0;transform-origin:0 0}
+.tag{font-family:Fredoka;font-weight:600;font-size:14px;color:var(--apoio);background:#F1EFF8;border-radius:8px;padding:3px 8px}
+</style></head><body>
+<div id="stage">
+  <div id="bg"></div>
+  <div class="topbar"><div class="logo"><i>F</i>FONEMA</div><div class="chip" style="background:#EAE7FF">Formação do professor</div><div class="chip">microvídeo · 30 s</div><div class="sp"></div><div class="badge">CC</div></div>
+
+  <div id="intro"><div class="k">PAINEL DA TURMA</div><h1>Como ler o painel em 3 perguntas</h1><div class="s">Dados de uma turma fictícia de 1º ano.</div><div id="nums3"><div>1</div><div>2</div><div>3</div></div></div>
+
+  <div id="panel">
+    <div class="ph"><div class="t">1º ano B</div><div class="m">24 crianças · semana 14 · Escola Mun. Ipê</div><div class="sp" style="flex:1"></div><span class="tag">atualizado hoje, 7h</span></div>
+    <div class="w" id="w1"><h4><i>1</i>Crianças por nível (0 a 10)</h4>
+      <div id="band"><div id="bandl">maioria: níveis 4 a 6</div></div>
+      <div id="low"><div id="lowl">3 abaixo do nível 3</div></div>
+      <div class="hist" id="hist"></div><div class="hx" id="hx"></div></div>
+    <div class="w" id="w2"><h4><i>2</i>Acerto por som (% da turma)</h4><div class="hm" id="hm"></div><div id="rowhl"></div></div>
+    <div class="w" id="w3"><h4><i>3</i>Grupos sugeridos para hoje</h4><div id="grps"></div></div>
+  </div>
+
+  <div id="qs">
+    <div class="q" id="q1"><div class="n">1</div><div><div class="tx">Onde está a minha turma?</div><div class="sb">olhe a faixa da maioria e quem ficou para trás</div></div></div>
+    <div class="q" id="q2"><div class="n">2</div><div><div class="tx">Qual som está travando?</div><div class="sb">procure a célula mais clara (menor %)</div></div></div>
+    <div class="q" id="q3"><div class="n">3</div><div><div class="tx">Quem precisa de mim hoje?</div><div class="sb">o grupo pequeno, com roteiro pronto</div></div></div>
+  </div>
+
+  <div id="outro"><div class="card"><div style="width:200px;height:250px;position:relative;flex:none" id="outsofia"></div><div><h2>O painel sugere.<br>Quem decide é você.</h2>
+    <div class="nx"><div class="pl">${''}</div><div>Próximo · Como modelar o som do R, sem vogal extra · 2 min</div></div></div></div></div>
+
+  <div id="sofiaP"></div>
+  <div id="cap"></div>
+</div>
+<script>
+const THUMB = Q.get('thumb');
+$('#outro .pl').innerHTML = `<svg viewBox="0 0 48 48" width="24"><path d="M16,10 L38,24 L16,38Z" fill="#fff"/></svg>`;
+$('#sofiaP').innerHTML = sofiaSVG({ letter: 'r' });
+$('#outsofia').innerHTML = `<div style="position:absolute;left:0;top:0;width:200px">${sofiaSVG({ letter: 'r' })}</div>`;
+// dados fictícios
+const H = [0, 1, 2, 3, 5, 6, 4, 2, 1, 0, 0];
+$('#hist').innerHTML = H.map(v => `<div class="b"><span>${v || ''}</span></div>`).join('');
+$('#hx').innerHTML = H.map((_, i) => `<span>${i}</span>`).join('');
+const SONS = [['M L F', 94, 90, 86], ['V S N', 88, 81, 74], ['P T', 90, 84, 79], ['B D', 77, 70, 63], ['C QU', 72, 61, 55], ['R RR', 58, 44, 38]];
+const col = v => v >= 85 ? '#1E8E55' : v >= 75 ? '#55B97E' : v >= 62 ? '#A8DDBB' : v >= 50 ? '#FFE3A1' : '#FFD27A';
+const fg = v => v >= 75 ? '#fff' : '#1F1D3D';
+$('#hm').innerHTML = `<div></div><div class="hd">ouvir o som</div><div class="hd">ler sílaba</div><div class="hd">ler palavra</div>` +
+  SONS.map(([n, ...vs]) => `<div class="rl">${n}</div>` + vs.map(v => `<div class="c" style="background:${col(v)};color:${fg(v)}">${v}</div>`).join('')).join('');
+const AVC = ['#E0569F', '#2EC4F1', '#FF6B3D', '#2FB866', '#8E7CC3', '#E39A2D', '#1FA7A0'];
+const av = (n, s) => `<div class="av">${Array.from({ length: Math.min(n, 4) }, (_, i) => `<i style="background:${AVC[(i + s) % 7]}">${['AL', 'BE', 'CA', 'DU', 'EV', 'FI', 'GI'][(i + s) % 7]}</i>`).join('')}${n > 4 ? `<i style="background:#6C6A85">+${n - 4}</i>` : ''}</div>`;
+$('#grps').innerHTML = `
+  <div class="grp" id="g1">${av(4, 0)}<div><div class="nm">Lobo-guará · 4</div><div class="ds">R/RR · 10 min com você</div></div><div class="go">roteiro</div></div>
+  <div class="grp" id="g2">${av(7, 3)}<div><div class="nm">Ipê · 7</div><div class="ds">B/D · estação no tablet</div></div></div>
+  <div class="grp" id="g3">${av(13, 5)}<div><div class="nm">Tatu · 13</div><div class="ds">segue a trilha</div></div></div>`;
+
+const CAP = [
+  { a: .4, b: 3.5, who: 'Formadora', html: 'O painel da turma responde a 3 perguntas.' },
+  { a: 3.8, b: 6.2, who: 'Formadora', html: 'Primeira: <b>onde está a minha turma?</b>' },
+  { a: 6.3, b: 8.8, who: 'Formadora', html: 'A maioria está entre os níveis 4 e 6.' },
+  { a: 8.9, b: 11.3, who: 'Formadora', html: 'Três crianças estão abaixo do nível 3: olho nelas.' },
+  { a: 11.6, b: 13.8, who: 'Formadora', html: 'Segunda: <b>qual som está travando?</b>' },
+  { a: 13.9, b: 16.6, who: 'Formadora', html: 'Procure a célula mais clara: aqui, o R e o RR.' },
+  { a: 16.7, b: 19.2, who: 'Formadora', html: 'Muitas crianças ainda leem “caro” no lugar de “carro”.' },
+  { a: 19.6, b: 21.8, who: 'Formadora', html: 'Terceira: <b>quem precisa de mim hoje?</b>' },
+  { a: 21.9, b: 24.8, who: 'Formadora', html: 'O painel sugere um grupo de 4, por 10 minutos, com você.' },
+  { a: 24.9, b: 27.5, who: 'Formadora', html: 'O roteiro vem pronto: eu faço, nós fazemos, você faz.' },
+  { a: 27.9, b: 29.9, who: 'Formadora', html: 'O painel sugere. Quem decide é você.' },
+  { a: 30.0, b: 31.8, who: 'Formadora', html: 'No próximo vídeo: como modelar o som do R.' },
+];
+window.renderAt = (t) => {
+  // abertura
+  const io = win(t, 0, 3.7, .5, .5); css('#intro', { o: io, x: (1 - eo(prog(t, 0, .6))) * -30 });
+  $$('#nums3 div').forEach((d, i) => { const f = clamp(back(prog(t, .8 + i * .3, 1.2 + i * .3)), 0, 1.2); d.style.transform = `scale(${f})`; });
+  // painel
+  const po = Math.min(eo(prog(t, 3.0, 3.8)), 1 - eio(prog(t, 27.4, 27.9)));
+  const intro = t < 3.8; css('#panel', { o: po, s: intro ? .96 + .04 * eo(prog(t, 3.0, 3.8)) : 1, x: intro ? (1 - eo(prog(t, 3.0, 3.8))) * 300 : 0 });
+  css('#qs', { o: Math.min(eo(prog(t, 3.4, 4.0)), 1 - eio(prog(t, 27.4, 27.9))) });
+  const step = t < 3.6 ? 0 : t < 11.4 ? 1 : t < 19.4 ? 2 : t < 27.6 ? 3 : 4;
+  [1, 2, 3].forEach(i => {
+    $('#q' + i).className = 'q' + (i === step ? ' on' : i < step ? ' done' : '');
+    if (i < step) $('#q' + i + ' .n').textContent = '✓'; else $('#q' + i + ' .n').textContent = i;
+    const w = $('#w' + i); const on = i === step;
+    w.style.opacity = step === 0 || step === 4 ? 1 : on ? 1 : .32;
+    w.style.borderColor = on ? '#FFC83D' : '#E3E0F0';
+    w.style.boxShadow = on ? '0 0 0 5px rgba(255,200,61,.45)' : 'none';
+    w.style.background = on ? '#fff' : '#FCFBFF';
+  });
+  // histograma cresce
+  const hg = eio(prog(t, 4.0, 5.6));
+  $$('#hist .b').forEach((b, i) => { b.style.height = (H[i] / 6 * 110 * hg + 2) + 'px'; b.style.background = (t > 8.9 && t < 11.4 && i < 3) ? '#E39A2D' : (t > 6.3 && i >= 4 && i <= 6) ? '#2FB866' : '#4B3FA8'; b.querySelector('span').style.opacity = hg; });
+  const histW = 790 - 28 - 48; const bw = (histW - 100) / 11;
+  const band = $('#band'); band.style.left = (24 + 4 * (bw + 10) - 6) + 'px'; band.style.width = (3 * bw + 20 + 12) + 'px';
+  css('#band', { o: t > 6.3 && t < 11.4 ? eo(prog(t, 6.3, 6.7)) : 0 });
+  
+  const low = $('#low'); low.style.position = 'absolute'; low.style.left = (24 + 0 * (bw + 10)) + 'px'; low.style.bottom = '92px';
+  css('#low', { o: t > 8.9 && t < 11.4 ? eo(prog(t, 8.9, 9.3)) : 0 });
+  $('#lowl').style.top = '0';
+  // mapa de calor
+  const hm = $$('#hm .c'); hm.forEach((c, i) => { const r = Math.floor(i / 3); c.style.opacity = t < 3.6 ? 1 : eo(prog(t, 11.8 + r * .12, 12.2 + r * .12)) * (t > 13.9 && t < 19.4 && r !== 5 ? .45 : 1) || (t >= 3.6 && t < 11.8 ? .9 : 0); });
+  const rh = $('#rowhl'); { const w2 = $('#w2'); const lr = $$('#hm .rl')[5]; rh.style.top = (lr.offsetTop - 6) + 'px'; } css(rh, { o: t > 13.9 && t < 19.4 ? .6 + .4 * Math.sin(t * 5) : 0 });
+  // grupos
+  ['#g1', '#g2', '#g3'].forEach((g, i) => { const e = $(g); const f = t < 19.6 ? 1 : eo(prog(t, 20.0 + i * .25, 20.4 + i * .25)); css(e, { o: t >= 19.4 && t < 27.6 ? f * (t > 21.9 && i > 0 ? .45 : 1) : 1, x: t >= 19.4 && t < 27.6 ? (1 - f) * 20 : 0 }); e.style.borderColor = t > 21.9 && t < 27.6 && i === 0 ? '#FF6B3D' : '#E3E0F0'; e.style.background = t > 21.9 && t < 27.6 && i === 0 ? '#FFF1EA' : '#fff'; });
+  css('#g1 .go', { s: t > 24.9 && t < 27.6 ? 1 + .08 * Math.sin(t * 6) : 1 });
+  // Sofia pequena só na abertura (aponta para o título)
+  css('#sofiaP', { o: win(t, .2, 3.7, .5, .5), x: 860, y: 230 + (1 - eo(prog(t, .2, .8))) * 60, s: 1.05 });
+  poseSofia($('#sofiaP'), t, { mouth: 'smile', arm: 150 + Math.sin(t * 9) * 12, hand: 'open' });
+  // fecho
+  css('#outro', { o: eo(prog(t, 27.6, 28.2)), s: .96 + .04 * eo(prog(t, 27.6, 28.2)) });
+  poseSofia($('#outsofia'), t, { mouth: 'smile', arm: t > 29.9 ? 150 + Math.sin(t * 9) * 12 : 12, hand: t > 29.9 ? 'open' : 'fist' });
+  captions(t, CAP);
+  if (THUMB) $('#cap').style.opacity = 0;
+};
+</script></body></html>

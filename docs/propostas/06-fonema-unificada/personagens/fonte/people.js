@@ -166,14 +166,14 @@ const ELENCO = {
   cida: () => person({ skin: '#5C3A26', hair: 'vovo', hairColor: '#CFC8BE', browColor: '#BDB6AE', topColor: '#9B6FC4', top: 'cardigan', inner: '#F6E7C9', bottom: 'skirt', bottomColor: '#2F7D4F', shoe: '#7A4B2E', glasses: '#B5651D', wrinkles: true, earrings: P.ipe, expr: { eyes: 'happy', mouth: 'smile' },
     armR: { t: [168, 760], hand: 'fist', hrot: 90 }, front: `<path d="M172,760 V1000" stroke="${P.line}" stroke-width="16" stroke-linecap="round"/><path d="M172,760 V1000" stroke="#8A5A33" stroke-width="10" stroke-linecap="round"/><path d="M150,752 q22,-14 34,8" stroke="${P.line}" stroke-width="14" fill="none" stroke-linecap="round"/><path d="M150,752 q22,-14 34,8" stroke="#8A5A33" stroke-width="8" fill="none" stroke-linecap="round"/>` }),
   davi: () => person({ seated: true, skin: '#8D5A3B', hair: 'fade', hairColor: '#1E1410', beard: true, topColor: '#1F7A70', bottomColor: '#2F4E86', shoe: P.ipe, expr: { eyes: 'open', mouth: 'bigSmile' },
-    armR: { t: [190, 300], hand: 'wave', hrot: -100 }, armL: { t: [-150, 690], hand: 'fist', hrot: 90 }, badge: `<g transform="translate(-40,500)"><circle r="22" fill="#FFF8EC" stroke="${P.line}" stroke-width="3"/><path d="M-10,-6 l10,-8 l10,8 v12 h-20z" fill="${P.vowel}"/></g>` }),
+    armR: { t: [190, 300], hand: 'wave', hrot: -100 }, armL: { t: [-150, 690], hand: 'fist', hrot: 90 }, badge: `<g transform="translate(-40,500)"><circle r="22" fill="#FFF8EC" stroke="${P.line}" stroke-width="3"/><path d="M4,-12 v18" stroke="${P.focus}" stroke-width="4"/><ellipse cx="-2" cy="7" rx="7" ry="5" fill="${P.focus}"/><path d="M4,-12 q8,2 10,10" stroke="${P.focus}" stroke-width="4" fill="none"/></g>` }),
   tito: () => person({ skin: '#F1C9A5', hair: 'menino', hairColor: '#8A5A33', topColor: '#F4B400', top: 'stripes', stripe: '#2F7D4F', bottomColor: '#2F5DA8', headScale: 1, hearingAid: true, expr: { eyes: 'open', mouth: 'bigSmile', look: [4, -2] },
-    armR: { t: [180, 340], hand: 'fist', hrot: -60 } }),
+    armR: { t: [176, 480], hand: 'fist', hrot: -40 } }),
   kenji: () => person({ skin: '#EBC39C', hair: 'curto', hairColor: '#2A2622', topColor: '#E9E2D4', top: 'apron', bottom: 'pants', bottomColor: '#5B5A72', shoe: '#3A3A4A', hat: 'padeiro', mustache: '#3A3430', expr: { eyes: 'happy', mouth: 'smile' },
     armL: { t: [-60, 500], hand: 'open', hrot: 0, bend: 'in' }, armR: { t: [60, 500], hand: 'open', hrot: 180, bend: 'in' }, front: bandeja(0, 480, 1.1) }),
   jaci: () => person({ skin: '#B07A50', hair: 'liso', hairColor: '#17110D', topColor: '#E2A23B', top: 'cardigan', inner: '#2F7D4F', bottom: 'skirt', bottomColor: '#7A4B8E', shoe: '#5C3A26', earrings: '#8A5A33', glasses: '#C2410C', expr: { eyes: 'open', mouth: 'smile' },
     armL: { t: [-40, 560], hand: 'open', hrot: 20, bend: 'in' }, armR: { t: [44, 560], hand: 'open', hrot: 160, bend: 'in' }, front: livros(0, 560, 1) }),
   lia: () => person({ skin: '#3B2419', hair: 'locs', hairColor: '#1B110C', topColor: '#F6E7C9', top: 'overall', overall: '#6D3FC0', bottom: 'pants', bottomColor: '#6D3FC0', shoe: '#F28C28', goggles: true, earrings: '#38A090', expr: { eyes: 'open', mouth: 'bigSmile', look: [6, 2] },
-    armR: { t: [200, 560], hand: 'open', hrot: -10 } }),
+    armR: { t: [150, 610], hand: 'fist', hrot: 60 } }),
 };
 module.exports = { person, ELENCO, robo, shade, livros, pipa, bandeja };

@@ -1,0 +1,217 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="base.css">
+<script src="engine.js"></script><script src="chars.js"></script><script src="parts.js"></script>
+<style>
+#bg{position:absolute;inset:0;background:radial-gradient(1200px 700px at 70% 110%,#FFE9C9 0,#FFF8EC 60%)}
+#bg .hill{position:absolute;border-radius:50%;background:#E4F5DF}
+.steps{position:absolute;top:16px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:41}
+.step{width:46px;height:46px;border-radius:50%;border:3px solid #CFC9E6;background:#fff;display:grid;place-items:center;padding:8px}
+.step.on{border-color:var(--tinta);background:var(--sol);box-shadow:0 4px 0 var(--tinta)}
+.step.done{border-color:var(--mata);background:#E6F8EC}
+.step svg{width:100%;height:100%}
+#title{left:84px;top:150px;width:560px;padding:34px 40px 38px}
+#title .k{font-family:Fredoka;font-weight:600;font-size:24px;color:var(--noite);letter-spacing:.5px}
+#title h1{font-family:Fredoka;font-weight:700;font-size:58px;line-height:1.02;margin:6px 0 22px}
+#title .ph{display:inline-flex;align-items:center;gap:18px}
+#title .ph b{font-family:Andika;font-size:120px;line-height:1;color:var(--grafema);background:#FFF0F6;border:4px solid var(--tinta);border-radius:26px;padding:0 30px 10px}
+#title .ph span{font-size:26px;color:var(--apoio);max-width:200px;line-height:1.2;font-weight:700}
+#mirror{left:150px;top:92px;width:520px;height:520px;border-radius:50%;background:#EAE7FF;border:10px solid var(--noite);overflow:hidden;box-shadow:0 0 0 8px #fff,0 14px 0 8px rgba(31,29,61,.12)}
+#mirror .inner{position:absolute;left:-170px;top:-150px;width:860px}
+#mirlabel{left:780px;top:112px}
+.lbl{font-family:Fredoka;font-weight:600;font-size:22px;background:var(--noite);color:#fff;border-radius:99px;padding:6px 18px;border:3px solid var(--tinta)}
+#ringlips{position:absolute;left:198px;top:328px;width:124px;height:80px;border:7px solid var(--ipe);border-radius:50%;box-shadow:0 0 0 5px rgba(224,86,159,.25)}
+#nosevib{position:absolute;left:292px;top:250px;width:96px;height:96px}
+#side1{left:780px;top:176px;width:430px}
+.tip{background:#fff;border:4px solid var(--tinta);border-radius:24px;padding:16px 22px;display:flex;gap:16px;align-items:center;font-size:27px;font-weight:700;box-shadow:6px 6px 0 var(--tinta)}
+.tip .ic{width:62px;height:62px;flex:none;border-radius:18px;display:grid;place-items:center;padding:8px}
+.tip .ic svg{width:100%;height:100%}
+#cortebox{left:60px;top:88px;width:790px;height:520px;border-radius:34px;background:var(--noite);border:5px solid var(--tinta);box-shadow:10px 10px 0 rgba(31,29,61,.2);overflow:hidden}
+#cortebox .t{position:absolute;left:28px;top:20px;font-family:Fredoka;font-weight:600;color:#fff;font-size:26px}
+#cortebox .corte{position:absolute;left:44px;top:66px;width:530px}
+.legend{position:absolute;display:flex;align-items:center;gap:10px;font-family:Fredoka;font-weight:600;font-size:22px;color:#fff;background:#2E2670;border:2.5px solid rgba(255,255,255,.55);border-radius:16px;padding:7px 16px}
+.legend i{display:inline-block;width:18px;height:18px;border-radius:50%}
+#lettercard{left:80px;top:96px;width:790px;height:480px;padding:20px}
+#lettercard svg{width:100%;height:100%}
+.wcard{position:absolute;top:140px;width:300px;height:410px;padding:16px 14px 18px;display:flex;flex-direction:column;align-items:center}
+.wcard .ill svg{width:240px;height:190px}
+.wcard .w{font-family:Andika;font-weight:700;font-size:74px;letter-spacing:4px;margin-top:10px;line-height:1}
+.wcard .w b{color:var(--grafema);text-decoration:underline;text-decoration-thickness:7px;text-underline-offset:9px}
+.wcard .sy{font-size:24px;color:var(--apoio);margin-top:18px;font-weight:700;letter-spacing:1px}
+#yourturn{left:84px;top:112px;width:620px;padding:30px 34px 28px}
+#yourturn h2{font-family:Fredoka;font-weight:700;font-size:56px;line-height:1}
+#yourturn .row{display:flex;gap:26px;margin-top:26px;align-items:center}
+.mirrorbtn{width:150px;height:150px;border-radius:50%;background:#EAE7FF;border:6px solid var(--noite);display:grid;place-items:center}
+.micbtn{width:132px;height:132px;border-radius:50%;background:var(--urucum);border:5px solid var(--tinta);box-shadow:0 7px 0 var(--tinta);display:grid;place-items:center;position:relative}
+.micbtn .halo{position:absolute;inset:-14px;border-radius:50%;border:6px solid var(--urucum)}
+.wait{display:flex;gap:10px;margin-top:24px;align-items:center;font-size:25px;font-weight:700;color:var(--apoio)}
+.wait i{width:16px;height:16px;border-radius:50%;background:var(--noite);display:inline-block}
+#sofia{position:absolute;left:0;top:0;width:400px;transform-origin:0 0}
+#bolota{position:absolute;left:0;top:0;width:230px;transform-origin:0 0}
+#thumbt{display:none}
+</style></head><body>
+<div id="stage">
+  <div id="bg"><div class="hill" style="left:-200px;bottom:-420px;width:1100px;height:560px"></div><div class="hill" style="right:-260px;bottom:-460px;width:1100px;height:600px;background:#D8F0D2"></div></div>
+  <div class="topbar"><div class="logo"><i>F</i>FONEMA</div><div class="sp"></div><div class="badge">CC</div></div>
+  <div class="steps" id="steps"></div>
+
+  <div class="scene" id="s1"><div class="abs card" id="title"><div class="k">SOFIA APRESENTA O SOM</div><h1>O som do<br>nariz que vibra</h1><div class="ph"><b>m</b><span>som /m/<br>letra M</span></div></div></div>
+
+  <div class="scene" id="s2">
+    <div class="abs" id="mirror"><div class="inner" id="bigsofia"></div><div id="ringlips"></div>
+      <svg id="nosevib" viewBox="0 0 120 120" stroke="#2EC4F1" stroke-width="7" fill="none" stroke-linecap="round"><path d="M14,30 q16,30 0,60"/><path d="M34,18 q24,42 0,84"/><path d="M56,8 q30,52 0,104"/></svg>
+    </div>
+    <div class="abs lbl" id="mirlabel">Boca da Sofia</div>
+    <div class="abs" id="side1">
+      <div class="tip" id="tip1"><div class="ic" style="background:#FFE3F0"></div><span>lábios fechados</span></div>
+      <div class="tip" id="tip2" style="margin-top:20px"><div class="ic" style="background:#DDF5FF"></div><span>o ar sai pelo nariz</span></div>
+      <div class="tip" id="tip3" style="margin-top:20px"><div class="ic" style="background:#FFF0C2"></div><span>dedo no nariz: vibra!</span></div>
+    </div>
+  </div>
+
+  <div class="scene" id="s3"><div class="abs" id="cortebox"><div class="t">Por dentro</div><div id="cortewrap"></div>
+    <div class="legend" style="right:26px;top:96px" id="lg1"><i style="background:#FF8CC6"></i>boca fechada</div>
+    <div class="legend" style="right:26px;top:154px" id="lg2"><i style="background:#2EC4F1"></i>ar pelo nariz</div>
+    <div class="legend" style="right:26px;top:212px" id="lg3"><i style="background:#fff"></i>garganta vibra</div>
+  </div></div>
+
+  <div class="scene" id="s4"><div class="abs card" id="lettercard">
+    <svg viewBox="0 0 560 320">
+      <g stroke="#E7E2F3" stroke-width="2.5"><line x1="10" y1="40" x2="550" y2="40"/><line x1="10" y1="138" x2="550" y2="138" stroke-dasharray="10 10"/><line x1="10" y1="270" x2="550" y2="270" stroke="#CFC9E6" stroke-width="3"/></g>
+      <g fill="none" stroke="#EFEAF8" stroke-width="30" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M60,270 L60,44 L140,190 L220,44 L220,270"/>
+        <path d="M320,270 L320,140 M320,176 C320,146 344,136 362,138 C382,140 390,156 390,178 L390,270 M390,178 C390,148 414,136 432,138 C452,140 460,156 460,178 L460,270"/>
+      </g>
+      <g fill="none" stroke="#C2307A" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+        <path class="tr" d="M60,270 L60,44"/><path class="tr" d="M60,44 L140,190 L220,44"/><path class="tr" d="M220,44 L220,270"/>
+        <path class="tr" d="M320,140 L320,270"/><path class="tr" d="M320,176 C320,146 344,136 362,138 C382,140 390,156 390,178 L390,270"/><path class="tr" d="M390,178 C390,148 414,136 432,138 C452,140 460,156 460,178 L460,270"/>
+      </g>
+      <circle id="pen" r="13" fill="#FFC83D" stroke="#1F1D3D" stroke-width="4"/>
+    </svg>
+  </div></div>
+
+  <div class="scene" id="s5">
+    <div class="wcard card" id="w0" style="left:40px"><div class="ill"></div><div class="w"><b>M</b>ALA</div><div class="sy">MA · LA</div></div>
+    <div class="wcard card" id="w1" style="left:360px"><div class="ill"></div><div class="w"><b>M</b>APA</div><div class="sy">MA · PA</div></div>
+    <div class="wcard card" id="w2" style="left:680px"><div class="ill"></div><div class="w"><b>M</b>OLA</div><div class="sy">MO · LA</div></div>
+  </div>
+
+  <div class="scene" id="s6"><div class="abs card" id="yourturn"><h2>Agora é<br>sua vez!</h2>
+    <div class="row"><div class="mirrorbtn" id="mirbtn"></div><div class="micbtn" id="mic"><div class="halo"></div><svg viewBox="0 0 48 48" width="70" height="70"><rect x="17" y="5" width="14" height="25" rx="7" fill="#fff" stroke="#1F1D3D" stroke-width="3"/><path d="M10,24 Q10,37 24,37 Q38,37 38,24 M24,37 L24,44" fill="none" stroke="#1F1D3D" stroke-width="4" stroke-linecap="round"/></svg></div></div>
+    <div class="wait" id="wait"><i></i><i></i><i></i><span>a Sofia espera você</span></div>
+  </div></div>
+
+  <div id="sofia"></div>
+  <div id="bolota"></div>
+  <div class="mute" id="mute"></div>
+  <div id="cap"></div>
+</div>
+<script>
+const THUMB = Q.get('thumb');
+$('#sofia').innerHTML = sofiaSVG({ letter: 'm' });
+$('#bigsofia').innerHTML = sofiaSVG({ letter: 'm' });
+$('#bolota').innerHTML = bolotaSVG();
+$('#cortewrap').innerHTML = corteSVG();
+const corte = $('#cortewrap svg'); initParts(corte, 16);
+['mala', 'mapa', 'mola'].forEach((k, i) => $(`#w${i} .ill`).innerHTML = ILL[k]);
+$('#tip1 .ic').innerHTML = ICON.mouth('#C2307A');
+$('#tip2 .ic').innerHTML = `<svg viewBox="0 0 48 48"><path d="M20,6 L12,30 Q12,36 20,36 L26,36" fill="none" stroke="#1F8DB5" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="30" r="3" fill="#2EC4F1"/><circle cx="39" cy="34" r="3" fill="#2EC4F1"/><circle cx="44" cy="39" r="2.5" fill="#2EC4F1"/></svg>`;
+$('#tip3 .ic').innerHTML = `<svg viewBox="0 0 48 48"><path d="M18,46 L18,22 a5,5 0 0 1 10,0 L28,30 L36,30 a5,5 0 0 1 5,5 L41,46" fill="#F2C3A0" stroke="#1F1D3D" stroke-width="3.5" stroke-linejoin="round"/><path d="M23,3 L23,13 M12,6 l4,6 M34,6 l-4,6" stroke="#2EC4F1" stroke-width="4" stroke-linecap="round"/></svg>`;
+$('#mirbtn').innerHTML = `<svg viewBox="0 0 120 120" width="120"><circle cx="60" cy="60" r="44" fill="#fff" stroke="#4B3FA8" stroke-width="5"/><path d="M38,64 Q49,57 60,60 Q71,57 82,64 Q71,76 60,75 Q49,76 38,64Z" fill="#B9575C" stroke="#1F1D3D" stroke-width="4"/><path d="M39,64 L81,64" stroke="#1F1D3D" stroke-width="3.5"/><path d="M34,30 l10,10 M30,44 l8,4" stroke="#C9C3EF" stroke-width="5" stroke-linecap="round"/></svg>`;
+$('#steps').innerHTML = ['ear', 'mouth', 'letter', 'words', 'you'].map(k => `<div class="step">${ICON[k]('#1F1D3D')}</div>`).join('');
+const trs = $$('.tr'); trs.forEach(p => { const L = p.getTotalLength(); p.style.strokeDasharray = L; p.dataset.L = L; });
+
+// ROTEIRO = LEGENDAS (mesmo texto vai para o TTS). SND = fonema gravado pela fono (trilha muda).
+const CAP = [
+  { a: .4, b: 3.3, who: 'Sofia', html: 'Oi! Eu sou a Sofia. Hoje tem som novo!' },
+  { a: 3.5, b: 6.3, who: 'Sofia', html: 'Olha a minha boca: os lábios ficam fechadinhos.' },
+  { a: 6.4, b: 8.3, who: 'Sofia', html: '<i class="snd">mmmmmm…</i>' },
+  { a: 8.4, b: 10.4, who: 'Sofia', html: 'Põe o dedo no nariz: <i class="snd">mmmm</i>. Vibrou?' },
+  { a: 10.7, b: 12.8, who: 'Sofia', html: 'Por dentro: a boca fecha e o ar sai pelo nariz.' },
+  { a: 12.9, b: 15.4, who: 'Sofia', html: '<i class="snd">mmmmmm…</i> e a garganta vibra também.' },
+  { a: 15.8, b: 17.8, who: 'Sofia', html: '<i class="snd">mmm</i>… esse som é da letra <span class="g">M</span>.' },
+  { a: 17.9, b: 20.0, who: 'Sofia', html: '<span class="g">M</span> grande, <span class="g">m</span> pequeno: os dois fazem <i class="snd">mmm</i>.' },
+  { a: 20.3, b: 22.7, who: 'Sofia', html: '<i class="snd">mmm</i>… <span class="g">M</span>ALA!' },
+  { a: 22.9, b: 25.3, who: 'Sofia', html: '<i class="snd">mmm</i>… <span class="g">M</span>APA!' },
+  { a: 25.5, b: 27.9, who: 'Sofia', html: '<i class="snd">mmm</i>… <span class="g">M</span>OLA!' },
+  { a: 28.2, b: 30.6, who: 'Sofia', html: 'Agora é sua vez! Feche a boca e faça <i class="snd">mmmm</i>.' },
+  { a: 30.7, b: 33.6, who: 'Sofia', html: 'Eu espero você. Pode começar!' },
+];
+const SND = [[6.4, 8.3], [8.9, 10.2], [12.9, 14.4], [15.8, 16.6], [20.3, 21.1], [22.9, 23.7], [25.5, 26.3]];
+const CHILD = [31.0, 34.0];
+const inW = (t, W) => W.some(([a, b]) => t >= a && t < b);
+const mouthAt = t => mouthFor(t, CAP, SND);
+
+window.renderAt = (t) => {
+  const S = [[0, 3.4], [3.3, 10.6], [10.5, 15.7], [15.6, 20.1], [20.0, 28.1], [28.0, 34.0]];
+  S.forEach(([a, b], i) => css('#s' + (i + 1), { o: win(t, a, b, .45, .4) }));
+  const stepIdx = t < 3.3 ? -1 : t < 6.4 ? 0 : t < 15.6 ? 1 : t < 20 ? 2 : t < 28 ? 3 : 4;
+  $$('.step').forEach((s, i) => { s.className = 'step' + (i === stepIdx ? ' on' : i < stepIdx ? ' done' : ''); });
+  css('#steps', { o: prog(t, 3.0, 3.5) });
+  const ti = eo(prog(t, .1, .8)); css('#title', { o: ti, y: (1 - ti) * 30 });
+  // Sofia
+  let sx = 760, sy = 120, ss = 1.12, arm = 12, hand = 'fist', look = 0;
+  if (t < 3.4) { sx = 740; sy = 110; arm = 150 + Math.sin(t * 9) * 14; hand = 'open'; }
+  else if (t < 15.7) { sx = 900; sy = 210; ss = .92; arm = 96; hand = 'point'; look = -1; }
+  else if (t < 20.05) { sx = 900; sy = 210; ss = .92; arm = 84; hand = 'point'; look = -1; }
+  else if (t < 28.05) { sx = 1000; sy = 250; ss = .78; arm = 80; hand = 'point'; look = -1; }
+  else { sx = 770; sy = 120; ss = 1.12; arm = 92; hand = 'point'; look = -1; }
+  const sofiaIn = t < 3.4 ? eo(prog(t, 0, .7)) : 1;
+  const hidden = t > 3.25 && t < 10.55;
+  let dy = 0; for (const a of [10.5, 28.0]) if (t >= a && t < a + .6) dy = (1 - eo(prog(t, a, a + .55))) * 90;
+  css('#sofia', { o: hidden ? 0 : sofiaIn, x: sx, y: sy + dy + (1 - sofiaIn) * 60, s: ss });
+  poseSofia($('#sofia'), t, { mouth: mouthAt(t), arm, hand, look });
+  // Bolota
+  let bx = 560, by = 500, bs = 1, bo = 0;
+  if (t < 3.4) { bo = eo(prog(t, .5, 1.1)); }
+  else if (t >= 28) { bx = 486; by = 296; bs = .8; bo = eo(prog(t, 28.4, 29)); }
+  css('#bolota', { o: bo, x: bx, y: by, s: bs });
+  poseBolota($('#bolota'), t, { hop: t > 28 ? 1 : .3 });
+  // cena 2: espelho (boca da Sofia em close)
+  const m2 = eo(prog(t, 3.3, 3.9)); css('#mirror', { s: .85 + .15 * m2, o: m2 });
+  poseSofia($('#bigsofia'), t, { mouth: (t >= 4.2 && t < 6.4) || inW(t, SND) ? 'closed' : mouthAt(t), bob: false });
+  const ring = t > 4.3 && t < 6.4 ? .55 + .45 * Math.sin(t * 6) : 0; css('#ringlips', { o: ring > 0 ? Math.max(.35, ring) : 0, s: 1 + .04 * Math.sin(t * 6) });
+  const nv = inW(t, SND) && t > 6.4 && t < 10.5 ? 1 : 0;
+  $$('#nosevib path').forEach((p, i) => { p.style.opacity = nv * (.4 + .6 * Math.max(0, Math.sin(t * 14 - i * 1.3))); });
+  css('#tip1', { o: eo(prog(t, 4.2, 4.6)), x: (1 - eo(prog(t, 4.2, 4.6))) * 30 });
+  css('#tip2', { o: eo(prog(t, 6.6, 7.0)), x: (1 - eo(prog(t, 6.6, 7.0))) * 30 });
+  css('#tip3', { o: eo(prog(t, 8.5, 8.9)), x: (1 - eo(prog(t, 8.5, 8.9))) * 30 });
+  css('#mirlabel', { o: eo(prog(t, 3.8, 4.2)) });
+  // cena 3: corte lateral
+  const air = inW(t, SND) && t > 12 ? 1 : (t > 11.2 && t < 12.9 ? .9 : 0);
+  flowParts(corte, t, air);
+  corte.querySelectorAll('.nvib path').forEach((p, i) => p.style.opacity = (t > 12.9 && t < 14.6 ? 1 : 0) * (.3 + .7 * Math.max(0, Math.sin(t * 14 - i * 1.3))));
+  corte.querySelector('.ring-labios').style.opacity = t > 10.8 && t < 12.6 ? .5 + .5 * Math.sin(t * 6) : 0;
+  corte.querySelector('.vib').setAttribute('transform', t > 12.9 && t < 15.4 ? `translate(${Math.sin(t * 60) * 1.5},0)` : '');
+  css('#lg1', { o: eo(prog(t, 11.0, 11.4)) }); css('#lg2', { o: eo(prog(t, 11.8, 12.2)) }); css('#lg3', { o: eo(prog(t, 13.2, 13.6)) });
+  // cena 4: traçado da letra (aparece junto com o som)
+  const strokes = [[15.9, 16.4], [16.4, 17.0], [17.0, 17.5], [18.0, 18.4], [18.4, 19.0], [19.0, 19.6]];
+  let pen = null;
+  trs.forEach((p, i) => {
+    const [a, b] = strokes[i]; const f = eio(prog(t, a, b)); const L = +p.dataset.L;
+    p.style.strokeDashoffset = (L * (1 - f)).toFixed(1);
+    if (t >= a && t <= b + .05) pen = p.getPointAtLength(L * f);
+  });
+  const pe = $('#pen'); if (pen) { pe.setAttribute('cx', pen.x); pe.setAttribute('cy', pen.y); pe.style.opacity = 1; } else pe.style.opacity = 0;
+  css('#lettercard', { o: eo(prog(t, 15.6, 16.0)), s: .94 + .06 * eo(prog(t, 15.6, 16.0)) });
+  // cena 5: palavras
+  [20.3, 22.9, 25.5].forEach((a, i) => {
+    const e = clamp(back(prog(t, a - .3, a + .25)), 0, 1.2); const active = t >= a && t < a + 2.5;
+    css('#w' + i, { o: clamp(e), y: (1 - clamp(e)) * 40, s: active ? 1.04 : 1 });
+    const c = $('#w' + i); c.style.background = active ? '#FFF0C2' : (t >= a + 2.5 ? '#EFFAF2' : '#fff');
+    const bm = c.querySelector('.w b'); const pulse = t >= a && t < a + .8 ? 1 + .14 * Math.sin(prog(t, a, a + .8) * Math.PI) : 1;
+    bm.style.display = 'inline-block'; bm.style.transform = `scale(${pulse})`;
+  });
+  // cena 6: convite
+  css('#yourturn', { o: eo(prog(t, 28.0, 28.5)), x: (1 - eo(prog(t, 28.0, 28.5))) * -40 });
+  const h = $('#mic .halo'); const hp = (t * .8) % 1; h.style.opacity = t > 30.7 ? (1 - hp) * .8 : 0; h.style.transform = `scale(${1 + hp * .35})`;
+  $$('#wait i').forEach((d, i) => d.style.opacity = .25 + .75 * Math.max(0, Math.sin(t * 4 - i * .9)));
+  css('#wait', { o: eo(prog(t, 30.7, 31.1)) });
+  const mu = $('#mute');
+  if (inW(t, SND)) { mu.innerHTML = '🔇 trilha muda · fonema /m/ gravado'; mu.style.opacity = 1; }
+  else if (t >= CHILD[0]) { mu.innerHTML = '🔇 silêncio: vez da criança'; mu.style.opacity = 1; }
+  else mu.style.opacity = 0;
+  mu.style.right = '22px'; mu.style.top = '70px';
+  captions(t, CAP);
+  if (THUMB) { $('#cap').style.opacity = 0; mu.style.opacity = 0; }
+};
+</script></body></html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FONEMA Criança · Meu jardim da leitura (sem números)</title>
+<link rel="stylesheet" href="base.css">
+<style>
+html,body{height:100%;overflow:hidden}
+body{font-family:Andika,sans-serif;color:#2B2340;background:linear-gradient(180deg,#8ED1FC 0%,#BFE6FF 45%,#E9F7FF 70%,#FFF6E5 100%)}
+#cena{position:fixed;inset:0}
+.sol{position:fixed;right:200px;top:46px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#FFE7A0,#FFC94A 60%,#F4A93A);box-shadow:0 0 80px 30px rgba(255,201,74,.45)}
+.topo-k{position:fixed;left:28px;top:24px;display:flex;align-items:center;gap:14px}
+.topo-k .casa{width:84px;height:84px;border-radius:26px;background:#fff;display:grid;place-items:center;box-shadow:0 6px 0 #D9C8A8,0 10px 24px rgba(43,35,64,.15)}
+.topo-k h1{font-size:34px;font-weight:700;text-shadow:0 2px 0 rgba(255,255,255,.7)}
+.termo{position:fixed;right:34px;top:150px;width:110px;height:470px;display:grid;justify-items:center}
+.balao{position:fixed;left:220px;bottom:46px;max-width:520px;background:#fff;border-radius:28px;padding:22px 26px;font-size:26px;line-height:1.3;box-shadow:0 8px 0 #E8DCC3,0 18px 40px rgba(43,35,64,.18)}
+.balao:before{content:"";position:absolute;left:-18px;bottom:40px;border:18px solid transparent;border-right-color:#fff;border-left:0}
+.balao .som{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#8ED1FC;vertical-align:middle;margin-left:8px}
+.sofia{position:fixed;left:24px;bottom:0;width:200px}
+.vamos{position:fixed;right:40px;bottom:46px;display:flex;align-items:center;gap:14px;background:#3FA34D;color:#fff;font-family:Andika;font-weight:700;font-size:34px;border:0;border-radius:36px;padding:22px 38px 22px 30px;box-shadow:0 8px 0 #2C7A37,0 18px 30px rgba(43,35,64,.2)}
+.vamos i{width:56px;height:56px;border-radius:50%;background:#fff;display:grid;place-items:center}
+</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head>
+<body>
+<div class="sol"></div>
+<canvas id="cena"></canvas>
+<div class="topo-k"><div class="casa"><svg width="46" height="46" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z" fill="#FF7A59"/></svg></div><h1>Meu jardim da leitura</h1></div>
+
+<svg class="termo" viewBox="0 0 110 470" aria-label="Termômetro: mais da metade do caminho">
+  <defs><linearGradient id="enche" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF7A59"/><stop offset="1" stop-color="#FFC94A"/></linearGradient>
+  <linearGradient id="vid" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".3" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#E7F3FB" stop-opacity=".9"/></linearGradient></defs>
+  <rect x="30" y="18" width="50" height="370" rx="25" fill="url(#vid)" stroke="#fff" stroke-width="5"/>
+  <rect x="38" y="168" width="34" height="230" rx="17" fill="url(#enche)"/>
+  <circle cx="55" cy="410" r="44" fill="#FF7A59" stroke="#fff" stroke-width="6"/>
+  <ellipse cx="42" cy="396" rx="12" ry="8" fill="#fff" opacity=".6"/>
+  <rect x="42" y="40" width="7" height="320" rx="3.5" fill="#fff" opacity=".7"/>
+  <g transform="translate(36,-6)"><path d="M19 0l5.5 11.5 12.5 1.6-9.2 8.6 2.4 12.3L19 28l-11.2 6 2.4-12.3L1 13.1l12.5-1.6z" fill="#FFC94A" stroke="#fff" stroke-width="3"/></g>
+  <g fill="#fff"><circle cx="55" cy="130" r="5"/><circle cx="55" cy="200" r="5"/><circle cx="55" cy="270" r="5"/></g>
+</svg>
+
+<svg class="sofia" viewBox="0 0 200 260" aria-label="Sofia">
+  <ellipse cx="100" cy="252" rx="70" ry="10" fill="#2B2340" opacity=".15"/>
+  <path d="M40 260c0-60 20-92 60-92s60 32 60 92z" fill="#6C4AB6"/>
+  <path d="M70 172l30 28 30-28" fill="#FFC94A"/>
+  <circle cx="100" cy="112" r="56" fill="#C98B5B"/>
+  <path d="M42 112c-4-60 116-66 116 0-6-30-36-46-58-44-28 2-52 16-58 44z" fill="#2B2340"/>
+  <circle cx="148" cy="88" r="16" fill="#2B2340"/><circle cx="160" cy="76" r="9" fill="#FF7A59"/>
+  <ellipse cx="80" cy="118" rx="7" ry="9" fill="#2B2340"/><ellipse cx="120" cy="118" rx="7" ry="9" fill="#2B2340"/>
+  <circle cx="82" cy="115" r="2.5" fill="#fff"/><circle cx="122" cy="115" r="2.5" fill="#fff"/>
+  <ellipse cx="66" cy="138" rx="10" ry="6" fill="#FF7A59" opacity=".45"/><ellipse cx="134" cy="138" rx="10" ry="6" fill="#FF7A59" opacity=".45"/>
+  <path d="M82 142q18 18 36 0" stroke="#2B2340" stroke-width="5" fill="#fff" stroke-linecap="round"/>
+</svg>
+<div class="balao">Que lindo! Sua trilha já tem <b>muitas flores</b>. Vamos plantar a próxima?<span class="som"><svg width="26" height="26" viewBox="0 0 24 24" fill="#1E3A5F"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a5 5 0 010 7" fill="none" stroke="#1E3A5F" stroke-width="2.2" stroke-linecap="round"/></svg></span></div>
+<button class="vamos"><i><svg width="26" height="26" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="#3FA34D"/></svg></i>Vamos!</button>
+
+<script type="module">
+import * as THREE from 'three';
+const cv=document.getElementById('cena');
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true,preserveDrawingBuffer:true});
+R.setPixelRatio(Math.min(devicePixelRatio,2));R.setSize(innerWidth,innerHeight);
+R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.05;R.outputColorSpace=THREE.SRGBColorSpace;
+const S=new THREE.Scene();S.fog=new THREE.Fog(0xDDF2FF,60,120);
+const C=new THREE.PerspectiveCamera(30,innerWidth/innerHeight,.1,200);C.position.set(19,18.5,25);C.lookAt(-1.2,0.6,0.6);
+S.add(new THREE.HemisphereLight(0xE4F5FF,0x8CCB6E,1.35));
+const sun=new THREE.DirectionalLight(0xFFF1D6,2.6);sun.position.set(14,22,10);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+Object.assign(sun.shadow.camera,{left:-16,right:16,top:16,bottom:-16,near:1,far:60});sun.shadow.bias=-0.0006;sun.shadow.radius=4;S.add(sun);
+const M=(c,o={})=>{const {flat,...r}=o;return new THREE.MeshStandardMaterial({color:c,roughness:.85,metalness:0,flatShading:!!flat,...r});};
+const add=(g,m,p,sh=true)=>{const o=new THREE.Mesh(g,m);if(p)o.position.set(...p);o.castShadow=sh;o.receiveShadow=true;S.add(o);return o;};
+// ilha flutuante
+const ilha=new THREE.Group();S.add(ilha);
+const top=new THREE.Mesh(new THREE.CylinderGeometry(9.2,8.6,1.4,64),[M(0xC98B5B),M(0x86CF6F),M(0x86CF6F)]);top.position.y=-.7;top.receiveShadow=true;top.castShadow=true;S.add(top);
+const rocha=new THREE.Mesh(new THREE.ConeGeometry(8.6,7,9,1),M(0xA8754C,{flat:true}));rocha.rotation.x=Math.PI;rocha.position.y=-4.9;S.add(rocha);
+const borda=new THREE.Mesh(new THREE.TorusGeometry(9.0,.35,12,64),M(0x6FBF5A));borda.rotation.x=Math.PI/2;borda.position.y=-.02;S.add(borda);
+// colina suave (relevo)
+const hfun=r=>3.4*Math.exp(-(r*r)/18);
+const prof=[];for(let i=0;i<=60;i++){const r=8.9*(1-i/60);prof.push(new THREE.Vector2(r,hfun(r)));}
+const hg=new THREE.LatheGeometry(prof,128);
+add(hg,M(0x93D67A,{side:THREE.DoubleSide}),[0,0.01,0],false);
+// trilha em espiral com 11 pedrinhas (0..10) — estados sem números
+const N=11,ATUAL=6;const pts=[];
+for(let i=0;i<N;i++){const t=i/(N-1);const a=2.75-t*3.1;const r=7.4-t*6.1;pts.push(new THREE.Vector3(Math.cos(a)*r,0,Math.sin(a)*r));pts[i].y=hfun(r);}
+// caminho de terra entre pedras
+const curva=new THREE.CatmullRomCurve3(pts.map(p=>p.clone().setY(p.y+.03)));
+const tubo=new THREE.TubeGeometry(curva,200,.42,8,false);tubo.scale(1,.18,1);
+add(tubo,M(0xEBC99A),null,false);
+const quente=[0xFFC94A,0xFFB84F,0xFFA552,0xFF9455,0xFF8657,0xFF7A59];
+pts.forEach((p,i)=>{
+  const feito=i<ATUAL,atual=i===ATUAL,meta=i===N-1;
+  if(meta)return;
+  const g=new THREE.CylinderGeometry(.78,.88,.34,10);
+  const m=feito?M(quente[i],{roughness:.55,flat:true}):atual?M(0xFFFFFF,{emissive:0xFFD27A,emissiveIntensity:.5,roughness:.4,flat:true}):M(0xF7F0E2,{roughness:.9,flat:true});
+  const st=add(g,m,[p.x,p.y+.18,p.z]);
+  if(feito){ // flores desabrochadas ao redor
+    const cores=[0xFF7A59,0x6C4AB6,0xFFC94A,0x8ED1FC,0xF05A7E];
+    for(let k=0;k<4;k++){const a=k*1.7+i,d=1.25+((k*37+i*11)%5)*.12;const fx=p.x+Math.cos(a)*d,fz=p.z+Math.sin(a)*d,fy=hfun(Math.hypot(fx,fz));
+      add(new THREE.CylinderGeometry(.05,.06,.8,5),M(0x3FA34D),[fx,fy+.4,fz]);
+      const cor=cores[(i+k)%cores.length];
+      for(let pe=0;pe<5;pe++){const b=pe/5*Math.PI*2;add(new THREE.SphereGeometry(.18,10,8),M(cor,{roughness:.6}),[fx+Math.cos(b)*.22,fy+.86,fz+Math.sin(b)*.22]);}
+      add(new THREE.SphereGeometry(.15,10,8),M(0xFFE07A),[fx,fy+.9,fz]);}
+  } else if(!atual){ // brotinhos esperando (sem cadeado)
+    for(let k=0;k<2;k++){const a=k*2.4+i,fx=p.x+Math.cos(a)*1.2,fz=p.z+Math.sin(a)*1.2,fy=hfun(Math.hypot(fx,fz));
+      const f=add(new THREE.SphereGeometry(.16,8,6),M(0x5DBB63),[fx,fy+.16,fz]);f.scale.set(1,1.4,.6);}
+  }
+  if(atual){ // anel brilhante e regador
+    const an=add(new THREE.TorusGeometry(1.15,.09,10,48),M(0xFFFFFF,{emissive:0xFFC94A,emissiveIntensity:1.2}),[p.x,p.y+.4,p.z],false);an.rotation.x=Math.PI/2;
+    const pin=new THREE.Group();S.add(pin);pin.position.set(p.x,p.y+1.6,p.z);
+    const gota=new THREE.Mesh(new THREE.SphereGeometry(.42,24,16),M(0x2C9BE0,{roughness:.2,metalness:.1,emissive:0x0E5A8A,emissiveIntensity:.25}));gota.castShadow=true;pin.add(gota);
+    const ponta=new THREE.Mesh(new THREE.ConeGeometry(.3,.6,24),gota.material);ponta.position.y=.5;pin.add(ponta);
+    const br=new THREE.Mesh(new THREE.SphereGeometry(.1,10,8),M(0xffffff,{emissive:0xffffff,emissiveIntensity:.6}));br.position.set(-.16,.12,.32);pin.add(br);
+  }
+});
+// árvore dos livros no topo (meta)
+const pm=pts[N-1];
+add(new THREE.CylinderGeometry(.35,.55,3.2,10),M(0x8B5A3C,{flat:true}),[pm.x,pm.y+1.6,pm.z]);
+[[0,4.0,0,1.9],[.9,3.4,.5,1.3],[-.9,3.5,-.3,1.35],[.1,4.9,-.2,1.25]].forEach(([dx,dy,dz,r])=>add(new THREE.IcosahedronGeometry(r,1),M(0x4FB45B,{flat:true}),[pm.x+dx,pm.y+dy,pm.z+dz]));
+// frutos = sons conquistados (alguns ainda por vir: botões verdes)
+for(let k=0;k<11;k++){const a=k*2.3,yy=3.4+(k%4)*.5,rr=1.55+(k%3)*.15;const done=k<6;
+  add(new THREE.SphereGeometry(done?.2:.13,14,10),done?M(0xFFB13B,{emissive:0xFF9A2A,emissiveIntensity:.25,roughness:.4}):M(0x8FD47F),[pm.x+Math.cos(a)*rr,pm.y+yy,pm.z+Math.sin(a)*rr]);}
+// livrinhos ao pé da árvore
+[[0xFF7A59,.0],[0x6C4AB6,.32],[0x8ED1FC,.62]].forEach(([c,h],i)=>{const b=add(new THREE.BoxGeometry(.9,.26,.65),M(c,{roughness:.6}),[pm.x+1.4,pm.y+.15+h*.9,pm.z+1.1]);b.rotation.y=i*.35;});
+// ponte para a próxima ilha
+const ilha2=new THREE.Group();S.add(ilha2);ilha2.position.set(-17,-.4,-10);
+const t2=new THREE.Mesh(new THREE.CylinderGeometry(4,3.6,1.2,40),[M(0xC98B5B),M(0xB9E3A8),M(0xB9E3A8)]);t2.receiveShadow=true;ilha2.add(t2);
+const r2=new THREE.Mesh(new THREE.ConeGeometry(3.6,4,8),M(0xA8754C,{flat:true}));r2.rotation.x=Math.PI;r2.position.y=-2.6;ilha2.add(r2);
+for(let k=0;k<3;k++){const tr=new THREE.Mesh(new THREE.ConeGeometry(.8,2.2,7),M(0x9ACF8A,{flat:true}));tr.position.set(-1+k*1.2,1.7,-.5+k*.4);ilha2.add(tr);}
+const ini=new THREE.Vector3(-7.6,.2,-3.6),fim=new THREE.Vector3(-13.4,.2,-8.2);
+for(let k=0;k<12;k++){const t=k/11;const p=ini.clone().lerp(fim,t);p.y+=-Math.sin(t*Math.PI)*.7;const tb=add(new THREE.BoxGeometry(.5,.12,1.4),M(0xD8A86E,{flat:true}),[p.x,p.y,p.z]);tb.lookAt(fim.x,p.y,fim.z);}
+// moitas e arvorezinhas decorativas
+[[5.5,-2.5],[6.2,1.2],[3.8,-5.4],[-2.5,-6.6],[-5.8,-3.6],[1.0,-7.2]].forEach(([x,z],k)=>{const y=hfun(Math.hypot(x,z));
+  if(k%2){add(new THREE.CylinderGeometry(.12,.16,1,6),M(0x8B5A3C),[x,y+.5,z]);add(new THREE.ConeGeometry(.75,1.8,7),M(k%3?0x58B866:0x6CC46F,{flat:true}),[x,y+1.7,z]);}
+  else{[[0,0,0,.7],[.5,-.1,.2,.5],[-.45,-.1,.1,.55]].forEach(([a,b,c,r])=>add(new THREE.IcosahedronGeometry(r,1),M(0x62BE60,{flat:true}),[x+a,y+.5+b,z+c]));}});
+// cogumelos
+[[4.6,3.4],[-1.5,5.6]].forEach(([x,z])=>{const y=hfun(Math.hypot(x,z));add(new THREE.CylinderGeometry(.12,.15,.4,8),M(0xFFF6E5),[x,y+.2,z]);const ch=add(new THREE.SphereGeometry(.32,16,10,0,Math.PI*2,0,Math.PI/2),M(0xFF7A59),[x,y+.38,z]);});
+// nuvens
+const nuvem=(x,y,z,s)=>{const g=new THREE.Group();[[0,0,0,1],[1,.2,0,.8],[-1,.1,.2,.75],[.4,.6,-.1,.7]].forEach(([a,b,c,r])=>{const m=new THREE.Mesh(new THREE.SphereGeometry(r,18,14),M(0xFFFFFF,{roughness:1}));m.position.set(a,b,c);g.add(m);});g.position.set(x,y,z);g.scale.setScalar(s);S.add(g);};
+nuvem(-12,9,-14,1.8);nuvem(10,10,-16,1.4);nuvem(-20,3,4,1.2);
+// pedrinhas e moitas na borda
+for(let k=0;k<22;k++){const a=k/22*Math.PI*2+.2,r=8.1;const b=add(new THREE.IcosahedronGeometry(.35+(k%3)*.12,0),M(k%2?0x5DBB63:0x6CC46F,{flat:true}),[Math.cos(a)*r,.2,Math.sin(a)*r]);b.scale.y=.8;}
+let n=0;function loop(){R.render(S,C);if(++n===8)window.__pronto=true;requestAnimationFrame(loop);}loop();
+addEventListener('resize',()=>{R.setSize(innerWidth,innerHeight);C.aspect=innerWidth/innerHeight;C.updateProjectionMatrix();});
+</script>
+</body>
+</html>

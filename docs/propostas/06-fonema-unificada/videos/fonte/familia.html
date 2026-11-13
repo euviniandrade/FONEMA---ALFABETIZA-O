@@ -1,0 +1,251 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="base.css">
+<script src="engine.js"></script><script src="chars.js"></script><script src="parts.js"></script>
+<style>
+#bg{position:absolute;inset:0;background:linear-gradient(180deg,#FFF8EC 0,#FFF1DE 100%)}
+.blob{position:absolute;border-radius:50%;opacity:.55}
+.vis{position:absolute;left:50px;top:92px;width:620px;height:500px}
+.txt{position:absolute;left:720px;top:118px;width:510px}
+.kick{font-family:Fredoka;font-weight:600;font-size:20px;letter-spacing:1px;color:var(--noite);text-transform:uppercase}
+.txt h1{font-family:Fredoka;font-weight:700;font-size:52px;line-height:1.04;margin:8px 0 18px}
+.txt h2{font-family:Fredoka;font-weight:700;font-size:44px;line-height:1.05;margin:8px 0 22px}
+.row{display:flex;align-items:center;gap:16px;font-size:27px;font-weight:700;line-height:1.2;margin-bottom:16px}
+.row .ic{width:58px;height:58px;flex:none;border-radius:16px;border:3px solid var(--tinta);display:grid;place-items:center;padding:9px;background:#fff}
+.row .ic svg{width:100%;height:100%}
+.pill{display:inline-flex;align-items:center;gap:10px;font-family:Fredoka;font-weight:600;font-size:21px;border-radius:99px;padding:8px 18px;border:3px solid var(--tinta);background:var(--sol)}
+.sub{font-size:24px;color:var(--apoio);font-weight:700;line-height:1.3}
+/* telefone */
+.phone{position:absolute;width:250px;height:480px;border-radius:40px;background:var(--tinta);padding:14px;box-shadow:12px 12px 0 rgba(31,29,61,.15)}
+.phone .scr{width:100%;height:100%;border-radius:28px;background:#FFF8EC;overflow:hidden;position:relative}
+/* termômetro */
+#thermo{position:absolute;left:0;top:30px;width:620px;padding:26px 28px 24px}
+#thermo .lv{font-family:Fredoka;font-weight:700;font-size:62px;line-height:1}
+#thermo .lv small{font-size:30px;color:var(--apoio);font-weight:600}
+.segs{display:flex;gap:8px;margin-top:70px;position:relative}
+.seg{flex:1;height:54px;border-radius:12px;border:3px solid var(--tinta);background:#EEEAF6;position:relative;overflow:hidden}
+.seg i{position:absolute;left:0;top:0;bottom:0;background:var(--mata)}
+.nums{display:flex;gap:8px;margin-top:8px}
+.nums span{flex:1;text-align:center;font-family:Fredoka;font-weight:600;font-size:20px;color:var(--apoio)}
+#marker{position:absolute;top:-62px;width:56px;height:56px;margin-left:-28px}
+.ends{display:flex;justify-content:space-between;font-size:20px;font-weight:700;color:var(--apoio);margin-top:6px}
+#warn{position:absolute;left:0;top:420px;width:620px;display:flex;gap:14px;align-items:center;background:#EAE7FF;border:3px solid var(--noite);border-radius:20px;padding:14px 18px;font-size:24px;font-weight:700;color:var(--noite)}
+/* missão */
+#mission{position:absolute;left:0;top:10px;width:620px;padding:24px 26px}
+#mission .hd{display:flex;align-items:center;gap:14px}
+#mission .hd .t{font-family:Fredoka;font-weight:700;font-size:36px;flex:1}
+.clock{display:flex;align-items:center;gap:6px;font-family:Fredoka;font-weight:700;font-size:26px;background:var(--sol);border:3px solid var(--tinta);border-radius:16px;padding:4px 12px}
+.clock svg{width:30px;height:30px}
+#mission .q{font-size:28px;font-weight:700;line-height:1.3;margin:18px 0 18px}
+#mission .q b{color:var(--grafema);text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:4px}
+.objs{display:flex;gap:16px}
+.obj{flex:1;border:3px solid var(--tinta);border-radius:20px;background:#FFF8EC;padding:10px 8px 8px;text-align:center;position:relative}
+.obj svg.il{width:110px;height:92px}
+.obj .w{font-size:30px;font-weight:700}
+.obj .w b{color:var(--grafema);text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:4px}
+.obj .ok{position:absolute;right:-12px;top:-12px;width:44px;height:44px;border-radius:50%;background:var(--mata);border:3px solid var(--tinta);display:grid;place-items:center}
+.audio{display:flex;align-items:center;gap:14px;margin-top:18px;background:#F3F0FF;border-radius:18px;padding:10px 14px;border:2.5px solid #CFC9E6}
+.audio .pb{width:50px;height:50px;border-radius:50%;background:var(--noite);display:grid;place-items:center;flex:none}
+.audio .pb svg{width:26px;height:26px}
+.wave{flex:1;display:flex;gap:4px;align-items:center;height:40px}
+.wave i{flex:1;background:var(--noite);border-radius:3px;opacity:.65}
+.audio span{font-family:Fredoka;font-weight:600;font-size:20px;color:var(--noite)}
+/* privacidade */
+#privphone{left:180px;top:6px}
+#shield{position:absolute;left:236px;top:150px;width:150px}
+#cloud{position:absolute;left:470px;top:40px;width:140px}
+#cloudx{position:absolute;left:500px;top:52px;width:80px}
+.ptag{position:absolute;font-family:Fredoka;font-weight:600;font-size:20px;background:#fff;border:3px solid var(--tinta);border-radius:14px;padding:6px 12px;white-space:nowrap}
+/* fecho */
+#chat{position:absolute;left:0;top:0;width:620px}
+.bub{background:#fff;border:3px solid var(--tinta);border-radius:22px 22px 22px 6px;padding:12px 18px;box-shadow:5px 5px 0 rgba(31,29,61,.15);font-size:24px;font-weight:700;margin-bottom:12px;width:max-content;max-width:600px}
+.bub .from{font-family:Fredoka;font-weight:600;font-size:17px;color:var(--mata);margin-bottom:4px}
+.btn{display:inline-flex;align-items:center;gap:12px;font-family:Fredoka;font-weight:700;font-size:28px;background:var(--urucum);color:#fff;border:4px solid var(--tinta);border-radius:22px;padding:12px 26px;box-shadow:0 6px 0 var(--tinta)}
+.sofiaw{position:absolute;width:300px}
+.bolw{position:absolute;width:170px}
+/* ===== vertical 9:16 ===== */
+body.v .vis{left:50px;top:120px;width:620px;height:500px}
+body.v .txt{left:50px;top:672px;width:620px}
+body.v .txt h1{font-size:50px}
+body.v .txt h2{font-size:42px;margin-bottom:18px}
+body.v .row{font-size:30px;margin-bottom:20px}
+body.v #cap{white-space:normal;width:660px;max-width:660px;font-size:31px;bottom:44px;padding:14px 22px}
+body.v .topbar{top:26px}
+body.v #warn{top:440px}
+</style></head><body>
+<div id="stage">
+  <div id="bg"><div class="blob" style="left:-120px;top:420px;width:520px;height:520px;background:#FFE3C2"></div><div class="blob" style="right:-160px;top:-160px;width:520px;height:520px;background:#E3F3FF"></div></div>
+  <div class="topbar"><div class="logo"><i>F</i>FONEMA</div><div class="chip" style="background:#E6F8EC">Para a família</div><div class="sp"></div><div class="badge">CC</div><div class="badge" style="background:var(--noite)">LIBRAS</div></div>
+
+  <!-- 1 abertura -->
+  <div class="scene" id="s1">
+    <div class="vis"><div class="abs" style="left:60px;top:40px;width:500px;height:440px;border-radius:50%;background:#FFE7C7;border:4px dashed #F3C98F"></div>
+      <div class="sofiaw" id="so1" style="left:120px;top:10px;width:360px"></div><div class="bolw" id="bo1" style="left:440px;top:350px"></div></div>
+    <div class="txt"><div class="kick">Para a família · 40 s</div><h1>Como o FONEMA ajuda seu filho a ler</h1><div class="sub">Com legendas e versão em Libras.<br>Também chega pelo WhatsApp.</div></div>
+  </div>
+  <!-- 2 o que é -->
+  <div class="scene" id="s2">
+    <div class="vis">
+      <div class="phone" style="left:40px;top:10px"><div class="scr" id="scr2">
+        <div class="abs" style="left:14px;top:16px;right:14px;font-family:Fredoka;font-weight:700;font-size:16px;color:var(--noite)">Espelho do Som</div>
+        <div class="abs" style="left:24px;top:48px;width:170px;height:170px;border-radius:50%;background:#EAE7FF;border:6px solid var(--noite);overflow:hidden"><div id="minisofia" class="abs" style="left:-55px;top:-48px;width:280px"></div></div>
+        <div class="abs" id="miniM" style="left:0;right:0;top:236px;text-align:center;font-family:Andika;font-weight:700;font-size:92px;line-height:1;color:var(--grafema)">M</div>
+        <div class="abs" id="miniW" style="left:0;right:0;top:350px;text-align:center;font-family:Andika;font-weight:700;font-size:40px;letter-spacing:3px"><span style="color:var(--grafema);text-decoration:underline;text-decoration-thickness:4px">M</span>ALA</div>
+      </div></div>
+      <div class="abs" style="left:330px;top:40px;width:270px" id="steps2">
+        <div class="pill fs" style="background:#DDF5FF;margin-bottom:24px"><span class="i2"></span>1 · ouvir o som</div><br>
+        <div class="pill fs" style="background:#FFE3F0;margin-bottom:24px"><span class="i2"></span>2 · ver a boca</div><br>
+        <div class="pill fs" style="background:#FFF0C2"><span class="i2"></span>3 · ler a palavra</div>
+      </div>
+    </div>
+    <div class="txt"><div class="kick">O que é</div><h2>Aprender a ler pelo som das letras</h2>
+      <div class="row r2"><div class="ic" style="background:#DDF5FF"></div>método fônico, com a Sofia</div>
+      <div class="row r2"><div class="ic" style="background:#FFF0C2"></div>10 a 15 minutos por dia</div>
+      <div class="row r2"><div class="ic" style="background:#E6F8EC"></div>funciona até sem internet</div></div>
+  </div>
+  <!-- 3 termômetro -->
+  <div class="scene" id="s3">
+    <div class="vis"><div class="card" id="thermo"><div class="kick" style="margin-bottom:8px">Termômetro da leitura</div>
+      <div class="lv">Nível <span id="lvn">0</span> <small>de 10</small> <span class="pill" id="falta" style="font-size:22px;vertical-align:10px;margin-left:8px;background:#E6F8EC">faltam 4</span></div>
+      <div class="segs" id="segs"><div id="marker"></div></div><div class="nums" id="nums"></div>
+      <div class="ends"><span>começo</span><span>lê textos curtos sozinho</span></div>
+    </div>
+    <div id="warn"><span style="font-size:30px">ⓘ</span>Não é nota nem diagnóstico: é o caminho.</div></div>
+    <div class="txt"><div class="kick">Como ler o termômetro</div><h2>Nível X de 10</h2>
+      <div class="row r3"><div class="ic" style="background:#E6F8EC"></div>0 = começo · 10 = lê sozinho</div>
+      <div class="row r3"><div class="ic" style="background:#FFF0C2"></div>cada nível leva semanas</div>
+      <div class="row r3"><div class="ic" style="background:#EAE7FF"></div>ouça o resumo em áudio</div></div>
+  </div>
+  <!-- 4 missão -->
+  <div class="scene" id="s4">
+    <div class="vis"><div class="card" id="mission">
+      <div class="hd"><div class="t">Missão da semana</div><div class="clock" id="clk"></div></div>
+      <div class="q">No almoço, peça para achar <b>3 coisas</b> que começam com <b>mmm</b>.</div>
+      <div class="objs"><div class="obj" id="o0"></div><div class="obj" id="o1"></div><div class="obj" id="o2"></div></div>
+      <div class="audio"><div class="pb" id="pb"></div><div class="wave" id="wave"></div><span>ouvir · 1 min</span></div>
+    </div></div>
+    <div class="txt"><div class="kick">Missão da semana</div><h2>5 minutos, uma vez por semana</h2>
+      <div class="row r4"><div class="ic" style="background:#FFE3F0"></div>ligada ao som que seu filho está aprendendo</div>
+      <div class="row r4"><div class="ic" style="background:#EAE7FF"></div>chega em áudio: não precisa ler</div>
+      <div class="row r4" style="color:var(--noite)"><div class="ic" style="background:#E6F8EC"></div>Você não precisa ser professor.</div></div>
+  </div>
+  <!-- 5 privacidade -->
+  <div class="scene" id="s5">
+    <div class="vis">
+      <div class="phone" id="privphone" style="position:absolute"><div class="scr" style="background:#EAE7FF">
+        <div class="abs" style="left:0;right:0;top:40px;text-align:center;font-family:Fredoka;font-weight:700;font-size:20px;color:var(--noite)">Leitura em voz alta</div>
+        <div class="abs" style="left:66px;top:300px;width:90px;height:90px;border-radius:50%;background:var(--urucum);border:4px solid var(--tinta);display:grid;place-items:center"><svg viewBox="0 0 48 48" width="50"><rect x="17" y="5" width="14" height="25" rx="7" fill="#fff" stroke="#1F1D3D" stroke-width="3"/><path d="M10,24 Q10,37 24,37 Q38,37 38,24 M24,37 L24,44" fill="none" stroke="#1F1D3D" stroke-width="4" stroke-linecap="round"/></svg></div>
+        <div class="abs" style="left:20px;right:20px;top:410px;text-align:center;font-family:Fredoka;font-weight:600;font-size:15px;color:var(--noite)">a voz fica aqui</div>
+      </div></div>
+      <svg id="shield" viewBox="0 0 120 140"><path d="M60,6 L110,24 L110,64 C110,100 86,124 60,134 C34,124 10,100 10,64 L10,24Z" fill="#2FB866" stroke="#1F1D3D" stroke-width="6" stroke-linejoin="round"/><g id="swave" stroke="#fff" stroke-width="7" stroke-linecap="round"><path d="M34,70 L34,70"/><path d="M47,70 L47,70"/><path d="M60,70 L60,70"/><path d="M73,70 L73,70"/><path d="M86,70 L86,70"/></g></svg>
+      <svg id="cloud" viewBox="0 0 140 100"><path d="M36,86 C16,86 8,72 12,60 C16,48 28,44 36,46 C38,26 56,14 74,18 C90,22 98,34 100,44 C116,42 132,54 130,70 C128,82 118,86 108,86Z" fill="#fff" stroke="#9A97B4" stroke-width="5" stroke-dasharray="10 8"/></svg>
+      <svg id="cloudx" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="#fff" stroke="#1F1D3D" stroke-width="5"/><path d="M26,26 L54,54 M54,26 L26,54" stroke="#E0569F" stroke-width="8" stroke-linecap="round"/></svg>
+      <div class="ptag" id="pt1" style="left:452px;top:170px">não vai para a internet</div>
+      <div class="ptag" id="pt2" style="left:452px;top:236px">nada é gravado</div>
+      <div class="ptag" id="pt3" style="left:452px;top:302px">sem anúncios</div>
+    </div>
+    <div class="txt"><div class="kick">Privacidade</div><h2>A voz do seu filho fica no aparelho</h2>
+      <div class="row r5"><div class="ic" style="background:#E6F8EC"></div>sem anúncios e sem compras</div>
+      <div class="row r5"><div class="ic" style="background:#FFF0C2"></div>você vê e apaga os dados</div>
+      <div class="row r5"><div class="ic" style="background:#EAE7FF"></div>segue a LGPD e o ECA Digital</div></div>
+  </div>
+  <!-- 6 fecho -->
+  <div class="scene" id="s6">
+    <div class="vis"><div id="chat">
+      <div class="bub" id="b1"><div class="from">FONEMA · Escola Mun. Ipê</div>🎧 Missão da semana: som /m/ · 1 min</div>
+      <div class="bub" id="b2" style="margin-left:40px"><div class="from" style="color:var(--noite)">Professora Ana</div>Mandem um áudio da leitura! ❤</div>
+    </div>
+      <div class="sofiaw" id="so6" style="left:330px;top:196px;width:270px"></div><div class="bolw" id="bo6" style="left:120px;top:360px"></div></div>
+    <div class="txt"><div class="kick">Toda semana</div><h2>A missão chega pelo WhatsApp, em áudio</h2>
+      <div class="btn" id="cta"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M16,10 L38,24 L16,38Z" fill="#fff"/></svg>Abrir a missão</div></div>
+  </div>
+
+  <div class="mute" id="mute"></div>
+  <div id="cap"></div>
+</div>
+<script>
+const V = Q.get('v') === '1'; if (V) document.body.classList.add('v');
+const THUMB = Q.get('thumb');
+$('#so1').innerHTML = sofiaSVG({ letter: 'm' }); $('#so6').innerHTML = sofiaSVG({ letter: 'm' }); $('#minisofia').innerHTML = sofiaSVG({ letter: 'm' });
+$('#bo1').innerHTML = bolotaSVG(); $('#bo6').innerHTML = bolotaSVG();
+const ic = (sel, arr) => $$(sel + ' .ic').forEach((e, i) => e.innerHTML = arr[i]);
+ic('.r2', [ICON.ear('#1F1D3D'), ICON.clock('#1F1D3D'), ICON.phone('#1F1D3D')]);
+ic('.r3', [`<svg viewBox="0 0 48 48"><rect x="4" y="18" width="40" height="12" rx="6" fill="none" stroke="#1F1D3D" stroke-width="4"/><rect x="6" y="20" width="20" height="8" rx="4" fill="#2FB866"/></svg>`, ICON.clock('#1F1D3D'), ICON.ear('#1F1D3D')]);
+ic('.r4', [ICON.mouth('#C2307A'), ICON.ear('#1F1D3D'), `<svg viewBox="0 0 48 48"><path d="M24,42 C10,32 4,24 4,16 C4,9 10,5 15,5 C19,5 22,7 24,11 C26,7 29,5 33,5 C38,5 44,9 44,16 C44,24 38,32 24,42Z" fill="#E0569F" stroke="#1F1D3D" stroke-width="3.5"/></svg>`]);
+ic('.r5', [`<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="none" stroke="#1F1D3D" stroke-width="4"/><path d="M11,11 L37,37" stroke="#E0569F" stroke-width="4.5" stroke-linecap="round"/></svg>`, ICON.lock('#1F1D3D'), `<svg viewBox="0 0 48 48"><path d="M24,4 L42,11 L42,24 C42,35 34,42 24,45 C14,42 6,35 6,24 L6,11Z" fill="none" stroke="#1F1D3D" stroke-width="4" stroke-linejoin="round"/><path d="M16,24 l6,6 l11,-12" fill="none" stroke="#2FB866" stroke-width="4.5" stroke-linecap="round"/></svg>`]);
+$$('#steps2 .i2').forEach((e, i) => e.innerHTML = `<span style="display:inline-block;width:30px;height:30px;vertical-align:-6px">${[ICON.ear, ICON.mouth, ICON.book][i]('#1F1D3D')}</span>`);
+// termômetro
+$('#segs').insertAdjacentHTML('beforeend', Array.from({ length: 11 }, () => '<div class="seg"><i></i></div>').join(''));
+$('#nums').innerHTML = Array.from({ length: 11 }, (_, i) => `<span>${i}</span>`).join('');
+$('#marker').innerHTML = `<svg viewBox="0 0 56 62"><circle cx="28" cy="26" r="24" fill="#FFC83D" stroke="#1F1D3D" stroke-width="4"/><circle cx="20" cy="24" r="3.5" fill="#1F1D3D"/><circle cx="36" cy="24" r="3.5" fill="#1F1D3D"/><path d="M19,33 Q28,40 37,33" stroke="#1F1D3D" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M22,50 L28,60 L34,50Z" fill="#1F1D3D"/></svg>`;
+// missão
+$('#clk').innerHTML = ICON.clock('#1F1D3D') + '5 min';
+[['mesa', 'M', 'ESA'], ['mamao', 'M', 'AMÃO'], ['meia', 'M', 'EIA']].forEach(([k, a, b], i) => $('#o' + i).innerHTML = ILL[k].replace('<svg ', '<svg class="il" ') + `<div class="w"><b>${a}</b>${b}</div><div class="ok"><svg viewBox="0 0 24 24" width="24"><path d="M5,12 l5,5 l9,-10" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>`);
+$('#pb').innerHTML = ICON.play('#fff');
+$('#wave').innerHTML = Array.from({ length: 34 }, () => '<i></i>').join('');
+
+const CAP = [
+  { a: .4, b: 2.4, who: 'Sofia', html: 'Oi, família! Eu sou a Sofia.' },
+  { a: 2.5, b: 4.6, who: 'Sofia', html: 'Em 40 segundos, eu mostro como o FONEMA funciona.' },
+  { a: 4.9, b: 7.4, who: 'Sofia', html: 'O FONEMA ensina a ler pelo som das letras.' },
+  { a: 7.5, b: 10.0, who: 'Sofia', html: 'A criança ouve o som, vê a boca e lê a palavra.' },
+  { a: 10.1, b: 12.3, who: 'Sofia', html: 'São 10 a 15 minutos por dia, até sem internet.' },
+  { a: 12.7, b: 15.4, who: 'Sofia', html: 'No termômetro, você vê o nível do seu filho, de 0 a 10.' },
+  { a: 15.5, b: 18.2, who: 'Sofia', html: 'Aqui: <b>nível 6 de 10</b>. Faltam 4 para ler sozinho.' },
+  { a: 18.3, b: 21.0, who: 'Sofia', html: 'Não é nota nem diagnóstico: é o caminho.' },
+  { a: 21.4, b: 23.8, who: 'Sofia', html: 'Toda semana chega uma missão de <b>5 minutos</b>.' },
+  { a: 23.9, b: 27.2, who: 'Sofia', html: 'No almoço, achem 3 coisas que começam com <i class="snd">mmm</i>.' },
+  { a: 27.3, b: 30.4, who: 'Sofia', html: 'Mesa, mamão, meia! Você não precisa ser professor.' },
+  { a: 30.8, b: 33.4, who: 'Sofia', html: 'A voz do seu filho fica no aparelho.' },
+  { a: 33.5, b: 36.8, who: 'Sofia', html: 'Nada é gravado nem enviado. E não tem anúncio.' },
+  { a: 37.2, b: 39.4, who: 'Sofia', html: 'A missão chega aqui no WhatsApp, em áudio.' },
+  { a: 39.5, b: 41.6, who: 'Sofia', html: 'Até a semana que vem!' },
+];
+const SND = [[25.6, 26.4]];
+window.DUR = 42;
+window.renderAt = (t) => {
+  const S = [[0, 4.8], [4.7, 12.6], [12.5, 21.3], [21.2, 30.7], [30.6, 37.1], [37.0, 42.5]];
+  S.forEach(([a, b], i) => {
+    const o = win(t, a, b, .45, .4); css('#s' + (i + 1), { o });
+    const sc = $('#s' + (i + 1));
+    const e = eo(prog(t, a, a + .6));
+    css(sc.querySelector('.vis'), { x: (1 - e) * (V ? 0 : -30), y: (1 - e) * (V ? 30 : 0) });
+    css(sc.querySelector('.txt'), { x: (1 - eo(prog(t, a + .15, a + .75))) * (V ? 0 : 30), y: (1 - eo(prog(t, a + .15, a + .75))) * (V ? 30 : 0) });
+    sc.querySelectorAll('.txt .row').forEach((r, k) => { const f = eo(prog(t, a + .8 + k * .9, a + 1.2 + k * .9)); css(r, { o: f, x: (1 - f) * 20 }); });
+  });
+  const mouth = mouthFor(t, CAP, SND);
+  poseSofia($('#so1'), t, { mouth, arm: 150 + Math.sin(t * 9) * 14, hand: 'open' });
+  poseBolota($('#bo1'), t, { hop: .4 });
+  poseSofia($('#so6'), t, { mouth, arm: t > 39.4 ? 150 + Math.sin(t * 9) * 14 : 92, hand: t > 39.4 ? 'open' : 'point', look: -1 });
+  poseBolota($('#bo6'), t, { hop: .6 });
+  // 2: telefone com os 3 passos
+  poseSofia($('#minisofia'), t, { mouth: t > 8.6 && t < 9.4 ? 'closed' : 'smile', bob: false });
+  const st = [7.6, 8.6, 9.4]; $$('#steps2 .fs').forEach((p, i) => { const f = back(prog(t, st[i], st[i] + .4)); css(p, { o: clamp(f), s: .8 + .2 * f }); });
+  css('#miniM', { o: eo(prog(t, 8.6, 9.0)) }); css('#miniW', { o: eo(prog(t, 9.4, 9.8)) });
+  // 3: termômetro enche até 6,4
+  const lvl = 6.4 * eio(prog(t, 13.2, 15.6));
+  $$('#segs .seg i').forEach((s, i) => { s.style.width = (clamp(lvl - i) * 100) + '%'; });
+  $('#lvn').textContent = Math.floor(lvl + 1e-6) < 6 ? Math.floor(lvl) : 6;
+  const segW = (620 - 56 - 80) / 11 + 8; $('#marker').style.left = (Math.min(lvl, 6.4) * segW) + 'px';
+  css('#falta', { o: eo(prog(t, 15.6, 16.0)) });
+  css('#warn', { o: eo(prog(t, 18.3, 18.7)), y: (1 - eo(prog(t, 18.3, 18.7))) * 16 });
+  $$('#segs .seg')[6].style.boxShadow = t > 15.5 ? `0 0 0 ${4 + 2 * Math.sin(t * 5)}px rgba(255,200,61,.8)` : 'none';
+  // 4: missão
+  const ob = [27.3, 28.0, 28.7];
+  ob.forEach((a, i) => { const f = clamp(back(prog(t, 23.9 + i * .25, 24.4 + i * .25)), 0, 1.2); css('#o' + i, { o: clamp(f), y: (1 - clamp(f)) * 20 }); const ok = $('#o' + i + ' .ok'); const g = back(prog(t, a, a + .35)); ok.style.transform = `scale(${clamp(g, 0, 1.3)})`; $('#o' + i).style.background = t > a ? '#EFFAF2' : '#FFF8EC'; });
+  $$('#wave i').forEach((w, i) => { const h = 8 + 26 * Math.abs(Math.sin(i * 1.7 + 2) * Math.cos(i * .6)); const play = t > 21.4 && t < 30.5; w.style.height = (play ? h * (.6 + .4 * Math.abs(Math.sin(t * 6 + i))) : h * .6) + 'px'; w.style.opacity = play && i / 34 < prog(t, 21.4, 30.5) ? 1 : .35; });
+  // 5: privacidade
+  $$('#swave path').forEach((p, i) => { const h = 6 + 18 * Math.abs(Math.sin(t * 7 + i * 1.3)); p.setAttribute('d', `M${34 + i * 13},${70 - h} L${34 + i * 13},${70 + h}`); });
+  css('#shield', { s: clamp(back(prog(t, 31.0, 31.5)), 0, 1.2) });
+  css('#cloudx', { o: eo(prog(t, 33.5, 33.8)), s: clamp(back(prog(t, 33.5, 33.9)), 0, 1.2) });
+  ['#pt1', '#pt2', '#pt3'].forEach((s, i) => { const f = eo(prog(t, 33.6 + i * .7, 34.0 + i * .7)); css(s, { o: f, x: (1 - f) * 20 }); });
+  // 6: fecho
+  css('#b1', { o: eo(prog(t, 37.4, 37.8)), y: (1 - eo(prog(t, 37.4, 37.8))) * 16 });
+  css('#b2', { o: eo(prog(t, 38.3, 38.7)), y: (1 - eo(prog(t, 38.3, 38.7))) * 16 });
+  css('#cta', { s: 1 + .03 * Math.sin(t * 4) });
+  const mu = $('#mute');
+  if (SND.some(([a, b]) => t >= a && t < b)) { mu.innerHTML = '🔇 trilha muda · som /m/'; mu.style.opacity = 1; } else mu.style.opacity = 0;
+  mu.style.right = '22px'; mu.style.top = V ? '80px' : '64px';
+  captions(t, CAP);
+  if (THUMB) { $('#cap').style.opacity = 0; mu.style.opacity = 0; }
+};
+</script></body></html>

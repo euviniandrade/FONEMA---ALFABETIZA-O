@@ -297,3 +297,36 @@ function telaEspelho() {
   return { w: W, h: H, html: page(W, H, body) };
 }
 module.exports['tela-espelho-do-som'] = telaEspelho;
+
+const PE = require('./people');
+function elenco() {
+  const W = 1800, H = 1040;
+  const L = [
+    ['cida', 'Dona Cida', '72 anos · contadora de histórias', ['Avó do bairro, borda e conta', 'causos. Usa bengala e óculos.', 'Ensina parlendas e cantigas.'], 1.12],
+    ['davi', 'Davi', '28 anos · professor de música', ['Cadeirante, toca percussão na', 'praça. Puxa as canções das', 'letras e o ritmo das sílabas.'], 1.12],
+    ['tito', 'Tito', '6 anos · amigo da Sofia', ['Usa aparelho auditivo (azul!).', 'Adora pipa. Mostra que ver a', 'boca ajuda todo mundo a ouvir.'], 0.86],
+    ['kenji', 'Seu Kenji', '58 anos · padeiro', ['Neto de japoneses, faz o pão', 'de queijo e o pão francês da', 'vila. Letreiros: PÃO, BOLO.'], 1.14],
+    ['jaci', 'Jaci', '35 anos · bibliotecária', ['Guarani, cuida da biblioteca', 'da praça e da hora do conto.', 'Empresta os livros decodificáveis.'], 1.12],
+    ['lia', 'Lia', '40 anos · inventora de robôs', ['Engenheira da oficina da vila.', 'O robô dela, o Tec, mostra as', 'letras na tela e erra junto.'], 1.12],
+  ];
+  const cw = 272, ch = 840, x0 = 64, y0 = 146, base = 640;
+  let g = '';
+  L.forEach(([k, n, role, desc, sc], i) => {
+    const x = x0 + i * (cw + 14);
+    const s = 0.5 * sc;
+    g += `<g transform="translate(${x},${y0})"><rect width="${cw}" height="${ch}" rx="28" fill="${i % 2 ? '#FFF4E4' : '#FFFBF4'}" stroke="${P.line}" stroke-opacity=".1" stroke-width="2"/>
+      <ellipse cx="${cw / 2}" cy="${base - 210}" rx="118" ry="210" fill="${[P.sky, P.mint, P.peach][i % 3]}"/>
+      ${groundShadow(cw / 2, base + 2, 110)}
+      ${k === 'lia' ? `<g transform="translate(${cw / 2 + 92},${base})">${PE.robo(0, -40, .5)}</g>` : ''}
+      ${k === 'tito' ? PE.pipa(cw / 2 + 92, 110, .7) + `<path d="M${cw / 2 + 92},150 Q${cw / 2 + 90},260 ${cw / 2 + 76},${base - 1000 * s + 470 * s}" stroke="${P.line}" stroke-width="1.6" fill="none"/>` : ''}
+      <g transform="translate(${cw / 2 - (k === 'lia' ? 24 : 0)},${base - 1000 * s}) scale(${s})">${PE.ELENCO[k]()}</g>
+      <text x="22" y="${base + 54}" font-family="Fredoka" font-weight="700" font-size="28" fill="${P.ink}">${n}</text>
+      <text x="22" y="${base + 82}" font-size="15.5" fill="${P.mango}" font-weight="700">${role}</text>
+      ${desc.map((t, j) => `<text x="22" y="${base + 114 + j * 23}" font-size="15.5" fill="${P.slate}">${t}</text>`).join('')}</g>`;
+  });
+  const body = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${defs()}<rect width="${W}" height="${H}" fill="${P.cream}"/>
+   ${header(W, 'Elenco da Vila · 6 moradores', 'Diversidade de idade, cor/raça, origem, corpo e deficiência — sem estereótipo: cada um tem profissão, desejo e papel nas lições')}${g}
+   <text x="64" y="${H - 22}" font-size="16" fill="${P.slate}">Representatividade: Censo 2022 (pardos 45,3%, pretos 10,2%) + indígena, amarela e branca; deficiência como parte da vida, nunca como "lição de superação". Validar com consultoria de diversidade e com as próprias comunidades.</text></svg>`;
+  return { w: W, h: H, html: page(W, H, body) };
+}
+module.exports['elenco-vila'] = elenco;

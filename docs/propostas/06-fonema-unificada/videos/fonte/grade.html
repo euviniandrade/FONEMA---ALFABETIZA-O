@@ -1,0 +1,139 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="base.css"><script src="engine.js"></script><script src="chars.js"></script><script src="parts.js"></script>
+<style>
+body{background:#FFF8EC}
+#app{position:absolute;inset:0;display:flex}
+#nav{width:150px;background:#fff;border-right:3px solid #EFE6D6;display:flex;flex-direction:column;align-items:center;padding:30px 0;gap:26px}
+.nb{width:96px;height:96px;border-radius:28px;border:3.5px solid var(--tinta);background:#fff;display:grid;place-items:center;box-shadow:0 5px 0 var(--tinta);padding:18px}
+.nb svg{width:100%;height:100%}
+.nb.on{background:var(--sol)}
+.nl{font-family:Fredoka;font-weight:600;font-size:18px;margin-top:-16px;color:var(--apoio)}
+#main{flex:1;padding:34px 40px 0 44px;position:relative}
+#hdr{display:flex;align-items:center;gap:22px;height:110px}
+#hdr h1{font-family:Fredoka;font-weight:700;font-size:58px}
+.hchip{display:flex;align-items:center;gap:12px;font-family:Fredoka;font-weight:600;font-size:24px;background:#fff;border:3px solid var(--tinta);border-radius:99px;padding:8px 20px 8px 10px}
+.ring{width:54px;height:54px}
+.row{margin-top:14px}
+.rh{display:flex;align-items:center;gap:16px;margin-bottom:12px}
+.rh .ic{width:58px;height:58px;border-radius:18px;border:3px solid var(--tinta);display:grid;place-items:center;padding:10px}
+.rh .ic svg{width:100%;height:100%}
+.rh h2{font-family:Fredoka;font-weight:700;font-size:36px}
+.rh .ct{font-family:Fredoka;font-weight:600;font-size:22px;color:var(--apoio)}
+.bar{width:220px;height:16px;border-radius:99px;background:#EDE7DA;border:2.5px solid var(--tinta);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--mata)}
+.cards{display:flex;gap:22px}
+.vc{width:292px;flex:none}
+.th{position:relative;width:292px;height:164px;border-radius:22px;border:3.5px solid var(--tinta);overflow:hidden;box-shadow:0 6px 0 var(--tinta);background:#fff}
+.th img{width:100%;height:100%;object-fit:cover;display:block}
+.vc .tt{font-family:Andika;font-weight:700;font-size:23px;margin-top:14px;line-height:1.15}
+.vc .st{font-family:Fredoka;font-weight:600;font-size:18px;color:var(--apoio);margin-top:4px}
+.dur{position:absolute;right:10px;bottom:10px;font-family:Fredoka;font-weight:700;font-size:17px;background:rgba(31,29,61,.88);color:#fff;border-radius:8px;padding:2px 8px}
+.ok{position:absolute;left:10px;top:10px;width:40px;height:40px;border-radius:50%;background:var(--mata);border:3px solid var(--tinta);display:grid;place-items:center}
+.now{outline:6px solid var(--sol);outline-offset:4px}
+.pg{position:absolute;left:0;right:0;bottom:0;height:8px;background:rgba(31,29,61,.25)}
+.pg i{display:block;height:100%;background:var(--urucum)}
+.obras{position:absolute;inset:0;background:repeating-linear-gradient(-45deg,#FFC83D 0 18px,#1F1D3D 18px 36px);opacity:.9}
+.obras span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#FFF8EC;border:3px solid var(--tinta);border-radius:12px;padding:6px 14px;font-family:Fredoka;font-weight:700;font-size:20px;white-space:nowrap}
+/* mini-miniaturas desenhadas */
+.mt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:12px}
+.mt .L{font-family:Andika;font-weight:700;font-size:92px;line-height:1;color:var(--grafema)}
+.mt .L2{font-family:Andika;font-weight:700;font-size:58px;line-height:1}
+.mt .mouth{width:84px;height:84px;border-radius:50%;background:#fff;border:4px solid var(--noite);display:grid;place-items:center}
+/* adultos */
+#adult{width:760px;background:var(--noite);color:#fff;padding:34px 36px;position:relative}
+#adult h3{font-family:Fredoka;font-weight:700;font-size:40px;display:flex;align-items:center;gap:14px}
+#adult .gate{font-family:Fredoka;font-weight:600;font-size:20px;background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.4);border-radius:12px;padding:6px 12px;display:inline-block;margin:10px 0 18px}
+.asec{background:#fff;color:var(--tinta);border-radius:26px;border:3.5px solid var(--tinta);padding:22px 22px 10px;margin-bottom:22px}
+.asec h4{font-family:Fredoka;font-weight:700;font-size:30px;display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.li{display:flex;gap:16px;align-items:center;margin-bottom:16px}
+.li .th{width:208px;height:117px;border-radius:16px;box-shadow:0 4px 0 var(--tinta);flex:none}
+.li .tt{font-family:Andika;font-weight:700;font-size:23px;line-height:1.2}
+.li .st{font-family:Fredoka;font-weight:600;font-size:18px;color:var(--apoio);margin-top:4px}
+.wa{display:inline-flex;align-items:center;gap:6px;background:#DCF8E6;color:#137A43;border-radius:8px;padding:2px 8px;font-family:Fredoka;font-weight:600;font-size:16px;margin-left:6px}
+.legend2{position:absolute;left:44px;bottom:26px;display:flex;gap:26px;font-family:Fredoka;font-weight:600;font-size:20px;color:var(--apoio);align-items:center}
+.legend2 b{display:inline-block;width:22px;height:22px;border-radius:6px;border:2.5px solid var(--tinta);vertical-align:-5px;margin-right:6px}
+</style></head><body>
+<div id="app">
+  <div id="nav">
+    <div class="logo" style="flex-direction:column;gap:4px;font-size:18px"><i style="width:56px;height:56px;font-size:30px;border-radius:16px">F</i></div>
+    <div class="nb" id="n1"></div><div class="nl">Vila</div>
+    <div class="nb" id="n2"></div><div class="nl">Trilha</div>
+    <div class="nb on" id="n3"></div><div class="nl" style="color:var(--tinta)">Vídeos</div>
+    <div class="nb" id="n4"></div><div class="nl">Lojinha</div>
+  </div>
+  <div id="main">
+    <div id="hdr"><h1>Vídeos da Sofia</h1>
+      <div class="hchip"><svg class="ring" viewBox="0 0 54 54"><circle cx="27" cy="27" r="21" fill="none" stroke="#EDE7DA" stroke-width="8"/><circle cx="27" cy="27" r="21" fill="none" stroke="#2FB866" stroke-width="8" stroke-dasharray="${0}" id="rg" transform="rotate(-90 27 27)" stroke-linecap="round"/></svg>12 de 33 sons vistos</div>
+      <div class="hchip" style="padding-left:20px">hoje: 2 vídeos · depois, sua vez de praticar</div>
+      <div style="flex:1"></div>
+      <div id="miniS" style="width:120px;height:110px;position:relative;overflow:hidden;border-radius:50%;border:4px solid var(--tinta);background:#FFE7C7"></div>
+    </div>
+    <div id="rows"></div>
+    <div class="legend2"><span><b style="background:var(--mata)"></b>visto</span><span><b style="background:var(--sol)"></b>agora</span><span><b style="background:repeating-linear-gradient(-45deg,#FFC83D 0 5px,#1F1D3D 5px 10px)"></b>em obras (chega depois)</span><span>Todo vídeo termina com um convite para praticar · legendas sempre · versão em Libras</span></div>
+  </div>
+  <div id="adult">
+    <h3><span style="width:52px;height:52px;border-radius:14px;background:#fff;display:grid;place-items:center;padding:9px" id="lk"></span>Área dos adultos</h3>
+    <div class="gate">porteira: segure 3 s + tarefa de leitura</div>
+    <div class="asec"><h4><span class="ic2" style="width:44px;height:44px;border-radius:12px;background:#E6F8EC;border:3px solid var(--tinta);display:grid;place-items:center;padding:7px" id="ifam"></span>Para a família</h4><div id="fam"></div></div>
+    <div class="asec"><h4><span style="width:44px;height:44px;border-radius:12px;background:#EAE7FF;border:3px solid var(--tinta);display:grid;place-items:center;padding:7px" id="iprof"></span>Formação do professor</h4><div id="prof"></div></div>
+  </div>
+</div>
+<script>
+$('#n1').innerHTML = `<svg viewBox="0 0 48 48"><path d="M6,24 L24,8 L42,24 M11,20 L11,42 L37,42 L37,20" fill="none" stroke="#1F1D3D" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><rect x="19" y="28" width="10" height="14" fill="#FF6B3D" stroke="#1F1D3D" stroke-width="3.5"/></svg>`;
+$('#n2').innerHTML = `<svg viewBox="0 0 48 48"><path d="M8,40 C8,26 40,30 40,16 M40,16 L40,6 L30,10 L40,14" fill="none" stroke="#1F1D3D" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="40" r="4" fill="#2FB866"/></svg>`;
+$('#n3').innerHTML = `<svg viewBox="0 0 48 48"><rect x="4" y="9" width="40" height="30" rx="8" fill="#fff" stroke="#1F1D3D" stroke-width="4.5"/><path d="M20,17 L31,24 L20,31Z" fill="#FF6B3D" stroke="#1F1D3D" stroke-width="3" stroke-linejoin="round"/></svg>`;
+$('#n4').innerHTML = `<svg viewBox="0 0 48 48"><path d="M9,16 L39,16 L36,42 L12,42Z" fill="#E0569F" stroke="#1F1D3D" stroke-width="4.5" stroke-linejoin="round"/><path d="M17,16 Q17,6 24,6 Q31,6 31,16" fill="none" stroke="#1F1D3D" stroke-width="4.5"/></svg>`;
+$('#lk').innerHTML = ICON.lock('#4B3FA8'); $('#ifam').innerHTML = `<svg viewBox="0 0 48 48"><path d="M24,42 C10,32 4,24 4,16 C4,9 10,5 15,5 C19,5 22,7 24,11 C26,7 29,5 33,5 C38,5 44,9 44,16 C44,24 38,32 24,42Z" fill="#E0569F" stroke="#1F1D3D" stroke-width="3.5"/></svg>`; $('#iprof').innerHTML = ICON.book('#4B3FA8');
+const rg = $('#rg'); const C = 2 * Math.PI * 21; rg.setAttribute('stroke-dasharray', `${C * 12 / 33} ${C}`);
+$('#miniS').innerHTML = `<div style="position:absolute;left:-30px;top:-14px;width:180px">${sofiaSVG({ letter: 'm' })}</div>`;
+poseSofia($('#miniS'), 0, {});
+const okI = `<div class="ok"><svg viewBox="0 0 24 24" width="22"><path d="M5,12 l5,5 l9,-10" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>`;
+const mouthMini = `<div class="mouth"><svg viewBox="0 0 48 48" width="52"><path d="M8,24 Q24,12 40,24 Q24,38 8,24Z" fill="#B9575C" stroke="#1F1D3D" stroke-width="3.5"/><path d="M9,24 L39,24" stroke="#1F1D3D" stroke-width="3"/></svg></div>`;
+const letterTh = (L, bg, mouth = false) => `<div class="mt" style="background:${bg}">${mouth ? mouthMini : ''}<div class="L">${L}</div></div>`;
+const pairTh = (a, b, bg) => `<div class="mt" style="background:${bg}"><div class="L2" style="color:#C2307A">${a}</div><div class="L2" style="color:#6C6A85;font-size:40px">ou</div><div class="L2" style="color:#4B3FA8">${b}</div></div>`;
+const biomeTh = (sky, ground, extra) => `<svg viewBox="0 0 300 169" style="width:100%;height:100%"><rect width="300" height="169" fill="${sky}"/><circle cx="244" cy="40" r="22" fill="#FFE07A"/><path d="M0,120 Q80,90 150,115 Q220,138 300,105 L300,169 L0,169Z" fill="${ground}"/>${extra}</svg>`;
+const tree = (x, y, c) => `<g transform="translate(${x},${y})"><rect x="-4" y="0" width="8" height="26" fill="#7A4A30"/><circle cx="0" cy="-6" r="22" fill="${c}" stroke="#1F1D3D" stroke-width="3"/></g>`;
+const card = ({ th, tt, st, dur, state, img, prog }) => `<div class="vc"><div class="th ${state === 'now' ? 'now' : ''}">${img ? `<img src="${img}">` : th}${state === 'obras' ? '<div class="obras"><span>em obras</span></div>' : ''}${state === 'ok' ? okI : ''}${dur && state !== 'obras' ? `<div class="dur">${dur}</div>` : ''}${prog ? `<div class="pg"><i style="width:${prog}%"></i></div>` : ''}</div><div class="tt">${tt}</div><div class="st">${st}</div></div>`;
+const ROWS = [
+  { name: 'Sofia apresenta o som', ic: ICON.mouth('#C2307A'), icb: '#FFE3F0', ct: '12 de 33', p: 36, cards: [
+    { th: letterTh('a', '#DDF5FF'), tt: 'O som /a/', st: 'boca bem aberta', dur: '0:32', state: 'ok' },
+    { th: letterTh('u', '#DDF5FF'), tt: 'O som /u/', st: 'boca de biquinho', dur: '0:31', state: 'ok' },
+    { img: 'out/thumb-sofia-som-m.png', tt: 'O som /m/', st: 'o nariz vibra', dur: '0:34', state: 'now', prog: 40 },
+    { th: letterTh('l', '#E6F8EC'), tt: 'O som /l/', st: 'a língua sobe', dur: '0:33', state: '' },
+    { th: letterTh('f', '#FFF0C2'), tt: 'O som /f/', st: 'dente no lábio', dur: '0:30', state: '' },
+  ] },
+  { name: 'Regrinhas', ic: `<svg viewBox="0 0 48 48"><path d="M10,8 L38,8 L38,40 L10,40Z" fill="none" stroke="#4B3FA8" stroke-width="4.5" stroke-linejoin="round"/><path d="M17,19 h14 M17,27 h9" stroke="#4B3FA8" stroke-width="4" stroke-linecap="round"/></svg>`, icb: '#EAE7FF', ct: '2 de 18', p: 11, cards: [
+    { th: pairTh('R', 'RR', '#FBE9D4'), tt: 'caro ou carro?', st: 'R entre vogais', dur: '0:52', state: 'ok' },
+    { th: pairTh('C', 'QU', '#EAE7FF'), tt: 'casa ou queijo?', st: 'antes de e, i', dur: '0:58', state: '' },
+    { th: pairTh('G', 'GU', '#E6F8EC'), tt: 'gato ou guizo?', st: 'antes de e, i', dur: '0:55', state: '' },
+    { th: pairTh('S', 'SS', '#FFF0C2'), tt: 'casa ou massa?', st: 'S entre vogais', dur: '0:57', state: 'obras' },
+    { th: pairTh('Ç', 'C', '#FFE3F0'), tt: 'a cedilha', st: 'ça, ço, çu', dur: '0:49', state: 'obras' },
+  ] },
+  { name: 'Episódios · Mata Atlântica', ic: `<svg viewBox="0 0 48 48"><circle cx="24" cy="20" r="14" fill="#2FB866" stroke="#1F1D3D" stroke-width="3.5"/><rect x="21" y="32" width="6" height="12" fill="#7A4A30"/></svg>`, icb: '#E6F8EC', ct: 'ep. 4 de 10', p: 35, cards: [
+    { th: biomeTh('#BDEBFF', '#2FB866', tree(60, 100, '#14805A') + tree(110, 95, '#2FB866')), tt: '1 · O mico perdido', st: 'som /m/ · 6 min', dur: '6:10', state: 'ok' },
+    { th: biomeTh('#BDEBFF', '#2FB866', tree(200, 98, '#14805A') + `<path d="M70,110 q20,-40 40,0" fill="#5BC0EB" stroke="#1F1D3D" stroke-width="3"/>`), tt: '2 · A trilha da lua', st: 'som /l/ · 7 min', dur: '7:02', state: 'ok' },
+    { th: biomeTh('#FFE9C9', '#2FB866', tree(80, 98, '#14805A') + tree(230, 104, '#9BD14B')), tt: '3 · A folha que fala', st: 'som /f/ · 6 min', dur: '6:24', state: 'ok' },
+    { th: biomeTh('#BDEBFF', '#1FA7A0', `<path d="M120,30 L132,110" stroke="#fff" stroke-width="18" opacity=".8"/>` + tree(220, 100, '#14805A')), tt: '4 · A cachoeira', st: 'som /v/ · 7 min', dur: '7:15', state: 'now', prog: 20 },
+    { th: biomeTh('#BDEBFF', '#2FB866', ''), tt: '5 · A onça-pintada', st: 'chega depois', dur: '', state: 'obras' },
+  ] },
+  { name: 'Como funciona', ic: `<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="none" stroke="#1F8DB5" stroke-width="4.5"/><path d="M24,22 L24,34" stroke="#1F8DB5" stroke-width="5" stroke-linecap="round"/><circle cx="24" cy="15" r="3" fill="#1F8DB5"/></svg>`, icb: '#DDF5FF', ct: '3 de 5', p: 60, cards: [
+    { th: `<div class="mt" style="background:#FFF0C2">${ICON.ear('#1F1D3D').replace('<svg ', '<svg width="90" ')}</div>`, tt: 'Como o app me ouve?', st: 'a voz fica no aparelho', dur: '1:05', state: 'ok' },
+    { th: `<div class="mt" style="background:#EAE7FF">${mouthMini}</div>`, tt: 'O espelho do som', st: 'compare sua boca', dur: '0:50', state: 'ok' },
+    { th: `<div class="mt" style="background:#FFE3F0"><svg viewBox="0 0 48 48" width="90"><path d="M9,16 L39,16 L36,42 L12,42Z" fill="#E0569F" stroke="#1F1D3D" stroke-width="4" stroke-linejoin="round"/><path d="M17,16 Q17,6 24,6 Q31,6 31,16" fill="none" stroke="#1F1D3D" stroke-width="4"/></svg></div>`, tt: 'A vila e a lojinha', st: 'moedinhas e emblemas', dur: '1:10', state: 'ok' },
+    { th: `<div class="mt" style="background:#E6F8EC"><svg viewBox="0 0 48 48" width="90"><path d="M8,40 C8,26 40,30 40,16" fill="none" stroke="#1F1D3D" stroke-width="4.5" stroke-linecap="round"/><circle cx="40" cy="12" r="6" fill="#FFC83D" stroke="#1F1D3D" stroke-width="3"/></svg></div>`, tt: 'O mapa da expedição', st: 'as 11 regiões', dur: '1:00', state: '' },
+    { th: `<div class="mt" style="background:#DDF5FF"><svg viewBox="0 0 48 48" width="90"><circle cx="24" cy="24" r="16" fill="#FFC83D" stroke="#1F1D3D" stroke-width="4"/><path d="M17,26 Q24,32 31,26" stroke="#1F1D3D" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>`, tt: 'Respirar com a Sofia', st: 'antes do desafio', dur: '0:45', state: '' },
+  ] },
+];
+$('#rows').innerHTML = ROWS.map(r => `<div class="row"><div class="rh"><div class="ic" style="background:${r.icb}">${r.ic}</div><h2>${r.name}</h2><div class="bar"><i style="width:${r.p}%"></i></div><div class="ct">${r.ct}</div></div><div class="cards">${r.cards.map(card).join('')}</div></div>`).join('');
+const li = (img, th, tt, st, extra = '') => `<div class="li"><div class="th">${img ? `<img src="${img}">` : th}</div><div><div class="tt">${tt}</div><div class="st">${st}${extra}</div></div></div>`;
+const wa = `<span class="wa">WhatsApp</span>`;
+const famTh = (bg, inner) => `<div class="mt" style="background:${bg}">${inner}</div>`;
+$('#fam').innerHTML = li('out/thumb-familia-como-funciona.png', '', 'Como o FONEMA funciona', '0:42 · também 9:16', wa) +
+  li('', famTh('#E6F8EC', `<div style="display:flex;gap:4px">${Array.from({ length: 11 }, (_, i) => `<i style="width:12px;height:30px;border-radius:4px;border:2px solid #1F1D3D;background:${i < 6 ? '#2FB866' : '#fff'}"></i>`).join('')}</div>`), 'Como ler o termômetro', '0:55 · nível X de 10', wa) +
+  li('', famTh('#FFF0C2', `<div style="font-family:Fredoka;font-weight:700;font-size:40px">5 min</div>`), 'Missão da semana: /m/', '0:48 · muda toda semana', wa) +
+  li('', famTh('#EAE7FF', ICON.lock('#4B3FA8').replace('<svg ', '<svg width="64" ')), 'Privacidade em 1 minuto', '0:58 · voz fica no aparelho', wa);
+$('#prof').innerHTML = li('out/thumb-professor-painel.png', '', 'O painel em 3 perguntas', '0:32 · microvídeo') +
+  li('', famTh('#FFE3F0', `<div class="L" style="font-size:64px">m</div>`), 'Modelar o /m/ sem vogal extra', '2:10 · lição do dia') +
+  li('', famTh('#DDF5FF', `<svg viewBox="0 0 48 48" width="70"><rect x="4" y="8" width="40" height="26" rx="4" fill="#fff" stroke="#1F1D3D" stroke-width="4"/><path d="M16,42 h16 M24,34 v8" stroke="#1F1D3D" stroke-width="4"/></svg>`), 'Modo sala: leitura em coro', '2:40 · projetor');
+window.renderAt = () => {};
+</script></body></html>
