@@ -61,6 +61,7 @@ fonema/
 ├─ ferramentas/
 │  ├─ estudio/                  # CLI: validar → gerar voz/visemas → empacotar → publicar no R2
 │  └─ dispositivos/             # scripts de teste de desempenho em Android real
+├─ infra/                       # Terraform (Cloudflare, Supabase), ambientes dev/hml/prod
 ├─ docs/                        # ADRs, guias, este esqueleto
 ├─ .github/
 │  ├─ workflows/                # ci.yml, conteudo.yml, release-web.yml, release-android.yml, release-ios.yml
