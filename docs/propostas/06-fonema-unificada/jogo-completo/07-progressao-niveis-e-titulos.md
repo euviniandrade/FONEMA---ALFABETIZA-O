@@ -38,6 +38,24 @@ Fase (1 som ou objetivo)
 | **Eventos semanais** | Temporada curta (1 semana) com cenário novo e revisão misturada | Toda segunda-feira, para quem já tem as habilidades | Semana do Esporte, Semana da Horta, Copa das Letras, Semana do Zum-Zum (atenção) |
 | **Modo infinito de revisão** | Fases geradas a partir do que a criança já domina (§6) | Sempre, no Jardim da Revisão e no mapa | "Trilha do dia" nova a cada sessão |
 
+**Um desafio por vez, sem pular fases (D021 §2):** as camadas se percorrem **na ordem**. A fase seguinte só abre depois do domínio da anterior; bônus, versão mestre e eventos são extras opcionais e nunca substituem uma fase. Quem já sabe avança pela **Trilha Expressa** ([01](01-primeira-experiencia.md) §5): provas-relâmpago de domínio, **uma fase por vez**, que liberam selos, história, áreas e níveis em ritmo rápido. Se errar, a trilha desacelera ali. Na Trilha Expressa, cada prova-relâmpago aprovada vale os desafios daquela fase para o nível, para ninguém ficar "atrás" em títulos por já saber.
+
+### 2.1 Lojinha e Minhas Conquistas em cada fase (D021 §1)
+Ao entrar em qualquer fase (e no ritual de fim), a criança vê dois botões grandes:
+
+| Botão | Mostra | Como fica na tela | Regras |
+|---|---|---|---|
+| 🛒 **Lojinha** | O que **pode** comprar e o que **ainda não pode** com as moedinhas | Itens que cabem no cofrinho: **acesos, com preço**. Itens que ainda não cabem: **apagados, com "faltam X moedinhas"** e uma barrinha | Educação financeira (D002): esperar, juntar, escolher; poupança com meta. Moedinhas só da jornada, em bloco (teto 12/dia); nada com dinheiro real, nada por sorte; itens sem joias ou adornos |
+| 🏅 **Minhas Conquistas** | Selos, medalhas e troféus **da fase** | **Conquistados:** brilhantes e com animação curta (1–2 s, desligável). **Não conquistados:** apagados, com **cadeado** e a **dica** ("Leia 5 palavras com M para desbloquear"). **Mistério:** só a silhueta e "?" | A dica sempre aponta um desafio da própria fase (ou bônus depois do domínio). Ao lado, a barra do **próximo objetivo** (§6). Nada se perde: conquista nunca volta a ter cadeado |
+
+**Exemplo · R2a-F01 (M):**
+| Conquista | Estado no começo da fase | Dica no cadeado |
+|---|---|---|
+| Selo **Mestre do Som M** (bronze) | 🔒 apagado | "Leia 5 palavras com M para desbloquear" |
+| Medalha **Primeira Sílaba** | 🔒 apagado | "Junte o M com uma vogal: MA, MO, MU" |
+| Troféu **Ouvido de Mico** (bônus) | 🔒 apagado | "Depois do M: ache 3 coisas com /mmm/ na trilha" |
+| Selo **mistério** | silhueta "?" | "Continue a trilha para descobrir!" |
+
 **Por que parece infinito, mas não vicia:** cada camada tem **começo e fim visíveis**. O dia termina no ritual de fim, sem botão "continuar" (README §3, C9). A sensação de "sempre tem mais" vem da variedade, não de uma corrida sem pausa.
 
 ---

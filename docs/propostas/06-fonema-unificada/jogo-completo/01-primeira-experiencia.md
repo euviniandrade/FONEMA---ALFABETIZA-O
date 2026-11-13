@@ -10,11 +10,12 @@
 | 0:45 | Conta do adulto | Já existente (e-mail ou celular + senha forte). Consentimento LGPD art. 14 em linguagem simples, com opções separadas | D002, D013 |
 | 1:30 | "Quem vai aprender?" | **Nome**: o campo sugere "o primeiro nome, ou o nome pelo qual a família chama a criança". **Sem apelido**, sem sobrenome obrigatório | D013 §2 |
 | 2:00 | Gênero | 3 botões: **Masculino · Feminino · Prefiro não informar**. Texto: "Serve só para a Sofia e o Tales falarem certinho: 'pronto' ou 'pronta'." | D013 §1 |
-| 2:15 | Idade | Ano de nascimento (define o tempo de sessão: 10–12 min aos 4–5 anos; 10–15 aos 6; 15–20 aos 7–8) | Doc. mestre §4.4 |
+| 2:15 | Idade | Ano de nascimento (define o tempo de sessão: 10–12 min aos 4–5 anos; 10–15 aos 6; 15–20 aos 7–8). **2–3 anos:** a criança entra no módulo **Maternal "Primeiros Sons"** ([08](08-maternal-primeiros-sons.md)), mediado pelo adulto, sem cobrar leitura | Doc. mestre §4.4; D021 §4 |
 | 2:30 | **Gravar o nome** | "Fale o nome do jeito que vocês falam em casa." Gravação de 2–3 s, com regravar | D013 §2 |
 | 3:00 | **Escolher a pronúncia** | 3 opções na voz da Sofia e 3 na do Tales ("Ma-ri-A-na" variando tônica, abertura e ritmo). O adulto toca e escolhe a que soa igual. Se nenhuma servir: "Ajustar como se fala" (ex.: "Ka-u-Ã") e gerar de novo | D013 §2 |
 | 4:00 | Privacidade da voz | Escolha: voz feita pelo serviço de voz (só o primeiro nome é enviado) **ou** voz feita no próprio aparelho (qualidade menor). O áudio gravado pelo adulto é apagado em 30 dias (padrão) | D013 §4 |
 | 4:30 | Rotina | Horário de dormir (bloqueia sessões 1 h antes), tempo diário, dias da semana | N4; rel. 42 |
+| 4:45 | **O que a criança já sabe?** (D021 §3) | 3 perguntas rápidas, com figuras e "não sei" sempre aceito: "Reconhece as letras do próprio nome?" · "Lê alguma palavra sozinha?" · "Lê frases ou livrinhos?" Texto: "Isso só ajuda a Sofia e o Tales a escolher o ritmo. A jornada começa do começo para todo mundo." | Ponto de partida da sondagem lúdica (§5) |
 | 5:00 | Apoios | "Seu filho ou filha precisa de algum apoio?" Modo Previsível, Foco curto, Leitura com reforço, Modo calmo (sem rótulo para a criança; pode ligar depois) | Rel. 11, 12 |
 | 5:30 | Microfone | Explicação: "A escuta acontece no aparelho. Nenhum áudio da criança é gravado ou enviado." Permissão do sistema | Doc. mestre §4.8 |
 | 6:00 | WhatsApp (opcional) | Opt-in por categoria: resumo semanal, missão de 5 min, recados da escola | whatsapp §1 |
@@ -65,3 +66,39 @@
 ## 4. Dias 2 e 3: completar a chegada
 - **Dia 2:** o Bolota aparece ("Me ensina?"); triagem parte 2 (som inicial e síntese oral) dentro da "fala de tatu"; R0-F02 começa (rimas).
 - **Dia 3:** triagem parte 3; o painel da família ganha o **ponto de partida** completo e a **faixa de previsão** ("entre X e Y meses para o nível 1"), sempre como estimativa.
+
+## 5. Sondagem lúdica de nivelamento e Trilha Expressa (Decisão 021 §2–3)
+
+**Objetivo:** saber **de onde a criança começa** (do zero ou com algum conhecimento) sem prova, sem nota e sem "errado" visível. **Toda criança vive a jornada desde R0-F01**, com a mesma história, a mesma magia e as mesmas conquistas. Muda só a **velocidade**.
+
+### 5.1 A sondagem lúdica: "Missão das Placas da Vila" (5–10 min)
+O Zum-Zum embaralhou as placas da vila; a criança ajuda a Sofia e o Tales a arrumar. Cada placa é um item da sondagem, do mais fácil ao mais difícil, e a missão **para sozinha** quando a criança erra 2 itens seguidos do mesmo degrau (ela termina sempre num acerto, com um item fácil).
+
+| Degrau | O que a placa pede | Habilidade (região) | Fala-chave |
+|---|---|---|---|
+| 1 | Rima e palmas: "GATO rima com…?"; "quantas palmas tem BOLOTA?" | Consciência fonológica (R0) | Sofia: "Me ajuda a pendurar esta placa, [NOME]?" |
+| 2 | Primeiro som: "qual começa com /mmm/?" | Som inicial (R0) | Tales: "Escuta comigo…" |
+| 3 | Vogais: tocar a letra do som /a/, /o/… | Vogais (R1) | Sofia: "Qual letra faz /aaa/?" |
+| 4 | Letra ↔ som de consoantes (M, L, F, V, S, N, P, T…) | Letras-som (R2–R4) | Tales: "Essa letra faz que som?" |
+| 5 | Ler palavras CV.CV e 1 pseudopalavra (MALA, SAPO, "LUFO") | Decodificação (R2–R3) | Sofia: "Lê a placa pra mim, [NOME]?" |
+| 6 | Dígrafos, sílabas complexas e uma frase curta (CHUVA, PRATO, "O PATO NADA.") | R4–R8 | Tales: "Essa é difícil! Tenta?" |
+| 7 | Frase com pergunta de compreensão | R8–R10 | Sofia: "O que a placa conta?" |
+
+**Regras:**
+- **4–5 anos:** a sondagem fica **espalhada nos dias 1–3** (é a "triagem disfarçada" de §2 e §4), no máximo 4–5 placas por dia, e quase sempre para nos degraus 1–3.
+- **6–8 anos:** uma missão única de 5–10 min no dia 1, logo depois da primeira vitória do nome (§2), para não começar por uma prova.
+- Sem cronômetro, sem pontuação, sem "certo/errado" visível: toda placa vai para o lugar com ajuda, se preciso. Palavras sempre decodificáveis no degrau (linter, rel. 25).
+- **Resultado (só para o adulto e o professor):** "ponto de partida" por região (ex.: "R0–R1: já domina · R2a: está aprendendo · a partir de R2b: começa do início"). Nunca rótulo nem diagnóstico. A pergunta ao adulto (§1, 4:45) só ajuda a escolher a primeira placa.
+
+### 5.2 Trilha Expressa: todas as fases, uma por vez, em ritmo rápido
+| Situação | O que acontece |
+|---|---|
+| A sondagem indica domínio de uma região | As fases dela abrem em **Trilha Expressa**: a cena-padrão vira uma **prova-relâmpago de domínio** (4–6 itens, ≥ 1 pseudopalavra, 1–3 min) |
+| A criança passa na prova-relâmpago | A fase é marcada como feita: **selos, moedinhas da fase, área do mundo, momento uau e a história** (o vídeo "Assiste e Faz" curto e o gancho) são vividos **em ritmo rápido**. Nada é pulado: a criança vê cada fase, na ordem |
+| A criança erra na prova-relâmpago | A Trilha Expressa **desacelera ali**: a fase passa para o ritmo completo, com a Sofia dizendo "Essa a gente vai fazer com calma, juntos!". Sem "reprovou", sem perda; as fases seguintes continuam no ritmo completo até nova prova-relâmpago dar certo |
+| Chefe de região | O chefe é feito **inteiro** também na Trilha Expressa (provinha de fase, ≥ 85% / ≥ 75%), porque é o portão do título e do termômetro ([07](07-progressao-niveis-e-titulos.md) §4) |
+| Fim da Trilha Expressa | Quando chega à primeira fase que a criança ainda não domina, a jornada segue no ritmo completo. Termômetro, títulos e níveis ficam coerentes com o caminho feito |
+
+**Ritmo de referência:** uma fase de R0–R2 em Trilha Expressa leva 1 sessão (às vezes 2 fases por sessão, sempre com o ritual de fim). Uma criança de 7 anos que já lê palavras simples chega a R3 em cerca de 3–4 semanas, tendo vivido o quintal, a ilha e a mata com a dupla.
+
+**Para a família (painel):** "O Pedro já sabia muitos sons! Ele está passando pelas primeiras fases em **Trilha Expressa** e vai desacelerar onde precisar de mais tempo. A história é a mesma para todos."

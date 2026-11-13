@@ -4,7 +4,7 @@
 >
 > Este documento detalha **a jornada inteira, região a região, fase a fase e cena a cena**: da primeira tela do cadastro até a formatura da alfabetização, com a neurociência da aprendizagem aplicada em cada cena e **o fonema no centro de tudo**.
 >
-> **Base (não contradiz):** decisões [001–019](../../../decisoes/), a [jornada](../jornada/README.md) (R0–R10, N1–N12, sessão e semana), a [série Sofia e Tales](../serie-sofia-e-tales/README.md), [esporte, respeito e ambiente](../esporte-respeito-ambiente/README.md), [imersivo](../imersivo/README.md), [Academia](../academia/README.md), [lojinha e emblemas](../lojinha-emblemas/README.md), [avatar 3D](../avatar-3d/README.md) e o [documento mestre](../../../sintese/00-documento-mestre.md) §4.2–4.8. Tudo aqui é **[proposta de roteiro]**: tempos, contagens e limiares são hipóteses a calibrar no piloto. O avanço é **por domínio, nunca por tempo**.
+> **Base (não contradiz):** decisões [001–021](../../../decisoes/), a [jornada](../jornada/README.md) (R0–R10, N1–N12, sessão e semana), a [série Sofia e Tales](../serie-sofia-e-tales/README.md), [esporte, respeito e ambiente](../esporte-respeito-ambiente/README.md), [imersivo](../imersivo/README.md), [Academia](../academia/README.md), [lojinha e emblemas](../lojinha-emblemas/README.md), [avatar 3D](../avatar-3d/README.md) e o [documento mestre](../../../sintese/00-documento-mestre.md) §4.2–4.8. Tudo aqui é **[proposta de roteiro]**: tempos, contagens e limiares são hipóteses a calibrar no piloto. O avanço é **por domínio, nunca por tempo**.
 
 ## Arquivos desta pasta
 
@@ -18,6 +18,7 @@
 | [05-imersao-e-ritmo.md](05-imersao-e-ritmo.md) | Camadas da tela, transições, música por região, câmera, momentos uau, proteção contra sobrecarga |
 | [06-familia-e-escola-acompanham.md](06-familia-e-escola-acompanham.md) | O que a família vê em cada etapa, mensagens com o nome, missões de 5 min em casa, quem vê o quê |
 | [07-progressao-niveis-e-titulos.md](07-progressao-niveis-e-titulos.md) | Progressão quase infinita (fase → subfases → bônus → versão mestre → eventos semanais), curva de dificuldade, **níveis e títulos** (Aprendiz dos Sons → Mestre Leitor), barra "próximo objetivo", revisão procedural e salvaguardas (D019) |
+| [08-maternal-primeiros-sons.md](08-maternal-primeiros-sons.md) | Módulo **Maternal "Primeiros Sons"** (2–3 anos): escuta, cantigas, rimas, sons dos bichos, nome próprio, vocabulário, atenção e convivência, sem cobrar leitura; sessões de 5–10 min com o adulto, propostas fora da tela, tempo de tela e passagem para R0 (D021 §4) |
 
 ---
 
@@ -97,6 +98,16 @@ Cada fase reaproveita a anatomia da sessão. Nas tabelas das regiões aparecem *
 **Domínio de uma habilidade** (doc. mestre §4.5): (1) prática: P(domínio) ≥ 0,95, ≥ 8 tentativas em ≥ 2 sessões, 4 das últimas 5 certas com ≥ 2 pseudopalavras; (2) generalização com item novo; (3) transferência fora do formato; (4) **retenção entre 24 h e 7 dias**. **Chefe de região** = provinha de fase disfarçada: ≥ 85% na leitura e ≥ 75% na escrita. Não passou: trilha curta de reforço; **nada se perde e nada bloqueia o mundo**.
 
 **Recompensas (padrão em toda cena):** no acerto, só 1 s de brilho e a frase específica da dupla. **Moedinhas em bloco no ritual** (atividade 1, marco de domínio 5, região 10; teto 12/dia). **Selos** depois do fato (§6). Sem sorte, sem baú, sem streak, sem perda por erro ou ausência (D002).
+
+**Ao entrar em cada fase: dois botões grandes (D021 §1).**
+| Botão | O que a criança vê | Regra |
+|---|---|---|
+| 🛒 **Lojinha** (de brincadeirinha) | Itens que **pode** comprar com as moedinhas (acesos, com preço) e os que **ainda não pode** (mostram "faltam X moedinhas"); a meta do cofrinho | Educação financeira: esperar, juntar, escolher (D002). Só moedinhas da jornada, nunca dinheiro real; sem sorte; itens sem joias nem adornos (D008, D009). A fala é pré-gravada: "Faltam 4 moedinhas. Quer juntar para a mochila?" |
+| 🏅 **Minhas Conquistas** | Selos, medalhas e troféus **desta fase**: conquistados **brilhantes e animados**; não conquistados **apagados, com cadeado e a dica** do desafio ("Leia 5 palavras com M para desbloquear"); selos **mistério** só como silhueta | A dica é lida em voz alta pela dupla; nunca mostra comparação com outras crianças. Detalhes em [07](07-progressao-niveis-e-titulos.md) §2.1 |
+
+Os dois botões ficam na **chegada da fase** e no **ritual de fim (C9)**, nunca na tela de lição. No modo Previsível, a ordem é sempre a mesma (Conquistas → Lojinha → missão).
+
+**Um desafio por vez, sem pular fases (D021 §2).** A jornada é **sequencial**: cada desafio e cada fase são feitos **um de cada vez**, na ordem do grafo de habilidades, porque cada som apoia o próximo. Não existe atalho, compra ou botão que pule fase. Quem já sabe passa mais rápido pela **Trilha Expressa** ([01](01-primeira-experiencia.md) §5), mas também fase por fase. Desafios bônus, versão mestre e eventos são **opcionais** e só abrem depois do domínio; nunca substituem a fase.
 
 ---
 
@@ -232,6 +243,8 @@ Além das 233 cenas detalhadas, cada sessão usa as cenas-padrão C0, C1, C6, C7
 3. ✅ **Nomes com som inicial irregular:** **aprovado**. A primeira missão usa o **som real** e mostra a **letra real** (Helena começa com /é/; Cecília, com /s/ e a letra C) ([01](01-primeira-experiencia.md) §2).
 5. ✅ **Capoeira:** **incluída como esporte e expressão corporal** (ginga, equilíbrio, palmas no ritmo das sílabas, roda de respeito e fair play), **sem cantigas ou elementos religiosos, sem rituais e sem conteúdo político**. Cenas: R0-F03-C6b (roda de respeito no ritmo das sílabas) e R8-F02-C6b (capoeira na areia).
 - ✅ **Primeiras fases (R0–R2):** histórias no **cotidiano universal**: família com pai e mãe, amigos, escola, dia a dia, esportes, natureza, cuidado com os animais e selos. Temas sensíveis ficam fora ([02](02-regioes-R0-R2.md), nota de abertura).
+
+- ✅ **Lojinha e Minhas Conquistas em cada fase; um desafio por vez; sondagem lúdica e Trilha Expressa; Maternal** ([Decisão 021](../../../decisoes/021-lojinha-conquistas-nivelamento-maternal.md)): §3 deste README, [01](01-primeira-experiencia.md) §5, [07](07-progressao-niveis-e-titulos.md) §2.1 e [08](08-maternal-primeiros-sons.md).
 
 **Ainda em aberto:**
 4. **Tales com boca própria no Espelho do Som** a partir de R1 (alternando sons com a Sofia), depois da validação das 2 bocas por fonoaudiólogas.
