@@ -19,3 +19,8 @@
 4. **Culturas brasileiras:** comidas, músicas, danças e artesanatos regionais podem aparecer quando não forem rito religioso. Os povos indígenas aparecem com respeito, como gente real, no cotidiano. A pintura facial fica como expressão cultural (Decisão 011), sem caráter de ritual.
 5. **Tom:** muito criativo, lúdico, envolvente e empolgante, mas sempre funcional, inteligente, didático e eficiente. A diversão serve à aprendizagem.
 6. **Revisão:** toda arte e todo roteiro novo passa por esta checagem, junto com as Decisões 008 (sem joias) e 009 (sem arco-íris).
+
+## Confirmações do dono (13/11/2026)
+- As personagens chamadas **Iara** ficam: é nome de pessoa, não a entidade do folclore.
+- **Comidas e trajes regionais** (pamonha, canjica, chita, chapéu de palha) ficam como "feira da colheita".
+- O **turbante** fica como opção de cabelo. A **Estrela de Natal** só aparece se a escola quiser.
