@@ -165,7 +165,7 @@ O mapa segue as 11 regiões do Documento Mestre (§4.2). A vila tem **bairros** 
 | **10 mil** | US$ 800–1.300 | R$ 600 | **R$ 5,2–8,0 mil** | R$ 0,52–0,80 |
 | **100 mil** | US$ 4.000–7.000 | R$ 2.000 | **R$ 25–42 mil** | R$ 0,25–0,42 |
 
-O que pesa: base fixa (Aurora com 0,5 ACU mínimo, WAF, GuardDuty, logs) no começo; CDN de pacotes de conteúdo e Aurora em escala. **TTS e fala custam ≈ zero por aluno** porque o TTS é pré-gerado uma vez e o reconhecimento roda no aparelho, o que atende à regra de *unit economics* do Documento Mestre (< R$ 10 por criança/ano). Detalhes em [`infra.md`](infra.md#custos).
+O que pesa: base fixa (Aurora com 0,5 ACU mínimo, WAF, GuardDuty, logs) no começo; CDN de pacotes de conteúdo e Aurora em escala. **TTS e fala custam ≈ zero por aluno** porque o TTS é pré-gerado uma vez e o reconhecimento roda no aparelho, o que atende à regra de *unit economics* do Documento Mestre (< R$ 10 por criança/ano). Detalhes em [`infra.md`](infra.md#6-custos).
 Fora da nuvem: taxa das lojas (15% no programa de pequenas empresas), gateway de pagamento (≈ 3–5%), suporte e sustentação da equipe.
 
 ---

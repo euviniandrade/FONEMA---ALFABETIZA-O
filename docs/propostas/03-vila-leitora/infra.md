@@ -65,7 +65,7 @@ Ferramentas: **GitHub Actions** (com OIDC para a AWS, sem chave fixa), **AWS CDK
 
 **RPO 15 min · RTO 4 h.** Durante uma falha da nuvem, o app continua funcionando offline e o progresso fica na fila local.
 
-## 6. Custos {#custos}
+## 6. Custos
 Estimativa mensal, sa-east-1, câmbio US$ 1 = R$ 5,70, incluindo prod + hml + dev.
 
 | Item | 1 mil alunos | 10 mil | 100 mil |
