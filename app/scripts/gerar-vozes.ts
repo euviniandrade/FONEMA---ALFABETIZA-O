@@ -30,16 +30,20 @@ const chaveTrecho = (t: string) => t.replace(/^[\s,.!?;:…]+/, '').replace(/\s+
  * - palavra solta sai cortada → "Mala." com velocidade 0,85.
  */
 const VOGAIS = 'aeiouáéíóúâêôãõ';
-function paraTTS(k: string): { texto: string; lento: boolean } {
+/** "sss… ooo… lll" (síntese de fonemas): o TTS não faz; fica para a gravação da fonoaudióloga. */
+const ehSequenciaDeSons = (k: string) => { const ts = k.split(/[\s…,.!?-]+/).filter(Boolean); return ts.length > 1 && ts.every((t) => /^(\p{L})\1{2,}$/u.test(t)); };
+function paraTTS(k: string): { texto: string; lento: boolean } | null {
+  if (ehSequenciaDeSons(k)) return null;
   let t = k.replace(/(^|[^\p{L}])(\p{L})\2{2,}(\p{L}?)(?=$|[^\p{L}])/gu, (_m, antes: string, l: string) => {
     const low = l.toLowerCase();
     if (VOGAIS.includes(low)) return antes + low.toUpperCase() + low.repeat(4);
     const som = Object.values(SONS).find((x) => x.chave === low || x.letra.toLowerCase() === low);
     return antes + (som ? `${som.letra}, de ${som.palavras[0][0]}` : l.toUpperCase());
   });
+  t = t.replace(/\//g, '');
   const palavras = t.split(/\s+/).filter(Boolean);
   const lento = palavras.length <= 2;
-  if (lento) t = t.charAt(0).toUpperCase() + t.slice(1).replace(/[!?]?$/, (m) => m || '.');
+  if (lento) t = t.charAt(0).toUpperCase() + t.slice(1).replace(/[.,!?…]?$/, (m) => m || '.');
   return { texto: t, lento };
 }
 const chaveNome = (n: string) => n.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
@@ -70,6 +74,8 @@ async function tts(voz: Voz, texto: string, destino: string, lento = false) {
   throw new Error('ElevenLabs: muitas tentativas');
 }
 
+const semAudio = new Set<string>();
+
 async function main() {
   const falas = JSON.parse(readFileSync('packages/conteudo/src/falas.json', 'utf8')) as { voz: Voz; texto: string }[];
   mkdirSync(`${PUB}/falas`, { recursive: true });
@@ -85,7 +91,9 @@ async function main() {
       const arq = `${f.voz}-${hash(chave)}.mp3`;
       if (existsSync(`${PUB}/falas/${arq}`)) { manFalas[chave] = arq; continue; }
       if (tarefas.some((t) => t.destino.endsWith(arq))) continue;
-      tarefas.push({ voz: f.voz, ...paraTTS(k), destino: `${PUB}/falas/${arq}`, registrar: () => (manFalas[chave] = arq) });
+      const tts = paraTTS(k);
+      if (!tts) { semAudio.add(k); continue; }
+      tarefas.push({ voz: f.voz, ...tts, destino: `${PUB}/falas/${arq}`, registrar: () => (manFalas[chave] = arq) });
     }
   }
   const manNomesArq = `${PUB}/nomes/manifesto.json`;
@@ -100,6 +108,7 @@ async function main() {
       tarefas.push({ voz, texto: `${nome}.`, lento: true, destino, registrar });
     }
   }
+  if (semAudio.size) console.log(`sem áudio (sequências de sons para a fonoaudióloga): ${[...semAudio].join(' | ')}`);
   const total = tarefas.reduce((s, t) => s + t.texto.length, 0);
   const antes = await creditos();
   console.log(`a gerar: ${tarefas.length} clipes, ${total} caracteres · créditos usados antes: ${antes.usados}/${antes.limite}`);

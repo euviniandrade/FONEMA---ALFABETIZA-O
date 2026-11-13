@@ -121,6 +121,10 @@ export class ProvedorPreGerado implements ProvedorVoz {
     const quem = o.quem ?? 'sofia';
     const arqs = this.arquivos(texto, quem);
     if (modoTeste()) return this.reserva.falar(texto, o);
+    if (!arqs && /^[\s…,.!?-]*((\p{L})\2{2,}[\s…,.!?-]*)+$/u.test(texto)) {
+      // sequência de sons isolados ("sss… ooo… lll"): ainda sem gravação da fonoaudióloga → voz do aparelho como último recurso
+      return this.reserva.falar(texto, o);
+    }
     if (!arqs) {
       // sem áudio oficial: NUNCA voz robótica para a Sofia/Tales; o texto fica no balão e a tela segue no ritmo da leitura
       faltando.add(`${(VOZ_DO_PERSONAGEM[quem] ?? VOZ_DO_PERSONAGEM.sofia).voz}|${texto}`);
