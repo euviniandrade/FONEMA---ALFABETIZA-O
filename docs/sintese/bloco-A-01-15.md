@@ -356,3 +356,192 @@
 - Tabela de durações = heurística de design, não resultado de estudo único; efeitos de ritmo são de curto prazo e amostras pequenas.
 
 ---
+
+## 10 — Neurociência: fala, percepção fonológica e multissensorial
+
+**(a) Achados mais fortes**
+1. **Consciência fonêmica tem papel causal, sobretudo ensinada com letras**: é o correlato mais forte da leitura de palavras (Melby-Lervåg, Lyster & Hulme, 2012, doi:10.1037/a0026744); treino com efeito d = 0,53 (leitura) e 0,59 (escrita), maior **com letras**, focado em 1–2 habilidades, em pequenos grupos (Ehri et al., 2001, NRP, doi:10.1598/RRQ.36.3.2); fonema + letra-som são os fundamentos causais (Hulme et al., 2012, doi:10.1177/0956797611435921). — **A**.
+2. **Evidência brasileira direta**: 90 crianças da EI (média 53 meses): **mapeamento fonema-letra com articulação** superou fonema sem articulação, mapeamento **silábico** e controle em segmentação, leitura e escrita (Sargiani, Ehri & Maluf, 2018, doi:10.1017/s0142716418000371) → **em PB, fonema > sílaba**. — **B** (o achado mais aplicável ao FONEMA).
+3. **Treino articulatório reforça a consciência fonêmica**: Castiglioni-Spalten & Ehri, 2003 (doi:10.1207/s1532799xssr0701_03); letras + figuras de articulação > só letras (Boyer & Ehri, 2011, doi:10.1080/10888438.2010.520778). — **B**.
+4. **Ver a boca é biológico**: ganho de inteligibilidade em ruído (Sumby & Pollack, 1954); McGurk (1976); bebês olham a boca quando aprendem a falar e voltam a ela diante de língua estrangeira (Lewkowicz & Hansen-Tift, 2012, doi:10.1073/pnas.1114783109). A criança já percebe as categorias do PB; o trabalho é torná-las **conscientes**. — **B/C**.
+5. **Multissensorial só funciona com estímulos congruentes** (Kim, Seitz & Shams, 2008, doi:10.1371/journal.pone.0001532; Shams & Seitz, 2008, doi:10.1016/j.tics.2008.07.006). **Escrever à mão** > digitar para reconhecer letras (Longcamp et al., 2005, doi:10.1016/j.actpsy.2004.10.019); só a **produção livre** (não o traçado sobre pontilhado) ativou o circuito de leitura (James & Engelhardt, 2012, doi:10.1016/j.tine.2012.08.001). — **B**.
+6. **Cautela**: teoria motora/neurônios-espelho não autorizam "só aprende se imitar a boca" (Hickok 2009, [C]); **o efeito dos gestos do Jolly Phonics nunca foi isolado** do pacote fônico. — **C**.
+
+**(b) Regras de design/produto**
+- **Um vídeo por fonema, não por letra**; sempre **som + boca + letra sincronizados** (sincronia labial no nível de quadro); nunca boca sem som ou dessincronizada; o vídeo **sempre termina na letra** e a atividade seguinte exige mapear som → letra (não substituir a letra pela boca).
+- **Close frontal real** (o que a criança imita/vê no espelho) + **vista lateral esquemática** (língua, véu, nasalidade, ícone "garganta vibra"); pares mínimos surdo/sonoro lado a lado com a pista da mão na garganta.
+- Resolução não é o gargalo: boa luz, rosto neutro, lábios com contraste, fundo limpo; versões leves para celulares simples.
+- Boca real = referência articulatória; Sofia pode estilizar, mas com **visemas corretos por fonema** (lip-sync a partir dos fonemas), senão vira estímulo incongruente.
+- Boca padrão na introdução e na correção; opcional na prática fluente.
+- **Espelho/câmera**: modo espelho **local**, sem gravação nem envio, **sem nota baseada em câmera no MVP**.
+- **Gestos** próprios para o PB, opcionais, como gancho de memória — preferir gestos que **reforcem a articulação** (mão na garganta, dedo no nariz, palma diante da boca); não importar ações do Jolly Phonics.
+- **Traçado**: ver animado → traçar com guia → **escrever sem guia** → reconhecer entre distratores; dizer **o som** (não o nome) enquanto escreve; tolerância com variações de forma.
+- **Feedback de pronúncia**: julgar a **categoria** do fonema, não a distância acústica a um modelo; aceitar variação dialetal; o alvo é consciência fonêmica, **não fonoaudiologia** (separar "identificou o som?" de "produziu perfeito?"); feedback acionável ("põe a mão aqui, a garganta vibra") com vídeo do alvo e do produzido lado a lado; **baixa confiança do ASR = não penalizar**; **tarefas de percepção (escutar e escolher) antes de produção**.
+- Sequência pedagógica: ouvir o som → ver a boca → sentir na própria boca (espelho + mão) → ver a letra surgir → escolher a letra → escrever dizendo o som → usar em segmentação/síntese com letras. Princípios fixos: **sempre com letras** e **sempre congruente**.
+
+**(c) Números operacionais**
+- Clipe da boquinha: **3–5 s** (som isolado prolongado se contínuo /fff/ /sss/ /mmm/ /vvv/ → em sílaba e palavra → letra aparece no momento do som).
+- Inventário: ~19 consoantes + 7 vogais orais + nasais (cf. rel. 02).
+- Tolerância de sincronia audiovisual: "dezenas de milissegundos" (aproximada).
+
+**(d) Riscos, limites, pendências**
+- E2: 43 de 46 verificadas, 3 não checáveis (tese de Boyer 2010, registro FAPESP, whitepaper UVA). Vários itens marcados [C] no relatório (Massaro/Baldi, Hickok, Kuhl 2003/2007, Munhall 2004, Bruderer 2015, Stuart 1999, Neri et al. 2008, Hattie & Timperley 2007) — a E2 confirmou quase todos, mas conferir antes de citar publicamente.
+- Massaro/Baldi: amostras pequenas e clínicas (viabilidade, não eficácia geral). Feedback automático de pronúncia foi testado em adultos L2; transposição para 5–7 anos é incerta.
+- Não há evidência de que classificar a boca da criança por visão computacional melhore a aprendizagem (cf. rel. 03, que propõe câmera opt-in na camada 3).
+
+---
+
+## 11 — Neurociência: dislexia e intervenção
+
+**(a) Achados mais fortes**
+1. **Dislexia é sobretudo fonológica, mas multifatorial e dimensional** (IDA: Lyon, Shaywitz & Shaywitz, 2003, doi:10.1007/s11881-003-0001-9; Ramus et al.: déficit fonológico em todos os 16 adultos); amostragem temporal (Goswami, 2011, doi:10.1016/j.tics.2010.10.001), span visual-atencional, cerebelar e magnocelular explicam subgrupos. Duplo déficit (fonológico + RAN) é o mais grave. — **A/C**.
+2. **Assinatura cerebral** (subativação temporoparietal e occipitotemporal esquerda) **muda com intervenção fônica intensiva** (Simos 2002, ~80 h; Shaywitz et al., 2004, doi:10.1016/j.biopsych.2003.12.019, persistiu 1 ano; Meyler 2008, ~100 h). **Dose importa**: dezenas a centenas de horas; **precisão vem antes, fluência resiste** (Torgesen et al., 2001, 67,5 h 1:1, doi:10.1177/002221940103400104). — **B**.
+3. **Só a instrução fônica teve efeito consistente** em ECRs (g ≈ 0,3); overlays coloridos, treino auditivo isolado e medicação não (Galuschka et al., 2014, doi:10.1371/journal.pone.0089900). Intervenções precoces extensas (> 100 sessões) rendem mais se começam até o 1º ano (Wanzek & Vaughn). — **A**.
+4. **"Paradoxo da dislexia"**: diferenças cerebrais já existem **antes da alfabetização** em crianças com risco familiar, mas o diagnóstico chega no 2º–3º ano (Ozernov-Palchik & Gaab, 2016, doi:10.1002/wcs.1383; Raschle, Zuk & Gaab, 2012, doi:10.1073/pnas.1107721109). **~45% das crianças com risco familiar** desenvolvem dislexia vs ~12% dos controles (Snowling & Melby-Lervåg, 2016, doi:10.1037/bul0000037); herdabilidade 0,4–0,7, poligênica (42 loci), sem teste genético. — **A/B**.
+5. **Preditores precoces**: consciência fonológica, **RAN** (r ≈ 0,4 com leitura, maior com alfanuméricos; Araújo et al., 2015, doi:10.1037/edu0000006), conhecimento de letras, linguagem oral; em ortografias transparentes o RAN pesa mais. — **A**.
+6. **Em português, dislexia = leitura lenta e laboriosa** mais do que erros ("lê certo, mas devagar"); a escrita é a área mais afetada. Coadjuvantes com evidência **mista/modesta**: música/ritmo (Flaugnacco et al., 2015, ECR n = 48, doi:10.1371/journal.pone.0138715), videogame de ação (Franceschini et al., 2013, doi:10.1016/j.cub.2013.01.044; contra: Łuniewska et al., 2018, doi:10.1038/s41598-017-18878-7); **espaçamento extra entre letras** melhora velocidade e precisão sem treino (Zorzi et al., 2012, doi:10.1073/pnas.1205566109). — **B**.
+
+**(b) Regras de design/produto**
+- **Monitorar, não diagnosticar**; sinais de atenção com linguagem cuidadosa ("vale observar"), sem rótulos; dados de desenvolvimento são sensíveis (consentimento parental explícito, minimização, nenhum uso comercial).
+- **Indicadores monitoráveis**: histórico familiar (pergunta opcional no onboarding → ativa trilha de reforço preventivo); consciência fonológica; **RAN** (mini-jogo "fala rápido": grade de 5 itens repetidos — cores/objetos, depois letras — cronometrado por ASR); conhecimento de letras (acurácia + latência); **taxa de aprendizagem** (exposições até dominar cada grafema — melhor sinal, lógica RTI); velocidade de decodificação e **efeito de extensão**; pseudopalavras ("fapo", "tilu"); padrão de erros no ditado; linguagem oral.
+- Regras: comparar com **coorte etária e tempo de exposição**, nunca valores absolutos; exigir **persistência** (várias sessões/semanas); mostrar o sinal ao adulto **com uma ação concreta** e citar a Lei 14.254/2021 como direito; limiares = hipóteses a validar psicometricamente (parceria universitária).
+- **Modo reforço** (sem rótulo para a criança): mais fônica (Structured Literacy), passos menores, multissensorial, ritmo e prosódia (batida silábica, leitura em eco), **tipografia ajustável** (espaçamento de letras, palavras e linhas; poucas palavras por linha; sem promessa de fonte especial), foco em **fluência** com leitura repetida e metas pessoais (comparar a criança com ela mesma), **sem cronômetro visível**, proteção emocional, áudio sob demanda sem substituir a decodificação.
+- Medir **velocidade e fluência**, não só acerto. Mostrar ao adulto o **"tempo acumulado de prática fônica"**.
+- Voz da Sofia com sílabas bem marcadas e velocidade ajustável; música/ritmo como atividade regular; elementos de ação só com conteúdo fônico.
+- Comunicação: proibir mitos (ver letras ao contrário, overlays/Irlen, fontes milagrosas, treino visual, exercícios cerebelares, "preguiça", "esperar o 3º ano", "o app diagnostica").
+
+**(c) Números operacionais**
+- Dose (a validar): **trilha padrão 10–15 min/dia, 5 dias/semana**; **modo reforço 20–30 min/dia em 2 blocos**, 5 dias/semana, **≥ 12–20 semanas**, reavaliação a cada **4–6 semanas**; sem resposta após **3–6 meses** de boa dose → recomendar avaliação profissional (Nível 3).
+- Espaçamento extra: **+2,5 pt** (≈ 0,1–0,15 em) entre letras.
+- RTI: triagem universal **2–3×/ano**; DSM-5 exige persistência ≥ **6 meses** apesar de intervenção.
+- Risco familiar: ~45% vs ~12% (o relatório também fala em "~4 em cada 10" e "~4 vezes maior").
+- Trocas surdo/sonoro na escrita só preocupam se persistirem **após o 2º ano**.
+
+**(d) Riscos, limites, pendências**
+- E2: 51 de 62 verificadas, **4 corrigidas** (DOIs de Goswami 2011 e Shaywitz 2004; GraphoGame Brasil = Dos Santos Konkewicz et al., preprint 2026, doi:10.1590/SciELOPreprints.15029; link PMC de Dehaene & Cohen 2011 trocado), **2 não encontradas**: Capovilla & Capovilla (2004, *Alfabetização: método fônico*) e Capellini, Smythe & Silva (2012, protocolo) — Crossref traz outro protocolo (Capellini & Smythe, 2008, doi:10.36311/2008.978-85-98176-13-0).
+- Percentuais de prevalência no Brasil (Fortes et al., 2016, doi:10.1007/s00787-015-0708-2) a conferir no artigo original.
+- Efeito de videogames de ação é controverso (amostras pequenas); música é coadjuvante.
+
+---
+
+## 12 — Neurociência: TEA e TDAH aplicados à alfabetização
+
+**(a) Achados mais fortes**
+1. **TEA não tem um perfil leitor único**: decodificação em geral na média, **compreensão ~0,7 DP abaixo** (meta-análise de 36 estudos; Brown, Oram-Cardy & Johnson, 2013, doi:10.1007/s10803-012-1638-1); preditores = vocabulário/semântica e decodificação, não o diagnóstico; textos sociais são compreendidos pior; heterogeneidade alta (Nation et al., 2006, doi:10.1007/s10803-006-0130-1; Norbury & Nation, 2011, doi:10.1080/10888431003623553). ~84% da hiperlexia está no espectro (Ostrolenk et al., 2017). — **A/B**.
+2. **Fônica sistemática também funciona no TEA**, mas a base é pequena (11 estudos, 61 participantes; Whalon et al., 2009, doi:10.1177/1088357608328515); ABRACADABRA (digital, fônico) com ganhos em autistas (Bailey et al., 2017, doi:10.1037/edu0000138). — **B/C**.
+3. **Previsibilidade é neurocognição** (priors atenuados / erros de predição rígidos; Pellicano & Burr, 2012, doi:10.1016/j.tics.2012.08.009); mudanças não anunciadas custam caro; o código grafema-fonema regular combina com a **sistematização**. — **C** (modelos teóricos, contestados).
+4. **Recompensa social (voz/rosto/elogio) pode valer menos** para parte das crianças autistas: menor conectividade entre córtex seletivo à voz e circuito de recompensa (Abrams et al., 2013, doi:10.1073/pnas.1302982110); a teoria da motivação social é **contestada** (neurodiversidade; achados mistos). — **B/C**.
+5. **TDAH: o atraso entre ação e consequência é o inimigo** (aversão à demora, modelo de via dupla; hipótese da transferência de dopamina — Tripp & Wickens, 2008, doi:10.1111/j.1469-7610.2007.01851.x) → feedback **imediato, frequente, previsível e informativo**. **Variabilidade do tempo de reação** é a marca robusta (Kofler et al., 2013, 319 estudos, doi:10.1016/j.cpr.2013.06.001). — **A/B**.
+6. **TDAH + dislexia: comorbidade ~25–40%** (Willcutt & Pennington, 2000, doi:10.1177/002221940003300206) → TDAH também precisa de triagem/reforço fonológico. EndeavorRx (Kollins et al., 2020, *Lancet Digital Health*; 348 crianças): ganho no TOVA, efeito modesto/nulo nos sintomas por pais; neurofeedback some com avaliador cego (Cortese et al., 2016, doi:10.1016/j.jaac.2016.03.007). — **A/B**.
+
+**(b) Regras de design/produto**
+- **Modo TEA**: trilha da sessão visual sempre visível (ex.: aquecer → som novo → jogo → história), mesma ordem toda sessão, **aviso 10 s antes de cada transição**; **desligar** recompensas aleatórias, sons-surpresa, trocas de cenário e pop-ups (novidade só por "botão de novidade" opcional); som baixo, sem música de fundo, sem sons agudos, opção "silencioso + legenda"; baixa saturação, sem piscar, animação reduzida; **voz da Sofia neutra/calma**, frases curtas e literais, **frases-âncora fixas** ("Vamos ouvir.", "Agora você."); opção de **Sofia sem rosto** ou rosto estático; recompensa padrão **informativa e não social** (barra, coleção do tema de interesse, "tabela de sons" que se completa), família cadastra o interesse restrito como tema; português como **sistema de regras explícitas**; toda unidade fecha com **checagem de significado**; textos começam concretos/pouco sociais; medir **decodificação e compreensão separadamente** com alerta de "perfil hiperléxico"; sem cronômetro, botão de pausa fixo; ASR aceita prosódia atípica, ecolalia e volume baixo, com alternativa por toque.
+- **Modo TDAH**: feedback **< 300 ms**, nunca acumulado; reforço contínuo na aquisição, afinado só após domínio; feedback informativo ("Isso! /b/ de **b**ola"), erro sem perda de pontos; monitorar **desvio-padrão do tempo de resposta** (janela ~10 itens) → trocar atividade, pausa de movimento ou baixar dificuldade; dificuldade adaptativa (~80% de acerto); movimento permitido (não exigir quietude); variação controlada de mini-jogos ("o quê" muda, "como" fica estável); animação de recompensa **só depois** da resposta; triagem fonológica **obrigatória** (se fraca, ativar também o percurso de dislexia); metas curtas visíveis.
+- **Comum**: perfis combináveis — com TEA + TDAH, **previsibilidade (TEA) prevalece sobre novidade (TDAH)**; todos os parâmetros ajustáveis por responsável/terapeuta com registro; linguagem de neurodiversidade ("modo de apoio", "diferenças", "apoios"); **nenhuma alegação terapêutica** (o FONEMA não é dispositivo médico).
+
+**(c) Números operacionais** (parâmetros iniciais de design, não medidos em estudos)
+- TEA: volume padrão ~60%; ≤ 3 flashes/s (WCAG); voz 0,85–0,9×; aviso 10 s antes de transição; sessão 10–15 min.
+- TDAH: feedback < 300 ms; micro-recompensa a cada 30–60 s e maior a cada 3–5 min (ver conflito na seção final); blocos de **3–5 min**, sessão 10–15 min; pausa de movimento 20–40 s; janela de ~10 itens para variabilidade; acerto-alvo ~80%.
+- Prevalência mundial de TDAH ~5,3% (Polanczyk et al., 2007, doi:10.1176/ajp.2007.164.6.942).
+
+**(d) Riscos, limites, pendências**
+- No relatório original, [12]–[55] estavam marcadas † (não verificadas); na E2, 53 de 55 verificadas e **2 corrigidas**: Kohls et al. 2012 (título correto: "Social wanting dysfunction in autism…", doi:10.1186/1866-1955-4-10) e Bul et al. 2016 (Plan-It Commander; título correto "Behavioral outcome effects of serious gaming…", doi:10.2196/jmir.5173).
+- Desfecho primário do EndeavorRx sobre sintomas: "verificar o texto do ensaio". Teoria E-S e "cérebro masculino extremo" são criticadas — usar só como heurística. Estudos com tablets/robôs/agentes no TEA são pequenos (engajamento ≠ aprendizagem). "Ruído branco" moderado é achado de nicho/experimental.
+- Todos os parâmetros exigem validação com A/B, terapeutas e famílias.
+
+---
+
+## 13 — Neurociência: emoção, estresse, erro e feedback
+
+**(a) Achados mais fortes**
+1. **Estresse na hora de recuperar (prova) prejudica fortemente a lembrança** e empurra para respostas rígidas (Vogel & Schwabe, 2016, doi:10.1038/npjscilearn.2016.11); emoção modula atenção e consolidação — inclusive **memórias de vergonha ligadas à leitura**. Ansiedade de desempenho consome memória de trabalho (matemática, 1º–2º ano; para leitura é hipótese). — **B/C**.
+2. **Feedback é poderoso mas pode piorar**: d ≈ 0,41, porém **> 1/3 das intervenções pioraram** o desempenho, sobretudo quando desviam a atenção para o "eu" (Kluger & DeNisi, 1996, doi:10.1037/0033-2909.119.2.254); nível "self" é o menos eficaz (Hattie & Timperley, 2007, doi:10.3102/003465430298487); d = 0,48, o que conta é o **conteúdo informativo**, feedback corretivo muito eficaz, elogio/recompensa efeito baixo (Wisniewski, Zierer & Hattie, 2020, doi:10.3389/fpsyg.2019.03087). Feedback **imediato** é melhor em contextos aplicados (Kulik & Kulik, 1988, doi:10.3102/00346543058001079). — **A**.
+3. **Elogio**: à inteligência → evita desafios e piora após fracasso; ao processo → protege (Mueller & Dweck, 1998); **elogio inflado** faz crianças com baixa autoestima fugirem de desafios (Brummelman et al., 2014, doi:10.1177/0956797613514251). — **B**.
+4. **Prompts (autocorreção) > recasts (repetir o certo)** na correção oral; efeito maior em aprendizes mais jovens (Lyster & Ranta, 1997, doi:10.1017/s0272263197001034; Lyster & Saito, 2010, doi:10.1017/s0272263109990520) — estudos de L2, transferência só do princípio. Erros seguidos de feedback corretivo não prejudicam e podem ajudar; erros sem feedback persistem (Metcalfe, 2017, doi:10.1146/annurev-psych-010416-044022). — **A/B**.
+5. **Mindset de crescimento: efeito pequeno, condicional e contestado** (Sisk et al., 2018, doi:10.1177/0956797617739704; Yeager et al., 2019, doi:10.1038/s41586-019-1466-y; Macnamara & Burgoyne, 2023, doi:10.1037/bul0000352); o Pe (atenção consciente ao erro) prevê precisão pós-erro em crianças (Schroder et al., 2017, doi:10.1016/j.dcn.2017.01.004). — **A** (com controvérsia).
+6. **Fracasso precoce reduz a motivação para ler** (Morgan et al., 2008, doi:10.1177/0022219408321112) e o **autoconceito de leitor** se forma nas primeiras semanas do 1º ano (Chapman et al., 2000, doi:10.1037/0022-0663.92.4.703); efeito Mateus tem evidência mista. Autoeficácia nasce sobretudo de **experiências de êxito**. — **B**.
+
+**(b) Regras de design/produto — "Guia de falas da Sofia"**
+- **Regras de ouro**: falar da **tarefa e da estratégia, nunca da pessoa**; específica, curta, sincera, sem superlativos automáticos; **corrigir sempre mostrando o certo**, logo após a tentativa; **primeiro prompt (autocorreção), depois modelo**; erro é informação — **sem buzina, X vermelho, tremor de tela ou careta triste**; garantir êxito; ser consistente; **ASR inseguro = "não ouvi bem", nunca "errou"**; não corrigir sotaque, só decodificação.
+- Elogio: "Você olhou letra por letra, por isso acertou!" em vez de "Você é muito inteligente!"; comparar a criança **com ela mesma**; para quem acerta tudo, **convidar ao desafio**.
+- **Escada de ajuda** (parar quando acertar): 1 reconhecer a tentativa → 2 prompt/pista (localizada, repetição com entonação, pista metalinguística) → 3 modelo + nova tentativa → 4 leitura conjunta → 5 **fechar com êxito** e seguir (nunca terminar no erro). Máx. 1–2 frases por feedback; uma correção por vez; Sofia como **modelo vicário** ("eu também trocava…").
+- Após **2ª tentativa sem êxito** no item: Sofia modela e faz junto. Após **3 erros seguidos na mesma habilidade**: mudar de estratégia sem anunciar fracasso (acolher, reduzir dificuldade, mudar modalidade, intercalar item fácil, pausa, registrar para o adulto sem nota para a criança) e **encerrar a sessão com êxito**.
+- **Provinha sem ansiedade**: nomes como "Desafio da Sofia"/"Mostra o que você já sabe"; **sem nota, ranking ou "reprovou"** para a criança (resultado vai ao adulto); progresso dela mesma ("Você já sabe 12 sons! Na primeira semana eram 5"); sem cronômetro visível; ritual de entrada ("se não souber, tudo bem, a gente pula") e opcional "Como você está hoje?" com 3 emojis (adaptação não testada); começar fácil; feedback neutro-breve durante ("Anotado!"), revisão de 1–2 erros no fim; permitir pular; provinhas **curtas e frequentes**; orientar pais a elogiar processo.
+- Não vender "mindset" como solução; "seu cérebro está ficando mais forte" só com moderação e junto de estratégia concreta.
+- Microcopy-modelo por situação (acerto fácil/difícil, 1º/2º/3º erro, ASR inseguro, autocorreção, frustração, início de provinha, fim de sessão).
+
+**(c) Números operacionais**
+- Taxa de acerto-alvo **~80%** (heurística de produto, não achado das fontes).
+- 2 tentativas sem êxito → modelar; 3 erros seguidos na habilidade → mudar estratégia.
+- Feedback ≤ 1–2 frases. ERN ~50–100 ms; Pe ~200–500 ms (referência neurofisiológica).
+
+**(d) Riscos, limites, pendências**
+- E2: **45 de 45 verificadas** (o relatório marcava parte como "C", DOI a conferir).
+- Literatura específica de ansiedade de leitura infantil é escassa; "nomear o sentimento com emoji" e "escrever preocupações" são adaptações não testadas em 4–8 anos.
+- Estudos de recast/prompt são de L2; transpor só o princípio; não corrigir variação dialetal ("pexe").
+
+---
+
+## 14 — Neurodesenvolvimento 0–8 anos, música e fatores que potencializam
+
+**(a) Achados mais fortes**
+1. **Leitura não tem "janela que fecha"**; períodos sensíveis fortes existem para a *percepção de sons da fala* no 1º ano de vida, não para a decodificação (cf. rel. 06). A urgência no Brasil é **pedagógica e social**, não neurobiológica. — **B/C**.
+2. **Começar aos 5 não garante vantagem de longo prazo sobre começar aos 7** em contextos de boa linguagem oral (Suggate, Schaughency & Reese, 2013, doi:10.1016/j.ecresq.2012.04.004; Suggate, 2009, PISA 55 países, doi:10.1016/j.ijer.2009.05.001) — **mas esperar não serve para crianças com sinais de risco** ("late bloomers usually just wilt", fonte não checável). — **B**.
+3. **Prontidão = habilidades emergentes ensináveis**: NELP (2008, ERIC ED504224) — conhecimento alfabético, consciência fonológica, RAN (letras/dígitos e objetos/cores), escrita do nome e memória fonológica; intervenções focadas no código têm efeito grande em consciência fonológica; ressalva: não reduzir a EI a seis habilidades (Teale et al., 2010). — **A**.
+4. **Música/ritmo: complemento modesto**: d ≈ 0,2 em consciência fonológica, **sem efeito agregado em fluência**; rima cresce com mais horas (Gordon, Fehd & McCandliss, 2015, 13 estudos, n = 901, doi:10.3389/fpsyg.2015.01777); ECR com pré-escolares, 10 min/dia × 20 semanas (Degé & Schwarzer, 2011, doi:10.3389/fpsyg.2011.00124); sincronia com a batida prevê codificação neural de sílabas (Carr et al., 2014, doi:10.1073/pnas.1406219111); mudanças neurais só após **2 anos** de música ativa (Harmony Project, Kraus et al., 2014); transferência distante em debate (Sala & Gobet, 2020, doi:10.3758/s13421-020-01060-2). — **A/B**.
+5. **Turnos conversacionais > quantidade de palavras**: explicam a diferença de linguagem ligada à renda (Romeo et al., 2018, doi:10.1177/0956797617742725); o "gap de 30 milhões" é contestado. Pobreza associa-se a diferenças corticais de forma não linear e **não causal/determinista** (Noble et al., 2015, doi:10.1038/nn.3983). — **B**.
+6. **Leitura dialógica, movimento e sono são alavancas baratas**; **bilinguismo não atrapalha** (consciência fonológica transfere). — **B/C** (Whitehurst, Mol et al., Donnelly, Bialystok marcados [C] no relatório).
+
+**(b) Regras de design/produto**
+- **Trilhas por idade**: **Sementinha** (4–5 anos: linguagem oral, rimas, sílabas com batida, letras como personagens, escrita do nome, pseudopalavras cantadas, RAN lúdico; **sem pressão por decodificar**) → **Broto** (5–6: fonema inicial, síntese de 2–3 sons, vogais e contínuas /m s f v l/, primeiras CV) → **Florada** (6–7: fônica sistemática, CV/CVC/dígrafos, frases decodificáveis, ditado) → **Fruto** (7–8: fluência com modelo de voz, sílabas complexas, compreensão; **sem leitura cronometrada ansiogênica**) → **Recomeço** (8+ não alfabetizados: mesmo conteúdo, estética "mais velha", progressão acelerada, **sem rótulo de atrasado**).
+- Diagnóstico de entrada **não reprovativo** pelos preditores do NELP; risco persistente → recomendar avaliação em vez de "esperar amadurecer".
+- Música: **canção-tema por fonema** (som, não nome, em posição saliente); jogo **"Bate a Sílaba"** com sincronia medida como **triagem rítmica, não nota**; prosódia exagerada/fala cantada; **parlendas e cantigas brasileiras de domínio público**; criança **produz** ritmo (não só ouve); **música nas tarefas rítmicas e silêncio nas de escuta fina**; módulo extra de ritmo para risco de dislexia.
+- Pausas ativas que **também treinam fonologia** ("pula quando ouvir /p/"); limite diário configurável; nenhum streak que puna.
+- Sono: sessões curtas diárias; revisão no dia seguinte **e após 3–7 dias**; **modo noturno após ~19h30** com "história para dormir" compartilhada em vez de jogos estimulantes.
+- Família: **"Desafio do vai-e-vem"** (missões de 5 min por app ou WhatsApp gerando turnos conversacionais); leitura dialógica com perguntas **CROWD** para o adulto e protocolo **PEER** em vídeo de 1 min; tarefas que funcionem **sem que o adulto saiba ler bem** (áudio, imagens); valorizar o repertório da família; incentivar a língua materna (espanhol, crioulo, indígenas, Libras); relatório simples com 1 atividade da semana.
+- Equidade: não reduzir expectativas por origem social; offline, baixo consumo de dados, celulares simples e compartilhados, áudio claro em ambiente ruidoso; dar ao professor dados de triagem (ritmo, RAN, consciência fonológica).
+
+**(c) Números operacionais**
+- Sessão por trilha: Sementinha **8–12 min** (2–3 blocos de 3–4 min + 1 pausa); Broto **10–15 min**; Florada **15–20 min com 1–2 pausas**; Fruto e Recomeço **15–20 min**.
+- Pausa ativa de **60–90 s** a cada **4–6 min** (4–5 anos) ou **8–10 min** (6–8 anos).
+- Música: efeito esperado **d ≈ 0,2**; benefícios neurais exigem meses/anos de prática.
+- Revisão: dia seguinte + **3–7 dias**; modo noturno após **~19h30**; missões familiares de **5 min**.
+
+**(d) Riscos, limites, pendências**
+- E2: 35 de 41 verificadas, 1 corrigida (link PMC de Goswami 2011 era de Goswami 2014; DOI correto 10.1016/j.tics.2010.10.001), 5 não checáveis (Reading Rockets — fonte do "late bloomers" —, FCRR, APA, nota da Northwestern, OMS 2019).
+- Vários itens "[C]" no corpo do relatório (Kuhl, Werker & Hensch, Hart & Risley, Hackman et al., Whitehurst, Mol et al., Bus et al., Donnelly, Bialystok, Howard-Jones) — reconferir antes de citação pública.
+- A "não desvantagem de começar aos 7" vem de amostras com boa linguagem oral; não generalizar para escola pública com risco.
+
+---
+
+## 15 — Neuroeducação: da ciência à prática, neuromitos e pesquisa brasileira
+
+**(a) Achados mais fortes**
+1. **A neurociência respalda o fônico explícito**, convergindo com meta-análises e guias (NRP, Ehri et al., WWC 2016, EEF +5 meses, Castles et al.); no Brasil, consolidado no RENABE (MEC/Sealf, 2020/2021). EEF: o efeito aparece mais na **precisão** que na compreensão, e o ensaio *Flexible Phonics* teve efeito nulo → **"ser fônico" não basta; a implementação importa**. — **A** (EEF não checável).
+2. **Os 4 pilares de Dehaene** (atenção, engajamento ativo, retorno de erro, consolidação; *How We Learn*, 2020, verificada por resenha) funcionam como especificação de produto, cada um apoiado na psicologia cognitiva. — **C**.
+3. **A ponte neurociência → sala é indireta**, passa pela psicologia cognitiva (Bruer, 1997; Horvath & Donoghue, 2016, doi:10.3389/fpsyg.2016.00377); explicações com jargão neural parecem melhores do que são (Weisberg et al., 2008, doi:10.1162/jocn.2008.20040). — **B/C**.
+4. **Neuromitos são muito difundidos** entre professores (inclusive América Latina e Portugal), e **mais interesse em neurociência prevê mais mitos** (Dekker et al., 2012, doi:10.3389/fpsyg.2012.00429; Howard-Jones, 2014, doi:10.1038/nrn3817); estilos de aprendizagem sem evidência (Pashler et al., 2008, doi:10.1111/j.1539-6053.2009.01038.x); não há "pessoas de hemisfério esquerdo/direito" (Nielsen et al., 2013, doi:10.1371/journal.pone.0071275); Brain Gym sem base (Hyatt, 2007, doi:10.1177/07419325070280020201). — **A/B**.
+5. **Sono consolida a alfabetização — contribuição brasileira**: grupo de Sidarta Ribeiro (UFRN), 102 crianças de 5–7 anos, treino multissensorial de letras + cochilo → após 4 meses, quem dormiu manteve desempenho próximo de zero erro em letras espelhadas (fonte: reportagem, não checável; artigo original a localizar); revisão "Sleep and school education" (Ribeiro & Stickgold, 2014, doi:10.1016/j.tine.2014.02.004); cochilos pós-aula (Cabral et al., 2018, *npj Sci. Learn.*, doi:10.1038/s41539-018-0031-z). — **B**.
+6. **Jogos ajudam quando a mecânica é a própria tarefa**; brain training comercial não transfere (FTC multou a Lumosity em 2016). — **A/B**.
+
+**(b) Regras de design/produto**
+- Posicionamento: **"baseado na ciência da leitura e da aprendizagem"**; nunca "ativa o hemisfério X", "treina o cérebro", "ondas cerebrais", "comprovado pela neurociência" sem estudo próprio (a evidência é do **método**, não do app). Ser o produto que **desmente** mitos. Citar a evidência internacional, **não alinhamento a gestão de governo** (RENABE/PNA são politicamente contestados).
+- **Pilar Atenção**: 1 meta por tela; voz sinaliza o foco + destaque sincronizado; microblocos; inatividade → pausa ativa, não mais estímulo; sem anúncios/pop-ups/recompensas que interrompam; painel com "tempo em tarefa", não "tempo de tela".
+- **Pilar Engajamento ativo**: toda tela exige **resposta gerada**; **nenhum vídeo passivo > 60 s**; recuperação antes da reexposição; **ponto vem de decodificar**, não de tocar rápido ou sorte; tarefas de predição ("e se trocarmos /p/ por /b/?"); leitura compartilhada com roteiro para a família.
+- **Pilar Retorno de erro**: feedback **< 1 s** e específico ("Você leu /f/, a letra é V, /v/. Põe a mão na garganta: vibra!"); **sem perda de vidas ou moedas por errar**, sem som humilhante; diagnóstico de padrão de erro alimentando o próximo item; ASR tolerante — **falso negativo ensina o erro**; relatório ao professor com o **tipo** de erro.
+- **Pilar Consolidação**: repetição espaçada algorítmica; abrir a sessão com revisão; meta de **automatização** (latência, PCPM); mensagem de sono às famílias (sessão no fim da tarde/noite, sem tela imediatamente antes de dormir) **sem prometer** "aprende dormindo"; intercalação controlada; pista multissensorial para grafemas parecidos (todas as crianças recebem todas as modalidades — não é "estilos").
+- **7 princípios públicos "FONEMA Baseado em Evidência"**: fonte primária para toda afirmação (página "A ciência do FONEMA"); hierarquia de evidência; **checklist de zero neuromitos** em todo texto/vídeo/anúncio; medição própria (pré/pós embutido + **ECR pré-registrado na OSF** com parceiro acadêmico; meta "promissor/moderado" estilo Evidence for ESSA); transparência de limites; conselho científico externo com declaração de conflito; privacidade. **Não criar selo com aparência de certificação oficial**.
+- **16 frases proibidas** (estilos de aprendizagem, cérebro direito/esquerdo, 10% do cérebro, Brain Gym, treina o cérebro/QI, janela crítica fechada, ambientes enriquecidos = mais sinapses, açúcar, água/ômega-3, inteligências múltiplas, aprende dormindo, efeito Mozart, imagens de cérebro/jargão "dopamina"/"neuroplasticidade turbo" como venda, "comprovado pela neurociência", "dopamina das recompensas mantém seu filho viciado", "cura/trata dislexia") e frases permitidas-modelo.
+- Parceiros acadêmicos possíveis: Rede CpE/Cátedra UNESCO (Lent, Weissheimer), Instituto do Cérebro–UFRN (Ribeiro), IDOR, InsCer–PUCRS (Buchweitz), pesquisadores como Renan Sargiani, SESI.
+
+**(c) Números operacionais**
+- Sessões **8–15 min** por faixa etária, **microblocos de 2–4 min**; vídeo passivo **≤ 60 s**; feedback **< 1 s**.
+- EEF: fônica +5 meses (1:1 ≈ +5; pequenos grupos ≈ +4). Dekker et al.: professores acreditam em ~metade de 15 mitos. Rede CpE: 100–180 pesquisadores, parceiros em 11 países.
+
+**(d) Riscos, limites, pendências**
+- E2: 44 de 62 verificadas, 18 não checáveis (EEF, RENABE — HTTP 429 —, reportagem do estudo de Natal, dissertação de Cabral 2014, sites institucionais).
+- **Localizar o artigo original** (*Current Biology*) do grupo de Ribeiro sobre sono + treino multissensorial de letras e seu DOI.
+- **Confirmar o que é a "ABNE"** citada no briefing antes de qualquer contato/citação.
+- Reconferir DOIs das referências "C"; abrir o RENABE e extrair os capítulos de neurociência da leitura; buscar estudos brasileiros de prevalência de neuromitos entre professores.
+
+---
