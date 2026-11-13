@@ -3,7 +3,7 @@
 **Data:** 13/11/2026 · **Status:** aprovada pelo dono do projeto · **Origem:** conversa de planejamento
 
 ## 1. Construção só depois da coleta completa
-A construção da plataforma começa **depois** que a coleta bibliográfica (57 países, 8 eixos) e a validação das referências terminarem 100%. O documento de síntese e o backlog serão feitos com **todos** os dados.
+A construção da plataforma começa **depois** que a coleta bibliográfica (56 países, 8 eixos) e a validação das referências terminarem 100%. O documento de síntese e o backlog serão feitos com **todos** os dados.
 
 ## 2. Jornada "quase infinita" — 2 anos de aprendizado
 - **Duração-alvo:** cerca de 2 anos de conteúdo, do zero ao leitor fluente que compreende textos (alinhado à BNCC 1º–2º ano e ao indicador Criança Alfabetizada).
