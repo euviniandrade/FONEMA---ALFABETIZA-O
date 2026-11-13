@@ -93,7 +93,8 @@ async function missao(page, prefixo, { mic, errarFigura, errarLetra }) {
   await page.click('#bTerminar');
   await pausa(900);
   await foto(page, prefixo + '12-celebracao-selo');
-  ok(/Próximo objetivo: faltam 2 desafios/.test(await texto(page)) && /Caçador de Sílabas/.test(await texto(page)), 'álbum mostra o próximo objetivo e o caminho para Caçador de Sílabas (D019)');
+  const tCel = await texto(page); if (!/Próximo objetivo/.test(tCel)) console.log(tCel.slice(-500));
+  ok(/Próximo objetivo: faltam 2 desafios/.test(tCel) && /Caçador de Sílabas/.test(await texto(page)), 'álbum mostra o próximo objetivo e o caminho para Caçador de Sílabas (D019)');
   await page.click('#bMostra');
 }
 
