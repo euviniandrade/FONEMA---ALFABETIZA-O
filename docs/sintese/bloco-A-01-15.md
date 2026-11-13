@@ -545,3 +545,90 @@
 - Reconferir DOIs das referências "C"; abrir o RENABE e extrair os capítulos de neurociência da leitura; buscar estudos brasileiros de prevalência de neuromitos entre professores.
 
 ---
+
+## Consensos e conflitos entre relatórios
+
+### C1. Consensos fortes (vários relatórios, evidência A/B convergente)
+1. **Fônica sistemática e explícita como núcleo, nunca sozinha** (01, 02, 05, 06, 10, 11, 15): grafema-fonema explícito + consciência fonêmica **com letras** + leitura com sentido, vocabulário e compreensão (fios superiores da Corda; Reading First mostrou zero em compreensão).
+2. **Unidade de ensino = fonema, não sílaba nem palavra inteira** (06, 07, 10): foco grafema-fonema recruta a rede esquerda e generaliza; em PB, mapeamento fonêmico > silábico (Sargiani et al., 2018). A sílaba organiza a **progressão de complexidade** (CV → V → CVC → CCV; rel. 02), não a unidade de mapeamento.
+3. **Pseudopalavras para treinar e medir decodificação real** (01, 02, 06, 11; Decisão 003).
+4. **Boquinha + som + letra congruentes e sincronizados**, um vídeo **por fonema**, pessoa real + vista lateral + ícones de vozeamento/nasalidade; o vídeo termina na letra (01, 02, 03, 06, 10).
+5. **Fonemas isolados gravados por humano** (fonoaudióloga/locutora); TTS neural para o resto, pré-gerado e versionado (02, 03, 04).
+6. **Prática distribuída + recuperação + feedback corretivo imediato** (07, 13, 15); revisão no dia seguinte; superaprender numa sessão não substitui revisões.
+7. **Telas limpas, um foco por vez, animação só quando ensina, sem música em tarefas fonológicas, celebração depois da resposta** (04, 09, 12, 15).
+8. **Erro sem punição**: sem buzina, X vermelho, vidas, perda de moedas, personagem triste; escada de ajuda prompt → modelo → leitura conjunta → fechar com êxito (04, 08, 13, 15; Decisão 002).
+9. **ASR nunca é juiz**: tarefas fechadas e texto-dependentes, limiares tolerantes, aceitar variação dialetal e processos fonológicos da idade, **baixa confiança = "não ouvi bem"**, alternativa por toque sempre (02, 03, 05, 10, 13, 15).
+10. **Sem streaks punitivos, notificações à criança, autoplay, rankings, anúncios, SDKs de terceiros, loot boxes** (04, 05, 08, 09, 12; ECA Digital).
+11. **Adulto no circuito**: app sozinho ≈ zero (GraphoGame g = −0,02 vs 0,48 com adulto); modo "ler junto", leitura dialógica, missões para a família que funcionem para pais com baixa escolaridade (01, 04, 09, 14; Decisão 004).
+12. **Monitorar, nunca diagnosticar**: sinais por **persistência**, comparados à coorte e ao tempo de exposição, só para o adulto, com ação concreta e "isto não é um diagnóstico" (02, 05, 06, 11, 14).
+13. **Elogio ao processo, específico e sincero**; comparar a criança com ela mesma (08, 13).
+14. **Zero neuromitos e nenhuma alegação terapêutica** (estilos de aprendizagem, fontes para dislexia, treino cerebral, "trata dislexia/TDAH") (05, 06, 09, 11, 12, 15; Decisão 002).
+15. **Privacidade por arquitetura**: voz processada no aparelho, sem armazenar áudio, sem voiceprint, conta do adulto, criança como perfil (03, 05; Decisões 002 e 004).
+16. **Offline e aparelhos modestos** como requisito de acesso no Brasil (02, 04, 14).
+
+### C2. Conflitos e qual recomendação prevalece
+
+| # | Tema | Posições | Recomendação que prevalece e por quê |
+|---|---|---|---|
+| 1 | **Duração da sessão** | 01/04/06/11: 10–15 min; 07: 10–15 (5–6 a) e 15–20 (7–8 a); 08: 10–15 (4–5) e 15–20 (6–7); 09: 5–10 / 10–15 / 15–20 / **20–25 (7–8 a)**; 14: 8–12 / 10–15 / 15–20; 15: 8–15 com microblocos de 2–4; 03 usa 20 min/dia só como premissa de custo | **Padrão 10–15 min (4–6 anos) e 15–20 min (7–8 anos)**, configurável pelos pais, com microblocos e fim natural. 20–25 min (09) fica como teto, não padrão: é a única fonte acima de 20, é heurística declarada, e SBP/OMS/AAP pedem cautela. Calibrar por telemetria (erro, latência, abandono). |
+| 2 | **Bloco no TDAH** | 12: blocos de 3–5 min; 07: 5–7 min; 05: micro-sessões de 5–10 min | Começar em **5 min**, faixa ajustável **3–7 min**, com pausa ativa — todos são parâmetros iniciais não medidos; a regra comum (curto, feedback imediato, pausa) não muda. |
+| 3 | **Pausa ativa** | 09: 20–60 s; 12 (TDAH): 20–40 s; 14: 60–90 s | **20–60 s** como padrão e até 90 s para 4–5 anos; preferir pausas que também treinam fonologia (14). Diferença pequena e heurística. |
+| 4 | **Taxa de acerto-alvo** | 07: 80–90% (< 75% bloqueia novos; > 95% acelera); 08: 80–85% (regra dos 85%); 12/13: ~80%; Decisão 001: ~85% no modo infinito | **Alvo 85%, faixa 80–90%**, com as regras de bloqueio do rel. 07. A Decisão 001 já fixou 85%, e a faixa acomoda os demais. |
+| 5 | **Ritmo de letras novas** | 01: 4–5 sons/semana (programas ingleses); 07: 2–4 grafemas/semana (1–2 por sessão), taxa de aquisição ajustável; 06: ~8 semanas para o bloco básico | **Começar com 2–4/semana e subir até 4–5/semana** pela regra de taxa de aquisição do rel. 07 (≥ 85% retidos no dia seguinte → +1). Ambos rejeitam "uma letra por semana"; o rel. 07 traz o mecanismo adaptativo e considera a memória de trabalho infantil. |
+| 6 | **Ordem de ensino** | 01: vogais + contínuas → oclusivas → dígrafos (CH, LH, NH, RR, SS, QU, GU) → encontros → grafias concorrentes; 02: vogais → M L F V S N → P T B D → J Z X CH NH LH → contextuais → nasais → CVC/ditongos → CCV → arbitrárias; 04/14: vogais e contínuas primeiro | **Prevalece a sequência do rel. 02** (específica do PB, apoiada em Lemle/Morais e na BNCC EF02LP03–05), com as restrições do 06/07: pares espelhados (b/d, p/q) e surdo/sonoro separados no tempo e depois contrastados por intercalação. O 01 dá o **formato** (ritmo, ciclo de lição), não a ordem do PB. A ordem final é síntese de projeto e precisa de validação com especialistas (Decisão 004). |
+| 7 | **Som × nome da letra** | 01/06/10: sons, não nomes, nas fases iniciais; 07 (Piasta & Wagner): combinar nome, som e escrita traz mais benefício; 02: BNCC exige nomear letras (EF01LP10) e o princípio acrofônico (EF02LP06) | **Som como foco da apresentação e da decodificação**; nome disponível sempre num botão separado ("nome da letra" × "som da letra", rel. 02) e ensinado explicitamente, sem misturar os dois na fusão. Atende a evidência neural (06) e a BNCC. |
+| 8 | **Câmera / "corrigir a boquinha" pela imagem** | 01: espelho via câmera frontal; 03: camada 3 com MediaPipe, opt-in do responsável, para fonemas visíveis; 05: **câmera fora do MVP**; 10: só modo espelho local, **sem nota baseada em câmera no MVP** | **Prevalecem 05 e 10**: no MVP, no máximo espelho local sem gravação e sem avaliação; o modelo (vídeo + Sofia) entrega a maior parte do valor. Razões: biometria infantil é dado sensível (LGPD/ECA Digital), não há evidência de que classificar a boca da criança melhore a aprendizagem e a câmera não vê a língua. A camada 3 do rel. 03 fica para depois de PoC + parecer jurídico. |
+| 9 | **Papel do ASR no domínio** | 07: domínio usa acerto + latência + **confiança do ASR** e formato produtivo (falar) é mais seguro para o efeito de testagem; 01/02: ASR por fonema com limiares por idade; 05: progresso **nunca depende só do ASR**, avaliação desligada em TDL/apraxia; 10: percepção antes de produção, não fazer fonoaudiologia | **ASR é um sinal, não o portão.** Usar fala como formato preferido de recuperação (07), mas todo critério de domínio precisa de caminho equivalente por toque (05); avaliar **leitura** (leu o alvo?) e não articulação; feedback articulatório é dica, nunca nota. Perfis TDL/apraxia/Down com avaliação desligada ou em modo "incentivar". |
+| 10 | **Moedas, loja e economia** | 04: lista vermelha inclui "moedas compráveis, gemas, lojas para a criança"; 08: camada "tangível/econômica (moedas, lojas, baús, rankings) — não usar"; 15: "sem perda de moedas por errar" (pressupõe moedas); **Decisão 002**: economia de moedinhas aprovada, ganhas só aprendendo, sem compra com dinheiro real, sem aleatoriedade, loja com etiquetas decodificáveis | **Prevalece a Decisão 002** (aprovada pelo dono do projeto), **com as salvaguardas do rel. 08 obrigatórias**: moedas reconhecem domínio e esforço (marcos), não cliques nem repetição fácil; nunca anunciar "leia 10 e ganhe X"; recompensa principal continua sendo a leitura "fazer algo"; elogio ao processo; nenhuma perda por errar ou faltar; preço e aparência visíveis antes da compra. Recomenda-se medir motivação intrínseca no piloto (retorno voluntário, encerramento tranquilo) para detectar superjustificação. |
+| 11 | **Micro-recompensa no TDAH** | 12: "moeda/estrela a cada 30–60 s", recompensa maior a cada 3–5 min, "faltam 3 palavras para o baú"; 08: evitar contingências anunciadas e baús; Decisão 002: moedas por marcos, nada de baú aleatório | Interpretar o rel. 12 como **feedback informativo imediato (estrela/som), não moeda**; metas curtas visíveis sim, mas com prêmio **determinístico** e sem o termo "baú" (associado a loot box). Mantém o achado do TDAH (reforço imediato e frequente) sem violar a Decisão 002 nem o ECA Digital. |
+| 12 | **Surpresas e novidade** | 04: surpresas gratuitas não contingentes (figurinha bônus), aleatoriedade sob revisão jurídica; 08: surpresa só no conteúdo; 12: **desligar surpresas no modo TEA** (botão de novidade opcional); Decisão 002: surpresa no conteúdo, nunca no item | **Surpresa só no conteúdo** (história, palavra que surge, descoberta), nunca em itens/prêmios; no modo TEA, novidade apenas sob demanda. Com TEA + TDAH, **previsibilidade prevalece** (12). |
+| 13 | **Legendas das falas da Sofia** | 05: legendas em 100% do áudio (surdez/acessibilidade, LBI); 09: não legendar as falas da Sofia para pré-leitores (redundância) | **Legendas disponíveis para 100% das falas** e ligadas por padrão nos perfis de deficiência auditiva, nas telas do adulto e onde a lei exigir; **desligadas por padrão na tela da criança pré-leitora típica**. Acessibilidade é requisito legal; a redundância é custo cognitivo para quem não precisa. |
+| 14 | **Idade de início** | 01: efeito maior se a fônica começa cedo (d = 0,55 até o 1º ano vs 0,27); 11: intervir antes do fracasso; 14: começar aos 5 não dá vantagem duradoura sobre 7 em contextos ricos, mas esperar é ruim para crianças em risco | **4–5 anos: pré-alfabetização lúdica sem pressão por decodificar**, mas já com letras e sons (consciência fonêmica com letras, rel. 10); **6–7 anos: fônica sistemática**; crianças com sinais de risco ou histórico familiar recebem reforço precoce. O "cedo" do rel. 01 é educação infantil/1º ano (5–6 anos), compatível com a trilha Broto do rel. 14. |
+| 15 | **Horário da sessão** | 07: sessão no fim da tarde/noite antes do sono; 14: após ~19h30 só "história para dormir"; 15: fim da tarde/noite, sem tela imediatamente antes de dormir | **Sessão principal no fim da tarde**; à noite só modo áudio/história compartilhada; revisão na manhã seguinte. Integra os três sem contrariar higiene do sono. |
+| 16 | **Tipografia inicial** | 04: começar pela letra bastão (caixa alta), depois imprensa minúscula, cursiva ~6–7 anos; 03/05: Andika ("a" e "g" de um andar) como padrão; 02: BNCC EF01LP11 (maiúsculas/minúsculas, imprensa/cursiva) | Fonte padrão **Andika** com caixa alta na entrada e minúscula introduzida cedo ("modo descobrir"), cursiva como mundo próprio; **pendente de validação pedagógica** (o próprio rel. 04 marca "a validar"). Espaçamento ajustável (11) vale para todos. |
+| 17 | **"Vício positivo" e dopamina** | Decisão 001 usa "vício positivo (dopamina pelo aprendizado)"; 04/08: reformular como "vontade de voltar"/"apetite de aprender"; 15: frase "dopamina das recompensas mantém seu filho viciado" é proibida | Termo aceitável **só internamente** como meta de design; **na comunicação externa, vale o rel. 15 e a Decisão 002** ("sem prometer nada", zero neuromitos). Métrica: retorno voluntário + encerramento tranquilo + progresso real, nunca tempo de tela. |
+| 18 | **Elogio "cérebro"** | 15: Sofia pode dizer "Errar faz o cérebro aprender"; 13: "seu cérebro está ficando mais forte" só com moderação (mindset tem evidência fraca) | Usar raramente e **sempre junto de estratégia concreta** (13); preferir frases de processo ("você foi devagar e acertou"). |
+
+---
+
+## Pendências de verificação (consolidado 01–15)
+
+### P1. Leis, normas e documentos oficiais (conferir na fonte primária, em outra rede)
+- **Nenhum texto de lei foi conferido no Planalto** (TLS não completa): LGPD (L13709), ECA Digital (L15211) + Decreto 12.880/2026, ECA (L8069), LBI (L13146, arts. 28 e 63; alteração pela Lei 15.249/2025), Lei 12.764/2012, Lei 14.254/2021, Lei 10.436/2002, Decretos 9.765/2019 (PNA), 11.556/2023 e 12.191/2024 (CNCA). Numeração de artigos do ECA Digital diverge entre fontes secundárias.
+- **Lei 15.247/2025** (CNCA em lei) — confirmar existência e teor.
+- **BNCC**: conferir a redação literal de todos os códigos (EI03EF01–09, EF01LP01–13, EF12LP01/03/19, EF02LP01–08) no documento oficial; códigos de Educação Financeira e Computação citados nas Decisões 002/003.
+- Série histórica oficial do **ICA** (painel MEC/Inep) e documento da Pesquisa Alfabetiza Brasil (743 pontos).
+- Orientações **definitivas da ANPD** sobre aferição/verificação de idade (previstas para ago/2026); desfecho da **ação no STF** contra o ECA Digital; alcance da **NBR 17225:2025** e do art. 63 da LBI sobre apps; WCAG 2.2.1/2.2.2 (limiares); Resolução CONANDA 163/2014; SBP 2024; OMS 2019 (ISBN).
+- Validade atual da política de áudio da **FTC (COPPA, 2017)** após a emenda de 2025 (só se houver usuários nos EUA).
+
+### P2. Questões jurídicas abertas (⚖️ parecer de advogado)
+- Voz usada só para transcrição é dado biométrico sensível? Base legal (consentimento × contrato).
+- Base legal da **sinalização de risco** (dado de saúde inferido).
+- Transferência internacional (ASR/TTS em nuvem) e contrato de operador (região, retenção, sem treino).
+- Quais obrigações de verificação de idade valem para app infantil; uso de imagem/voz de criança em marketing (ECA art. 17); compatibilidade da **economia de moedinhas** e de qualquer elemento aleatório com o ECA Digital (Decisões 001/002 já pedem confirmação).
+
+### P3. Referências não encontradas ou corrigidas (E2)
+- **Não encontradas** (livros/capítulos): Leitner (1972) — base do agendador v0 (07); Bjork & Bjork (2011) (07); Dias & Seabra (2013, PIAFEx) (09); Capovilla & Capovilla (2004) (11); Capellini, Smythe & Silva (2012) (11). Também McWeeny et al. (2022, RAN) (05).
+- **Candidatos a conferir manualmente**: Johnston & Watson (2004), doi:10.1023/b:read.0000032666.66359.62 (Clackmannanshire, 01); Leonard et al. (2021), doi:10.1186/s11689-021-09368-z (no lugar de Haebig et al., 04); Boquinhas na RIAEE, curva de aquisição na CoDAS, encontros consonantais na Rev. CEFAC e GraphoGame no SBIE (02).
+- **Corrigidas** (usar a versão corrigida): Park & Fine 2024 (06 #23); Mayer 3ª ed. = 2020 (09); Goswami 2011 → doi:10.1016/j.tics.2010.10.001 (11, 14); Shaywitz 2004 → doi:10.1016/j.biopsych.2003.12.019 (11); GraphoGame Brasil = Dos Santos Konkewicz et al., preprint 2026 (11); Dehaene & Cohen 2011 → doi:10.1016/j.tics.2011.04.003 (11); Kohls et al. 2012 e Bul et al. 2016 (títulos, 12).
+- **A localizar**: artigo original do grupo de Sidarta Ribeiro (sono + treino multissensorial de letras, *Current Biology*) (15); Godwin et al. (2022, *Cognitive Science*) (09); desfecho primário do EndeavorRx nos sintomas (12); percentuais de Fortes et al. (2016) (11); detalhes do Reading Framework 2023 (01); apelidos LiPS no manual oficial (01).
+- **A confirmar**: entidade "ABNE" (15); alvos não verificados do rel. 06 (Reading in the Brain; "Illiterate to literate" 2015; Rueckl; Blomert 2011; Jobard 2003; estudos brasileiros de ERP/espelhamento).
+- 245 referências dos rels. 01–15 ficaram "não checáveis" (sites fora da rede): concentradas em 01 (31), 02 (49), 04 (77), 05 (30) e 15 (18). Preços e notas de lojas (04) precisam ser conferidos antes de material comercial.
+
+### P4. Validações técnicas e de produto (PoC e piloto)
+- **PoC de pronúncia** com 30–50 crianças de 5–7 anos (Azure PA pt-BR × wav2vec2-espeak + GOP/CTC × Vosk com gramática), anotação de fonoaudióloga como referência (03).
+- PoC de câmera (só se a camada 3 voltar à pauta), PoC da Sofia em Rive com visemas (03).
+- **Licenças "a conferir"**: Rhubarb, Spine, Cocos, Fish Speech, vozes Piper, GCompris, ricky0123/vad, MLS, Moonshine (03).
+- **Corpus próprio de fala infantil pt-BR** (20–50 h, TCLE, anonimização) (03).
+- Base de **frequência de palavras do PB infantil** e normas de **idade de aquisição por fonema** (Lamprecht et al., 2004; ABFW/Wertzner) (02).
+- **Busca no INPI** para "Sofia" e o nome do parceiro (classes 9, 41, 28) (04).
+- Playtest de personagem/parceiro com 20–30 crianças (04).
+
+### P5. Parâmetros que são hipóteses e precisam de calibração com dados brasileiros
+- Limiares de **latência** de automatização e todo o **agendador v0** (intervalos, fatores, critérios de nível) (07).
+- Tabelas de **duração por idade**, pausas e limites diários (06, 07, 08, 09, 12, 14).
+- **Limiares de sinais de risco** (RAN, taxa de aprendizagem, velocidade, efeito de extensão) — validação psicométrica com parceria universitária (05, 11).
+- Parâmetros dos modos **TEA/TDAH/dislexia** (12, 07, 11) — A/B com terapeutas e famílias.
+- Taxa de acerto-alvo 80–90% e regras de bloqueio (07, 08, 13).
+- **Tabela articulatória, critérios de encaminhamento fonoaudiológico e limiares de ASR por idade** — validar com fonoaudiólogo(a) e linguista (02, 10); consultoria com educadores surdos (05).
+- Ordem dos sons, decisão bastão/dupla caixa e Escala FONEMA 0–10 — validar com especialistas e no piloto (02, 04; Decisão 004).
