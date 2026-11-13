@@ -600,3 +600,495 @@ Lyrics (Brazilian Portuguese):
 ```
 
 ---
+
+### 09 · Junta, Junta
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R2a-F04 · Juntar sílabas: primeiras palavras**; reprise no momento uau da primeira palavra lida (MALA, R2a-F04-C9) |
+| Objetivo | **Síntese contínua**: deslizar a consoante na vogal sem parar (mmmaaa → MA); juntar sílabas em palavra (MA + LA = MALA; LU + A = LUA; FA + LA = FALA) |
+| Estilo · BPM | Pop infantil (violão, baixo, palmas, sino leve) · **104 BPM** · Dó maior |
+| Duração | ~75 s |
+| Quem canta | Sofia e Tales; Coro diz a palavra formada |
+
+**Letra**
+
+> **Verso 1 — S:**
+> O M dá a mão pro A, sem soltar:
+> mmm… aaa… *(desliza)* MA!
+> O L dá a mão pro A, devagar:
+> lll… aaa… *(desliza)* LA!
+> **T:** Junta MA com LA, o que é que dá?
+> **Coro:** MALA!
+>
+> **Refrão — S+T + Coro:**
+> Junta, junta, junta o som,
+> desliza um no outro, que é tão bom!
+> Sem parar no meio, sem pular,
+> junta, junta, e vai falar!
+>
+> **Verso 2 — T:**
+> lll… uuu… LU! LU com A…
+> **Coro:** LUA!
+> **S:** fff… aaa… FA! FA com LA…
+> **Coro:** FALA!
+>
+> **Ponte — B (falado):** Mmm… *(para)* … a… Ma? **T:** Opa! Sem parar no meio, Bolota: mmmaaa! **B:** MA! Aprendi!
+>
+> **Refrão** (2×)
+
+**Dancinha (4 movimentos)**
+1. **Consoante:** mão direita com o gesto do som (M: dedos nos lábios; L: indicador para cima; F: leque na boca).
+2. **Vogal:** mão esquerda com o gesto da vogal (A: braço aberto; U: tubinho).
+3. **"desliza":** a mão da consoante **escorrega** até a mão da vogal e as duas se juntam, sem parar.
+4. **Palavra:** palmas juntas e braços para cima no "MALA!", "LUA!", "FALA!".
+
+**Assiste e Faz**
+- **Alfabeto móvel (ARRASTAR, C3):** arrastar M até A; o som toca contínuo enquanto a letra desliza; depois MA + LA. Primeiras palavras: MALA, LUA, FALA, MEL (com pseudopalavra "MOLA"? não: MOLA é real; pseudo: "FALU").
+- **Ler a palavra:** a criança lê MALA (MAIÚSCULAS = lida). Registro: síntese CV e palavras decodificadas.
+
+**Notas:** a síntese **contínua** só funciona com consoantes que se esticam (por isso R2a começa com M, L, F). No canto, a consoante entra **na mesma nota** da vogal, ligada (legato). Nunca "mê-a", "lê-a".
+
+**Prompt (ElevenLabs Music)**
+```
+Happy Brazilian children's pop song, 104 BPM, C major, 4/4, about 75 seconds. Acoustic guitar, bass, light claps, small bell. One note per syllable. Key technique: blend each consonant smoothly into the vowel on the same note with no gap and no extra vowel, like "mmmaaa" turning into "MA" and "lllaaa" into "LA". Voices: warm girl-like animated-character voice (Sofia), energetic boy-like voice (Tales), adult singers; small choir shouts the formed words. Clear Brazilian Portuguese. Not in the style of any specific artist.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Sofia] O M dá a mão pro A, sem soltar: / mmm... aaa... MA! / O L dá a mão pro A, devagar: / lll... aaa... LA! / [Tales] Junta MA com LA, o que é que dá? / [Choir] MALA!
+[Chorus - all] Junta, junta, junta o som, / desliza um no outro, que é tão bom! / Sem parar no meio, sem pular, / junta, junta, e vai falar!
+[Verse 2 - Tales] lll... uuu... LU! LU com A... [Choir] LUA! / [Sofia] fff... aaa... FA! FA com LA... [Choir] FALA!
+[Chorus - all, twice] Junta, junta, junta o som, / desliza um no outro, que é tão bom! / Sem parar no meio, sem pular, / junta, junta, e vai falar!
+```
+
+---
+
+### 10 · Mão na Garganta
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R2b · Trilha do V-S-N**: versos do V (F01), do S (F02), do N (F03); completa em R2b-F04 "F ou V? A garganta conta". Volta como **música de contraste** se F × V virar "sanguessuga" |
+| Objetivo | Sentir o **vozeamento**: F não vibra × V vibra; /s/ (não vibra) e /n/ (vibra, som pelo nariz) |
+| Estilo · BPM | Folk-pop com flauta e violão · **100 BPM** · Lá maior |
+| Duração | ~75 s |
+| Quem canta | Tales (F/V), Sofia (S/N); Coro "Tá!" |
+
+**Letra**
+
+> **Verso 1 — T:**
+> Dentinho no lábio, sopra: *(pausa)* fffff!
+> Mão na garganta: tá paradinha? *(Coro)* Tá!
+> Agora liga o motorzinho: *(pausa)* vvvvv!
+> Mão na garganta: tá vibrando? *(Coro)* Tá!
+>
+> **Refrão — S+T + Coro:**
+> Mão na garganta, vamos sentir:
+> vibra ou não vibra? Vamos descobrir!
+> F não vibra, V vibra, sim!
+> Mão na garganta, faz assim!
+>
+> **Verso 2 — S:**
+> Dentinhos quase juntos, a língua escondida: *(pausa)* sssss!
+> É o S do sapo e da Sofia, e não vibra, não!
+> **T:** Língua lá no céu da boca, o som vai pro nariz: *(pausa)* nnnnn!
+> É o N da Nina, e vibra, sim!
+>
+> **Final — S+T:** F de faca? Não! F de **figo**! V de **vaca**! S de **sapo**! N de **Nina**! Mão na garganta… *(silêncio)* vibrou? Vibrou!
+
+**Dancinha (6 movimentos)**
+1. **/f/:** leque na frente da boca.
+2. **/v/:** leque na boca + **outra mão na garganta** (sente vibrar).
+3. **/s/:** mão espalmada desliza **reta** para a frente, rente ao queixo (ar escapando fininho).
+4. **/n/:** indicador na **ponta do nariz**.
+5. **"vibra":** mãos tremem de leve; **"não vibra":** mãos paradas.
+6. **Refrão:** passo para o lado a cada verso, mão na garganta no "faz assim!".
+
+**Assiste e Faz**
+- **F ou V? (TOCAR, R2b-F04):** ouvir FACA? **não** — itens: FIGO × *VIGO* (pseudo), FOCA × VACA… usar a lista da fase; a criança toca F ou V, **com a mão na garganta** se quiser.
+- **Fazer o gesto:** ouvir /s/ ou /n/ e fazer o gesto (mão que desliza ou dedo no nariz).
+- Registro: discriminação F × V (critério 4/5, intercalada só após ≥ 2 recuperações isoladas de cada, N7).
+
+**Notas:** a "pegadinha" do final ("F de faca? Não!") existe porque **faca** é objeto cortante: preferimos **figo** (morador Dona Cida). O /n/ isolado é zumbido nasal com a língua no céu da boca, sem vogal. O gesto do /s/ é **original** (não usar a "cobra que serpenteia", que é ação de programa estrangeiro).
+
+**Prompt (ElevenLabs Music)**
+```
+Warm Brazilian folk-pop children's song, 100 BPM, A major, 4/4, about 75 seconds. Flute, acoustic guitar, soft bass, light percussion. One note per syllable. Before each target sound leave one beat of silence, then sustain the pure consonant for two beats with no vowel: voiceless "fffff", voiced buzzing "vvvvv", voiceless hissing "sssss", nasal hum "nnnnn". Make the contrast between voiceless F and voiced V very clear. Voices: energetic boy-like animated-character voice (Tales) and warm girl-like voice (Sofia), adult singers; small choir answers "Tá!". Clear Brazilian Portuguese. Not in the style of any specific artist.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Tales] Dentinho no lábio, sopra: fffff! / Mão na garganta: tá paradinha? [Choir] Tá! / [Tales] Agora liga o motorzinho: vvvvv! / Mão na garganta: tá vibrando? [Choir] Tá!
+[Chorus - all] Mão na garganta, vamos sentir: / vibra ou não vibra? Vamos descobrir! / F não vibra, V vibra, sim! / Mão na garganta, faz assim!
+[Verse 2 - Sofia] Dentinhos quase juntos, a língua escondida: sssss! / É o S do sapo e da Sofia, e não vibra, não! / [Tales] Língua lá no céu da boca, o som vai pro nariz: nnnnn! / É o N da Nina, e vibra, sim!
+[Chorus - all] Mão na garganta, vamos sentir: / vibra ou não vibra? Vamos descobrir! / F não vibra, V vibra, sim! / Mão na garganta, faz assim!
+[Outro - Sofia and Tales] F de figo! V de vaca! S de sapo! N de Nina! / Mão na garganta... (one beat of silence) vibrou? Vibrou!
+```
+*(Na gravação final, o "F de faca? Não!" sai do prompt da IA para evitar a palavra; ele fica como fala curta do Tales, opcional.)*
+
+---
+
+### 11 · O Ventinho do P
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R3 · Pampa**: verso do P em R3-F01, do T em R3-F02; reprise em R3-F03 "Palavras do vento" |
+| Objetivo | Oclusivas **surdas** /p/ e /t/: fecha (ou toca) e **solta de uma vez**; som curto, **sem vogal de apoio** |
+| Estilo · BPM | Vaneira gaúcha leve (acordeão, violão, baixo, pandeiro discreto) · **118 BPM** · Sol maior |
+| Duração | ~65 s |
+| Quem canta | Sofia (P), Tales (T); Coro nos estourinhos |
+
+**Letra**
+
+> **Verso 1 — S:**
+> Fecha os lábios, segura um pouquinho,
+> e solta de uma vez: *(pausa)* p! p! p!
+> A pipoca na panela pula assim:
+> p! p! p! *(Coro)* p! p! p!
+>
+> **Verso 2 — T:**
+> A pontinha da língua toca atrás do dente,
+> e solta rapidinho: *(pausa)* t! t! t!
+> O tatu bate na porta assim:
+> t! t! t! *(Coro)* t! t! t!
+>
+> **Refrão — S+T + Coro:**
+> P de pato, P de pão,
+> um estourinho na palma da mão!
+> T de tatu, T de tomate,
+> a língua toca no dente e bate!
+>
+> **Ponte — S:** E o vento do Pampa? Ele **não estoura**, ele sopra: fffff! *(revisão do F)* **T:** Então P é estourinho… **S+T:** e F é ventinho!
+>
+> **Refrão** (2×)
+
+**Dancinha (5 movimentos)**
+1. **/p/:** palma **na frente da boca**; no "p!" a mão sente o estourinho e **pula** um pouco para a frente.
+2. **/t/:** indicador **toca de leve** a palma da outra mão e solta ("toc").
+3. **pipoca:** mãos fechadas se abrem de repente (pipoca estourando), uma por "p!".
+4. **"bate na porta":** bater de leve no ar, uma vez por "t!".
+5. **Refrão:** passo de vaneira simples (dois para o lado, dois para o outro), palma na frente da boca no "estourinho".
+
+**Assiste e Faz**
+- **Falar o som + TOCAR:** ouvir /p/ ou /t/ e tocar P ou T; falar ao microfone (música muda).
+- **Completar o verso:** "P de pato, P de… ___" (PÃO).
+- Registro: grafema → som de P e T; palavras-âncora PATO, TATU.
+
+**Notas:** o /p/ do português tem **pouco sopro** (menos que em outras línguas): a palma sente um estourinho pequeno; não exagerar com ar ("p-há"). O "p!" e o "t!" são **sem voz e sem vogal**. B e D **não aparecem** nesta música (vêm depois, com intervalo; N7).
+
+**Prompt (ElevenLabs Music)**
+```
+Light Brazilian southern "vaneira" children's song, 118 BPM, G major, 2/4 feel, about 65 seconds. Accordion, acoustic guitar, bass, discreet tambourine. Bouncy, simple melody, one note per syllable. The sounds "p!" and "t!" must be short, crisp, voiceless clicks with NO vowel after them (not "pê", not "puh", not "tê"); place each one exactly on a beat, after one beat of silence. Voices: warm girl-like animated-character voice (Sofia) and energetic boy-like voice (Tales), adult singers; small choir echoes the clicks. Clear Brazilian Portuguese. Not in the style of any specific artist.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Sofia] Fecha os lábios, segura um pouquinho, / e solta de uma vez: p! p! p! / A pipoca na panela pula assim: / p! p! p! [Choir] p! p! p!
+[Verse 2 - Tales] A pontinha da língua toca atrás do dente, / e solta rapidinho: t! t! t! / O tatu bate na porta assim: / t! t! t! [Choir] t! t! t!
+[Chorus - all] P de pato, P de pão, / um estourinho na palma da mão! / T de tatu, T de tomate, / a língua toca no dente e bate!
+[Bridge - Sofia] E o vento do Pampa? Ele não estoura, ele sopra: fffff! / [Tales] Então P é estourinho... [Sofia and Tales] e F é ventinho!
+[Chorus - all, twice] P de pato, P de pão, / um estourinho na palma da mão! / T de tatu, T de tomate, / a língua toca no dente e bate!
+```
+
+---
+
+### 12 · Vibra ou Não Vibra?
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R3-F06 (P ou B?)**: só a parte 1. **R3-F07 (T ou D?)**: libera a parte 2. Volta na Ventania que Embaralha (R3-F10) |
+| Objetivo | Pares surdo × sonoro: **P × B** e **T × D** (a mesma boca; muda a garganta) |
+| Estilo · BPM | Chamamé leve (acordeão, violão, contrabaixo) · **100 BPM** · Mi menor → Sol maior no refrão |
+| Duração | ~70 s (parte 1 ~40 s) |
+| Quem canta | Sofia e Tales; Bolota erra; Coro "vibra!" / "não vibra!" |
+
+**Letra**
+
+> **Parte 1 (P × B) — S:**
+> A boca do P e a boca do B são iguais,
+> lábios fechados e solta, mas escuta o que muda mais:
+> **POTE** *(mão na garganta)*… *(Coro)* não vibra!
+> **BOTE**… *(Coro)* vibra!
+> **T:** **PICO**… *(Coro)* não vibra! **BICO**… *(Coro)* vibra!
+>
+> **Refrão — S+T + Coro:**
+> Vibra ou não vibra? A garganta conta!
+> Põe a mão, escuta, e a resposta tá pronta!
+> P e T não vibram, B e D vibram, sim,
+> mão na garganta, faz assim!
+>
+> **Parte 2 (T × D, só a partir de R3-F07) — T:**
+> A língua do T e a do D tocam no mesmo lugar:
+> **TIA**… *(Coro)* não vibra! **DIA**… *(Coro)* vibra!
+> **S:** **TELA**… *(Coro)* não vibra! **DELA**… *(Coro)* vibra!
+> **B (falado):** Bico… é com P? **S:** Põe a mão, Bolota! **B:** … Vibrou! É B! Aprendi!
+>
+> **Refrão** (2×)
+
+**Dancinha (5 movimentos)**
+1. **Boca do P/B:** palma na frente da boca (igual para os dois).
+2. **"não vibra":** a outra mão **parada** na garganta, cabeça balança "não".
+3. **"vibra":** a mão na garganta **treme**, ombros tremem juntos.
+4. **Par mínimo:** passo para a esquerda na palavra surda, passo para a direita na sonora (o corpo "separa" os dois).
+5. **Refrão:** giro de meia volta e mão na garganta no "faz assim!".
+
+**Assiste e Faz**
+- **Pares mínimos (TOCAR):** ouvir POTE/BOTE, PICO/BICO (e na parte 2 TIA/DIA, TELA/DELA) e tocar a figura certa; ≥ 1 pseudopalavra por bloco (ex.: PAFO × BAFO? não: BAFO é real; usar "PULE × BULE"? BULE é real e PULE também: ok como par).
+- **Ensinar o Bolota (C8):** o Bolota troca P e B; a criança corrige.
+- Registro: P × B (F06) e T × D (F07); "sanguessugas" vão para a trilha de contraste.
+
+**Notas:** a regra da jornada é **b e d espelhados nunca na mesma semana** antes de R3-F08. Por isso: (1) a parte 2 só abre em F07, depois de D firmado; (2) o karaokê usa **caixa alta** (B e D maiúsculos não são espelho um do outro); (3) nesta música **não** há b e d minúsculos lado a lado.
+
+**Prompt (ElevenLabs Music)**
+```
+Gentle Brazilian "chamamé" children's song, 100 BPM, E minor moving to G major on the chorus, 6/8 lilt, about 70 seconds. Accordion, acoustic guitar, upright-style bass. One note per syllable, slow enough to hear each word. Minimal pairs must be crystal clear: voiceless P and T (no voicing) versus voiced B and D (clearly voiced). Leave a short pause before each target word. Voices: warm girl-like animated-character voice (Sofia), energetic boy-like voice (Tales), adult singers; small choir answers "vibra!" or "não vibra!". Clear Brazilian Portuguese. Not in the style of any specific artist.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Sofia] A boca do P e a boca do B são iguais, / lábios fechados e solta, mas escuta o que muda mais: / POTE... [Choir] não vibra! / BOTE... [Choir] vibra! / [Tales] PICO... [Choir] não vibra! BICO... [Choir] vibra!
+[Chorus - all] Vibra ou não vibra? A garganta conta! / Põe a mão, escuta, e a resposta tá pronta! / P e T não vibram, B e D vibram, sim, / mão na garganta, faz assim!
+[Verse 2 - Tales] A língua do T e a do D tocam no mesmo lugar: / TIA... [Choir] não vibra! DIA... [Choir] vibra! / [Sofia] TELA... [Choir] não vibra! DELA... [Choir] vibra!
+[Chorus - all, twice] Vibra ou não vibra? A garganta conta! / Põe a mão, escuta, e a resposta tá pronta! / P e T não vibram, B e D vibram, sim, / mão na garganta, faz assim!
+```
+
+---
+
+### 13 · Zzz do Zum-Zum
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R4-F02 · Z** (o nome do vilão leve treina o /z/; D019); reprise no fim de R4, quando o Zum-Zum vira amigo |
+| Objetivo | /z/ sonoro × /s/ surdo; **atenção** (N1): olho na boca, ouvido no som |
+| Estilo · BPM | Rasqueado pantaneiro leve (viola, violão, baixo, percussão de cabaça) · **106 BPM** · Ré maior |
+| Duração | ~70 s |
+| Quem canta | Tales e Sofia; o Zum-Zum só **fala** no fim (voz pequena e rápida, "zzz" no começo, nunca assustadora) |
+
+**Letra**
+
+> **Verso 1 — T:**
+> Lá vem o Zum-Zum voando: *(pausa)* zzzzz!
+> Olha ali, olha aqui, olha lá: zzzzz!
+> Dentinhos quase fechados
+> e a garganta ligada: *(pausa)* zzzzz!
+>
+> **Verso 2 — S:**
+> Mas presta atenção, que tem diferença:
+> o S faz sssss, a garganta não balança;
+> o Z faz zzzzz, a garganta vibra e dança!
+>
+> **Refrão — S+T + Coro:**
+> Zum-Zum, zum-zum, presta atenção,
+> olho na boca e ouvido no som!
+> Z de zebra, Z de zero, Z de azul,
+> zzz, zzz, zum-zum-zum!
+>
+> **Ponte (jogo da estátua) — S:** Quando a música parar… estátua! Olho na minha boca! *(silêncio de 2 tempos)* … sssss ou zzzzz? *(Coro)* zzzzz!
+>
+> **Refrão** · **Final — Zum-Zum (falado):** Zzz… vou tentar prestar atenção com você!
+
+**Dancinha (6 movimentos)**
+1. **Voo do Zum-Zum:** mãos atrás dos ombros batendo como **asinhas de besouro** (não de abelha).
+2. **"olha ali, aqui, lá":** apontar em três direções **e voltar o olhar para a frente** (para a Sofia).
+3. **/z/:** dentinhos quase juntos + **mão na garganta tremendo**.
+4. **/s/:** a mão que desliza reta (gesto da música 10), garganta parada.
+5. **Estátua:** todos param, olhar fixo na boca da Sofia (atenção).
+6. **Refrão:** passinho de rasqueado (dois tempos para cada lado) e asinhas no "zum-zum-zum".
+
+**Assiste e Faz**
+- **Turma contra o Zum-Zum (TOCAR, sem música por baixo):** ele embaralha cartas; a criança escuta /s/ ou /z/ e acha a letra. Cada acerto devolve uma letra no lugar.
+- **Completar o verso:** "Z de zebra, Z de… ___" (ZERO).
+- Registro: Z ↔ /z/; contraste S × Z (intercalado depois de ≥ 2 recuperações de cada).
+
+**Notas:** só palavras com a **letra Z** (ZEBRA, ZERO, AZUL, BUZINA). Palavras com **S de som /z/** (CASA, MESA) ficam para R5-F05, para não confundir agora. AZUL termina em L com som de "u" (R7): aqui é só *ouvida*. Zumbido curto e suave; no modo calmo o Zum-Zum aparece parado e é anunciado.
+
+**Prompt (ElevenLabs Music)**
+```
+Light Brazilian Pantanal "rasqueado" children's song, 106 BPM, D major, 2/4 feel, about 70 seconds. Brazilian ten-string viola, acoustic guitar, bass, gourd shaker. Playful and bouncy, never scary. One note per syllable. Before each target sound leave one beat of silence, then hold a clearly voiced buzzing "zzzzz" or a voiceless "sssss" for two beats, with no vowel. Include a two-beat full stop (silence) in the bridge after "estátua!". Voices: energetic boy-like animated-character voice (Tales) and warm girl-like voice (Sofia), adult singers; small choir. Clear Brazilian Portuguese. Not in the style of any specific artist.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Tales] Lá vem o Zum-Zum voando: zzzzz! / Olha ali, olha aqui, olha lá: zzzzz! / Dentinhos quase fechados / e a garganta ligada: zzzzz!
+[Verse 2 - Sofia] Mas presta atenção, que tem diferença: / o S faz sssss, a garganta não balança; / o Z faz zzzzz, a garganta vibra e dança!
+[Chorus - all] Zum-Zum, zum-zum, presta atenção, / olho na boca e ouvido no som! / Z de zebra, Z de zero, Z de azul, / zzz, zzz, zum-zum-zum!
+[Bridge - Sofia] Quando a música parar... estátua! Olho na minha boca! (two beats of silence) ...sssss ou zzzzz? [Choir] zzzzz!
+[Chorus - all] Zum-Zum, zum-zum, presta atenção, / olho na boca e ouvido no som! / Z de zebra, Z de zero, Z de azul, / zzz, zzz, zum-zum-zum!
+```
+*(A fala final do Zum-Zum é gravada à parte, com a voz dele quando for definida.)*
+
+---
+
+### 14 · Duas Letras, Um Som
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R4 · Pantanal**: verso do CH em R4-F03, do NH em F05, do LH em F06; reprise na Cheia (R4-F08) |
+| Objetivo | Dígrafos: **duas letras, um som só** (CH = /ʃ/, NH = /ɲ/, LH = /ʎ/) |
+| Estilo · BPM | Pop com viola e violão, baixo e palmas · **100 BPM** · Fá maior |
+| Duração | ~75 s |
+| Quem canta | Sofia (CH, LH), Tales (NH); Coro no refrão |
+
+**Letra**
+
+> **Verso 1 — S:**
+> O C deu a mão pro H, e o som mudou:
+> biquinho pra frente: *(pausa)* xxxxx!
+> CHUVA no Pantanal, CHAVE da canoa, BICHO no ninho:
+> xxxxx! Duas letras, um som!
+>
+> **Verso 2 — T:**
+> O N deu a mão pro H, e o som foi pro nariz:
+> NINHO, GALINHA, MINHOCA:
+> nha, nhe, nhi, nho, nhu!
+>
+> **Verso 3 — S:**
+> O L deu a mão pro H, e o ar sai pelos ladinhos:
+> OLHO, PALHA, ABELHA:
+> lha, lhe, lhi, lho, lhu!
+>
+> **Refrão — S+T + Coro:**
+> Duas letras, um som só,
+> de mãos dadas, olha só:
+> CHA, NHA, LHA!
+> Duas letras, um som só!
+
+**Dancinha (5 movimentos)**
+1. **"deu a mão":** as duas mãos se **seguram** (as duas letras juntas) — o gesto de todo dígrafo.
+2. **CH:** indicador nos lábios em biquinho, soltando "xxx" (aqui o gesto de "silêncio" é **congruente**: é o próprio som /ʃ/).
+3. **NH:** mão espalmada sobe e encosta na outra (o meio da língua no "céu da boca") + dedo no nariz.
+4. **LH:** mãos ao lado da boca se abrindo para os lados (o ar escapa pelos ladinhos).
+5. **Refrão:** mãos dadas balançando, três passos no "CHA, NHA, LHA!".
+
+**Assiste e Faz**
+- **Achar o dígrafo (TOCAR):** ouvir CHAVE, NINHO, OLHO e tocar o par de letras certo; pista visual retirável (dígrafo marcado; N11).
+- **Ler a palavra:** BICHO, NINHO, OLHO (palavras da fase).
+- Registro: CH, NH, LH ↔ som.
+
+**Notas:** cantar **sílabas** (nha, lha) em vez de /ɲ/ e /ʎ/ isolados, que soam artificiais; o CH pode ser sustentado ("xxxxx", é contínuo). **X com som de CH** (R4-F04) entra como verso extra opcional: "O X também faz xxx: XÍCARA, PEIXE!" (só depois de F04). MINHOCA e ABELHA são bichos reais, sem nada de fantasia.
+
+**Prompt (ElevenLabs Music)**
+```
+Friendly Brazilian pop children's song with ten-string viola, 100 BPM, F major, 4/4, about 75 seconds. Viola, acoustic guitar, bass, claps. One note per syllable. The "xxxxx" sound is the Portuguese "ch" (like English "sh"), held for two beats after one beat of silence. Sing the syllables "nha, nhe, nhi, nho, nhu" and "lha, lhe, lhi, lho, lhu" clearly and slowly, one per beat. Voices: warm girl-like animated-character voice (Sofia) and energetic boy-like voice (Tales), adult singers; small choir on the chorus. Clear Brazilian Portuguese. Not in the style of any specific artist.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Sofia] O C deu a mão pro H, e o som mudou: / biquinho pra frente: xxxxx! / Chuva no Pantanal, chave da canoa, bicho no ninho: / xxxxx! Duas letras, um som!
+[Verse 2 - Tales] O N deu a mão pro H, e o som foi pro nariz: / ninho, galinha, minhoca: / nha, nhe, nhi, nho, nhu!
+[Verse 3 - Sofia] O L deu a mão pro H, e o ar sai pelos ladinhos: / olho, palha, abelha: / lha, lhe, lhi, lho, lhu!
+[Chorus - all, twice] Duas letras, um som só, / de mãos dadas, olha só: / CHA, NHA, LHA! / Duas letras, um som só!
+```
+
+---
+
+### 15 · O U Quietinho
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R5 · Cerrado**: R5-F01 (QU) e R5-F02 (GU), depois da descoberta guiada (a Sofia nomeia a regra) |
+| Objetivo | Em **QUE, QUI, GUE, GUI** o U **não soa**: ele "abre caminho" para o som /k/ ou /g/ antes de E e I |
+| Estilo · BPM | Country-pop com viola caipira e violão · **96 BPM** · Sol maior |
+| Duração | ~70 s |
+| Quem canta | Tales (descobre), Sofia (nomeia a regra); Coro |
+
+**Letra**
+
+> **Verso 1 — T:**
+> O Q chamou o U pra passear,
+> mas o U ficou quietinho, sem cantar!
+> QUE de **queijo**, QUI de **quiabo**,
+> e o U ali, calado do lado!
+>
+> **Verso 2 — S:**
+> O G chamou o U também,
+> pra encontrar o E e o I, que vêm:
+> GUE de **foguete**, GUI de **formiguinha**,
+> e o U quietinho, de mão dadinha!
+>
+> **Refrão — S+T + Coro:**
+> O U quietinho, quietinho,
+> não faz barulho, só abre o caminho!
+> Ele ajuda o Q, ajuda o G:
+> QUE, QUI, GUE, GUI, você lê!
+>
+> **Ponte — T:** E se tirar o U? **S:** Sem o U, o G vira outro som: GENTE, GIRAFA! Por isso o U fica ali, quietinho, ajudando!
+>
+> **Refrão** (2×)
+
+**Dancinha (5 movimentos)**
+1. **Q ou G:** mão em gancho perto do queixo, fecha e solta (o fundo da língua sobe e solta).
+2. **U quietinho:** a outra mão faz o **tubinho do U**, mas **sem som**, e se encolhe junto ao corpo.
+3. **"abre o caminho":** a mão do U se abre como uma porta para o lado.
+4. **E / I:** gesto do é (mãos abertas) e do i (sorriso esticado).
+5. **Refrão:** passinho de viola, dedo nos lábios **fechados** no "quietinho" (sem som nenhum).
+
+**Assiste e Faz**
+- **Descoberta guiada → ler:** QUEIJO, QUIABO, ESQUILO, FOGUETE, FORMIGUINHA; pseudopalavra "QUILE"/"GUEPO".
+- **Completar o verso:** "QUE de… ___" (QUEIJO).
+- Registro: regra QU/GU; erros esperados viram explicação ("por que tem U?").
+
+**Notas:** **evitadas** as palavras em que o U **soa** (aguentar, linguiça, frequente, pinguim, águia), que seriam exceção agora. **Nunca** cantar a série "ca, que, qui, co, cu" (sílaba chula isolada); trabalhe CA, CO com palavras inteiras (CASA, COCO). O gesto "dedo nos lábios" aqui é com a **boca fechada e sem som**, diferente do "xxx" do CH.
+
+**Prompt (ElevenLabs Music)**
+```
+Warm Brazilian country-pop children's song with caipira ten-string viola, 96 BPM, G major, 4/4, about 70 seconds. Viola, acoustic guitar, soft bass, light shaker. One note per syllable, clear and unhurried. In "que, qui, gue, gui" the letter U is silent: sing "ke, ki, ge (hard g), gi (hard g)" with no "u" sound. Voices: energetic boy-like animated-character voice (Tales) and warm girl-like voice (Sofia), adult singers; small choir on the chorus. Clear Brazilian Portuguese. Not in the style of any specific artist.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Tales] O Q chamou o U pra passear, / mas o U ficou quietinho, sem cantar! / QUE de queijo, QUI de quiabo, / e o U ali, calado do lado!
+[Verse 2 - Sofia] O G chamou o U também, / pra encontrar o E e o I, que vêm: / GUE de foguete, GUI de formiguinha, / e o U quietinho, de mão dadinha!
+[Chorus - all] O U quietinho, quietinho, / não faz barulho, só abre o caminho! / Ele ajuda o Q, ajuda o G: / QUE, QUI, GUE, GUI, você lê!
+[Bridge - Tales] E se tirar o U? [Sofia] Sem o U, o G vira outro som: gente, girafa! Por isso o U fica ali, quietinho, ajudando!
+[Chorus - all, twice] O U quietinho, quietinho, / não faz barulho, só abre o caminho! / Ele ajuda o Q, ajuda o G: / QUE, QUI, GUE, GUI, você lê!
+```
+
+---
+
+### 16 · R Forte, R Fraquinho
+
+| Campo | Ficha |
+|---|---|
+| Onde | **R5-F04 · R forte e R fraco**; volta na mistura das regras (R5-F06) |
+| Objetivo | **R fraco** (um toque de língua) entre vogais × **R forte** no começo da palavra e no **RR** |
+| Estilo · BPM | Moda de viola animada (viola, violão, sanfona discreta) · **104 BPM** · Lá maior |
+| Duração | ~70 s |
+| Quem canta | Sofia (R fraco), Tales (R forte); Coro |
+
+**Letra**
+
+> **Verso 1 — S:**
+> R fraquinho mora entre duas vogais,
+> a língua dá um toque e nada mais:
+> ARARA, PERA, GIRAFA,
+> ra, re, ri, um toquinho e passa!
+>
+> **Verso 2 — T:**
+> R forte chega no começo da palavra:
+> RATO, RODA, RIO, RUA!
+> E quando tem dois R, o som fica forte também:
+> CARRO, TERRA, CACHORRO… vem!
+>
+> **Refrão — S+T + Coro:**
+> R forte, R fraquinho,
+> um é grandão, o outro é baixinho!
+> No começo, forte; dois R, forte também;
+> sozinho no meio, fraquinho, e vai bem!
+>
+> **Ponte — B (falado):** CARO… é o carro? **T:** Opa! CARO tem um R só: fraquinho. CARRO tem dois: forte! **B:** Aprendi!
+>
+> **Refrão** (2×)
+
+**Dancinha (5 movimentos)**
+1. **R fraco:** indicador dá **um toquinho rápido** na palma (a ponta da língua toca uma vez).
+2. **R forte:** mão aberta **sai do pescoço para a frente**, como empurrando o som lá do fundo.
+3. **"grandão":** braços bem abertos; **"baixinho":** mãos pertinho, agachadinho.
+4. **RR:** dois dedos levantados (dois R) e o gesto do R forte.
+5. **Refrão:** passo de moda de viola (bate o pé no tempo 1).
+
+**Assiste e Faz**
+- **Ler e separar (TOCAR):** CARO × CARRO, MURO × MURRO? (evitar: MURRO = soco) → usar **CARO × CARRO** e **ERA × ERRA**; palavras RATO, ARARA, TERRA.
+- **Completar o verso:** "R forte chega no começo da… ___" (PALAVRA).
+- Registro: regra R/RR; pares intercalados (N7).
+
+**Notas:** o **R forte** tem muitas pronúncias no Brasil (rasgado, aspirado, vibrante): **todas aceitas** na fala da criança (jogo completo §5.2); a gravação usa uma delas e a atividade é **de leitura**, não de pronúncia. Evitados "burro" e "murro" (podem ofender ou ser violentos) e "coroa" (adorno).
+
+**Prompt (ElevenLabs Music)**
+```
+Lively Brazilian "moda de viola" children's song, 104 BPM, A major, 4/4, about 70 seconds. Ten-string viola, acoustic guitar, soft accordion, light percussion. One note per syllable. Make the contrast clear: the soft Portuguese "r" between vowels is a single quick tongue tap (arara, pera, girafa); the strong "R" at the start of words and in "rr" is a strong guttural sound (rato, roda, carro, terra). Voices: warm girl-like animated-character voice (Sofia) and energetic boy-like voice (Tales), adult singers; small choir on the chorus. Clear Brazilian Portuguese. Not in the style of any specific artist.
+
+Lyrics (Brazilian Portuguese):
+[Verse 1 - Sofia] R fraquinho mora entre duas vogais, / a língua dá um toque e nada mais: / arara, pera, girafa, / ra, re, ri, um toquinho e passa!
+[Verse 2 - Tales] R forte chega no começo da palavra: / rato, roda, rio, rua! / E quando tem dois R, o som fica forte também: / carro, terra, cachorro... vem!
+[Chorus - all] R forte, R fraquinho, / um é grandão, o outro é baixinho! / No começo, forte; dois R, forte também; / sozinho no meio, fraquinho, e vai bem!
+[Chorus - all, repeat] R forte, R fraquinho, / um é grandão, o outro é baixinho! / No começo, forte; dois R, forte também; / sozinho no meio, fraquinho, e vai bem!
+```
+
+---
