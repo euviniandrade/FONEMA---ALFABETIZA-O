@@ -717,9 +717,9 @@
     ['meu-nome', 'Selo Meu Nome', () => E.nome.charAt(0).toUpperCase()],
     ['professor', 'Aprovado pelo Professor', () => '✓'],
     ['explica', 'Me Explicou Certinho', () => '🎤'],
-    ['som', 'Mestre do Som', () => (M ? M.info.letra : '?')],
-    ['gentil', 'Leitor Gentil', () => '📖'],
-    ['ambiente', 'Guardião do Meio Ambiente', () => '🌱']
+    ['som', 'Maestria do Som', () => (M ? M.info.letra : '?')],
+    ['gentil', 'Leitura Gentil', () => '📖'],
+    ['ambiente', 'Guarda do Meio Ambiente', () => '🌱']
   ];
   function albumHTML() {
     return `<div class="album" aria-label="Álbum de Selos">${ALBUM.map(([k, nm, sim]) => {
@@ -728,16 +728,16 @@
     }).join('')}</div>`;
   }
   // PRÓXIMO OBJETIVO (Decisão 019; jogo-completo/07): nível da jornada e título, por esforço; nunca desce.
-  // Após a 1ª missão: Nível 1 · Aprendiz dos Sons I. Nível 2 pede 2 desafios; para Caçador de Sílabas
+  // Após a 1ª missão: Nível 1 · Primeiros Sons I. Nível 2 pede 2 desafios; para Caça às Sílabas (D022)
   // são 2+3+4+5+6+6 = 26 desafios e vencer a Festa das Rimas (chefe de R0).
-  const PROGRESSO = { nivel: 1, titulo: 'Aprendiz dos Sons I', feitos: 0, proxNivel: 2, paraCacador: 26 };
+  const PROGRESSO = { nivel: 1, titulo: 'Primeiros Sons I', feitos: 0, proxNivel: 2, paraCaca: 26 };
   function proximoHTML() {
     const p = PROGRESSO;
     const bolinhas = Array.from({ length: p.proxNivel }, (_, i) => `<span class="bol ${i < p.feitos ? 'cheia' : ''}" aria-hidden="true"></span>`).join('');
     return `<div class="proximo" aria-label="Próximo objetivo">
       <p class="titulo-j"><strong>Nível ${p.nivel}</strong> · ${esc(p.titulo)}</p>
       <p class="prox-txt">Próximo objetivo: faltam <strong>${p.proxNivel - p.feitos} desafios</strong> para o nível ${p.nivel + 1}. <span class="bolinhas">${bolinhas}</span></p>
-      <p class="regra-moeda">Rumo a <strong>Caçador de Sílabas</strong>: faltam ${p.paraCacador} desafios e a Festa das Rimas. Nada se perde.</p>
+      <p class="regra-moeda">Rumo a <strong>Caça às Sílabas</strong>: faltam ${p.paraCaca} desafios e a Festa das Rimas. Nada se perde.</p>
     </div>`;
   }
   TELAS.celebra = (t) => {
