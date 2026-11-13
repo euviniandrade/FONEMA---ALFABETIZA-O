@@ -5,6 +5,7 @@ import { asset } from '../servicos/ambiente.ts';
 import { NOMES_PERSONAGEM, falar, textoTela } from '../util.ts';
 import { useApp } from '../contexto.tsx';
 import { navegar } from '../rotas.ts';
+import { IcContraste, IcMovimento, IcSom, IcVoltar } from './icones.tsx';
 
 const BUSTO: Partial<Record<Personagem, string>> = { sofia: 'dupla/sofia-busto-alegre.webp', tales: 'dupla/tales-busto-alegre.webp' };
 const COR: Record<string, string> = { bolota: '#A06A3B', 'dona-cida': '#B5512E', davi: '#2E7A4C', 'guarda-parque': '#1F5A37', pescadora: '#3D7CC4', 'zum-zum': '#6B7A2E' };
@@ -42,7 +43,7 @@ export function Balao({ fala, crianca, auto = false, humor, extras, destaque = f
 export function BotaoOuvir({ onClick, rotulo = 'Ouvir' }: { onClick: () => void; rotulo?: string }) {
   return (
     <button className="ouvir" onClick={onClick} aria-label={rotulo} title={rotulo}>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#fff" /><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="#fff" strokeWidth="2" fill="none" strokeLinecap="round" /></svg>
+      <IcSom tamanho={32} color="#fff" />
     </button>
   );
 }
@@ -57,24 +58,38 @@ export function Moedinhas({ valor, id }: { valor: number; id?: string }) {
   );
 }
 
+/** Logotipo: selo azul-marinho com o F e o ponto amarelo-ipê + palavra FONEMA em Fredoka. */
+export function Logo({ subtitulo, grande = false }: { subtitulo?: string; grande?: boolean }) {
+  return (
+    <div className={`marca ${grande ? 'marca-grande' : ''}`} aria-label="FONEMA">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <defs><linearGradient id="lgF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#2C4F93" /><stop offset="1" stopColor="#1B3160" /></linearGradient></defs>
+        <rect x="3" y="5" width="58" height="58" rx="18" fill="#0F1F45" opacity=".25" />
+        <rect x="3" y="2" width="58" height="58" rx="18" fill="url(#lgF)" />
+        <rect x="9" y="7" width="46" height="16" rx="8" fill="#fff" opacity=".12" />
+        <path d="M21 46V17h21v7H29v5.5h11v7H29V46z" fill="#fff" />
+        <circle cx="46" cy="42" r="5.5" fill="#F4B73C" stroke="#fff" strokeWidth="2" />
+      </svg>
+      <div><b>FONEMA</b>{subtitulo ? <small>{subtitulo}</small> : null}</div>
+    </div>
+  );
+}
+
 export function Topo({ crianca, moedinhas, voltar, titulo, children }: { crianca?: Crianca; moedinhas?: number; voltar?: string; titulo?: string; children?: ReactNode }) {
   const { prefs, setPrefs } = useApp();
   return (
     <header className="topo">
-      {voltar ? (
-        <button className="btn-ic" onClick={() => navegar(voltar)} aria-label="Voltar"><span aria-hidden="true">←</span><small>Voltar</small></button>
+      {voltar !== undefined ? (
+        <button className="btn-ic" onClick={() => navegar(voltar)} aria-label="Voltar"><IcVoltar /><small>Voltar</small></button>
       ) : null}
-      <div className="marca" aria-label="FONEMA">
-        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="#1B3160" /><path d="M15 33V15h14v4h-9.5v3.6H28v4h-8.5V33z" fill="#fff" /><circle cx="34" cy="31" r="4" fill="#F4B73C" /></svg>
-        <div><b>FONEMA</b><small>{titulo ?? 'plataforma de alfabetização'}</small></div>
-      </div>
+      <Logo subtitulo={titulo ?? 'plataforma de alfabetização'} />
       {crianca ? <AvatarMini crianca={crianca} /> : null}
       <div className="topo-meio">{children}</div>
       {moedinhas !== undefined ? <Moedinhas valor={moedinhas} id="cofre-topo" /> : null}
       <div className="ajustes" role="group" aria-label="Ajustes de acessibilidade">
-        <button className="btn-ic" aria-pressed={prefs.vozLigada} onClick={() => setPrefs({ vozLigada: !prefs.vozLigada })}><span aria-hidden="true">{prefs.vozLigada ? '🔊' : '🔈'}</span><small>Voz</small></button>
-        <button className="btn-ic" aria-pressed={prefs.contraste} onClick={() => setPrefs({ contraste: !prefs.contraste })}><span aria-hidden="true">◐</span><small>Contraste</small></button>
-        <button className="btn-ic" aria-pressed={prefs.menosMovimento} onClick={() => setPrefs({ menosMovimento: !prefs.menosMovimento })}><span aria-hidden="true">🐢</span><small>Movimento</small></button>
+        <button className="btn-ic" aria-pressed={prefs.vozLigada} onClick={() => setPrefs({ vozLigada: !prefs.vozLigada })} title="Voz ligada ou desligada"><IcSom ligado={prefs.vozLigada} /><small>Voz</small></button>
+        <button className="btn-ic" aria-pressed={prefs.contraste} onClick={() => setPrefs({ contraste: !prefs.contraste })} title="Alto contraste"><IcContraste /><small>Contraste</small></button>
+        <button className="btn-ic" aria-pressed={prefs.menosMovimento} onClick={() => setPrefs({ menosMovimento: !prefs.menosMovimento })} title="Menos movimento"><IcMovimento /><small>Calmo</small></button>
       </div>
     </header>
   );
