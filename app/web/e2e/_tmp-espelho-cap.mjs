@@ -75,8 +75,15 @@ async function cap(page, nome) {
 /** Capturas da Trilha do Alfabeto (D027): alfabeto-NN-nome.png (computador) e alfabeto-celular-NN-nome.png. */
 async function capA(page, nome, espera = 450) {
   if (!CAPTURAS_AL) return;
-  await page.waitForTimeout(/espelho/.test(nome) ? 6000 : espera);
-  await page.screenshot({ path: `${DIR_CAP}/alfabeto-${nome}.png` });
+  if (/espelho/.test(nome)) {
+    await page.waitForTimeout(5000);
+    await page.screenshot({ path: `${DIR_CAP}/${process.env.NOME}-ao-vivo.png` });
+    for (const f of page.frames()) await f.evaluate(() => window.ESPELHO && window.ESPELHO.congelar('faz')).catch(() => {});
+    await page.waitForTimeout(2500);
+    await page.screenshot({ path: `${DIR_CAP}/${process.env.NOME}.png` });
+    console.log('capturado'); process.exit(0);
+  }
+  await page.waitForTimeout(espera);
 }
 
 /**
@@ -232,7 +239,7 @@ async function main() {
   if (CAPTURAS) mkdirSync(DIR_CAP, { recursive: true });
   await subirServidor();
   const browser = await chromium.launch({ executablePath: EXEC, args: ['--autoplay-policy=no-user-gesture-required', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
-  const ctx = await browser.newContext({ viewport: { width: 1850, height: 980 }, deviceScaleFactor: 1, locale: 'pt-BR' });
+  const ctx = await browser.newContext({ viewport: { width: +process.env.VW, height: +process.env.VH }, deviceScaleFactor: 1, isMobile: process.env.VW < 500, hasTouch: process.env.VW < 500, locale: 'pt-BR' });
   await ctx.addInitScript((c) => { try { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); } catch { /* sem armazenamento */ } }, COLETAR);
   const page = await ctx.newPage();
   const erros = [];

@@ -138,7 +138,7 @@ class Cena {
   private readonly contato: THREE.Mesh;
   private readonly chao: THREE.Mesh;
 
-  constructor(canvas: HTMLCanvasElement, opcoes: { sombras: boolean }) {
+  constructor(canvas: HTMLCanvasElement, opcoes: { sombras: boolean; ambiente: boolean }) {
     const r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'default' });
     r.outputColorSpace = THREE.SRGBColorSpace;
     r.toneMapping = THREE.NeutralToneMapping;
@@ -148,10 +148,12 @@ class Cena {
     r.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderizador = r;
 
-    const pmrem = new THREE.PMREMGenerator(r);
-    this.cena.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    this.cena.environmentIntensity = 0.5;
-    pmrem.dispose();
+    if (opcoes.ambiente) {
+      const pmrem = new THREE.PMREMGenerator(r);
+      this.cena.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+      this.cena.environmentIntensity = 0.5;
+      pmrem.dispose();
+    }
 
     // luz principal (quente, de cima e da frente), preenchimento do céu e contraluz (rim light)
     const chave = new THREE.DirectionalLight(0xfff1e0, 2.3);
@@ -161,7 +163,7 @@ class Cena {
     chave.shadow.camera.left = -0.8; chave.shadow.camera.right = 0.8; chave.shadow.camera.top = 1.4; chave.shadow.camera.bottom = -0.3;
     chave.shadow.camera.near = 0.5; chave.shadow.camera.far = 6;
     chave.shadow.bias = -0.0006; chave.shadow.normalBias = 0.012; chave.shadow.radius = 5;
-    const ceu = new THREE.HemisphereLight(0xe4f1ff, 0xcdb9a0, 0.6);
+    const ceu = new THREE.HemisphereLight(0xe4f1ff, 0xcdb9a0, opcoes.ambiente ? 0.6 : 1.5);
     const contra = new THREE.DirectionalLight(0xcfe6ff, 2.4);
     contra.position.set(-1.6, 1.7, -2.2);
     const contra2 = new THREE.DirectionalLight(0xffe2b8, 1.2);
@@ -229,7 +231,7 @@ export class Palco {
     this.canvas = canvas;
     this.menosMovimento = o.menosMovimento;
     this.enquadramento = o.enquadramento ?? 'corpo';
-    this.cena = new Cena(canvas, { sombras: true });
+    this.cena = new Cena(canvas, { sombras: true, ambiente: true });
     this.cena.cena.add(this.boneco.raiz);
     this.obsTamanho = new ResizeObserver(() => this.ajustar());
     this.obsTamanho.observe(canvas);
@@ -354,21 +356,28 @@ export function desenharMiniatura(a: Aparencia, tipo: Enquadramento, largura: nu
     if (!aindaQuer()) throw new MiniaturaCancelada();
     if (!foraDaTela) {
       const canvas = document.createElement('canvas');
-      foraDaTela = { canvas, cena: new Cena(canvas, { sombras: false }) };
+      foraDaTela = { canvas, cena: new Cena(canvas, { sombras: false, ambiente: false }) };
       canvas.addEventListener('webglcontextlost', () => { foraDaTela = null; });
     }
     const { cena, canvas } = foraDaTela;
     const boneco = new Boneco();
     try {
+      const T: number[] = [performance.now()];
       await boneco.aplicar(a);
+      T.push(performance.now());
       boneco.parado();
       boneco.raiz.rotation.y = giro;
       cena.cena.add(boneco.raiz);
       cena.renderizador.setPixelRatio(1);
       cena.renderizador.setSize(largura, altura, false);
       cena.enquadrar(tipo, largura / altura, boneco.sentado);
+      T.push(performance.now());
       cena.desenhar();
-      return canvas.toDataURL('image/webp', 0.9);
+      T.push(performance.now());
+      const u = canvas.toDataURL('image/webp', 0.9);
+      T.push(performance.now());
+      ((window as unknown as { __medidas: number[][] }).__medidas ??= []).push(T.map((x) => Math.round(x - T[0])));
+      return u;
     } finally {
       cena.cena.remove(boneco.raiz);
       boneco.descartar();
