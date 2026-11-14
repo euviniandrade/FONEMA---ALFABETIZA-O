@@ -35,6 +35,7 @@ const BATIDA = [[-0.8, 0.5], [-1.26, 0.6]];
 
 /* ---------- linha do tempo de cada tipo de som: devolve o estado no instante t (s) do ciclo ----------
  * { w: 0 repouso → 1 pose do som, abre: 0..1 (depois do estouro), ar, voz, bate: 0..1 (tremor), aperta: 0..1, marca: 0..1, fase } */
+const VEL_LENTA = 0.42; // câmera lenta: só a ANIMAÇÃO fica mais devagar; nenhum áudio muda de velocidade ou tom
 const DUR = { descanso: 0.55, prepara: 0.6, faz: 1.8, solta: 0.5 };
 function linhaDoTempo(f, t, segura) {
   const e = { w: 0, abre: 0, ar: 0, voz: 0, bate: 0, aperta: 0, marca: 0, fase: 'descanso', fim: false };
@@ -162,8 +163,8 @@ export async function montar(el, o = {}) {
     const a = arquivoSom(f);
     if (!a || typeof Audio === 'undefined') { repetir(); return Promise.resolve(false); }
     return new Promise((ok) => {
-      const au = new Audio(a.url); tocando = au; au.playbackRate = lento ? 0.8 : 1;
-      const comeca = () => falando(true, (a.duracao || au.duration || 0) / au.playbackRate);
+      const au = new Audio(a.url); tocando = au; // a voz toca sempre na velocidade e no tom originais (D029 §5)
+      const comeca = () => falando(true, a.duracao || au.duration || 0);
       au.onplaying = comeca;
       au.onended = () => { falando(false); aoAudio({ f, tocou: true }); ok(true); };
       au.onerror = () => { repetir(); aoAudio({ f, tocou: false }); ok(false); };
@@ -215,7 +216,7 @@ export async function montar(el, o = {}) {
     if (ativo) {
       tCiclo = DUR.descanso - 0.02; congelado = null; umaVez = true;
       if (fo.anim === 'sustentado' || fo.anim === 'tremor') {
-        if (duracao && isFinite(duracao) && duracao > 0.2) { segura = clamp(duracao - 0.35, 0.7, 6); externo = false; }
+        if (duracao && isFinite(duracao) && duracao > 0.2) { segura = clamp(duracao - 0.35, 0.7, 6) * (lento ? VEL_LENTA : 1); externo = false; } // em câmera lenta só a animação desacelera
         else { segura = 60; externo = true; }
       } else { segura = 0; externo = false; }
       acorda();
@@ -274,7 +275,7 @@ export async function montar(el, o = {}) {
     const passo = (agora) => {
       if (morto) return;
       const dtReal = Math.max(0, Math.min(0.05, (agora - ultimo) / 1000)); ultimo = agora;
-      avanca(dtReal * (lento ? 0.45 : 1), dtReal);
+      avanca(dtReal * (lento ? VEL_LENTA : 1), dtReal);
       const r = palco.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
       if (tela.width !== Math.round(r.width * dpr) || tela.height !== Math.round(r.height * dpr)) { tela.width = Math.round(r.width * dpr); tela.height = Math.round(r.height * dpr); }
       if (ctx) desenhar2D(ctx, P, poseAtual, estado, P.F[f], [vF, vL].map((v) => { const b = v.getBoundingClientRect(); return { x: (b.left - r.left) * dpr, y: (b.top - r.top) * dpr, w: b.width * dpr, h: b.height * dpr }; }), quem, agora / 1000);
@@ -350,7 +351,7 @@ export async function montar(el, o = {}) {
     function desenha(agora) {
       quadro = 0; if (morto) return;
       const dtReal = Math.max(0, Math.min(0.05, (agora - ultimo) / 1000)); ultimo = agora;
-      const dt = dtReal * (lento ? 0.42 : 1);
+      const dt = dtReal * (lento ? VEL_LENTA : 1);
       tempo += dtReal;
       avanca(dt, dtReal);
       const fo = P.F[f], e = estado, p = poseAtual;

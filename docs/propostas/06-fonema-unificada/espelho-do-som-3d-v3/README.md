@@ -42,7 +42,8 @@ Mensagens enviadas: `espelho:pronto {fonemas, webgl, versao: 3}`, `espelho:mudou
    a boca recomeça junto e segura o som enquanto a voz durar. É o que o app usa (`sons=` vazio).
 2. O próprio espelho toca: `sons` aponta para um mapa `{ fonemas: { "<id>": { arquivo, duracaoMs } } }` (o formato de
    `app/web/public/audio/sons/mapa.json`; também aceita `{ "<id>": "arquivo.mp3" }`). O botão de repetir toca o arquivo e a boca
-   segura o som pela duração do áudio. Padrão do embed fora do app: `../audio/sons/mapa.json`.
+   segura o som pela duração do áudio. Em câmera lenta só a animação desacelera: o áudio nunca muda de velocidade nem de tom
+   (D029 §5). Padrão do embed fora do app: `../audio/sons/mapa.json`.
 
 Ids dos sons: `a E e i O o u`, nasais `a~ e~ i~ o~ u~`, `p b m f v t d n l r s z x j nh lh k g rr h`.
 Apelidos aceitos: `ch c q é ê ó ô ã õ y w` e letras maiúsculas.
