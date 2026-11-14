@@ -6,10 +6,13 @@
  *
  * Notação das falas (jogo-completo/README §2):
  *   [NOME]                      → primeiro nome da criança, na pronúncia escolhida pelo adulto
- *   {pronto|pronta|Tudo pronto} → concordância: masculino | feminino | prefiro não informar
+ *   {pronto|pronta|Tudo pronto} → concordância: masculino | feminino | forma neutra (sem criança, ou sexo pendente de cadastro antigo)
  */
 
-export type Genero = 'm' | 'f' | 'n';
+/** D029: só masculino ou feminino. */
+export type Genero = 'm' | 'f';
+/** Concordância das falas: `n` (forma neutra) só quando não há criança ou o sexo de um cadastro antigo está pendente. */
+export type GeneroFala = Genero | 'n';
 
 export type Personagem = 'sofia' | 'tales' | 'bolota' | 'dona-cida' | 'davi' | 'guarda-parque' | 'pescadora' | 'zum-zum';
 

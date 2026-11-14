@@ -1,13 +1,13 @@
 import type { Fala } from '@fonema/conteudo';
-import { renderFala, type Crianca } from '@fonema/motor';
+import { generoDaFala, renderFala, type Crianca } from '@fonema/motor';
 import { voz } from './servicos/voz.ts';
 
 /** Texto na tela usa o nome ESCRITO; a voz usa a PRONÚNCIA escolhida pelo adulto (D013). */
 export function textoTela(t: string, c?: Crianca, extras?: Record<string, string | number>): string {
-  return renderFala(t, { nome: c?.nome ?? 'você', genero: c?.genero ?? 'n', extras });
+  return renderFala(t, { nome: c?.nome ?? 'você', genero: generoDaFala(c), extras });
 }
 export function textoVoz(t: string, c?: Crianca, extras?: Record<string, string | number>): string {
-  return renderFala(t, { nome: c?.pronuncia.fala ?? c?.nome ?? 'você', genero: c?.genero ?? 'n', extras });
+  return renderFala(t, { nome: c?.pronuncia.fala ?? c?.nome ?? 'você', genero: generoDaFala(c), extras });
 }
 export function falar(f: Fala | string, c?: Crianca, extras?: Record<string, string | number>): Promise<void> {
   const fala = typeof f === 'string' ? { quem: 'sofia' as const, texto: f } : f;

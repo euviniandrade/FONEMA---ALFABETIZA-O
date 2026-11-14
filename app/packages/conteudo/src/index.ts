@@ -6,6 +6,7 @@ export * from './habilidades.ts';
 export * from './regioes.ts';
 export * from './conquistas.ts';
 export * from './lojinha.ts';
+export * from './avatar.ts';
 export * from './config.ts';
 export * from './falas-gerais.ts';
 export { FASES_ALFABETO, FALAS_ALFABETO, MARCADOR_PALAVRINHAS } from './fases/alfabeto.ts';

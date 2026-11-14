@@ -6,6 +6,7 @@ import { ALFABETO, CONQUISTA_POR_ID, FASES, FASE_POR_ID, FALAS, HABILIDADES } fr
 import type { ConfigPlataforma } from '@fonema/conteudo';
 import type { Crianca, Demonstracao, Evento, Progresso } from './estado.ts';
 import { DIA_MS } from './estado.ts';
+import { generoDaFala } from './avatar.ts';
 import { avaliarDominio } from './dominio.ts';
 import { calcularNivel } from './nivel.ts';
 import { descreverTermometro } from './termometro.ts';
@@ -30,7 +31,7 @@ export interface ResumoFamilia {
 export function resumoFamilia(c: Crianca, p: Progresso, eventos: Evento[], cfg: ConfigPlataforma, agora: number): ResumoFamilia {
   const nivel = calcularNivel(p.desafios, missaoInicialFeita(p), fasesConcluidas(p));
   const fase = FASE_POR_ID[p.faseAtual];
-  const ctx = { nome: c.nome, genero: c.genero };
+  const ctx = { nome: c.nome, genero: generoDaFala(c) };
   const jaSabe = HABILIDADES.filter((h) => p.habilidades[h.id]?.dominadaEm).map((h) => renderFala(`[NOME] ${h.paraFamilia}`, ctx));
   const aprendendo = HABILIDADES.filter((h) => p.habilidades[h.id] && !p.habilidades[h.id].dominadaEm).map((h) => ({
     nome: h.nome,

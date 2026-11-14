@@ -4,6 +4,7 @@ import { configEfetiva, progressoInicial, type Crianca, type Progresso } from '@
 import type { Repositorio } from './dados/repositorio.ts';
 import { RepositorioIndexedDB } from './dados/repositorio-idb.ts';
 import { voz } from './servicos/voz.ts';
+import { sonsLetras } from './servicos/sons-letras.ts';
 import { efeitosLigados } from './servicos/efeitos.ts';
 import { modoTeste } from './servicos/ambiente.ts';
 
@@ -38,6 +39,7 @@ export function ProvedorApp({ children, repo }: { children: ReactNode; repo: Rep
   useEffect(() => {
     repo.obterConfig().then((c) => { setCfgSalva(c); setPronto(true); });
     repo.apagarAudiosAntigos(30, Date.now()).catch(() => undefined);
+    sonsLetras.usarGravacoes(repo);
   }, [repo]);
 
   const configBruta = useMemo(() => mesclarConfig(CONFIG_PADRAO, cfgSalva), [cfgSalva]);

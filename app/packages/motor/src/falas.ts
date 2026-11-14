@@ -1,18 +1,18 @@
 /**
  * Encaixa o nome e a concordância nas falas (D013).
  *   [NOME]           → nome (texto na tela) ou pronúncia (voz)
- *   {masc|fem|neutro} → escolhe pela opção de gênero do cadastro
+ *   {masc|fem|neutro} → masculino ou feminino (D029); a forma neutra vale sem criança ou com sexo pendente
  *   [CHAVE]          → extras (ex.: [CONQUISTA], [FALTAM])
  */
-import type { Genero } from '@fonema/conteudo';
+import type { GeneroFala } from '@fonema/conteudo';
 
 export interface ContextoFala {
   nome: string;
-  genero: Genero;
+  genero: GeneroFala;
   extras?: Record<string, string | number>;
 }
 
-export function concordar(texto: string, genero: Genero): string {
+export function concordar(texto: string, genero: GeneroFala): string {
   return texto.replace(/\{([^{}|]*)\|([^{}|]*)\|([^{}]*)\}/g, (_m, masc: string, fem: string, neutro: string) =>
     genero === 'm' ? masc : genero === 'f' ? fem : neutro
   );

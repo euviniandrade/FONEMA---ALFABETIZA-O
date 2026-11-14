@@ -9,7 +9,7 @@
  */
 import type { Personagem } from '@fonema/conteudo';
 import { modoTeste } from './ambiente.ts';
-import { fonemaDoTexto, fonemasDaSequencia, sonsLetras } from './sons-letras.ts';
+import { fonemasDaSequencia, sonsLetras } from './sons-letras.ts';
 
 /** `rate` e `pitchExtra` são ignorados (ficaram só para não quebrar chamadas antigas): a voz nunca é esticada. */
 export interface OpcoesFala { quem?: Personagem; rate?: number; pitchExtra?: number }
@@ -272,9 +272,33 @@ class Voz {
     this.parar();
     coletar(texto, o?.quem, this.pre.nome);
     if (!this.ligada) return Promise.resolve();
-    this.fila = this.provedor.falar(texto, o);
+    this.fila = this.dizer(texto, o);
     return this.fila;
   }
+  /**
+   * Som isolado ("mmm", "/ssss/") ou sequência de sons ("sss… ooo… lll"): toca o SOM REAL da letra quando todos
+   * existem (Estúdio de sons ou public/audio/sons). Senão, a fala gravada da dupla (ou silêncio, se não houver).
+   */
+  private async dizer(texto: string, o?: OpcoesFala): Promise<void> {
+    const seq = fonemasDaSequencia(texto);
+    if (seq && !modoTeste() && (await sonsLetras.temTodos(seq))) { await sonsLetras.tocarSequencia(seq); return; }
+    return this.provedor.falar(texto, o);
+  }
+  /**
+   * SOM REAL de um fonema (D029 §2), `vezes` seguidas com um respiro. Devolve false quando não há som para ele:
+   * aí a tela usa a fala antiga da dupla ("M, de macaco.").
+   */
+  async somReal(fonema: string, vezes = 1): Promise<boolean> {
+    this.parar();
+    if (!(await sonsLetras.tem(fonema))) return false;
+    if (!this.ligada) return true;
+    const p = (async () => { await sonsLetras.tocarSequencia(Array.from({ length: vezes }, () => fonema), 450); })();
+    this.fila = p;
+    await p;
+    return true;
+  }
+  /** Existe som real (gravado ou publicado) para este fonema? */
+  temSomReal(fonema: string): Promise<boolean> { return sonsLetras.tem(fonema); }
   /** O nome tem clipe gravado nas vozes oficiais? (lista de nomes comuns) */
   async temNome(nome: string): Promise<boolean> {
     await this.pre.pronto;
@@ -299,11 +323,11 @@ class Voz {
     for (let i = 0; i < falas.length; i++) {
       aoMudar?.(i);
       coletar(falas[i].texto, falas[i].quem, this.pre.nome);
-      if (this.ligada) await this.provedor.falar(falas[i].texto, { quem: falas[i].quem });
+      if (this.ligada) await this.dizer(falas[i].texto, { quem: falas[i].quem });
       else await new Promise((r) => setTimeout(r, modoTeste() ? 10 : 1400));
     }
   }
-  parar() { this.provedor.parar(); }
+  parar() { this.provedor.parar(); sonsLetras.parar(); }
 }
 
 export const voz = new Voz();

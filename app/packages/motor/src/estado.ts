@@ -82,6 +82,30 @@ export interface Progresso {
   criadoEm: number;
 }
 
+/**
+ * Avatar montável (D029): só DADOS — ids de peças e de cores do catálogo (@fonema/conteudo › avatar.ts).
+ * `null` = a criança ainda não escolheu (o boneco começa limpo).
+ */
+export interface AvatarCrianca {
+  versao: 2;
+  /** Cor do cantinho (fundo das miniaturas). */
+  cantinho: string;
+  pele: string | null;
+  rosto: string | null;
+  olhos: string | null;
+  cabelo: string | null;
+  corCabelo: string;
+  camisa: string | null;
+  calca: string | null;
+  calcado: string | null;
+  /** Itens de acessibilidade ligados (óculos, aparelho auditivo, cadeira de rodas, pintura no rosto). */
+  acessibilidade: string[];
+  /** A montagem obrigatória foi concluída ao menos uma vez. */
+  pronto: boolean;
+  /** Recorte antigo guardado só até o sexo ser escolhido (migração). */
+  baseAntiga?: string;
+}
+
 export interface Crianca {
   id: string;
   nome: string;
@@ -91,7 +115,9 @@ export interface Crianca {
   /** Id do áudio gravado pelo adulto (apagado em 30 dias). */
   gravacaoNomeId?: string;
   gravacaoNomeEm?: number;
-  avatar: { base: string; cantinho: string };
+  /** Cadastro antigo com "prefiro não informar": o app pede a escolha uma vez (D029). */
+  generoPendente?: boolean;
+  avatar: AvatarCrianca;
   apoios: { previsivel: boolean; focoCurto: boolean; leituraReforco: boolean; calmo: boolean };
   jaSabe: { letrasDoNome: string; lePalavras: string; leFrases: string };
   consentimentos: { responsavel: boolean; vozPrimeiroNome: boolean; gravarVozAdulto: boolean; em: number };

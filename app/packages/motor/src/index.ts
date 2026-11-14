@@ -4,6 +4,7 @@ export * from './primeiro-som.ts';
 export * from './dominio.ts';
 export * from './revisao.ts';
 export * from './moedinhas.ts';
+export * from './avatar.ts';
 export * from './nivel.ts';
 export * from './termometro.ts';
 export * from './sequencia.ts';

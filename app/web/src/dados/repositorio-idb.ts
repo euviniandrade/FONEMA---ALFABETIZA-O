@@ -1,6 +1,6 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
 import type { ConfigPlataforma } from '@fonema/conteudo';
-import type { Crianca, Demonstracao, Evento, Progresso, StatusDemonstracao } from '@fonema/motor';
+import { normalizarCrianca, type Crianca, type Demonstracao, type Evento, type Progresso, type StatusDemonstracao } from '@fonema/motor';
 import type { RegistroConta, Repositorio } from './repositorio.ts';
 
 interface Esquema extends DBSchema {
@@ -30,8 +30,9 @@ export class RepositorioIndexedDB implements Repositorio {
     });
   }
 
-  async listarCriancas() { return (await (await this.db).getAll('criancas')).sort((a, b) => a.criadoEm - b.criadoEm); }
-  async obterCrianca(id: string) { return (await this.db).get('criancas', id); }
+  // leitura sempre normalizada: cadastros antigos (sexo "n", avatar de recorte) viram o formato da D029
+  async listarCriancas() { return (await (await this.db).getAll('criancas')).map(normalizarCrianca).sort((a, b) => a.criadoEm - b.criadoEm); }
+  async obterCrianca(id: string) { const c = await (await this.db).get('criancas', id); return c ? normalizarCrianca(c) : undefined; }
   async salvarCrianca(c: Crianca) { await (await this.db).put('criancas', c); }
   async removerCrianca(id: string) {
     const db = await this.db;
@@ -70,7 +71,8 @@ export class RepositorioIndexedDB implements Repositorio {
     const db = await this.db;
     let n = 0;
     for (const a of await db.getAll('audios')) {
-      if (agora - a.em > dias * 86400_000) { await db.delete('audios', a.id); n++; }
+      // os sons das letras gravados pelo adulto (Estúdio de sons, id "som-letra-…") não expiram
+      if (!a.id.startsWith('som-letra-') && agora - a.em > dias * 86400_000) { await db.delete('audios', a.id); n++; }
     }
     return n;
   }
