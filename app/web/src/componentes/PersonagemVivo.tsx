@@ -193,7 +193,7 @@ async function anunciar(el: HTMLAudioElement) {
 }
 
 /* ───────────── BUSTO que fala ───────────── */
-const normal = (s: string) => s.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+const normal = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const instancias = new Set<{ quem: string; texto?: string }>();
 /** Com vários balões do mesmo personagem na tela, só fala o balão cujo texto contém a fala (se nenhum bater, todos falam). */
 function eMinhaVez(eu: { quem: string; texto?: string }): boolean {
@@ -201,7 +201,8 @@ function eMinhaVez(eu: { quem: string; texto?: string }): boolean {
   if (!a || a.quem !== eu.quem) return false;
   const alvo = normal(a.texto);
   if (!alvo) return true;
-  const bate = (i: { quem: string; texto?: string }) => i.quem === eu.quem && !!i.texto && normal(i.texto).includes(alvo);
+  // a voz pode trazer o nome na grafia da pronúncia ("Mariána"): vale também o começo igual
+  const bate = (i: { quem: string; texto?: string }) => { if (i.quem !== eu.quem || !i.texto) return false; const t = normal(i.texto); return t.includes(alvo) || (alvo.length >= 8 && t.startsWith(alvo.slice(0, 12))); };
   if (bate(eu)) return true;
   for (const i of instancias) if (bate(i)) return false;
   return true;

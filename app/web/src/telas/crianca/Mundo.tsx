@@ -104,7 +104,7 @@ export function Vila({ criancaId }: { criancaId: string }) {
     )
   });
   const marcadores: Marcador[] = [
-    { id: 'dupla', ...LUGAR.dupla, conteudo: <PersonagemVivo quem="dupla" modo="corpo" gestos className="mapa-dupla" /> },
+    { id: 'dupla', ...LUGAR.dupla, conteudo: <div className="mapa-dupla"><PersonagemVivo quem="dupla" modo="corpo" gestos style={{ height: 'clamp(128px,15vw,197px)' }} /></div> },
     lugar('casa', 'casa', 'Minha casa', `c/${criancaId}/avatar`, 1),
     lugar('album', 'album', 'Álbum', `c/${criancaId}/album`, 2),
     lugar('corpo', 'boca', 'Conheça seu corpo', `c/${criancaId}/corpo`, 3),
