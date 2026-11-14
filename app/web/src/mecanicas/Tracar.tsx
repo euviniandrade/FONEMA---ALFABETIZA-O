@@ -99,6 +99,7 @@ export function Tracar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
     setVez(0); setProg(0); setCobertura(0);
   };
 
+  const pararDemo = () => { rodada.current++; };
   /** Demonstração animada: um ponto percorre cada traço, na ordem. */
   const demonstrar = async () => {
     const r = ++rodada.current;
@@ -130,7 +131,7 @@ export function Tracar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
       if (i === 0) await falar(atividade.enunciado, crianca);
       if (vivo) await demonstrar();
     })();
-    return () => { vivo = false; rodada.current++; };
+    return () => { vivo = false; pararDemo(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i]);
 
@@ -163,7 +164,10 @@ export function Tracar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
       if (Math.hypot(p.x - x, p.y - y) <= TOLERANCIA) novo = Math.max(novo, p.s);
     }
     const fim = t.ponto ? 0 : t.comp - 5;
-    if (novo >= fim && (t.ponto ? noInicio : true)) {
+    // o traço só termina com o dedo perto do PONTO FINAL (traços curtos não se completam só de encostar no começo)
+    const ult = t.pts[t.pts.length - 1];
+    const noFim = Math.hypot(ult.x - x, ult.y - y) <= TOLERANCIA * 0.8;
+    if (novo >= fim && (t.ponto ? noInicio : noFim)) {
       estado.current = { vez: st.vez + 1, prog: 0 };
       setVez(st.vez + 1); setProg(0);
       efeitos.toque();
