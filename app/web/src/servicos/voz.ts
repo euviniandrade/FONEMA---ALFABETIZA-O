@@ -121,6 +121,7 @@ export class ProvedorPreGerado implements ProvedorVoz {
   private geracao = 0;
   nome = '';
   pronto: Promise<void>;
+  nomesDe(voz: 'sofia' | 'tales'): string[] { return this.nomes[voz] ?? []; }
   constructor(private reserva: ProvedorVoz) {
     this.pronto = Promise.all([
       fetch('./audio/falas/manifesto.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
@@ -220,6 +221,21 @@ class Voz {
   simularPronuncia(texto: string, o?: OpcoesFala): Promise<void> {
     this.parar();
     return this.ligada ? this.nav.falar(texto, o) : Promise.resolve();
+  }
+  /** O nome tem clipe gravado nas vozes oficiais? (lista de nomes comuns) */
+  async temNome(nome: string): Promise<boolean> {
+    await this.pre.pronto;
+    return this.pre.nomesDe('sofia').includes(chaveNome(nome)) && this.pre.nomesDe('tales').includes(chaveNome(nome));
+  }
+  /** Toca o nome na voz OFICIAL da Sofia ou do Tales (cadastro). Devolve false se o nome ainda não tem gravação. */
+  async ouvirNome(nome: string, quem: 'sofia' | 'tales'): Promise<boolean> {
+    this.parar();
+    await this.pre.pronto;
+    if (!this.pre.nomesDe(quem).includes(chaveNome(nome))) return false;
+    if (!this.ligada || modoTeste()) return true;
+    const url = await urlDoAudio(`./audio/nomes/${quem}/${chaveNome(nome)}.mp3`);
+    await new Promise<void>((resolve) => { const el = new Audio(url); el.onended = () => resolve(); el.onerror = () => resolve(); el.play().catch(() => resolve()); });
+    return true;
   }
   /** Fala uma sequência de falas, uma depois da outra. */
   async sequencia(falas: { texto: string; quem?: Personagem }[], aoMudar?: (i: number) => void): Promise<void> {

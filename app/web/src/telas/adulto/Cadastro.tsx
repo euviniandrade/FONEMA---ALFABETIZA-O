@@ -39,8 +39,11 @@ export function Cadastro() {
 
   const primeiro = nome.trim().split(/\s+/)[0] ?? '';
   const nomeOk = primeiro.length >= 2 && /^[\p{L}'-]+$/u.test(primeiro);
+  const [temClipe, setTemClipe] = useState<boolean | null>(null);
+  useEffect(() => { let vivo = true; setTemClipe(null); if (nomeOk) voz.temNome(primeiro).then((t) => { if (vivo) setTemClipe(t); }); return () => { vivo = false; }; }, [primeiro, nomeOk]);
   const opcoes = useMemo(() => {
-    if (!nomeOk) return [];
+    if (!nomeOk || temClipe === false) return [];
+    if (temClipe) return opcoesPronuncia(primeiro[0].toUpperCase() + primeiro.slice(1).toLowerCase()).slice(0, 1).map((o) => ({ ...o, grafia: primeiro[0].toUpperCase() + primeiro.slice(1).toLowerCase(), titulo: 'Nas vozes da Sofia e do Tales' }));
     const base = opcoesPronuncia(primeiro[0].toUpperCase() + primeiro.slice(1).toLowerCase());
     if (ajuste.trim()) {
       const extra = opcoesPronuncia(primeiro).map((o) => o);
@@ -48,13 +51,13 @@ export function Cadastro() {
       return [extra[0], ...base.slice(0, 2)];
     }
     return base;
-  }, [primeiro, nomeOk, ajuste]);
+  }, [primeiro, nomeOk, ajuste, temClipe]);
   const nomeBonito = primeiro ? primeiro[0].toUpperCase() + primeiro.slice(1) : '';
   const previa = genero ? renderFala('{Você está pronto|Você está pronta|Tudo pronto pra começar}, [NOME]?', { nome: nomeBonito || 'Mariana', genero }) : '';
 
   useEffect(() => { setEscolha(null); }, [primeiro, ajuste]);
 
-  const ouvir = (op: OpcaoPronuncia, quem: 'sofia' | 'tales') => voz.simularPronuncia(`Oi, ${op.fala}!`, { quem, rate: op.rate, pitchExtra: op.pitchExtra });
+  const ouvir = (_op: OpcaoPronuncia, quem: 'sofia' | 'tales') => voz.ouvirNome(primeiro, quem);
 
   const salvar = async () => {
     const op = escolha?.op ?? opcoes[0];
@@ -152,7 +155,7 @@ export function Cadastro() {
             {passo === 'falar' ? (
               <div className="passo-corpo" key="falar">
                 <h1 className="t">Como se fala {nomeBonito}?</h1>
-                <p className="passo-sub">Toque para ouvir e escolha a pronúncia que soa igual à de casa.</p>
+                <p className="passo-sub">{temClipe === false ? `A Sofia e o Tales ainda não gravaram o nome ${nomeBonito}. Por enquanto eles conversam com carinho sem dizer o nome, que aparece escrito nas falas. Em breve o nome será gravado nas vozes deles.` : 'Toque para ouvir como a Sofia e o Tales chamam a criança.'}</p>
                 <div className="grade-pronuncia">
                   {opcoes.map((op) => (
                     <div key={op.id + op.grafia} className={`pronuncia ${escolha?.op.grafia === op.grafia ? 'sel' : ''}`}>
@@ -167,7 +170,7 @@ export function Cadastro() {
                     </div>
                   ))}
                 </div>
-                <details className="mais-opcoes">
+                <details className="mais-opcoes" hidden>
                   <summary><Icone nome="microfone" />Nenhuma serviu? Ajuste ou grave</summary>
                   <label className="campo">
                     <span>Escreva como se fala (sílaba forte em MAIÚSCULAS, ex.: Ka-u-Ã)</span>

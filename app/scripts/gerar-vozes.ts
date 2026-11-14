@@ -15,6 +15,14 @@ import { NOMES_COMUNS, SONS } from '@fonema/conteudo';
 
 const VOZES = { sofia: 'nlRJzw7MAFZF6truVWij', tales: 'HUKUk1tOcZ0szNQgemif' } as const;
 type Voz = keyof typeof VOZES;
+/**
+ * Modelo por voz. A voz do Tales foi desenhada e aprovada no Eleven v3: no multilingual_v2 ela sai como
+ * homem adulto (conferido por comparação com a amostra aprovada). A da Sofia é fiel no multilingual_v2.
+ */
+const MODELO: Record<Voz, string> = { sofia: 'eleven_multilingual_v2', tales: 'eleven_v3' };
+/** Sufixo de versão no nome do arquivo: muda quando o modelo da voz muda, para regerar sem apagar nada. */
+const VERSAO: Record<Voz, string> = { sofia: '', tales: '-v3' };
+const REFAZER_NOMES_TALES = process.argv.includes('--refazer-nomes-tales');
 const API = 'https://api.elevenlabs.io/v1';
 const CHAVE = process.env.ELEVENLABS_API_KEY ?? 'proxy-injected';
 const arg = (n: string, d?: string) => { const i = process.argv.indexOf(n); return i >= 0 ? process.argv[i + 1] : d; };
@@ -64,7 +72,7 @@ async function tts(voz: Voz, texto: string, destino: string, lento = false) {
     const r = await fetch(`${API}/text-to-speech/${VOZES[voz]}?output_format=mp3_44100_64`, {
       method: 'POST',
       headers: { 'xi-api-key': CHAVE, 'content-type': 'application/json', accept: 'audio/mpeg' },
-      body: JSON.stringify({ text: texto, model_id: 'eleven_multilingual_v2', voice_settings: { stability: 0.5, similarity_boost: 0.8, ...(lento ? { speed: 0.85 } : {}) } })
+      body: JSON.stringify({ text: texto, model_id: MODELO[voz], voice_settings: { stability: 0.5, similarity_boost: 0.8, ...(lento && voz !== 'tales' ? { speed: 0.85 } : {}) } })
     });
     if (r.ok) { writeFileSync(destino, Buffer.from(await r.arrayBuffer())); return; }
     const msg = await r.text();
@@ -88,7 +96,7 @@ async function main() {
       const k = chaveTrecho(parte);
       if (!k) continue;
       const chave = `${f.voz}|${k}`;
-      const arq = `${f.voz}-${hash(chave)}.mp3`;
+      const arq = `${f.voz}-${hash(chave)}${VERSAO[f.voz]}.mp3`;
       const refazer = process.argv.includes('--refazer-maiusculas') && /\b\p{Lu}{2,3}\b/u.test(k);
       if (!refazer && existsSync(`${PUB}/falas/${arq}`)) { manFalas[chave] = arq; continue; }
       if (tarefas.some((t) => t.destino.endsWith(arq))) continue;
@@ -105,7 +113,7 @@ async function main() {
       const k = chaveNome(nome);
       const destino = `${PUB}/nomes/${voz}/${k}.mp3`;
       const registrar = () => { if (!manNomes[voz].includes(k)) manNomes[voz].push(k); };
-      if (existsSync(destino)) { registrar(); continue; }
+      if (existsSync(destino) && !(REFAZER_NOMES_TALES && voz === 'tales')) { registrar(); continue; }
       tarefas.push({ voz, texto: `${nome}.`, lento: true, destino, registrar });
     }
   }
