@@ -1,14 +1,17 @@
 /**
- * Serviço de VOZ com ponto de troca (D011, D013, voz/README.md):
- *  - ProvedorPreGerado: toca os mp3 das vozes oficiais "Sofia — FONEMA" e "Tales — FONEMA" quando existirem
- *    em public/audio/falas/manifesto.json (texto → arquivo). O nome da criança é gerado UMA vez e encaixado.
- *  - ProvedorNavegador: simulação com speechSynthesis (pt-BR), timbre diferente para cada personagem.
- * Sons isolados (/mmm/) serão gravados por fonoaudióloga; aqui a voz do navegador estica a escrita.
+ * Serviço de VOZ (D011, D013, D029 §5):
+ *  - Na fala dos personagens só existem DUAS vozes: "Sofia — FONEMA" e "Tales — FONEMA", pré-geradas
+ *    (public/audio/falas/manifesto.json, texto → arquivo). O nome da criança é gerado UMA vez e encaixado.
+ *  - Nenhuma voz do navegador (speechSynthesis) e nenhuma mudança de tom ou de velocidade: todo clipe toca em 1×,
+ *    do jeito que foi gravado. Falas de outros personagens (Bolota, Dona Cida…) são narradas pela dupla.
+ *  - Som REAL das letras (fonemas): clipes próprios em public/audio/sons (ou gravados pelo adulto no Estúdio de sons),
+ *    tocados por servicos/sons-letras.ts. É a única voz diferente da dupla, autorizada só para o som da letra (D029 §2).
  */
 import type { Personagem } from '@fonema/conteudo';
 import { modoTeste } from './ambiente.ts';
+import { fonemaDoTexto, fonemasDaSequencia, sonsLetras } from './sons-letras.ts';
 
-/** rate/pitchExtra só valem para a voz do aparelho (simulação de pronúncia); as vozes oficiais nunca são esticadas. */
+/** `rate` e `pitchExtra` são ignorados (ficaram só para não quebrar chamadas antigas): a voz nunca é esticada. */
 export interface OpcoesFala { quem?: Personagem; rate?: number; pitchExtra?: number }
 
 export interface ProvedorVoz {
@@ -16,63 +19,32 @@ export interface ProvedorVoz {
   parar(): void;
 }
 
-const TIMBRE: Record<string, { pitch: number; rate: number }> = {
-  sofia: { pitch: 1.35, rate: 1 },
-  tales: { pitch: 1.12, rate: 1.03 },
-  bolota: { pitch: 0.85, rate: 0.92 },
-  'dona-cida': { pitch: 1.0, rate: 0.9 },
-  davi: { pitch: 1.2, rate: 1 },
-  'guarda-parque': { pitch: 0.95, rate: 0.95 },
-  pescadora: { pitch: 1.1, rate: 0.95 },
-  'zum-zum': { pitch: 1.5, rate: 1.1 }
-};
-
-let vozPt: SpeechSynthesisVoice | null = null;
-function escolherVoz() {
-  if (typeof speechSynthesis === 'undefined') return;
-  const vs = speechSynthesis.getVoices();
-  vozPt = vs.find((v) => /pt[-_]BR/i.test(v.lang) && /female|luciana|francisca|google/i.test(v.name)) ?? vs.find((v) => /pt[-_]BR/i.test(v.lang)) ?? vs.find((v) => /^pt/i.test(v.lang)) ?? null;
-}
-if (typeof speechSynthesis !== 'undefined') {
-  escolherVoz();
-  speechSynthesis.onvoiceschanged = escolherVoz;
-}
-
-export class ProvedorNavegador implements ProvedorVoz {
-  velocidade = 0.95;
-  falar(texto: string, o: OpcoesFala = {}): Promise<void> {
+/**
+ * Reserva SILENCIOSA: quando não há clipe oficial, ninguém fala (o texto fica no balão) e a tela segue no ritmo
+ * da leitura. Substitui a antiga voz do aparelho (speechSynthesis), que não é mais usada em lugar nenhum.
+ */
+export class ProvedorSilencioso implements ProvedorVoz {
+  falar(texto: string): Promise<void> {
     const limpo = texto.replace(/[/*_]/g, '').trim();
     if (!limpo) return Promise.resolve();
-    if (modoTeste() || typeof speechSynthesis === 'undefined') return new Promise((r) => setTimeout(r, modoTeste() ? 20 : 400));
-    const t = TIMBRE[o.quem ?? 'sofia'] ?? TIMBRE.sofia;
-    return new Promise((resolve) => {
-      const u = new SpeechSynthesisUtterance(limpo);
-      u.lang = 'pt-BR';
-      if (vozPt) u.voice = vozPt;
-      u.pitch = Math.min(2, t.pitch + (o.pitchExtra ?? 0));
-      u.rate = (o.rate ?? 1) * t.rate * this.velocidade;
-      let feito = false;
-      const fim = () => { if (!feito) { feito = true; resolve(); } };
-      u.onend = fim;
-      u.onerror = fim;
-      // alguns navegadores não disparam "end": tempo máximo pela duração estimada
-      setTimeout(fim, 1200 + limpo.length * 85 / (u.rate || 1));
-      speechSynthesis.speak(u);
-    });
+    return new Promise((r) => setTimeout(r, modoTeste() ? 20 : Math.min(2500, 400 + limpo.length * 35)));
   }
-  parar() { if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel(); }
+  parar() { /* nada tocando */ }
 }
 
 /** Falas sem áudio oficial nesta sessão (para o relatório do gerador; veja window.__fonemaFaltando). */
 export const faltando = new Set<string>();
 if (typeof window !== 'undefined') (window as any).__fonemaFaltando = faltando;
 
-/** Personagens sem voz própria usam a voz da Sofia ou do Tales com outro ritmo (até terem dubladores). */
-export const VOZ_DO_PERSONAGEM: Record<string, { voz: 'sofia' | 'tales'; rate: number }> = {
-  sofia: { voz: 'sofia', rate: 1 }, tales: { voz: 'tales', rate: 1 }, bolota: { voz: 'tales', rate: 0.86 },
-  davi: { voz: 'tales', rate: 1.05 }, 'dona-cida': { voz: 'sofia', rate: 0.9 }, pescadora: { voz: 'sofia', rate: 0.95 },
-  'guarda-parque': { voz: 'tales', rate: 0.9 }, 'zum-zum': { voz: 'tales', rate: 1.12 }
+/**
+ * Qual das DUAS vozes diz a fala de cada personagem (D029 §5). Não há mais tom nem ritmo por personagem:
+ * o conteúdo novo já atribui as falas à Sofia ou ao Tales; este mapa só cobre dados antigos.
+ */
+export const VOZ_DO_PERSONAGEM: Record<string, 'sofia' | 'tales'> = {
+  sofia: 'sofia', tales: 'tales', bolota: 'tales', davi: 'tales', 'dona-cida': 'sofia', pescadora: 'sofia',
+  'guarda-parque': 'tales', 'zum-zum': 'tales'
 };
+const vozDe = (quem: string | undefined): 'sofia' | 'tales' => VOZ_DO_PERSONAGEM[quem ?? 'sofia'] ?? 'sofia';
 
 /** Chave de um trecho de fala (sem pontuação solta no começo). Mesma regra do gerador (scripts/gerar-vozes.mjs). */
 export function chaveTrecho(t: string): string {
@@ -176,8 +148,7 @@ export class ProvedorPreGerado implements ProvedorVoz {
   }
   /** Existe clipe para este trecho (sem nome) nesta voz? */
   temTrecho(texto: string, quem: string): boolean {
-    const v = VOZ_DO_PERSONAGEM[quem] ?? VOZ_DO_PERSONAGEM.sofia;
-    return !!this.falas?.[`${v.voz}|${chaveTrecho(texto)}`];
+    return !!this.falas?.[`${vozDe(quem)}|${chaveTrecho(texto)}`];
   }
   /** Lista de arquivos para uma fala, ou null se faltar algum trecho. */
   arquivos(texto: string, quem: string): string[] | null {
@@ -186,7 +157,7 @@ export class ProvedorPreGerado implements ProvedorVoz {
   /** Trechos da fala em ordem, com a pausa extra depois de cada um. */
   plano(texto: string, quem: string): { arquivo: string; pausaMs: number }[] | null {
     if (!this.falas) return null;
-    const v = VOZ_DO_PERSONAGEM[quem] ?? VOZ_DO_PERSONAGEM.sofia;
+    const v = { voz: vozDe(quem) };
     const partes = this.nome ? texto.split(this.nome) : [texto];
     const temNome = this.nome && this.nomes[v.voz]?.includes(chaveNome(this.nome));
     const out: { arquivo: string; pausaMs: number }[] = [];
@@ -205,18 +176,12 @@ export class ProvedorPreGerado implements ProvedorVoz {
     const quem = o.quem ?? 'sofia';
     const plano = this.plano(texto, quem);
     if (modoTeste()) return this.reserva.falar(texto, o);
-    if (!plano && /^[\s…,.!?-]*((\p{L})\2{2,}[\s…,.!?-]*)+$/iu.test(texto)) {
-      // sequência de sons isolados ("sss… ooo… lll"): ainda sem gravação da fonoaudióloga → voz do aparelho como último recurso
+    if (!plano) {
+      // sem áudio oficial: NUNCA voz do aparelho; o texto fica no balão e a tela segue no ritmo da leitura
+      faltando.add(`${vozDe(quem)}|${texto}`);
       return this.reserva.falar(texto, o);
     }
-    if (!plano) {
-      // sem áudio oficial: NUNCA voz robótica para a Sofia/Tales; o texto fica no balão e a tela segue no ritmo da leitura
-      faltando.add(`${(VOZ_DO_PERSONAGEM[quem] ?? VOZ_DO_PERSONAGEM.sofia).voz}|${texto}`);
-      return new Promise((r) => setTimeout(r, Math.min(2500, 400 + texto.length * 35)));
-    }
     const g = ++this.geracao;
-    // personagens sem dublador próprio (Bolota, Dona Cida…) usam a voz da dupla em outro ritmo/tom; Sofia e Tales tocam sempre em 1×
-    const rate = VOZ_DO_PERSONAGEM[quem]?.rate ?? 1;
     // carrega TODOS os trechos antes de começar (e espera o finzinho da fala anterior)
     const [els] = await Promise.all([Promise.all(plano.map(async (p) => carregar(await urlDoAudio(p.arquivo)))), this.cauda]);
     for (let i = 0; i < els.length; i++) {
@@ -229,9 +194,8 @@ export class ProvedorPreGerado implements ProvedorVoz {
       });
       this.atual = el;
       this.cauda = fim;
-      el.playbackRate = rate;
-      (el as any).preservesPitch = rate === 1;
-      avisar('fonema:fala', { quem, voz: (VOZ_DO_PERSONAGEM[quem] ?? VOZ_DO_PERSONAGEM.sofia).voz, texto, audio: el, arquivo: plano[i].arquivo.replace(/^\.\//, ''), inicio: performance.now(), trecho: i, trechos: els.length });
+      el.playbackRate = 1; // D029 §5: nunca mudar tom nem velocidade
+      avisar('fonema:fala', { quem, voz: vozDe(quem), texto, audio: el, arquivo: plano[i].arquivo.replace(/^\.\//, ''), inicio: performance.now(), trecho: i, trechos: els.length });
       el.play().catch(() => el.onerror?.(new Event('error')));
       await fim;
       if (this.atual === el) this.atual = null;
@@ -281,7 +245,7 @@ export class ProvedorPreGerado implements ProvedorVoz {
 function coletar(texto: string, quem: Personagem | undefined, nome: string) {
   try {
     if (localStorage.getItem('fonema-coletar') !== '1') return;
-    const v = (VOZ_DO_PERSONAGEM[quem ?? 'sofia'] ?? VOZ_DO_PERSONAGEM.sofia).voz;
+    const v = vozDe(quem);
     const t = nome ? texto.split(nome).join('[NOME]') : texto;
     const k = 'fonema-falas';
     const atual = JSON.parse(localStorage.getItem(k) || '[]') as string[];
@@ -293,7 +257,7 @@ function coletar(texto: string, quem: Personagem | undefined, nome: string) {
 /** Fachada usada pelas telas: liga/desliga e troca de provedor num lugar só. */
 class Voz {
   ligada = true;
-  private nav = new ProvedorNavegador();
+  private nav = new ProvedorSilencioso();
   private pre = new ProvedorPreGerado(this.nav);
   private provedor: ProvedorVoz = this.pre;
   /** Nome (na pronúncia escolhida) da criança desta tela, para encaixar o clipe do nome. */
@@ -301,8 +265,7 @@ class Voz {
   private fila: Promise<void> = Promise.resolve();
   configurar(o: { ligada?: boolean; velocidade?: number; provedor?: 'navegador' | 'pre-gerada' }) {
     if (o.ligada !== undefined) this.ligada = o.ligada;
-    if (o.velocidade) this.nav.velocidade = o.velocidade;
-    if (o.provedor === 'navegador') this.provedor = this.nav;
+    // `velocidade` e `provedor: 'navegador'` não têm mais efeito (D029 §5): só as vozes oficiais, em 1×
   }
   /** Fala agora (interrompe o que estava falando). */
   falar(texto: string, o?: OpcoesFala): Promise<void> {
@@ -311,14 +274,6 @@ class Voz {
     if (!this.ligada) return Promise.resolve();
     this.fila = this.provedor.falar(texto, o);
     return this.fila;
-  }
-  /**
-   * Simulação de PRONÚNCIA no cadastro do adulto (variações de tônica/ritmo de um nome qualquer):
-   * única situação em que a voz do aparelho é usada de propósito. No produto, vira 3 versões geradas no ElevenLabs.
-   */
-  simularPronuncia(texto: string, o?: OpcoesFala): Promise<void> {
-    this.parar();
-    return this.ligada ? this.nav.falar(texto, o) : Promise.resolve();
   }
   /** O nome tem clipe gravado nas vozes oficiais? (lista de nomes comuns) */
   async temNome(nome: string): Promise<boolean> {

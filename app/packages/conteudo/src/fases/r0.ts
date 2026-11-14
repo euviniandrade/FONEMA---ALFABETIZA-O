@@ -3,7 +3,7 @@
  * Consciência fonológica oral: nome, rima, sílaba, som inicial, síntese. A criança ainda não lê.
  */
 import type { Fase } from '../tipos.ts';
-import { bolota, davi, donaCida, itemFig, itemSimNao, sofia, tales } from '../construtores.ts';
+import { itemFig, itemSimNao, sofia, tales } from '../construtores.ts';
 
 export const FASES_R0: Fase[] = [
   {
@@ -90,17 +90,17 @@ export const FASES_R0: Fase[] = [
         assiste: {
           imagem: 'dupla-praca',
           roteiro: [
-            donaCida('Escuta: GATO… PATO. Terminam igual: g-ATO, p-ATO!'),
-            donaCida('MÃO… PÃO. Também terminam igual!'),
+            sofia('Escuta: GATO… PATO. Terminam igual: g-ATO, p-ATO!'),
+            sofia('MÃO… PÃO. Também terminam igual!'),
             sofia('Quando termina igual, a gente diz que RIMA.'),
             tales('Agora é a sua vez, [NOME]!')
           ]
         },
         atividade: {
           tipo: 'escolher', estilo: 'tocar', habilidade: 'rima',
-          enunciado: donaCida('Qual rima com GATO, [NOME]?'),
+          enunciado: sofia('Qual rima com GATO, [NOME]?'),
           itens: [itemFig('gato… qual rima com gato?', 'pato', 'bola')],
-          comemora: donaCida('GATO e PATO terminam igual!')
+          comemora: sofia('GATO e PATO terminam igual!')
         }
       },
       {
@@ -125,9 +125,9 @@ export const FASES_R0: Fase[] = [
         id: 'R0-F02-C8', tipo: 'C8', titulo: 'O Bolota se confundiu', cenario: 'quintal', contaDominio: true,
         atividade: {
           tipo: 'escolher', estilo: 'ensinar', habilidade: 'rima',
-          enunciado: bolota('Ops! Eu disse que BOLA rima com MESA. Me ensina, [NOME]? Qual rima com BOLA?'),
+          enunciado: tales('Ops! O Bolota disse que BOLA rima com MESA. Ensina para ele, [NOME]? Qual rima com BOLA?'),
           itens: [itemFig('bola… qual rima com bola?', 'cola', 'mesa'), itemFig('gato… qual rima com gato?', 'pato', 'sol'), itemFig('janela… qual rima com janela?', 'panela', 'uva')],
-          comemora: bolota('Ahh, agora eu entendi! Obrigado, [NOME]!')
+          comemora: tales('Ahh, agora o Bolota entendeu! Obrigado, [NOME]!')
         }
       }
     ],
@@ -152,9 +152,9 @@ export const FASES_R0: Fase[] = [
         id: 'R0-F03-C2', tipo: 'C2', titulo: 'O pandeiro do Davi', cenario: 'praca', contaDominio: true,
         assiste: {
           imagem: 'serie-palmas',
-          roteiro: [davi('PI… PO… CA! Uma batida para cada pedacinho.'), tales('Três pedacinhos!'), tales('Agora é a sua vez, [NOME]! Uma palma para cada pedacinho.')]
+          roteiro: [tales('PI… PO… CA! Uma batida para cada pedacinho.'), tales('Três pedacinhos!'), tales('Agora é a sua vez, [NOME]! Uma palma para cada pedacinho.')]
         },
-        atividade: { tipo: 'palmas', habilidade: 'silaba', palavras: ['pipoca'], enunciado: davi('Bate comigo: PIPOCA!'), comemora: davi('PI-PO-CA! Três palmas!') }
+        atividade: { tipo: 'palmas', habilidade: 'silaba', palavras: ['pipoca'], enunciado: tales('Bate comigo: PIPOCA!'), comemora: tales('PI-PO-CA! Três palmas!') }
       },
       {
         id: 'R0-F03-C4', tipo: 'C4', titulo: 'Varal de lâmpadas', cenario: 'praca', contaDominio: true,
@@ -172,7 +172,7 @@ export const FASES_R0: Fase[] = [
         id: 'R0-F03-C6b', tipo: 'C6', titulo: 'Roda de respeito (capoeira como esporte)', cenario: 'praca', marcador: 'esporte-capoeira',
         atividade: {
           tipo: 'palmas', estilo: 'capoeira', habilidade: 'silaba', palavras: ['ginga', 'peteca'],
-          enunciado: davi('Na roda a gente joga junto, ninguém bate em ninguém. Uma palma por pedacinho, [NOME]!')
+          enunciado: tales('Na roda a gente joga junto, ninguém bate em ninguém. Uma palma por pedacinho, [NOME]!')
         }
       },
       {
@@ -227,9 +227,9 @@ export const FASES_R0: Fase[] = [
         id: 'R0-F04-C8', tipo: 'C8', titulo: 'Começam igual?', cenario: 'quintal', contaDominio: true,
         atividade: {
           tipo: 'escolher', estilo: 'ensinar', habilidade: 'som-inicial',
-          enunciado: bolota('Eu acho que SAPO e MALA começam igual… Começam, [NOME]?'),
+          enunciado: tales('O Bolota acha que SAPO e MALA começam igual… Começam, [NOME]?'),
           itens: [itemSimNao('sapo… mala', false), itemSimNao('sapo… sol', true), itemSimNao('mala… macaco', true), itemSimNao('foca… lua', false)],
-          comemora: bolota('Você me ensinou! Valeu, [NOME]!')
+          comemora: tales('Você ensinou o Bolota! Valeu, [NOME]!')
         }
       }
     ],
@@ -252,12 +252,12 @@ export const FASES_R0: Fase[] = [
     cenas: [
       {
         id: 'R0-F05-C2', tipo: 'C2', titulo: 'Fala de tatu', cenario: 'quintal', contaDominio: true,
-        assiste: { imagem: 'serie-bolota', roteiro: [bolota('Bo… la.'), sofia('O Bolota falou bem devagar. Junta comigo: bo… la… BOLA!'), tales('Agora é a sua vez, [NOME]!')] },
+        assiste: { imagem: 'serie-bolota', roteiro: [sofia('O Bolota fala assim, bem devagar: bo… la. Junta comigo: bo… la… BOLA!'), tales('Agora é a sua vez, [NOME]!')] },
         atividade: {
           tipo: 'escolher', estilo: 'sintese', habilidade: 'sintese',
           enunciado: sofia('O que o Bolota disse, [NOME]?'),
           itens: [itemFig('bo… la', 'bola', 'mala'), itemFig('pa… to', 'pato', 'gato'), itemFig('ca… sa', 'casa', 'mesa')],
-          comemora: bolota('Isso! Você me entendeu!')
+          comemora: tales('Isso! Você entendeu o Bolota!')
         }
       },
       {
@@ -316,7 +316,7 @@ export const FASES_R0: Fase[] = [
       },
       {
         id: 'R0-F06-C4d', tipo: 'C4', titulo: 'Estação 4: fala de tatu', cenario: 'praca', contaDominio: true,
-        atividade: { tipo: 'escolher', estilo: 'sintese', habilidade: 'sintese', enunciado: bolota('Me escuta, [NOME]!'), itens: [itemFig('ma… ca… co', 'macaco', 'moto', 'mala'), itemFig('sss… ooo… lll', 'sol', 'lua', 'mel')] }
+        atividade: { tipo: 'escolher', estilo: 'sintese', habilidade: 'sintese', enunciado: tales('Escuta o que o Bolota falou, [NOME]!'), itens: [itemFig('ma… ca… co', 'macaco', 'moto', 'mala'), itemFig('sss… ooo… lll', 'sol', 'lua', 'mel')] }
       },
       {
         id: 'R0-F06-C7', tipo: 'C7', titulo: 'Álbum da minha família', cenario: 'praca',

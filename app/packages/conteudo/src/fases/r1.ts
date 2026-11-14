@@ -2,7 +2,7 @@
  * R1 · Ilha das Vogais (jogo-completo/02, semanas 3–6). Som ≠ nome da letra.
  */
 import type { Fase } from '../tipos.ts';
-import { bolota, itemFig, itemLetra, pescadora, sofia, tales } from '../construtores.ts';
+import { itemFig, itemLetra, sofia, tales } from '../construtores.ts';
 
 export const FASES_R1: Fase[] = [
   {
@@ -51,7 +51,7 @@ export const FASES_R1: Fase[] = [
       },
       {
         id: 'R1-F02-C3', tipo: 'C3', titulo: 'Vovó ou vovô?', cenario: 'ilha', contaDominio: true,
-        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'o-aberto-fechado', enunciado: pescadora('É a vovó ou o vovô, [NOME]?'), itens: [itemFig('vovó', 'vovó', 'vovô'), itemFig('vovô', 'vovô', 'vovó'), itemFig('vovó', 'vovó', 'vovô'), itemFig('vovô', 'vovô', 'vovó')], comemora: pescadora('Você ouviu a diferença!') }
+        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'o-aberto-fechado', enunciado: sofia('É a vovó ou o vovô, [NOME]?'), itens: [itemFig('vovó', 'vovó', 'vovô'), itemFig('vovô', 'vovô', 'vovó'), itemFig('vovó', 'vovó', 'vovô'), itemFig('vovô', 'vovô', 'vovó')], comemora: sofia('Você ouviu a diferença!') }
       },
       {
         id: 'R1-F02-C4', tipo: 'C4', titulo: 'Bolhas para o peixe-boi', cenario: 'mar', contaDominio: true,
@@ -59,7 +59,7 @@ export const FASES_R1: Fase[] = [
       },
       {
         id: 'R1-F02-C8', tipo: 'C8', titulo: 'O Bolota trocou A e O', cenario: 'ilha', contaDominio: true,
-        atividade: { tipo: 'escolher', estilo: 'ensinar', habilidade: 'vogal-o', enunciado: bolota('Ops! Eu acho que esse som é do A… Me ensina?'), itens: [itemLetra('ôôôô', 'O', 'A'), itemLetra('aaaa', 'A', 'O'), itemLetra('óóóó', 'O', 'A')], comemora: bolota('Você me ensinou direitinho!') }
+        atividade: { tipo: 'escolher', estilo: 'ensinar', habilidade: 'vogal-o', enunciado: tales('Ops! O Bolota acha que esse som é do A… Ensina para ele?'), itens: [itemLetra('ôôôô', 'O', 'A'), itemLetra('aaaa', 'A', 'O'), itemLetra('óóóó', 'O', 'A')], comemora: tales('Você ensinou direitinho!') }
       }
     ],
     gancho: sofia('Amanhã a gente descobre o E, que também tem dois jeitos!'),

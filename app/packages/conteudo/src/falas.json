@@ -246,12 +246,6 @@
   "origem": "figuras"
  },
  {
-  "id": "s-19z8rh3",
-  "voz": "sofia",
-  "texto": "Me ajuda a bordar, [NOME]? Um carretel para cada pedacinho.",
-  "origem": "telas (E2E)"
- },
- {
   "id": "s-1a5bawm",
   "voz": "sofia",
   "texto": "Olha como a boca faz cada som: os lábios, os dentes e a língua mudam de lugar. Escolha um som!",
@@ -267,12 +261,6 @@
   "id": "s-1asmjqs",
   "voz": "sofia",
   "texto": "llll… lua!",
-  "origem": "telas (E2E)"
- },
- {
-  "id": "s-1avoeg9",
-  "voz": "sofia",
-  "texto": "Amanhã venha me ajudar a bordar, [NOME]. Tenho um fio que faz /fff/!",
   "origem": "telas (E2E)"
  },
  {
@@ -1572,6 +1560,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1xnuzv8",
+  "voz": "sofia",
+  "texto": "Amanhã a Dona Cida vai bordar com você, [NOME]. Ela tem um fio que faz /fff/!",
+  "origem": "R2a-F02"
+ },
+ {
   "id": "s-1yf579q",
   "voz": "sofia",
   "texto": "A concha abriu!",
@@ -2400,6 +2394,12 @@
   "origem": "AL-R4-C3a"
  },
  {
+  "id": "s-tb8y1h",
+  "voz": "sofia",
+  "texto": "Ajuda a Dona Cida a bordar, [NOME]? Um carretel para cada pedacinho.",
+  "origem": "R2a-F03-C4"
+ },
+ {
   "id": "s-tdn7n3",
   "voz": "sofia",
   "texto": "helicóptero",
@@ -2451,12 +2451,6 @@
   "id": "s-wsnmlu",
   "voz": "sofia",
   "texto": "Ovelha",
-  "origem": "telas (E2E)"
- },
- {
-  "id": "s-x25bp3",
-  "voz": "sofia",
-  "texto": "O Bolota falou bem devagar. Junta comigo: bo… la… BOLA!",
   "origem": "telas (E2E)"
  },
  {
@@ -2535,12 +2529,6 @@
   "id": "s-zz715h",
   "voz": "sofia",
   "texto": "Qual rima com GATO, [NOME]?",
-  "origem": "telas (E2E)"
- },
- {
-  "id": "t-106uhle",
-  "voz": "tales",
-  "texto": "Ops! Eu acho que esse som é do A… Me ensina?",
   "origem": "telas (E2E)"
  },
  {
@@ -2638,6 +2626,12 @@
   "voz": "tales",
   "texto": "Fff… cadê o que começa com fff?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-15waase",
+  "voz": "tales",
+  "texto": "Ops! O Bolota acha que esse som é do A… Ensina para ele?",
+  "origem": "R1-F02-C8"
  },
  {
   "id": "t-16afgct",
@@ -2862,12 +2856,6 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "t-1fotjb7",
-  "voz": "tales",
-  "texto": "Eu li \"LALA\"… Ops! Me ensina, [NOME]? Como se lê?",
-  "origem": "telas (E2E)"
- },
- {
   "id": "t-1g26fuf",
   "voz": "tales",
   "texto": "B, de bola.",
@@ -2920,6 +2908,12 @@
   "voz": "tales",
   "texto": "O H não faz som sozinho.",
   "origem": "AL-H-C2"
+ },
+ {
+  "id": "t-1k8otqw",
+  "voz": "tales",
+  "texto": "O Bolota leu \"LALA\"… Ops! Ensina para ele, [NOME]? Como se lê?",
+  "origem": "R2a-F02-C8"
  },
  {
   "id": "t-1k986gf",
@@ -3390,6 +3384,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-1xuz4l0",
+  "voz": "tales",
+  "texto": "Isso! Você entendeu o Bolota!",
+  "origem": "AL-R4-C3a"
+ },
+ {
   "id": "t-20jjsj",
   "voz": "tales",
   "texto": "A ponta da língua subiu!",
@@ -3456,12 +3456,6 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "t-6e3ybz",
-  "voz": "tales",
-  "texto": "Agora eu sei! M é /mmm/, L é /lll/!",
-  "origem": "telas (E2E)"
- },
- {
   "id": "t-733h3j",
   "voz": "tales",
   "texto": "Hoje é a Festa das Rimas, [NOME]! São 4 estações. Cada uma acende uma lanterna.",
@@ -3472,6 +3466,12 @@
   "voz": "tales",
   "texto": "A tartaruga volta! Valeu, [NOME]!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-7n00ko",
+  "voz": "tales",
+  "texto": "Agora o Bolota conhece a mata!",
+  "origem": "R2a-F05-C7"
  },
  {
   "id": "t-8495tb",
@@ -3486,10 +3486,10 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "t-98g7pm",
+  "id": "t-8xpboj",
   "voz": "tales",
-  "texto": "Ops! Eu disse que BOLA rima com MESA. Me ensina, [NOME]? Qual rima com BOLA?",
-  "origem": "telas (E2E)"
+  "texto": "Ajuda o Bolota a fazer o guia da mata? Lê a figurinha!",
+  "origem": "R2a-F05-C7"
  },
  {
   "id": "t-a34kgc",
@@ -3648,12 +3648,6 @@
   "origem": "R1-F03"
  },
  {
-  "id": "t-go8403",
-  "voz": "tales",
-  "texto": "Você me ensinou! Valeu, [NOME]!",
-  "origem": "telas (E2E)"
- },
- {
   "id": "t-gorna0",
   "voz": "tales",
   "texto": "Tem alguém chamando lá do outro lado da ponte, [NOME]! A ponte está em obras… e um tucano espia.",
@@ -3666,33 +3660,21 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "t-hohrig",
-  "voz": "tales",
-  "texto": "Isso! Você me entendeu!",
-  "origem": "telas (E2E)"
- },
- {
-  "id": "t-hzkoxc",
-  "voz": "tales",
-  "texto": "Ahh, agora eu entendi! Obrigado, [NOME]!",
-  "origem": "telas (E2E)"
- },
- {
   "id": "t-i1nw9b",
   "voz": "tales",
   "texto": "Festa do Alfabeto!",
   "origem": "AL-FESTA"
  },
  {
+  "id": "t-idht80",
+  "voz": "tales",
+  "texto": "Agora o Bolota sabe ler direitinho!",
+  "origem": "R2a-F02-C8"
+ },
+ {
   "id": "t-iv3ocw",
   "voz": "tales",
   "texto": "Janela… qual rima com janela?",
-  "origem": "telas (E2E)"
- },
- {
-  "id": "t-iy7x8n",
-  "voz": "tales",
-  "texto": "Eu acho que SAPO e MALA começam igual… Começam, [NOME]?",
   "origem": "telas (E2E)"
  },
  {
@@ -3756,12 +3738,6 @@
   "origem": "AL-X-C2"
  },
  {
-  "id": "t-nghhhb",
-  "voz": "tales",
-  "texto": "Me ajuda a fazer o guia da mata? Lê a figurinha!",
-  "origem": "telas (E2E)"
- },
- {
   "id": "t-nh4xb5",
   "voz": "tales",
   "texto": "Agora é a sua vez, [NOME]! Quantas palmas tem o seu nome?",
@@ -3772,6 +3748,12 @@
   "voz": "tales",
   "texto": "VOVÔ: a boca fecha mais, redondinha. Ôôô.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-o3nxol",
+  "voz": "tales",
+  "texto": "Você ensinou direitinho!",
+  "origem": "R1-F02-C8"
  },
  {
   "id": "t-orq89r",
@@ -3882,12 +3864,6 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "t-udeibe",
-  "voz": "tales",
-  "texto": "Agora eu sei a mata!",
-  "origem": "telas (E2E)"
- },
- {
   "id": "t-uzc3z3",
   "voz": "tales",
   "texto": "Falar o som das 5 vogais e tocar cada letra.",
@@ -3900,22 +3876,10 @@
   "origem": "AL-R2-C3a"
  },
  {
-  "id": "t-wbksjt",
-  "voz": "tales",
-  "texto": "Me escuta, [NOME]!",
-  "origem": "telas (E2E)"
- },
- {
   "id": "t-x44x86",
   "voz": "tales",
   "texto": "V, de vaca.",
   "origem": "AL-FESTA-C4b"
- },
- {
-  "id": "t-yclrv1",
-  "voz": "tales",
-  "texto": "Você me ensinou direitinho!",
-  "origem": "telas (E2E)"
  },
  {
   "id": "t-yddfon",

@@ -3,7 +3,7 @@
  * Toda palavra LIDA aqui usa só M, L, F e vogais (linter de decodificabilidade).
  */
 import type { Fase } from '../tipos.ts';
-import { bolota, donaCida, guarda, itemLer, itemLetra, itemSilaba, sofia, tales } from '../construtores.ts';
+import { itemLer, itemLetra, itemSilaba, sofia, tales } from '../construtores.ts';
 
 export const FASES_R2A: Fase[] = [
   {
@@ -57,17 +57,17 @@ export const FASES_R2A: Fase[] = [
         id: 'R2a-F02-C8', tipo: 'C8', titulo: 'O Bolota leu errado', cenario: 'mata', contaDominio: true,
         atividade: {
           tipo: 'escolher', estilo: 'ensinar', habilidade: 'gpc-l',
-          enunciado: bolota('Eu li "LALA"… Ops! Me ensina, [NOME]? Como se lê?'),
+          enunciado: tales('O Bolota leu "LALA"… Ops! Ensina para ele, [NOME]? Como se lê?'),
           itens: [
             { mostrar: 'MALA', correta: 'mala', opcoes: [{ id: 'lala', rotulo: '"lala"', figura: '🔊', falar: 'lala' }, { id: 'mala', rotulo: '"mala"', figura: '🔊', falar: 'mala' }] },
             { mostrar: 'LUA', correta: 'lua', opcoes: [{ id: 'lua', rotulo: '"lua"', figura: '🔊', falar: 'lua' }, { id: 'mua', rotulo: '"mua"', figura: '🔊', falar: 'mua' }] },
             { mostrar: 'MOLA', correta: 'mola', opcoes: [{ id: 'lola', rotulo: '"lola"', figura: '🔊', falar: 'lola' }, { id: 'mola', rotulo: '"mola"', figura: '🔊', falar: 'mola' }] }
           ],
-          comemora: bolota('Agora eu sei! M é /mmm/, L é /lll/!')
+          comemora: tales('Agora o Bolota sabe ler direitinho!')
         }
       }
     ],
-    gancho: donaCida('Amanhã venha me ajudar a bordar, [NOME]. Tenho um fio que faz /fff/!'),
+    gancho: sofia('Amanhã a Dona Cida vai bordar com você, [NOME]. Ela tem um fio que faz /fff/!'),
     fechamento: 'A lua apareceu no lago quando você leu LUA.',
     emCasa: 'Procurar o L em embalagens e fazer o som /lll/ (não "ele").',
     conquistas: ['S-SOM-L', 'S-R2a-02', 'S-R2a-06'],
@@ -89,11 +89,11 @@ export const FASES_R2A: Fase[] = [
       },
       {
         id: 'R2a-F03-C4', tipo: 'C4', titulo: 'Os carretéis da Dona Cida', cenario: 'mata', contaDominio: true,
-        atividade: { tipo: 'montar', habilidade: 'silaba-cv', palavras: ['FILA', 'FALA', 'FOFO'], mostrarModelo: true, porSilaba: true, distratoras: ['MU', 'LE'], enunciado: donaCida('Me ajuda a bordar, [NOME]? Um carretel para cada pedacinho.'), comemora: donaCida('Ficou um bordado lindo!') }
+        atividade: { tipo: 'montar', habilidade: 'silaba-cv', palavras: ['FILA', 'FALA', 'FOFO'], mostrarModelo: true, porSilaba: true, distratoras: ['MU', 'LE'], enunciado: sofia('Ajuda a Dona Cida a bordar, [NOME]? Um carretel para cada pedacinho.'), comemora: sofia('Ficou um bordado lindo!') }
       },
       {
         id: 'R2a-F03-C5', tipo: 'C5', titulo: 'A placa do vale', cenario: 'mata', contaDominio: true,
-        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'gpc-f', enunciado: guarda('A placa apagou! Qual sílaba falta aqui, [NOME]?'), itens: [itemSilaba('__LA (FALA)', 'FA', 'MA', 'LU'), itemSilaba('__FO (FOFO)', 'FO', 'MO', 'LI'), itemSilaba('__LA (FILA)', 'FI', 'MI', 'LA')], comemora: guarda('A placa do vale voltou a funcionar!') }
+        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'gpc-f', enunciado: tales('A placa apagou! Qual sílaba falta aqui, [NOME]?'), itens: [itemSilaba('__LA (FALA)', 'FA', 'MA', 'LU'), itemSilaba('__FO (FOFO)', 'FO', 'MO', 'LI'), itemSilaba('__LA (FILA)', 'FI', 'MI', 'LA')], comemora: tales('A placa do vale voltou a funcionar!') }
       }
     ],
     gancho: tales('Amanhã a ponte do rio precisa da sua leitura, [NOME]!'),
@@ -154,7 +154,7 @@ export const FASES_R2A: Fase[] = [
       },
       {
         id: 'R2a-F05-C7', tipo: 'C7', titulo: 'Guia da mata para o Bolota', cenario: 'mata',
-        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'leitura-cvcv', enunciado: bolota('Me ajuda a fazer o guia da mata? Lê a figurinha!'), itens: [itemLer('MULA', 'MULA', 'lua'), itemLer('LULA', 'LULA', 'mala')], comemora: bolota('Agora eu sei a mata!') }
+        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'leitura-cvcv', enunciado: tales('Ajuda o Bolota a fazer o guia da mata? Lê a figurinha!'), itens: [itemLer('MULA', 'MULA', 'lua'), itemLer('LULA', 'LULA', 'mala')], comemora: tales('Agora o Bolota conhece a mata!') }
       }
     ],
     gancho: tales('Tem alguém chamando lá do outro lado da ponte, [NOME]! A ponte está em obras… e um tucano espia.'),
