@@ -1,72 +1,70 @@
 import { useEffect, useRef, useState } from 'react';
-import { som } from '@fonema/conteudo';
 import { asset } from '../servicos/ambiente.ts';
 
 /**
- * Espelho do Som (D020): boca da Sofia/Tales DE FRENTE + RAIO-X DE LADO.
- * Integra a demo de docs/propostas/06-fonema-unificada/espelho-do-som-3d (copiada para ./espelho/ no build)
- * por meio de ./espelho-embed.html. Sem a demo, usa as imagens (placeholder).
- * P8-b: na lição, só frente + lado; "dentro da boca" e 360° ficam em "Conheça seu corpo".
+ * Espelho do Som (D020) dentro do app.
+ *
+ * VISTA PADRÃO: a boca DE FRENTE ("Boca gigante"). O raio-X escuro antigo saiu (reprovado pelo dono).
+ *
+ * 1) Com o componente novo (docs/.../espelho-do-som-3d/embed.html, copiado para ./espelho/ no build): iframe
+ *    `./espelho/embed.html?f=<fonema>&vista=frente&quem=sofia&compacto=1`, com as abas "De frente / De lado"
+ *    (lado = perfil 3D da Sofia ou do Tales). O app troca o som por postMessage `{ tipo: 'espelho:fonema', f }`.
+ *    A VOZ continua vindo do app (mp3 oficiais), então o embed não toca nada sozinho.
+ * 2) Sem o embed (pasta ausente): as bocas ilustradas por visema de public/assets/espelho/frente-*.webp.
+ *
+ * PONTO DE TROCA: `USAR_EMBED_NOVO` (desligue para voltar às imagens) e a URL em `urlEmbed`.
  */
-const QUADROS_SOFIA = ['A', 'CH', 'E', 'F', 'L', 'M', 'O', 'S'];
-const QUADROS_TALES = ['A', 'E', 'I', 'M', 'O', 'U'];
-const QUADRO_DO_FONEMA: Record<string, string> = { a: 'A', 'a~': 'A', E: 'E', e: 'E', 'e~': 'E', i: 'I', 'i~': 'I', O: 'O', o: 'O', 'o~': 'O', u: 'U', 'u~': 'U', m: 'M', p: 'M', b: 'M', f: 'F', v: 'F', l: 'L', lh: 'L', s: 'S', z: 'S', t: 'S', d: 'S', n: 'S', x: 'CH', j: 'CH' };
+export const USAR_EMBED_NOVO = true;
+const urlEmbed = (fonema: string) => `./espelho/embed.html?f=${encodeURIComponent(fonema)}&vista=frente&quem=sofia&compacto=1&audioBase=${encodeURIComponent('../audio/falas/')}`;
 
-export function quadroFrente(fonema: string): { quem: 'sofia' | 'tales'; q: string } {
-  const q = QUADRO_DO_FONEMA[fonema] ?? som(fonema).bocaFrente;
-  if (QUADROS_SOFIA.includes(q)) return { quem: 'sofia', q };
-  if (QUADROS_TALES.includes(q)) return { quem: 'tales', q };
-  return { quem: 'sofia', q: som(fonema).bocaFrente };
+let embed: Promise<boolean> | null = null;
+/** O embed novo foi copiado para ./espelho/? (servidores de SPA devolvem o index do app para caminhos inexistentes.) */
+export function espelhoEmbedDisponivel(): Promise<boolean> {
+  if (!USAR_EMBED_NOVO) return Promise.resolve(false);
+  embed ??= fetch('./espelho/embed.html', { cache: 'no-store' }).then(async (r) => r.ok && !(await r.text()).includes('id="raiz"')).catch(() => false);
+  return embed;
+}
+export function useEspelhoEmbed(): boolean | null {
+  const [ok, setOk] = useState<boolean | null>(USAR_EMBED_NOVO ? null : false);
+  useEffect(() => { espelhoEmbedDisponivel().then(setOk); }, []);
+  return ok;
 }
 
-let disponivel: Promise<boolean> | null = null;
-export function espelhoDisponivel(): Promise<boolean> {
-  disponivel ??= fetch('./espelho/espelho.js', { method: 'GET', cache: 'no-store' }).then((r) => r.ok && !(r.headers.get('content-type') ?? '').includes('text/html')).catch(() => false);
-  return disponivel;
-}
+export type Visema = 'boca-vazia' | 'u' | 'o' | 'm' | 'f' | 'i';
+const VISEMA_DO_FONEMA: Record<string, Visema> = {
+  a: 'boca-vazia', 'a~': 'boca-vazia', l: 'boca-vazia', lh: 'boca-vazia', r: 'boca-vazia', rr: 'boca-vazia', k: 'boca-vazia', g: 'boca-vazia',
+  u: 'u', 'u~': 'u', x: 'u', j: 'u',
+  O: 'o', o: 'o', 'o~': 'o',
+  m: 'm', p: 'm', b: 'm',
+  f: 'f', v: 'f',
+  i: 'i', 'i~': 'i', E: 'i', e: 'i', 'e~': 'i', s: 'i', z: 'i', t: 'i', d: 'i', n: 'i'
+};
+export const visemaDe = (fonema: string): Visema => VISEMA_DO_FONEMA[fonema] ?? VISEMA_DO_FONEMA[fonema.toLowerCase()] ?? 'boca-vazia';
 
-export interface ApiEspelho { fonema(f: string): void; modo(m: string): void; lento?(v: boolean): void; girar?(v: boolean): void; rotulos?(v: boolean): void }
+const DESCRICAO: Record<Visema, string> = {
+  'boca-vazia': 'boca bem aberta', u: 'biquinho', o: 'boca redonda', m: 'lábios fechados', f: 'dentes de cima no lábio de baixo', i: 'sorriso com os dentes juntinhos'
+};
 
-export function EspelhoLado({ fonema, modo = 'lado', rotulos = false, aoPronto }: { fonema: string; modo?: string; rotulos?: boolean; aoPronto?: (api: ApiEspelho | null) => void }) {
-  const [ok, setOk] = useState<boolean | null>(null);
-  const ref = useRef<HTMLIFrameElement>(null);
-  const [src] = useState(() => `./espelho-embed.html?f=${encodeURIComponent(fonema)}&m=${modo}&rot=${rotulos ? 1 : 0}`);
-  useEffect(() => { espelhoDisponivel().then(setOk); }, []);
+/** Boca gigante de frente (e de lado, no embed), pelo som. `falando` dá o destaque enquanto a voz faz o som. */
+export function EspelhoBoca({ fonema, falando = false }: { fonema: string; falando?: boolean }) {
+  const v = visemaDe(fonema);
+  const embedOk = useEspelhoEmbed();
+  const quadro = useRef<HTMLIFrameElement>(null);
+  const [src] = useState(() => urlEmbed(fonema));
   useEffect(() => {
-    const f = (e: MessageEvent) => {
-      if (e.data?.tipo === 'espelho:pronto' && ref.current && e.source === ref.current.contentWindow) aoPronto?.((ref.current.contentWindow as any).esp ?? null);
-    };
-    window.addEventListener('message', f);
-    return () => window.removeEventListener('message', f);
-  }, [aoPronto]);
-  useEffect(() => {
-    const api = (ref.current?.contentWindow as any)?.esp as ApiEspelho | undefined;
-    api?.fonema(fonema);
+    quadro.current?.contentWindow?.postMessage({ tipo: 'espelho:fonema', f: fonema }, '*');
   }, [fonema]);
-  useEffect(() => {
-    const api = (ref.current?.contentWindow as any)?.esp as ApiEspelho | undefined;
-    api?.modo(modo);
-  }, [modo]);
-  if (ok === null) return <div className="espelho-lado carregando-esp" />;
-  if (!ok) {
+  if (embedOk === null) return <figure className="espelho-boca carregando-esp" />;
+  if (embedOk) {
     return (
-      <figure className="espelho-lado espelho-placeholder">
-        <img src={asset('fundos/raio-x-partes.webp')} alt="Raio-X de lado da boca: lábios, dentes, língua, céu da boca, nariz e garganta" />
-        <figcaption>Raio-X de lado</figcaption>
+      <figure className={`espelho-boca espelho-embed ${falando ? 'falando' : ''}`}>
+        <iframe ref={quadro} src={src} title="Espelho do Som: a boca de frente e de lado" allow="autoplay" onLoad={() => quadro.current?.contentWindow?.postMessage({ tipo: 'espelho:fonema', f: fonema }, '*')} />
       </figure>
     );
   }
-  return <iframe ref={ref} className="espelho-lado" src={src} title="Espelho do Som: raio-X de lado" allow="autoplay" />;
-}
-
-export function EspelhoFrente({ fonema, falando }: { fonema: string; falando: boolean }) {
-  const { quem, q } = quadroFrente(fonema);
-  const [src, setSrc] = useState(`./espelho/recortes/rosto-${quem}-${q}.jpg`);
-  useEffect(() => setSrc(`./espelho/recortes/rosto-${quem}-${q}.jpg`), [quem, q]);
   return (
-    <figure className={`espelho-frente ${falando ? 'falando' : ''}`}>
-      <img src={src} alt={`Boca ${quem === 'sofia' ? 'da Sofia' : 'do Tales'} fazendo o som`} onError={() => setSrc(asset(`dupla/${quem}-busto-alegre.webp`))} />
-      <figcaption>{quem === 'sofia' ? 'Sofia' : 'Tales'} de frente</figcaption>
+    <figure className={`espelho-boca ${falando ? 'falando' : ''}`} data-visema={v}>
+      <img key={v} src={asset(`espelho/frente-${v}.webp`)} alt={`A Sofia e o Tales mostram a boca fazendo o som: ${DESCRICAO[v]}`} />
     </figure>
   );
 }

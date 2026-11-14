@@ -306,6 +306,7 @@ async function main() {
     pj.on('pageerror', (e) => erros.push(String(e)));
     await pj.goto(BASE + '#/adulto/config');
     await passarPorteira(pj);
+    await pj.getByTestId('avancado').locator('summary').click();
     await pj.getByTestId('modo-demo').click();
     await pj.waitForFunction(() => document.querySelector('[data-testid=modo-demo]')?.checked);
     await pj.goto(BASE + '#/adulto/cadastro');

@@ -34,9 +34,10 @@ function du(p) {
   return readdirSync(p).reduce((t, n) => t + du(join(p, n)), 0);
 }
 
+// Espelho do Som: só o que o componente embutível (embed.html) usa — frente por visemas + lado 3D da Sofia/Tales.
 copiar(join(docs, 'espelho-do-som-3d'), join(publico, 'espelho'), {
-  exige: 'espelho.js',
-  ignora: [/^capturas$/, /^imagens$/, /^ferramentas$/, /^_teste/, /\.py$/, /\.md$/, /^__pycache__$/]
+  exige: 'embed.html',
+  ignora: [/^capturas$/, /^imagens$/, /^ferramentas$/, /^estilos-opcoes$/, /^vendor$/, /^demo\./, /^espelho3d\.js$/, /^espelho\.js$/, /^espelho-svg\.js$/, /^_t/, /\.py$/, /\.md$/, /^__pycache__$/]
 });
 copiar(join(docs, 'mundo-3d-v2'), join(publico, 'mundo3d'), {
   exige: 'index.html',

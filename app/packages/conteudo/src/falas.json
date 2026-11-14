@@ -3,13 +3,19 @@
   "id": "s-104fnkb",
   "voz": "sofia",
   "texto": "Mais uma tábua encaixou na ponte!",
-  "origem": "R2a-F04-C4"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-10qm0oq",
+  "voz": "sofia",
+  "texto": "Escada",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-10uxica",
   "voz": "sofia",
   "texto": "Você ouviu a diferença!",
-  "origem": "R1-F02-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-10vpbu0",
@@ -21,7 +27,13 @@
   "id": "s-117panc",
   "voz": "sofia",
   "texto": "Muito bem! Você foi devagar e deu certo.",
-  "origem": "acertos"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-11cpcp",
+  "voz": "sofia",
+  "texto": "Avião",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-11idavc",
@@ -30,10 +42,28 @@
   "origem": "R2a-F05"
  },
  {
+  "id": "s-11wcpy8",
+  "voz": "sofia",
+  "texto": "iiii… ilha!",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-12xqa5g",
   "voz": "sofia",
   "texto": "Lábios fechados, o som sai pelo nariz: /mmm/. Sua vez, [NOME]!",
-  "origem": "R2a-F01-C2"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-138awz1",
+  "voz": "sofia",
+  "texto": "Bo… la",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-13x8b5p",
+  "voz": "sofia",
+  "texto": "Ca… sa",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-149xfaz",
@@ -45,19 +75,19 @@
   "id": "s-14efwa7",
   "voz": "sofia",
   "texto": "A placa voltou para o lugar!",
-  "origem": "R1-F04-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-14skhwc",
   "voz": "sofia",
   "texto": "Você escutou o comecinho!",
-  "origem": "R0-F04-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-14zllpx",
   "voz": "sofia",
   "texto": "Quem mora com você, [NOME]? Bate as palmas do nome.",
-  "origem": "R0-F06-C7"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-155uhk4",
@@ -81,31 +111,43 @@
   "id": "s-15qosgb",
   "voz": "sofia",
   "texto": "Isso, [NOME]! Você escutou com atenção.",
-  "origem": "acertos"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-15x59ek",
   "voz": "sofia",
   "texto": "A ponte precisa da sua leitura, [NOME]. Lê e toca a figura!",
-  "origem": "R2a-F04-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-15yvsqq",
   "voz": "sofia",
   "texto": "Amanhã é a vez do sorriso mais largo de todos!",
-  "origem": "R1-F03"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-169urfp",
   "voz": "sofia",
   "texto": "Você acendeu o farol, [NOME]. A luz chegou até a mata… Ouviu? /mmm/…",
-  "origem": "R1-F07"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-16axgv3",
+  "voz": "sofia",
+  "texto": "Elefante",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-16f73ud",
+  "voz": "sofia",
+  "texto": "éééé… pé!",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-16jivpg",
   "voz": "sofia",
   "texto": "Oi, [NOME]! O farol precisa das cinco vogais para acender.",
-  "origem": "R1-F06"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-16o3epn",
@@ -114,10 +156,22 @@
   "origem": "R0-F05-C3"
  },
  {
+  "id": "s-17jgt4r",
+  "voz": "sofia",
+  "texto": "O H no começo do nome não faz som! O primeiro som é o da vogal.",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-17kix4o",
   "voz": "sofia",
   "texto": "Você juntou os sons!",
-  "origem": "R0-F05-C3"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-17p47qf",
+  "voz": "sofia",
+  "texto": "Pa… to",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-17yebzm",
@@ -135,13 +189,13 @@
   "id": "s-18fngks",
   "voz": "sofia",
   "texto": "Você ouviu o comecinho de palavras novas!",
-  "origem": "R1-F06-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-193fu3z",
   "voz": "sofia",
   "texto": "Isso! Uma cobrinha: sss!",
-  "origem": "R0-F04-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-19vk7gm",
@@ -153,7 +207,13 @@
   "id": "s-19z8rh3",
   "voz": "sofia",
   "texto": "Me ajuda a bordar, [NOME]? Um carretel para cada pedacinho.",
-  "origem": "R2a-F03-C4"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1a5bawm",
+  "voz": "sofia",
+  "texto": "Olha como a boca faz cada som: os lábios, os dentes e a língua mudam de lugar. Escolha um som!",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1abgg4w",
@@ -162,10 +222,16 @@
   "origem": "R1-F07"
  },
  {
+  "id": "s-1asmjqs",
+  "voz": "sofia",
+  "texto": "llll… lua!",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-1avoeg9",
   "voz": "sofia",
   "texto": "Amanhã venha me ajudar a bordar, [NOME]. Tenho um fio que faz /fff/!",
-  "origem": "R2a-F02"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1bj7qh6",
@@ -192,10 +258,16 @@
   "origem": "R0-F03-C5"
  },
  {
+  "id": "s-1cezx59",
+  "voz": "sofia",
+  "texto": "mmmm… mala!",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-1dfc6n5",
   "voz": "sofia",
   "texto": "Qual letra faz /lll/, [NOME]?",
-  "origem": "R2a-F02-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1djl32l",
@@ -204,16 +276,22 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1docthd",
+  "voz": "sofia",
+  "texto": "ssss… sapo!",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-1dp689r",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Sente o ventinho? /fff/…",
-  "origem": "R2a-F03"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1dxf71a",
   "voz": "sofia",
   "texto": "Sem ponte, sem bola. Só você e as letras, [NOME].",
-  "origem": "R2a-F04-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1egnpj4",
@@ -231,7 +309,7 @@
   "id": "s-1fszss8",
   "voz": "sofia",
   "texto": "Escuta, [NOME]. Qual começa com o som?",
-  "origem": "R0-F04-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1fxrmyn",
@@ -249,6 +327,12 @@
   "id": "s-1hs1iuo",
   "voz": "sofia",
   "texto": "As moedinhas vão para o cofrinho-tatu!",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1hupyxb",
+  "voz": "sofia",
+  "texto": "Mmm… eee… lll",
   "origem": "telas (E2E)"
  },
  {
@@ -279,18 +363,24 @@
   "id": "s-1iueel2",
   "voz": "sofia",
   "texto": "Amanhã a gente aprende a diferença entre o SOM e o NOME das letras.",
-  "origem": "R1-F05"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1jbedh7",
   "voz": "sofia",
   "texto": "Qual letra faz este som, [NOME]?",
-  "origem": "R1-F06-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1jzaxhx",
   "voz": "sofia",
   "texto": "Agora é a sua vez, [NOME]!",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1k1vikz",
+  "voz": "sofia",
+  "texto": "Lll… uuu… aaa",
   "origem": "telas (E2E)"
  },
  {
@@ -303,7 +393,7 @@
   "id": "s-1l8st3w",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Lembra do som que veio da mata? /mmm/…",
-  "origem": "R2a-F01"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1lb8np7",
@@ -315,7 +405,7 @@
   "id": "s-1mbnwmv",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje o sorriso é bem grande.",
-  "origem": "R1-F04"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1mstai",
@@ -333,7 +423,7 @@
   "id": "s-1myt00d",
   "voz": "sofia",
   "texto": "Oi, [NOME]! O Bolota fala de um jeito engraçado: bem devagar. É a fala de tatu!",
-  "origem": "R0-F05"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1n5lozv",
@@ -345,7 +435,7 @@
   "id": "s-1n5twnr",
   "voz": "sofia",
   "texto": "Uma palma para cada pedacinho, [NOME]!",
-  "origem": "R0-F06-C4b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1nd1s8",
@@ -357,19 +447,19 @@
   "id": "s-1nnazrj",
   "voz": "sofia",
   "texto": "Cada palma acendeu uma lâmpada!",
-  "origem": "R0-F03-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1o64pg2",
   "voz": "sofia",
   "texto": "VOVÓ: a boca abre mais. Óóó.",
-  "origem": "R1-F02-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1ojmdzj",
   "voz": "sofia",
   "texto": "Isso! Você abriu bem a boca: aaa!",
-  "origem": "R1-F01-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1ooec8a",
@@ -399,7 +489,7 @@
   "id": "s-1p8k0l1",
   "voz": "sofia",
   "texto": "Ficou um bordado lindo!",
-  "origem": "R2a-F03-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1pi6qvb",
@@ -411,7 +501,7 @@
   "id": "s-1ps7nfy",
   "voz": "sofia",
   "texto": "A tartaruga passou pelas boias!",
-  "origem": "R1-F05-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1psr1v1",
@@ -423,7 +513,13 @@
   "id": "s-1q0t1vc",
   "voz": "sofia",
   "texto": "Quase, [NOME]! Escuta comigo de novo.",
-  "origem": "erro1"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1q87b55",
+  "voz": "sofia",
+  "texto": "Muito bem! Letra por letra.",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1qah0gw",
@@ -609,19 +705,25 @@
   "id": "s-1qfo6l6",
   "voz": "sofia",
   "texto": "Isso mesmo! Olhou a boca e acertou.",
-  "origem": "acertos"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1ql0kx3",
   "voz": "sofia",
   "texto": "Você leu MALA!",
-  "origem": "R2a-F04-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1qmmj56",
   "voz": "sofia",
   "texto": "Que sorriso! iii!",
   "origem": "R1-F04-C2"
+ },
+ {
+  "id": "s-1qn9jre",
+  "voz": "sofia",
+  "texto": "Que sorriso! Iii!",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1rdj39n",
@@ -633,7 +735,7 @@
   "id": "s-1rskjwt",
   "voz": "sofia",
   "texto": "Quantas palmas tem esta palavra, [NOME]? Eu me perdi!",
-  "origem": "R0-F03-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1svhpmb",
@@ -663,7 +765,7 @@
   "id": "s-1ugteiz",
   "voz": "sofia",
   "texto": "Até o nome do bichinho da mata você leu!",
-  "origem": "R2a-F04-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqfwe4",
@@ -687,7 +789,7 @@
   "id": "s-1uqg4ej",
   "voz": "sofia",
   "texto": "iiii",
-  "origem": "sons"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqgtjf",
@@ -717,7 +819,7 @@
   "id": "s-1uqi87f",
   "voz": "sofia",
   "texto": "llll",
-  "origem": "sons"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqiakl",
@@ -735,7 +837,7 @@
   "id": "s-1uqifyz",
   "voz": "sofia",
   "texto": "lufo",
-  "origem": "palavras"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqig4f",
@@ -753,7 +855,7 @@
   "id": "s-1uqiz38",
   "voz": "sofia",
   "texto": "mola",
-  "origem": "palavras"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqizfk",
@@ -771,7 +873,7 @@
   "id": "s-1uqj0ve",
   "voz": "sofia",
   "texto": "mala",
-  "origem": "palavras"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqj423",
@@ -783,7 +885,7 @@
   "id": "s-1uqjb00",
   "voz": "sofia",
   "texto": "mufe",
-  "origem": "palavras"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqjb5q",
@@ -801,7 +903,7 @@
   "id": "s-1uqm3pn",
   "voz": "sofia",
   "texto": "aaaa",
-  "origem": "sons"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqmqiz",
@@ -831,13 +933,13 @@
   "id": "s-1uqpl55",
   "voz": "sofia",
   "texto": "fila",
-  "origem": "palavras"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqpmkr",
   "voz": "sofia",
   "texto": "fofo",
-  "origem": "palavras"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqpmn4",
@@ -855,7 +957,7 @@
   "id": "s-1uqpmxn",
   "voz": "sofia",
   "texto": "folu",
-  "origem": "palavras"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqpoa2",
@@ -867,7 +969,7 @@
   "id": "s-1uqprgh",
   "voz": "sofia",
   "texto": "fala",
-  "origem": "palavras"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqprvy",
@@ -879,7 +981,7 @@
   "id": "s-1uqpsi3",
   "voz": "sofia",
   "texto": "ffff",
-  "origem": "sons"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqqn3q",
@@ -921,7 +1023,7 @@
   "id": "s-1uqzgsr",
   "voz": "sofia",
   "texto": "ssss",
-  "origem": "sons"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqzlfl",
@@ -939,7 +1041,7 @@
   "id": "s-1ur0atf",
   "voz": "sofia",
   "texto": "Sem o farol agora. Qual som começa a palavra, [NOME]?",
-  "origem": "R1-F06-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1ur0mqn",
@@ -957,7 +1059,7 @@
   "id": "s-1ur11zf",
   "voz": "sofia",
   "texto": "uuuu",
-  "origem": "sons"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1ur1r4b",
@@ -990,16 +1092,58 @@
   "origem": "figuras"
  },
  {
+  "id": "s-1ur33j0",
+  "voz": "sofia",
+  "texto": "Iglu",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1ur350r",
+  "voz": "sofia",
+  "texto": "Iiii",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1ur3953",
+  "voz": "sofia",
+  "texto": "Ilha",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1ur3a28",
+  "voz": "sofia",
+  "texto": "Ioiô",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1ur64ob",
+  "voz": "sofia",
+  "texto": "Mmmm",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-1ur76v2",
   "voz": "sofia",
   "texto": "MULA",
   "origem": "R2a-F05-C7"
  },
  {
+  "id": "s-1ur94bv",
+  "voz": "sofia",
+  "texto": "Aaaa",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-1urawgv",
   "voz": "sofia",
   "texto": "LULA",
   "origem": "R2a-F05-C7"
+ },
+ {
+  "id": "s-1urbenf",
+  "voz": "sofia",
+  "texto": "Llll",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1urbxaj",
@@ -1014,16 +1158,40 @@
   "origem": "R2a-F05-C4a"
  },
  {
+  "id": "s-1uro2ln",
+  "voz": "sofia",
+  "texto": "Uuuu",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1uro8c0",
+  "voz": "sofia",
+  "texto": "Urso",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1uroyr4",
+  "voz": "sofia",
+  "texto": "Vovô",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1uroyrb",
+  "voz": "sofia",
+  "texto": "Vovó",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-1ut3mtn",
   "voz": "sofia",
   "texto": "éééé",
-  "origem": "sons"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1ut4c5n",
   "voz": "sofia",
   "texto": "êêêê",
-  "origem": "sons"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1utb0sr",
@@ -1035,13 +1203,25 @@
   "id": "s-1ute0p1",
   "voz": "sofia",
   "texto": "O que o Bolota disse, [NOME]?",
-  "origem": "R0-F05-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1utmzez",
   "voz": "sofia",
   "texto": "óóóó",
-  "origem": "sons"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1utqtyj",
+  "voz": "sofia",
+  "texto": "Éééé",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1utrjaj",
+  "voz": "sofia",
+  "texto": "Êêêê",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uttnnv",
@@ -1054,6 +1234,12 @@
   "voz": "sofia",
   "texto": "õõõõ",
   "origem": "sons"
+ },
+ {
+  "id": "s-1uugv6z",
+  "voz": "sofia",
+  "texto": "Ôôôô",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uvr58r",
@@ -1071,7 +1257,7 @@
   "id": "s-1uxuuhi",
   "voz": "sofia",
   "texto": "/aaa/. Boca bem aberta, como um bocejo. Sua vez, [NOME]!",
-  "origem": "R1-F01-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uyiqy0",
@@ -1101,31 +1287,31 @@
   "id": "s-1w4nk82",
   "voz": "sofia",
   "texto": "/fff/, um ventinho. Dentes de cima no lábio de baixo. Sua vez, [NOME]!",
-  "origem": "R2a-F03-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1w5uhlf",
   "voz": "sofia",
   "texto": "Que letra faz este som, [NOME]?",
-  "origem": "R1-F03-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1wmpa17",
   "voz": "sofia",
   "texto": "A cachoeira tem pedras com sílabas, [NOME]. Uma pedra de cada vez.",
-  "origem": "R2a-F05"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1xkxy86",
   "voz": "sofia",
   "texto": "/iii/, um sorriso grande. Sua vez, [NOME]!",
-  "origem": "R1-F04-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1yf579q",
   "voz": "sofia",
   "texto": "A concha abriu!",
-  "origem": "R1-F01-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-2aajyj",
@@ -1134,40 +1320,64 @@
   "origem": "chegada"
  },
  {
+  "id": "s-2dswlv",
+  "voz": "sofia",
+  "texto": "Devagar: mmm-aaa, MA. Lll-aaa, LA. MALA!",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-2jnu1",
   "voz": "sofia",
   "texto": "Qual rima, [NOME]?",
-  "origem": "R0-F06-C4a"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-2v3dp4",
   "voz": "sofia",
   "texto": "Este botão diz o nome. Este diz o som. Agora é a sua vez, [NOME]!",
-  "origem": "R1-F06-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-34lddr",
   "voz": "sofia",
   "texto": "U ou O, [NOME]? Olha minha boca.",
-  "origem": "R1-F05-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-359g4p",
   "voz": "sofia",
   "texto": "Você não se confundiu!",
-  "origem": "R1-F03-C8"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-3kt1cb",
   "voz": "sofia",
   "texto": "Olha a minha boca antes de responder, [NOME].",
-  "origem": "R1-F07-C4b"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-3zl2s8",
+  "voz": "sofia",
+  "texto": "Qual começa com fff?",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-3znd77",
+  "voz": "sofia",
+  "texto": "Qual começa com mmm?",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-3zuxhp",
+  "voz": "sofia",
+  "texto": "Qual começa com sss?",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-3zwej4",
   "voz": "sofia",
   "texto": "Lê a pedra e toca a figura, [NOME].",
-  "origem": "R2a-F05-C4a"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-559ma2",
@@ -1179,13 +1389,13 @@
   "id": "s-57b18j",
   "voz": "sofia",
   "texto": "Eu ouvi você, [NOME]! Agora escuta como eu falo:",
-  "origem": "euFalei"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-5qllno",
   "voz": "sofia",
   "texto": "O Zum-Zum embaralhou a placa. Escuta bem: qual som começa a palavra, [NOME]?",
-  "origem": "R1-F04-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-5xs6if",
@@ -1197,7 +1407,13 @@
   "id": "s-5xzhdr",
   "voz": "sofia",
   "texto": "Sentiu a cosquinha no nariz?",
-  "origem": "R2a-F01-C2"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-6kkt7f",
+  "voz": "sofia",
+  "texto": "Sss… ooo… lll",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-6qj94i",
@@ -1209,7 +1425,7 @@
   "id": "s-75h53n",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje a pescadora vai apresentar a vovó e o vovô dela.",
-  "origem": "R1-F02"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-7fkui7",
@@ -1221,13 +1437,13 @@
   "id": "s-8dfnot",
   "voz": "sofia",
   "texto": "É a vovó ou o vovô, [NOME]?",
-  "origem": "R1-F02-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-8dxf1w",
   "voz": "sofia",
   "texto": "Você juntou o /m/ com a vogal!",
-  "origem": "R2a-F01-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-8rt1vp",
@@ -1239,7 +1455,7 @@
   "id": "s-9a09w5",
   "voz": "sofia",
   "texto": "Ficou a sua cara! Tudo pronto pra começar?",
-  "origem": "avatar"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-9jci8e",
@@ -1251,7 +1467,7 @@
   "id": "s-9p2wlb",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje você vai ler uma palavra inteirinha.",
-  "origem": "R2a-F04"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-9ryn7q",
@@ -1269,13 +1485,13 @@
   "id": "s-b1gma7",
   "voz": "sofia",
   "texto": "Lembra das conchas, [NOME]?",
-  "origem": "R1-F07-C1"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-b9v4k4",
   "voz": "sofia",
   "texto": "Os dois são O. Sua vez, [NOME]!",
-  "origem": "R1-F02-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-bv2fhl",
@@ -1287,13 +1503,13 @@
   "id": "s-by1ls9",
   "voz": "sofia",
   "texto": "Letra por letra, [NOME]: L-U-A.",
-  "origem": "R2a-F02-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-c0qkz3",
   "voz": "sofia",
   "texto": "Amanhã a gente descobre o E, que também tem dois jeitos!",
-  "origem": "R1-F02"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-cbs8us",
@@ -1353,12 +1569,18 @@
   "id": "s-dn0nh0",
   "voz": "sofia",
   "texto": "O farol apagou, [NOME]. São 4 andares. Você vai devagar e dá certo.",
-  "origem": "R1-F07"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-dvw91j",
   "voz": "sofia",
   "texto": "O que rima com foca?",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-dwgm4x",
+  "voz": "sofia",
+  "texto": "O que rima com gato?",
   "origem": "telas (E2E)"
  },
  {
@@ -1383,7 +1605,7 @@
   "id": "s-ej9sf4",
   "voz": "sofia",
   "texto": "A letra E!",
-  "origem": "R1-F03-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-ep2nm3",
@@ -1395,13 +1617,13 @@
   "id": "s-erf71s",
   "voz": "sofia",
   "texto": "Tudo pronto para a primeira missão? É sobre o seu nome!",
-  "origem": "chegada"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-eveijx",
   "voz": "sofia",
   "texto": "Junta comigo, [NOME]!",
-  "origem": "R0-F05-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-ey0vns",
@@ -1440,10 +1662,22 @@
   "origem": "figuras"
  },
  {
+  "id": "s-fyskcb",
+  "voz": "sofia",
+  "texto": "O que rima com panela?",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-g35tl",
   "voz": "sofia",
   "texto": "avião",
   "origem": "figuras"
+ },
+ {
+  "id": "s-ganutj",
+  "voz": "sofia",
+  "texto": "ffff… foca!",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-gfdmv",
@@ -1461,7 +1695,7 @@
   "id": "s-goa7hw",
   "voz": "sofia",
   "texto": "Toda letra tem um NOME e um SOM.",
-  "origem": "R1-F06-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-gs3te",
@@ -1488,6 +1722,12 @@
   "origem": "figuras"
  },
  {
+  "id": "s-hbnus0",
+  "voz": "sofia",
+  "texto": "óóóó… vovó!",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-hgci9z",
   "voz": "sofia",
   "texto": "feijão",
@@ -1503,7 +1743,7 @@
   "id": "s-iaa9ia",
   "voz": "sofia",
   "texto": "Que ventinho bom!",
-  "origem": "R2a-F03-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-j0b53",
@@ -1515,7 +1755,7 @@
   "id": "s-j7stzy",
   "voz": "sofia",
   "texto": "Boca redonda, muito bem!",
-  "origem": "R1-F02-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-jr365",
@@ -1539,7 +1779,7 @@
   "id": "s-kkzzib",
   "voz": "sofia",
   "texto": "Você conseguiu, [NOME]!",
-  "origem": "acertos"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-lz4a3j",
@@ -1575,19 +1815,19 @@
   "id": "s-mkjlaw",
   "voz": "sofia",
   "texto": "Último andar, [NOME]!",
-  "origem": "R1-F07-C4d"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-molxto",
   "voz": "sofia",
   "texto": "Junta comigo, [NOME]: mmm-aaa… MA!",
-  "origem": "R2a-F01-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-mty594",
   "voz": "sofia",
   "texto": "Lê comigo, [NOME]. Devagar e até o fim.",
-  "origem": "R2a-F04-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-n0mlr6",
@@ -1605,7 +1845,7 @@
   "id": "s-nozyqa",
   "voz": "sofia",
   "texto": "VOCÊ: o sorriso fecha um pouquinho. Êêê.",
-  "origem": "R1-F03-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-nx41rj",
@@ -1683,13 +1923,25 @@
   "id": "s-qscwis",
   "voz": "sofia",
   "texto": "Primeiro a gente escuta: /sss/. Dentinhos quase fechados, língua escondida. Agora é a sua vez, [NOME]!",
-  "origem": "R0-F04-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-qtj0rr",
   "voz": "sofia",
   "texto": "Fala o som desta letra, [NOME]. A concha abre!",
-  "origem": "R1-F01-C4"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-r32h1q",
+  "voz": "sofia",
+  "texto": "uuuu… uva!",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-r7qb8v",
+  "voz": "sofia",
+  "texto": "aaaa… abelha!",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-reqymh",
@@ -1917,7 +2169,7 @@
   "id": "s-tgzh8v",
   "voz": "sofia",
   "texto": "Oi, [NOME]! O barco do Bolota chegou na Ilha das Vogais!",
-  "origem": "R1-F01"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-tn1n52",
@@ -1929,13 +2181,13 @@
   "id": "s-tq3a2r",
   "voz": "sofia",
   "texto": "A lua apareceu no lago!",
-  "origem": "R2a-F02-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-twesto",
   "voz": "sofia",
   "texto": "Agora você escreve, [NOME]. Escuta a palavra e monta com as letras.",
-  "origem": "R2a-F05-C4c"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-u20fs1",
@@ -1953,7 +2205,7 @@
   "id": "s-waq3p0",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje a gente escuta o comecinho das palavras.",
-  "origem": "R0-F04"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-wh1czs",
@@ -1962,10 +2214,16 @@
   "origem": "R0-F06"
  },
  {
+  "id": "s-wsnmlu",
+  "voz": "sofia",
+  "texto": "Ovelha",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-x25bp3",
   "voz": "sofia",
   "texto": "O Bolota falou bem devagar. Junta comigo: bo… la… BOLA!",
-  "origem": "R0-F05-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-x276k7",
@@ -2019,19 +2277,19 @@
   "id": "s-yuxfl0",
   "voz": "sofia",
   "texto": "Amanhã é a Festa das Rimas na praça! Vai ter lanterna e tudo.",
-  "origem": "R0-F05"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-yyp89a",
   "voz": "sofia",
   "texto": "Bolinha aberta: óóó. Sua vez, [NOME]!",
-  "origem": "R1-F02-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-zs3o1",
   "voz": "sofia",
   "texto": "Agora misturado. Letra por letra, [NOME].",
-  "origem": "R1-F03-C8"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-zz715h",
@@ -2043,7 +2301,7 @@
   "id": "t-106uhle",
   "voz": "tales",
   "texto": "Ops! Eu acho que esse som é do A… Me ensina?",
-  "origem": "R1-F02-C8"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-107vco9",
@@ -2067,7 +2325,13 @@
   "id": "t-1208k4u",
   "voz": "tales",
   "texto": "PÉ: o sorriso abre. Ééé.",
-  "origem": "R1-F03-C2"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-12fyudp",
+  "voz": "tales",
+  "texto": "Sapo… sol",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-12fyyit",
@@ -2091,7 +2355,13 @@
   "id": "t-13lfqkc",
   "voz": "tales",
   "texto": "Pula no /a/, [NOME]!",
-  "origem": "R1-F01-C6"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-13sfz2x",
+  "voz": "tales",
+  "texto": "O Paçoca quer o pei… xe",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-13xcsht",
@@ -2109,13 +2379,13 @@
   "id": "t-148clcu",
   "voz": "tales",
   "texto": "Qual começa com o som, [NOME]?",
-  "origem": "R0-F06-C4c"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-14hjh4t",
   "voz": "tales",
   "texto": "Tem um lago lá na frente… e dizem que a lua aparece nele!",
-  "origem": "R2a-F01"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-14k0se0",
@@ -2127,7 +2397,19 @@
   "id": "t-15hhr35",
   "voz": "tales",
   "texto": "O Paçoca adorou!",
-  "origem": "R0-F05-C4"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-15nw9c6",
+  "voz": "tales",
+  "texto": "Sss… ooo… lll",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-15r5dou",
+  "voz": "tales",
+  "texto": "Fff… cadê o que começa com fff?",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-16g88uo",
@@ -2139,7 +2421,7 @@
   "id": "t-16htdle",
   "voz": "tales",
   "texto": "É ou ê? Repara no meu sorriso. Sua vez, [NOME]!",
-  "origem": "R1-F03-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-17gcuyh",
@@ -2157,7 +2439,7 @@
   "id": "t-1915jp5",
   "voz": "tales",
   "texto": "Oi, [NOME]! Hoje a língua sobe e fica lá em cima.",
-  "origem": "R2a-F02"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-19cv506",
@@ -2169,7 +2451,7 @@
   "id": "t-1a7pp7p",
   "voz": "tales",
   "texto": "Andar 1! Qual letra, [NOME]?",
-  "origem": "R1-F07-C4a"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1aqriaq",
@@ -2181,7 +2463,7 @@
   "id": "t-1b217g6",
   "voz": "tales",
   "texto": "Qual letra faz /fff/, [NOME]?",
-  "origem": "R2a-F03-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1b75gv5",
@@ -2193,7 +2475,7 @@
   "id": "t-1bcvhyd",
   "voz": "tales",
   "texto": "A letra A faz /aaa/!",
-  "origem": "R1-F01-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1bwchjg",
@@ -2205,7 +2487,7 @@
   "id": "t-1byec6l",
   "voz": "tales",
   "texto": "E os nossos nomes? Bate pra mim, [NOME]!",
-  "origem": "R0-F03-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1c14b5f",
@@ -2217,13 +2499,13 @@
   "id": "t-1cgook1",
   "voz": "tales",
   "texto": "Você atravessou a cachoeira lendo pedra por pedra!",
-  "origem": "R2a-F05"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1clo569",
   "voz": "tales",
   "texto": "Tem uma vovó e um vovô na ilha… e os dois têm O no nome!",
-  "origem": "R1-F01"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1csyzcj",
@@ -2235,19 +2517,19 @@
   "id": "t-1d0dnp7",
   "voz": "tales",
   "texto": "O eco falou! Qual letra, [NOME]?",
-  "origem": "R1-F01-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1dda5ot",
   "voz": "tales",
   "texto": "E eu sou o Tales! Que bom ter você na Vila das Letras, [NOME]!",
-  "origem": "chegada"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1ei8zum",
   "voz": "tales",
   "texto": "Bo… la.",
-  "origem": "R0-F05-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1ew88z",
@@ -2259,31 +2541,31 @@
   "id": "t-1fc9pza",
   "voz": "tales",
   "texto": "O farol acendeu e a luz varreu o mar até a mata!",
-  "origem": "R1-F07"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1fotjb7",
   "voz": "tales",
   "texto": "Eu li \"LALA\"… Ops! Me ensina, [NOME]? Como se lê?",
-  "origem": "R2a-F02-C8"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1gmiezt",
   "voz": "tales",
   "texto": "/uuu/, biquinho de assobio. Sua vez, [NOME]!",
-  "origem": "R1-F05-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1gyhqij",
   "voz": "tales",
   "texto": "Mexe quando ouvir /mmm/, [NOME]!",
-  "origem": "R2a-F01-C6"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1h7oknp",
   "voz": "tales",
   "texto": "Amanhã é o grande dia: acender o farol inteiro!",
-  "origem": "R1-F06"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1hhi94d",
@@ -2301,19 +2583,25 @@
   "id": "t-1i20chk",
   "voz": "tales",
   "texto": "Na roda a gente joga junto, ninguém bate em ninguém. Uma palma por pedacinho, [NOME]!",
-  "origem": "R0-F03-C6b"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1i4ai9g",
+  "voz": "tales",
+  "texto": "Ma… ca… co",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1jpg70v",
   "voz": "tales",
   "texto": "Desenha a letra na areia com o dedo e fala o som, [NOME]!",
-  "origem": "R1-F04-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1k986gf",
   "voz": "tales",
   "texto": "PI-PO-CA! Três palmas!",
-  "origem": "R0-F03-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1kj902v",
@@ -2331,7 +2619,7 @@
   "id": "t-1kqffb3",
   "voz": "tales",
   "texto": "Mais um anel do farol acendeu!",
-  "origem": "R1-F06-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1mo3es0",
@@ -2343,7 +2631,7 @@
   "id": "t-1ms9oq1",
   "voz": "tales",
   "texto": "Fala o som desta letra, [NOME]!",
-  "origem": "R1-F07-C4c"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1msmtjo",
@@ -2355,7 +2643,7 @@
   "id": "t-1msyvae",
   "voz": "tales",
   "texto": "A cachoeira tem pedras com sílabas… Amanhã a gente atravessa!",
-  "origem": "R2a-F04"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1nuflpi",
@@ -2367,13 +2655,13 @@
   "id": "t-1ny7ioo",
   "voz": "tales",
   "texto": "Agora é a sua vez, [NOME]! Uma palma para cada pedacinho.",
-  "origem": "R0-F03-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1o59bxv",
   "voz": "tales",
   "texto": "MA… LA… Eu vou rápido demais e erro!",
-  "origem": "R2a-F04-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1ob5zp8",
@@ -2412,16 +2700,34 @@
   "origem": "sons"
  },
  {
+  "id": "t-1om1786",
+  "voz": "tales",
+  "texto": "Ôôôô",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "t-1om40xi",
   "voz": "tales",
   "texto": "éééé",
   "origem": "sons"
  },
  {
+  "id": "t-1omaoeu",
+  "voz": "tales",
+  "texto": "Óóóó",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1omr82e",
+  "voz": "tales",
+  "texto": "Éééé",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "t-1oo2wve",
   "voz": "tales",
   "texto": "vovó",
-  "origem": "R0-F06-C7"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1oo2wza",
@@ -2433,7 +2739,7 @@
   "id": "t-1oo4w7v",
   "voz": "tales",
   "texto": "sapo",
-  "origem": "R0-F03-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1oo510j",
@@ -2550,10 +2856,46 @@
   "origem": "sons"
  },
  {
+  "id": "t-1ootswm",
+  "voz": "tales",
+  "texto": "Uuuu",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1op22qe",
+  "voz": "tales",
+  "texto": "Ffff",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1op8r6e",
+  "voz": "tales",
+  "texto": "Aaaa",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1opbqty",
+  "voz": "tales",
+  "texto": "Mmmm",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1opcmom",
+  "voz": "tales",
+  "texto": "Llll",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1opeqhi",
+  "voz": "tales",
+  "texto": "Iiii",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "t-1oqrjm",
   "voz": "tales",
   "texto": "O peixe-boi adorou!",
-  "origem": "R1-F02-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1osnx2u",
@@ -2571,12 +2913,18 @@
   "id": "t-1p0jf2n",
   "voz": "tales",
   "texto": "O peixe-boi só come bolha de O. Qual letra faz /ôôô/, [NOME]?",
-  "origem": "R1-F02-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1p2djhh",
   "voz": "tales",
   "texto": "Aqui você troca as moedinhas que ganhou aprendendo. Pode esperar e juntar para algo maior!",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1p45oik",
+  "voz": "tales",
+  "texto": "Sapo… mala",
   "origem": "telas (E2E)"
  },
  {
@@ -2661,7 +3009,7 @@
   "id": "t-1rzys5z",
   "voz": "tales",
   "texto": "/lll/, a língua sobe e fica lá. Sua vez, [NOME]!",
-  "origem": "R2a-F02-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1s3s10i",
@@ -2676,6 +3024,12 @@
   "origem": "R1-F03-C4"
  },
  {
+  "id": "t-1sjj8km",
+  "voz": "tales",
+  "texto": "O Paçoca quer o sa… pa… to",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "t-1sjnbym",
   "voz": "tales",
   "texto": "qual começa com mmm?",
@@ -2688,10 +3042,16 @@
   "origem": "R1-F03-C4"
  },
  {
+  "id": "t-1stjvwi",
+  "voz": "tales",
+  "texto": "elefante",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "t-1tbgrn9",
   "voz": "tales",
   "texto": "Pescou um E!",
-  "origem": "R1-F03-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1u6p0m",
@@ -2733,13 +3093,13 @@
   "id": "t-1uun8i4",
   "voz": "tales",
   "texto": "Oi, [NOME]! Faz um biquinho de assobio comigo?",
-  "origem": "R1-F05"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1uzk5sd",
   "voz": "tales",
   "texto": "Amanhã a ponte do rio precisa da sua leitura, [NOME]!",
-  "origem": "R2a-F03"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1vpwe98",
@@ -2757,7 +3117,13 @@
   "id": "t-1xf18nl",
   "voz": "tales",
   "texto": "Gooool! Você leu!",
-  "origem": "R2a-F04-C4b"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1xlp4v1",
+  "voz": "tales",
+  "texto": "O Paçoca quer a ja… ne… la",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1yw1sx2",
@@ -2769,19 +3135,19 @@
   "id": "t-20jjsj",
   "voz": "tales",
   "texto": "A ponta da língua subiu!",
-  "origem": "R2a-F02-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-20w1zm",
   "voz": "tales",
   "texto": "O Paçoca pede em fala de tatu. Entrega pra ele, [NOME]?",
-  "origem": "R0-F05-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-20xfw4",
   "voz": "tales",
   "texto": "Oi, [NOME]! Repara no meu sorriso hoje.",
-  "origem": "R1-F03"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-2rnmu9",
@@ -2805,7 +3171,7 @@
   "id": "t-3mtpwb",
   "voz": "tales",
   "texto": "Bate comigo: PIPOCA!",
-  "origem": "R0-F03-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-4hq76n",
@@ -2823,31 +3189,31 @@
   "id": "t-5ei8eg",
   "voz": "tales",
   "texto": "Três pedacinhos!",
-  "origem": "R0-F03-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-6e3ybz",
   "voz": "tales",
   "texto": "Agora eu sei! M é /mmm/, L é /lll/!",
-  "origem": "R2a-F02-C8"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-733h3j",
   "voz": "tales",
   "texto": "Hoje é a Festa das Rimas, [NOME]! São 4 estações. Cada uma acende uma lanterna.",
-  "origem": "R0-F06"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-7h98bw",
   "voz": "tales",
   "texto": "A tartaruga volta! Valeu, [NOME]!",
-  "origem": "R1-F05-C6"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-8495tb",
   "voz": "tales",
   "texto": "Aquece com a gente, [NOME]!",
-  "origem": "R0-F06-C1"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-85r3ao",
@@ -2859,7 +3225,7 @@
   "id": "t-8atrrd",
   "voz": "tales",
   "texto": "PI… PO… CA! Uma batida para cada pedacinho.",
-  "origem": "R0-F03-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-97nhsh",
@@ -2877,13 +3243,31 @@
   "id": "t-a34kgc",
   "voz": "tales",
   "texto": "Amanhã a tartaruga precisa da nossa ajuda!",
-  "origem": "R1-F04"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-ais4wj",
   "voz": "tales",
   "texto": "A placa apagou! Qual sílaba falta aqui, [NOME]?",
-  "origem": "R2a-F03-C5"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-bhx7ou",
+  "voz": "tales",
+  "texto": "Qual começa com mmm?",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-bi36zq",
+  "voz": "tales",
+  "texto": "Qual começa com eee?",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-bktvhm",
+  "voz": "tales",
+  "texto": "Qual começa com ééé?",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-bq6179",
@@ -2895,7 +3279,7 @@
   "id": "t-bueh2m",
   "voz": "tales",
   "texto": "Biquinho perfeito!",
-  "origem": "R1-F05-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-bw2yi8",
@@ -2907,7 +3291,7 @@
   "id": "t-ca65q8",
   "voz": "tales",
   "texto": "E se tiver um /e/ escondido? Puxa a rede, [NOME]!",
-  "origem": "R1-F03-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-ctcpem",
@@ -2919,25 +3303,37 @@
   "id": "t-cw2zz7",
   "voz": "tales",
   "texto": "A placa do vale voltou a funcionar!",
-  "origem": "R2a-F03-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-d50mvi",
   "voz": "tales",
   "texto": "Esses são nomes de bichinhos da mata. Lê pra mim, [NOME]!",
-  "origem": "R2a-F05-C4b"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-dbtjo3",
+  "voz": "tales",
+  "texto": "Mala… macaco",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-de3zkv",
   "voz": "tales",
   "texto": "papai",
-  "origem": "R0-F06-C7"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-dh7w4u",
+  "voz": "tales",
+  "texto": "Isso! Uma palma para cada pedacinho!",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-dhyu8g",
   "voz": "tales",
   "texto": "ginga",
-  "origem": "R0-F03-C6b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-do7an8",
@@ -2949,13 +3345,13 @@
   "id": "t-drlas1",
   "voz": "tales",
   "texto": "mamãe",
-  "origem": "R0-F06-C7"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-dwjreh",
   "voz": "tales",
   "texto": "Tales",
-  "origem": "R0-F03-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-e043z8",
@@ -2976,22 +3372,28 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-fm8wci",
+  "voz": "tales",
+  "texto": "O que não é da praia?",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "t-fo8l8w",
   "voz": "tales",
   "texto": "peteca",
-  "origem": "R0-F03-C6b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-fwm7iq",
   "voz": "tales",
   "texto": "pipoca",
-  "origem": "R0-F03-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-g2fdxh",
   "voz": "tales",
   "texto": "Passa a bola, [NOME]! MO… LA! Monta e o gol vale!",
-  "origem": "R2a-F04-C4b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-g7eut",
@@ -3009,19 +3411,19 @@
   "id": "t-go8403",
   "voz": "tales",
   "texto": "Você me ensinou! Valeu, [NOME]!",
-  "origem": "R0-F04-C8"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-gorna0",
   "voz": "tales",
   "texto": "Tem alguém chamando lá do outro lado da ponte, [NOME]! A ponte está em obras… e um tucano espia.",
-  "origem": "R2a-F05"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-hohrig",
   "voz": "tales",
   "texto": "Isso! Você me entendeu!",
-  "origem": "R0-F05-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-hzkoxc",
@@ -3039,7 +3441,7 @@
   "id": "t-iy7x8n",
   "voz": "tales",
   "texto": "Eu acho que SAPO e MALA começam igual… Começam, [NOME]?",
-  "origem": "R0-F04-C8"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-ke5ywa",
@@ -3051,7 +3453,7 @@
   "id": "t-kggi3n",
   "voz": "tales",
   "texto": "O farol precisa da sua vogal, [NOME]!",
-  "origem": "R1-F06-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-l0cdlv",
@@ -3081,25 +3483,31 @@
   "id": "t-m4j3vf",
   "voz": "tales",
   "texto": "Nas vogais eles são parecidos: o nome é \"a\", o som é /aaa/.",
-  "origem": "R1-F06-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-mgoay",
   "voz": "tales",
   "texto": "M faz /mmm/!",
-  "origem": "R2a-F01-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-mh9ru5",
   "voz": "tales",
   "texto": "bolota",
-  "origem": "R0-F06-C4b"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-mo4dcj",
+  "voz": "tales",
+  "texto": "O Paçoca quer a ba… na… na",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-nghhhb",
   "voz": "tales",
   "texto": "Me ajuda a fazer o guia da mata? Lê a figurinha!",
-  "origem": "R2a-F05-C7"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-nh4xb5",
@@ -3111,7 +3519,7 @@
   "id": "t-nhro9y",
   "voz": "tales",
   "texto": "VOVÔ: a boca fecha mais, redondinha. Ôôô.",
-  "origem": "R1-F02-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-nxl0hp",
@@ -3123,31 +3531,37 @@
   "id": "t-owq6nk",
   "voz": "tales",
   "texto": "A primeira palavra que você leu, MALA, apareceu e se abriu!",
-  "origem": "R2a-F04"
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-owz81v",
+  "voz": "tales",
+  "texto": "Foca… lua",
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-pdyph1",
   "voz": "tales",
   "texto": "abelha",
-  "origem": "R1-F01-C6"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-ph68is",
   "voz": "tales",
   "texto": "Letra por letra! Agora é a sua vez, [NOME]!",
-  "origem": "R2a-F04-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-qi864h",
   "voz": "tales",
   "texto": "Sorriso aberto: ééé. Sua vez, [NOME]!",
-  "origem": "R1-F03-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-rgnjzv",
   "voz": "tales",
   "texto": "janela",
-  "origem": "R0-F03-C6"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-s420wk",
@@ -3165,13 +3579,13 @@
   "id": "t-smg651",
   "voz": "tales",
   "texto": "Achou! O Paçoca abanou o rabo!",
-  "origem": "R0-F04-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-sy57tc",
   "voz": "tales",
   "texto": "Pula com a gente, [NOME]! Uma casa para cada pedacinho.",
-  "origem": "R0-F03-C6"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-t1a9u3",
@@ -3183,19 +3597,19 @@
   "id": "t-t59sgr",
   "voz": "tales",
   "texto": "Isso! O sorriso abriu!",
-  "origem": "R1-F03-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-uc4cv1",
   "voz": "tales",
   "texto": "Qual letra faz /mmm/, [NOME]?",
-  "origem": "R2a-F01-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-udeibe",
   "voz": "tales",
   "texto": "Agora eu sei a mata!",
-  "origem": "R2a-F05-C7"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-uzc3z3",
@@ -3213,25 +3627,25 @@
   "id": "t-wbksjt",
   "voz": "tales",
   "texto": "Me escuta, [NOME]!",
-  "origem": "R0-F06-C4d"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-yclrv1",
   "voz": "tales",
   "texto": "Você me ensinou direitinho!",
-  "origem": "R1-F02-C8"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-yddfon",
   "voz": "tales",
   "texto": "Tira da areia o que não é da praia, para a tartaruga voltar!",
-  "origem": "R1-F05-C6"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-yfupge",
   "voz": "tales",
   "texto": "O Paçoca escondeu tudo que começa com /fff/. Bora, [NOME]!",
-  "origem": "R0-F04-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-yhd9b7",

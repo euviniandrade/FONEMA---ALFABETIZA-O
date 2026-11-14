@@ -10,7 +10,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
-      includeAssets: ['icones/*', 'espelho-embed.html'],
+      includeAssets: ['icones/*'],
       manifest: {
         name: 'FONEMA · plataforma de alfabetização',
         short_name: 'FONEMA',
@@ -34,7 +34,7 @@ export default defineConfig({
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
         navigateFallback: 'index.html',
         // páginas embutidas por iframe não podem cair no app
-        navigateFallbackDenylist: [/espelho-embed\.html/, /\/mundo3d\//, /\/espelho\//],
+        navigateFallbackDenylist: [/\/mundo3d\//, /\/espelho\//],
         cleanupOutdatedCaches: true
       }
     })

@@ -6,7 +6,7 @@ import { navegar } from '../../rotas.ts';
 import { AvatarGrande, Balao, BotaoOuvir, Carregando, Topo } from '../../componentes/basicos.tsx';
 import { Figura, Fundo, Icone } from '../../componentes/ui.tsx';
 import { Cofrinho, Selo } from '../../componentes/recompensas.tsx';
-import { EspelhoFrente, EspelhoLado, type ApiEspelho } from '../../componentes/EspelhoDoSom.tsx';
+import { EspelhoBoca, useEspelhoEmbed } from '../../componentes/EspelhoDoSom.tsx';
 import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
 import { gravar, temGravacao } from '../../servicos/microfone.ts';
@@ -150,38 +150,37 @@ export function Album({ criancaId }: { criancaId: string }) {
   );
 }
 
-/** "Conheça seu corpo" (P8-b): o Espelho do Som completo — frente, raio-X, dentro da boca, corpo e giro 360°. */
+/** "Conheça seu corpo": o Espelho do Som de frente (boca gigante por visema); o lado 3D entra com o novo embed (ver EspelhoDoSom.tsx). */
 export function ConhecaSeuCorpo({ criancaId }: { criancaId: string }) {
-  const { config } = useApp();
   const { crianca } = useCrianca(criancaId);
   const [fonema, setFonema] = useState('a');
-  const [modo, setModo] = useState('lado');
-  const [girar, setGirar] = useState(false);
-  const api = useRef<ApiEspelho | null>(null);
+  const [falando, setFalando] = useState(false);
+  const embed = useEspelhoEmbed();
   if (!crianca) return <Carregando />;
   const sons = ['a', 'E', 'i', 'O', 'u', 'm', 'l', 'f', 's', 'v'];
-  const nomes: Record<string, string> = { frente: 'De frente', lado: 'Raio-X de lado', dentro: 'Dentro da boca', corpo: 'Do pulmão à boca' };
   const s = SONS[fonema];
+  const ouvir = async (f: string) => {
+    setFonema(f);
+    setFalando(true);
+    await voz.falar(SONS[f].esticado, { quem: 'sofia' });
+    setFalando(false);
+  };
   return (
     <div className="tela-corpo fundo-limpo">
       <Topo crianca={crianca} voltar={`c/${criancaId}/vila`} titulo="Conheça seu corpo" />
       <main className="palco">
         <section className="cartao corpo-cartao">
-          <Balao fala={{ quem: 'sofia', texto: 'Aqui você vê por dentro como o som é feito: lábios, dentes, língua, céu da boca, nariz e garganta. Escolha um som!' }} crianca={crianca} auto />
+          <Balao fala={{ quem: 'sofia', texto: 'Olha como a boca faz cada som: os lábios, os dentes e a língua mudam de lugar. Escolha um som!' }} crianca={crianca} auto />
           <div className="corpo-layout">
             <div className="corpo-palco">
-              <EspelhoLado fonema={fonema} modo={modo} rotulos aoPronto={(a) => (api.current = a)} />
+              <EspelhoBoca fonema={fonema} falando={falando} />
             </div>
             <div className="corpo-controles">
-              <EspelhoFrente fonema={fonema} falando={false} />
               <div className="grade-sons" role="radiogroup" aria-label="Sons">
-                {sons.map((f) => <button key={f} role="radio" aria-checked={fonema === f} className={`peca ${fonema === f ? 'sel' : ''}`} onClick={() => { setFonema(f); voz.falar(SONS[f].esticado, { quem: 'sofia' }); }}>{f === 'E' ? 'É' : f === 'O' ? 'Ó' : SONS[f].letra}</button>)}
+                {sons.map((f) => <button key={f} role="radio" aria-checked={fonema === f} className={`peca ${fonema === f ? 'sel' : ''}`} onClick={() => ouvir(f)}>{f === 'E' ? 'É' : f === 'O' ? 'Ó' : SONS[f].letra}</button>)}
               </div>
-              <div className="grade-modos">
-                {config.espelho.conhecaSeuCorpo.map((m) => <button key={m} className={`btn ${modo === m ? 'pri' : ''}`} onClick={() => setModo(m)}>{nomes[m]}</button>)}
-                <button className={`btn ${girar ? 'pri' : ''}`} onClick={() => { setGirar(!girar); api.current?.girar?.(!girar); }}><Icone nome="repetir" />Girar 360°</button>
-              </div>
-              <p className="dica-boca"><Icone nome="boca" /><span>{s.dica}</span></p>
+              <button className="btn grande pri" onClick={() => ouvir(fonema)}><Icone nome="som" />Ouvir o som</button>
+              {embed ? null : <p className="dica-boca"><Icone nome="boca" /><span>{s.dica}</span></p>}
             </div>
           </div>
         </section>

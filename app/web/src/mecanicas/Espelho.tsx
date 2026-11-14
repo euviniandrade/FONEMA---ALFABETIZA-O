@@ -1,9 +1,9 @@
 import { Figura, Icone } from '../componentes/ui.tsx';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { som, type AtividadeEspelho } from '@fonema/conteudo';
 import { infoNome } from '@fonema/motor';
 import { Balao, Brilho } from '../componentes/basicos.tsx';
-import { EspelhoFrente, EspelhoLado, type ApiEspelho } from '../componentes/EspelhoDoSom.tsx';
+import { EspelhoBoca, useEspelhoEmbed } from '../componentes/EspelhoDoSom.tsx';
 import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
@@ -22,10 +22,8 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
   const [falando, setFalando] = useState(false);
   const [fase, setFase] = useState<'mostra' | 'vez' | 'feito'>('mostra');
   const [dica, setDica] = useState(false);
-  const api = useRef<ApiEspelho | null>(null);
 
   const mostrar = async (lento = false) => {
-    api.current?.lento?.(lento);
     setFalando(true);
     for (let k = 0; k < 2; k++) {
       await voz.falar(s.esticado, { quem: 'sofia', rate: lento ? 0.6 : 0.8 });
@@ -33,7 +31,6 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
       await espera(300);
     }
     setFalando(false);
-    api.current?.lento?.(false);
   };
 
   useEffect(() => {
@@ -57,21 +54,20 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
   };
 
   const letrasTela = atividade.letra;
+  const embed = useEspelhoEmbed(); // o embed novo já traz a dica de boca na legenda
   return (
     <div className="mec mec-espelho licao">
       <Balao fala={atividade.enunciado} crianca={crianca} />
       <div className="espelho-palco">
-        <EspelhoFrente fonema={atividade.fonema} falando={falando} />
+        <EspelhoBoca fonema={atividade.fonema} falando={falando} />
         <div className="espelho-centro">
           <div className={`letra-surge ${letra ? 'visivel' : ''}`} aria-live="polite" data-testid="letra-espelho">
             {ehNome && nome.mudo ? <><span className="muda">{letrasTela.slice(0, nome.mudo)}</span>{letrasTela.slice(nome.mudo)}</> : letrasTela}
           </div>
           <div className="ancora"><Figura emoji={atividade.ancora.figura} palavra={ehNome ? undefined : atividade.ancora.texto} /> {atividade.ancora.texto}</div>
-          <p className="ipa">som {s.ipa}</p>
         </div>
-        <EspelhoLado fonema={atividade.fonema} aoPronto={(a) => (api.current = a)} />
       </div>
-      <p className="dica-boca"><Icone nome="boca" /><span>{s.dica}</span></p>
+      {embed ? null : <p className="dica-boca"><Icone nome="boca" /><span>{s.dica}</span></p>}
       <div className="linha-botoes">
         <button className="btn" onClick={() => mostrar()}><Icone nome="som" />Ouvir o som</button>
         <button className="btn" onClick={() => mostrar(true)}><Icone nome="tartaruga" />Bem devagar</button>

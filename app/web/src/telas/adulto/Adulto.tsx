@@ -379,36 +379,28 @@ export function Configuracoes() {
       <Fundo cena="varanda" desfoque={18} tom="calmo" />
       <Topo voltar="adulto" titulo="Configurações" />
       <main className="palco adulto">
-        <section className="cartao">
+        <section className="cartao config">
           <div className="adulto-cab"><h1 className="t">Configurações</h1>{msg ? <span className="etiqueta verde" role="status"><Icone nome="check" />{msg}</span> : null}</div>
-          <p className="nota-mic">Padrões PROVISÓRIOS do MVP até as respostas do dono (docs/revisao/04-perguntas-para-o-dono.md). O arquivo de padrões é packages/conteudo/src/config.ts.</p>
-          <fieldset className="campo config-grupo"><legend>Prêmios de nível</legend>
-            <label className="opcao-linha"><input type="radio" name="premios" checked={configBruta.recompensas.modo === 'surpresa'} onChange={() => set({ recompensas: { modo: 'surpresa' } })} /> Surpresa depois da conquista; a barra mostra o próximo objetivo de aprendizagem (recomendado)</label>
-            <label className="opcao-linha"><input type="radio" name="premios" checked={configBruta.recompensas.modo === 'anunciada'} onChange={() => set({ recompensas: { modo: 'anunciada' } })} /> Anunciar o prêmio antes</label>
-          </fieldset>
-          <fieldset className="campo config-grupo"><legend>Onde aparecem a Lojinha e as Conquistas</legend>
-            <label className="opcao-linha"><input type="checkbox" checked={configBruta.lojinha.naVila} onChange={(e) => set({ lojinha: { ...configBruta.lojinha, naVila: e.target.checked } })} /> Lojinha na vila</label>
-            <label className="opcao-linha"><input type="checkbox" checked={configBruta.lojinha.noFimDaSessao} onChange={(e) => set({ lojinha: { ...configBruta.lojinha, noFimDaSessao: e.target.checked } })} /> Lojinha no fim da sessão</label>
-            <label className="opcao-linha"><input type="checkbox" checked={configBruta.lojinha.naEntradaDaFase} onChange={(e) => set({ lojinha: { ...configBruta.lojinha, naEntradaDaFase: e.target.checked } })} /> Lojinha na entrada da fase (a revisão recomenda desligado)</label>
-            <label className="opcao-linha"><input type="checkbox" checked={configBruta.conquistas.naEntradaDaFase} onChange={(e) => set({ conquistas: { naEntradaDaFase: e.target.checked } })} /> "Minhas Conquistas" na entrada da fase</label>
-          </fieldset>
-          <fieldset className="campo config-grupo"><legend>Ranking</legend>
-            <label className="opcao-linha"><input type="checkbox" checked={configBruta.ranking.naTelaDaCrianca} disabled readOnly /> Ranking na tela da criança (desligado no MVP)</label>
-          </fieldset>
-          <fieldset className="campo config-grupo"><legend>Testar a jornada</legend>
-            <label className="opcao-linha"><input type="checkbox" checked={configBruta.modoDemonstracao} onChange={(e) => set({ modoDemonstracao: e.target.checked })} data-testid="modo-demo" /> Modo demonstração: domínio em 1 sessão (para o adulto testar as fases rapidamente)</label>
-          </fieldset>
-          <fieldset className="campo config-grupo"><legend>Voz</legend>
-            <label className="opcao-linha">Velocidade <input type="range" min={0.7} max={1.2} step={0.05} value={configBruta.voz.velocidade} onChange={(e) => set({ voz: { ...configBruta.voz, velocidade: Number(e.target.value) } })} /> <b>{configBruta.voz.velocidade.toFixed(2)}×</b></label>
+          <p className="passo-sub">Valem para todas as crianças deste aparelho.</p>
+
+          <fieldset className="campo config-grupo"><legend><Icone nome="som" />Voz da Sofia e do Tales</legend>
+            <label className="opcao-linha">Velocidade da fala <input type="range" min={0.7} max={1.2} step={0.05} value={configBruta.voz.velocidade} onChange={(e) => set({ voz: { ...configBruta.voz, velocidade: Number(e.target.value) } })} /> <b>{configBruta.voz.velocidade.toFixed(2)}×</b></label>
             <div className="linha-botoes">
-              <button className="btn" onClick={() => voz.falar('Oi! Eu sou a Sofia.', { quem: 'sofia' })}><Icone nome="som" />Testar Sofia</button>
-              <button className="btn" onClick={() => voz.falar('E eu sou o Tales!', { quem: 'tales' })}><Icone nome="som" />Testar Tales</button>
+              <button className="btn" onClick={() => voz.falar('Oi! Eu sou a Sofia.', { quem: 'sofia' })}><Icone nome="som" />Ouvir a Sofia</button>
+              <button className="btn" onClick={() => voz.falar('E eu sou o Tales!', { quem: 'tales' })}><Icone nome="som" />Ouvir o Tales</button>
             </div>
           </fieldset>
-          <fieldset className="campo config-grupo"><legend>Dados deste aparelho</legend>
+
+          <fieldset className="campo config-grupo"><legend><Icone nome="lojinha" />Lojinha de brincadeira</legend>
+            <p className="nota-mic">As moedinhas só se ganham aprendendo. Nada é comprado com dinheiro de verdade.</p>
+            <label className="opcao-linha"><input type="checkbox" checked={configBruta.lojinha.naVila} onChange={(e) => set({ lojinha: { ...configBruta.lojinha, naVila: e.target.checked } })} /> Mostrar a Lojinha no mapa da vila</label>
+            <label className="opcao-linha"><input type="checkbox" checked={configBruta.lojinha.noFimDaSessao} onChange={(e) => set({ lojinha: { ...configBruta.lojinha, noFimDaSessao: e.target.checked } })} /> Oferecer a Lojinha quando a missão do dia termina</label>
+          </fieldset>
+
+          <fieldset className="campo config-grupo"><legend><Icone nome="escudo" />Dados deste aparelho</legend>
+            <p className="nota-mic">Tudo fica guardado só aqui. Você pode levar uma cópia ou apagar quando quiser.</p>
             <div className="linha-botoes">
-              <button className="btn" onClick={() => set(CONFIG_PADRAO)}><Icone nome="repetir" />Voltar aos padrões</button>
-              <button className="btn" onClick={exportar}><Icone nome="baixar" />Exportar dados (JSON)</button>
+              <button className="btn" onClick={exportar}><Icone nome="baixar" />Guardar uma cópia dos dados</button>
               {apagar ? (
                 <>
                   <button className="btn terra" data-testid="confirmar-apagar" onClick={async () => { await repo.apagarTudo(); navegar(''); location.reload(); }}><Icone nome="lixeira" />Sim, apagar tudo</button>
@@ -418,6 +410,22 @@ export function Configuracoes() {
             </div>
             {apagar ? <p className="nota-mic" role="alert">Isso apaga as crianças, o progresso e as gravações deste aparelho. Não dá para desfazer.</p> : null}
           </fieldset>
+
+          <details className="mais-opcoes" data-testid="avancado">
+            <summary><Icone nome="engrenagem" />Avançado</summary>
+            <fieldset className="campo"><legend>Prêmios quando a criança sobe de nível</legend>
+              <label className="opcao-linha"><input type="radio" name="premios" checked={configBruta.recompensas.modo === 'surpresa'} onChange={() => set({ recompensas: { modo: 'surpresa' } })} /> <span><b>Surpresa depois da conquista</b> (recomendado): a criança vê o próximo objetivo de aprendizagem, não o prêmio.</span></label>
+              <label className="opcao-linha"><input type="radio" name="premios" checked={configBruta.recompensas.modo === 'anunciada'} onChange={() => set({ recompensas: { modo: 'anunciada' } })} /> <span><b>Mostrar o prêmio antes</b>: a criança sabe o que vai ganhar.</span></label>
+            </fieldset>
+            <fieldset className="campo"><legend>Antes de começar cada fase</legend>
+              <label className="opcao-linha"><input type="checkbox" checked={configBruta.conquistas.naEntradaDaFase} onChange={(e) => set({ conquistas: { naEntradaDaFase: e.target.checked } })} /> Mostrar as conquistas que a fase oferece</label>
+              <label className="opcao-linha"><input type="checkbox" checked={configBruta.lojinha.naEntradaDaFase} onChange={(e) => set({ lojinha: { ...configBruta.lojinha, naEntradaDaFase: e.target.checked } })} /> Mostrar um atalho para a Lojinha (pode distrair; recomendamos desligado)</label>
+            </fieldset>
+            <fieldset className="campo"><legend>Para conhecer a plataforma</legend>
+              <label className="opcao-linha"><input type="checkbox" checked={configBruta.modoDemonstracao} onChange={(e) => set({ modoDemonstracao: e.target.checked })} data-testid="modo-demo" /> <span><b>Modo demonstração</b>: cada fase termina em 1 sessão, para o adulto percorrer a jornada depressa. Desligue para a criança.</span></label>
+            </fieldset>
+            <div className="linha-botoes"><button className="btn" onClick={() => set(CONFIG_PADRAO)}><Icone nome="repetir" />Voltar ao recomendado</button></div>
+          </details>
         </section>
       </main>
     </div>
