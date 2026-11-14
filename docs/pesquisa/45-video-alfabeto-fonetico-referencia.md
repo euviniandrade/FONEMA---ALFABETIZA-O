@@ -65,3 +65,40 @@ Ritmo lento, voz adulta feminina calma, música de fundo baixa, aplausos pontuai
 7. Três palavras-exemplo por letra, com figura.
 8. No Espelho do Som, a boca deve mostrar exatamente o que a brincadeira pede: boca bem aberta (A), lábios que estouram (B, P),
    sopro (F), ponta da língua para cima (L), boca fechada com som no nariz (M), chiado com biquinho (X) etc.
+
+## O que a imagem mostra em cada som (análise visual completa do vídeo)
+
+Formato fixo: cartão da letra → cena do faz de conta (desenho) → **close da boca real de uma mulher adulta fazendo o som**, quase sempre
+com o **dedo apontando onde o som nasce** (lábios, dentes, bochecha, garganta) → três cartões de palavra com figura e a letra em destaque.
+Voz feminina adulta, doce e pausada; música instrumental baixa; sons contínuos duram 1,5–2 s, sons curtos vêm em série de 3.
+
+| Som | Boca / língua / ar | Onde a apresentadora aponta |
+|---|---|---|
+| A | boca bem aberta, queixo desce, língua deitada embaixo; com voz | — |
+| B | lábios selados que estouram; com voz; apoio de vogal quase nulo | lábios |
+| C / K / Q | lábios abertos mostrando dentes; fundo da língua fecha e solta no céu da boca mole; sem voz | bochecha / mandíbula |
+| D | ponta da língua atrás dos dentes de cima, solta com estouro; com voz | queixo / lábios |
+| E | lábios abertos e esticados em sorriso, dentes separados, língua no meio | — |
+| F | dentes de cima pousados no lábio de baixo, sopro contínuo; sem voz | — |
+| G (ga, go, gu) | boca entreaberta, fundo da língua no fundo do céu da boca; com voz | base da garganta |
+| G brando / J | dentes fechados, lábios para a frente (biquinho), chiado contínuo com voz | dentes |
+| H | lábios fechados, dedo na frente da boca (silêncio) | dedo sobre os lábios |
+| I / Y | lábios bem esticados em sorriso largo, dentes próximos, ponta da língua atrás dos dentes de baixo | têmpora / bochecha |
+| L | boca bem aberta; ponta da língua sobe e encosta atrás dos dentes de cima; ar pelos lados; com voz | — |
+| M | lábios totalmente fechados; som e ar só pelo nariz | queixo |
+| N | lábios entreabertos, dentes à vista; ponta e bordas da língua na gengiva de cima; ar pelo nariz | dente / lábio |
+| O | lábios em círculo, dentes escondidos, língua recuada | — |
+| P | lábios fechados, pressão e estalo curto; sem voz | — |
+| R fraco / vibrante | boca entreaberta; ponta da língua vibra atrás dos dentes de cima; com voz | dente / língua |
+| RR (forte) | boca aberta; atrito do ar no fundo da garganta; ponta da língua parada | pescoço / garganta |
+| S | dentes quase juntos, lábios esticados; fio de ar sibilante; sem voz | boca |
+| S entre vogais / Z | mesma posição do S, com voz forte | dentes / sorriso |
+| T | ponta da língua atrás dos dentes de cima, solta seca; sem voz; série "t-t-t" | mão fechada "batendo na porta" |
+| U / W(u) | biquinho estreito bem para a frente, dentes escondidos | — |
+| V / W(v) | dentes de cima no lábio de baixo, com voz forte | lábio de baixo |
+| X | lábios para a frente, dentes fechados, chiado sem voz | dedo de silêncio sobre os lábios |
+
+Consequências para o nosso Espelho do Som: (a) a vista de frente precisa de lábios, dentes e língua bem legíveis, porque é isso que o
+vídeo mostra em close; (b) um **marcador "o som nasce aqui"** (lábios, dentes, ponta da língua, fundo, garganta, nariz) cumpre o papel
+do dedo da apresentadora; (c) sons curtos em série de três, sons contínuos por 1,5–2 s; (d) a vista de lado mostra o que o close real
+não mostra: língua por dentro, ar pelo nariz, voz ligada.
