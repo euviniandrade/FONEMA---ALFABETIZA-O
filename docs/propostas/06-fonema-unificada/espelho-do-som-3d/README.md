@@ -1,41 +1,71 @@
-# Espelho do Som 3D: a boca da Sofia e do Tales, de frente, em raio-X e por dentro
+# Espelho do Som: como a boca faz cada som
 
-O dono pediu que o Espelho do Som use **a boca dos próprios personagens**, com **zoom grande**, e uma **vista de lado tipo raio-X** mostrando a língua. Assim a criança entende como o som é feito e conhece as partes do corpo. Tudo bonito, lúdico e com exercícios. É uma das partes mais importantes da plataforma.
+A parte mais importante da plataforma: a criança **vê** como os lábios e a língua fazem cada som. Estilo aprovado pelo dono (D020):
 
-> ⚠️ **Posições simplificadas — validar com fonoaudióloga** antes de ir para o produto.
+- **De frente — "Boca gigante":** boca grande de cartoon, com a Sofia e o Tales ao lado apontando.
+- **De lado — "3D fofinho":** a Sofia (ou o Tales) de perfil, em 3D de filme de animação, com uma **janelinha** translúcida na bochecha mostrando a boca por dentro.
+
+> Posições simplificadas — **validar com fonoaudióloga** antes de ir para o produto.
 
 ![De frente: a ponta da língua sobe no L](capturas/02-frente-L-ponta-sobe.png)
 
-![De lado: Sofia 3D fofinha, dorso da língua no véu no K](capturas/06-lado-K-dorso-no-veu.png)
+![De lado: no L a ponta toca atrás dos dentes](capturas/05-lado-L-ponta-no-alveolo.png)
+
+![De lado: no K o fundo da língua toca o véu](capturas/06-lado-K-dorso-no-veu.png)
 
 ## Como abrir
 
-- **Completo (com 3D):** sirva a pasta `06-fonema-unificada/` com qualquer servidor estático (módulos ES não funcionam em `file://`):
-  `python3 -m http.server 8931` e abra `http://localhost:8931/espelho-do-som-3d/demo.html`.
-- **Direto do disco:** `demo.html` também abre em `file://`; aí aparecem a boca gigante de frente e a Sofia de lado (sem os modos 3D).
-- **Capturas:** `node ferramentas/capturar.js` (Playwright, Chromium com WebGL em software, 1280×800, `deviceScaleFactor 2`).
-- **Imagens:** `python3 recortar.py` recria os recortes (`recortes/`).
+- **Demo completa:** `demo.html` (abre direto do disco). Para o botão "Ouvir" achar o manifesto dos áudios, sirva a **raiz do repositório**: `python3 -m http.server 8931` e abra `http://localhost:8931/docs/propostas/06-fonema-unificada/espelho-do-som-3d/demo.html`.
+- **Componente para o app:** `embed.html` (ver abaixo).
+- **Capturas:** `node ferramentas/capturar.js` (Playwright; 1280×800 e 390×844, `deviceScaleFactor 2`). `node ferramentas/folha.js lado a,l,k saida.png` monta uma folha de contato para revisão.
+- **Imagens:** `python3 recortar.py` recria `recortes/` a partir de `estilos-opcoes/` e `imagens/`.
 
-## As vistas (mexem juntas) — estilos escolhidos pelo dono (D020)
+Sem dependências externas: SVG + JavaScript puro, fontes em `fontes/`, todos os caminhos relativos.
 
-| Vista | O que é | Arquivos |
+## As duas vistas (mexem juntas)
+
+| Vista | Como é feita | Arquivos |
 |---|---|---|
-| **De frente** (padrão) — "Boca gigante" | A boca grande e fofa com a Sofia e o Tales apontando (`estilos-opcoes/base-frente-boca-vazia.png`). A forma dos lábios vem de **6 ilustrações por visema** (`estilos-opcoes/base-frente-*.png`), trocadas com crossfade (~180 ms) e um "squash & stretch" pequeno: **aberta** (A, É, Ê, nasais, T D N L R, K G, NH LH, RR), **U** (U, Ũ), **O** (Ô, Ó, CH, J), **M** (M, P, B), **F** (F, V) e **I** (I, E, S, Z). Só na boca aberta aparece a **língua animada**, desenhada entre o fundo e a camada da frente: ponta sobe atrás dos dentes de cima no T/D/N/L, bate no R, fica deitada e larga no A, "embola" para trás no K/G. Nas outras bases, só setas e frase (no M: "ar pelo nariz"). Seta amarela curva + frase curtinha ("A ponta da língua sobe!"). Transições com mola | `espelho-frente.js`, `recortes/frente-*.{jpg,png}` |
-| **De lado** — "3D fofinho" | A Sofia de perfil, estilo filme 3D, com a janelinha na bochecha (`estilos-opcoes/base-lado-3d-vazia.png`; o interior de IA foi apagado por `recortar.py`). O enquadramento mostra o rosto (olho, nariz, orelha). Dentro da janela, o **boneco fiel**, com **brilho no ponto de contato** e **seta amarela na parte da língua que sobe** (ponta no L/T; dorso no K/G; meio no NH/LH): dentes de perfil arredondados com gengiva, céu da boca, véu que sobe e desce, língua coral com brilho, setinhas de ar (boca/nariz) e ondinhas douradas de voz. Os lábios de fora são os da ilustração; o movimento dos lábios aparece na vista de frente | `espelho-svg.js` (personagem `lado3d`), `recortes/lado3d-sofia-limpo.jpg` |
-| **3D** (opção) | Boca 3D em Three.js: boca de frente, **dentro da boca**, **do pulmão à boca** (usado em "Conheça seu corpo") e **girar 360°** | `espelho3d.js`, `vendor/` |
+| **De frente** | A forma dos lábios vem de **6 ilustrações por visema**, todas com o mesmo enquadramento da dupla (conferido: deslocamento 0 px): **A** aberta (A, É, nasais do A, T D N L R, K G, NH LH, RR), **U** (U, Ũ), **O** (Ô, Ó, Õ, CH, J), **M** (M, P, B), **F** (F, V) e **I** (I, Ê, S, Z). Troca com crossfade de ~180 ms e um "squash & stretch" pequeno só na região da boca (a dupla não se mexe). **Nenhum lábio é desenhado por código.** Só na boca aberta aparece a **língua animada** (coral, gordinha, com gradiente, brilho e sulco), desenhada entre o fundo e a camada dos dentes (`recortes/frente-camada.png`): ela passa por trás dos dentes. Ponta sobe no T/D/N/L, bate no R, fundo sobe no K/G, meio sobe no NH/LH. Setas amarelas, brilho no ponto de contato, risquinhos de ar (F, V, S, Z, CH, J), "ar pelo nariz" e frase curta | `espelho-frente.js`, `recortes/frente-*` |
+| **De lado** | Perfil 3D da Sofia ou do Tales (`recortes/lado-<quem>.jpg`, gerado com a referência `personagens-3d/dupla-opcao-1.png`). A **janelinha** e tudo dentro dela são desenhados por código, nas posições de `fonemas.js`: dentes de perfil (brancos, arredondados, com brilho), gengiva, céu da boca, **véu que sobe e desce**, língua com volume (gradiente coral, brilho, sombra interna), lábios em corte (fecham no M/P/B, fazem bico no U/CH, o de baixo encosta nos dentes no F/V), ar pela boca e/ou pelo nariz, ondinhas douradas de voz. **Brilho no ponto de contato** e **seta amarela na parte que se mexe**. Etiquetas opcionais (botão Nomes) | `espelho-lado.js` |
 
-O raio-X escuro de "vidro" (Sofia/Tales, `espelho-svg.js` personagens `sofia`/`tales`) saiu da lição; o código continua disponível para "Conheça seu corpo".
+Diferenças que a criança precisa ver (de lado): **L** = só a **ponta** sobe e toca atrás dos dentes de cima, dorso baixo · **K/G** = ponta **baixa**, atrás dos dentes de baixo, e o **dorso** sobe até o véu · **T/D/N** = ponta no mesmo lugar do L, mas a língua fica mais plana e alta · **S/Z** = ponta perto, sem tocar, ar fininho · **CH/J** = língua mais recuada e alta, lábios em bico · **R** fraco = a ponta bate rapidinho · **RR** = raspa no fundo da garganta · **M** = lábios fechados, véu abaixado, ar pelo nariz.
 
-Animações por som: a língua sobe e toca o lugar certo; o **"r" fraco bate** rapidinho no alvéolo; **p/b/t/d/k/g** fecham e soltam o ar de uma vez; no **m/n/nh** o véu desce e o ar sai pelo nariz; o **rr** raspa no fundo; nas **vogais nasais** o ar sai pela boca e pelo nariz; a voz liga e desliga (ex.: **f × v**, **s × z**, **p × b**). Há **câmera lenta** e sequências (M→A, L→A, T→A, A-R-A, F×V, A E I O U).
+Animações: plosivas (P B T D K G) fecham e soltam; o R bate; o RR treme no fundo; câmera lenta; sequências M→A, L→A, T→A, A-R-A, F×V, A E I O U. Respeita `prefers-reduced-motion`.
 
-## Exercícios
+O raio-X escuro e o 3D em Three.js **saíram da experiência**. "Conheça seu corpo" agora usa a janelinha de lado com as etiquetas.
 
-1. **Onde está a língua?** A criança toca no raio-X o lugar onde a língua (ou o lábio) encosta. No 1º erro, dica; no 2º, o lugar certo brilha.
-2. **Tem voz ou não tem?** "Ponha a mão na garganta": f×v, s×z, p×b, t×d, k×g, ch×j. Depois, o raio-X mostra as ondinhas (ou não).
-3. **Imite a Sofia (ou o Tales):** boca de frente ao lado de um espelho com a **câmera opcional** (`getUserMedia`, só neste aparelho; nada é gravado nem enviado). Sem câmera, segue normalmente.
-4. **Conheça seu corpo:** tocar em lábios, dentes, língua, céu da boca, nariz, véu, pregas vocais e pulmões para ouvir o nome e para que serve.
+## Áudio ("Ouvir")
 
-**O que é simulado:** a voz usa `speechSynthesis` pt-BR. No produto, cada som será **áudio gravado** (fonoaudióloga e vozes oficiais da Sofia e do Tales), sincronizado com a boca. As bocas de frente e as cabeças de vidro são imagens de IA provisórias (arte final por ilustradora, universo/06).
+**Sem `speechSynthesis`.** `espelho-audio.js` toca só os mp3 das vozes oficiais já gerados pelo app (`app/web/public/audio/falas/` + `manifesto.json`, chave `quem|texto`). Hoje há fala gravada para: **A, É, Ê, I, Ó, Ô, U, M, F, L, S** (teclas com pontinho dourado). Para os outros sons o botão fica desligado e **nada toca**. Quando o app gerar falas no formato `"M, de macaco."`, elas entram sozinhas pelo manifesto. A pasta é configurável: `audioBase` (parâmetro de URL ou opção de `montar`). As instruções dos exercícios ficam escritas (sem voz sintetizada).
+
+## Componente embutível (`embed.html` + `embed.js`)
+
+```html
+<iframe src="…/espelho-do-som-3d/embed.html?f=m&vista=frente&quem=sofia&compacto=1&audioBase=/audio/falas/" title="Espelho do Som"></iframe>
+```
+
+| Parâmetro | Valores |
+|---|---|
+| `f` | fonema: `a E(é) e(ê) i O(ó) o(ô) u`, `a~ e~ i~ o~ u~`, `p b m f v t d n l r s z`, `x`(ch) `j nh lh k g rr`. Apelidos: `ch`, `c`, `q`, `é`, `ê`, `ó`, `ô`, `ã`, `õ`; maiúsculas viram minúsculas (`M` → `m`; atenção: `E` e `O` exatos são É e Ó) |
+| `vista` | `frente` (padrão) ou `lado` |
+| `quem` | `sofia` (padrão) ou `tales` (vista de lado e voz preferida) |
+| `compacto` | `1` = só o palco com os botões De frente/De lado (o app põe os próprios controles) |
+| `audioBase` | pasta com `manifesto.json` e os mp3 (no app: `/audio/falas/`) |
+| `lento`, `rotulos` | `1`/`0` |
+
+Mensagens (`postMessage`): o iframe **aceita** `{tipo:'espelho:fonema', f}`, `{tipo:'espelho:vista', vista}`, `{tipo:'espelho:quem', quem}`, `{tipo:'espelho:lento', lento}`, `{tipo:'espelho:rotulos', rotulos}`, `{tipo:'espelho:ouvir'}`; e **envia** `{tipo:'espelho:pronto', fonemas}`, `{tipo:'espelho:mudou', f, vista, quem}`, `{tipo:'espelho:audio', f, tocou}`.
+
+Sem iframe: carregue `espelho.css`, `fonemas.js`, `espelho-frente.js`, `espelho-lado.js`, `espelho-audio.js`, `embed.js` e chame `EspelhoDoSom.montar(div, { fonema, vista, quem, compacto, audioBase })`, que devolve `{ fonema(), vista(), quem(), lento(), rotulos(), ouvir(), temAudio(), estado(), destruir() }`.
+
+Para o app copiar: `embed.html`, `embed.js`, `espelho.css`, `espelho-frente.js`, `espelho-lado.js`, `espelho-audio.js`, `fonemas.js`, `fontes/` e, de `recortes/`, `frente-*` e `lado-*` (≈ 1,9 MB).
+
+## Exercícios (na demo)
+
+1. **Onde está a língua?** A criança toca na janelinha o lugar onde a língua (ou o lábio) encosta. No 1º erro, dica; no 2º, o lugar certo brilha.
+2. **Tem voz ou não tem?** "Ponha a mão na garganta": f×v, s×z, p×b, t×d, k×g, ch×j. Depois, a janelinha mostra as ondinhas (ou não).
+3. **Imite a Sofia (ou o Tales):** boca de frente ao lado de um espelho com a **câmera opcional** (`getUserMedia`, só neste aparelho; nada é gravado nem enviado).
+4. **Conheça seu corpo:** tocar em lábios, dentes, língua, atrás dos dentes, céu da boca, véu, nariz, garganta e voz.
 
 ## Tabela fonema → posição (`fonemas.js`)
 
@@ -81,17 +111,20 @@ Notas: o "rr" (/ʁ/) varia muito entre sotaques (pode soar como [h] ou [χ]); fi
 
 | Arquivo | O quê |
 |---|---|
-| `capturas/01..04e-frente-*` | Boca gigante: A, L (ponta sobe), M, U, K (fundo sobe), F, O, I |
-| `capturas/05..09c-lado-*` | Sofia 3D de lado: L (ponta no alvéolo), K (dorso no véu), M (nariz e voz), S, A, T, CH |
-| `capturas/10..13-3d-*` | 3D: boca de frente, dentro da boca (T e K), do pulmão à boca |
+| `capturas/01..04e-frente-*` | Boca gigante: A, L, M, U, K, F, O, I |
+| `capturas/05..09c-lado-*` | Sofia de lado: L, K, M, S, A, T, CH |
+| `capturas/09d, 09e-lado-tales-*` | Tales de lado: L e K |
 | `capturas/14..17-ex-*` | Exercícios |
-| `capturas/transicao-*.png` | Quadros (0, 33, 66, 100%): frente M→A e T→A; lado L→K e T→A; soltos em `capturas/transicoes/` |
+| `capturas/18..21-embed-*` | Componente embutido (normal e compacto) |
+| `capturas/celular/*` | As mesmas cenas em 390×844 |
+| `capturas/transicao-*.png` | Tiras (0, 33, 66, 100%): frente M→A e T→A; lado L→K e T→A; quadros soltos em `capturas/transicoes/` |
 
-## Imagens de origem (`imagens/`)
+## Arquivos antigos que podem ser apagados
 
-| Arquivo | Uso |
-|---|---|
-| `v2-raio-x-sofia.png`, `v2-raio-x-tales-L.png` | Fundo do raio-X (exterior); o interior da boca é apagado e redesenhado |
-| `sofia-bocas-M-A-O-S.png`, `v2-sofia-bocas-F-L-CH-E.png`, `v2-tales-bocas-M-U-I-K.png` | Rostos de frente |
-| `raio-x-boca-partes.png`, `raio-x-sons-M-L-R-S.png` | Só referência de estilo (posições erradas; não usadas) |
-| `estilos-opcoes/base-frente-boca-vazia.png`, `estilos-opcoes/base-lado-3d-vazia.png` | Bases dos estilos escolhidos (D020) |
+Não são mais usados (ficaram do protótipo anterior, com raio-X escuro e 3D): `espelho-svg.js`, `espelho3d.js`, `espelho.js`, `_t3.html`, `vendor/`, `recortes/raiox-*`, `recortes/lado3d-*`, `imagens/v2-raio-x-*`, `imagens/raio-x-*`, `imagens/referencia-estilo-*`, `estilos-opcoes/base-lado-3d-vazia.png`, `capturas/10..13-3d-*`.
+
+## O que ainda é provisório
+
+- Posições e proporções simplificadas: falta a revisão de uma fonoaudióloga. O "rr" varia muito entre sotaques; o "l" e o "r" de fim de sílaba não estão na tabela.
+- Ilustrações de IA (bocas de frente e perfis): arte final por ilustradora.
+- Só 11 sons têm fala gravada; faltam os áudios dos outros (e sons isolados gravados por fonoaudióloga).
