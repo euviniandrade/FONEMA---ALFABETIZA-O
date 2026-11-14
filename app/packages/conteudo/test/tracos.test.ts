@@ -23,13 +23,13 @@ describe('traçado das letras (D029 §4)', () => {
       }
     }
   });
-  it('maiúsculas ficam entre o topo (15) e a base (85); minúsculas não passam do topo das altas (12)', () => {
+  it('maiúsculas ficam entre o topo (15) e a base (85); minúsculas vão do topo das altas (7) até a perna (92)', () => {
     for (const [letra, ts] of Object.entries(TRACOS)) {
       const ys = ts.flatMap((t) => pontosDoTraco(t.d, 1).map((p) => p.y));
       if (letra === letra.toUpperCase()) {
         expect(Math.min(...ys), letra).toBeGreaterThanOrEqual(14.9);
         expect(Math.max(...ys), letra).toBeLessThanOrEqual(letra === 'Q' ? 92.1 : 85.1);
-      } else expect(Math.min(...ys), letra).toBeGreaterThanOrEqual(11.9);
+      } else { expect(Math.min(...ys), letra).toBeGreaterThanOrEqual(6.9); expect(Math.max(...ys), letra).toBeLessThanOrEqual(92.1); }
     }
   });
   it('o primeiro traço começa em cima (de cima para baixo), salvo nas bolinhas e curvas', () => {

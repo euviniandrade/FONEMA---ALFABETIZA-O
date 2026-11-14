@@ -469,6 +469,37 @@ async function main() {
   await passarPorteira(page);
   await cap(page, 'configuracoes-padroes-mvp');
 
+  console.log('8b. Cadastro antigo (D029): sexo "prefiro não informar" e avatar de recorte');
+  await page.evaluate(async () => {
+    const db = await new Promise((ok, erro) => { const r = indexedDB.open('fonema'); r.onsuccess = () => ok(r.result); r.onerror = () => erro(r.error); });
+    const tx = db.transaction(['criancas'], 'readwrite');
+    tx.objectStore('criancas').put({
+      id: 'cr-antiga', nome: 'Rafa', genero: 'n', anoNascimento: 2020, pronuncia: { grafia: 'Rafa', fala: 'Rafa', rate: 1, pitchExtra: 0, voz: 'sofia' },
+      avatar: { base: 'crianca-07-black-power-alto', cantinho: 'mata' }, apoios: { previsivel: false, focoCurto: false, leituraReforco: false, calmo: false },
+      jaSabe: { letrasDoNome: 'nao-sei', lePalavras: 'nao-sei', leFrases: 'nao-sei' }, consentimentos: { responsavel: true, vozPrimeiroNome: true, gravarVozAdulto: false, em: 1 },
+      rotina: { minutosDia: 15, horaDormir: '20:00' }, criadoEm: 5
+    });
+    await new Promise((ok) => { tx.oncomplete = ok; });
+    db.close();
+  });
+  await page.goto(BASE + '#/aluno');
+  await page.locator('[data-perfil="Rafa"]').waitFor();
+  ok(true, 'criança de cadastro antigo aparece nos cartões sem quebrar');
+  await page.goto(BASE + '#/c/cr-antiga/vila');
+  await page.locator('[data-testid="montar-avatar"][data-passo="sexo"]').waitFor();
+  ok(page.url().includes('/avatar'), 'cadastro antigo sem sexo: o app pede "menino ou menina?" uma vez, antes de qualquer tela');
+  await page.locator('[data-sexo="m"]').click();
+  await page.locator('[data-testid="montar-avatar"][data-passo="pele"]').waitFor();
+  ok(await page.locator('.montar-corpo [data-peca="pele-09"][aria-checked="true"]').count() === 1, 'avatar antigo migrado: a cor de pele equivalente já vem escolhida');
+  await page.locator('[data-ir-passo="cabelo"]').click();
+  ok(await page.locator('.montar-corpo [data-peca="m-black-power"][aria-checked="true"]').count() === 1, 'avatar antigo migrado: black power de menino, depois da escolha do sexo');
+  await page.locator('[data-ir-passo="lojinha"]').click();
+  await page.getByTestId('avatar-pronto').click();
+  await page.locator('[data-testid="primeira-missao"], [data-testid="vila"]').first().waitFor();
+  await page.goto(BASE + '#/c/cr-antiga/vila');
+  await page.getByTestId('vila').waitFor();
+  ok(true, 'depois da escolha, a criança entra na vila e o app não pergunta de novo');
+
   const JORNADA = !process.argv.includes('--sem-jornada');
   {
   console.log('9. Jornada inteira: Alfabeto → Sílabas → Palavras → Meu nome (modo demonstração: domínio em 1 sessão)');

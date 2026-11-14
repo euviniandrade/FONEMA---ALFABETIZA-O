@@ -24,7 +24,8 @@ export interface Peca {
   borda: number;
 }
 
-export type Modo = 'entrada' | 'auto' | 'parado';
+/** entrada: vem girando e assenta · auto: giro lento contínuo · parado: de frente (arrastar gira) · balanco: vai e vem, sem mostrar o verso */
+export type Modo = 'entrada' | 'auto' | 'parado' | 'balanco';
 export interface OpcoesVista {
   modo: Modo;
   /** "Menos movimento": sem entrada nem giro automático; arrastar continua valendo. */
@@ -137,6 +138,7 @@ class VistaInterna implements Vista {
       const agora = performance.now();
       const d = ((e.clientX - this.ultimoX) / Math.max(120, canvas.clientWidth)) * Math.PI * 1.35;
       this.ang += d;
+      if (op.modo === 'balanco') this.ang = Math.max(-1.2, Math.min(1.2, this.ang));
       const dt = Math.max(8, agora - this.ultimoT) / 1000;
       this.vel = this.vel * 0.5 + (d / dt) * 0.5;
       this.ultimoX = e.clientX; this.ultimoT = agora; this.sujo = true;
@@ -165,6 +167,13 @@ class VistaInterna implements Vista {
       return true;
     }
     if (this.arrastando) return true;
+    if (this.op.modo === 'balanco' && !this.op.calmo) {
+      // vai e vem (a peça não tem verso desenhado): mola até o ângulo do balanço
+      const alvoB = Math.sin(agora / 1150) * 0.62;
+      this.vel += ((alvoB - this.ang) * 9 - this.vel * 4.5) * dt;
+      this.ang += this.vel * dt; this.sujo = true;
+      return true;
+    }
     const auto = this.op.modo === 'auto' && !this.op.calmo;
     if (auto) {
       // inércia do arrasto se desfaz e o giro lento volta sozinho

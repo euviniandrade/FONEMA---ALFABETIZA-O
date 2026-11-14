@@ -4,7 +4,8 @@
  * Letra bastão (imprensa), a usada no começo da alfabetização no Brasil. Cada letra é uma lista de traços NA ORDEM
  * em que a mão faz; cada traço é um caminho SVG (`d`) desenhado no SENTIDO do movimento, num quadro de 100 × 100:
  *   maiúsculas  topo y = 15 · base y = 85
- *   minúsculas  topo das altas (b, d, f, h, k, l, t) y = 12 · topo das baixas y = 42 · base y = 72 · perna (g, j, p, q, y) até y = 97
+ *   minúsculas  topo das altas (b, d, f, h, k, l, t) y = 7 · topo das baixas y = 37 · base y = 67 · perna (g, j, p, q, y) até y = 92
+ *               (no arquivo estão escritas 5 unidades abaixo e sobem no fim: veja SOBE)
  * A tela (web/src/mecanicas/Tracar.tsx) desenha a própria letra a partir destes caminhos (por isso as setas, os
  * números e o ponto de início caem sempre em cima da letra), anima a demonstração e confere o traço da criança.
  *
@@ -85,6 +86,13 @@ export const TRACOS: Record<string, TracoLetra[]> = {
   y: [t('M34,42 L50,72'), t('M68,42 L40,97')],
   z: [t('M34,42 L66,42 L34,72 L66,72')]
 };
+
+// As minúsculas foram desenhadas com a base em y = 72; sobem 5 unidades para a perna do g, j, p, q, y caber no quadro.
+const SOBE = 5;
+for (const letra of Object.keys(TRACOS)) {
+  if (letra === letra.toUpperCase()) continue;
+  TRACOS[letra] = TRACOS[letra].map((tr) => ({ ...tr, d: tr.d.replace(/(-?[\d.]+),(-?[\d.]+)/g, (_m, x: string, y: string) => `${x},${Number(y) - SOBE}`) }));
+}
 
 /** Traços de uma letra (maiúscula ou minúscula); `undefined` se a letra não tem traçado definido. */
 export function tracosDaLetra(letra: string): TracoLetra[] | undefined {

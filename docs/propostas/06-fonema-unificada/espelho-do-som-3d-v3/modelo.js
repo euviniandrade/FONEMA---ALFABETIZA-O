@@ -62,7 +62,7 @@ function raio(d, queixo) {
 /** Abertura dos lábios no meio: quanto o de cima sobe (hu) e o de baixo desce (hl), em cm. O de baixo acompanha a mandíbula. */
 export function abertura(p) {
   const J = 5.4 * Math.sin((p.jaw * Math.PI) / 180);
-  const hu = mix(Math.min(0.36 * p.ab, 0.5), 0.36, p.ld);
+  const hu = mix(Math.min(0.36 * p.ab, 0.5), 0.46, p.ld);
   const hl = mix(p.ab < 0.02 ? 0.64 * p.ab : Math.max(0.64 * p.ab, Math.min(J - 0.28, p.ab * 1.1)), -0.15, p.ld);
   return { hu, hl, J, dy: -(p.dy || 0) };
 }
@@ -76,7 +76,7 @@ function contorno(p, th, o, A) {
   const pb = mix(1.75, 1.0, arr);
   const sorriso = (0.05 + 0.2 * clamp((p.lg - 1.02) / 0.3)) * (1 - arr);
   const vin = (cima ? hu : -hl) * Math.pow(as, pb) + sorriso * Math.pow(ac, 2.6) - 0.15 * sorriso + dy;
-  const cai = mix(Math.pow(as, 0.72), 1, 0.62 * arr);
+  const cai = mix(Math.pow(as, 0.72), 1, 0.5 * arr);
   const estica = Math.pow(1.05 / w, 0.12) * (1 + 0.12 * arr);
   let T;
   if (cima) T = 0.4 * estica * ((1 - 0.24 * gauss(c, 0.15)) + 0.12 * gauss(ac - 0.34, 0.17));
@@ -281,21 +281,6 @@ export function criarCabeca(THREE, P, { modo = 'frente', quem = 'sofia' } = {}) 
     g.setAttribute('color', new THREE.BufferAttribute(cn, 3)); g.setAttribute('lab', new THREE.BufferAttribute(ln, 1));
     const add = (m, ro) => { const n = new THREE.Mesh(g, m); n.position.set(0, PESC.yTopo - PESC.alt / 2, PESC.z); n.renderOrder = ro; grupo.add(n); return n; };
     if (frente) add(mat.pele, 0); else { add(mat.pesc, 6); }
-  }
-
-  /* ----- olhos fechados sorrindo (arquinhos), só um detalhe simpático ----- */
-  {
-    const mOlho = guarda(new THREE.MeshStandardMaterial({ color: frente ? 0x3a2418 : 0x2f6fb5, roughness: 0.5, transparent: !frente, opacity: frente ? 1 : 0.75 }));
-    for (const lado of [-1, 1]) {
-      const pts = [];
-      for (let k = 0; k <= 10; k++) {
-        const t = k / 10 - 0.5, u = lado * 2.2 + t * 1.3, v = 3.85 + 0.4 * (1 - (2 * t) * (2 * t));
-        const dd = dirDe(u, v), r = raio(dd, QUEIXO) + 0.03;
-        pts.push(new THREE.Vector3(C[0] + dd[0] * r, C[1] + dd[1] * r, C[2] + dd[2] * r));
-      }
-      const g = guarda(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 20, 0.1, 8, false));
-      const m = new THREE.Mesh(g, mOlho); m.renderOrder = 7; grupo.add(m);
-    }
   }
 
   /* ----- fundo escuro da boca (só de frente): um saco que começa na borda de dentro dos lábios ----- */

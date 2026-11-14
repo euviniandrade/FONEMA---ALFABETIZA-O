@@ -268,7 +268,7 @@ def medir(fonema, y):
         if fonema == 'z' and m['cenh'] < 6500: falhas.append(f'chiado em {m["cenh"]} Hz (z fica acima de 6500)')
         if fonema == 'j' and not 3800 <= m['cenh'] <= 6600: falhas.append(f'chiado em {m["cenh"]} Hz (j fica entre 3800 e 6600)')
         if dur < 0.6: falhas.append(f'duração {dur:.2f} s')
-        if fonema == 'j': duvidas.append('a transcrição automática ouviu "iii" neste som: o chiado do J pode estar fraco perto da voz')
+        if fonema == 'j': duvidas.append('a transcrição automática não reconheceu o som como J (ouviu "iii" numa versão): o chiado pode estar fraco perto da voz')
     elif fonema == 'rr':
         if vogal > 0.25: falhas.append(f'{vogal:.0%} do clipe soa como vogal')
         if dur < 0.3: falhas.append(f'duração {dur:.2f} s')

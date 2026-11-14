@@ -246,7 +246,7 @@ export async function montar(el, o = {}) {
     congelar(fase = 'faz') {
       const fo = P.F[f];
       const tt = typeof fase === 'number' ? fase : fase === 'repouso' ? 0 : fase === 'prepara' ? DUR.descanso + (fo.anim === 'estouro' ? 0.5 : DUR.prepara * 0.6)
-        : fase === 'solta' ? 99 : DUR.descanso + (fo.anim === 'estouro' ? 0.3 + 0.36 + 0.09 + 0.06 : DUR.prepara + 0.75);
+        : fase === 'solta' ? 99   : DUR.descanso + (fo.anim === 'estouro' ? 0.3 + 0.3 : DUR.prepara + 0.75);
       congelado = tt; tTroca = 1; aquece = true; acorda();
     },
     prontoSons, destruir
@@ -287,7 +287,7 @@ export async function montar(el, o = {}) {
     renderer.toneMapping = THREE.NeutralToneMapping || THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.0;
     renderer.autoClear = false;
-    const sombras = o.sombras !== undefined ? !!o.sombras : true;
+    const sombras = !!o.sombras; // desligadas por padrão: mais leve no celular e a pele fica limpa
     renderer.shadowMap.enabled = sombras; renderer.shadowMap.type = THREE.PCFShadowMap;
     const amb = mapaAmbiente(THREE, renderer);
 
@@ -310,16 +310,16 @@ export async function montar(el, o = {}) {
     const monta = () => {
       cabF = criarCabeca(THREE, P, { modo: 'frente', quem }); cabL = criarCabeca(THREE, P, { modo: 'lado', quem });
       giroF.add(cabF.grupo); giroL.add(cabL.grupo);
-      arF = criarAr(THREE, { n: 60, tamanho: 0.26, ordem: 4, soFora: true, cor: 0x7fd4ff }); arL = criarAr(THREE, { n: 120, tamanho: 0.3, ordem: 4 });
-      giroF.add(arF.pontos); giroL.add(arL.pontos);
+      arL = criarAr(THREE, { n: 120, tamanho: 0.3, ordem: 4 });
+      giroL.add(arL.pontos);
       marF = criarMarcador(THREE); marL = criarMarcador(THREE); giroF.add(marF.sprite); giroL.add(marL.sprite);
     };
-    const desmonta = () => { for (const x of [cabF, cabL, arF, arL, marF, marL]) x.liberar(); giroF.clear(); giroL.clear(); };
+    const desmonta = () => { for (const x of [cabF, cabL, arL, marF, marL]) x.liberar(); giroF.clear(); giroL.clear(); };
     monta();
     refaz = () => { desmonta(); monta(); acorda(); };
 
     // enquadramento: cada vista mostra uma caixa do modelo inteira, seja a janela larga ou alta
-    const CX_F = { c: [0, -0.1, 0], mw: 3.1, mh: 3.05 }, CX_L = { c: [0, -0.2, -2.3], mw: 4.9, mh: 5.2 };
+    const CX_F = { c: [0, 0.1, 0], mw: 3.1, mh: 3.1 }, CX_L = { c: [0, -0.45, -1.7], mw: 4.9, mh: 4.9 };
     function enquadra(cam, cx, aspecto, deLado) {
       const tg = Math.tan((cam.fov * Math.PI) / 360), dist = Math.max(cx.mh, cx.mw / aspecto) / tg;
       cam.aspect = aspecto;
@@ -370,24 +370,24 @@ export async function montar(el, o = {}) {
       const arAgora = fo.ar === 'nenhum' ? 0 : e.ar;
       const dtAr = menosMov && !umaVez ? 0 : dt;
       const oAr = { ar: arAgora, forca: fo.forca, nasal, tempo };
-      if (aquece) { aquece = false; arL.aquecer(cam, oAr); arF.aquecer(cam, oAr); }
-      arL.atualizar(dtAr, cam, oAr); arF.atualizar(dtAr, cam, oAr);
+      if (aquece) { aquece = false; arL.aquecer(cam, oAr); }
+      arL.atualizar(dtAr, cam, oAr);
       // marcador "o som nasce aqui"
       const zona = fo.modo === 'vogal' || fo.modo === 'mudo' ? null : ZONAS3D[fo.zona];
       const mz = zona ? [zona[0], zona[1], zona[2]] : null;
       marL.atualizar(dtReal, mz && [0, mz[1], mz[2] + 2.0], zona ? e.marca : 0, tempo, 1.25);
-      marF.atualizar(dtReal, mz && [mz[0], mz[1], Math.max(mz[2], 0.4)], zona ? e.marca : 0, tempo, 0.95);
+      marF.atualizar(dtReal, mz && [mz[0], mz[2] < -1 ? 0 : Math.min(mz[1], 0.3), Math.max(mz[2], 0.4)], zona ? e.marca : 0, tempo, 0.95);
 
       // desenha as duas janelas
       const r = ajusta();
       renderer.setScissorTest(false); renderer.clear(true, true, true); renderer.setScissorTest(true);
-      for (const [v, cena, camx, cx, deLado, ar] of [[vF, cenaF, camF, CX_F, false, arF], [vL, cenaL, camL, CX_L, true, arL]]) {
+      for (const [v, cena, camx, cx, deLado, ar] of [[vF, cenaF, camF, CX_F, false, null], [vL, cenaL, camL, CX_L, true, arL]]) {
         const b = v.getBoundingClientRect();
         const x = b.left - r.left, y = r.bottom - b.bottom, w = b.width, h = b.height;
         if (w < 4 || h < 4) continue;
         renderer.setViewport(x, y, w, h); renderer.setScissor(x, y, w, h);
         enquadra(camx, cx, w / h, deLado);
-        ar.escala(h * dpr / (2 * Math.tan((camx.fov * Math.PI) / 360)));
+        if (ar) ar.escala(h * dpr / (2 * Math.tan((camx.fov * Math.PI) / 360)));
         renderer.clearDepth();
         renderer.render(cena, camx);
       }
@@ -413,7 +413,7 @@ export async function montar(el, o = {}) {
       cancelAnimationFrame(quadro); if (io) io.disconnect(); if (ro) ro.disconnect(); document.removeEventListener('visibilitychange', aoVis);
       desmonta(); amb.dispose(); renderer.dispose();
     };
-    api.three = { THREE, renderer, cenaF, cenaL, camF, camL };
+    api.three = { THREE, renderer, cenaF, cenaL, camF, camL, pecas: () => ({ cabF, cabL, arL }) };
   }
 
   /* avança a linha do tempo e calcula a pose do quadro */

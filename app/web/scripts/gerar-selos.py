@@ -94,10 +94,16 @@ def recortar(quad):
             tirar |= rot == i
     # ilhas NEUTRAS (cinza/branco, sem amarelo) presas entre a base e a faixa = fundo e sombra do fundo;
     # o brilho especular do ouro é creme (tem saturação) ou pequeno, e fica
-    # (o fundo ali pega um reflexo creme do ouro: o que separa do brilho especular é a LARGURA da mancha)
-    palido = (s < .34) & (v > .6)
-    miolo = ndi.binary_opening(palido, iterations=9)
-    neutro = ndi.binary_dilation(miolo, iterations=12, mask=palido)
+    neutro = (s < .1) & (v > .55)
+    neutro = ndi.binary_dilation(ndi.binary_opening(neutro, iterations=2), iterations=3) & ((s < .2) & (v > .5))
+    # só na ZONA entre a base e a faixa: ali o fundo pega um reflexo creme do ouro (não é neutro);
+    # o que o separa do brilho especular é a LARGURA da mancha
+    Hq, Wq = s.shape
+    zona = np.zeros_like(neutro)
+    zona[int(Hq * .665):int(Hq * .80), int(Wq * .24):int(Wq * .76)] = True
+    palido = (s < .34) & (v > .6) & zona
+    miolo = ndi.binary_opening(palido, iterations=7)
+    neutro |= ndi.binary_dilation(miolo, iterations=10, mask=palido)
     rot2, n2 = ndi.label(neutro)
     tam2 = ndi.sum(neutro, rot2, range(1, n2 + 1))
     for i in range(1, n2 + 1):
@@ -276,7 +282,7 @@ def premio(nome, geo):
     a = im[..., 3]
     m = maior(a > .6)
     H, W = a.shape
-    sig = H * .022
+    sig = H * (.085 if nome == 'moeda' else .022)
     pm = im[..., :3] * a[..., None]
     bl = np.dstack([ndi.gaussian_filter(pm[..., c], sig) for c in range(3)]) / np.maximum(ndi.gaussian_filter(a, sig), 1e-3)[..., None]
     nit = im[..., :3]

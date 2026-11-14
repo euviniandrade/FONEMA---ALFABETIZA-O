@@ -1,21 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 import { asset } from '../servicos/ambiente.ts';
+import './espelho-do-som.css';
 
 /**
- * Espelho do Som (D020) dentro do app.
+ * Espelho do Som (D020, refeito na D029 §3) dentro do app.
  *
- * VISTA PADRÃO: a boca DE FRENTE ("Boca gigante"). O raio-X escuro antigo saiu (reprovado pelo dono).
- *
- * 1) Com o componente novo (docs/.../espelho-do-som-3d/embed.html, copiado para ./espelho/ no build): iframe
- *    `./espelho/embed.html?f=<fonema>&vista=frente&quem=sofia&compacto=1`, com as abas "De frente / De lado"
- *    (lado = perfil 3D da Sofia ou do Tales). O app troca o som por postMessage `{ tipo: 'espelho:fonema', f }`.
- *    A VOZ continua vindo do app (mp3 oficiais), então o embed não toca nada sozinho.
+ * 1) Componente 3D (docs/.../espelho-do-som-3d-v3/embed.html, copiado para ./espelho/ no build): iframe
+ *    `./espelho/embed.html?f=<fonema>&quem=sofia&compacto=1&sons=`. A boca DE FRENTE e a boca POR DENTRO (de lado)
+ *    ficam as duas na mesma tela, animando juntas. Contrato por postMessage:
+ *      `{ tipo: 'espelho:fonema', f }`              troca o som;
+ *      `{ tipo: 'espelho:falando', ativo }`         a voz do app está fazendo o som agora (a boca recomeça junto e segura).
+ *    A VOZ continua vindo do app (voz.ts / sons puros), por isso `sons=` vai vazio e o embed não toca nada sozinho.
+ *    Sem WebGL, o próprio embed desenha as duas vistas em 2D.
  * 2) Sem o embed (pasta ausente): as bocas ilustradas por visema de public/assets/espelho/frente-*.webp.
  *
  * PONTO DE TROCA: `USAR_EMBED_NOVO` (desligue para voltar às imagens) e a URL em `urlEmbed`.
  */
 export const USAR_EMBED_NOVO = true;
-const urlEmbed = (fonema: string) => `./espelho/embed.html?f=${encodeURIComponent(fonema)}&vista=frente&quem=sofia&compacto=1&audioBase=${encodeURIComponent('../audio/falas/')}`;
+const urlEmbed = (fonema: string) => `./espelho/embed.html?f=${encodeURIComponent(fonema)}&quem=sofia&compacto=1&sons=`;
 
 let embed: Promise<boolean> | null = null;
 /** O embed novo foi copiado para ./espelho/? (servidores de SPA devolvem o index do app para caminhos inexistentes.) */
@@ -45,20 +47,20 @@ const DESCRICAO: Record<Visema, string> = {
   'boca-vazia': 'boca bem aberta', u: 'biquinho', o: 'boca redonda', m: 'lábios fechados', f: 'dentes de cima no lábio de baixo', i: 'sorriso com os dentes juntinhos'
 };
 
-/** Boca gigante de frente (e de lado, no embed), pelo som. `falando` dá o destaque enquanto a voz faz o som. */
+/** A boca de frente e por dentro (de lado), juntas, pelo som. `falando` avisa o instante em que a voz faz o som. */
 export function EspelhoBoca({ fonema, falando = false }: { fonema: string; falando?: boolean }) {
   const v = visemaDe(fonema);
   const embedOk = useEspelhoEmbed();
   const quadro = useRef<HTMLIFrameElement>(null);
   const [src] = useState(() => urlEmbed(fonema));
-  useEffect(() => {
-    quadro.current?.contentWindow?.postMessage({ tipo: 'espelho:fonema', f: fonema }, '*');
-  }, [fonema]);
+  const manda = (m: Record<string, unknown>) => quadro.current?.contentWindow?.postMessage(m, '*');
+  useEffect(() => { manda({ tipo: 'espelho:fonema', f: fonema }); }, [fonema]);
+  useEffect(() => { manda({ tipo: 'espelho:falando', ativo: falando }); }, [falando]);
   if (embedOk === null) return <figure className="espelho-boca carregando-esp" />;
   if (embedOk) {
     return (
-      <figure className={`espelho-boca espelho-embed ${falando ? 'falando' : ''}`}>
-        <iframe ref={quadro} src={src} title="Espelho do Som: a boca de frente e de lado" allow="autoplay" onLoad={() => quadro.current?.contentWindow?.postMessage({ tipo: 'espelho:fonema', f: fonema }, '*')} />
+      <figure className={`espelho-boca espelho-embed espelho-3d ${falando ? 'falando' : ''}`}>
+        <iframe ref={quadro} src={src} title="Espelho do Som: a boca de frente e por dentro" allow="autoplay" onLoad={() => manda({ tipo: 'espelho:fonema', f: fonema })} />
       </figure>
     );
   }

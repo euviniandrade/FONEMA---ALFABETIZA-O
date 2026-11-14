@@ -215,11 +215,78 @@ function pintarLetra(ctx: Ctx, texto: string, cx: number, cy: number, r: number,
   ctx.restore();
 }
 
+/**
+ * As figuras 3D vêm com um "chão" branco recortado junto (sombra sobre fundo claro). No esmalte azul do selo ele
+ * vira uma mancha: tiramos as manchas brancas e neutras grandes da metade de baixo (o selo põe a própria sombra).
+ */
+const limpas = new Map<string, HTMLCanvasElement | HTMLImageElement>();
+function semChao(im: HTMLImageElement): HTMLCanvasElement | HTMLImageElement {
+  const pronta = limpas.get(im.src);
+  if (pronta) return pronta;
+  let saida: HTMLCanvasElement | HTMLImageElement = im;
+  try {
+    const W = Math.min(440, im.naturalWidth);
+    const H = Math.round((im.naturalHeight * W) / im.naturalWidth);
+    const c = novoCanvas(W, H);
+    const x = c.getContext('2d', { willReadFrequently: true });
+    if (x) {
+      x.drawImage(im, 0, 0, W, H);
+      const dados = x.getImageData(0, 0, W, H);
+      const d = dados.data;
+      const claro = (i: number, lim: number) => d[i + 3] > 20 && Math.min(d[i], d[i + 1], d[i + 2]) > lim && Math.max(d[i], d[i + 1], d[i + 2]) - Math.min(d[i], d[i + 1], d[i + 2]) < 16;
+      const rot = new Int32Array(W * H);
+      const fila = new Int32Array(W * H);
+      let n = 0;
+      for (let p0 = 0; p0 < W * H; p0++) {
+        if (rot[p0] || !claro(p0 * 4, 226)) continue;
+        n++;
+        let ini = 0; let fim = 0; let somaY = 0;
+        fila[fim++] = p0; rot[p0] = n;
+        while (ini < fim) {
+          const p = fila[ini++];
+          const px = p % W; const py = (p / W) | 0;
+          somaY += py;
+          for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+            const qx = px + dx; const qy = py + dy;
+            if (qx < 0 || qy < 0 || qx >= W || qy >= H) continue;
+            const q = qy * W + qx;
+            if (!rot[q] && claro(q * 4, 226)) { rot[q] = n; fila[fim++] = q; }
+          }
+        }
+        // mancha grande, na metade de baixo = chão
+        if (fim > W * H * 0.012 && somaY / fim > H * 0.6) {
+          for (let k = 0; k < fim; k++) d[fila[k] * 4 + 3] = 0;
+          // franja clara em volta da mancha (2 passadas)
+          let borda = Array.from(fila.subarray(0, fim));
+          for (let passo = 0; passo < 3; passo++) {
+            const prox: number[] = [];
+            for (const p of borda) {
+              const px = p % W; const py = (p / W) | 0;
+              for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+                const qx = px + dx; const qy = py + dy;
+                if (qx < 0 || qy < 0 || qx >= W || qy >= H) continue;
+                const q = qy * W + qx;
+                if (d[q * 4 + 3] && claro(q * 4, 196)) { d[q * 4 + 3] = 0; prox.push(q); }
+              }
+            }
+            borda = prox;
+          }
+        }
+      }
+      x.putImageData(dados, 0, 0);
+      saida = c;
+    }
+  } catch { /* imagem de outra origem: fica como veio */ }
+  limpas.set(im.src, saida);
+  return saida;
+}
+
 let rascunho: HTMLCanvasElement | null = null;
-function pintarFigura(ctx: Ctx, im: HTMLImageElement, cx: number, cy: number, lado: number, silhueta: boolean) {
-  const k = Math.min(lado / im.naturalWidth, lado / im.naturalHeight);
-  const w = im.naturalWidth * k;
-  const h = im.naturalHeight * k;
+function pintarFigura(ctx: Ctx, original: HTMLImageElement, cx: number, cy: number, lado: number, silhueta: boolean) {
+  const im = semChao(original);
+  const k = Math.min(lado / original.naturalWidth, lado / original.naturalHeight);
+  const w = original.naturalWidth * k;
+  const h = original.naturalHeight * k;
   ctx.save();
   if (silhueta) {
     // bloqueado: só a silhueta, em cinza (a criança vê a forma, não o prêmio pronto)
@@ -300,6 +367,23 @@ function estrela(ctx: Ctx, cx: number, cy: number, R: number) {
   ctx.closePath();
 }
 
+/** Estrela em RELEVO no metal (verso dos selos e da moeda). */
+export function relevoEstrela(ctx: Ctx, cx: number, cy: number, R: number, tom: { claro: string; meio: string; escuro: string } = TOM_VERSO.ouro) {
+  ctx.lineJoin = 'round';
+  ctx.save();
+  ctx.lineWidth = R * 0.16;
+  ctx.translate(R * 0.045, R * 0.06); estrela(ctx, cx, cy, R); ctx.fillStyle = tom.escuro; ctx.strokeStyle = tom.escuro; ctx.globalAlpha = 0.55; ctx.fill(); ctx.stroke();
+  ctx.translate(-R * 0.09, -R * 0.11); estrela(ctx, cx, cy, R); ctx.fillStyle = tom.claro; ctx.strokeStyle = tom.claro; ctx.globalAlpha = 0.8; ctx.fill(); ctx.stroke();
+  ctx.restore();
+  const gr = ctx.createLinearGradient(cx - R, cy - R, cx + R, cy + R);
+  gr.addColorStop(0, tom.claro); gr.addColorStop(0.5, tom.meio); gr.addColorStop(1, tom.escuro);
+  ctx.lineWidth = R * 0.16; ctx.strokeStyle = gr; ctx.fillStyle = gr;
+  estrela(ctx, cx, cy, R); ctx.fill(); ctx.stroke();
+  const luz = ctx.createLinearGradient(cx, cy - R, cx, cy + R * 0.2);
+  luz.addColorStop(0, 'rgba(255,255,255,.55)'); luz.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = luz; estrela(ctx, cx, cy, R * 0.86); ctx.fill();
+}
+
 /**
  * Pinta o VERSO: placa lisa de metal, uma estrela em relevo e o nível/data gravados (sem logotipo).
  * A arte já sai ESPELHADA na horizontal, para a silhueta casar com a da frente quando o selo vira.
@@ -319,20 +403,7 @@ export function pintarVerso(canvas: HTMLCanvasElement, arte: ArteSelo, im: Image
   const cy0 = (g.centro.cy + g.centro.y) / 2;
   const cy = cy0 - r * 0.24;
   const R = r * 0.5;
-  ctx.lineJoin = 'round';
-  // relevo: sombra embaixo/direita, luz em cima/esquerda, face no tom do metal
-  ctx.save();
-  ctx.lineWidth = R * 0.16;
-  ctx.translate(R * 0.045, R * 0.06); estrela(ctx, cx, cy, R); ctx.fillStyle = tom.escuro; ctx.strokeStyle = tom.escuro; ctx.globalAlpha = 0.55; ctx.fill(); ctx.stroke();
-  ctx.translate(-R * 0.09, -R * 0.11); estrela(ctx, cx, cy, R); ctx.fillStyle = tom.claro; ctx.strokeStyle = tom.claro; ctx.globalAlpha = 0.8; ctx.fill(); ctx.stroke();
-  ctx.restore();
-  const gr = ctx.createLinearGradient(cx - R, cy - R, cx + R, cy + R);
-  gr.addColorStop(0, tom.claro); gr.addColorStop(0.5, tom.meio); gr.addColorStop(1, tom.escuro);
-  ctx.lineWidth = R * 0.16; ctx.strokeStyle = gr; ctx.fillStyle = gr;
-  estrela(ctx, cx, cy, R); ctx.fill(); ctx.stroke();
-  const luz = ctx.createLinearGradient(cx, cy - R, cx, cy + R * 0.2);
-  luz.addColorStop(0, 'rgba(255,255,255,.55)'); luz.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = luz; estrela(ctx, cx, cy, R * 0.86); ctx.fill();
+  relevoEstrela(ctx, cx, cy, R, tom);
   // gravação: nível e data
   const gravar = (t: string, y: number, fs: number) => {
     ctx.font = FONTE(700, fs); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';

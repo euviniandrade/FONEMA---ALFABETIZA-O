@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { LETRA_POR_ID, type AtividadeLetra } from '@fonema/conteudo';
+import { LETRA_POR_ID, PALAVRAS_SEM_VOZ, type AtividadeLetra } from '@fonema/conteudo';
 import { infoNome } from '@fonema/motor';
 import { Balao, Brilho } from '../componentes/basicos.tsx';
 import { Figura, Icone, caminhoFigura } from '../componentes/ui.tsx';
@@ -68,7 +68,7 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
     // as três palavras, uma a uma, na voz da Sofia (só as que têm clipe)
     for (let k = 1; k < l.palavras.length && vivo.current; k++) {
       setPalavra(k);
-      if (voz.temTodas([l.palavras[k]], 'sofia')) await voz.falar(l.palavras[k], { quem: 'sofia' }); else await espera(700);
+      if (!PALAVRAS_SEM_VOZ.includes(l.palavras[k]) && voz.temTodas([l.palavras[k]], 'sofia')) await voz.falar(l.palavras[k], { quem: 'sofia' }); else await espera(700);
       await espera(200);
     }
     if (fs[3] && !(await diz(fs[3], 3))) return;

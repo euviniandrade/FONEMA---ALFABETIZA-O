@@ -1,0 +1,9 @@
+/* Espelho do Som 3D (D029 §3): as duas vistas (frente + por dentro) dentro do app. O embed já traz seus cartões,
+   então a moldura de fora some; a altura cresce no celular em pé, onde as vistas ficam uma em cima da outra. */
+.espelho-boca.espelho-3d{background:transparent;box-shadow:none;border-radius:0;overflow:visible;aspect-ratio:auto;height:clamp(260px,46vh,470px);transition:filter .3s}
+.espelho-boca.espelho-3d.falando{box-shadow:none;filter:drop-shadow(0 0 14px rgba(255,214,82,.75))}
+.mec-espelho .espelho-boca.espelho-3d{height:clamp(260px,46vh,470px)}
+.corpo-palco .espelho-boca.espelho-3d{height:clamp(280px,52vh,520px)}
+@media (max-width:760px) and (orientation:portrait){
+  .espelho-boca.espelho-3d,.mec-espelho .espelho-boca.espelho-3d,.corpo-palco .espelho-boca.espelho-3d{height:clamp(380px,58vh,560px)}
+}

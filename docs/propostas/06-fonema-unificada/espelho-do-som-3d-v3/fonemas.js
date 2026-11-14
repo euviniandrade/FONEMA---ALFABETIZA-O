@@ -35,7 +35,7 @@
   const REPOUSO = [[-0.88, -0.42], [-1.2, 0.02], [-2.1, 0.32], [-3.2, 0.42], [-4.35, -0.3], [-4.55, -1.6]];
   const LAB = (ab, lg, arr = 0, ld = 0) => ({ ab, lg, arr, ld });
   // vogais redondas: a abertura fica um pouco abaixo dos dentes de cima (os dentes ficam escondidos)
-  const DESCE = { O: 0.1, o: 0.14, u: 0.16, 'o~': 0.14, 'u~': 0.16 };
+  const DESCE = { O: 0.33, o: 0.24, u: 0.23, 'o~': 0.24, 'u~': 0.23 };
 
   const F = {};
   const def = (id, o) => { F[id] = Object.assign({ id, jaw: 2, tj: 1, lab: LAB(0.25, 1.05), lin: REPOUSO, vel: 0, voz: true, ar: 'oral', modo: 'vogal', larg: 1 }, o); };
@@ -65,7 +65,7 @@
     lin: [[-0.85, -0.4], [-1.6, -0.3], [-2.5, 0.14], [-3.6, 0.76], [-4.62, 0.0], [-4.72, -1.5]],
     t: { labios: 'redondinhos', lingua: 'atrás, meio-alta', contato: 'nenhum' }, boca: ['O', true], zona: 'baixo',
     dica: 'Boca redondinha, como a letra O: ôôô.' });
-  def('u', { ipa: 'u', letra: 'U', ex: 'uva', fala: 'uuuu', jaw: 4.5, lab: LAB(0.36, 0.4, 1),
+  def('u', { ipa: 'u', letra: 'U', ex: 'uva', fala: 'uuuu', jaw: 6.5, lab: LAB(0.36, 0.4, 1),
     lin: [[-0.9, -0.4], [-1.7, -0.24], [-2.6, 0.3], [-3.7, 1.0], [-4.62, 0.3], [-4.72, -1.4]],
     t: { labios: 'biquinho bem projetado', lingua: 'atrás e alta, perto do véu', contato: 'nenhum' }, boca: ['O', false], zona: 'baixo',
     dica: 'Biquinho pequeno, como para assobiar: uuu.' });

@@ -71,6 +71,23 @@ export function Tracar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
     const todos = tracos.flatMap((t) => t.pts);
     return todos.length ? { x: todos.reduce((s, p) => s + p.x, 0) / todos.length, y: todos.reduce((s, p) => s + p.y, 0) / todos.length } : { x: 50, y: 50 };
   }, [tracos]);
+  /** Onde fica o número de cada traço: ao lado do comecinho, do lado de fora da letra, sem cobrir outro número. */
+  const numeros = useMemo(() => {
+    const postos: { x: number; y: number }[] = [];
+    for (const t of tracos) {
+      const opcoes: { x: number; y: number }[] = [];
+      for (const s of [Math.min(7, t.comp / 2), Math.min(16, t.comp * 0.7), 0]) {
+        const p = em(t, s);
+        const rad = (p.ang * Math.PI) / 180;
+        let nx = -Math.sin(rad), ny = Math.cos(rad);
+        if ((p.x - centro.x) * nx + (p.y - centro.y) * ny < 0) { nx = -nx; ny = -ny; }
+        for (const lado of [1, -1]) opcoes.push({ x: Math.min(94, Math.max(6, p.x + nx * lado * 10.5)), y: Math.min(94, Math.max(6, p.y + ny * lado * 10.5)) });
+      }
+      const livre = (o: { x: number; y: number }) => postos.every((q) => Math.hypot(q.x - o.x, q.y - o.y) >= 10.5);
+      postos.push(opcoes.find(livre) ?? opcoes[0]);
+    }
+    return postos;
+  }, [tracos, centro]);
   const completo = tracos.length > 0 && vez >= tracos.length;
   const liberado = completo || cobertura >= COBERTURA_LIVRE || (tracos.length === 0 && cobertura > 0);
 
@@ -136,16 +153,17 @@ export function Tracar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
     const st = estado.current;
     const t = tracos[st.vez];
     if (!t) return;
-    let novo = st.prog;
+    // o traço só começa na bolinha verde (perto do ponto de início); depois, só anda para a frente
+    const noInicio = Math.hypot(t.pts[0].x - x, t.pts[0].y - y) <= TOLERANCIA;
+    if (st.prog === 0 && !noInicio) return;
+    let novo = Math.max(st.prog, 0.01);
     for (const p of t.pts) {
       if (p.s < st.prog) continue;
       if (p.s > st.prog + JANELA) break;
       if (Math.hypot(p.x - x, p.y - y) <= TOLERANCIA) novo = Math.max(novo, p.s);
     }
-    // o começo precisa ser perto da bolinha verde
-    if (st.prog === 0 && novo === 0 && Math.hypot(t.pts[0].x - x, t.pts[0].y - y) > TOLERANCIA) return;
     const fim = t.ponto ? 0 : t.comp - 5;
-    if (novo >= fim && (t.ponto ? Math.hypot(t.pts[0].x - x, t.pts[0].y - y) <= TOLERANCIA : true)) {
+    if (novo >= fim && (t.ponto ? noInicio : true)) {
       estado.current = { vez: st.vez + 1, prog: 0 };
       setVez(st.vez + 1); setProg(0);
       efeitos.toque();
@@ -201,13 +219,8 @@ export function Tracar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
               return <path key={`s${k}-${j}`} className={`tracado-seta ${k === atual ? 'da-vez' : ''} ${k < atual ? 'feita' : ''}`} d="M-3.4,-2.6 L2.6,0 L-3.4,2.6 Z" transform={`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${p.ang.toFixed(0)})`} />;
             }))}
             {/* números da ordem, ao lado do começo de cada traço */}
-            {tracos.map((t, k) => {
-              // ao lado do comecinho do traço, do lado de fora da letra (traços que saem do mesmo ponto não se cobrem)
-              const p = em(t, Math.min(7, t.comp / 2));
-              const rad = (p.ang * Math.PI) / 180;
-              let nx = -Math.sin(rad), ny = Math.cos(rad);
-              if ((p.x - centro.x) * nx + (p.y - centro.y) * ny < 0) { nx = -nx; ny = -ny; }
-              const x = Math.min(94, Math.max(6, p.x + nx * 10.5)), y = Math.min(94, Math.max(6, p.y + ny * 10.5));
+            {tracos.map((_t, k) => {
+              const { x, y } = numeros[k];
               return (
                 <g key={`n${k}`} className={`tracado-numero ${k === atual ? 'da-vez' : ''} ${k < atual ? 'feito' : ''}`} transform={`translate(${x.toFixed(1)} ${y.toFixed(1)})`}>
                   <circle r="4.6" /><text y="1.9" textAnchor="middle">{k + 1}</text>

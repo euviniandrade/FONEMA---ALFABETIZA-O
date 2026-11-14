@@ -21,9 +21,9 @@ export function caminhos(P, p, topo, nTopo) {
   for (let i = nTopo - 3; i >= 0; i -= 3) {
     const z = topo[i * 2], y = topo[i * 2 + 1];
     if (z < -4.45) continue;
-    const teto = z > -3.8 ? P.ceuY(z) : mix(1.25, 0.2, clamp((-3.8 - z) / 0.7)) * (1 - p.vel) + p.vel * 1.25;
+    const teto = z > -3.8 ? P.ceuY(z) : 1.25;
     const folga = teto - y;
-    if (z > -4.2 && folga < menor) { menor = folga; if (folga < 0.09 && !lateral) bloqueio = oral.length; }
+    if (z > -4.0 && folga < menor) { menor = folga; if (folga < 0.09 && !lateral) bloqueio = oral.length; }
     const aperto = lateral ? sm((0.35 - folga) / 0.3) : 0;
     oral.push({ z, y: y + Math.max(0.05, folga) * 0.5 - aperto * 0.35, lx: mix(0.85, 0.35, aperto), ly: Math.max(0.04, folga * 0.32), dx: aperto * 1.3 });
   }
@@ -79,7 +79,7 @@ export function criarAr(THREE, { n = 110, cor = 0x23b7ff, tamanho = 0.3, ordem =
       let v = vBase * vel[i];
       if (u[i] > fim) v *= 0.75 + 0.5 * forca; // do lado de fora: sopro forte vai longe e rápido
       let nu = u[i] + dt * v * (0.25 + 0.75 * visivel);
-      const limite = !canal[i] && bl !== null ? bl - 0.012 - 0.07 * Math.abs(ox[i]) : 2;
+      const limite = !canal[i] && bl !== null ? bl * (1 - 0.5 * ((i * 0.618) % 1)) - 0.012 : 2; // o ar preso enche o espaço atrás do fechamento
       if (u[i] <= limite + 0.02 && nu > limite) nu = limite; // a passagem está fechada: o ar para e se junta
       if (nu >= 1 || (canal[i] === 0 && nasal >= 1 && nu > 0.2) || (canal[i] === 1 && nasal <= 0 && nu > 0.2 && nu < fim)) { nu = rnd() * 0.12; canal[i] = rnd() < nasal ? 1 : 0; vida[i] = 0; }
       else if (nu < 0.2 && ((canal[i] === 0 && nasal >= 1) || (canal[i] === 1 && nasal <= 0))) canal[i] = nasal >= 1 ? 1 : 0;

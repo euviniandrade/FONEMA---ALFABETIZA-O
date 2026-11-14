@@ -1,5 +1,5 @@
 // Copia para public/ (sem editar as pastas de origem) as demos que outros agentes constroem em docs/:
-//  - Espelho do Som 3D  (docs/propostas/06-fonema-unificada/espelho-do-som-3d) → public/espelho/
+//  - Espelho do Som 3D  (docs/propostas/06-fonema-unificada/espelho-do-som-3d-v3) → public/espelho/
 //  - Mundo 3D v2        (docs/propostas/06-fonema-unificada/mundo-3d-v2)       → public/mundo3d/
 // Roda antes de `npm run dev` e `npm run build`. Se a pasta não existir (ou ainda não tiver o arquivo
 // principal), o app usa o modo 2D (imagens) e mostra o aviso no console.
@@ -34,10 +34,11 @@ function du(p) {
   return readdirSync(p).reduce((t, n) => t + du(join(p, n)), 0);
 }
 
-// Espelho do Som: só o que o componente embutível (embed.html) usa — frente por visemas + lado 3D da Sofia/Tales.
-copiar(join(docs, 'espelho-do-som-3d'), join(publico, 'espelho'), {
+// Espelho do Som (v3, D029 §3): boca 3D em tempo real, frente e lado na mesma tela. Usa o three.js do Mundo 3D
+// (public/mundo3d/vendor), por isso não leva cópia própria. A versão anterior (espelho-do-som-3d) fica só em docs/.
+copiar(join(docs, 'espelho-do-som-3d-v3'), join(publico, 'espelho'), {
   exige: 'embed.html',
-  ignora: [/^capturas$/, /^imagens$/, /^ferramentas$/, /^estilos-opcoes$/, /^vendor$/, /^demo\./, /^espelho3d\.js$/, /^espelho\.js$/, /^espelho-svg\.js$/, /^_t/, /\.py$/, /\.md$/, /^__pycache__$/]
+  ignora: [/^capturas$/, /^ferramentas$/, /^vendor$/, /^_/, /\.py$/, /\.md$/]
 });
 copiar(join(docs, 'mundo-3d-v2'), join(publico, 'mundo3d'), {
   exige: 'index.html',

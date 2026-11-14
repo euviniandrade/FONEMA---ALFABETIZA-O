@@ -1,6 +1,6 @@
 /**
  * BANCADA DE TESTE dos selos 3D e do giro 360° (não entra no build do app).
- *   npx vite            → /bancada-selos.html#metais | #doze | #angulos | #premios | #todos
+ *   npx vite            → /bancada-selos.html#metais | #doze | #angulos | #premios | #celebracao | #todos
  * Usa os componentes REAIS (recompensas.tsx). window.__nomes(lista) confere o ajuste dos nomes na faixa.
  */
 import { createRoot } from 'react-dom/client';
@@ -8,7 +8,7 @@ import { CONQUISTAS, type Conquista } from '@fonema/conteudo';
 import type { ConquistaGanha } from '@fonema/motor';
 import './estilos.css';
 import './estilos-recompensas.css';
-import { Cofrinho, Premio3D, Selo, SeloGirando, formaDoSelo } from './componentes/recompensas.tsx';
+import { CelebracaoSelos, Cofrinho, Premio3D, Selo, SeloGirando, formaDoSelo } from './componentes/recompensas.tsx';
 import { ajustarNome, fontePronta, type Forma } from './componentes/selo-pintura.ts';
 
 const c = (id: string, nome: string, tipo: Conquista['tipo'], motivo: string, visivel: Conquista['visivel_antes'] = 'visivel'): Conquista =>
@@ -77,6 +77,12 @@ function Premios() {
   );
 }
 
+function Celebracao() {
+  const ids = ['S-LETRA-A', 'S-R0-10'];
+  const itens = ids.map((i) => ({ conquista: CONQUISTAS.find((x) => x.id === i)!, ganha: g(i, i === 'S-R0-10' ? 'bronze' : 'unico') }));
+  return <div data-pronto="celebracao" style={{ minHeight: '70vh', display: 'grid', placeItems: 'end center' }}><CelebracaoSelos itens={itens} letra="K" /></div>;
+}
+
 declare global { interface Window { __nomes?: (nomes: string[]) => Promise<unknown> } }
 window.__nomes = async (nomes: string[]) => {
   await fontePronta();
@@ -109,6 +115,7 @@ function Bancada() {
       {qual === 'metais' || qual === 'todos' ? <><h1>4 formatos × 4 metais (+ bloqueado e mistério)</h1><Metais /></> : null}
       {qual === 'doze' || qual === 'todos' ? <><h1>12 selos do catálogo (nomes curtos e longos)</h1><Doze /></> : null}
       {qual === 'angulos' || qual === 'todos' ? <><h1>Giro 360°: 0°, 45°, 90°, 135° e 180° (frente, borda e verso)</h1><Angulos /></> : null}
+      {qual === 'celebracao' ? <><h1>Fim da fase: entra grande, girando, um por vez</h1><Celebracao /></> : null}
       {qual === 'premios' || qual === 'todos' ? <><h1>Moeda, troféu, baú e porquinho</h1><Premios /></> : null}
     </main>
   );

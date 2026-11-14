@@ -4,7 +4,7 @@ import type { Conquista } from '@fonema/conteudo';
 import type { ConquistaGanha, InfoNivel } from '@fonema/motor';
 import { asset } from '../servicos/ambiente.ts';
 import { caminhoFigura } from './ui.tsx';
-import { carregarImagem, geoPremio, geoSelo, novoCanvas, pintarFrente, pintarVerso, prepararSelo, type ArteSelo, type Forma, type Metal, type Motivo } from './selo-pintura.ts';
+import { carregarImagem, geoPremio, geoSelo, novoCanvas, pintarFrente, pintarVerso, prepararSelo, relevoEstrela, type ArteSelo, type Forma, type Metal, type Motivo } from './selo-pintura.ts';
 import type { Modo, Peca, Vista } from './premio3d.ts';
 
 /* ============================== selos 3D (D025/D029) ============================== */
@@ -104,21 +104,31 @@ export function SeloGirando({ conquista, ganha, letra, bloqueado = false, tamanh
 }
 
 const PREMIOS = {
-  moeda: { arquivo: 'moeda', rotulo: 'Moedinha', espessura: 0.07, borda: 0xe2a52c },
-  trofeu: { arquivo: 'trofeu', rotulo: 'Troféu', espessura: 0.1, borda: 0xd9982a },
-  bau: { arquivo: 'bau-livros', rotulo: 'Baú de livros', espessura: 0.1, borda: 0x2a3f78 }
+  moeda: { arquivo: 'moeda', rotulo: 'Moedinha', espessura: 0.07, borda: 0xe2a52c, modo: 'auto' },
+  trofeu: { arquivo: 'trofeu', rotulo: 'Troféu', espessura: 0.1, borda: 0xd9982a, modo: 'balanco' },
+  bau: { arquivo: 'bau-livros', rotulo: 'Baú de livros', espessura: 0.1, borda: 0x2a3f78, modo: 'balanco' }
 } as const;
 
-/** Moeda, troféu e baú no mesmo giro 360° dos selos (silhueta com espessura; o verso não repete letras espelhadas). */
-export function Premio3D({ tipo, tamanho = 160, modo = 'auto', angulo }: { tipo: keyof typeof PREMIOS; tamanho?: number; modo?: Modo; angulo?: number }) {
+/**
+ * Moeda, troféu e baú como objetos com espessura, no mesmo motor dos selos.
+ * A MOEDA dá a volta inteira (verso liso com estrela em relevo). TROFÉU e BAÚ são uma imagem só, com letras:
+ * balançam de um lado para o outro mostrando a borda, sem virar de costas (a volta inteira pede modelo 3D).
+ */
+export function Premio3D({ tipo, tamanho = 160, modo, angulo }: { tipo: keyof typeof PREMIOS; tamanho?: number; modo?: Modo; angulo?: number }) {
   const p = PREMIOS[tipo];
   const g = geoPremio(p.arquivo);
   const montar = async (): Promise<Montada> => {
     const [f, v] = await Promise.all([carregarImagem(asset(`recompensas/${p.arquivo}.webp`)), carregarImagem(asset(`recompensas/${p.arquivo}-verso.webp`))]);
     if (!f) throw new Error('sem imagem');
-    return { frente: f, peca: { frente: f, verso: v ?? f, contorno: g.contorno, proporcao: g.w / g.h, espessura: p.espessura, borda: p.borda } };
+    let verso: HTMLCanvasElement | HTMLImageElement = v ?? f;
+    if (tipo === 'moeda' && v) {
+      const c = novoCanvas(g.w * 2, g.h * 2);
+      const x = c.getContext('2d');
+      if (x) { x.drawImage(v, 0, 0, c.width, c.height); relevoEstrela(x, c.width * 0.5, c.height * 0.47, c.height * 0.2); verso = c; }
+    }
+    return { frente: f, peca: { frente: f, verso, contorno: g.contorno, proporcao: g.w / g.h, espessura: p.espessura, borda: p.borda } };
   };
-  return <Objeto3D chave={tipo} montar={montar} proporcao={g.w / g.h} largura={tamanho} modo={modo} angulo={angulo} rotulo={p.rotulo} className={`premio-${tipo}`} />;
+  return <Objeto3D chave={tipo} montar={montar} proporcao={g.w / g.h} largura={tamanho} modo={modo ?? p.modo} angulo={angulo} rotulo={p.rotulo} className={`premio-${tipo}`} />;
 }
 
 /**
