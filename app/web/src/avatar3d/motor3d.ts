@@ -337,6 +337,9 @@ export class Palco {
 
 /* ------------------------------------------------------------------ miniaturas (um contexto fora da tela) */
 
+/** A tela que pediu a miniatura saiu antes de chegar a vez dela. */
+export class MiniaturaCancelada extends Error {}
+
 let foraDaTela: { cena: Cena; canvas: HTMLCanvasElement } | null = null;
 let fila: Promise<unknown> = Promise.resolve();
 
@@ -344,8 +347,11 @@ let fila: Promise<unknown> = Promise.resolve();
  * Desenha o boneco numa imagem (data URL). Todas as miniaturas usam o MESMO contexto WebGL fora da tela, uma de
  * cada vez — nada de abrir um contexto por cartão.
  */
-export function desenharMiniatura(a: Aparencia, tipo: Enquadramento, largura: number, altura: number, giro = tipo === 'busto' ? 0.28 : 0.3): Promise<string> {
+export function desenharMiniatura(a: Aparencia, tipo: Enquadramento, largura: number, altura: number, aindaQuer: () => boolean = () => true, giro = tipo === 'busto' ? 0.28 : 0.3): Promise<string> {
   const tarefa = fila.then(async () => {
+    // devolve a vez ao navegador entre uma miniatura e outra: toques e animações não esperam a fila inteira
+    await new Promise<void>((r) => setTimeout(r, 0));
+    if (!aindaQuer()) throw new MiniaturaCancelada();
     if (!foraDaTela) {
       const canvas = document.createElement('canvas');
       foraDaTela = { canvas, cena: new Cena(canvas, { sombras: false }) };

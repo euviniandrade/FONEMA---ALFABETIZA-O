@@ -34,7 +34,7 @@ for (const f of sons) {
   await pg.goto(`http://127.0.0.1:${porta}/espelho-do-som-3d-v3/embed.html?f=${encodeURIComponent(f)}&congela=${fase}&sons=&${extra}`);
   await pg.waitForFunction(() => document.documentElement.dataset.pronto === '1', null, { timeout: 30000 });
   await pg.waitForTimeout(+arg('espera', '900'));
-  const nome = join(saida, `${arg('prefixo', 'v3')}-${f.replace('~', 'n')}${fase === 'faz' ? '' : '-' + fase}.png`);
+  const nome = join(saida, `${arg('prefixo', 'v3')}-${({ E: 'e-aberto', O: 'o-aberto', e: 'e-fechado', o: 'o-fechado' })[f] || f.replace('~', '-nasal')}${fase === 'faz' ? '' : '-' + fase}.png`);
   await pg.screenshot({ path: nome }); arquivos.push([f, nome]);
   console.log('ok', f);
 }

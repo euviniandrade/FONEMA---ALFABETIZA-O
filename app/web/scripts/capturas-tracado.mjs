@@ -22,8 +22,11 @@ const fechar = () => { try { servidor.kill(); } catch { /* já fechou */ } };
 process.on('exit', fechar);
 for (let i = 0; i < 60; i++) { try { if ((await fetch(`${BASE}/bancada-tracado.html`)).ok) break; } catch { /* subindo */ } await new Promise((r) => setTimeout(r, 500)); }
 
-const nav = await chromium.launch({ executablePath: process.env.CHROMIUM ?? '/opt/pw-browsers/chromium', args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'] });
-const falhas = [];
+const abrir = () => chromium.launch({ executablePath: process.env.CHROMIUM ?? '/opt/pw-browsers/chromium', args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'] });
+let nav = await abrir();
+const falhas = { lista: [], push(m) { this.lista.push(m); console.error('  ✗ ' + m); }, get length() { return this.lista.length; }, map(f) { return this.lista.map(f); } };
+const SO_VALIDAR = process.argv.includes('--so-validar'); // só confere as letras (sem quadros, demonstração e estúdio)
+const SO_QUADROS = process.argv.includes('--so-quadros');
 async function seguir(pg, traco, caixa) {
   await pg.mouse.move(caixa.x + traco[0][0] * caixa.width, caixa.y + traco[0][1] * caixa.height);
   await pg.mouse.down();
@@ -65,10 +68,18 @@ async function umaLetra(l, capturar) {
   if (!(await pg.getByTestId('tracei').isEnabled())) falhas.push(`${l}: "Pronto" não liberou depois de todos os traços`);
   await ctx.close();
 }
-for (const l of TODAS ? [...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'] : letras) await umaLetra(l, letras.includes(l));
+if (!SO_QUADROS) for (const l of TODAS ? [...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'] : letras) {
+  // máquina carregada: se o navegador cair no meio, abre outro e repete a letra (até 3 vezes)
+  for (let t = 0; t < 3; t++) {
+    const antes = falhas.lista.length;
+    try { await umaLetra(l, letras.includes(l)); break; } catch (e) { falhas.lista.length = antes; if (t === 2) falhas.push(`${l}: ${String(e).slice(0, 80)}`); try { await nav.close(); } catch { /* já caiu */ } nav = await abrir(); }
+  }
+  process.stdout.write(l);
+}
+console.log('');
 
 // demonstração animada (sem o modo de teste) e a tela inteira
-{
+if (!SO_VALIDAR && !SO_QUADROS) {
   const ctx = await nav.newContext({ viewport: { width: 900, height: 820 } });
   const pg = await ctx.newPage();
   await pg.goto(`${BASE}/bancada-tracado.html?letra=R`);
@@ -81,7 +92,7 @@ for (const l of TODAS ? [...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy
   await ctx.close();
 }
 // quadro com as 52 letras (para conferir letra por letra)
-{
+if (!SO_VALIDAR) {
   const ctx = await nav.newContext({ viewport: { width: 1500, height: 900 } });
   await ctx.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { /* sem armazenamento */ } });
   for (const [arq, conj] of [['maiusculas', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'], ['minusculas', 'abcdefghijklmnopqrstuvwxyz']]) {
@@ -104,7 +115,7 @@ for (const l of TODAS ? [...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy
   await ctx.close();
 }
 // Estúdio de sons: lista, gravação (microfone falso do Chromium) e som gravado
-{
+if (!SO_VALIDAR && !SO_QUADROS) {
   const ctx = await nav.newContext({ viewport: { width: 1100, height: 900 }, permissions: ['microphone'] });
   const pg = await ctx.newPage();
   await pg.goto(`${BASE}/bancada-tracado.html?tela=estudio`);

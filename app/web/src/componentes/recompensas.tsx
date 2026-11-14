@@ -223,12 +223,18 @@ export function CelebracaoSelos({ itens, letra }: { itens: Array<{ conquista: Co
   };
   useEffect(() => {
     // rede de segurança: se o giro não puder rodar, o selo pousa assim mesmo
-    if (pousados < itens.length) pousar(pousados, 7000);
+    if (pousados < itens.length) pousar(pousados, 12000);
     return () => window.clearTimeout(relogio.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pousados, itens.length]);
   const atual = pousados < itens.length ? itens[pousados] : null;
-  const lado = itens.length <= 2 ? 150 : 132;
+  // lado a lado: 1 selo bem grande, 2 grandes, 3–4 menores; sempre cabem dois por linha no celular
+  const [lado] = useState(() => {
+    const n = Math.min(itens.length, 2);
+    const base = itens.length === 1 ? 200 : itens.length === 2 ? 170 : 132;
+    const util = Math.min(typeof window === 'undefined' ? 560 : window.innerWidth - 96, 560);
+    return Math.max(104, Math.min(base, Math.floor((util - 18 * (n - 1)) / n)));
+  });
   return (
     <>
       <div className={`selos-linha selos-novos n${itens.length}`}>

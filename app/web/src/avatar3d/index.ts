@@ -48,22 +48,37 @@ export function miniaturaGuardada(a: Aparencia, tipo: 'busto' | 'corpo' = 'busto
   return tipo === 'busto' ? lerCache()[`busto|${chaveAparencia(a)}`] : undefined;
 }
 
+/** Quem ainda espera cada miniatura: se todo mundo desistiu (a tela mudou), ela sai da fila sem ser desenhada. */
+const interessados = new Map<string, Set<object>>();
+
 /**
  * Imagem do boneco. `null` = este aparelho não consegue desenhar em 3D (a tela usa a reserva 2D).
  * Bustos (cartões, topo, mapa) ficam guardados no aparelho; as outras, só na memória da sessão.
+ * Devolve também `desistir()`: quem pediu avisa quando não precisa mais (a miniatura sai da fila se ninguém quiser).
  */
-export function miniatura(a: Aparencia, tipo: 'busto' | 'corpo' = 'busto', largura = 256, altura = tipo === 'busto' ? 256 : Math.round(largura * 1.45), guardar = tipo === 'busto' && largura === 256): Promise<string | null> {
+export function pedirMiniatura(a: Aparencia, tipo: 'busto' | 'corpo' = 'busto', largura = 256, altura = tipo === 'busto' ? 256 : Math.round(largura * 1.45)): { imagem: Promise<string | null | undefined>; desistir: () => void } {
+  const guardar = tipo === 'busto' && largura === 256;
   const chave = `${tipo}|${chaveAparencia(a)}`;
   const chaveMem = `${chave}|${largura}x${altura}`;
+  const eu = {};
+  let quem = interessados.get(chaveMem);
+  if (!quem) interessados.set(chaveMem, (quem = new Set()));
+  quem.add(eu);
   let p = memoria.get(chaveMem);
   if (!p) {
     const salva = guardar ? lerCache()[chave] : undefined;
     p = salva ? Promise.resolve(salva) : !temWebGL() ? Promise.resolve(null) : carregarMotor()
-      .then((m) => m.desenharMiniatura(a, tipo, largura, altura))
-      .then((url) => { if (guardar) guardarCache(chave, url); return url; })
-      .catch((e) => { console.warn('[avatar3d] miniatura falhou; uso a reserva 2D.', e); return null; });
+      .then((m) => m.desenharMiniatura(a, tipo, largura, altura, () => (interessados.get(chaveMem)?.size ?? 0) > 0)
+        .then((url) => { if (guardar) guardarCache(chave, url); return url; })
+        .catch((e) => {
+          memoria.delete(chaveMem);
+          if (e instanceof m.MiniaturaCancelada) return undefined;
+          console.warn('[avatar3d] miniatura falhou; uso a reserva 2D.', e);
+          return null;
+        }))
+      .catch(() => null) as Promise<string | null>;
     memoria.set(chaveMem, p);
     if (memoria.size > 160) memoria.delete(memoria.keys().next().value!);
   }
-  return p;
+  return { imagem: p, desistir: () => { const q = interessados.get(chaveMem); q?.delete(eu); if (q && !q.size) interessados.delete(chaveMem); } };
 }

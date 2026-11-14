@@ -3,9 +3,12 @@
  *   npx vite            → /bancada-selos.html#metais | #doze | #angulos | #premios | #celebracao | #todos
  * Usa os componentes REAIS (recompensas.tsx). window.__nomes(lista) confere o ajuste dos nomes na faixa.
  */
+import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { CONQUISTAS, type Conquista } from '@fonema/conteudo';
-import type { ConquistaGanha } from '@fonema/motor';
+import { CONQUISTAS, FASE_POR_ID, type Conquista } from '@fonema/conteudo';
+import { AVATAR_LIMPO, progressoInicial, type ConquistaGanha, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
+import { ProvedorApp, criarRepositorio } from './contexto.tsx';
+import { Ritual } from './telas/crianca/Ritual.tsx';
 import './estilos.css';
 import './estilos-recompensas.css';
 import { CelebracaoSelos, Cofrinho, Premio3D, Selo, SeloGirando, formaDoSelo } from './componentes/recompensas.tsx';
@@ -83,6 +86,37 @@ function Celebracao() {
   return <div data-pronto="celebracao" style={{ minHeight: '70vh', display: 'grid', placeItems: 'end center' }}><CelebracaoSelos itens={itens} letra="K" /></div>;
 }
 
+/* ---- telas reais com dados semeados (para capturas sem passar pelo fluxo inteiro) ---- */
+const ID = 'bancada-selos';
+const AGORA = Date.UTC(2026, 10, 14, 15);
+const GANHAS: Array<[string, ConquistaGanha['nivel']]> = [['S-LETRA-A', 'unico'], ['S-R0-01', 'bronze'], ['S-R0-10', 'prata'], ['TI-R0-01', 'ouro'], ['S-R0-03', 'diamante'], ['M-R0-01', 'unico']];
+function dados(): { crianca: Crianca; progresso: Progresso } {
+  const crianca = {
+    id: ID, nome: 'Kauã', genero: 'm', anoNascimento: 2020, pronuncia: { grafia: 'Kauã', fala: 'Kauã', rate: 1, pitchExtra: 0, voz: 'sofia' },
+    avatar: { ...AVATAR_LIMPO }, apoios: { previsivel: false, focoCurto: false, leituraReforco: false, calmo: false },
+    jaSabe: { letrasDoNome: 'nao', lePalavras: 'nao', leFrases: 'nao' }, consentimentos: { responsavel: true, vozPrimeiroNome: true, gravarVozAdulto: false, em: AGORA },
+    rotina: { minutosDia: 15, horaDormir: '20:00' }, criadoEm: AGORA
+  } as unknown as Crianca;
+  const progresso = progressoInicial(ID, AGORA);
+  progresso.moedinhas = { saldo: 30, total: 30, porDia: {} };
+  progresso.desafios = 6; progresso.sessoesFeitas = 2;
+  for (const [id, nivel] of GANHAS) progresso.conquistas[id] = g(id, nivel);
+  return { crianca, progresso };
+}
+const repo = criarRepositorio();
+function Semear() {
+  const [ok, setOk] = useState(false);
+  useEffect(() => { const d = dados(); void repo.salvarCrianca(d.crianca).then(() => repo.salvarProgresso(d.progresso)).then(() => setOk(true)); }, []);
+  return ok ? <p data-pronto="semear">Dados de teste gravados: abra /#/c/{ID}/album</p> : null;
+}
+function TelaRitual({ quantos }: { quantos: number }) {
+  const d = dados();
+  const fase = FASE_POR_ID['AL-A'] ?? Object.values(FASE_POR_ID)[0];
+  const novas = (quantos > 1 ? ['S-LETRA-A', 'S-R0-10', 'S-R0-01', 'TI-R0-01'] : ['S-LETRA-A']).slice(0, quantos).map((i) => d.progresso.conquistas[i]);
+  const relatorio: RelatorioSessao = { faseId: fase.id, atividades: 6, moedinhas: 10, moedinhasCalculadas: 10, dominadasAgora: [], faseConcluida: true, conquistasNovas: novas, surpresas: [], nivelAntes: 0, nivelDepois: 0, termometroAntes: 0, termometroDepois: 0 };
+  return <div data-pronto="ritual"><ProvedorApp repo={repo}><Ritual crianca={d.crianca} progresso={d.progresso} relatorio={relatorio} fase={fase} expressa={false} /></ProvedorApp></div>;
+}
+
 declare global { interface Window { __nomes?: (nomes: string[]) => Promise<unknown> } }
 window.__nomes = async (nomes: string[]) => {
   await fontePronta();
@@ -104,6 +138,8 @@ window.__nomes = async (nomes: string[]) => {
 
 function Bancada() {
   const qual = location.hash.replace('#', '') || 'todos';
+  if (qual.startsWith('ritual')) return <TelaRitual quantos={Number(qual.slice(6)) || 1} />;
+  if (qual === 'semear') return <Semear />;
   return (
     <main className="b-selos">
       <style>{`body{margin:0;background:radial-gradient(120% 90% at 50% 0%,#2C4C94,#16285A 60%,#0E1C44)}

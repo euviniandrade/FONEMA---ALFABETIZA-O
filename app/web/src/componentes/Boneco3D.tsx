@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { COR_MASSINHA, COR_ROUPA_BASE, carregarMotor, chaveAparencia, miniatura, miniaturaGuardada, temWebGL, type Aparencia, type Palco } from '../avatar3d/index.ts';
+import { COR_MASSINHA, COR_ROUPA_BASE, carregarMotor, chaveAparencia, miniaturaGuardada, pedirMiniatura, temWebGL, type Aparencia, type Palco } from '../avatar3d/index.ts';
 import { useApp } from '../contexto.tsx';
 import { Icone } from './ui.tsx';
 import '../estilos-avatar.css';
@@ -62,8 +62,9 @@ export function useMiniatura(aparencia: Aparencia, tipo: 'busto' | 'corpo' = 'bu
   ref.current = aparencia;
   useEffect(() => {
     let vivo = true;
-    miniatura(ref.current, tipo, largura, altura).then((url) => { if (vivo) setEstado({ chave, url }); });
-    return () => { vivo = false; };
+    const pedido = pedirMiniatura(ref.current, tipo, largura, altura);
+    pedido.imagem.then((url) => { if (vivo && url !== undefined) setEstado({ chave, url }); });
+    return () => { vivo = false; pedido.desistir(); };
   }, [chave, tipo, largura, altura]);
   return estado.chave === chave ? estado.url : miniaturaGuardada(aparencia, tipo);
 }
