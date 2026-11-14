@@ -303,6 +303,7 @@ export function criarCabeca(THREE, P, { modo = 'frente', quem = 'sofia' } = {}) 
   const HINGE = P.DOBRA; // [z, y]
   const mand = new THREE.Group(); mand.position.set(0, HINGE[1], HINGE[0]); grupo.add(mand); // gira com a mandíbula
   const mandIn = new THREE.Group(); mandIn.position.set(0, -HINGE[1], -HINGE[0]); mand.add(mandIn);
+  const dentes = [];
   function arcada(pai, { a, b, z0, yPonta, sentido, larg, alt, prof }) {
     const pt = (t) => [a * Math.sin(t), z0 - b * (1 - Math.cos(t))];
     const comp = (t0, t1) => { let l = 0, q = pt(t0); for (let k = 1; k <= 12; k++) { const r = pt(t0 + (t1 - t0) * k / 12); l += Math.hypot(r[0] - q[0], r[1] - q[1]); q = r; } return l; };
@@ -316,7 +317,7 @@ export function criarCabeca(THREE, P, { modo = 'frente', quem = 'sofia' } = {}) 
         const m = new THREE.Mesh(g, mat.dente);
         m.position.set(ladoX * x, yPonta + sentido * alt[k] / 2, z - prof[k] / 2 * Math.cos(tc));
         m.rotation.y = ladoX * tc; m.castShadow = frente; m.receiveShadow = frente;
-        pai.add(m);
+        pai.add(m); dentes.push(m);
       }
     }
     // gengiva: fita arredondada sobre a raiz dos dentes
@@ -477,6 +478,8 @@ export function criarCabeca(THREE, P, { modo = 'frente', quem = 'sofia' } = {}) 
       gFundo.attributes.position.needsUpdate = true;
     }
 
+    // vogais redondas (O, U): de frente os dentes ficam escondidos atrás do biquinho
+    if (frente) { const ve = !(p.dy > 0.02); if (dentes[0].visible !== ve) for (const d of dentes) d.visible = ve; }
     poeLingua(p);
     poeVeu(p.vel, (extra.raspa || 0) * 0.07 * Math.sin((extra.tempo || 0) * 70));
 

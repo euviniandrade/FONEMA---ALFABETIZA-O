@@ -225,7 +225,6 @@ export function CelebracaoSelos({ itens, letra }: { itens: Array<{ conquista: Co
     // rede de segurança: se o giro não puder rodar, o selo pousa assim mesmo
     if (pousados < itens.length) pousar(pousados, 12000);
     return () => window.clearTimeout(relogio.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pousados, itens.length]);
   const atual = pousados < itens.length ? itens[pousados] : null;
   // lado a lado: 1 selo bem grande, 2 grandes, 3–4 menores; sempre cabem dois por linha no celular

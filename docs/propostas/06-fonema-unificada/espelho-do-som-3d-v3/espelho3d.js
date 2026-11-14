@@ -319,7 +319,7 @@ export async function montar(el, o = {}) {
     refaz = () => { desmonta(); monta(); acorda(); };
 
     // enquadramento: cada vista mostra uma caixa do modelo inteira, seja a janela larga ou alta
-    const CX_F = { c: [0, 0.1, 0], mw: 3.1, mh: 3.1 }, CX_L = { c: [0, -0.45, -1.7], mw: 4.9, mh: 4.9 };
+    const CX_F = { c: [0, -0.2, 0], mw: 2.9, mh: 2.75 }, CX_L = { c: [0, -0.45, -1.7], mw: 4.9, mh: 4.9 };
     function enquadra(cam, cx, aspecto, deLado) {
       const tg = Math.tan((cam.fov * Math.PI) / 360), dist = Math.max(cx.mh, cx.mw / aspecto) / tg;
       cam.aspect = aspecto;

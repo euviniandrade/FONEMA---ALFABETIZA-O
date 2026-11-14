@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { COR_MASSINHA, COR_ROUPA_BASE, carregarMotor, chaveAparencia, miniaturaGuardada, pedirMiniatura, temWebGL, type Aparencia, type Palco } from '../avatar3d/index.ts';
 import { useApp } from '../contexto.tsx';
 import { Icone } from './ui.tsx';
+import { modoTeste } from '../servicos/ambiente.ts';
 import '../estilos-avatar.css';
 
 /**
@@ -86,7 +87,8 @@ export function Boneco3D({ aparencia, nome, className = '', girar = true }: { ap
   const canvas = useRef<HTMLCanvasElement>(null);
   const palco = useRef<Palco | null>(null);
   const [estado, setEstado] = useState<'carregando' | 'pronto' | 'sem3d'>(() => (temWebGL() ? 'carregando' : 'sem3d'));
-  const menos = prefs.menosMovimento || (typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  // parado em "menos movimento", com a preferência do sistema e nos testes automáticos (como o resto do app)
+  const menos = prefs.menosMovimento || modoTeste() || (typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches);
   const atual = useRef(aparencia);
   atual.current = aparencia;
   const menosRef = useRef(menos);

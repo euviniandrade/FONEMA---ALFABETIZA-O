@@ -85,7 +85,7 @@ class VistaInterna implements Vista {
   grupo = new THREE.Group();
   ctx: CanvasRenderingContext2D;
   ang = 0; vel = 0; escala = 1; sobe = 0;
-  t0 = -1; fixo = false; assentou = false; sujo = true; morta = false;
+  t0 = -1; pintou = false; fixo = false; assentou = false; sujo = true; morta = false;
   arrastando = false; ultimoX = 0; ultimoT = 0;
   descartar: Array<() => void> = [];
 
@@ -155,8 +155,11 @@ class VistaInterna implements Vista {
   passo(agora: number, dt: number): boolean {
     if (this.fixo) return false;
     if (!this.assentou) {
-      if (this.t0 < 0) this.t0 = agora;
-      const p = Math.min(1, (agora - this.t0) / DUR_ENTRADA);
+      // o relógio da entrada só anda depois do primeiro quadro desenhado e em passos curtos: a compilação
+      // dos shaders (lenta em aparelho fraco) não "come" o giro
+      if (!this.pintou) { this.sujo = true; return true; }
+      this.t0 = this.t0 < 0 ? 0 : this.t0 + dt * 1000;
+      const p = Math.min(1, this.t0 / DUR_ENTRADA);
       const e = 1 - Math.pow(1 - p, 3.2);
       this.ang = -Math.PI * 5 * (1 - e);
       const s = Math.min(1, p / 0.62);
@@ -206,6 +209,7 @@ class VistaInterna implements Vista {
     this.ctx.clearRect(0, 0, w, h);
     this.ctx.drawImage(r.domElement, 0, 0);
     this.sujo = false;
+    this.pintou = true;
   }
 
   angulo(graus: number) { this.fixo = true; this.ang = (graus * Math.PI) / 180; this.sujo = true; acordar(); }
@@ -219,7 +223,7 @@ function laco(agora: number) {
   quadro = 0;
   const r = renderer;
   if (!r) return;
-  const dt = Math.min(0.05, antes ? (agora - antes) / 1000 : 0.016);
+  const dt = Math.min(0.1, antes ? (agora - antes) / 1000 : 0.016);
   antes = agora;
   let vivo = false;
   for (const v of vistas) {
