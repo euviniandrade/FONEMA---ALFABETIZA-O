@@ -167,7 +167,7 @@ export function Selo({ conquista, ganha, tamanho = 150, girar = false, letra, bl
       {girar
         ? <SeloGirando conquista={conquista} ganha={ganha} letra={letra} bloqueado={bloqueado} tamanho={tamanho} modo="entrada" />
         : <canvas ref={ref} style={{ aspectRatio: `${g.w} / ${g.h}` }} role="img" aria-label={rotulo} />}
-      {tamanho <= 130 && !girar ? <figcaption className="selo-nome">{mist ? 'Mistério' : conquista.nome}</figcaption> : null}
+      {tamanho <= 130 && !girar && !mist ? <figcaption className="selo-nome">{conquista.nome}</figcaption> : null}
       {aberto ? <SeloAmpliado conquista={conquista} ganha={ganha} letra={letra} bloqueado={bloqueado} aoFechar={() => setAberto(false)} /> : null}
     </figure>
   );
