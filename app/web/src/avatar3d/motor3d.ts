@@ -182,8 +182,9 @@ class Cena {
   }
 
   enquadrar(tipo: Enquadramento, aspecto: number, sentado = false) {
-    const alvoY = tipo === 'busto' ? 0.875 : 0.57;
-    const alturaVista = tipo === 'busto' ? 0.74 : 1.32;
+    // corpo inteiro com folga embaixo (botões de girar no palco) e em cima (cabelos altos)
+    const alvoY = tipo === 'busto' ? 0.875 : 0.56;
+    const alturaVista = tipo === 'busto' ? 0.74 : 1.5;
     const larguraVista = tipo === 'busto' ? 0.7 : sentado ? 0.82 : 0.72;
     const fovV = THREE.MathUtils.degToRad(this.camera.fov);
     const dAltura = alturaVista / 2 / Math.tan(fovV / 2);

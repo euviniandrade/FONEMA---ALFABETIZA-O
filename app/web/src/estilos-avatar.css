@@ -37,7 +37,7 @@ svg.boneco3d-reserva{position:absolute;inset:6% 0 12%;height:82%;width:100%}
 .montar-painel{min-height:0;min-width:0;display:flex;flex-direction:column;gap:clamp(6px,1.2vh,12px);padding:clamp(12px,1.8vh,22px) clamp(12px,1.6vw,24px)}
 .montar-passos{list-style:none;display:flex;gap:6px;flex-wrap:nowrap}
 .montar-passos li{flex:1;min-width:0}
-.montar-passo{width:100%;min-height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:6px;padding:2px 6px;font-family:var(--f-titulo);font-weight:600;font-size:15px;color:var(--marinho);background:#EEF5FC;box-shadow:inset 0 0 0 1.5px #D5E3F1;white-space:nowrap;overflow:hidden}
+.montar-passo{width:100%;min-height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:5px;padding:2px 4px;font-family:var(--f-titulo);font-weight:600;font-size:14px;color:var(--marinho);background:#EEF5FC;box-shadow:inset 0 0 0 1.5px #D5E3F1;white-space:nowrap;overflow:hidden}
 .montar-passo b{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#fff;box-shadow:inset 0 0 0 1.5px #C5D7EA;font-size:15px}
 .montar-passo .ic{flex:none;width:22px;height:22px;color:var(--folha2)}
 .montar-passo span{overflow:hidden;text-overflow:ellipsis}
@@ -50,7 +50,7 @@ svg.boneco3d-reserva{position:absolute;inset:6% 0 12%;height:82%;width:100%}
 .montar-corpo{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:clamp(8px,1.4vh,14px);padding:4px 2px 6px;overscroll-behavior:contain}
 .montar-opcoes{display:grid;gap:clamp(8px,1.2vh,12px)}
 .montar-opcoes.cores{grid-template-columns:repeat(auto-fill,minmax(clamp(56px,7.6vh,68px),1fr));justify-items:center}
-.montar-opcoes.com-retrato{grid-template-columns:repeat(auto-fill,minmax(clamp(88px,9vw,124px),1fr))}
+.montar-opcoes.com-retrato{grid-template-columns:repeat(auto-fill,minmax(clamp(88px,9vw,150px),1fr))}
 .montar-opcoes.cor-cabelo{padding-top:clamp(6px,1vh,10px);border-top:2px dashed var(--linha)}
 .opcao-cor{width:clamp(56px,7.6vh,68px);height:clamp(56px,7.6vh,68px);border-radius:50%;background:var(--cor);display:grid;place-items:center;color:#fff;
   box-shadow:0 4px 0 rgba(12,26,64,.28),inset 0 3px 0 rgba(255,255,255,.45),inset 0 -6px 10px rgba(12,26,64,.18),0 0 0 3px #fff;transition:transform .2s var(--mola)}
@@ -61,8 +61,8 @@ svg.boneco3d-reserva{position:absolute;inset:6% 0 12%;height:82%;width:100%}
   background:linear-gradient(180deg,#fff,#EEF5FC);box-shadow:0 5px 0 #B9CEE2,inset 0 2px 0 #fff;transition:transform .2s var(--mola);min-width:0}
 .opcao-peca:hover{transform:translateY(-2px)}
 .opcao-peca.sel{background:linear-gradient(180deg,#FFF3C4,#FFFBEA);box-shadow:0 5px 0 #D79A1F,0 0 0 4px #FFD652}
-.opcao-arte{display:block;width:100%;height:clamp(60px,10.5vh,112px);border-radius:16px;overflow:hidden}
-.montar-opcoes.corpo .opcao-arte,.vitrine-lista .opcao-arte{height:clamp(72px,13vh,132px)}
+.opcao-arte{display:block;width:100%;height:clamp(60px,13vh,140px);border-radius:16px;overflow:hidden}
+.montar-opcoes.corpo .opcao-arte,.vitrine-lista .opcao-arte{height:clamp(72px,17vh,180px)}
 .opcao-peca b{font-family:var(--f-titulo);font-weight:600;font-size:clamp(13px,1.7vh,16px);line-height:1.1;color:var(--marinho)}
 .opcao-peca.trancada{background:linear-gradient(180deg,#F5F8FB,#E6EDF4);box-shadow:0 4px 0 #C9D8E7,inset 0 2px 0 #fff}
 .opcao-peca.trancada .opcao-arte{filter:grayscale(.75) opacity(.62)}
@@ -102,23 +102,39 @@ html.contraste .opcao-peca.sel,html.contraste .montar-passo.atual{background:#FF
 html.contraste .cadeado,html.contraste .montar-aviso{color:#000}
 html.contraste .opcao-cor.sel{box-shadow:0 0 0 4px #fff,0 0 0 8px #000}
 
+@media (max-width:1500px){
+  .montar-passo:not(.atual) span{display:none}
+}
 @media (max-width:1000px){
   .montar-passo span{display:none}
   .loja{grid-template-columns:1fr}
   .loja-boneco{position:relative;top:0;height:300px}
 }
 @media (max-width:820px){
-  .montar{grid-template-columns:1fr;grid-template-rows:minmax(150px,32%) minmax(0,1fr);gap:8px;padding:0 8px 8px}
+  .montar{grid-template-columns:1fr;grid-template-rows:minmax(130px,25%) minmax(0,1fr);gap:8px;padding:0 8px 8px}
   .montar-painel{padding:10px 10px 10px;gap:6px;border-radius:24px}
-  .montar-passo{min-height:40px;border-radius:12px}
-  .montar-opcoes.com-retrato{grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+  .montar-passo{min-height:38px;border-radius:12px}
+  .montar-passo span{display:none!important}
+  .montar-pergunta h1{font-size:20px}
+  .montar-pergunta .ouvir{width:52px;height:52px}
+  .montar-pergunta .ouvir .ic{width:34px;height:34px}
+  .montar-corpo{gap:6px;padding:2px}
+  .montar-opcoes{gap:6px}
+  .montar-opcoes.com-retrato{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .montar-opcoes.com-retrato.corpo,.vitrine-lista{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
   .montar-opcoes.cores{grid-template-columns:repeat(5,1fr)}
-  .montar-opcoes.cor-cabelo{grid-template-columns:repeat(7,1fr)}
-  .cor-cabelo .opcao-cor{width:42px;height:42px}
+  .montar-opcoes.cor-cabelo{grid-template-columns:repeat(7,1fr);padding-top:6px}
+  .cor-cabelo .opcao-cor{width:40px;height:40px}
   .cor-cabelo .opcao-cor .ic{width:22px;height:22px}
-  .opcao-arte{height:clamp(56px,8.4vh,84px)}
-  .montar-opcoes.corpo .opcao-arte,.vitrine-lista .opcao-arte{height:clamp(64px,10vh,96px)}
-  .vitrine-lista{grid-template-columns:repeat(3,1fr)}
+  .opcao-peca{padding:3px 2px 5px;border-radius:14px;box-shadow:0 3px 0 #B9CEE2,inset 0 2px 0 #fff}
+  .opcao-peca.sel{box-shadow:0 3px 0 #D79A1F,0 0 0 3px #FFD652}
+  .opcao-peca b{font-size:11.5px}
+  .opcao-arte{height:clamp(44px,6.4vh,60px);border-radius:10px}
+  .montar-opcoes.corpo .opcao-arte,.vitrine-lista .opcao-arte{height:clamp(60px,9.5vh,88px)}
+  .cadeado{font-size:10px;gap:2px}.cadeado .ic{width:14px;height:14px}
+  .montar-dica{font-size:14px}.montar-nota{font-size:12px}
+  .montar-aviso{min-height:0;font-size:13px}
+  .montar-aviso:empty{display:none}
   .boneco3d-giro small{display:none}
   .boneco3d-giro{justify-content:space-between;padding:0 8px}
   .boneco3d-giro .hud-btn{width:46px;height:46px}
