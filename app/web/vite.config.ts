@@ -29,8 +29,9 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,webp,jpg,woff2,mp3,json}'],
-        globIgnores: ['**/mundo3d/**/*.mp4'],
+        globPatterns: ['**/*.{js,css,html,svg,png,webp,jpg,woff2,mp3,json,webm}'],
+        // personagens vivos: o WebP animado é só a reserva do Safari (vem pela rede quando preciso)
+        globIgnores: ['**/mundo3d/**/*.mp4', '**/vivos/corpo/*.anim.webp'],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
         navigateFallback: 'index.html',
         // páginas embutidas por iframe não podem cair no app

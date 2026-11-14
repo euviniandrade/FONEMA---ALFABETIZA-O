@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FONEMA · Personagens vivos (giro 360°, corpo em movimento, boca que fala)</title>
+<style>
+  :root{--azul:#284A86;--ipe:#FFC43D;--ceu:#DDF1FF}
+  *{box-sizing:border-box} body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;color:#14264d;background:linear-gradient(180deg,#CFE8F8,#F4FBFF 40%,#FFF6E3)}
+  header{padding:22px 20px 6px;text-align:center} h1{margin:0;font-size:clamp(24px,4vw,38px)} header p{margin:6px auto 0;max-width:820px;opacity:.8}
+  section{max-width:1180px;margin:22px auto;padding:20px;background:#ffffffd9;border-radius:28px;box-shadow:0 14px 30px -18px rgba(12,26,64,.5)}
+  h2{margin:0 0 4px;font-size:24px} .sub{margin:0 0 14px;opacity:.75}
+  .fila{display:flex;flex-wrap:wrap;gap:18px 34px;align-items:flex-end;justify-content:center}
+  figure{margin:0;display:grid;justify-items:center;gap:8px} figcaption{font-weight:700}
+  .giro{background-repeat:no-repeat;cursor:grab;touch-action:pan-y;filter:drop-shadow(0 18px 12px rgba(12,26,64,.32))} .giro.pegou{cursor:grabbing}
+  .palco{position:relative;height:min(64vh,560px);border-radius:22px;overflow:hidden;background:#9fd3f5 center/cover no-repeat;display:flex;align-items:flex-end;justify-content:center;gap:3%}
+  .palco video{height:78%;width:auto;filter:drop-shadow(0 22px 14px rgba(12,26,64,.45))} .palco video.pequeno{height:40%} .palco video.voa{height:26%;align-self:flex-start;margin-top:6%}
+  .botoes{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px}
+  button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:12px 20px;background:var(--azul);color:#fff;cursor:pointer;box-shadow:0 4px 0 #17305c} button:active{transform:translateY(3px);box-shadow:0 1px 0 #17305c}
+  button.ipe{background:var(--ipe);color:#3b2a00;box-shadow:0 4px 0 #c9921a}
+  .busto{position:relative;width:min(300px,40vw);aspect-ratio:1;border-radius:50%;overflow:hidden;border:6px solid #fff;box-shadow:0 10px 24px rgba(12,26,64,.35);background:#cfe8f8}
+  .busto.falando{box-shadow:0 10px 24px rgba(12,26,64,.35),0 0 0 6px var(--ipe)}
+  .cabeca{position:absolute;inset:-4%;transform-origin:50% 92%} .falando .cabeca{animation:balanco 1.5s ease-in-out infinite}
+  .cabeca img{position:absolute;inset:0;width:100%;height:100%} .boca{opacity:0;transition:opacity 70ms linear} .pisca{opacity:0;transition:opacity 55ms linear;z-index:3}
+  @keyframes balanco{0%,100%{transform:rotate(-2.2deg)}25%{transform:rotate(.6deg) translateY(-1.6%)}50%{transform:rotate(2.2deg)}75%{transform:rotate(-.4deg) translateY(-1.2%)}}
+  .legenda{min-height:58px;text-align:center;font-size:clamp(18px,2.4vw,26px);font-weight:700;margin:14px 0 0}
+  .linha{font:14px/1.3 ui-monospace,monospace;word-break:break-all;opacity:.7;text-align:center;min-height:36px} .linha b{background:var(--ipe);border-radius:4px}
+  .visemas{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px} .visemas figure{font-size:13px} .visemas .busto{width:92px;border-width:3px}
+  select{font:inherit;padding:10px 14px;border-radius:14px;border:2px solid #c9d9ee;max-width:100%}
+  @media (prefers-reduced-motion:reduce){.falando .cabeca{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Personagens vivos</h1>
+  <p>Decisão 027 §3 — a Sofia, o Tales, o Bolota e o Zum-Zum deixam de ser foto: giro de 360° que se arrasta, corpo em movimento com fundo transparente e boca que acompanha a voz oficial.</p>
+</header>
+
+<section id="s-giro">
+  <h2>1 · Giro de 360°</h2>
+  <p class="sub">Arraste cada personagem com o dedo ou o mouse. Parado, ele gira sozinho bem devagar.</p>
+  <div class="fila" id="giros"></div>
+</section>
+
+<section id="s-corpo">
+  <h2>2 · Vivos em cena</h2>
+  <p class="sub">Laços de vídeo com fundo transparente por cima do cenário. Os botões pedem um gesto; depois a dupla volta a respirar e piscar.</p>
+  <div class="palco" id="palco">
+    <video id="v-bolota" class="pequeno" muted loop playsinline autoplay></video>
+    <video id="v-dupla" muted loop playsinline autoplay></video>
+    <video id="v-zum" class="voa" muted loop playsinline autoplay></video>
+  </div>
+  <div class="botoes" id="gestos"></div>
+  <div class="fila" style="margin-top:18px">
+    <figure><video id="v-sofia" muted loop playsinline autoplay style="height:300px"></video><div class="botoes"><button data-solo="sofia">Sofia acena</button></div></figure>
+    <figure><video id="v-tales" muted loop playsinline autoplay style="height:300px"></video><div class="botoes"><button data-solo="tales">Tales acena</button></div></figure>
+  </div>
+</section>
+
+<section id="s-fala">
+  <h2>3 · Boca que fala</h2>
+  <p class="sub">A boca troca de posição (as mesmas do Espelho do Som) no tempo da voz oficial: fecha nos silêncios e no M/P/B, abre nas vogais.</p>
+  <div class="fila">
+    <figure><div class="busto" id="b-sofia"></div><figcaption>Sofia</figcaption></figure>
+    <figure><div class="busto" id="b-tales"></div><figcaption>Tales</figcaption></figure>
+  </div>
+  <p class="legenda" id="legenda">Escolha uma fala.</p>
+  <p class="linha" id="linha"></p>
+  <div class="botoes">
+    <select id="falas-sofia" aria-label="Falas da Sofia"></select><button class="ipe" id="t-sofia">▶ Sofia fala</button>
+    <select id="falas-tales" aria-label="Falas do Tales"></select><button class="ipe" id="t-tales">▶ Tales fala</button>
+    <button id="conversa">▶ Conversa (4 falas)</button>
+  </div>
+  <h3 style="text-align:center;margin:22px 0 0">Posições de boca de cada um</h3>
+  <div class="visemas" id="visemas"></div>
+</section>
+
+<script>
+const A = '../../../../app/web/public/assets/vivos/', AUDIO = '../../../../app/web/public/audio/';
+const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── 1. giro ── */
+const GIROS = [['sofia', 'Sofia', 203, 420, 380], ['tales', 'Tales', 155, 420, 380], ['bolota', 'Bolota', 404, 340, 250], ['zum-zum', 'Zum-Zum', 532, 260, 150]];
+for (const [arq, nome, l, a, alt] of GIROS) {
+  const fig = document.createElement('figure'), el = document.createElement('div');
+  el.className = 'giro'; el.dataset.giro = arq;
+  Object.assign(el.style, { height: alt + 'px', width: alt * l / a + 'px', backgroundImage: `url(${A}giro/${arq}.webp)`, backgroundSize: '800% 600%' });
+  fig.append(el, Object.assign(document.createElement('figcaption'), { textContent: nome })); document.getElementById('giros').append(fig);
+  let q = 0, x0 = 0, q0 = 0, preso = false, mexeu = 0, antes = performance.now();
+  const pintar = () => { const i = ((Math.round(q) % 48) + 48) % 48; el.style.backgroundPosition = `${(i % 8) / 7 * 100}% ${Math.floor(i / 8) / 5 * 100}%`; };
+  el.addEventListener('pointerdown', (e) => { preso = true; x0 = e.clientX; q0 = q; el.setPointerCapture(e.pointerId); el.classList.add('pegou'); });
+  el.addEventListener('pointermove', (e) => { if (!preso) return; q = q0 - (e.clientX - x0) / el.clientWidth * 48 * 0.9; mexeu = performance.now(); pintar(); });
+  const solta = () => { preso = false; mexeu = performance.now(); el.classList.remove('pegou'); };
+  el.addEventListener('pointerup', solta); el.addEventListener('pointercancel', solta);
+  const passo = (t) => { const dt = Math.min(100, t - antes); antes = t; if (!reduz && !preso && t - mexeu > 2500) { q += dt / 12000 * 48; pintar(); } requestAnimationFrame(passo); };
+  el.irPara = (i) => { q = i; mexeu = performance.now() + 1e9; pintar(); };   // para as capturas
+  pintar(); requestAnimationFrame(passo);
+}
+
+/* ── 2. corpo ── */
+document.getElementById('palco').style.backgroundImage = `url(../../../../app/web/public/assets/arte/hero-paisagem.webp)`;
+const v = (id) => document.getElementById(id);
+const tocar = (el, arq, laco) => { el.loop = laco; el.src = `${A}corpo/${arq}.webm`; el.play().catch(() => {}); };
+tocar(v('v-dupla'), 'dupla-parado', true); tocar(v('v-bolota'), 'bolota-parado', true); tocar(v('v-zum'), 'zum-zum-voando', true);
+tocar(v('v-sofia'), 'sofia-parado', true); tocar(v('v-tales'), 'tales-parado', true);
+for (const [g, rot] of [['acenando', 'Acenar'], ['palmas', 'Bater palmas'], ['pensando', 'Pensar'], ['comemorando', 'Comemorar'], ['apontando', 'Apontar']]) {
+  const b = Object.assign(document.createElement('button'), { textContent: rot }); b.dataset.gesto = g;
+  b.onclick = () => { const el = v('v-dupla'); tocar(el, 'dupla-' + g, false); el.onended = () => { el.onended = null; tocar(el, 'dupla-parado', true); }; };
+  document.getElementById('gestos').append(b);
+}
+document.querySelectorAll('[data-solo]').forEach((b) => b.onclick = () => { const q = b.dataset.solo, el = v('v-' + q); tocar(el, q + '-acenando', false); el.onended = () => { el.onended = null; tocar(el, q + '-parado', true); }; });
+
+/* ── 3. boca ── */
+const BOCAS = { sofia: { a: 'a', e: 'e', i: 's', o: 'o', u: 'u', f: 'f', l: 'l', s: 's', x: 'u' }, tales: { a: 'a', e: 'e', i: 'i', o: 'o', u: 'u', f: 'i', l: 'e', s: 'i', x: 'u' } };
+const bustos = {};
+for (const q of ['sofia', 'tales']) {
+  const el = document.getElementById('b-' + q);
+  el.innerHTML = `<div class="cabeca"><img src="${A}busto/${q}-base.webp" alt=""><img class="boca"><img class="boca"><img class="pisca" src="${A}busto/${q}-pisca.webp" alt=""></div>`;
+  const [ba, bb] = el.querySelectorAll('.boca'); bustos[q] = { el, frente: ba, fundo: bb, atual: '.', pisca: el.querySelector('.pisca') };
+  for (const x of new Set(Object.values(BOCAS[q]))) new Image().src = `${A}busto/${q}-boca-${x}.webp`;
+  const piscar = () => { if (!reduz) { bustos[q].pisca.style.opacity = 1; setTimeout(() => bustos[q].pisca.style.opacity = 0, 130); } setTimeout(piscar, 2200 + Math.random() * 3800); };
+  setTimeout(piscar, 1500 + Math.random() * 2000);
+}
+function mostrar(q, vis) {
+  const b = bustos[q]; if (vis === b.atual) return; b.atual = vis;
+  if (vis === '.') { b.frente.style.opacity = 0; b.fundo.style.opacity = 0; return; }
+  [b.frente, b.fundo] = [b.fundo, b.frente];
+  b.frente.src = `${A}busto/${q}-boca-${BOCAS[q][vis] || 'e'}.webp`; b.frente.style.opacity = 1; b.frente.style.zIndex = 2; b.fundo.style.opacity = 0; b.fundo.style.zIndex = 1;
+}
+let dados, audio;
+function falar(chave) {
+  return new Promise((fim) => {
+    const [, linha, texto] = dados.clipes[chave], q = chave.includes('sofia') ? 'sofia' : 'tales';
+    if (audio) audio.pause();
+    audio = new Audio(AUDIO + chave); const meu = audio;
+    document.getElementById('legenda').textContent = (q === 'sofia' ? 'Sofia: ' : 'Tales: ') + texto;
+    bustos[q].el.classList.add('falando');
+    const passo = () => {
+      if (meu !== audio || meu.ended || meu.paused && meu.currentTime > 0) { mostrar(q, '.'); bustos[q].el.classList.remove('falando'); document.getElementById('linha').textContent = ''; fim(); return; }
+      const i = Math.floor((meu.currentTime + 0.03) * dados.qps);
+      mostrar(q, linha[i] || '.');
+      document.getElementById('linha').innerHTML = linha.slice(0, i) + '<b>' + (linha[i] || '') + '</b>' + linha.slice(i + 1);
+      requestAnimationFrame(passo);
+    };
+    meu.play().then(passo).catch(() => { document.getElementById('legenda').textContent = 'Toque no botão para ouvir.'; fim(); });
+  });
+}
+window.falar = falar;
+fetch(A + 'bocas.json').then((r) => r.json()).then((d) => {
+  dados = d;
+  for (const q of ['sofia', 'tales']) {
+    const sel = document.getElementById('falas-' + q);
+    Object.entries(d.clipes).filter(([k, c]) => k.startsWith('falas/' + q) && c[2].length > 24 && c[2].length < 90).slice(0, 60).forEach(([k, c]) => sel.append(new Option(c[2], k)));
+    document.getElementById('t-' + q).onclick = () => falar(sel.value);
+  }
+  const achar = (q, trecho) => Object.keys(d.clipes).find((k) => k.startsWith('falas/' + q) && d.clipes[k][2].includes(trecho));
+  const CONVERSA = [achar('sofia', 'Você juntou os sons'), achar('tales', 'E eu sou o Tales! Que bom'), achar('sofia', 'Muito bem! Você foi devagar'), achar('tales', 'O farol acendeu')].filter(Boolean);
+  window.CONVERSA = CONVERSA;
+  document.getElementById('conversa').onclick = async () => { for (const k of CONVERSA) { await falar(k); await new Promise((r) => setTimeout(r, 350)); } };
+  // tabela de posições
+  const nomes = { '.': 'descanso', m: 'M·P·B', a: 'A', e: 'E', i: 'I', o: 'O', u: 'U', f: 'F·V', l: 'L·T·D·N', s: 'S·Z', x: 'CH·J' };
+  for (const q of ['sofia', 'tales']) for (const [vis, nome] of Object.entries(nomes)) {
+    const arq = vis === '.' || vis === 'm' ? null : BOCAS[q][vis];
+    const f = document.createElement('figure');
+    f.innerHTML = `<div class="busto"><div class="cabeca"><img src="${A}busto/${q}-base.webp" alt="">${arq ? `<img src="${A}busto/${q}-boca-${arq}.webp" alt="">` : ''}</div></div><figcaption>${nome}</figcaption>`;
+    document.getElementById('visemas').append(f);
+  }
+});
+</script>
+</body>
+</html>

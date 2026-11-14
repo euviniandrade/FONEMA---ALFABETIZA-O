@@ -1,268 +1,228 @@
-import { useEffect, useMemo, useState } from 'react';
-import { NIVEIS_INICIAIS, aplicarNivelInicial, opcoesPronuncia, progressoInicial, renderFala, type Crianca, type NivelInicial, type OpcaoPronuncia } from '@fonema/motor';
+import { useEffect, useState } from 'react';
+import { NIVEIS_INICIAIS, aplicarNivelInicial, opcoesPronuncia, progressoInicial, renderFala, type Crianca, type NivelInicial } from '@fonema/motor';
 import type { Genero } from '@fonema/conteudo';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
-import { Rosto, Topo } from '../../componentes/basicos.tsx';
-import { Fundo, Icone } from '../../componentes/ui.tsx';
+import { Icone } from '../../componentes/ui.tsx';
+import { Camada } from '../../componentes/Camada.tsx';
 import { asset } from '../../servicos/ambiente.ts';
 import { novoId } from '../../dados/repositorio.ts';
-import { gravar, temGravacao } from '../../servicos/microfone.ts';
 import { voz } from '../../servicos/voz.ts';
 import { BASES } from '../crianca/Avatar.tsx';
+import { Fluxo } from '../entrada/Entrada.tsx';
+import type { PoseDupla } from '../../componentes/Dupla3D.tsx';
 
 const ANO = new Date().getFullYear();
-type Passo = 'nome' | 'falar' | 'genero' | 'nivel' | 'autorizacao' | 'entrega';
-const PASSOS: [Passo, string][] = [['nome', 'Nome'], ['falar', 'Como falar'], ['genero', 'Gênero'], ['nivel', 'De onde começa'], ['autorizacao', 'Autorização']];
+type Passo = 1 | 2 | 3 | 'entrega';
+const IDADES = [3, 4, 5, 6, 7, 8];
+const GENEROS: [Genero, string][] = [['m', 'Menino'], ['f', 'Menina'], ['n', 'Prefiro não informar']];
+const FRASE_NIVEL: Record<NivelInicial, string> = {
+  zero: 'Começa pelo alfabeto: cada letra e o som dela.',
+  'letras-e-sons': 'Pula o alfabeto e começa juntando letras em sílabas.',
+  'le-palavras': 'Começa lendo palavras sozinho, rumo às frases.'
+};
 
 /**
- * Cadastro pelo adulto em passos ilustrados (D002, D013, D026): 1 nome · 2 como falar o nome · 3 gênero para as falas ·
- * 4 de onde a criança começa · 5 autorização (LGPD em linguagem simples, com apoios e rotina opcionais).
+ * Cadastro da criança pelo adulto em 3 passos (D002, D013, D026), tudo sem rolagem:
+ * 1 quem vai aprender (nome, idade, como a dupla fala) · 2 de onde começa · 3 resumo e autorização em um toque.
+ * Apoios e rotina ficam para depois, na Área da Família.
  */
-export function Cadastro() {
+export function Cadastro({ area = 'familia' }: { area?: 'familia' | 'professor' }) {
   const { repo } = useApp();
-  const [passo, setPasso] = useState<Passo>('nome');
+  const [passo, setPasso] = useState<Passo>(1);
   const [nome, setNome] = useState('');
+  const [idade, setIdade] = useState<number | null>(null);
   const [genero, setGenero] = useState<Genero | null>(null);
-  const [ano, setAno] = useState(ANO - 5);
   const [nivel, setNivel] = useState<NivelInicial>('zero');
-  const [cons, setCons] = useState({ responsavel: false, vozPrimeiroNome: true, gravarVozAdulto: false });
-  const [gravacao, setGravacao] = useState<Blob | null>(null);
-  const [gravando, setGravando] = useState(false);
-  const [nivelMic, setNivelMic] = useState(0);
-  const [ajuste, setAjuste] = useState('');
-  const [escolha, setEscolha] = useState<{ op: OpcaoPronuncia; voz: 'sofia' | 'tales' } | null>(null);
-  const [jaSabe] = useState({ letrasDoNome: 'nao-sei', lePalavras: 'nao-sei', leFrases: 'nao-sei' });
-  const [apoios, setApoios] = useState({ previsivel: false, focoCurto: false, leituraReforco: false, calmo: false });
-  const [rotina, setRotina] = useState({ minutosDia: 15, horaDormir: '20:00' });
+  const [autorizo, setAutorizo] = useState(false);
+  const [falarNome, setFalarNome] = useState(true);
+  const [tentou, setTentou] = useState(false);
+  const [privacidade, setPrivacidade] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+  const [ouvindo, setOuvindo] = useState(false);
   const [id] = useState(() => novoId('cr'));
 
   const primeiro = nome.trim().split(/\s+/)[0] ?? '';
   const nomeOk = primeiro.length >= 2 && /^[\p{L}'-]+$/u.test(primeiro);
-  const [temClipe, setTemClipe] = useState<boolean | null>(null);
-  useEffect(() => { let vivo = true; setTemClipe(null); if (nomeOk) voz.temNome(primeiro).then((t) => { if (vivo) setTemClipe(t); }); return () => { vivo = false; }; }, [primeiro, nomeOk]);
-  const opcoes = useMemo(() => {
-    if (!nomeOk || temClipe === false) return [];
-    if (temClipe) return opcoesPronuncia(primeiro[0].toUpperCase() + primeiro.slice(1).toLowerCase()).slice(0, 1).map((o) => ({ ...o, grafia: primeiro[0].toUpperCase() + primeiro.slice(1).toLowerCase(), titulo: 'Nas vozes da Sofia e do Tales' }));
-    const base = opcoesPronuncia(primeiro[0].toUpperCase() + primeiro.slice(1).toLowerCase());
-    if (ajuste.trim()) {
-      const extra = opcoesPronuncia(primeiro).map((o) => o);
-      extra[0] = { ...extra[0], id: 9, titulo: 'Como você ajustou', grafia: ajuste.trim(), fala: ajuste.replace(/-/g, '').toLowerCase().replace(/^./, (c) => c.toUpperCase()) };
-      return [extra[0], ...base.slice(0, 2)];
-    }
-    return base;
-  }, [primeiro, nomeOk, ajuste, temClipe]);
   const nomeBonito = primeiro ? primeiro[0].toUpperCase() + primeiro.slice(1) : '';
+  const [temClipe, setTemClipe] = useState<boolean | null>(null);
+  useEffect(() => {
+    let vivo = true;
+    setTemClipe(null);
+    if (nomeOk) voz.temNome(primeiro).then((t) => { if (vivo) setTemClipe(t); });
+    return () => { vivo = false; };
+  }, [primeiro, nomeOk]);
   const previa = genero ? renderFala('{Você está pronto|Você está pronta|Tudo pronto pra começar}, [NOME]?', { nome: nomeBonito || 'Mariana', genero }) : '';
 
-  useEffect(() => { setEscolha(null); }, [primeiro, ajuste]);
-
-  const ouvir = (_op: OpcaoPronuncia, quem: 'sofia' | 'tales') => voz.ouvirNome(primeiro, quem);
+  const ouvirNome = async () => {
+    if (ouvindo) return;
+    setOuvindo(true);
+    try { await voz.ouvirNome(primeiro, 'sofia'); await new Promise((r) => setTimeout(r, 250)); await voz.ouvirNome(primeiro, 'tales'); } finally { setOuvindo(false); }
+  };
 
   const salvar = async () => {
-    const op = escolha?.op ?? opcoes[0];
+    setTentou(true);
+    if (!autorizo || salvando) return;
+    setSalvando(true);
     const agora = Date.now();
+    const op = opcoesPronuncia(primeiro[0].toUpperCase() + primeiro.slice(1).toLowerCase())[0];
     const c: Crianca = {
       id,
       nome: nomeBonito,
       genero: genero ?? 'n',
-      anoNascimento: ano,
-      pronuncia: { grafia: op.grafia, fala: op.fala, rate: op.rate, pitchExtra: op.pitchExtra, voz: escolha?.voz ?? 'sofia' },
+      anoNascimento: ANO - (idade ?? 5),
+      pronuncia: { grafia: temClipe ? nomeBonito : op.grafia, fala: op.fala, rate: op.rate, pitchExtra: op.pitchExtra, voz: 'sofia' },
       avatar: { base: BASES[0][0], cantinho: 'ceu' },
-      apoios,
-      jaSabe: { ...jaSabe, letrasDoNome: nivel === 'zero' ? 'nao-sei' : 'sim', lePalavras: nivel === 'le-palavras' ? 'sim' : 'nao-sei' },
-      consentimentos: { ...cons, em: agora },
-      rotina,
+      // apoios e rotina: padrões; o adulto ajusta depois, na Área da Família
+      apoios: { previsivel: false, focoCurto: false, leituraReforco: false, calmo: false },
+      jaSabe: { letrasDoNome: nivel === 'zero' ? 'nao-sei' : 'sim', lePalavras: nivel === 'le-palavras' ? 'sim' : 'nao-sei', leFrases: 'nao-sei' },
+      consentimentos: { responsavel: true, vozPrimeiroNome: falarNome, gravarVozAdulto: false, em: agora },
+      rotina: { minutosDia: 15, horaDormir: '20:00' },
       criadoEm: agora
     };
-    if (gravacao && cons.gravarVozAdulto) {
-      await repo.salvarAudio(`nome-${id}`, gravacao, agora);
-      c.gravacaoNomeId = `nome-${id}`;
-      c.gravacaoNomeEm = agora;
-    }
     await repo.salvarCrianca(c);
     // D026: o nível inicial escolhido pelo adulto define o ponto de partida (do zero é o padrão)
     await repo.salvarProgresso(aplicarNivelInicial(progressoInicial(id, agora), nivel, agora));
+    setSalvando(false);
     setPasso('entrega');
   };
 
-  const idx = PASSOS.findIndex(([p]) => p === passo);
-  const falaDupla: Record<Passo, [string, string]> = {
-    nome: ['Sofia', 'Que bom que vocês chegaram! Como a criança se chama?'],
-    falar: ['Tales', `Queremos chamar ${nomeBonito || 'a criança'} do jeitinho certo. Ouça e escolha!`],
-    genero: ['Sofia', 'É só para a gente falar certinho: "pronto" ou "pronta".'],
-    nivel: ['Tales', 'A gente ensina desde o comecinho. Na dúvida, escolha "Do zero".'],
-    autorizacao: ['Sofia', 'Falta só a sua autorização. Tudo fica neste aparelho.'],
-    entrega: ['Sofia', 'Tudo pronto!']
+  const passo1Ok = nomeOk && idade !== null && genero !== null;
+  const avancar = () => {
+    if (passo === 1) { setTentou(true); if (!passo1Ok) return; setTentou(false); setPasso(2); }
+    else if (passo === 2) { setTentou(false); setPasso(3); }
   };
+
+  const dupla: Record<string, [PoseDupla, string, string]> = {
+    1: ['acenando', 'Sofia', 'Oi! Conte pra gente quem vai aprender.'],
+    2: ['pensando', 'Tales', 'Na dúvida, escolha "Do zero". Dá para mudar depois.'],
+    3: ['apontando', 'Sofia', `Falta só um toque para ${nomeBonito || 'a criança'} começar!`],
+    entrega: ['comemorando', 'Sofia e Tales', `Tudo pronto! Estamos esperando ${nomeBonito}.`]
+  };
+  const [pose, quem, fala] = dupla[String(passo)];
+  const rotuloNivel = NIVEIS_INICIAIS.find((n) => n.id === nivel)?.titulo ?? '';
+  const rotuloGenero = GENEROS.find(([g]) => g === genero)?.[1] ?? '';
 
   if (passo === 'entrega') {
     return (
-      <div className="tela-adulto">
-        <Fundo cena="quintal" desfoque={10} tom="claro" />
-        <Topo voltar="adulto" titulo="Cadastro concluído" />
-        <main className="palco adulto">
-          <section className="cartao entrega">
-            <img className="entrega-arte" src={asset('dupla/dupla-corpo.webp')} alt="Sofia e Tales" />
+      <Fluxo titulo="Cadastro concluído" voltar={area} pose={pose} quem={quem} fala={fala} testId="cadastro-entrega">
+        <section className="cartao fluxo-cartao entrega-cartao">
+          <div className="fluxo-corpo entrega-corpo">
+            <span className="etiqueta verde"><Icone nome="check" />Cadastro feito</span>
             <h1 className="t">Agora entregue o aparelho para {nomeBonito}.</h1>
-            <p>Fique por perto nos primeiros 10 minutos: é um momento especial. Daqui em diante, todo texto tem áudio.</p>
+            <p className="fluxo-sub">Fique por perto nos primeiros 10 minutos: é um momento especial. Daqui em diante, todo texto tem áudio.</p>
             <button className="btn enorme ipe brilha" onClick={() => navegar(`c/${id}/avatar`)} data-testid="entregar"><Icone nome="play" />Entregar para {nomeBonito}</button>
-          </section>
-        </main>
-      </div>
+            <button className="link" onClick={() => navegar(area)}>Agora não: voltar para a {area === 'professor' ? 'Área do Professor' : 'Área da Família'}</button>
+          </div>
+        </section>
+      </Fluxo>
     );
   }
 
   return (
-    <div className="tela-adulto">
-      <Fundo cena="quintal" desfoque={14} tom="claro" />
-      <Topo voltar="adulto" titulo="Cadastro" />
-      <main className="palco adulto">
-        <div className="cadastro">
-          <aside className="cadastro-dupla">
-            <p className="cadastro-fala" key={passo}><b>{falaDupla[passo][0]}</b>{falaDupla[passo][1]}</p>
-            <img src={asset('dupla/dupla-corpo.webp')} alt="Sofia e Tales dão as boas-vindas" />
-          </aside>
-
-          <section className="cartao cadastro-cartao">
-            <ol className="passos" aria-label={`Passo ${idx + 1} de ${PASSOS.length}`}>
-              {PASSOS.map(([p, r], i) => (
-                <li key={p} className={i < idx ? 'feito' : i === idx ? 'agora' : ''} aria-current={i === idx ? 'step' : undefined}>
-                  <i>{i < idx ? <Icone nome="check" /> : i + 1}</i>{r}
-                </li>
-              ))}
-            </ol>
-
-            {passo === 'nome' ? (
-              <div className="passo-corpo" key="nome">
-                <h1 className="t">Quem vai aprender?</h1>
-                <p className="passo-sub">Só o primeiro nome (ou como a família chama a criança).</p>
-                <label className="campo">
-                  <span className="sr">Primeiro nome</span>
-                  <input className="nome-grande" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Mariana" autoComplete="off" autoCapitalize="words" data-testid="campo-nome" />
-                  {nome.trim().includes(' ') ? <small>Usamos só o primeiro nome: <b>{nomeBonito}</b>. Sobrenome não é necessário.</small> : null}
-                </label>
-                <label className="campo">
-                  <span>Ano de nascimento</span>
-                  <select value={ano} onChange={(e) => setAno(Number(e.target.value))}>
-                    {Array.from({ length: 8 }, (_, i) => ANO - 2 - i).map((a) => <option key={a} value={a}>{a} ({ANO - a} anos)</option>)}
-                  </select>
-                  <small>{ANO - ano <= 3 ? 'Para 2–3 anos, a jornada funciona com o adulto junto.' : 'Define o tempo de cada sessão.'}</small>
-                </label>
-              </div>
-            ) : null}
-
-            {passo === 'falar' ? (
-              <div className="passo-corpo" key="falar">
-                <h1 className="t">Como se fala {nomeBonito}?</h1>
-                <p className="passo-sub">{temClipe === false ? `A Sofia e o Tales ainda não gravaram o nome ${nomeBonito}. Por enquanto eles conversam com carinho sem dizer o nome, que aparece escrito nas falas. Em breve o nome será gravado nas vozes deles.` : 'Toque para ouvir como a Sofia e o Tales chamam a criança.'}</p>
-                <div className="grade-pronuncia">
-                  {opcoes.map((op) => (
-                    <div key={op.id + op.grafia} className={`pronuncia ${escolha?.op.grafia === op.grafia ? 'sel' : ''}`}>
-                      <b>{op.grafia}</b><small>{op.titulo}</small>
-                      <div className="linha-botoes">
-                        {(['sofia', 'tales'] as const).map((q) => (
-                          <button key={q} className={`btn mini ${escolha?.op.grafia === op.grafia && escolha.voz === q ? 'ipe' : ''}`} onClick={() => { setEscolha({ op, voz: q }); ouvir(op, q); }} data-pronuncia={`${op.id}-${q}`} aria-label={`Ouvir ${op.grafia} na voz ${q === 'sofia' ? 'da Sofia' : 'do Tales'}`}>
-                            <Rosto quem={q} tamanho={44} />{q === 'sofia' ? 'Sofia' : 'Tales'}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <details className="mais-opcoes" hidden>
-                  <summary><Icone nome="microfone" />Nenhuma serviu? Ajuste ou grave</summary>
-                  <label className="campo">
-                    <span>Escreva como se fala (sílaba forte em MAIÚSCULAS, ex.: Ka-u-Ã)</span>
-                    <input value={ajuste} onChange={(e) => setAjuste(e.target.value)} placeholder="Ma-ri-A-na" />
-                  </label>
-                  <div className="linha-botoes">
-                    {temGravacao() ? (
-                      <button className="btn" disabled={gravando} onClick={async () => { setGravando(true); try { setGravacao(await gravar(3000, setNivelMic)); } catch { /* sem microfone */ } setGravando(false); }}>
-                        <Icone nome={gravacao ? 'repetir' : 'gravar'} />{gravando ? 'Gravando…' : gravacao ? 'Regravar' : 'Gravar o nome (3 s)'}
-                      </button>
-                    ) : <small>Este navegador não permite gravar; tudo bem, escolha pela escuta.</small>}
-                    {gravacao ? <button className="btn" onClick={() => new Audio(URL.createObjectURL(gravacao)).play()}><Icone nome="tocar" />Ouvir gravação</button> : null}
-                    {gravando ? <div className="medidor"><i style={{ width: `${nivelMic * 100}%` }} /></div> : null}
-                  </div>
-                  <p className="nota-mic">A gravação fica só neste aparelho. No produto, as versões são geradas uma vez nas vozes oficiais da Sofia e do Tales (só o primeiro nome é enviado).</p>
-                </details>
-              </div>
-            ) : null}
-
-            {passo === 'genero' ? (
-              <div className="passo-corpo" key="genero">
-                <h1 className="t">Como a dupla fala com {nomeBonito}?</h1>
-                <p className="passo-sub">Só para a Sofia e o Tales concordarem as palavras nas falas.</p>
-                <div className="escolhas">
-                  {([['f', 'Feminino', '"Você está pronta?"', 'sofia'], ['m', 'Masculino', '"Você está pronto?"', 'tales'], ['n', 'Prefiro não informar', '"Tudo pronto pra começar?"', 'dupla']] as [Genero, string, string, string][]).map(([g, r, ex, arte]) => (
-                    <button key={g} className="escolha" aria-pressed={genero === g} onClick={() => setGenero(g)} data-genero={g}>
-                      <div className="escolha-arte">{arte === 'dupla' ? <img src={asset('dupla/dupla-corpo.webp')} alt="" /> : <Rosto quem={arte as 'sofia' | 'tales'} humor="joinha" tamanho={84} />}</div>
-                      <div><b>{r}</b><small>{ex}</small></div>
-                    </button>
-                  ))}
-                </div>
-                {previa ? (
-                  <p className="previa"><Rosto quem="sofia" tamanho={60} /><span>A Sofia vai dizer: <b>"{previa}"</b></span><button className="ouvir-mini" onClick={() => voz.falar(previa, { quem: 'sofia' })} aria-label="Ouvir"><Icone nome="som" /></button></p>
-                ) : null}
-              </div>
-            ) : null}
-
-            {passo === 'nivel' ? (
-              <div className="passo-corpo" key="nivel">
-                <h1 className="t">De onde {nomeBonito} começa?</h1>
-                <p className="passo-sub">Dá para mudar depois, na área da família.</p>
-                <div className="escolhas" role="group" aria-label="Nível inicial">
-                  {NIVEIS_INICIAIS.map((n) => (
-                    <button key={n.id} className="escolha" aria-pressed={nivel === n.id} onClick={() => setNivel(n.id)} data-nivel={n.id}>
-                      {n.id === 'zero' ? <span className="etiqueta verde recomendado">Recomendado</span> : null}
-                      <div className="escolha-arte">
-                        {n.id === 'zero' ? <img src={asset('figuras/muda.webp')} alt="" /> : n.id === 'letras-e-sons' ? <div className="mini-pecas" aria-hidden="true"><span>A</span><span>M</span><span>L</span></div> : <img src={asset('recompensas/bau-livros.webp')} alt="" />}
-                      </div>
-                      <div>
-                        <b>{n.titulo}</b>
-                        <small>{n.resumo}</small>
-                        <ul>{n.perguntas.map((q) => <li key={q}><Icone nome="check" /><span>{q}</span></li>)}</ul>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-
-            {passo === 'autorizacao' ? (
-              <div className="passo-corpo" key="autorizacao">
-                <h1 className="t">Sua autorização</h1>
-                <p className="passo-sub">Em linguagem simples (LGPD, art. 14).</p>
-                <label className="opcao-linha"><input type="checkbox" checked={cons.responsavel} onChange={(e) => setCons({ ...cons, responsavel: e.target.checked })} data-testid="cons-responsavel" /> <span><b>Sou responsável por {nomeBonito}</b> e autorizo o uso da plataforma.</span></label>
-                <label className="opcao-linha"><input type="checkbox" checked={cons.vozPrimeiroNome} onChange={(e) => setCons({ ...cons, vozPrimeiroNome: e.target.checked })} /> <span>A Sofia e o Tales podem falar o primeiro nome.</span></label>
-                <label className="opcao-linha"><input type="checkbox" checked={cons.gravarVozAdulto} onChange={(e) => setCons({ ...cons, gravarVozAdulto: e.target.checked })} /> <span>(Opcional) Guardar a minha gravação do nome por até 30 dias.</span></label>
-                <div className="nao-pedimos"><Icone nome="escudo" /><span><b>Não pedimos:</b> foto, CPF, endereço, sobrenome nem e-mail da criança. Nenhum áudio da criança é enviado.</span></div>
-                <details className="mais-opcoes">
-                  <summary><Icone nome="coracao" />Apoios e rotina (opcional)</summary>
-                  <p className="nota-mic">Sem rótulo para a criança; dá para mudar depois.</p>
-                  {([['previsivel', 'Modo Previsível (trilha fixa, avisos antes das mudanças)'], ['focoCurto', 'Foco curto (blocos menores)'], ['leituraReforco', 'Leitura com reforço (passos menores)'], ['calmo', 'Modo calmo (sem música e partículas)']] as const).map(([k, r]) => (
-                    <label key={k} className="opcao-linha"><input type="checkbox" checked={apoios[k]} onChange={(e) => setApoios({ ...apoios, [k]: e.target.checked })} /> {r}</label>
-                  ))}
-                  <div className="campo linha-campos">
-                    <label><span>Tempo por dia</span><select value={rotina.minutosDia} onChange={(e) => setRotina({ ...rotina, minutosDia: Number(e.target.value) })}>{[10, 12, 15, 20].map((m) => <option key={m} value={m}>{m} min</option>)}</select></label>
-                    <label><span>Hora de dormir</span><input type="time" value={rotina.horaDormir} onChange={(e) => setRotina({ ...rotina, horaDormir: e.target.value })} /></label>
-                  </div>
-                </details>
-              </div>
-            ) : null}
-
-            <div className="passo-pe">
-              {idx > 0 ? <button className="btn" onClick={() => setPasso(PASSOS[idx - 1][0])}><Icone nome="seta-esq" />Voltar</button> : <span />}
-              {passo === 'nome' ? <button className="btn grande pri" disabled={!nomeOk} onClick={() => setPasso('falar')} data-testid="cadastro-continuar">Continuar<Icone nome="seta" /></button> : null}
-              {passo === 'falar' ? <button className="btn grande pri" onClick={() => setPasso('genero')} data-testid="nome-continuar">Continuar<Icone nome="seta" /></button> : null}
-              {passo === 'genero' ? <button className="btn grande pri" disabled={!genero} onClick={() => setPasso('nivel')} data-testid="genero-continuar">Continuar<Icone nome="seta" /></button> : null}
-              {passo === 'nivel' ? <button className="btn grande pri" onClick={() => setPasso('autorizacao')} data-testid="nivel-continuar">Continuar<Icone nome="seta" /></button> : null}
-              {passo === 'autorizacao' ? <button className="btn grande verde" disabled={!cons.responsavel} onClick={salvar} data-testid="salvar-crianca"><Icone nome="check" />Salvar</button> : null}
-            </div>
-          </section>
+    <Fluxo titulo="Cadastro da criança" voltar={area} pose={pose} quem={quem} fala={fala} testId="cadastro">
+      <section className="cartao fluxo-cartao" data-passo={passo}>
+        <div className="progresso" role="img" aria-label={`Passo ${passo} de 3`}>
+          <span className="progresso-rotulo">Cadastro da criança · <b>{passo} de 3</b></span>
+          <span className="progresso-barra tres"><i style={{ width: `${(passo / 3) * 100}%` }} /></span>
         </div>
-      </main>
-    </div>
+
+        {passo === 1 ? (
+          <div className="fluxo-corpo" key="p1">
+            <h1 className="t">Quem vai aprender?</h1>
+            <label className="campo campo-junto">
+              <span className="sr">Primeiro nome da criança</span>
+              <input className="nome-grande" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Primeiro nome" autoComplete="off" autoCapitalize="words" data-testid="campo-nome" aria-invalid={tentou && !nomeOk || undefined} />
+            </label>
+            <div className="nome-linha" aria-live="polite">
+              {tentou && !nomeOk ? <small className="aviso-campo" role="alert">Escreva o primeiro nome da criança (só letras).</small>
+                : nomeOk && temClipe ? <button type="button" className="ouvir-nome" onClick={ouvirNome} data-testid="ouvir-nome"><Icone nome="som" />{ouvindo ? 'Ouvindo…' : `Ouvir a Sofia e o Tales chamando ${nomeBonito}`}</button>
+                : nomeOk && temClipe === false ? <small data-testid="nome-sem-gravacao">Em breve a dupla vai dizer este nome; por enquanto ele aparece escrito.</small>
+                : nome.trim().includes(' ') ? <small>Usamos só o primeiro nome: <b>{nomeBonito}</b>.</small>
+                : <small>Só o primeiro nome, ou como a família chama.</small>}
+            </div>
+
+            <div className={`grupo ${tentou && idade === null ? 'falta' : ''}`} role="group" aria-label="Idade">
+              <span className="grupo-rotulo">Idade <em>(anos)</em>{tentou && idade === null ? <small className="aviso-campo" role="alert">Escolha a idade.</small> : null}</span>
+              <div className="idades">
+                {IDADES.map((i) => <button key={i} type="button" className="pilula" aria-pressed={idade === i} onClick={() => setIdade(i)} data-idade={i} aria-label={i === 8 ? '8 anos ou mais' : `${i} anos`}>{i === 8 ? '8+' : i}</button>)}
+              </div>
+            </div>
+
+            <div className={`grupo ${tentou && genero === null ? 'falta' : ''}`} role="group" aria-label="Como a dupla fala com a criança">
+              <span className="grupo-rotulo">Como a dupla fala com {nomeOk ? nomeBonito : 'a criança'}?{tentou && genero === null ? <small className="aviso-campo" role="alert">Escolha uma opção.</small> : null}</span>
+              <div className="generos">
+                {GENEROS.map(([g, r]) => <button key={g} type="button" className="pilula" aria-pressed={genero === g} onClick={() => setGenero(g)} data-genero={g}>{r}</button>)}
+              </div>
+              <p className="previa-curta previa" data-vazia={!previa || undefined}>{previa ? <>A dupla diz: <b>“{previa}”</b></> : 'É só para a dupla dizer “pronto” ou “pronta”.'}</p>
+            </div>
+          </div>
+        ) : null}
+
+        {passo === 2 ? (
+          <div className="fluxo-corpo" key="p2">
+            <h1 className="t">De onde {nomeBonito} começa?</h1>
+            <p className="fluxo-sub">Escolha o que mais parece com {nomeBonito} hoje.</p>
+            <div className="niveis" role="group" aria-label="Nível inicial">
+              {NIVEIS_INICIAIS.map((n) => (
+                <button key={n.id} type="button" className="nivel" aria-pressed={nivel === n.id} onClick={() => setNivel(n.id)} data-nivel={n.id}>
+                  {n.id === 'zero' ? <span className="etiqueta verde recomendado">Recomendado</span> : null}
+                  <span className="nivel-arte">
+                    {n.id === 'zero' ? <img src={asset('figuras/muda.webp')} alt="" /> : n.id === 'letras-e-sons' ? <span className="mini-pecas" aria-hidden="true"><span>A</span><span>M</span><span>L</span></span> : <img src={asset('recompensas/bau-livros.webp')} alt="" />}
+                  </span>
+                  <span className="nivel-texto"><b>{n.titulo}</b><small>{FRASE_NIVEL[n.id]}</small></span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        {passo === 3 ? (
+          <div className="fluxo-corpo" key="p3">
+            <h1 className="t">Tudo certo?</h1>
+            <dl className="resumo">
+              <div><dt>Nome</dt><dd>{nomeBonito}</dd><button className="link" onClick={() => setPasso(1)} aria-label="Mudar o nome">mudar</button></div>
+              <div><dt>Idade</dt><dd>{idade === 8 ? '8 anos ou mais' : `${idade} anos`}</dd><button className="link" onClick={() => setPasso(1)} aria-label="Mudar a idade">mudar</button></div>
+              <div><dt>A dupla fala como</dt><dd>{rotuloGenero}</dd><button className="link" onClick={() => setPasso(1)} aria-label="Mudar como a dupla fala">mudar</button></div>
+              <div><dt>Começa</dt><dd>{rotuloNivel}</dd><button className="link" onClick={() => setPasso(2)} aria-label="Mudar de onde começa">mudar</button></div>
+            </dl>
+            <label className={`autorizo ${tentou && !autorizo ? 'falta' : ''}`}>
+              <input type="checkbox" checked={autorizo} onChange={(e) => setAutorizo(e.target.checked)} data-testid="cons-responsavel" />
+              <i className="autorizo-caixa" aria-hidden="true"><Icone nome="check" /></i>
+              <span><b>{area === 'professor' ? `Tenho autorização da família de ${nomeBonito}` : `Sou responsável por ${nomeBonito} e autorizo`}</b><small>o uso do FONEMA neste aparelho.</small></span>
+            </label>
+            <p className="autorizo-nota">
+              {tentou && !autorizo ? <span className="aviso-campo" role="alert">Toque na autorização para continuar. </span> : null}
+              Não pedimos foto, sobrenome nem documento. <button className="link" onClick={() => setPrivacidade(true)} data-testid="ver-privacidade">ver detalhes de privacidade</button>
+            </p>
+          </div>
+        ) : null}
+
+        <footer className="fluxo-pe">
+          {passo > 1 ? <button className="btn" onClick={() => { setTentou(false); setPasso((passo - 1) as Passo); }} data-testid="cadastro-voltar"><Icone nome="seta-esq" />Voltar</button> : <button className="btn" onClick={() => navegar(area)}><Icone nome="seta-esq" />Voltar</button>}
+          {passo === 1 ? <button className="btn grande pri" onClick={avancar} data-incompleto={!passo1Ok || undefined} data-testid="cadastro-continuar">Continuar<Icone nome="seta" /></button> : null}
+          {passo === 2 ? <button className="btn grande pri" onClick={avancar} data-testid="nivel-continuar">Continuar<Icone nome="seta" /></button> : null}
+          {passo === 3 ? <button className="btn grande ipe brilha" onClick={salvar} data-incompleto={!autorizo || undefined} data-testid="salvar-crianca"><Icone nome="play" />Começar a aventura com {nomeBonito}</button> : null}
+        </footer>
+      </section>
+
+      {privacidade ? (
+        <Camada titulo="Privacidade, em palavras simples" aoFechar={() => setPrivacidade(false)} testId="painel-privacidade">
+          <ul className="privacidade">
+            <li><Icone nome="escudo" /><span><b>O que guardamos:</b> o primeiro nome, a idade e o progresso de {nomeBonito || 'a criança'}. Tudo fica neste aparelho.</span></li>
+            <li><Icone nome="x" /><span><b>O que não pedimos:</b> foto, CPF, endereço, sobrenome nem e-mail da criança.</span></li>
+            <li><Icone nome="microfone" /><span><b>Voz da criança:</b> nenhum áudio da criança sai do aparelho.</span></li>
+            <li><Icone nome="lixeira" /><span><b>Apagar:</b> você pode levar uma cópia ou apagar tudo quando quiser, nas configurações da área do adulto.</span></li>
+          </ul>
+          <button className="ajuste" role="switch" aria-checked={falarNome} onClick={() => setFalarNome(!falarNome)}>
+            <Icone nome="som" />
+            <span><b>Falar o primeiro nome</b><small>A Sofia e o Tales chamam a criança pelo nome</small></span>
+            <i className="chave" aria-hidden="true" />
+          </button>
+          <p className="nota-mic">Seguimos a lei de proteção de dados para crianças (LGPD, art. 14): só um adulto responsável autoriza o uso.</p>
+          <button className="btn pri ajustes-pronto" onClick={() => setPrivacidade(false)}><Icone nome="check" />Entendi</button>
+        </Camada>
+      ) : null}
+    </Fluxo>
   );
 }

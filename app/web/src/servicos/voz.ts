@@ -8,6 +8,7 @@
 import type { Personagem } from '@fonema/conteudo';
 import { modoTeste } from './ambiente.ts';
 
+/** rate/pitchExtra só valem para a voz do aparelho (simulação de pronúncia); as vozes oficiais nunca são esticadas. */
 export interface OpcoesFala { quem?: Personagem; rate?: number; pitchExtra?: number }
 
 export interface ProvedorVoz {
@@ -109,15 +110,46 @@ export async function urlDoAudio(caminho: string): Promise<string> {
   return u;
 }
 
+/** Um clipe carregado e pronto para tocar inteiro (sem esperar a rede no meio da frase). */
+function carregar(url: string): Promise<HTMLAudioElement> {
+  return new Promise((resolve) => {
+    const el = new Audio();
+    el.preload = 'auto';
+    let feito = false;
+    const ok = () => { if (!feito) { feito = true; resolve(el); } };
+    el.addEventListener('canplaythrough', ok, { once: true });
+    el.addEventListener('error', ok, { once: true });
+    setTimeout(ok, 4000); // rede lenta: toca assim mesmo
+    el.src = url;
+    el.load();
+  });
+}
+
+/** Fala em andamento menor que isto é deixada terminar (nunca cortar uma sílaba, um som ou o fim de uma frase). */
+const DEIXA_TERMINAR_S = 1.0;
+/** Ao interromper uma fala longa, o volume desce nesse tempo (sem estalo). */
+const FADE_MS = 90;
+/** Respiro extra depois do nome da criança, quando a frase continua ("Oi, Mariana! | Eu sou a Sofia."). */
+const PAUSA_DEPOIS_DO_NOME_MS = 140;
+
 /**
  * Vozes OFICIAIS pré-geradas (ElevenLabs: "Sofia — FONEMA" e "Tales — FONEMA").
  * A fala é dividida no nome da criança: [trecho] + [clipe do nome] + [trecho]. Se o nome não tem clipe,
  * toca a variante sem o nome (o nome continua escrito na tela). Só cai no speechSynthesis se faltar um trecho.
+ *
+ * Regras de reprodução (D027 §2, "áudio sem cortes"):
+ *  - todos os trechos da fala são CARREGADOS antes de o primeiro tocar; cada um toca até o fim ('ended');
+ *  - os clipes já vêm masterizados (silêncio de 80 ms nas pontas, fade, volume igual): a emenda não estala;
+ *  - a voz da Sofia e do Tales nunca é esticada (sem playbackRate para "falar devagar"): a fala lenta é gravada lenta;
+ *  - uma fala nova não corta o finzinho da anterior: se falta menos de 1 s, espera terminar; senão, baixa o volume e para.
  */
 export class ProvedorPreGerado implements ProvedorVoz {
   private falas: Record<string, string> | null = null;
   private nomes: Record<string, string[]> = { sofia: [], tales: [] };
+  private arqNomes: Record<string, Record<string, string>> = {};
   private atual: HTMLAudioElement | null = null;
+  /** Termina quando a fala anterior acabou de verdade (fim natural do clipe ou fim do fade). */
+  private cauda: Promise<void> = Promise.resolve();
   private geracao = 0;
   nome = '';
   pronto: Promise<void>;
@@ -126,57 +158,109 @@ export class ProvedorPreGerado implements ProvedorVoz {
     this.pronto = Promise.all([
       fetch('./audio/falas/manifesto.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
       fetch('./audio/nomes/manifesto.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({}))
-    ]).then(([f, n]) => { this.falas = f; this.nomes = { sofia: [], tales: [], ...n }; });
+    ]).then(([f, n]) => { this.falas = f; this.nomes = { sofia: n.sofia ?? [], tales: n.tales ?? [] }; this.arqNomes = n.arquivos ?? {}; });
+  }
+  /** Caminho do clipe do nome (o manifesto diz o arquivo; sem ele, <nome>.mp3). */
+  arquivoDoNome(voz: 'sofia' | 'tales', nome: string): string {
+    const k = chaveNome(nome);
+    return `./audio/nomes/${voz}/${this.arqNomes[voz]?.[k] ?? `${k}.mp3`}`;
+  }
+  /** Existe clipe para este trecho (sem nome) nesta voz? */
+  temTrecho(texto: string, quem: string): boolean {
+    const v = VOZ_DO_PERSONAGEM[quem] ?? VOZ_DO_PERSONAGEM.sofia;
+    return !!this.falas?.[`${v.voz}|${chaveTrecho(texto)}`];
   }
   /** Lista de arquivos para uma fala, ou null se faltar algum trecho. */
   arquivos(texto: string, quem: string): string[] | null {
+    return this.plano(texto, quem)?.map((p) => p.arquivo) ?? null;
+  }
+  /** Trechos da fala em ordem, com a pausa extra depois de cada um. */
+  plano(texto: string, quem: string): { arquivo: string; pausaMs: number }[] | null {
     if (!this.falas) return null;
     const v = VOZ_DO_PERSONAGEM[quem] ?? VOZ_DO_PERSONAGEM.sofia;
     const partes = this.nome ? texto.split(this.nome) : [texto];
     const temNome = this.nome && this.nomes[v.voz]?.includes(chaveNome(this.nome));
-    const out: string[] = [];
+    const out: { arquivo: string; pausaMs: number }[] = [];
     for (let i = 0; i < partes.length; i++) {
-      if (i > 0 && temNome) out.push(`./audio/nomes/${v.voz}/${chaveNome(this.nome)}.mp3`);
+      if (i > 0 && temNome) out.push({ arquivo: this.arquivoDoNome(v.voz, this.nome), pausaMs: chaveTrecho(partes[i]) ? PAUSA_DEPOIS_DO_NOME_MS : 0 });
       const k = chaveTrecho(partes[i]);
       if (!k) continue;
       const arq = this.falas[`${v.voz}|${k}`];
       if (!arq) return null;
-      out.push(`./audio/falas/${arq}`);
+      out.push({ arquivo: `./audio/falas/${arq}`, pausaMs: 0 });
     }
     return out.length ? out : null;
   }
   async falar(texto: string, o: OpcoesFala = {}): Promise<void> {
     await this.pronto;
     const quem = o.quem ?? 'sofia';
-    const arqs = this.arquivos(texto, quem);
+    const plano = this.plano(texto, quem);
     if (modoTeste()) return this.reserva.falar(texto, o);
-    if (!arqs && /^[\s…,.!?-]*((\p{L})\2{2,}[\s…,.!?-]*)+$/iu.test(texto)) {
+    if (!plano && /^[\s…,.!?-]*((\p{L})\2{2,}[\s…,.!?-]*)+$/iu.test(texto)) {
       // sequência de sons isolados ("sss… ooo… lll"): ainda sem gravação da fonoaudióloga → voz do aparelho como último recurso
       return this.reserva.falar(texto, o);
     }
-    if (!arqs) {
+    if (!plano) {
       // sem áudio oficial: NUNCA voz robótica para a Sofia/Tales; o texto fica no balão e a tela segue no ritmo da leitura
       faltando.add(`${(VOZ_DO_PERSONAGEM[quem] ?? VOZ_DO_PERSONAGEM.sofia).voz}|${texto}`);
       return new Promise((r) => setTimeout(r, Math.min(2500, 400 + texto.length * 35)));
     }
     const g = ++this.geracao;
-    const rate = (VOZ_DO_PERSONAGEM[quem]?.rate ?? 1) * (o.rate && o.rate < 0.85 ? 0.85 : 1);
-    for (const a of arqs) {
+    // personagens sem dublador próprio (Bolota, Dona Cida…) usam a voz da dupla em outro ritmo/tom; Sofia e Tales tocam sempre em 1×
+    const rate = VOZ_DO_PERSONAGEM[quem]?.rate ?? 1;
+    // carrega TODOS os trechos antes de começar (e espera o finzinho da fala anterior)
+    const [els] = await Promise.all([Promise.all(plano.map(async (p) => carregar(await urlDoAudio(p.arquivo)))), this.cauda]);
+    for (let i = 0; i < els.length; i++) {
       if (g !== this.geracao) return;
-      const url = await urlDoAudio(a);
-      if (g !== this.geracao) return;
-      await new Promise<void>((resolve) => {
-        const el = new Audio(url);
-        this.atual = el;
-        el.playbackRate = rate;
-        (el as any).preservesPitch = rate === 1;
+      const el = els[i];
+      const fim = new Promise<void>((resolve) => {
         el.onended = () => resolve();
         el.onerror = () => resolve();
-        el.play().catch(() => resolve());
+        el.onpause = () => { if (!el.ended) resolve(); };
       });
+      this.atual = el;
+      this.cauda = fim;
+      el.playbackRate = rate;
+      (el as any).preservesPitch = rate === 1;
+      el.play().catch(() => el.onerror?.(new Event('error')));
+      await fim;
+      if (this.atual === el) this.atual = null;
+      if (plano[i].pausaMs && g === this.geracao) await new Promise((r) => setTimeout(r, plano[i].pausaMs));
     }
   }
-  parar() { this.geracao++; this.atual?.pause(); this.reserva.parar(); }
+  /** Interrompe a fala: o clipe que está quase no fim termina sozinho; o resto some com fade (sem estalo). */
+  parar() {
+    this.geracao++;
+    const el = this.atual;
+    this.atual = null;
+    if (el && !el.paused && !el.ended) {
+      const resta = (el.duration - el.currentTime) / (el.playbackRate || 1);
+      if (!(resta <= DEIXA_TERMINAR_S)) {
+        const v0 = el.volume;
+        const t0 = performance.now();
+        const passo = () => {
+          const k = (performance.now() - t0) / FADE_MS;
+          if (k >= 1 || el.paused) { el.pause(); return; }
+          el.volume = v0 * (1 - k) * (1 - k);
+          setTimeout(passo, 15);
+        };
+        passo();
+      }
+    }
+    this.reserva.parar();
+  }
+  /** Toca um clipe solto (nome no cadastro) até o fim. */
+  async tocarArquivo(caminho: string): Promise<void> {
+    const g = ++this.geracao;
+    const [el] = await Promise.all([urlDoAudio(caminho).then(carregar), this.cauda]);
+    if (g !== this.geracao) return;
+    const fim = new Promise<void>((resolve) => { el.onended = () => resolve(); el.onerror = () => resolve(); el.onpause = () => { if (!el.ended) resolve(); }; });
+    this.atual = el;
+    this.cauda = fim;
+    el.play().catch(() => el.onerror?.(new Event('error')));
+    await fim;
+    if (this.atual === el) this.atual = null;
+  }
 }
 
 /** Coleta (só em teste) as falas realmente ditas, para gerar os áudios oficiais (scripts/gerar-vozes.mjs). */
@@ -233,9 +317,12 @@ class Voz {
     await this.pre.pronto;
     if (!this.pre.nomesDe(quem).includes(chaveNome(nome))) return false;
     if (!this.ligada || modoTeste()) return true;
-    const url = await urlDoAudio(`./audio/nomes/${quem}/${chaveNome(nome)}.mp3`);
-    await new Promise<void>((resolve) => { const el = new Audio(url); el.onended = () => resolve(); el.onerror = () => resolve(); el.play().catch(() => resolve()); });
+    await this.pre.tocarArquivo(this.pre.arquivoDoNome(quem, nome));
     return true;
+  }
+  /** Todas estas falas curtas (sílabas, sons) têm clipe na voz oficial? Se faltar uma, é melhor não falar nenhuma. */
+  temTodas(textos: string[], quem: Personagem = 'sofia'): boolean {
+    return textos.every((t) => this.pre.temTrecho(t, quem));
   }
   /** Fala uma sequência de falas, uma depois da outra. */
   async sequencia(falas: { texto: string; quem?: Personagem }[], aoMudar?: (i: number) => void): Promise<void> {

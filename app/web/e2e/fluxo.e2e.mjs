@@ -162,10 +162,11 @@ async function jogarSessao(page, capturar = {}) {
     if (await tracei.isVisible().catch(() => false)) {
       const box = await page.locator('.areia canvas').boundingBox({ timeout: 500 }).catch(() => null);
       if (!box) continue;
-      for (let y = 0.1; y < 0.95; y += 0.06) {
-        await page.mouse.move(box.x + box.width * 0.12, box.y + box.height * y);
+      await tirar('tracar-antes');
+      for (let y = 0.1; y < 0.95; y += 0.05) {
+        await page.mouse.move(box.x + box.width * 0.2, box.y + box.height * y);
         await page.mouse.down();
-        await page.mouse.move(box.x + box.width * 0.88, box.y + box.height * y, { steps: 16 });
+        await page.mouse.move(box.x + box.width * 0.8, box.y + box.height * y, { steps: 12 });
         await page.mouse.up();
       }
       await tirar('tracar');
@@ -250,7 +251,7 @@ async function main() {
   await page.locator('.letra-exemplo.visivel').waitFor();
   ok(/A, de abelha/.test(await page.locator('.letra-palavra').innerText()), 'palavra-exemplo com figura: "A, de abelha"');
   const capAl = (_, nome) => capA(page, nome, 500);
-  await jogarSessao(page, { letra: '03-letra-a-apresentacao', espelho: '04-letra-a-espelho-do-som', escolher2: '05-ache-a-letra', escolher: '06-ache-a-figura', tracar: '07-tracar-a-letra', tirarCom: capAl });
+  await jogarSessao(page, { letra: '03-letra-a-apresentacao', espelho: '04-letra-a-espelho-do-som', escolher2: '05-ache-a-letra', escolher: '06-ache-a-figura', 'tracar-antes': '07-tracar-a-letra', tirarCom: capAl });
   await page.getByTestId('selo-novo').first().waitFor({ timeout: 15000 });
   await page.waitForTimeout(CAPTURAS ? 1200 : 200);
   await cap(page, 'ritual-conquista-moedinhas');
@@ -318,6 +319,7 @@ async function main() {
 
   ok(await page.locator('.album-regiao[data-regiao="AL"] .conquista-item').count() === 27, 'Álbum: 26 selos das letras + o troféu Alfabeto Completo');
   ok(await page.locator('.album-regiao[data-regiao="AL"] .conquista-item.ganha').count() === 1, 'Álbum: só o selo da letra A brilha por enquanto');
+  await page.locator('.album-regiao[data-regiao="AL"]').evaluate((el) => el.scrollIntoView({ block: 'start' }));
   await capA(page, '12-album-selos-das-letras', 700);
 
   console.log('7. Letra B liberada (C trancada), letras B–E e a revisão');
@@ -372,7 +374,8 @@ async function main() {
   await page.goto(BASE + '#/adulto/config');
   await cap(page, 'configuracoes-padroes-mvp');
 
-  if (!process.argv.includes('--sem-jornada')) {
+  const JORNADA = !process.argv.includes('--sem-jornada');
+  {
   console.log('9. Jornada inteira: Alfabeto → Sílabas → Palavras → Meu nome (modo demonstração: domínio em 1 sessão)');
     const ctx2 = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: 'pt-BR' });
     await ctx2.addInitScript((c) => { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); }, COLETAR);
@@ -388,9 +391,10 @@ async function main() {
     await pj.getByTestId('avatar-pronto').click();
     await pj.getByTestId('primeira-missao').waitFor();
     const idj = pj.url().split('/c/')[1].split('/')[0];
+    // --sem-jornada: pula a jornada inteira (demorada) e vai direto ao nível inicial
     const AL = [...'ABCDE', 'R1', ...'FGHIJ', 'R2', ...'KLMNO', 'R3', ...'PQRST', 'R4', ...'UVWXYZ', 'FESTA'].map((x) => `AL-${x}`);
     const FASES = [...AL, 'R1-F02', 'R1-F03', 'R1-F06', 'R1-F07', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04', 'R2a-F05', 'R0-F01'];
-    for (const f of FASES) {
+    for (const f of JORNADA ? FASES : []) {
       let concluiu = false;
       for (let tentativa = 0; tentativa < 3 && !concluiu; tentativa++) {
         await pj.goto(BASE + `#/c/${idj}/sessao/${f}`);
@@ -408,11 +412,13 @@ async function main() {
         await capA(pj, '15-trilha-completa', 1200);
       }
     }
+    if (JORNADA) {
     await pj.goto(BASE + `#/adulto/familia/${idj}`);
     await pj.getByTestId('painel-familia').waitFor();
     await pj.getByText('Nível 2 de 10').first().waitFor({ timeout: 5000 }).catch(() => {});
     ok(/Nível 2 de 10/.test(await pj.getByTestId('painel-familia').innerText()), 'termômetro subiu para 2 depois da Cachoeira das Sílabas');
     ok(/Exploração das Palavras/.test(await pj.getByTestId('painel-familia').innerText()), 'título "Exploração das Palavras" depois do portão');
+    }
     await guardarFalas(pj);
 
     console.log('10. Nível inicial escolhido pelo adulto (D026)');
@@ -461,7 +467,7 @@ async function main() {
     await p3.getByTestId('trilha-alfabeto').waitFor();
     await capC(0, '01-trilha-inicio');
     await p3.goto(BASE + `#/c/${idk}/sessao/AL-A`);
-    await jogarSessao(p3, { letra: '03-letra-a-apresentacao', espelho: '04-letra-a-espelho-do-som', escolher2: '05-ache-a-letra', escolher: '06-ache-a-figura', tracar: '07-tracar-a-letra', tirarCom: capC });
+    await jogarSessao(p3, { letra: '03-letra-a-apresentacao', espelho: '04-letra-a-espelho-do-som', escolher2: '05-ache-a-letra', escolher: '06-ache-a-figura', 'tracar-antes': '07-tracar-a-letra', tirarCom: capC });
     await p3.getByTestId('selo-novo').first().waitFor({ timeout: 15000 });
     await capC(0, '08-ritual-selo-da-letra');
     await p3.goto(BASE + `#/c/${idk}/alfabeto`);
@@ -477,7 +483,7 @@ async function main() {
     await capC(0, '11-trilha-depois-da-revisao');
     await p3.goto(BASE + `#/c/${idk}/album`);
     await p3.getByTestId('album').waitFor();
-    await p3.locator('.album-regiao[data-regiao="AL"]').scrollIntoViewIfNeeded();
+    await p3.locator('.album-regiao[data-regiao="AL"]').evaluate((el) => el.scrollIntoView({ block: 'start' }));
     await capC(0, '12-album-selos-das-letras');
     await p3.goto(BASE + `#/c/${idk}/vila`);
     await p3.getByTestId('vila').waitFor();

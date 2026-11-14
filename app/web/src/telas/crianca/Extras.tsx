@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { PersonagemVivo } from '../../componentes/PersonagemVivo.tsx';
 import { CONQUISTAS, FASE_POR_ID, ITENS_LOJA, REGIOES, SONS, SURPRESAS, type ItemLoja } from '@fonema/conteudo';
 import { aplicarSondagem, comprar, infoNome, podeComprar, podeEntrar } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
@@ -124,6 +125,14 @@ export function Album({ criancaId }: { criancaId: string }) {
               {progresso.itens.length ? <div className="mochila"><b>Mochila:</b>{progresso.itens.map((i) => <img key={i} src={asset(`itens/${i}.webp`)} alt={i} title={i} />)}</div> : null}
               {progresso.areas.length ? <p className="nota-mic">Lugares novos na vila: {SURPRESAS.filter((s) => progresso.areas.includes(s.id)).map((s) => s.nome).join(' · ')}</p> : null}
             </div>
+          </div>
+          <div className="conheca-dupla" data-testid="conheca-dupla">
+            <h2 className="t">Conheça a Sofia e o Tales</h2>
+            <figure><PersonagemVivo quem="sofia" modo="giro" tamanho={230} /><figcaption>Sofia</figcaption></figure>
+            <figure><PersonagemVivo quem="tales" modo="giro" tamanho={230} /><figcaption>Tales</figcaption></figure>
+            <figure><PersonagemVivo quem="bolota" modo="giro" tamanho={150} /><figcaption>Bolota</figcaption></figure>
+            <figure><PersonagemVivo quem="zum-zum" modo="giro" tamanho={96} /><figcaption>Zum-Zum</figcaption></figure>
+            <small>Arraste com o dedo para girar.</small>
           </div>
           {REGIOES.map((r) => {
             const lista = CONQUISTAS.filter((c) => c.regiao === r.id && c.visivel_antes !== 'oculto');

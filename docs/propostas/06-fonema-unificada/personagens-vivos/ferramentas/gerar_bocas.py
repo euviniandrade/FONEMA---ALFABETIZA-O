@@ -150,14 +150,18 @@ def marca(arq):
     return f'{len(b)}-{h:x}'
 
 if __name__ == '__main__':
-    saida = {}
+    saida = {}; faltam = 0
+    def juntar(chave, arq, texto, mostra):
+        global faltam
+        if not os.path.exists(arq): faltam += 1; return
+        saida[chave] = [marca(arq), boca(texto, arq), mostra]
     falas = json.load(open(f'{PUB}/audio/falas/manifesto.json'))
     for chave, arq in falas.items():
         texto = chave.split('|', 1)[1]
-        saida[f'falas/{arq}'] = [marca(f'{PUB}/audio/falas/{arq}'), boca(texto, f'{PUB}/audio/falas/{arq}'), texto]
+        juntar(f'falas/{arq}', f'{PUB}/audio/falas/{arq}', texto, texto)
     nomes = json.load(open(f'{PUB}/audio/nomes/manifesto.json'))
     for voz, lista in nomes.items():
         for nome in lista:
-            saida[f'nomes/{voz}/{nome}.mp3'] = [marca(f'{PUB}/audio/nomes/{voz}/{nome}.mp3'), boca(nome, f'{PUB}/audio/nomes/{voz}/{nome}.mp3'), '']
+            juntar(f'nomes/{voz}/{nome}.mp3', f'{PUB}/audio/nomes/{voz}/{nome}.mp3', nome, '')
     json.dump({'qps': 25, 'clipes': saida}, open(SAIDA, 'w'), ensure_ascii=False, separators=(',', ':'))
-    print(len(saida), 'clipes')
+    print(len(saida), 'clipes;', faltam, 'arquivos do manifesto não encontrados')

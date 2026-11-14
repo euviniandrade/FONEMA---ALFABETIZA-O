@@ -1,7 +1,7 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
 import type { ConfigPlataforma } from '@fonema/conteudo';
 import type { Crianca, Demonstracao, Evento, Progresso, StatusDemonstracao } from '@fonema/motor';
-import type { Repositorio } from './repositorio.ts';
+import type { RegistroConta, Repositorio } from './repositorio.ts';
 
 interface Esquema extends DBSchema {
   criancas: { key: string; value: Crianca };
@@ -77,6 +77,10 @@ export class RepositorioIndexedDB implements Repositorio {
 
   async obterConfig() { return (await (await this.db).get('config', 'config'))?.valor ?? {}; }
   async salvarConfig(c: Partial<ConfigPlataforma>) { await (await this.db).put('config', { id: 'config', valor: c }); }
+
+  // contas dos adultos (D028): ficam na mesma gaveta das configurações; nunca entram na cópia exportada
+  async listarContas() { return ((await (await this.db).get('config', 'contas')) as unknown as { valor?: RegistroConta[] } | undefined)?.valor ?? []; }
+  async salvarContas(contas: RegistroConta[]) { await (await this.db).put('config', { id: 'contas', valor: contas } as never); }
 
   async exportarTudo() {
     const db = await this.db;

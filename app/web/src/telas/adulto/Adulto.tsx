@@ -1,177 +1,107 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { CONFIG_PADRAO, CONQUISTA_POR_ID, FASE_POR_ID, type ConfigPlataforma, sonsPurosPendentes } from '@fonema/conteudo';
-import { NIVEIS_INICIAIS, aplicarNivelInicial, avaliarConquistas, calcularNivel, fasesConcluidas, missaoInicialFeita, filaProfessor, mapaHabilidades, progressoInicial, resumoFamilia, type Crianca, type Demonstracao, type Evento, type NivelInicial, type Progresso, type StatusDemonstracao } from '@fonema/motor';
+import { NIVEIS_INICIAIS, aplicarNivelInicial, avaliarConquistas, filaProfessor, mapaHabilidades, progressoInicial, resumoFamilia, type Crianca, type Demonstracao, type Evento, type NivelInicial, type Progresso, type StatusDemonstracao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
-import { Ajustes, AvatarMini, Carregando, Topo } from '../../componentes/basicos.tsx';
+import { Ajustes, AvatarMini, Carregando } from '../../componentes/basicos.tsx';
 import { BarraObjetivo, Termometro } from '../../componentes/recompensas.tsx';
-import { BotaoSegurar, Fundo, Icone, Logo } from '../../componentes/ui.tsx';
+import { Fundo, Icone } from '../../componentes/ui.tsx';
+import { Dupla3D } from '../../componentes/Dupla3D.tsx';
+import { useConta } from '../entrada/Entrada.tsx';
 import { asset } from '../../servicos/ambiente.ts';
 import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
 
-/* ------------------------------ portão do adulto (sem cálculo) ------------------------------ */
-const CHAVE = 'fonema-adulto-ate';
-export function adultoLiberado(): boolean {
-  try { return Number(sessionStorage.getItem(CHAVE) ?? 0) > Date.now(); } catch { return false; }
-}
-/** "Área para adultos": segurar o botão por 3 segundos (anel de progresso). Vale por 20 minutos. */
-export function Porteira({ children }: { children: ReactNode }) {
-  const [ok, setOk] = useState(adultoLiberado);
-  if (ok) return <>{children}</>;
-  const liberar = () => {
-    try { sessionStorage.setItem(CHAVE, String(Date.now() + 20 * 60_000)); } catch { /* sem sessionStorage: vale só nesta tela */ }
-    setOk(true);
-  };
-  return (
-    <div className="tela-adulto" data-testid="portao-adulto">
-      <Fundo cena="arte/hero-paisagem" desfoque={14} tom="escuro" />
-      <Topo voltar="" titulo="Família e escola" />
-      <main className="palco adulto">
-        <section className="cartao vidro portao">
-          <img className="portao-icone" src={asset('arte/icones/familia.webp')} alt="" />
-          <h1 className="t">Área para adultos</h1>
-          <p>Segure o botão por 3 segundos para entrar.</p>
-          <BotaoSegurar ms={3000} aoCompletar={liberar} rotulo="Entrar na área para adultos" testId="segurar-adulto" />
-          <p className="nota-mic">Aqui ficam o cadastro, o painel da família, a visão do professor e as configurações.</p>
-        </section>
-      </main>
-    </div>
-  );
-}
-
-/* ------------------------------ entrada (splash) ------------------------------ */
-const nivelDe = (p?: Progresso) => (p ? calcularNivel(p.desafios, missaoInicialFeita(p), fasesConcluidas(p)) : null);
-
-export function Inicio() {
-  const { repo, pronto, prefs } = useApp();
-  const [lista, setLista] = useState<{ c: Crianca; p?: Progresso }[] | null>(null);
-  const [sel, setSel] = useState<string | null>(null);
-  const video = useRef<HTMLVideoElement>(null);
-  useEffect(() => {
-    repo.listarCriancas().then(async (cs) => {
-      const l = await Promise.all(cs.map(async (c) => ({ c, p: await repo.obterProgresso(c.id) })));
-      setLista(l);
-      const ultimo = (() => { try { return localStorage.getItem('fonema-ultimo-perfil'); } catch { return null; } })();
-      setSel(l.find((x) => x.c.id === ultimo)?.c.id ?? l[0]?.c.id ?? null);
-    });
-  }, [repo]);
-  const semMovimento = prefs.menosMovimento || (typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches);
-  // vídeo só quando a aba está visível
-  useEffect(() => {
-    const f = () => { const v = video.current; if (!v) return; if (document.hidden) v.pause(); else v.play().catch(() => undefined); };
-    document.addEventListener('visibilitychange', f);
-    return () => document.removeEventListener('visibilitychange', f);
-  }, []);
-  const petalas = useMemo(() => Array.from({ length: 14 }, (_, i) => ({ left: `${(i * 37 + 11) % 100}%`, dur: `${9 + (i * 5) % 8}s`, atraso: `${-(i * 1.7)}s` })), []);
-  if (!pronto || !lista) return <Carregando />;
-  const entrar = (id: string) => {
-    try { localStorage.setItem('fonema-ultimo-perfil', id); } catch { /* ok */ }
-    navegar(`c/${id}/vila`);
-  };
-  const temCriancas = lista.length > 0;
-  return (
-    <div className="tela-inicio" data-testid="inicio">
-      <img className="splash-midia paisagem" src={asset('arte/hero-paisagem.webp')} alt="" />
-      {!semMovimento ? (
-        <video ref={video} className="splash-midia paisagem" src={asset('arte/hero-loop.mp4')} poster={asset('arte/hero-paisagem.webp')} autoPlay muted loop playsInline preload="auto" aria-hidden="true" />
-      ) : null}
-      <img className="splash-midia retrato" src={asset('arte/hero-retrato.webp')} alt="" />
-      <div className="splash-veu" />
-      <div className="splash-nuvens" aria-hidden="true"><i /><i /><i /></div>
-      <div className="splash-petalas" aria-hidden="true">{petalas.map((p, i) => <i key={i} style={{ left: p.left, animationDuration: p.dur, animationDelay: p.atraso }} />)}</div>
-
-      <div className="splash-cima">
-        <Ajustes />
-        <button className="splash-familia vidro" onClick={() => navegar('adulto')} data-testid="area-adulto" aria-label="Família e escola (área para adultos)">
-          <Icone nome="familia" /><span>Família e escola</span>
-        </button>
-      </div>
-
-      <div className="splash-logo"><Logo tamanho="g" subtitulo animar /></div>
-
-      <main className="splash-base">
-        {temCriancas ? (
-          <div className="perfis vidro" role="group" aria-label="Quem vai jogar?">
-            {lista.map(({ c, p }) => {
-              const n = nivelDe(p);
-              const pct = n && n.custoProximo ? Math.min(100, Math.round((n.desafiosNoNivel / n.custoProximo) * 100)) : 0;
-              return (
-                <button key={c.id} className={`perfil ${sel === c.id ? 'sel' : ''}`} onClick={() => entrar(c.id)} onFocus={() => setSel(c.id)} data-perfil={c.nome} aria-label={`Jogar como ${c.nome}`}>
-                  <AvatarMini crianca={c} tamanho={84} />
-                  <b>{c.nome}</b>
-                  <small>{n && n.nivel > 0 ? `Nível ${n.nivel}${n.titulo ? ` · ${n.rotulo}` : ''}` : 'Começando a aventura'}</small>
-                  <div className="barrinha" aria-hidden="true"><i style={{ width: `${Math.max(6, pct)}%` }} /></div>
-                </button>
-              );
-            })}
-            <button className="perfil perfil-novo" onClick={() => navegar('adulto/cadastro')} aria-label="Cadastrar outra criança (área para adultos)">
-              <span className="mais"><Icone nome="mais" /></span>
-              <b>Nova criança</b>
-            </button>
-          </div>
-        ) : null}
-        <div className="splash-jogar">
-          <button
-            className="btn ipe enorme brilha pulsa-luz"
-            data-testid="jogar"
-            onClick={() => (temCriancas && sel ? entrar(sel) : navegar('adulto/cadastro'))}
-          >
-            <Icone nome="play" />{temCriancas ? 'Jogar' : 'Começar a aventura'}
-          </button>
-          {!temCriancas ? <p className="splash-nota">Um adulto cadastra a criança primeiro (2 minutos). Tudo fica neste aparelho.</p> : null}
-        </div>
-      </main>
-    </div>
-  );
-}
-
 const ROTULO_NIVEL: Record<NivelInicial, string> = { zero: 'Do zero', 'letras-e-sons': 'Já conhece as letras e os sons', 'le-palavras': 'Já lê palavras' };
 
-/* ------------------------------ painel do adulto ------------------------------ */
-export function AdultoHome() {
+
+/* ------------------------------ moldura das áreas (D028): cada perfil tem a sua, com menu próprio e "Sair" ------------------------------ */
+type AreaId = 'familia' | 'professor';
+const AREAS: Record<AreaId, { nome: string; cena: string; menu: [string, string, string][] }> = {
+  familia: { nome: 'Área da Família', cena: 'varanda', menu: [['familia', 'pessoa', 'Crianças'], ['familia/cadastro', 'mais', 'Adicionar criança'], ['familia/config', 'engrenagem', 'Configurações']] },
+  professor: { nome: 'Área do Professor', cena: 'biblioteca', menu: [['professor', 'pessoa', 'Turma'], ['professor/fila', 'chapeu', 'Mostra pro professor'], ['professor/habilidades', 'grafico', 'Habilidades'], ['professor/palavras', 'caderno', 'Palavras difíceis'], ['professor/config', 'engrenagem', 'Configurações']] }
+};
+
+export function Area({ area, atual, children }: { area: AreaId; atual: string; children: ReactNode }) {
+  const conta = useConta();
+  const sessao = useMemo(() => conta.sessao(), [conta]);
+  const a = AREAS[area];
+  return (
+    <div className={`tela-area area-${area}`} data-testid={`area-${area}`}>
+      <Fundo cena={a.cena} desfoque={18} tom="calmo" />
+      <header className="area-topo">
+        <div className="area-marca">
+          <img src={asset(area === 'familia' ? 'arte/icones/familia.webp' : 'recompensas/bau-livros.webp')} alt="" />
+          <span><b>{a.nome}</b><small>{sessao ? `Olá, ${sessao.nome}` : 'FONEMA'}</small></span>
+        </div>
+        <nav className="area-menu" aria-label={`Menu da ${a.nome}`}>
+          {a.menu.map(([rota, ic, r]) => (
+            <button key={rota} className="area-item" aria-current={rota === atual ? 'page' : undefined} onClick={() => navegar(rota)} data-menu={rota}><Icone nome={ic} /><span>{r}</span></button>
+          ))}
+        </nav>
+        <div className="area-dir">
+          <Ajustes />
+          <button className="area-sair" onClick={() => { conta.sair(); navegar(''); }} data-testid="sair"><Icone nome="seta-esq" /><span>Sair</span></button>
+        </div>
+      </header>
+      <main className="palco adulto">{children}</main>
+    </div>
+  );
+}
+
+function useTurma() {
   const { repo } = useApp();
   const [lista, setLista] = useState<{ c: Crianca; p?: Progresso }[] | null>(null);
   useEffect(() => {
     repo.listarCriancas().then(async (cs) => setLista(await Promise.all(cs.map(async (c) => ({ c, p: await repo.obterProgresso(c.id) })))));
   }, [repo]);
+  return lista;
+}
+
+/* ------------------------------ Área da Família: crianças ------------------------------ */
+export function FamiliaHome() {
+  const lista = useTurma();
   if (!lista) return <Carregando />;
   return (
-    <div className="tela-adulto">
-      <Fundo cena="varanda" desfoque={18} tom="calmo" />
-      <Topo voltar="" titulo="Família e escola" />
-      <main className="palco adulto">
-        <section className="cartao">
-          <div className="adulto-cab">
-            <h1 className="t">Crianças deste aparelho</h1>
-            <button className="btn pri" onClick={() => navegar('adulto/cadastro')} data-testid="nova-crianca"><Icone nome="mais" />Cadastrar criança</button>
+    <Area area="familia" atual="familia">
+      <section className="cartao">
+        <div className="adulto-cab">
+          <h1 className="t">Suas crianças</h1>
+          <button className="btn pri" onClick={() => navegar('familia/cadastro')} data-testid="nova-crianca"><Icone nome="mais" />Adicionar criança</button>
+        </div>
+        {lista.length === 0 ? (
+          <div className="area-vazio">
+            <Dupla3D pose="acenando" />
+            <div><h2 className="t">Vamos cadastrar a primeira criança?</h2><p>Leva uns 2 minutos, em 3 passos.</p>
+              <button className="btn grande ipe brilha" onClick={() => navegar('familia/cadastro')}><Icone nome="mais" />Cadastrar criança</button></div>
           </div>
-          {lista.length === 0 ? <p>Nenhuma criança cadastrada ainda. O cadastro leva 2 minutos.</p> : null}
-          <div className="lista-criancas">
-            {lista.map(({ c, p }) => (
-              <div key={c.id} className="linha-crianca">
-                <AvatarMini crianca={c} tamanho={76} />
-                <div>
-                  <b>{c.nome}</b>
-                  <small>{p ? FASE_POR_ID[p.faseAtual]?.titulo : 'ainda não começou'} · termômetro {p?.termometro ?? 0}/10</small>
-                  <div className="mini-termo" aria-hidden="true">{Array.from({ length: 10 }, (_, i) => <i key={i} className={i < (p?.termometro ?? 0) ? 'cheio' : ''} />)}</div>
-                </div>
-                <div className="linha-botoes">
-                  <button className="btn" onClick={() => navegar(`adulto/familia/${c.id}`)} data-testid={`painel-${c.nome}`}><Icone nome="grafico" />Painel da família</button>
-                  <button className="btn" onClick={() => navegar(`c/${c.id}/sondagem`)}><Icone nome="placa" />Sondagem</button>
-                  <button className="btn ipe" onClick={() => navegar(`c/${c.id}/vila`)}><Icone nome="tocar" />Jogar</button>
-                </div>
+        ) : null}
+        <div className="lista-criancas">
+          {lista.map(({ c, p }) => (
+            <div key={c.id} className="linha-crianca">
+              <AvatarMini crianca={c} tamanho={76} />
+              <div>
+                <b>{c.nome}</b>
+                <small>{p ? FASE_POR_ID[p.faseAtual]?.titulo : 'ainda não começou'}</small>
+                <div className="mini-termo" role="img" aria-label={`Termômetro da leitura: ${p?.termometro ?? 0} de 10`}>{Array.from({ length: 10 }, (_, i) => <i key={i} className={i < (p?.termometro ?? 0) ? 'cheio' : ''} />)}<em>{p?.termometro ?? 0}/10</em></div>
               </div>
-            ))}
-          </div>
-          <div className="atalhos">
-            <button className="atalho" onClick={() => navegar('adulto/professor')} data-testid="visao-professor"><Icone nome="chapeu" /><span><b>Visão do professor</b><small>Fila de demonstrações e mapa de habilidades</small></span></button>
-            <button className="atalho" onClick={() => navegar('adulto/config')}><Icone nome="engrenagem" /><span><b>Configurações</b><small>Voz, lojinha, modo demonstração e dados</small></span></button>
-          </div>
-        </section>
-      </main>
-    </div>
+              <div className="linha-botoes">
+                <button className="btn" onClick={() => navegar(`familia/crianca/${c.id}`)} data-testid={`painel-${c.nome}`}><Icone nome="grafico" />Ver o painel</button>
+                <button className="btn ipe" onClick={() => navegar(`c/${c.id}/vila`)}><Icone nome="tocar" />Jogar</button>
+              </div>
+            </div>
+          ))}
+        </div>
+        {lista.length ? <p className="nota-mic">No painel de cada criança: termômetro da leitura, missão de 5 minutos em casa, mensagem para a família e o nível inicial.</p> : null}
+      </section>
+    </Area>
   );
+}
+
+/** Rota antiga "#/adulto": leva para a área de quem está com a sessão aberta. */
+export function AdultoHome() {
+  const conta = useConta();
+  return conta.sessao()?.tipo === 'professor' ? <Professor aba="turma" /> : <FamiliaHome />;
 }
 
 /* ------------------------------ painel da família ------------------------------ */
@@ -200,10 +130,8 @@ export function PainelFamilia({ criancaId }: { criancaId: string }) {
     setMudando(false);
   };
   return (
-    <div className="tela-adulto">
-      <Fundo cena="varanda" desfoque={18} tom="calmo" />
-      <Topo voltar="adulto" titulo="Painel da família" />
-      <main className="palco adulto">
+    <Area area="familia" atual="familia">
+        <button className="link area-voltar" onClick={() => navegar('familia')}><Icone nome="seta-esq" />Todas as crianças</button>
         <section className="cartao painel" data-testid="painel-familia">
           <div className="painel-cab">
             <AvatarMini crianca={c} tamanho={96} />
@@ -275,26 +203,29 @@ export function PainelFamilia({ criancaId }: { criancaId: string }) {
             <p className="nota-mic">Até 3 mensagens por semana, só com o primeiro nome. Nunca: áudio, foto, comparação com outras crianças, oferta de compra ou diagnóstico.</p>
           </div>
         </section>
-      </main>
-    </div>
+    </Area>
   );
 }
 
-/* ------------------------------ visão do professor ------------------------------ */
-export function Professor() {
+/* ------------------------------ Área do Professor: turma · fila · habilidades · palavras difíceis ------------------------------ */
+export type AbaProfessor = 'turma' | 'fila' | 'habilidades' | 'palavras';
+export function Professor({ aba = 'turma' }: { aba?: AbaProfessor }) {
   const { repo, config } = useApp();
   const [ds, setDs] = useState<Demonstracao[]>([]);
-  const [turma, setTurma] = useState<{ crianca: Crianca; progresso: Progresso }[]>([]);
+  const [turma, setTurma] = useState<{ crianca: Crianca; progresso: Progresso }[] | null>(null);
+  const [eventos, setEventos] = useState<Evento[]>([]);
   const [tocando, setTocando] = useState<string | null>(null);
   const carregar = async () => {
     const cs = await repo.listarCriancas();
     setTurma(await Promise.all(cs.map(async (c) => ({ crianca: c, progresso: (await repo.obterProgresso(c.id)) ?? progressoInicial(c.id, Date.now()) }))));
     setDs(filaProfessor(await repo.listarDemonstracoes(), Date.now(), config));
+    setEventos((await Promise.all(cs.map((c) => repo.listarEventos(c.id)))).flat());
   };
   useEffect(() => {
     carregar();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  if (!turma) return <Carregando />;
   const nomes = Object.fromEntries(turma.map((t) => [t.crianca.id, t.crianca.nome]));
   const responder = async (d: Demonstracao, s: StatusDemonstracao) => {
     await repo.responderDemonstracao(d.id, s, Date.now());
@@ -309,18 +240,61 @@ export function Professor() {
   const mapa = mapaHabilidades(turma, config);
   const pend = ds.filter((d) => d.status === 'pendente');
   const STATUS: Record<string, [string, string]> = { aprendeu: ['check', 'Aprendeu'], treinar: ['repetir', 'Treinar mais'], explicou: ['microfone', 'Explicou certinho'], criterio: ['relogio', 'Vale o critério'] };
+  // "palavras difíceis": atividades em que a turma errou mais de uma vez (sem ranking de crianças)
+  const dificeis = (() => {
+    const m = new Map<string, { texto: string; erros: number; vezes: number; criancas: Set<string> }>();
+    for (const e of eventos) {
+      if (e.tipo !== 'atividade' || !e.total || e.acertos === undefined || e.acertos >= e.total) continue;
+      const x = m.get(e.texto) ?? { texto: e.texto, erros: 0, vezes: 0, criancas: new Set<string>() };
+      x.erros += e.total - e.acertos; x.vezes++; x.criancas.add(e.criancaId);
+      m.set(e.texto, x);
+    }
+    return [...m.values()].sort((a, b) => b.erros - a.erros).slice(0, 12);
+  })();
+  const rota = aba === 'turma' ? 'professor' : `professor/${aba}`;
   return (
-    <div className="tela-adulto">
-      <Fundo cena="biblioteca" desfoque={18} tom="calmo" />
-      <Topo voltar="adulto" titulo="Visão do professor" />
-      <main className="palco adulto">
+    <Area area="professor" atual={rota}>
+      {aba === 'turma' ? (
+        <section className="cartao" data-testid="professor-turma">
+          <div className="adulto-cab">
+            <h1 className="t">Turma neste aparelho</h1>
+            <button className="btn pri" onClick={() => navegar('professor/cadastro')} data-testid="novo-aluno"><Icone nome="mais" />Adicionar aluno</button>
+          </div>
+          {pend.length ? <button className="area-aviso" onClick={() => navegar('professor/fila')}><Icone nome="sino" /><span><b>{pend.length} {pend.length === 1 ? 'demonstração esperando' : 'demonstrações esperando'}</b> no Mostra pro professor</span><Icone nome="seta" /></button> : null}
+          {turma.length === 0 ? (
+            <div className="area-vazio">
+              <Dupla3D pose="acenando" />
+              <div><h2 className="t">Sua turma começa aqui</h2><p>Cadastre o primeiro aluno em 3 passos.</p>
+                <button className="btn grande ipe brilha" onClick={() => navegar('professor/cadastro')}><Icone nome="mais" />Cadastrar aluno</button></div>
+            </div>
+          ) : null}
+          <div className="lista-criancas">
+            {[...turma].sort((a, b) => a.crianca.nome.localeCompare(b.crianca.nome)).map(({ crianca: c, progresso: p }) => (
+              <div key={c.id} className="linha-crianca">
+                <AvatarMini crianca={c} tamanho={64} />
+                <div>
+                  <b>{c.nome}</b>
+                  <small>{FASE_POR_ID[p.faseAtual]?.titulo ?? 'ainda não começou'}</small>
+                  <div className="mini-termo" role="img" aria-label={`Termômetro da leitura: ${p.termometro} de 10`}>{Array.from({ length: 10 }, (_, i) => <i key={i} className={i < p.termometro ? 'cheio' : ''} />)}<em>{p.termometro}/10</em></div>
+                </div>
+                <div className="linha-botoes">
+                  <button className="btn ipe" onClick={() => navegar(`c/${c.id}/vila`)}><Icone nome="tocar" />Entregar o aparelho</button>
+                </div>
+              </div>
+            ))}
+          </div>
+          {turma.length ? <p className="nota-mic">Em ordem alfabética, sem ranking: serve para planejar a aula.</p> : null}
+        </section>
+      ) : null}
+
+      {aba === 'fila' ? (
         <section className="cartao" data-testid="professor">
           <div className="adulto-cab">
             <h1 className="t">Mostra pro professor</h1>
             <span className="etiqueta">{pend.length} na fila</span>
           </div>
-          <p className="nota-mic">Corrija em 1 toque. A criança ouve "Parabéns, [nome]!" na voz da dupla. Sem resposta em {config.demonstracao.horasParaValerCriterio} h, vale o critério de domínio.</p>
-          {ds.length === 0 ? <p>Nenhuma demonstração ainda.</p> : null}
+          <p className="nota-mic">Corrija em 1 toque. A criança ouve o parabéns na voz da dupla. Sem resposta em {config.demonstracao.horasParaValerCriterio} h, vale o que ela já mostrou nas atividades.</p>
+          {ds.length === 0 ? <p className="area-nada">Nenhuma demonstração ainda. Quando um aluno tocar em “Mostra pro professor”, ela aparece aqui.</p> : null}
           <div className="fila">
             {ds.map((d) => (
               <div key={d.id} className={`demo ${d.status}`} data-demo={d.status}>
@@ -340,29 +314,50 @@ export function Professor() {
               </div>
             ))}
           </div>
-          <h2 className="t">Turma neste aparelho · habilidades</h2>
-          <p className="nota-mic">Sem ranking (P2-b): ordem alfabética, estado por habilidade, só para planejar a aula.</p>
-          <div className="tabela-rolagem">
-            <table className="mapa-hab">
-              <thead><tr><th>Criança</th><th>Termômetro</th><th>Fase</th>{mapa[0]?.habilidades.map((h) => <th key={h.id} title={h.nome}>{h.nome}</th>)}</tr></thead>
-              <tbody>
-                {[...mapa].sort((a, b) => a.crianca.nome.localeCompare(b.crianca.nome)).map((l) => (
-                  <tr key={l.crianca.id}><td><b>{l.crianca.nome}</b></td><td>{l.termometro}/10</td><td>{l.faseAtual}</td>{l.habilidades.map((h) => <td key={h.id} className={`hab ${h.estado}`} title={h.falta.join('; ')}><i aria-hidden="true" /><span className="sr">{h.estado}</span></td>)}</tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="legenda">
-            <span className="hab dominada"><i />dominada</span><span className="hab aprendendo"><i />aprendendo</span><span className="hab"><i />ainda não começou</span>
-          </div>
         </section>
-      </main>
-    </div>
+      ) : null}
+
+      {aba === 'habilidades' ? (
+        <section className="cartao" data-testid="professor-habilidades">
+          <h1 className="t">Habilidades da turma</h1>
+          <p className="nota-mic">Sem ranking: ordem alfabética, estado por habilidade, só para planejar a aula.</p>
+          {mapa.length === 0 ? <p className="area-nada">Cadastre um aluno para ver as habilidades.</p> : (
+            <>
+              <div className="tabela-rolagem">
+                <table className="mapa-hab">
+                  <thead><tr><th>Criança</th><th>Termômetro</th><th>Fase</th>{mapa[0]?.habilidades.map((h) => <th key={h.id} title={h.nome}>{h.nome}</th>)}</tr></thead>
+                  <tbody>
+                    {[...mapa].sort((a, b) => a.crianca.nome.localeCompare(b.crianca.nome)).map((l) => (
+                      <tr key={l.crianca.id}><td><b>{l.crianca.nome}</b></td><td>{l.termometro}/10</td><td>{l.faseAtual}</td>{l.habilidades.map((h) => <td key={h.id} className={`hab ${h.estado}`} title={h.falta.join('; ')}><i aria-hidden="true" /><span className="sr">{h.estado}</span></td>)}</tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="legenda">
+                <span className="hab dominada"><i />dominada</span><span className="hab aprendendo"><i />aprendendo</span><span className="hab"><i />ainda não começou</span>
+              </div>
+            </>
+          )}
+        </section>
+      ) : null}
+
+      {aba === 'palavras' ? (
+        <section className="cartao" data-testid="professor-palavras">
+          <h1 className="t">Palavras difíceis</h1>
+          <p className="nota-mic">As atividades e palavras em que a turma mais precisou de ajuda. Bom para retomar na roda.</p>
+          {dificeis.length === 0 ? <p className="area-nada">Nada por aqui ainda: aparece depois que os alunos jogarem.</p> : (
+            <ul className="dificeis">
+              {dificeis.map((d) => <li key={d.texto}><b>{d.texto}</b><small>{d.criancas.size} {d.criancas.size === 1 ? 'aluno' : 'alunos'} · {d.erros} {d.erros === 1 ? 'tentativa a mais' : 'tentativas a mais'}</small></li>)}
+            </ul>
+          )}
+        </section>
+      ) : null}
+    </Area>
   );
 }
 
 /* ------------------------------ configurações (padrões do MVP) ------------------------------ */
-export function Configuracoes() {
+export function Configuracoes({ area = 'familia' }: { area?: AreaId }) {
   const { configBruta, salvarConfig, repo } = useApp();
   const [msg, setMsg] = useState('');
   const [apagar, setApagar] = useState(false);
@@ -375,10 +370,7 @@ export function Configuracoes() {
     a.click();
   };
   return (
-    <div className="tela-adulto">
-      <Fundo cena="varanda" desfoque={18} tom="calmo" />
-      <Topo voltar="adulto" titulo="Configurações" />
-      <main className="palco adulto">
+    <Area area={area} atual={`${area}/config`}>
         <section className="cartao config">
           <div className="adulto-cab"><h1 className="t">Configurações</h1>{msg ? <span className="etiqueta verde" role="status"><Icone nome="check" />{msg}</span> : null}</div>
           <p className="passo-sub">Valem para todas as crianças deste aparelho.</p>
@@ -433,7 +425,6 @@ export function Configuracoes() {
             <div className="linha-botoes"><button className="btn" onClick={() => set(CONFIG_PADRAO)}><Icone nome="repetir" />Voltar ao recomendado</button></div>
           </details>
         </section>
-      </main>
-    </div>
+    </Area>
   );
 }

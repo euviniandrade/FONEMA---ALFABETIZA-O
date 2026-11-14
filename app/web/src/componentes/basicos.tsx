@@ -6,6 +6,8 @@ import { NOMES_PERSONAGEM, falar, textoTela } from '../util.ts';
 import { useApp } from '../contexto.tsx';
 import { navegar } from '../rotas.ts';
 import { Icone, Logo } from './ui.tsx';
+import { Camada } from './Camada.tsx';
+import { PersonagemVivo, temBustoVivo } from './PersonagemVivo.tsx';
 
 const BUSTO: Partial<Record<Personagem, string>> = { sofia: 'dupla/sofia-busto-alegre.webp', tales: 'dupla/tales-busto-alegre.webp' };
 const COR: Record<string, string> = { bolota: '#A06A3B', 'dona-cida': '#B5512E', davi: '#2E7A4C', 'guarda-parque': '#1F5A37', pescadora: '#3D7CC4', 'zum-zum': '#6B7A2E' };
@@ -32,7 +34,8 @@ export function Balao({ fala, crianca, auto = false, humor, extras, destaque = f
   }, [auto, fala, crianca, extras]);
   return (
     <div className={`balao ${destaque ? 'balao-destaque' : ''}`} data-quem={fala.quem}>
-      <Rosto quem={fala.quem} humor={humor} />
+      {/* D027: a Sofia e o Tales falam de verdade — busto vivo com a boca sincronizada à voz */}
+      {temBustoVivo(fala.quem) ? <PersonagemVivo quem={fala.quem} modo="busto" className="rosto" texto={textoTela(fala.texto, crianca, extras)} /> : <Rosto quem={fala.quem} humor={humor} />}
       <div className="balao-texto">
         <b className="balao-quem">{NOMES_PERSONAGEM[fala.quem]}</b>
         <p>{textoTela(fala.texto, crianca, extras)}</p>
@@ -60,7 +63,7 @@ export function Moedinhas({ valor, id }: { valor: number; id?: string }) {
   );
 }
 
-/** Ajustes de acessibilidade num só botão do HUD (voz, alto contraste, reduzir movimento). */
+/** Ajustes de acessibilidade num só botão do HUD (voz, alto contraste, reduzir movimento). O painel abre numa Camada, sempre por cima de tudo. */
 export function Ajustes() {
   const { prefs, setPrefs } = useApp();
   const [aberto, setAberto] = useState(false);
@@ -71,20 +74,20 @@ export function Ajustes() {
   ];
   return (
     <div className="ajustes">
-      <button className="hud-btn" aria-expanded={aberto} aria-haspopup="true" aria-label="Ajustes: voz, contraste e movimento" onClick={() => setAberto(!aberto)}><Icone nome="engrenagem" /></button>
+      <button className="hud-btn" aria-expanded={aberto} aria-haspopup="dialog" aria-label="Configurações: voz, contraste e movimento" onClick={() => setAberto(true)} data-testid="abrir-ajustes"><Icone nome="engrenagem" /></button>
       {aberto ? (
-        <>
-          <button className="ajustes-veu" aria-label="Fechar ajustes" onClick={() => setAberto(false)} />
-          <div className="ajustes-painel vidro" role="group" aria-label="Ajustes de acessibilidade">
+        <Camada titulo="Configurações" aoFechar={() => setAberto(false)} posicao="canto" testId="ajustes-painel">
+          <div className="ajustes-lista" role="group" aria-label="Ajustes de acessibilidade">
             {itens.map(([k, ic, t, d]) => (
-              <button key={k} className="ajuste" role="switch" aria-checked={prefs[k]} onClick={() => setPrefs({ [k]: !prefs[k] })}>
+              <button key={k} className="ajuste" role="switch" aria-checked={prefs[k]} onClick={() => setPrefs({ [k]: !prefs[k] })} data-ajuste={k}>
                 <Icone nome={ic} />
                 <span><b>{t}</b><small>{d}</small></span>
                 <i className="chave" aria-hidden="true" />
               </button>
             ))}
           </div>
-        </>
+          <button className="btn pri ajustes-pronto" onClick={() => setAberto(false)}><Icone nome="check" />Pronto</button>
+        </Camada>
       ) : null}
     </div>
   );

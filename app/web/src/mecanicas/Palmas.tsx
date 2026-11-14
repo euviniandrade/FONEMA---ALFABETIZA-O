@@ -37,14 +37,16 @@ export function Palmas({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
     efeitos.palma();
     const n = palmas + 1;
     setPalmas(n);
-    if (n <= sil.length) voz.falar(sil[n - 1], { quem: 'sofia', rate: 0.9 });
+    // a sílaba só é falada se TODAS as sílabas da palavra têm gravação (senão ficaria "ma… (silêncio)… a…")
+    if (n <= sil.length && voz.temTodas(sil, 'sofia')) voz.falar(sil[n - 1], { quem: 'sofia' });
   };
 
   const modelar = async () => {
     for (let k = 0; k < sil.length; k++) {
       setMostrando(k);
       efeitos.palma();
-      await voz.falar(sil[k], { quem: 'sofia', rate: 0.8 });
+      if (voz.temTodas(sil, 'sofia')) await voz.falar(sil[k], { quem: 'sofia' });
+      else await espera(450);
       await espera(250);
     }
     setMostrando(-1);

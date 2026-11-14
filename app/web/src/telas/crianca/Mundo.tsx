@@ -5,6 +5,7 @@ import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Ajustes, AvatarMini, Balao, BotaoOuvir, Carregando, Moedinhas, Rosto, Topo } from '../../componentes/basicos.tsx';
 import { Selo } from '../../componentes/recompensas.tsx';
+import { PersonagemVivo } from '../../componentes/PersonagemVivo.tsx';
 import { Fundo, Icone, MapaNavegavel, type Marcador } from '../../componentes/ui.tsx';
 import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
 import { falar, falarVarias, textoTela } from '../../util.ts';
@@ -28,7 +29,7 @@ export function Chegada({ criancaId }: { criancaId: string }) {
       <Fundo cena="arte/hero-paisagem" desfoque={6} tom="claro" />
       <Topo crianca={crianca} titulo="Vila das Letras" />
       <main className="palco chegada">
-        <img className="dupla-corpo" src={asset('dupla/dupla-corpo.webp')} alt="Sofia e Tales" />
+        <PersonagemVivo quem="dupla" modo="corpo" estado="acenando" gestos className="dupla-corpo" style={{ height: '62vh', animation: 'none' }} />
         <div className="baloes">
           {FALAS.chegada.map((f, i) => <div key={i} className={i <= k ? 'aparece' : 'espera'}><Balao fala={f} crianca={crianca} /></div>)}
         </div>
@@ -103,7 +104,7 @@ export function Vila({ criancaId }: { criancaId: string }) {
     )
   });
   const marcadores: Marcador[] = [
-    { id: 'dupla', ...LUGAR.dupla, conteudo: <img className="mapa-dupla" src={asset('dupla/dupla-corpo.webp')} alt="" draggable={false} /> },
+    { id: 'dupla', ...LUGAR.dupla, conteudo: <PersonagemVivo quem="dupla" modo="corpo" gestos className="mapa-dupla" /> },
     lugar('casa', 'casa', 'Minha casa', `c/${criancaId}/avatar`, 1),
     lugar('album', 'album', 'Álbum', `c/${criancaId}/album`, 2),
     lugar('corpo', 'boca', 'Conheça seu corpo', `c/${criancaId}/corpo`, 3),

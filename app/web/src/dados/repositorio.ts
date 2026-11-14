@@ -6,7 +6,22 @@
 import type { ConfigPlataforma } from '@fonema/conteudo';
 import type { Crianca, Demonstracao, Evento, Progresso, StatusDemonstracao } from '@fonema/motor';
 
+/** Conta de adulto guardada no aparelho (D028). O PIN nunca é guardado: só o hash com salt. */
+export interface RegistroConta {
+  id: string;
+  nome: string;
+  tipo: 'responsavel' | 'professor';
+  email?: string;
+  salt: string;
+  hashPin: string;
+  criadaEm: number;
+}
+
 export interface Repositorio {
+  /** Contas de adultos deste aparelho (D028). Trocar por API quando houver servidor. */
+  listarContas(): Promise<RegistroConta[]>;
+  salvarContas(contas: RegistroConta[]): Promise<void>;
+
   listarCriancas(): Promise<Crianca[]>;
   obterCrianca(id: string): Promise<Crianca | undefined>;
   salvarCrianca(c: Crianca): Promise<void>;
