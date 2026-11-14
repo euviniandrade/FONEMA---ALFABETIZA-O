@@ -259,7 +259,7 @@ export function criarCabeca(THREE, P, { modo = 'frente', quem = 'sofia' } = {}) 
       if (s < 0.14) tmpC.lerp(cLab, 0.4 * (1 - s / 0.14));
       const bl = 0.6 * (gauss(Math.hypot(u - 2.85, v - 0.75), 1.15) + gauss(Math.hypot(u + 2.85, v - 0.75), 1.15)) + 0.22 * gauss(Math.hypot(u, v - 1.75), 0.55);
       tmpC.lerp(cBlush, clamp(bl));
-      tmpC.lerp(cBranco, 0.16 * gauss(Math.hypot(u, v - 1.95), 0.4)); // brilho na ponta do nariz
+      tmpC.lerp(cBranco, 0.26 * gauss(Math.hypot(u, v - 1.9), 0.38)); // brilho na ponta do nariz
       tmpC.lerp(cSombra, 0.7 * (gauss(Math.hypot((u - 0.34) / 1.4, v - 1.14), 0.1) + gauss(Math.hypot((u + 0.34) / 1.4, v - 1.14), 0.1))); // narinas
       tmpC.lerp(cSombra, 0.35 * sm((Math.hypot(u, v) - 5) / 6)); // escurece de leve para os lados
       lab[i] = s < 0.12 ? 0.5 * (1 - s / 0.12) : 0;

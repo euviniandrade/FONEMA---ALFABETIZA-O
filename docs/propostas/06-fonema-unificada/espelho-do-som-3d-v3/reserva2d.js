@@ -17,9 +17,9 @@ export function desenhar2D(x, P, p, e, fo, [rf, rl], quem, tempo) {
     caixa(x, rf, ['#E4F2FF', '#F6FBFF']);
     const s = Math.min(rf.w / 8, rf.h / 7), cx = rf.x + rf.w / 2, cy = rf.y + rf.h * 0.52;
     x.translate(cx, cy); x.scale(s, -s);
-    x.fillStyle = pele; x.beginPath(); x.ellipse(0, 1.4, 5.4, 5.6, 0, 0, TAU); x.fill();
-    x.fillStyle = 'rgba(224,122,110,.35)'; for (const d of [-1, 1]) { x.beginPath(); x.ellipse(d * 3.1, 0.9, 1.1, 0.8, 0, 0, TAU); x.fill(); }
-    x.fillStyle = 'rgba(0,0,0,.12)'; x.beginPath(); x.ellipse(0, 2.0, 0.55, 0.4, 0, 0, TAU); x.fill();
+    x.fillStyle = pele; x.beginPath(); x.ellipse(0, 1.6, 4.9, 5.4, 0, 0, TAU); x.fill();
+    x.fillStyle = 'rgba(224,122,110,.35)'; for (const d of [-1, 1]) { x.beginPath(); x.ellipse(d * 2.8, 0.8, 1.0, 0.75, 0, 0, TAU); x.fill(); }
+    x.fillStyle = 'rgba(0,0,0,.12)'; x.beginPath(); x.ellipse(0, 1.75, 0.5, 0.36, 0, 0, TAU); x.fill();
     const hu = p.ab * 0.4 * (1 - p.ld) + 0.36 * p.ld, hl = p.ab * 0.6 * (1 - p.ld) + 0.03 * p.ld, w = Math.max(0.25, p.lg), tu = 0.42 * (1 + 0.3 * p.arr), tl = 0.56 * (1 + 0.3 * p.arr);
     const boca = () => { x.beginPath(); x.moveTo(-w, 0); x.quadraticCurveTo(0, hu * 2, w, 0); x.quadraticCurveTo(0, -hl * 2, -w, 0); x.closePath(); };
     x.fillStyle = labio; x.beginPath(); x.moveTo(-w - 0.12, 0); x.bezierCurveTo(-w * 0.4, hu + tu * 1.5, w * 0.4, hu + tu * 1.5, w + 0.12, 0); x.bezierCurveTo(w * 0.5, -hl - tl * 1.6, -w * 0.5, -hl - tl * 1.6, -w - 0.12, 0); x.fill();
@@ -34,12 +34,12 @@ export function desenhar2D(x, P, p, e, fo, [rf, rl], quem, tempo) {
   if (rl.w > 4 && rl.h > 4) {
     x.setTransform(1, 0, 0, 1, 0, 0);
     caixa(x, rl, ['#FFF6E2', '#FFEBD2']);
-    const s = Math.min(rl.w / 11.4, rl.h / 12.2), cx = rl.x + rl.w / 2, cy = rl.y + rl.h / 2;
-    x.translate(cx, cy); x.scale(-s, -s); x.translate(2.35, 0.45); // rosto olhando para a esquerda; eixos (z, y)
+    const s = Math.min(rl.w / 9.8, rl.h / 9.8), cx = rl.x + rl.w / 2, cy = rl.y + rl.h / 2;
+    x.translate(cx, cy); x.scale(-s, -s); x.translate(1.7, 0.45); // rosto olhando para a esquerda; eixos (z, y)
     x.fillStyle = 'rgba(160,215,255,.5)'; x.strokeStyle = '#4AA8EE'; x.lineWidth = 0.14;
-    x.beginPath(); x.ellipse(-6, 2.5, 6.7, 6.9, 0, 0, TAU); x.fill(); x.stroke();
-    x.beginPath(); x.ellipse(0.75, 2.1, 0.75, 0.6, 0, 0, TAU); x.fill(); x.stroke();
-    x.fillRect(-8.1, -9, 5.1, 6); 
+    x.fillRect(-7.1, -9, 4.4, 6.9);
+    x.beginPath(); x.ellipse(-5, 2.2, 5.45, 5.65, 0, 0, TAU); x.fill(); x.stroke();
+    x.beginPath(); x.ellipse(0.55, 1.75, 0.7, 0.6, 0, 0, TAU); x.fill();
     x.strokeStyle = '#F7A48F'; x.lineWidth = 0.5; x.lineCap = 'round'; x.lineJoin = 'round';
     x.beginPath(); P.CEU.forEach((q, i) => (i ? x.lineTo(q[0], q[1] + 0.25) : x.moveTo(q[0], q[1] + 0.25))); x.stroke();
     x.strokeStyle = '#D9508A'; x.beginPath(); x.moveTo(-3.8, 1.5); x.quadraticCurveTo(-4.4, 1.5 - p.vel * 0.3, -5.05 + p.vel * 0.65, 1.12 - p.vel * 0.95); x.stroke();
@@ -53,7 +53,7 @@ export function desenhar2D(x, P, p, e, fo, [rf, rl], quem, tempo) {
     const hu = p.ab * 0.4, hl = p.ab * 0.6; x.fillStyle = labio;
     x.beginPath(); x.ellipse(0.3 + p.arr * 0.4, hu + 0.25, 0.42, 0.3, 0, 0, TAU); x.fill();
     x.beginPath(); x.ellipse(0.26 + p.arr * 0.4 - p.ld * 0.3, -hl - 0.3 + p.ld * 0.2, 0.44, 0.34, 0, 0, TAU); x.fill();
-    x.fillStyle = e.voz > 0.3 ? '#FFB629' : '#B9C2D6'; x.beginPath(); x.ellipse(-4.9 + (e.voz > 0.3 ? 0.06 * Math.sin(tempo * 60) : 0), -4.25, 0.8, 0.5, 0, 0, TAU); x.fill();
+    x.fillStyle = e.voz > 0.3 ? '#FFB629' : '#B9C2D6'; x.beginPath(); x.ellipse(-4.9 + (e.voz > 0.3 ? 0.06 * Math.sin(tempo * 60) : 0), -3.8, 0.8, 0.5, 0, 0, TAU); x.fill();
     if (e.ar > 0.2 && fo.ar !== 'nenhum') {
       x.fillStyle = '#23B7FF';
       const nasal = p.vel > 0.5;
