@@ -84,7 +84,16 @@ async function tts(voz: Voz, texto: string, destino: string, lento = false) {
 
 const semAudio = new Set<string>();
 
+/** --textos: imprime { "voz|chave": textoEnviadoAoTTS } para a auditoria (ferramentas/auditar-audio.py). Não gasta créditos. */
+function imprimirTextos() {
+  const man = JSON.parse(readFileSync(`${PUB}/falas/manifesto.json`, 'utf8')) as Record<string, string>;
+  const out: Record<string, string> = {};
+  for (const chave of Object.keys(man)) { const k = chave.slice(chave.indexOf('|') + 1); out[chave] = paraTTS(k)?.texto ?? k; }
+  console.log(JSON.stringify(out));
+}
+
 async function main() {
+  if (process.argv.includes('--textos')) return imprimirTextos();
   const falas = JSON.parse(readFileSync('packages/conteudo/src/falas.json', 'utf8')) as { voz: Voz; texto: string }[];
   mkdirSync(`${PUB}/falas`, { recursive: true });
   const manFalasArq = `${PUB}/falas/manifesto.json`;
