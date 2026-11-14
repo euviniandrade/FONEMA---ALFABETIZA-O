@@ -326,7 +326,7 @@ export function EntradaFase({ criancaId, faseId }: { criancaId: string; faseId: 
                     const dica = c.visivel_antes === 'misterio' ? 'Continue a trilha para descobrir!' : c.dica;
                     return (
                       <div key={c.id} className={`conquista-item ${g ? 'ganha' : 'bloqueada'}`} data-conquista={c.id} data-estado={g ? 'ganha' : 'bloqueada'}>
-                        <Selo conquista={c} ganha={g} bloqueado={!g} letra={letra} tamanho={124} />
+                        <Selo conquista={c} ganha={g} bloqueado={!g} letra={letra} tamanho={124} ampliavel />
                         {!g ? <p className="dica-cadeado">{dica}</p> : <p className="dica-cadeado ok">Conquistado!</p>}
                         {!g ? <button className="ouvir-mini" aria-label="Ouvir a dica" onClick={() => falar({ quem: 'sofia', texto: dica }, crianca)}><Icone nome="som" /></button> : null}
                       </div>

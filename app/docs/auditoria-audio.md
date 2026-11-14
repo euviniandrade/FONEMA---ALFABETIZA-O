@@ -2,9 +2,9 @@
 
 Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai ao ar sem esta auditoria**.
 
-- Clipes auditados: **1037** (747 falas + 290 nomes; vozes Sofia e Tales)
-- Graves (defeito audível provável): **33** · a conferir de ouvido (palavra/som solto com transcrição diferente): **66** · leves (higiene do sinal): **0** · sem defeito: **938**
-- Conteúdo conferido por transcrição: **1037** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
+- Clipes auditados: **1099** (809 falas + 290 nomes; vozes Sofia e Tales)
+- Graves (defeito audível provável): **35** · a conferir de ouvido (palavra/som solto com transcrição diferente): **70** · leves (higiene do sinal): **0** · sem defeito: **994**
+- Conteúdo conferido por transcrição: **1099** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
 - Volume (clipes ≥ 0,4 s): mediana -17.4 LUFS, de -22.8 a -14.6 (alvo -16)
 
 ## Defeitos por tipo
@@ -12,7 +12,7 @@ Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai
 | Tipo | Antes | Agora |
 |---|---|---|
 | começo seco | 184 | 0 |
-| conteúdo: palavra trocada | 69 | 77 |
+| conteúdo: palavra trocada | 69 | 82 |
 | volume fora da média | 135 | 0 |
 | sem respiro no começo | 113 | 0 |
 | sem respiro no fim | 69 | 0 |
@@ -24,6 +24,7 @@ Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai
 | conteúdo: sílaba faltando no começo | 4 | 5 |
 | conteúdo: sobrando | 5 | 3 |
 | conteúdo: transcrição vazia | 2 | 1 |
+| conteúdo: palavra faltando | 0 | 1 |
 | mudo | 1 | 0 |
 | conteúdo: sílaba faltando no meio | 0 | 1 |
 
@@ -61,7 +62,9 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 | sofia | X, de xícara | Xis de chave / X de chave | palavra trocada (“xikara” → “xave”) | `falas/sofia-1uqr763-m1.mp3` |
 | sofia | vovó: a boca abre mais. Óóóóó. | Vovó, a porta abriu mais. Ó! / Vovó, a boca abre mais. Ôpa | palavra trocada (“o” → “opa”) | `falas/sofia-1o64pg2-m1.mp3` |
 | sofia | vovó: a boca abre mais. Óóóóó. | Vovó, a boca abre mais. Abre! | palavra trocada (“o” → “abre”) | `falas/sofia-1vrnlcx-m1.mp3` |
+| tales | Ajuda o Bolota a fazer o guia da mata? Lê a figurinha! | Ajudo o Bolota a fazer o guia da mata? Leia a figurinha | palavra trocada (“le” → “lea”) | `falas/tales-8xpboj-v3-m1.mp3` |
 | tales | E eu sou o Tales! Seja bem-vinda na Vila das Letras, | E eu sou o Thales. Seja bem-vinda na Viva das Letras | palavra trocada (“vila” → “viva”) | `falas/tales-10xi3fj-v3-m1.mp3` |
+| tales | Isso! Você entendeu o Bolota! | Isso! Você entendeu, Bolota | palavra faltando “o” | `falas/tales-1xuz4l0-v3-m1.mp3` |
 | tales | Isso! Você me entendeu! | É isso. Você me entendeu? | sobrando “e” | `falas/tales-hohrig-v3-m1.mp3` |
 | tales | O eco falou! Qual letra, | O eco falou: qual letra | fim cortado na gravação | `falas/tales-y49e3v-v3-r2-m1.mp3` |
 | tales | X, de xícara | Xis, de chave. / X de chave | palavra trocada (“xikara” → “xave”) | `falas/tales-1ooggl2-v3-m1.mp3` |
@@ -84,6 +87,7 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 | sofia | Cama. | Come on! | `falas/sofia-1uqnjlx-m1.mp3` |
 | sofia | Ca… sa. | Tchau, tchau! / Xá, sá! | `falas/sofia-ki86cd-m1.mp3` |
 | sofia | Co. | So, / Tchau! | `falas/sofia-rpt9pj-m1.mp3` |
+| sofia | Doce! | Dote | `falas/sofia-1uqo36u-r2-m1.mp3` |
 | sofia | Eeeee. | Hum. / Ãhn | `falas/sofia-1uqp3d7-m1.mp3` |
 | sofia | Fo. | Fu! / Fu! | `falas/sofia-rpt9s2-m1.mp3` |
 | sofia | Folu. | Follow / Follow | `falas/sofia-1uqpmxn-m1.mp3` |
@@ -94,12 +98,14 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 | sofia | Iiiii… ilha! | Iiiih, ihá! | `falas/sofia-11wcpy8-m1.mp3` |
 | sofia | Ilha. | IA / E aí? | `falas/sofia-1uqg207-m1.mp3` |
 | sofia | Ja. | É? / Yeah | `falas/sofia-rpt9hc-m1.mp3` |
+| sofia | Kart! | Kurt! | `falas/sofia-1uqheef-r2-m1.mp3` |
 | sofia | Les. | Lê / Lei | `falas/sofia-1qah2up-m1.mp3` |
 | sofia | Lhá. | Lá / Lá | `falas/sofia-1qah37y-m1.mp3` |
 | sofia | Lo. | Não / Não | `falas/sofia-rpt9jc-m1.mp3` |
 | sofia | Lufo. | LMAO / Lofo | `falas/sofia-1uqifyz-m1.mp3` |
 | sofia | Mapa. | Maba | `falas/sofia-1uqj16e-m1.mp3` |
 | sofia | Mo. | Não! / Não! | `falas/sofia-rpt9k9-m1.mp3` |
+| sofia | Olho! | Óleo | `falas/sofia-1uqkeen-r2-m1.mp3` |
 | sofia | Ooooo. | Ah... / [efeito sonoro] | `falas/sofia-1uqkiiz-m1.mp3` |
 | sofia | Pai. | Vai / Bye | `falas/sofia-1qahjqr-m1.mp3` |
 | sofia | Pe. | Ei / Ei! | `falas/sofia-rpta1q-m1.mp3` |
@@ -109,6 +115,7 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 | sofia | Rei. | Ei! | `falas/sofia-1qahlf9-m1.mp3` |
 | sofia | Te. | Dê / E aí? | `falas/sofia-rpta56-m1.mp3` |
 | sofia | Tá. | Ei / Ei! | `falas/sofia-rpta1q-m1.mp3` |
+| sofia | Unha! | [balbuciando] | `falas/sofia-1ur148p-r2-m1.mp3` |
 | sofia | Uuuuu. | Au! / Uou! | `falas/sofia-1ur11zf-m1.mp3` |
 | sofia | Uuuuu. | [música de introdução] | `falas/sofia-1uroxmz-m1.mp3` |
 | sofia | Yakisoba. | E a Kisuba? | `falas/sofia-1h2qlq-m1.mp3` |

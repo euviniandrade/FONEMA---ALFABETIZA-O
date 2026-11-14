@@ -1,4 +1,7 @@
-import { useRota } from './rotas.ts';
+import { useEffect, type ReactNode } from 'react';
+import { navegar, useRota } from './rotas.ts';
+import { Carregando } from './componentes/basicos.tsx';
+import { EstudioSons } from './telas/adulto/EstudioSons.tsx';
 import { AdultoHome, Configuracoes, FamiliaHome, PainelFamilia, Professor, type AbaProfessor } from './telas/adulto/Adulto.tsx';
 import { Cadastro } from './telas/adulto/Cadastro.tsx';
 import { Alunos, Entrada, PrimeiraVez, Protegido, useConta } from './telas/entrada/Entrada.tsx';
@@ -6,7 +9,9 @@ import { Avatar } from './telas/crianca/Avatar.tsx';
 import { Arquipelago, Chegada, EntradaFase, Regiao, Vila } from './telas/crianca/Mundo.tsx';
 import { TrilhaAlfabeto } from './telas/crianca/Alfabeto.tsx';
 import { Sessao } from './telas/crianca/Sessao.tsx';
-import { Album, ConhecaSeuCorpo, Lojinha, MostraProfessor, Mundo3D, Sondagem } from './telas/crianca/Extras.tsx';
+import { Album, ConhecaSeuCorpo, MostraProfessor, Mundo3D, Sondagem } from './telas/crianca/Extras.tsx';
+import { Lojinha } from './telas/crianca/Lojinha.tsx';
+import { useCrianca } from './contexto.tsx';
 
 /**
  * Rotas (hash) — Decisão 028: a primeira página é sempre "Entrar no FONEMA".
@@ -28,14 +33,14 @@ function tela(r: string[]) {
   if (raiz === 'familia') {
     return (
       <Protegido tipo="responsavel">
-        {sub === 'cadastro' ? <Cadastro area="familia" /> : sub === 'crianca' && id ? <PainelFamilia criancaId={id} /> : sub === 'config' ? <Configuracoes area="familia" /> : <FamiliaHome />}
+        {sub === 'cadastro' ? <Cadastro area="familia" /> : sub === 'crianca' && id ? <PainelFamilia criancaId={id} /> : sub === 'sons' ? <EstudioSons /> : sub === 'config' ? <Configuracoes area="familia" /> : <FamiliaHome />}
       </Protegido>
     );
   }
   if (raiz === 'professor') {
     return (
       <Protegido tipo="professor">
-        {sub === 'cadastro' ? <Cadastro area="professor" /> : sub === 'config' ? <Configuracoes area="professor" /> : <Professor aba={ABAS[sub] ?? 'turma'} />}
+        {sub === 'cadastro' ? <Cadastro area="professor" /> : sub === 'sons' ? <EstudioSons /> : sub === 'config' ? <Configuracoes area="professor" /> : <Professor aba={ABAS[sub] ?? 'turma'} />}
       </Protegido>
     );
   }
@@ -47,22 +52,7 @@ function tela(r: string[]) {
   }
   if (raiz === 'c' && r[1]) {
     const [, cid, t, arg] = r;
-    switch (t) {
-      case 'avatar': return <Avatar criancaId={cid} />;
-      case 'chegada': return <Chegada criancaId={cid} />;
-      case 'mapa': return <Arquipelago criancaId={cid} />;
-      case 'alfabeto': return <TrilhaAlfabeto criancaId={cid} />;
-      case 'regiao': return arg === 'AL' ? <TrilhaAlfabeto criancaId={cid} /> : <Regiao criancaId={cid} regiaoId={arg} />;
-      case 'fase': return <EntradaFase key={arg} criancaId={cid} faseId={arg} />;
-      case 'sessao': return <Sessao key={arg + location.hash} criancaId={cid} faseId={arg} />;
-      case 'lojinha': return <Lojinha criancaId={cid} />;
-      case 'album': return <Album criancaId={cid} />;
-      case 'corpo': return <ConhecaSeuCorpo criancaId={cid} />;
-      case 'mostra': return <MostraProfessor criancaId={cid} faseId={arg} />;
-      case 'sondagem': return <Sondagem criancaId={cid} />;
-      case 'mundo': return <Mundo3D criancaId={cid} />;
-      default: return <Vila criancaId={cid} />;
-    }
+    return <PortaoSexo criancaId={cid} rota={t}>{telaCrianca(cid, t, arg)}</PortaoSexo>;
   }
   return <Entrada />;
 }
@@ -70,3 +60,35 @@ function tela(r: string[]) {
 function areaDaSessao(tipo?: string) { return tipo === 'professor' ? 'professor' as const : 'familia' as const; }
 function CadastroDaSessao() { return <Cadastro area={areaDaSessao(useConta().sessao()?.tipo)} />; }
 function ConfigDaSessao() { return <Configuracoes area={areaDaSessao(useConta().sessao()?.tipo)} />; }
+
+function telaCrianca(cid: string, t: string | undefined, arg: string) {
+  switch (t) {
+    case 'avatar': return <Avatar criancaId={cid} />;
+    case 'chegada': return <Chegada criancaId={cid} />;
+    case 'mapa': return <Arquipelago criancaId={cid} />;
+    case 'alfabeto': return <TrilhaAlfabeto criancaId={cid} />;
+    case 'regiao': return arg === 'AL' ? <TrilhaAlfabeto criancaId={cid} /> : <Regiao criancaId={cid} regiaoId={arg} />;
+    case 'fase': return <EntradaFase key={arg} criancaId={cid} faseId={arg} />;
+    case 'sessao': return <Sessao key={arg + location.hash} criancaId={cid} faseId={arg} />;
+    case 'lojinha': return <Lojinha criancaId={cid} />;
+    case 'album': return <Album criancaId={cid} />;
+    case 'corpo': return <ConhecaSeuCorpo criancaId={cid} />;
+    case 'mostra': return <MostraProfessor criancaId={cid} faseId={arg} />;
+    case 'sondagem': return <Sondagem criancaId={cid} />;
+    case 'mundo': return <Mundo3D criancaId={cid} />;
+    default: return <Vila criancaId={cid} />;
+  }
+}
+
+/**
+ * D029: cadastros antigos com "prefiro não informar" pedem a escolha (menino ou menina) UMA vez, na montagem do
+ * boneco, antes de qualquer outra tela da criança. Depois disso, nunca mais.
+ */
+function PortaoSexo({ criancaId, rota, children }: { criancaId: string; rota: string | undefined; children: ReactNode }) {
+  const { crianca, carregado } = useCrianca(criancaId);
+  const pendente = rota !== 'avatar' && !!crianca?.generoPendente;
+  useEffect(() => { if (pendente) navegar(`c/${criancaId}/avatar`); }, [pendente, criancaId]);
+  if (rota === 'avatar') return <>{children}</>;
+  if (!carregado || pendente) return <Carregando />;
+  return <>{children}</>;
+}

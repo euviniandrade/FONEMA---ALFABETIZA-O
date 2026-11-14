@@ -68,7 +68,7 @@ export const FASES_R0: Fase[] = [
       }
     ],
     gancho: tales('Ouviu isso, [NOME]? Alguma coisa rolou no arbusto… Amanhã a gente descobre quem é!'),
-    fechamento: 'A placa da porta mostra a letra do seu nome. O cofrinho-tatu apareceu!',
+    fechamento: 'A placa da porta mostra a letra do seu nome. O porquinho das moedinhas apareceu!',
     emCasa: 'Procurem juntos 3 coisas da casa que começam com o som do nome (o adulto fala o som esticado, sem dizer o nome da letra).',
     conquistas: ['S-R0-01', 'TI-R0-01', 'S-R0-10', 'S-R0-15'],
     demonstracao: { descricao: 'Bater as palmas do próprio nome e falar o primeiro som', habilidade: 'som-do-nome' },
@@ -257,7 +257,7 @@ export const FASES_R0: Fase[] = [
           tipo: 'escolher', estilo: 'sintese', habilidade: 'sintese',
           enunciado: sofia('O que o Bolota disse, [NOME]?'),
           itens: [itemFig('bo… la', 'bola', 'mala'), itemFig('pa… to', 'pato', 'gato'), itemFig('ca… sa', 'casa', 'mesa')],
-          comemora: tales('Isso! Você entendeu o Bolota!')
+          comemora: tales('Isso! Você entendeu a fala do Bolota!')
         }
       },
       {

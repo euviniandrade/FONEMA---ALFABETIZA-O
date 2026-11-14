@@ -6,6 +6,7 @@ import {
   registrarTentativa, renderFala, resultadoProvaRelampago, resultadoRevisao, agendarRevisao, revisoesVencidas,
   silabas, somInicial, subirTermometro, aplicarAtividade, avaliarConquistas, comprar, aplicarNivelInicial
 } from '../src/index.ts';
+import { AVATAR_LIMPO } from '../src/index.ts';
 import type { Crianca, Tentativa } from '../src/index.ts';
 
 const T0 = new Date('2026-11-13T15:00:00').getTime();
@@ -14,7 +15,7 @@ const cfg = CONFIG_PADRAO;
 const crianca = (nome = 'Mariana', genero: Crianca['genero'] = 'f'): Crianca => ({
   id: 'c1', nome, genero, anoNascimento: 2021,
   pronuncia: { grafia: 'Ma-ri-A-na', fala: 'Mariana', rate: 1, pitchExtra: 0, voz: 'sofia' },
-  avatar: { base: 'crianca-01', cantinho: 'mata' },
+  avatar: { ...AVATAR_LIMPO, cantinho: 'mata' },
   apoios: { previsivel: false, focoCurto: false, leituraReforco: false, calmo: false },
   jaSabe: { letrasDoNome: 'nao-sei', lePalavras: 'nao-sei', leFrases: 'nao-sei' },
   consentimentos: { responsavel: true, vozPrimeiroNome: true, gravarVozAdulto: false, em: T0 },
@@ -61,7 +62,7 @@ describe('primeiro som do nome (jogo-completo/01 §2)', () => {
 
 describe('falas com nome e concordância (D013)', () => {
   const frase = '{Você está pronto|Você está pronta|Tudo pronto pra começar}, [NOME]?';
-  it('masculino, feminino e neutro', () => {
+  it('masculino e feminino (D029); a forma neutra só vale sem criança ou com o sexo pendente de um cadastro antigo', () => {
     expect(renderFala(frase, { nome: 'Kauã', genero: 'm' })).toBe('Você está pronto, Kauã?');
     expect(renderFala(frase, { nome: 'Ana', genero: 'f' })).toBe('Você está pronta, Ana?');
     const n = renderFala('{Seja bem-vindo|Seja bem-vinda|Que bom ter você}, [NOME]!', { nome: 'Helena', genero: 'n' });

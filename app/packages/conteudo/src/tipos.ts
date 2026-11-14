@@ -168,6 +168,10 @@ export interface AtividadeLetra extends AtividadeBase {
   letra: string;
   /** Falas ditas em sequência depois do enunciado. */
   falas: Fala[];
+  /** Faz de conta do som (D029 §2): dito antes do som real da letra. */
+  brincadeira?: Fala;
+  /** "Repita comigo!": dito depois do som, com pausa para a criança fazer junto. */
+  repita?: Fala;
 }
 
 export interface AtividadeTracar extends AtividadeBase {

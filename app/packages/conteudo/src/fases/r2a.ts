@@ -154,7 +154,7 @@ export const FASES_R2A: Fase[] = [
       },
       {
         id: 'R2a-F05-C7', tipo: 'C7', titulo: 'Guia da mata para o Bolota', cenario: 'mata',
-        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'leitura-cvcv', enunciado: tales('Ajuda o Bolota a fazer o guia da mata? Lê a figurinha!'), itens: [itemLer('MULA', 'MULA', 'lua'), itemLer('LULA', 'LULA', 'mala')], comemora: tales('Agora o Bolota conhece a mata!') }
+        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'leitura-cvcv', enunciado: tales('Vamos ajudar o Bolota a fazer o guia da mata? Leia a figurinha!'), itens: [itemLer('MULA', 'MULA', 'lua'), itemLer('LULA', 'LULA', 'mala')], comemora: tales('Agora o Bolota conhece a mata!') }
       }
     ],
     gancho: tales('Tem alguém chamando lá do outro lado da ponte, [NOME]! A ponte está em obras… e um tucano espia.'),

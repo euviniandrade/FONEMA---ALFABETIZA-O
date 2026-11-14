@@ -1,0 +1,122 @@
+{
+ "a": {
+  "fonte": "a.mp3",
+  "texto": "Aaaaaaaaaaaaaaaaaa.",
+  "modelo": "eleven_v3"
+ },
+ "E": {
+  "fonte": "e-aberto.mp3",
+  "texto": "Éééééééééé.",
+  "modelo": "eleven_v3"
+ },
+ "e": {
+  "fonte": "e-fechado.mp3",
+  "texto": "Éééééééééééééééééé.",
+  "modelo": "eleven_v3"
+ },
+ "i": {
+  "fonte": "i.mp3",
+  "texto": "Iiiiiiiiii.",
+  "modelo": "eleven_v3"
+ },
+ "O": {
+  "fonte": "o-aberto.mp3",
+  "texto": "Óóóóóóóóóó.",
+  "modelo": "eleven_v3"
+ },
+ "o": {
+  "fonte": "o-fechado.mp3",
+  "texto": "Ôôôôôôôôôô.",
+  "modelo": "eleven_v3"
+ },
+ "u": {
+  "fonte": "u.mp3",
+  "texto": "Uuuuuuuuuuuuuuuuuu.",
+  "modelo": "eleven_v3"
+ },
+ "a~": {
+  "fonte": "a-nasal.mp3",
+  "texto": "Ãããããããããããããããããã.",
+  "modelo": "eleven_v3"
+ },
+ "m": {
+  "fonte": "m.mp3",
+  "texto": "Mmmmmmmmmmmmmmmmmm.",
+  "modelo": "eleven_v3"
+ },
+ "n": {
+  "fonte": "n.mp3",
+  "texto": "Nnnnnnnnavio.",
+  "modelo": "eleven_v3"
+ },
+ "f": {
+  "fonte": "f.mp3",
+  "texto": "Ffffffffff.",
+  "modelo": "eleven_v3"
+ },
+ "v": {
+  "fonte": "v.mp3",
+  "texto": "Vvvvvvvvvv.",
+  "modelo": "eleven_v3"
+ },
+ "s": {
+  "fonte": "s.mp3",
+  "texto": "Ssssssssssssssssss.",
+  "modelo": "eleven_v3"
+ },
+ "z": {
+  "fonte": "z.mp3",
+  "texto": "Zzzzzzzzzzzzzzzzá.",
+  "modelo": "eleven_v3"
+ },
+ "x": {
+  "fonte": "x.mp3",
+  "texto": "Shhhhhhhhhhh.",
+  "modelo": "eleven_v3"
+ },
+ "j": {
+  "fonte": "j.mp3",
+  "texto": "Jjjjjjjjá.",
+  "modelo": "eleven_v3"
+ },
+ "l": {
+  "fonte": "l.mp3",
+  "texto": "Lllllllllllllllá.",
+  "modelo": "eleven_v3"
+ },
+ "rr": {
+  "fonte": "rr.mp3",
+  "texto": "Arrrrrrrá.",
+  "modelo": "eleven_v3"
+ },
+ "p": {
+  "fonte": "p.mp3",
+  "texto": "Pá.",
+  "modelo": "eleven_v3"
+ },
+ "b": {
+  "fonte": "b.mp3",
+  "texto": "Bá.",
+  "modelo": "eleven_v3"
+ },
+ "t": {
+  "fonte": "t.mp3",
+  "texto": "Tá.",
+  "modelo": "eleven_v3"
+ },
+ "d": {
+  "fonte": "d.mp3",
+  "texto": "Dá.",
+  "modelo": "eleven_v3"
+ },
+ "k": {
+  "fonte": "k.mp3",
+  "texto": "Cá.",
+  "modelo": "eleven_v3"
+ },
+ "g": {
+  "fonte": "g.mp3",
+  "texto": "Gá.",
+  "modelo": "eleven_v3"
+ }
+}

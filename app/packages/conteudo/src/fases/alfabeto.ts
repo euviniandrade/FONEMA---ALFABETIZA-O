@@ -35,6 +35,7 @@ export const FALAS_ALFABETO = {
   muda: 'O H não faz som sozinho.',
   comU: 'O Q vem sempre com o U.',
   boca: 'Olha a minha boca fazendo o som.',
+  repita: 'Repita comigo!',
   fezOSom: 'Isso! Você fez o som!',
   acheALetra: 'Ouça e toque na letra.',
   acheAFigura: 'Qual figura começa com o som desta letra?',
@@ -127,6 +128,7 @@ function faseDaLetraAl(l: LetraAlfabeto, numero: number): Fase {
       id: `${id}-C2`, tipo: 'C2', titulo: `A letra ${l.letra}`, cenario: 'licao', contaDominio: true,
       atividade: {
         tipo: 'letra', habilidade: hab, letra: l.letra, enunciado: f(q, FALAS_ALFABETO.olha),
+        brincadeira: f(q, l.brincadeira), repita: f(q, FALAS_ALFABETO.repita),
         falas: [f(q, falaNomeLetra(l)), f(q, FALAS_ALFABETO.grandePequena), f(q, falaChave(l)), ...(l.nota ? [f(q, l.nota === 'dois-sons' ? (l.letra === 'E' ? FALAS_ALFABETO.doisSonsE : FALAS_ALFABETO.doisSonsO) : NOTA[l.nota])] : [])]
       }
     }

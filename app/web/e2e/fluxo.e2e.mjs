@@ -47,6 +47,23 @@ async function subirServidor() {
   throw new Error('servidor de preview não subiu (rode `npm run build` antes)');
 }
 
+/**
+ * Monta o boneco 3D (D029): em cada passo obrigatório toca a primeira opção liberada e avança; no fim, "Pronto!".
+ * `escolhas` troca a opção de um passo (ex.: { cabelo: 'f-trancas' }).
+ */
+async function montarAvatar(page, escolhas = {}) {
+  await page.getByTestId('montar-avatar').waitFor();
+  for (const passo of ['pele', 'rosto', 'olhos', 'cabelo', 'camisa', 'calca', 'calcado']) {
+    await page.locator(`[data-testid="montar-avatar"][data-passo="${passo}"]`).waitFor();
+    const alvo = escolhas[passo] ? `.montar-corpo [data-peca="${escolhas[passo]}"]` : '.montar-corpo [data-estado="livre"]';
+    await page.locator(alvo).first().click();
+    await page.locator('.montar-corpo [aria-checked="true"]').first().waitFor();
+    await page.getByTestId('avatar-proximo').click();
+  }
+  await page.locator('[data-testid="montar-avatar"][data-passo="lojinha"]').waitFor();
+  await page.getByTestId('avatar-pronto').click();
+}
+
 let n = 0;
 async function cap(page, nome) {
   if (!CAPTURAS_V2) return;
@@ -94,6 +111,7 @@ async function cadastrar(page, nome, genero, { previa, capturas = false, nivel, 
   await passarPorteira(page);
   await page.getByTestId('campo-nome').fill(nome);
   await page.locator(`[data-idade="${idade}"]`).click();
+  ok(await page.locator('[data-genero]').count() === 2 && await page.locator('[data-genero="n"]').count() === 0, 'cadastro: só menino ou menina (D029)');
   await page.locator(`[data-genero="${genero}"]`).click();
   if (previa) ok((await page.locator('.previa').innerText()).includes(previa), `prévia da concordância: "${previa}"`);
   if (capturas) await cap(page, 'cadastro-1-quem-vai-aprender');
@@ -247,8 +265,34 @@ async function main() {
   await cadastrar(page, 'Mariana Souza', 'f', { previa: 'pronta, Mariana', capturas: true });
 
   console.log('2. Avatar e chegada');
-  await page.locator('[data-base="crianca-02-trancas"]').click();
+  // D029: boneco 3D montável — começa limpo, passos obrigatórios, só peças de menina, cadeados que ensinam a Lojinha
+  await page.getByTestId('montar-avatar').waitFor();
+  ok(await page.locator('[data-testid="montar-avatar"][data-passo="pele"]').count() === 1, 'a montagem começa pelo primeiro passo (cor da pele), com o boneco limpo');
+  ok(await page.locator('.montar-corpo [aria-checked="true"]').count() === 0, 'nada vem escolhido de entrada');
+  ok(await page.getByTestId('avatar-proximo').isDisabled(), 'não dá para avançar sem escolher (passo obrigatório)');
+  ok(await page.getByTestId('avatar-pronto').count() === 0, 'sem "Pronto!" antes de montar o boneco');
+  ok(await page.locator('.montar-corpo [data-peca^="pele-"]').count() >= 8, 'leque amplo de cores de pele');
+  await page.locator('[data-testid=boneco3d]:not([data-estado=carregando])').waitFor({ timeout: 20000 });
+  ok(true, `boneco no palco: ${await page.getByTestId('boneco3d').getAttribute('data-estado') === 'pronto' ? '3D (WebGL)' : 'reserva 2D (sem WebGL neste navegador)'}`);
+  ok(await page.evaluate(() => document.documentElement.scrollHeight <= window.innerHeight + 1), 'tela de montar sem rolagem');
+  for (const passo of ['pele', 'rosto', 'olhos']) { await page.locator('.montar-corpo [data-estado="livre"]').nth(1).click(); await page.getByTestId('avatar-proximo').click(); await page.locator(`[data-testid="montar-avatar"]:not([data-passo="${passo}"])`).waitFor(); }
+  ok(await page.locator('.montar-corpo [data-peca^="m-"]').count() === 0 && await page.locator('.montar-corpo [data-peca^="f-"]').count() >= 8, 'menina só vê cabelos de menina');
+  ok(/Abre na Letra D · 8 moedas/.test(await page.locator('.montar-corpo [data-estado="fase"]').first().innerText()), 'penteado extra aparece com cadeado: "Abre na Letra D · 8 moedas"');
+  await page.locator('.montar-corpo [data-estado="fase"]').first().click();
+  ok(/Lojinha/.test(await page.locator('.montar-aviso').innerText()) && await page.locator('.montar-corpo [role="radio"][aria-checked="true"][data-peca^="f-"]').count() === 0, 'tocar numa peça trancada explica a Lojinha e não veste a peça');
+  await page.locator('.montar-corpo [data-peca="f-trancas"]').click();
+  await page.locator('[data-cor-cabelo="preto"]').click();
   await cap(page, 'avatar');
+  await page.getByTestId('avatar-proximo').click();
+  for (const passo of ['camisa', 'calca', 'calcado']) {
+    await page.locator(`[data-testid="montar-avatar"][data-passo="${passo}"]`).waitFor();
+    if (passo === 'camisa') ok(await page.locator('.montar-corpo [data-peca="uniforme"][data-estado="livre"]').count() === 1 && await page.locator('.montar-corpo [data-peca="polo-terra"]').count() === 0, 'camiseta da turma liberada; roupa de menino não aparece para a menina');
+    await page.locator('.montar-corpo [data-estado="livre"]').first().click();
+    await page.getByTestId('avatar-proximo').click();
+  }
+  await page.getByTestId('vitrine-lojinha').waitFor();
+  ok(await page.locator('.vitrine-lista li').count() >= 4 && /Abre na Letra B/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'o fim da montagem ensina a Lojinha: o que abre depois, com fase e moedas');
+  ok(/Acessibilidade/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'acessibilidade não vem de entrada: fica na Lojinha, grátis');
   await page.getByTestId('avatar-pronto').click();
   await page.getByTestId('primeira-missao').waitFor();
   await page.waitForTimeout(300);
@@ -347,6 +391,18 @@ async function main() {
   await page.goto(BASE + `#/c/${id}/lojinha`);
   await page.getByTestId('lojinha').waitFor();
   await cap(page, 'lojinha');
+  // D029: Lojinha do boneco — cadeados por fase + moedas, e Acessibilidade sempre grátis
+  ok(/Abre na Letra C · 6 moedas/.test(await page.locator('[data-testid="loja-boneco"] [data-peca="camiseta-listrada"]').innerText()), 'Lojinha: camiseta listrada com cadeado "Abre na Letra C · 6 moedas"');
+  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="camiseta-ipe"][data-estado="pode"]').count() === 1, 'Lojinha: com a Letra B aberta e 5 moedinhas, a camiseta amarela (4) já pode ser trocada');
+  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="polo-terra"]').count() === 0, 'Lojinha: a menina não vê roupa de menino');
+  await page.locator('[data-aba="acessibilidade"]').click();
+  ok(await page.locator('[data-testid="loja-acessibilidade"] [data-acess]').count() === 4 && await page.locator('[data-testid="loja-acessibilidade"] [aria-checked="true"]').count() === 0, 'Acessibilidade: óculos, aparelho auditivo, cadeira de rodas e pintura no rosto, grátis e desligados de entrada');
+  await page.locator('[data-acess="oculos"] button').click();
+  await page.locator('[data-acess="oculos"] [aria-checked="true"]').waitFor();
+  ok((await page.getByTestId('moedinhas').first().innerText()).match(/\d+/)[0] === '5', 'colocar os óculos não custa moedinhas');
+  await page.locator('[data-acess="oculos"] button').click();
+  await page.locator('[data-acess="oculos"] [aria-checked="false"]').waitFor();
+  await page.locator('[data-aba="utensilios"]').click();
   await page.locator('[data-item="caderno"] button').click();
   await page.getByTestId('confirmar-troca').click();
   await page.locator('[data-item="caderno"].tem').waitFor();
@@ -426,8 +482,8 @@ async function main() {
     await pj.getByTestId('modo-demo').click();
     await pj.waitForFunction(() => document.querySelector('[data-testid=modo-demo]')?.checked);
     await pj.goto(BASE + '#/adulto/cadastro');
-    await cadastrar(pj, 'Helena', 'n', { previa: 'Tudo pronto pra começar, Helena?' });
-    await pj.getByTestId('avatar-pronto').click();
+    await cadastrar(pj, 'Helena', 'f', { previa: 'pronta, Helena' });
+    await montarAvatar(pj);
     await pj.getByTestId('primeira-missao').waitFor();
     const idj = pj.url().split('/c/')[1].split('/')[0];
     // --sem-jornada: pula a jornada inteira (demorada) e vai direto ao nível inicial
@@ -463,7 +519,7 @@ async function main() {
     console.log('10. Nível inicial escolhido pelo adulto (D026)');
     await pj.goto(BASE + '#/adulto/cadastro');
     await cadastrar(pj, 'Davi', 'm', { nivel: 'letras-e-sons' });
-    await pj.getByTestId('avatar-pronto').click();
+    await montarAvatar(pj);
     await pj.getByTestId('primeira-missao').click();
     await pj.waitForFunction(() => location.hash.includes('/sessao/'));
     ok(pj.url().includes('/sessao/R2a-F01'), '"já conhece as letras e os sons" pula o Alfabeto e começa nas sílabas (R2a-F01)');
@@ -479,7 +535,7 @@ async function main() {
     await capA(pj, '13-letra-h-muda', 900);
     await pj.goto(BASE + '#/adulto/cadastro');
     await cadastrar(pj, 'Lia', 'f', { nivel: 'le-palavras' });
-    await pj.getByTestId('avatar-pronto').click();
+    await montarAvatar(pj);
     await pj.getByTestId('primeira-missao').click();
     await pj.waitForFunction(() => location.hash.includes('/sessao/'));
     ok(pj.url().includes('/sessao/R2a-F04'), '"já lê palavras" começa no ponto de leitura mais avançado (R2a-F04)');
@@ -499,7 +555,7 @@ async function main() {
     await p3.goto(BASE + '#/adulto/cadastro');
     await passarPorteira(p3);
     await cadastrar(p3, 'Kauã', 'm');
-    await p3.getByTestId('avatar-pronto').click();
+    await montarAvatar(p3);
     await p3.getByTestId('primeira-missao').waitFor();
     const idk = p3.url().split('/c/')[1].split('/')[0];
     await p3.goto(BASE + `#/c/${idk}/alfabeto`);
@@ -540,7 +596,7 @@ async function main() {
     await cadastrar(p2, 'Kauã', 'm');
     const capCel = async (nome, espera = 400) => { await p2.waitForTimeout(espera); await p2.screenshot({ path: `${DIR_CAP}/v2-celular-${nome}.png`, fullPage: false }); };
     await capCel('04-avatar');
-    await p2.getByTestId('avatar-pronto').click();
+    await montarAvatar(p2);
     await p2.getByTestId('primeira-missao').waitFor();
     await capCel('05-chegada');
     const idc = p2.url().split('/c/')[1].split('/')[0];
@@ -589,7 +645,7 @@ async function main() {
     await cadastrar(p2, 'Kauã', 'm');
     const capCel = async (nome, espera = 400) => { await p2.waitForTimeout(espera); await p2.screenshot({ path: `${DIR_CAP}/v2-celular-${nome}.png`, fullPage: false }); };
     await capCel('04-avatar');
-    await p2.getByTestId('avatar-pronto').click();
+    await montarAvatar(p2);
     await p2.getByTestId('primeira-missao').waitFor();
     await capCel('05-chegada');
     const idc = p2.url().split('/c/')[1].split('/')[0];

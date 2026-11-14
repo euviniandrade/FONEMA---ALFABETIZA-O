@@ -1,0 +1,5 @@
+{
+  "versao": 1,
+  "_leia": "Peças do boneco com modelo 3D pronto (GLB). Chave = <categoria>-<id da peça>; ver app/docs/avatar-3d-contrato.md. Peça sem entrada aqui usa o modelo provisório feito em código.",
+  "pecas": {}
+}

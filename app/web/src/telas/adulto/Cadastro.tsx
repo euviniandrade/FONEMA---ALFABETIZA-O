@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { NIVEIS_INICIAIS, aplicarNivelInicial, opcoesPronuncia, progressoInicial, renderFala, type Crianca, type NivelInicial } from '@fonema/motor';
+import { AVATAR_LIMPO, NIVEIS_INICIAIS, aplicarNivelInicial, opcoesPronuncia, progressoInicial, renderFala, type Crianca, type NivelInicial } from '@fonema/motor';
 import type { Genero } from '@fonema/conteudo';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
@@ -8,14 +8,14 @@ import { Camada } from '../../componentes/Camada.tsx';
 import { asset } from '../../servicos/ambiente.ts';
 import { novoId } from '../../dados/repositorio.ts';
 import { voz } from '../../servicos/voz.ts';
-import { BASES } from '../crianca/Avatar.tsx';
 import { Fluxo } from '../entrada/Entrada.tsx';
 import type { PoseDupla } from '../../componentes/Dupla3D.tsx';
 
 const ANO = new Date().getFullYear();
 type Passo = 1 | 2 | 3 | 'entrega';
 const IDADES = [3, 4, 5, 6, 7, 8];
-const GENEROS: [Genero, string][] = [['m', 'Menino'], ['f', 'Menina'], ['n', 'Prefiro não informar']];
+/** D029: só menino ou menina. */
+const GENEROS: [Genero, string][] = [['m', 'Menino'], ['f', 'Menina']];
 const FRASE_NIVEL: Record<NivelInicial, string> = {
   zero: 'Começa pelo alfabeto: cada letra e o som dela.',
   'letras-e-sons': 'Pula o alfabeto e começa juntando letras em sílabas.',
@@ -69,10 +69,11 @@ export function Cadastro({ area = 'familia' }: { area?: 'familia' | 'professor' 
     const c: Crianca = {
       id,
       nome: nomeBonito,
-      genero: genero ?? 'n',
+      genero: genero ?? 'f',
       anoNascimento: ANO - (idade ?? 5),
       pronuncia: { grafia: temClipe ? nomeBonito : op.grafia, fala: op.fala, rate: op.rate, pitchExtra: op.pitchExtra, voz: 'sofia' },
-      avatar: { base: BASES[0][0], cantinho: 'ceu' },
+      // D029: o boneco começa limpo; a criança monta na primeira entrada
+      avatar: { ...AVATAR_LIMPO },
       // apoios e rotina: padrões; o adulto ajusta depois, na Área da Família
       apoios: { previsivel: false, focoCurto: false, leituraReforco: false, calmo: false },
       jaSabe: { letrasDoNome: nivel === 'zero' ? 'nao-sei' : 'sim', lePalavras: nivel === 'le-palavras' ? 'sim' : 'nao-sei', leFrases: 'nao-sei' },

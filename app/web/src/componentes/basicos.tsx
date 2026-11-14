@@ -8,6 +8,8 @@ import { navegar } from '../rotas.ts';
 import { Icone, Logo } from './ui.tsx';
 import { Camada } from './Camada.tsx';
 import { PersonagemVivo, temBustoVivo } from './PersonagemVivo.tsx';
+import { RetratoBoneco } from './Boneco3D.tsx';
+import { aparenciaDe } from '../avatar3d/modelo.ts';
 
 const BUSTO: Partial<Record<Personagem, string>> = { sofia: 'dupla/sofia-busto-alegre.webp', tales: 'dupla/tales-busto-alegre.webp' };
 const COR: Record<string, string> = { bolota: '#A06A3B', 'dona-cida': '#B5512E', davi: '#2E7A4C', 'guarda-parque': '#1F5A37', pescadora: '#3D7CC4', 'zum-zum': '#6B7A2E' };
@@ -114,18 +116,20 @@ export function Topo({ crianca, moedinhas, voltar, titulo, children }: { crianca
   );
 }
 
-const CANTINHO: Record<string, string> = { mata: '#3E9A63', ipe: '#F4B73C', ceu: '#A8D5F2', barro: '#C9714C' };
+export const CANTINHO: Record<string, string> = { mata: '#3E9A63', ipe: '#F4B73C', ceu: '#A8D5F2', barro: '#C9714C' };
+/** Miniatura do boneco 3D da criança (D029): imagem desenhada fora da tela e guardada em cache, sem abrir um WebGL por cartão. */
 export function AvatarMini({ crianca, tamanho = 56 }: { crianca: Crianca; tamanho?: number }) {
   return (
     <div className="avatar-mini" style={{ background: CANTINHO[crianca.avatar.cantinho] ?? '#A8D5F2', width: tamanho, height: tamanho }}>
-      <img src={asset(`avatar/${crianca.avatar.base}.webp`)} alt={`Personagem de ${crianca.nome}`} />
+      <RetratoBoneco aparencia={aparenciaDe(crianca)} tipo="busto" alt={`Boneco de ${crianca.nome}`} />
     </div>
   );
 }
+/** Retrato de corpo inteiro (álbum), com os utensílios da mochila ao lado. */
 export function AvatarGrande({ crianca, itens = [] }: { crianca: Crianca; itens?: string[] }) {
   return (
     <div className="avatar-grande" style={{ ['--cantinho' as string]: CANTINHO[crianca.avatar.cantinho] ?? '#A8D5F2' }}>
-      <img src={asset(`avatar/${crianca.avatar.base}.webp`)} alt={`Personagem de ${crianca.nome}`} />
+      <RetratoBoneco aparencia={aparenciaDe(crianca)} tipo="corpo" largura={360} altura={520} alt={`Boneco de ${crianca.nome}`} />
       {itens.length ? (
         <div className="avatar-itens">{itens.slice(0, 4).map((i) => <img key={i} src={asset(`itens/${i}.webp`)} alt={i} />)}</div>
       ) : null}

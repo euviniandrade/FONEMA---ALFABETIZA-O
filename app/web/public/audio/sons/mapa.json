@@ -1,0 +1,365 @@
+{
+ "versao": 1,
+ "descricao": "Som real (fonema puro) de cada letra. Só entram clipes aprovados ou duvidosos nas medidas; reprovados ficam de fora e a letra usa a fala da dupla. Gravações do adulto (Estúdio de sons) têm prioridade no app.",
+ "repeticoes": {
+  "vogal": 2,
+  "continuo": 3,
+  "explosivo": 3
+ },
+ "fonemas": {
+  "a": {
+   "arquivo": "a.mp3",
+   "estado": "aprovado",
+   "tipo": "vogal",
+   "ipa": "/a/",
+   "letras": [
+    "A"
+   ],
+   "duracaoMs": 1990
+  },
+  "E": {
+   "arquivo": "e-aberto.mp3",
+   "estado": "aprovado",
+   "tipo": "vogal",
+   "ipa": "/ɛ/",
+   "letras": [
+    "E"
+   ],
+   "duracaoMs": 1250
+  },
+  "e": {
+   "arquivo": "e-fechado.mp3",
+   "estado": "aprovado",
+   "tipo": "vogal",
+   "ipa": "/e/",
+   "letras": [
+    "E"
+   ],
+   "duracaoMs": 1250
+  },
+  "i": {
+   "arquivo": "i.mp3",
+   "estado": "aprovado",
+   "tipo": "vogal",
+   "ipa": "/i/",
+   "letras": [
+    "I",
+    "Y"
+   ],
+   "duracaoMs": 1580
+  },
+  "O": {
+   "arquivo": "o-aberto.mp3",
+   "estado": "aprovado",
+   "tipo": "vogal",
+   "ipa": "/ɔ/",
+   "letras": [
+    "O"
+   ],
+   "duracaoMs": 1300
+  },
+  "o": {
+   "arquivo": "o-fechado.mp3",
+   "estado": "aprovado",
+   "tipo": "vogal",
+   "ipa": "/o/",
+   "letras": [
+    "O"
+   ],
+   "duracaoMs": 1770
+  },
+  "u": {
+   "arquivo": "u.mp3",
+   "estado": "aprovado",
+   "tipo": "vogal",
+   "ipa": "/u/",
+   "letras": [
+    "U",
+    "W"
+   ],
+   "duracaoMs": 1220
+  },
+  "a~": {
+   "arquivo": "a-nasal.mp3",
+   "estado": "duvidoso",
+   "tipo": "vogal",
+   "ipa": "/ã/",
+   "letras": [
+    "Ã"
+   ],
+   "duracaoMs": 1350
+  },
+  "m": {
+   "arquivo": "m.mp3",
+   "estado": "aprovado",
+   "tipo": "continuo",
+   "ipa": "/m/",
+   "letras": [
+    "M"
+   ],
+   "duracaoMs": 1540
+  },
+  "n": {
+   "arquivo": "n.mp3",
+   "estado": "aprovado",
+   "tipo": "continuo",
+   "ipa": "/n/",
+   "letras": [
+    "N"
+   ],
+   "duracaoMs": 1463
+  },
+  "l": {
+   "arquivo": "l.mp3",
+   "estado": "duvidoso",
+   "tipo": "continuo",
+   "ipa": "/l/",
+   "letras": [
+    "L"
+   ],
+   "duracaoMs": 1470
+  },
+  "v": {
+   "arquivo": "v.mp3",
+   "estado": "duvidoso",
+   "tipo": "continuo",
+   "ipa": "/v/",
+   "letras": [
+    "V",
+    "W"
+   ],
+   "duracaoMs": 1451
+  },
+  "f": {
+   "arquivo": "f.mp3",
+   "estado": "aprovado",
+   "tipo": "continuo",
+   "ipa": "/f/",
+   "letras": [
+    "F"
+   ],
+   "duracaoMs": 1482
+  },
+  "s": {
+   "arquivo": "s.mp3",
+   "estado": "aprovado",
+   "tipo": "continuo",
+   "ipa": "/s/",
+   "letras": [
+    "S"
+   ],
+   "duracaoMs": 1455
+  },
+  "x": {
+   "arquivo": "x.mp3",
+   "estado": "aprovado",
+   "tipo": "continuo",
+   "ipa": "/ʃ/",
+   "letras": [
+    "X",
+    "CH"
+   ],
+   "duracaoMs": 1377
+  },
+  "z": {
+   "arquivo": "z.mp3",
+   "estado": "aprovado",
+   "tipo": "continuo",
+   "ipa": "/z/",
+   "letras": [
+    "Z"
+   ],
+   "duracaoMs": 1421
+  },
+  "j": {
+   "arquivo": "j.mp3",
+   "estado": "duvidoso",
+   "tipo": "continuo",
+   "ipa": "/ʒ/",
+   "letras": [
+    "J"
+   ],
+   "duracaoMs": 1524
+  },
+  "rr": {
+   "arquivo": "rr.mp3",
+   "estado": "duvidoso",
+   "tipo": "continuo",
+   "ipa": "/ʁ/",
+   "letras": [
+    "R"
+   ],
+   "duracaoMs": 610
+  },
+  "p": {
+   "arquivo": "p.mp3",
+   "estado": "duvidoso",
+   "tipo": "explosivo",
+   "ipa": "/p/",
+   "letras": [
+    "P"
+   ],
+   "duracaoMs": 208
+  },
+  "b": {
+   "arquivo": "b.mp3",
+   "estado": "duvidoso",
+   "tipo": "explosivo",
+   "ipa": "/b/",
+   "letras": [
+    "B"
+   ],
+   "duracaoMs": 258
+  },
+  "t": {
+   "arquivo": "t.mp3",
+   "estado": "duvidoso",
+   "tipo": "explosivo",
+   "ipa": "/t/",
+   "letras": [
+    "T"
+   ],
+   "duracaoMs": 238
+  },
+  "d": {
+   "arquivo": "d.mp3",
+   "estado": "duvidoso",
+   "tipo": "explosivo",
+   "ipa": "/d/",
+   "letras": [
+    "D"
+   ],
+   "duracaoMs": 288
+  },
+  "k": {
+   "arquivo": "k.mp3",
+   "estado": "duvidoso",
+   "tipo": "explosivo",
+   "ipa": "/k/",
+   "letras": [
+    "C",
+    "K",
+    "Q"
+   ],
+   "duracaoMs": 238
+  },
+  "g": {
+   "arquivo": "g.mp3",
+   "estado": "duvidoso",
+   "tipo": "explosivo",
+   "ipa": "/g/",
+   "letras": [
+    "G"
+   ],
+   "duracaoMs": 278
+  }
+ },
+ "letras": {
+  "A": [
+   "a"
+  ],
+  "B": [
+   "b"
+  ],
+  "C": [
+   "k",
+   "s"
+  ],
+  "D": [
+   "d"
+  ],
+  "E": [
+   "e",
+   "E"
+  ],
+  "F": [
+   "f"
+  ],
+  "G": [
+   "g",
+   "j"
+  ],
+  "H": [],
+  "I": [
+   "i"
+  ],
+  "J": [
+   "j"
+  ],
+  "K": [
+   "k"
+  ],
+  "L": [
+   "l"
+  ],
+  "M": [
+   "m"
+  ],
+  "N": [
+   "n"
+  ],
+  "O": [
+   "o",
+   "O"
+  ],
+  "P": [
+   "p"
+  ],
+  "Q": [
+   "k"
+  ],
+  "R": [
+   "rr",
+   "r"
+  ],
+  "S": [
+   "s",
+   "z"
+  ],
+  "T": [
+   "t"
+  ],
+  "U": [
+   "u"
+  ],
+  "V": [
+   "v"
+  ],
+  "W": [
+   "u",
+   "v"
+  ],
+  "X": [
+   "x"
+  ],
+  "Y": [
+   "i"
+  ],
+  "Z": [
+   "z"
+  ],
+  "CH": [
+   "x"
+  ],
+  "LH": [
+   "lh"
+  ],
+  "NH": [
+   "nh"
+  ],
+  "RR": [
+   "rr"
+  ],
+  "SS": [
+   "s"
+  ],
+  "Ç": [
+   "s"
+  ]
+ },
+ "semSom": [
+  "lh",
+  "nh",
+  "r"
+ ]
+}

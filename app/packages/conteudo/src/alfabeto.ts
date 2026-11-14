@@ -52,9 +52,19 @@ export interface LetraAlfabeto {
   voz: 'sofia' | 'tales';
   /** Som puro da letra: fica para a gravação da fonoaudióloga (hoje a fala usa "B, de bola."). */
   somPuro: { gravado: boolean; arquivo?: string };
+  /**
+   * Faz de conta que leva o corpo a fazer o som (D029 §2, pesquisa 45): a dupla diz a brincadeira e, em seguida,
+   * toca o SOM REAL da letra (web/public/audio/sons ou o Estúdio de sons). Letras de mesmo som usam a mesma
+   * brincadeira (C = K = Q; I = Y; U = W). Texto nosso, a partir do Abecedário do MEC (público).
+   */
+  brincadeira: string;
+  /** Três palavras-exemplo com figura (a primeira é `palavra`). As que ainda não têm arte aparecem só escritas. */
+  palavras: [string, string, string];
+  /** Segundo som da letra, apresentado logo depois do principal (G de gelo, S de casa, W de Wagner, é, ó, R fraco). */
+  segundoFonema?: ChaveFonema;
 }
 
-type Base = Omit<LetraAlfabeto, 'minuscula' | 'voz' | 'somPuro'>;
+type Base = Omit<LetraAlfabeto, 'minuscula' | 'voz' | 'somPuro' | 'brincadeira' | 'palavras' | 'segundoFonema'>;
 const L = (letra: string, tipo: LetraAlfabeto['tipo'], ipa: string | null, fonema: string | null, palavra: string, dicaBoca: string, gesto: string, extra: Partial<Base> = {}): Base => ({ letra, tipo, ipa, fonema, palavra, dicaBoca, gesto, ...extra });
 
 const BASE: Base[] = [
@@ -86,11 +96,59 @@ const BASE: Base[] = [
   L('Z', 'consoante', '/z/', 'z', 'zebra', 'Igual ao S, mas a garganta vibra.', 'Dedo voando como abelha: zzz.', { outroSom: 'S entre vogais e Z no fim (luz, nariz)' })
 ];
 
+const MORDE = 'Faz de conta que você morde uma maçã bem crocante.';
+const ESQUECEU = 'Faz de conta que você esqueceu o lanche em casa.';
+const MACAQUINHO = 'Faz de conta que você é um macaquinho.';
+/** Faz de conta de cada letra (pesquisa 45). C = K = Q, I = Y e U = W dividem a mesma brincadeira (e o mesmo clipe). */
+export const BRINCADEIRAS: Record<string, string> = {
+  A: 'Faz de conta que você está no médico: abre bem a boca!',
+  B: 'Faz de conta que você quica uma bola no chão.',
+  C: MORDE,
+  D: 'Faz de conta que você toca um tambor com os dedos.',
+  E: 'Faz de conta que você ganhou um troféu!',
+  F: 'Faz de conta que você sopra as velinhas do bolo.',
+  G: 'Faz de conta que você toma um gole de água.',
+  H: 'Faz de conta que você fecha um zíper na boca.',
+  I: ESQUECEU,
+  J: 'Faz de conta que você pilota um barco a motor.',
+  K: MORDE,
+  L: 'Faz de conta que você lambe um sorvete.',
+  M: 'Faz de conta que a comida está uma delícia.',
+  N: 'Faz de conta que você diz não com a boca fechada.',
+  O: 'Faz de conta que você chama um amigo lá longe.',
+  P: 'Faz de conta que você estoura bolhas de sabão.',
+  Q: MORDE,
+  R: 'Faz de conta que você liga o motor de um carrinho.',
+  S: 'Faz de conta que você é uma cobrinha.',
+  T: 'Faz de conta que você bate na porta com um dedo.',
+  U: MACAQUINHO,
+  V: 'Faz de conta que você pilota um avião.',
+  W: MACAQUINHO,
+  X: 'Faz de conta que você pede silêncio.',
+  Y: ESQUECEU,
+  Z: 'Faz de conta que você é uma abelhinha.'
+};
+/** Três palavras-exemplo por letra (a primeira é a palavra-chave). Com arte quando existe em palavras.ts › FIGURAS. */
+export const TRES_PALAVRAS: Record<string, [string, string, string]> = {
+  A: ['abelha', 'avião', 'abacaxi'], B: ['bola', 'banana', 'boneca'], C: ['casa', 'caneca', 'cola'], D: ['dado', 'dedo', 'doce'],
+  E: ['elefante', 'ema', 'elástico'], F: ['foca', 'folha', 'faca'], G: ['gato', 'garrafa', 'galo'], H: ['hipopótamo', 'helicóptero', 'horta'],
+  I: ['ilha', 'iglu', 'ioiô'], J: ['janela', 'jacaré', 'jaca'], K: ['kiwi', 'kart', 'ketchup'], L: ['lua', 'leão', 'lobo'],
+  M: ['macaco', 'mala', 'moto'], N: ['navio', 'ninho', 'nuvem'], O: ['ovo', 'ovelha', 'olho'], P: ['pato', 'peixe', 'pipoca'],
+  Q: ['queijo', 'quiabo', 'quadro'], R: ['rato', 'rua', 'roda'], S: ['sapo', 'sol', 'suco'], T: ['tatu', 'tomate', 'tapete'],
+  U: ['uva', 'urso', 'unha'], V: ['vaca', 'vela', 'vovó'], W: ['Wesley', 'Wagner', 'wafer'], X: ['xícara', 'xilofone', 'xadrez'],
+  Y: ['Yasmin', 'yakisoba', 'Yuri'], Z: ['zebra', 'zíper', 'zero']
+};
+/** Segundo som de cada letra que tem dois (pesquisa 45): tocado logo depois do aviso "esta letra tem outro som". */
+export const SEGUNDO_FONEMA: Record<string, ChaveFonema> = { E: 'E', O: 'O', G: 'j', S: 'z', W: 'v', R: 'r', C: 's' };
+
 export const ALFABETO: LetraAlfabeto[] = BASE.map((b, i) => ({
   ...b,
   minuscula: b.letra.toLowerCase(),
   voz: i % 2 === 0 ? 'sofia' : 'tales',
-  somPuro: { gravado: false }
+  somPuro: { gravado: false },
+  brincadeira: BRINCADEIRAS[b.letra],
+  palavras: TRES_PALAVRAS[b.letra],
+  ...(SEGUNDO_FONEMA[b.letra] ? { segundoFonema: SEGUNDO_FONEMA[b.letra] } : {})
 }));
 
 export const LETRA_POR_ID: Record<string, LetraAlfabeto> = Object.fromEntries(ALFABETO.map((l) => [l.letra, l]));

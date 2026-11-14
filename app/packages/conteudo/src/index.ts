@@ -2,6 +2,7 @@ export * from './tipos.ts';
 export * from './sons.ts';
 export * from './palavras.ts';
 export * from './alfabeto.ts';
+export * from './tracos.ts';
 export * from './habilidades.ts';
 export * from './regioes.ts';
 export * from './conquistas.ts';

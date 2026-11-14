@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { PersonagemVivo } from '../../componentes/PersonagemVivo.tsx';
-import { CONQUISTAS, FASE_POR_ID, ITENS_LOJA, REGIOES, SONS, SURPRESAS, type ItemLoja } from '@fonema/conteudo';
-import { aplicarSondagem, comprar, infoNome, podeComprar, podeEntrar } from '@fonema/motor';
+import { CONQUISTAS, FASE_POR_ID, REGIOES, SONS, SURPRESAS } from '@fonema/conteudo';
+import { aplicarSondagem, infoNome, podeEntrar } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { AvatarGrande, Balao, BotaoOuvir, Carregando, Topo } from '../../componentes/basicos.tsx';
 import { Figura, Fundo, Icone } from '../../componentes/ui.tsx';
-import { Cofrinho, Selo } from '../../componentes/recompensas.tsx';
+import { Selo } from '../../componentes/recompensas.tsx';
 import { EspelhoBoca, useEspelhoEmbed } from '../../componentes/EspelhoDoSom.tsx';
 import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
@@ -14,95 +14,6 @@ import { gravar, temGravacao } from '../../servicos/microfone.ts';
 import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
 import { falar, falarVarias, textoTela } from '../../util.ts';
-
-/** Lojinha (de brincadeirinha, D002): pode × ainda não pode, "faltam X moedinhas", meta do cofrinho. */
-export function Lojinha({ criancaId }: { criancaId: string }) {
-  const { repo } = useApp();
-  const { crianca, progresso, salvarProgresso } = useCrianca(criancaId);
-  const [confirmar, setConfirmar] = useState<ItemLoja | null>(null);
-  useEffect(() => { if (crianca) falar({ quem: 'tales', texto: 'Aqui você troca as moedinhas que ganhou aprendendo. Pode esperar e juntar para algo maior!' }, crianca); }, [crianca]);
-  if (!crianca || !progresso) return <Carregando />;
-  const metaId = Object.entries(progresso.contadores).find(([k, v]) => k.startsWith('meta:') && v === 1)?.[0].slice(5);
-  const itemMeta = ITENS_LOJA.find((i) => i.id === metaId) ?? null;
-
-  const comprarItem = async (i: ItemLoja) => {
-    const p = comprar(progresso, i.id, i.preco);
-    await salvarProgresso({ ...p, equipados: [...p.equipados, i.id].slice(-4) });
-    await repo.registrarEvento({ id: novoId('ev'), criancaId, em: Date.now(), tipo: 'compra', texto: `Trocou ${i.preco} moedinhas por: ${i.nome}` });
-    efeitos.moeda();
-    await falar({ quem: 'sofia', texto: 'Que escolha boa! Já está na sua mochila.' }, crianca);
-    setConfirmar(null);
-  };
-  const definirMeta = async (i: ItemLoja) => {
-    const contadores = Object.fromEntries(Object.entries(progresso.contadores).filter(([k]) => !k.startsWith('meta:')));
-    await salvarProgresso({ ...progresso, contadores: { ...contadores, [`meta:${i.id}`]: 1 } });
-    await falar({ quem: 'tales', texto: 'Meta escolhida! Agora é juntar moedinhas aprendendo.' }, crianca);
-  };
-
-  return (
-    <div className="tela-lojinha" data-testid="lojinha">
-      <Fundo cena="feira" desfoque={14} tom="calmo" />
-      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/vila`} titulo="Lojinha da vila" />
-      <main className="palco">
-        <section className="cartao">
-          <div className="loja-cab">
-            <Cofrinho saldo={progresso.moedinhas.saldo} />
-            <div>
-              <h1 className="t">Lojinha</h1>
-              <p>Moedinhas só se ganham aprendendo. Nada com dinheiro de verdade, nada por sorte.</p>
-              {itemMeta ? (
-                <div className="meta-cofrinho">
-                  <img src={asset(itemMeta.imagem)} alt="" />
-                  <div>
-                    <b>Minha meta: {itemMeta.nome}</b>
-                    <div className="barrinha"><i style={{ width: `${Math.min(100, (progresso.moedinhas.saldo / itemMeta.preco) * 100)}%` }} /></div>
-                    <small>{progresso.moedinhas.saldo >= itemMeta.preco ? 'Já dá para trocar!' : `Faltam ${itemMeta.preco - progresso.moedinhas.saldo} moedinhas`}</small>
-                  </div>
-                </div>
-              ) : <p className="nota-mic">Toque em "Quero juntar" para escolher uma meta para o cofrinho.</p>}
-            </div>
-          </div>
-          <div className="grade-loja">
-            {ITENS_LOJA.map((i) => {
-              const tem = progresso.itens.includes(i.id);
-              const { pode, faltam } = podeComprar(progresso, i.preco);
-              return (
-                <div key={i.id} className={`item-loja ${tem ? 'tem' : pode ? 'pode' : 'falta'}`} data-item={i.id}>
-                  <img src={asset(i.imagem)} alt="" />
-                  <b>{i.nome}</b>
-                  <span className="preco"><img src={asset('recompensas/moeda.webp')} alt="" />{i.preco}</span>
-                  {tem ? <span className="ja-tem"><Icone nome="check" />Na mochila</span> : pode ? (
-                    <button className="btn verde" onClick={() => setConfirmar(i)}><Icone nome="check" />Trocar</button>
-                  ) : (
-                    <>
-                      <div className="barrinha"><i style={{ width: `${Math.min(100, (progresso.moedinhas.saldo / i.preco) * 100)}%` }} /></div>
-                      <small>Faltam {faltam}</small>
-                      <button className="btn mini" onClick={() => { definirMeta(i); void faltam; }}>Quero juntar</button>
-                    </>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      </main>
-      {confirmar ? (
-        <div className="modal" role="dialog" aria-modal="true" aria-label="Confirmar troca">
-          <div className="cartao">
-            <img src={asset(confirmar.imagem)} alt="" className="modal-img" />
-            <p className="t">Trocar <b>{confirmar.preco} moedinhas</b> por <b>{confirmar.nome}</b>?</p>
-            <p>{confirmar.fala}</p>
-            <p className="nota-mic">Depois da troca, sobram {progresso.moedinhas.saldo - confirmar.preco} moedinhas.</p>
-            <div className="linha-botoes">
-              <button className="btn grande" onClick={() => setConfirmar(null)}>Esperar e juntar</button>
-              <button className="btn grande verde" onClick={() => comprarItem(confirmar)} data-testid="confirmar-troca"><Icone nome="check" />Trocar agora</button>
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </div>
-  );
-}
 
 /** Álbum de Conquistas: por região; ganhas brilham; as outras mostram a HABILIDADE (P1-b). */
 export function Album({ criancaId }: { criancaId: string }) {
@@ -144,7 +55,7 @@ export function Album({ criancaId }: { criancaId: string }) {
                     const g = progresso.conquistas[c.id];
                     return (
                       <div key={c.id} className={`conquista-item ${g ? 'ganha' : 'bloqueada'}`} data-conquista={c.id}>
-                        <Selo conquista={c} ganha={g} bloqueado={!g} letra={letra} tamanho={110} />
+                        <Selo conquista={c} ganha={g} bloqueado={!g} letra={letra} tamanho={110} ampliavel />
                         <p className="dica-cadeado">{g ? `${g.nivel === 'unico' ? '' : g.nivel + ' · '}${new Date(g.em).toLocaleDateString('pt-BR')}` : c.visivel_antes === 'misterio' ? 'Mistério' : c.dica}</p>
                       </div>
                     );

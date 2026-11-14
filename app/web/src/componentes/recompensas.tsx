@@ -1,74 +1,262 @@
-import type { CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { createPortal } from 'react-dom';
 import type { Conquista } from '@fonema/conteudo';
 import type { ConquistaGanha, InfoNivel } from '@fonema/motor';
 import { asset } from '../servicos/ambiente.ts';
 import { caminhoFigura } from './ui.tsx';
+import { carregarImagem, geoPremio, geoSelo, novoCanvas, pintarFrente, pintarVerso, prepararSelo, type ArteSelo, type Forma, type Metal, type Motivo } from './selo-pintura.ts';
+import type { Modo, Peca, Vista } from './premio3d.ts';
 
-const METAL: Record<string, [string, string, string]> = {
-  bronze: ['#F2C7A0', '#C9814A', '#8A4F24'],
-  prata: ['#FFFFFF', '#C9D3DE', '#7D8A99'],
-  ouro: ['#FFF1B8', '#F4B73C', '#B07A0E'],
-  diamante: ['#F2FBFF', '#A8D5F2', '#3D7CC4'],
-  unico: ['#FFF1B8', '#F4B73C', '#B07A0E']
-};
-const FORMA: Record<string, string> = {
-  selo: 'M100 8 L122 30 L152 26 L158 56 L184 72 L170 100 L184 128 L158 144 L152 174 L122 170 L100 192 L78 170 L48 174 L42 144 L16 128 L30 100 L16 72 L42 56 L48 26 L78 30 Z',
-  medalha: 'M100 12 A88 88 0 1 1 99.9 12 Z',
-  titulo: 'M100 10 L178 40 L170 130 Q150 170 100 190 Q50 170 30 130 L22 40 Z',
-  selo_validacao: 'M30 20 H170 Q182 20 182 32 V150 Q182 162 170 162 H120 L100 190 L80 162 H30 Q18 162 18 150 V32 Q18 20 30 20 Z',
-  trofeu: 'M100 12 A88 88 0 1 1 99.9 12 Z',
-  emblema_colecao: 'M100 10 L184 60 V140 L100 190 L16 140 V60 Z'
-};
+/* ============================== selos 3D (D025/D029) ============================== */
+const NOME_NIVEL: Record<string, string> = { bronze: 'Bronze', prata: 'Prata', ouro: 'Ouro', diamante: 'Diamante' };
+const COR_BORDA: Record<Metal | 'bloqueado', number> = { ouro: 0xe7ad3c, bronze: 0xb56c38, prata: 0xc2cad6, diamante: 0x74b9ee, bloqueado: 0xb4bdc9 };
+const MARGEM_3D = 1.16; // o canvas 3D é um pouco maior que o selo (perspectiva e quique da entrada)
 
 /**
- * Selo "3D" em SVG: borda grossa metálica, disco azul-marinho, motivo e faixa com o nome NEUTRO (D022).
- * Sem arco-íris (D009): no máximo 2–3 cores por selo. Gira em 3D na celebração (desligável).
+ * Forma da base por tipo de conquista:
+ * selo → MEDALHA (roseta), ou ESTRELA quando o motivo é uma letra (o "Meu Nome" aprovado e os selos das letras);
+ * medalha (marco da jornada) e troféu → ESTRELA; título e emblema de coleção → ESCUDO com louros;
+ * selo de validação do adulto → HEXÁGONO.
  */
-export function Selo({ conquista, ganha, tamanho = 150, girar = false, letra, bloqueado = false }: { conquista: Conquista; ganha?: ConquistaGanha; tamanho?: number; girar?: boolean; letra?: string; bloqueado?: boolean }) {
-  const nivel = ganha?.nivel ?? 'bronze';
-  const [c1, c2, c3] = bloqueado ? ['#EEF2F6', '#C9D3DE', '#9AA6B4'] : METAL[nivel] ?? METAL.ouro;
-  const forma = FORMA[conquista.tipo] ?? FORMA.selo;
-  const id = conquista.id.replace(/[^a-z0-9]/gi, '');
-  const motivo = conquista.motivo === '$LETRA' ? letra ?? 'A' : conquista.motivo;
-  const ehTexto = /^[A-ZÁÉÍÓÚ]{1,2}$/.test(motivo);
-  const mist = bloqueado && conquista.visivel_antes === 'misterio';
+export function formaDoSelo(tipo: string, motivoEhLetra: boolean): Forma {
+  if (tipo === 'titulo' || tipo === 'patente' || tipo === 'emblema_colecao') return 'escudo';
+  if (tipo === 'selo_validacao') return 'hexagono';
+  if (tipo === 'medalha' || tipo === 'trofeu') return 'estrela';
+  return motivoEhLetra ? 'estrela' : 'medalha';
+}
+
+function motivoDe(c: Conquista, letra?: string): Motivo {
+  // "Cofrinho Novo": o motivo é o porquinho, não uma moeda solta
+  if (c.id === 'S-R0-10' || /cofrinho|porquinho/i.test(c.nome)) return { tipo: 'figura', src: asset('recompensas/cofrinho-porquinho.webp') };
+  const m = c.motivo === '$LETRA' ? (letra ?? 'A') : c.motivo;
+  if (/^[A-ZÀ-Ý]{1,2}$/.test(m)) return { tipo: 'letra', texto: m };
+  return { tipo: 'figura', src: caminhoFigura(m) ?? asset('figuras/estrela.webp') };
+}
+
+function arteDe(c: Conquista, ganha: ConquistaGanha | undefined, letra: string | undefined, bloqueado: boolean): ArteSelo {
+  const mist = bloqueado && c.visivel_antes === 'misterio';
+  const motivo: Motivo = mist ? { tipo: 'misterio' } : motivoDe(c, letra);
+  const nivel = ganha?.nivel ?? 'ouro';
+  const metal: Metal = nivel === 'bronze' || nivel === 'prata' || nivel === 'diamante' ? nivel : 'ouro';
+  return {
+    forma: formaDoSelo(c.tipo, motivo.tipo === 'letra' || c.motivo === '$LETRA'),
+    metal, nome: c.nome, motivo, bloqueado,
+    verso: ganha && !bloqueado ? { nivel: NOME_NIVEL[ganha.nivel] ?? '', data: new Date(ganha.em).toLocaleDateString('pt-BR') } : undefined
+  };
+}
+const chaveArte = (a: ArteSelo) => JSON.stringify(a);
+const dpr = () => Math.min(2, typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1);
+const calmo = () => typeof document !== 'undefined' && (document.documentElement.classList.contains('menos-movimento') || !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
+
+interface Montada { peca: Peca; frente: HTMLCanvasElement | HTMLImageElement }
+async function montarSelo(arte: ArteSelo): Promise<Montada> {
+  const im = await prepararSelo(arte, true);
+  const g = geoSelo(arte.forma);
+  const frente = novoCanvas(g.w * 1.2, g.h * 1.2);
+  const verso = novoCanvas(g.w, g.h);
+  pintarFrente(frente, arte, im);
+  pintarVerso(verso, arte, im);
+  return { frente, peca: { frente, verso, contorno: g.contorno, proporcao: g.w / g.h, espessura: 0.075, borda: COR_BORDA[arte.bloqueado ? 'bloqueado' : arte.metal] } };
+}
+
+/** Objeto que GIRA em 360° (frente, borda e verso). Sem WebGL, fica a frente parada. */
+function Objeto3D({ chave, montar, proporcao, largura, modo, angulo, rotulo, aoAssentar, className = '' }: {
+  chave: string; montar: () => Promise<Montada>; proporcao: number; largura: number; modo: Modo; angulo?: number; rotulo: string; aoAssentar?: () => void; className?: string;
+}) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  const assentar = useRef(aoAssentar);
+  assentar.current = aoAssentar;
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+    let vivo = true;
+    let vista: Vista | null = null;
+    canvas.width = Math.round(largura * MARGEM_3D * dpr());
+    canvas.height = Math.round(canvas.width / proporcao);
+    (async () => {
+      const { peca, frente } = await montar();
+      if (!vivo) return;
+      const ctx = canvas.getContext('2d');
+      const m = (1 - 1 / MARGEM_3D) / 2;
+      ctx?.drawImage(frente, canvas.width * m, canvas.height * m, canvas.width / MARGEM_3D, canvas.height / MARGEM_3D);
+      try {
+        const motor = await import('./premio3d.ts');
+        if (!vivo) return;
+        vista = motor.criarVista(canvas, peca, { modo, angulo, calmo: calmo(), aoAssentar: () => assentar.current?.() });
+        canvas.dataset.giro = '3d';
+        if (calmo() || modo !== 'entrada') assentar.current?.();
+      } catch {
+        canvas.dataset.giro = 'parado';
+        assentar.current?.();
+      }
+    })();
+    return () => { vivo = false; vista?.destruir(); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chave, largura, modo, angulo]);
+  return <canvas ref={ref} className={`premio-3d ${className}`} style={{ width: largura * MARGEM_3D, aspectRatio: String(proporcao) }} role="img" aria-label={rotulo} data-testid="premio-3d" />;
+}
+
+/** Selo girando em 360°: arraste para girar (com inércia); solta e ele volta de frente ou retoma o giro lento. */
+export function SeloGirando({ conquista, ganha, letra, bloqueado = false, tamanho = 300, modo = 'auto', angulo, aoAssentar }: { conquista: Conquista; ganha?: ConquistaGanha; letra?: string; bloqueado?: boolean; tamanho?: number; modo?: Modo; angulo?: number; aoAssentar?: () => void }) {
+  const arte = arteDe(conquista, ganha, letra, bloqueado);
+  const g = geoSelo(arte.forma);
+  return <Objeto3D chave={chaveArte(arte)} montar={() => montarSelo(arte)} proporcao={g.w / g.h} largura={tamanho} modo={modo} angulo={angulo} aoAssentar={aoAssentar} rotulo={`Selo ${conquista.nome}${bloqueado ? ' (ainda não conquistado)' : ''}`} />;
+}
+
+const PREMIOS = {
+  moeda: { arquivo: 'moeda', rotulo: 'Moedinha', espessura: 0.07, borda: 0xe2a52c },
+  trofeu: { arquivo: 'trofeu', rotulo: 'Troféu', espessura: 0.1, borda: 0xd9982a },
+  bau: { arquivo: 'bau-livros', rotulo: 'Baú de livros', espessura: 0.1, borda: 0x2a3f78 }
+} as const;
+
+/** Moeda, troféu e baú no mesmo giro 360° dos selos (silhueta com espessura; o verso não repete letras espelhadas). */
+export function Premio3D({ tipo, tamanho = 160, modo = 'auto', angulo }: { tipo: keyof typeof PREMIOS; tamanho?: number; modo?: Modo; angulo?: number }) {
+  const p = PREMIOS[tipo];
+  const g = geoPremio(p.arquivo);
+  const montar = async (): Promise<Montada> => {
+    const [f, v] = await Promise.all([carregarImagem(asset(`recompensas/${p.arquivo}.webp`)), carregarImagem(asset(`recompensas/${p.arquivo}-verso.webp`))]);
+    if (!f) throw new Error('sem imagem');
+    return { frente: f, peca: { frente: f, verso: v ?? f, contorno: g.contorno, proporcao: g.w / g.h, espessura: p.espessura, borda: p.borda } };
+  };
+  return <Objeto3D chave={tipo} montar={montar} proporcao={g.w / g.h} largura={tamanho} modo={modo} angulo={angulo} rotulo={p.rotulo} className={`premio-${tipo}`} />;
+}
+
+/**
+ * Selo 3D (padrão aprovado): base em render 3D no metal do nível, motivo no centro e o nome NEUTRO (D022) na faixa.
+ * Parado é uma pintura leve (dezenas no Álbum); `ampliavel` abre o selo grande em 360°; `girar` já entra girando.
+ */
+export function Selo({ conquista, ganha, tamanho = 150, girar = false, letra, bloqueado = false, ampliavel = false }: { conquista: Conquista; ganha?: ConquistaGanha; tamanho?: number; girar?: boolean; letra?: string; bloqueado?: boolean; ampliavel?: boolean }) {
+  const arte = arteDe(conquista, ganha, letra, bloqueado);
+  const chave = chaveArte(arte);
+  const g = geoSelo(arte.forma);
+  const ref = useRef<HTMLCanvasElement>(null);
+  const [aberto, setAberto] = useState(false);
+  useEffect(() => {
+    if (girar) return;
+    let vivo = true;
+    prepararSelo(arte).then((im) => {
+      const canvas = ref.current;
+      if (!vivo || !canvas) return;
+      canvas.width = Math.round(tamanho * dpr());
+      canvas.height = Math.round((canvas.width * g.h) / g.w);
+      pintarFrente(canvas, arte, im);
+      canvas.dataset.pintado = '1';
+    });
+    return () => { vivo = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chave, tamanho, girar]);
+  const mist = arte.motivo.tipo === 'misterio';
+  const rotulo = `${mist ? 'Mistério' : conquista.nome}${bloqueado ? ' (ainda não conquistado)' : ''}`;
+  const abrir = ampliavel ? () => setAberto(true) : undefined;
   return (
-    <figure className={`selo ${girar ? 'selo-gira' : ''} ${bloqueado ? 'selo-bloqueado' : ''}`} style={{ width: tamanho } as CSSProperties} data-conquista={conquista.id}>
-      <svg viewBox="0 0 200 230" role="img" aria-label={`${conquista.nome}${bloqueado ? ' (ainda não conquistado)' : ''}`}>
-        <defs>
-          <linearGradient id={`m${id}`} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor={c1} /><stop offset=".5" stopColor={c2} /><stop offset="1" stopColor={c3} /></linearGradient>
-          <radialGradient id={`d${id}`} cx=".4" cy=".35" r=".8"><stop offset="0" stopColor={bloqueado ? '#B9C4D0' : '#2E4F8E'} /><stop offset="1" stopColor={bloqueado ? '#8995A3' : '#16285A'} /></radialGradient>
-          <linearGradient id={`b${id}`} x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#fff" stopOpacity="0" /><stop offset=".5" stopColor="#fff" stopOpacity=".55" /><stop offset="1" stopColor="#fff" stopOpacity="0" /></linearGradient>
-          <clipPath id={`c${id}`}><path d={forma} /></clipPath>
-        </defs>
-        <g transform="translate(0,4)">
-          <path d={forma} fill={c3} transform="translate(0,6)" />
-          <path d={forma} fill={`url(#m${id})`} />
-          <circle cx="100" cy="100" r="62" fill={`url(#d${id})`} stroke={c3} strokeWidth="4" />
-          <ellipse cx="80" cy="72" rx="34" ry="16" fill="#fff" opacity=".12" />
-          {mist ? (
-            <text x="100" y="122" textAnchor="middle" fontSize="64" fontFamily="Fredoka" fontWeight="700" fill="#fff" opacity=".9">?</text>
-          ) : ehTexto ? (
-            <text x="100" y="124" textAnchor="middle" fontSize={motivo.length > 1 ? 54 : 70} fontFamily="Fredoka" fontWeight="700" fill={bloqueado ? '#EEF2F6' : '#FFD067'} stroke="#7A4F00" strokeWidth={bloqueado ? 0 : 2}>{motivo}</text>
-          ) : (
-            <image href={caminhoFigura(motivo) ?? asset('figuras/estrela.webp')} x="54" y="54" width="92" height="92" opacity={bloqueado ? 0.5 : 1} style={bloqueado ? { filter: 'grayscale(1)' } : undefined} />
-          )}
-          {!bloqueado ? <rect className="selo-brilho" x="-120" y="0" width="80" height="200" fill={`url(#b${id})`} clipPath={`url(#c${id})`} transform="skewX(-18)" /> : null}
-        </g>
-        <path d="M14 182 H186 L176 200 L186 218 H14 L24 200 Z" fill={bloqueado ? '#9AA6B4' : '#1B3160'} />
-        <text x="100" y="206" textAnchor="middle" fontSize={conquista.nome.length > 20 ? 12 : 15} fontFamily="Fredoka" fontWeight="600" fill="#fff">{mist ? 'Mistério' : conquista.nome}</text>
-        {bloqueado ? (
-          <g transform="translate(150,26)"><circle r="20" fill="#fff" stroke="#9AA6B4" strokeWidth="3" /><path d="M-8 -2 v-5 a8 8 0 0 1 16 0 v5" stroke="#4F5B6D" strokeWidth="3" fill="none" /><rect x="-10" y="-2" width="20" height="15" rx="3" fill="#4F5B6D" /></g>
-        ) : null}
-      </svg>
+    <figure
+      className={`selo selo-3d ${girar ? 'selo-gira' : ''} ${bloqueado ? 'selo-bloqueado' : ''} ${ampliavel ? 'selo-ampliavel' : ''}`}
+      style={{ width: tamanho } as CSSProperties} data-conquista={conquista.id} data-forma={arte.forma} data-metal={bloqueado ? 'bloqueado' : arte.metal}
+      {...(ampliavel ? { role: 'button', tabIndex: 0, onClick: abrir, onKeyDown: (e: { key: string; preventDefault: () => void }) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir?.(); } }, 'aria-label': `${rotulo}. Tocar para ver de perto e girar.` } : {})}
+    >
+      {girar
+        ? <SeloGirando conquista={conquista} ganha={ganha} letra={letra} bloqueado={bloqueado} tamanho={tamanho} modo="entrada" />
+        : <canvas ref={ref} style={{ aspectRatio: `${g.w} / ${g.h}` }} role="img" aria-label={rotulo} />}
+      {tamanho <= 130 && !girar ? <figcaption className="selo-nome">{mist ? 'Mistério' : conquista.nome}</figcaption> : null}
+      {aberto ? <SeloAmpliado conquista={conquista} ganha={ganha} letra={letra} bloqueado={bloqueado} aoFechar={() => setAberto(false)} /> : null}
     </figure>
   );
 }
 
-export function Cofrinho({ saldo, animar = 0 }: { saldo: number; animar?: number }) {
+function tamanhoGrande(): number {
+  if (typeof window === 'undefined') return 300;
+  return Math.round(Math.max(170, Math.min(340, window.innerWidth * 0.62, window.innerHeight * 0.42)));
+}
+
+/** Selo aberto, grande, em 360°: nome, nível e como foi conquistado (Álbum / Minhas Conquistas / fim da fase). */
+export function SeloAmpliado({ conquista, ganha, letra, bloqueado = false, aoFechar }: { conquista: Conquista; ganha?: ConquistaGanha; letra?: string; bloqueado?: boolean; aoFechar: () => void }) {
+  const [tam] = useState(tamanhoGrande);
+  const mist = bloqueado && conquista.visivel_antes === 'misterio';
+  useEffect(() => {
+    const tecla = (e: KeyboardEvent) => { if (e.key === 'Escape') aoFechar(); };
+    window.addEventListener('keydown', tecla);
+    return () => window.removeEventListener('keydown', tecla);
+  }, [aoFechar]);
+  const nivel = ganha && NOME_NIVEL[ganha.nivel];
+  return createPortal(
+    <div className="selo-ampliado" role="dialog" aria-modal="true" aria-label={mist ? 'Mistério' : conquista.nome} data-testid="selo-ampliado" onClick={(e) => { e.stopPropagation(); if (e.target === e.currentTarget) aoFechar(); }}>
+      <div className="selo-ampliado-cartao">
+        <div className="selo-ampliado-palco">
+          <div className="selo-raios" aria-hidden="true" />
+          <SeloGirando conquista={conquista} ganha={ganha} letra={letra} bloqueado={bloqueado} tamanho={tam} modo="auto" />
+        </div>
+        <p className="selo-ampliado-gire" aria-hidden="true">Arraste para girar</p>
+        <h2 className="t">{mist ? 'Mistério' : conquista.nome}</h2>
+        {bloqueado
+          ? <p className="selo-ampliado-nivel bloqueado">Ainda não conquistado</p>
+          : <p className={`selo-ampliado-nivel ${ganha?.nivel ?? 'unico'}`}>{nivel ? `Nível ${nivel}` : 'Conquistado'}{ganha ? ` · ${new Date(ganha.em).toLocaleDateString('pt-BR')}` : ''}</p>}
+        <p className="selo-ampliado-como"><b>{bloqueado ? 'Como conquistar: ' : 'Como você conquistou: '}</b>{mist ? 'Continue a trilha para descobrir!' : conquista.dica}</p>
+        <button className="btn grande ipe" onClick={aoFechar} data-testid="fechar-selo" autoFocus>Fechar</button>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+/**
+ * Celebração do fim da fase: cada selo novo entra GRANDE, girando, um por vez; depois ficam lado a lado
+ * (e cada um abre em 360° ao toque). Em "menos movimento" (e nos testes) já aparecem lado a lado.
+ */
+export function CelebracaoSelos({ itens, letra }: { itens: Array<{ conquista: Conquista; ganha: ConquistaGanha }>; letra?: string }) {
+  const [semGiro] = useState(calmo);
+  const [pousados, setPousados] = useState(semGiro ? itens.length : 0);
+  const [tam] = useState(tamanhoGrande);
+  const relogio = useRef<number | undefined>(undefined);
+  const pousar = (i: number, espera: number) => {
+    window.clearTimeout(relogio.current);
+    relogio.current = window.setTimeout(() => setPousados((n) => Math.max(n, i + 1)), espera);
+  };
+  useEffect(() => {
+    // rede de segurança: se o giro não puder rodar, o selo pousa assim mesmo
+    if (pousados < itens.length) pousar(pousados, 7000);
+    return () => window.clearTimeout(relogio.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pousados, itens.length]);
+  const atual = pousados < itens.length ? itens[pousados] : null;
+  const lado = itens.length <= 2 ? 150 : 132;
   return (
-    <div className="cofrinho" id="cofrinho" data-testid="cofrinho">
-      <img className="cofre" src={asset('recompensas/cofrinho-porquinho.webp')} alt="Cofrinho de porquinho" />
+    <>
+      <div className={`selos-linha selos-novos n${itens.length}`}>
+        {itens.slice(0, pousados).map((it) => (
+          <div key={it.conquista.id} className="selo-novo" data-testid="selo-novo">
+            <Selo conquista={it.conquista} ganha={it.ganha} letra={letra} tamanho={lado} ampliavel />
+          </div>
+        ))}
+      </div>
+      {atual ? createPortal(
+        <div className="selo-palco" data-testid="selo-palco" aria-hidden="true">
+          <div className="selo-raios" />
+          <SeloGirando key={atual.conquista.id} conquista={atual.conquista} ganha={atual.ganha} letra={letra} tamanho={tam} modo="entrada" aoAssentar={() => pousar(pousados, 1500)} />
+        </div>,
+        document.body
+      ) : null}
+    </>
+  );
+}
+
+/** Cofrinho de porquinho (D029): balança em 3D com sombra; arrastar inclina. (É uma imagem só: ver nota no CSS.) */
+export function Cofrinho({ saldo, animar = 0 }: { saldo: number; animar?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const arrasto = useRef<{ x: number; g: number } | null>(null);
+  const girar = (g: number | null) => {
+    const el = ref.current;
+    if (!el) return;
+    if (g === null) { el.classList.remove('arrastando'); el.style.removeProperty('--giro'); } else { el.classList.add('arrastando'); el.style.setProperty('--giro', `${g.toFixed(1)}deg`); }
+  };
+  return (
+    <div
+      className="cofrinho cofrinho-3d" id="cofrinho" data-testid="cofrinho" ref={ref}
+      onPointerDown={(e) => { arrasto.current = { x: e.clientX, g: 0 }; try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* ponteiro sintético */ } }}
+      onPointerMove={(e) => { const a = arrasto.current; if (a) girar(Math.max(-38, Math.min(38, (e.clientX - a.x) * 0.45))); }}
+      onPointerUp={() => { arrasto.current = null; girar(null); }}
+      onPointerCancel={() => { arrasto.current = null; girar(null); }}
+    >
+      <img className="cofre" src={asset('recompensas/cofrinho-porquinho.webp')} alt="Cofrinho de porquinho" draggable={false} />
       <b>{saldo}</b>
       {Array.from({ length: Math.min(animar, 12) }, (_, i) => (
         <img key={i} className="moeda-voando" style={{ animationDelay: `${i * 0.12}s` }} src={asset('recompensas/moeda.webp')} alt="" aria-hidden="true" />

@@ -1,0 +1,91 @@
+/* ======================================================================
+   Recompensas 3D (D025/D029): selos em render 3D, prêmios em 360°, porquinho.
+   Complementa estilos.css (carregado depois dele). Sem arco-íris (D009).
+   ====================================================================== */
+
+/* ---------------- selo parado ---------------- */
+.selo.selo-3d{display:inline-flex;flex-direction:column;align-items:center;margin:0;max-width:100%;filter:drop-shadow(0 10px 9px rgba(12,26,64,.32));animation:none}
+.selo.selo-3d>canvas{display:block;width:100%;height:auto}
+.selo.selo-3d.selo-bloqueado{filter:drop-shadow(0 6px 6px rgba(12,26,64,.16))}
+.selo-nome{font-family:var(--f-titulo);font-weight:600;font-size:14px;line-height:1.15;color:var(--marinho);margin-top:4px;text-align:center;text-wrap:balance;max-width:150px}
+.selo-bloqueado .selo-nome{color:var(--cinza)}
+.selo-ampliavel{cursor:pointer;border-radius:18px;transition:transform .18s var(--mola,ease-out)}
+.selo-ampliavel:hover{transform:translateY(-3px) scale(1.04)}
+.selo-ampliavel:active{transform:scale(.97)}
+.selo-ampliavel:focus-visible{outline:4px solid #F4B73C;outline-offset:4px}
+.conquista-item .selo-3d{max-width:100%}
+
+/* ---------------- peça que gira em 360° (canvas alimentado pelo three.js) ---------------- */
+.premio-3d{display:block;max-width:none;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 16px 14px rgba(8,18,50,.38))}
+.premio-3d:active{cursor:grabbing}
+/* o canvas 3D é 16% maior que o selo (margem para a perspectiva): compensa para o desenho ocupar o lugar do selo parado */
+.selo-3d>.premio-3d{margin:-8% -8%}
+
+/* raios dourados atrás do prêmio em destaque */
+.selo-raios{position:absolute;left:50%;top:50%;width:150%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
+  background:repeating-conic-gradient(from 0deg,rgba(255,220,110,.5) 0 9deg,transparent 9deg 22deg);
+  -webkit-mask:radial-gradient(circle,#000 8%,transparent 66%);mask:radial-gradient(circle,#000 8%,transparent 66%);animation:seloRaios 22s linear infinite}
+@keyframes seloRaios{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* ---------------- fim da fase: o selo entra grande, girando; depois pousa na fila ---------------- */
+.selo-palco{position:fixed;inset:0;z-index:80;display:grid;place-items:center;pointer-events:none;
+  background:radial-gradient(70% 60% at 50% 50%,rgba(14,30,78,.74),rgba(14,30,78,.42) 60%,rgba(14,30,78,.2));animation:seloPalco .35s ease-out both}
+.selo-palco .selo-raios{width:min(120vmin,900px)}
+.selo-palco .premio-3d{position:relative;pointer-events:auto}
+@keyframes seloPalco{from{opacity:0}to{opacity:1}}
+.selos-novos{gap:10px 18px;align-items:flex-start;min-height:0}
+.selos-novos .selo-novo{animation:seloPousa .7s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes seloPousa{0%{transform:scale(2.1) translateY(-30px);opacity:0}55%{opacity:1}100%{transform:none;opacity:1}}
+.ritual-conquistas .selos-novos:empty{display:none}
+
+/* ---------------- selo aberto (Álbum / Minhas Conquistas) ---------------- */
+.selo-ampliado{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:12px;overflow:auto;cursor:default;
+  background:radial-gradient(80% 70% at 50% 40%,rgba(22,44,104,.9),rgba(8,18,50,.94));animation:seloPalco .25s ease-out both}
+.selo-ampliado-cartao{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;width:min(560px,100%);max-height:100%;color:#fff}
+.selo-ampliado-palco{position:relative;display:grid;place-items:center}
+.selo-ampliado-palco .premio-3d{position:relative}
+.selo-ampliado-gire{font-family:var(--f-titulo);font-weight:500;font-size:14px;letter-spacing:.3px;color:#BFD3F5;margin:-6px 0 0}
+.selo-ampliado h2{font-size:clamp(26px,4.4vw,40px);line-height:1.1;color:#FFE08A;text-shadow:0 3px 0 rgba(4,10,35,.6);margin:2px 0 0;text-wrap:balance}
+.selo-ampliado-nivel{display:inline-block;font-family:var(--f-titulo);font-weight:700;font-size:17px;border-radius:999px;padding:4px 18px;margin:2px 0;color:#3B2500;background:linear-gradient(180deg,#FFE27A,#F4B73C);box-shadow:0 3px 0 rgba(4,10,35,.35),inset 0 1px 0 rgba(255,255,255,.7)}
+.selo-ampliado-nivel.bronze{background:linear-gradient(180deg,#F5C9A2,#C27A46);color:#3A1A06}
+.selo-ampliado-nivel.prata{background:linear-gradient(180deg,#FFFFFF,#B9C4D1);color:#1F2A3A}
+.selo-ampliado-nivel.diamante{background:linear-gradient(180deg,#E9F8FF,#7DC0F0);color:#0C2E5C}
+.selo-ampliado-nivel.bloqueado{background:linear-gradient(180deg,#EEF2F6,#B4BFCC);color:#2C3848}
+.selo-ampliado-como{font-family:var(--f-crianca,var(--f-titulo));font-size:clamp(17px,2.4vw,21px);line-height:1.3;max-width:460px;margin:2px 0 8px;color:#fff}
+.selo-ampliado-como b{color:#FFE08A;font-family:var(--f-titulo)}
+
+/* ---------------- porquinho: balanço 3D com sombra ---------------- */
+/* 360° real do porquinho exige modelo 3D (ou várias imagens por ângulo): com uma imagem só, ele balança e inclina. */
+.cofrinho.cofrinho-3d{perspective:700px;touch-action:pan-y;cursor:grab;-webkit-tap-highlight-color:transparent}
+.cofrinho.cofrinho-3d::before{content:"";position:absolute;left:14%;right:14%;bottom:1%;height:13%;border-radius:50%;background:radial-gradient(closest-side,rgba(40,24,6,.42),rgba(40,24,6,0));animation:cofreSombra 4.6s ease-in-out infinite alternate;pointer-events:none}
+.cofrinho.cofrinho-3d>img.cofre{position:relative;filter:none;transform-origin:50% 86%;animation:cofreBalanca 4.6s ease-in-out infinite alternate;-webkit-user-drag:none;user-select:none}
+@keyframes cofreBalanca{0%{transform:rotateY(-17deg) rotateZ(-2.2deg) translateY(0)}50%{transform:rotateY(0deg) rotateZ(0deg) translateY(-5px)}100%{transform:rotateY(17deg) rotateZ(2.2deg) translateY(0)}}
+@keyframes cofreSombra{0%{transform:translateX(5%) scaleX(.94)}50%{transform:translateX(0) scaleX(.86);opacity:.8}100%{transform:translateX(-5%) scaleX(.94)}}
+.cofrinho.cofrinho-3d.arrastando{cursor:grabbing}
+.cofrinho.cofrinho-3d.arrastando>img.cofre{animation:none;transform:rotateY(var(--giro,0deg)) rotateZ(calc(var(--giro,0deg) * .12));transition:transform .08s linear}
+.cofrinho.cofrinho-3d:not(.arrastando)>img.cofre{transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+
+/* moedinha que gira ao lado do total ganho */
+.ritual-moeda-3d{display:inline-block;vertical-align:middle;margin:-10px 2px -6px -6px}
+.ritual-moeda-3d .premio-3d{filter:drop-shadow(0 5px 4px rgba(90,50,0,.35))}
+
+/* ---------------- menos movimento ---------------- */
+html.menos-movimento .selo-raios{animation:none}
+html.menos-movimento .cofrinho.cofrinho-3d>img.cofre,html.menos-movimento .cofrinho.cofrinho-3d::before{animation:none;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .selo-raios,.cofrinho.cofrinho-3d>img.cofre,.cofrinho.cofrinho-3d::before,.selos-novos .selo-novo,.selo-palco,.selo-ampliado{animation:none}
+}
+
+/* ---------------- telas pequenas ---------------- */
+@media (max-width:560px){
+  .selo-nome{font-size:13px}
+  .selos-novos{gap:8px 10px}
+  .selo-ampliado-cartao{gap:4px}
+}
+@media (max-height:620px){
+  .selo-ampliado-gire{display:none}
+  .selo-ampliado-como{margin-bottom:4px}
+}
+
+/* alto contraste */
+html.contraste .selo-nome{color:#000}

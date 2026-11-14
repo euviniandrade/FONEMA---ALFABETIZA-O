@@ -27,7 +27,7 @@ const DICAS: Record<string, { dica: string; motivo?: string }> = {
   'TI-R0-02': { dica: 'Vencer a Festa das Rimas', motivo: '🔍' },
   'S-R0-06': { dica: 'A Festa das Rimas, na praça', motivo: '🏡' },
   'S-R0-07': { dica: 'Bater palmas nos nomes da família', motivo: '👨‍👩‍👧' },
-  'S-R0-10': { dica: 'Guardar moedinhas no cofrinho-tatu' },
+  'S-R0-10': { dica: 'Guardar moedinhas no porquinho' },
   'S-R0-12': { dica: 'Ensinar o Bolota com gentileza', motivo: '🦔' },
   'S-R0-13': { dica: 'Pular a amarelinha batendo as sílabas', motivo: '🦶' },
   'S-R0-15': { dica: 'Terminar a sessão no ritual de fim', motivo: '🌙' },

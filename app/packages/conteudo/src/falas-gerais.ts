@@ -14,7 +14,9 @@ export const FALAS = {
   voltou: [
     { quem: 'sofia', texto: 'Oi, [NOME]! {Que bom que você voltou, curioso|Que bom que você voltou, curiosa|Que bom te ver de novo}!' }
   ] as Fala[],
-  avatar: { quem: 'tales', texto: 'Escolhe do seu jeito, [NOME]!' } as Fala,
+  avatar: { quem: 'tales', texto: 'Vamos montar o seu boneco, [NOME]! Qual é a cor da sua pele?' } as Fala,
+  avatarSexo: { quem: 'sofia', texto: 'O boneco é menino ou menina?' } as Fala,
+  avatarLojinha: { quem: 'tales', texto: 'Olha a Lojinha! A cada letra abrem coisas novas para o seu boneco.' } as Fala,
   avatarPronto: { quem: 'sofia', texto: 'Ficou a sua cara! {Você está pronto|Você está pronta|Tudo pronto pra começar}?' } as Fala,
   suaVez: { quem: 'sofia', texto: 'Agora é a sua vez, [NOME]!' } as Fala,
   acertos: [
@@ -31,7 +33,7 @@ export const FALAS = {
   euFalei: 'Eu ouvi você, [NOME]! Agora escuta como eu falo:',
   ritual: {
     recap: 'Hoje você trabalhou com muita atenção, [NOME].',
-    moedinhas: 'As moedinhas vão para o cofrinho-tatu!',
+    moedinhas: 'As moedinhas vão para o porquinho!',
     amanha: 'Amanhã a gente lembra!',
     tchau: 'Tchau, [NOME]! A tela vai descansar e você também.'
   },

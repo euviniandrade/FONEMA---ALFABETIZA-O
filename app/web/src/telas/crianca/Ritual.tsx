@@ -5,14 +5,14 @@ import { calcularNivel, fasesConcluidas, missaoInicialFeita, infoNome, type Cria
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Topo } from '../../componentes/basicos.tsx';
-import { BarraObjetivo, Cofrinho, Selo, Termometro } from '../../componentes/recompensas.tsx';
+import { BarraObjetivo, CelebracaoSelos, Cofrinho, Premio3D, Termometro } from '../../componentes/recompensas.tsx';
 import { asset, espera } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
 import { voz } from '../../servicos/voz.ts';
 import { textoTela, textoVoz } from '../../util.ts';
 
 /**
- * C9 · Ritual de fim: recapitula, moedinhas EM BLOCO voando ao cofrinho-tatu, conquistas e surpresas
+ * C9 · Ritual de fim: recapitula, moedinhas EM BLOCO voando ao porquinho (cofrinho), conquistas e surpresas
  * DEPOIS do fato (P1-b), barra do próximo OBJETIVO, gancho e despedida. Sem botão "continuar".
  */
 export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { crianca: Crianca; progresso: Progresso; relatorio: RelatorioSessao; fase: Fase; expressa: boolean }) {
@@ -71,16 +71,14 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
           <div className="ritual-grade">
             <div className="ritual-moedas">
               <Cofrinho saldo={saldoAntes + (passo >= 1 ? relatorio.moedinhas : 0)} animar={moedasAnim} />
-              <p data-testid="moedinhas-ganhas"><b>+{relatorio.moedinhas}</b> moedinhas no cofrinho</p>
+              <p data-testid="moedinhas-ganhas"><span className="ritual-moeda-3d" aria-hidden="true"><Premio3D tipo="moeda" tamanho={44} /></span><b>+{relatorio.moedinhas}</b> moedinhas no cofrinho</p>
               {relatorio.moedinhasCalculadas > relatorio.moedinhas ? <small>Hoje o cofrinho já está cheio; amanhã tem mais.</small> : null}
             </div>
             <div className="ritual-conquistas" aria-live="polite">
               {passo >= 2 && relatorio.conquistasNovas.length ? (
                 <>
                   <h2 className="t">Olha o que você conquistou!</h2>
-                  <div className="selos-linha">
-                    {relatorio.conquistasNovas.slice(0, 4).map((g) => CONQUISTA_POR_ID[g.id] ? <div key={g.id} className="selo-novo" data-testid="selo-novo"><Selo conquista={CONQUISTA_POR_ID[g.id]} ganha={g} girar letra={letra} tamanho={140} /></div> : null)}
-                  </div>
+                  <CelebracaoSelos letra={letra} itens={relatorio.conquistasNovas.slice(0, 4).flatMap((g) => (CONQUISTA_POR_ID[g.id] ? [{ conquista: CONQUISTA_POR_ID[g.id], ganha: g }] : []))} />
                   {relatorio.conquistasNovas.length > 4 ? <p>+{relatorio.conquistasNovas.length - 4} no Álbum</p> : null}
                 </>
               ) : passo >= 2 ? <p className="ritual-sem">Cada desafio é um passo a mais na leitura.</p> : null}

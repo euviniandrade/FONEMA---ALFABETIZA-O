@@ -26,11 +26,19 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
   const quem = atividade.voz ?? 'sofia';
   const mostrar = async (lento = false) => {
     setFalando(true);
-    // Trilha do Alfabeto: consoante usa "B, de bola." (uma vez) no lugar do som isolado, até a gravação da fonoaudióloga
-    for (let k = 0; k < (atividade.falaSom ? 1 : 2); k++) {
-      await voz.falar(atividade.falaSom ?? s.esticado, { quem, rate: lento ? 0.6 : 0.8 });
+    // D029 §2: primeiro o SOM REAL da letra ("mmm"), depois o nome e a palavra-chave pela dupla ("M, de macaco.").
+    // Sem som real para o fonema (reprovado na verificação e ainda não gravado no Estúdio), fica a fala da dupla.
+    if (await voz.temSomReal(atividade.fonema)) {
+      await voz.somReal(atividade.fonema, lento ? 1 : 2);
       setLetra(true);
       await espera(300);
+      if (atividade.falaSom) await voz.falar(atividade.falaSom, { quem });
+    } else {
+      for (let k = 0; k < (atividade.falaSom ? 1 : 2); k++) {
+        await voz.falar(atividade.falaSom ?? s.esticado, { quem });
+        setLetra(true);
+        await espera(300);
+      }
     }
     setFalando(false);
   };

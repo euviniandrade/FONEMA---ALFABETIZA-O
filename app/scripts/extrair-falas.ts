@@ -6,7 +6,7 @@
  * Uso: npx tsx scripts/extrair-falas.ts
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { NOMES_COMUNS, FASES, FALAS, FALAS_ALFABETO, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
+import { ALFABETO, NOMES_COMUNS, FASES, FALAS, FALAS_ALFABETO, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
 import { concordar, silabas } from '@fonema/motor';
 
 const VOZ: Record<string, 'sofia' | 'tales'> = { sofia: 'sofia', tales: 'tales', bolota: 'tales', davi: 'tales', 'dona-cida': 'sofia', pescadora: 'sofia', 'guarda-parque': 'tales', 'zum-zum': 'tales' };
@@ -37,7 +37,7 @@ for (const f of FASES) {
     if (a.tipo === 'montar') a.palavras.forEach((w) => !w.startsWith('$') && add('sofia', w.toLowerCase(), c.id));
     if (a.tipo === 'ditado') a.palavras.forEach((w) => add('sofia', w.toLowerCase(), c.id));
     if (a.tipo === 'falar') a.itens.forEach((i) => add('sofia', i.falar, c.id));
-    if (a.tipo === 'letra') a.falas.forEach((x) => addF(x, c.id));
+    if (a.tipo === 'letra') { a.falas.forEach((x) => addF(x, c.id)); addF(a.brincadeira, c.id); addF(a.repita, c.id); }
     if (a.tipo === 'espelho') { add(a.voz ?? 'sofia', a.falaSom, c.id); add(a.voz ?? 'sofia', a.falaAncora, c.id); if (a.voz) add(a.voz, 'Agora é a sua vez, [NOME]!', c.id); }
     if (a.tipo === 'pausa') a.sequencia.forEach((s) => add('tales', s.falar, c.id));
   }
@@ -57,6 +57,8 @@ void ITENS_LOJA;
 Object.values(SONS).forEach((x) => { add('sofia', x.esticado, 'sons'); add('tales', x.esticado, 'sons'); });
 ['A', 'E', 'I', 'O', 'U', 'M', 'L', 'F', 'S', 'V', 'N'].forEach((l) => add('sofia', l.toLowerCase().repeat(3), 'sons'));
 add('sofia', FALAS_ALFABETO.trilha, 'trilha do alfabeto');
+// três palavras-exemplo de cada letra (D029 §2): ditas pela Sofia na tela da letra
+ALFABETO.forEach((l) => l.palavras.forEach((w) => add('sofia', w, 'alfabeto: palavras')));
 add('sofia', FALAS.conquista, 'ritual'); add('tales', FALAS.surpresa, 'ritual');
 
 const coletadas = 'web/e2e/falas-coletadas.json';

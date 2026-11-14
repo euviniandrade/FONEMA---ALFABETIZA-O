@@ -126,6 +126,39 @@
   "tales|Letra H.": {
    "versao": 2,
    "texto": "Letra agá."
+  },
+  "tales|Agora o Bolota sabe ler direitinho!": {
+   "versao": 2,
+   "texto": "Agora o Bolota sabe ler direitinho."
+  },
+  "tales|O Bolota leu \"LALA\"… Ops! Ensina para ele,": {
+   "versao": 2,
+   "texto": "O Bolota leu \"lala\"… Ops! Ensina para ele…"
+  },
+  "sofia|kart": {
+   "versao": 2,
+   "texto": "Kart!",
+   "lento": true
+  },
+  "sofia|olho": {
+   "versao": 2,
+   "texto": "Olho!",
+   "lento": true
+  },
+  "sofia|unha": {
+   "versao": 2,
+   "texto": "Unha!",
+   "lento": true
+  },
+  "sofia|quiabo": {
+   "versao": 2,
+   "texto": "Quiabo!",
+   "lento": true
+  },
+  "sofia|doce": {
+   "versao": 2,
+   "texto": "Doce!",
+   "lento": true
   }
  },
  "nomes": {

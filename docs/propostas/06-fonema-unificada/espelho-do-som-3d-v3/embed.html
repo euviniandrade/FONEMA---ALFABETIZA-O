@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>FONEMA · Espelho do Som</title>
+<!-- Componente embutível (iframe). Parâmetros: ?f=<fonema>&quem=sofia|tales&compacto=1&lento=1&rotulos=0|1
+     &sons=<mapa.json com fonema → arquivo de som>&congela=faz|prepara|repouso (para capturas). Mensagens: veja embed.js. -->
+<link rel="stylesheet" href="espelho.css">
+<style>html,body{margin:0;height:100%;background:transparent;overflow:hidden}#espelho{position:absolute;inset:0;padding:8px}body.compacto #espelho{padding:0}#espelho>.eds3{position:relative;width:100%;height:100%;inset:auto}</style>
+</head>
+<body>
+<div id="espelho"></div>
+<script src="fonemas.js"></script>
+<script type="module" src="embed.js"></script>
+</body>
+</html>

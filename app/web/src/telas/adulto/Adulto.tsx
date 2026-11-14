@@ -18,8 +18,8 @@ const ROTULO_NIVEL: Record<NivelInicial, string> = { zero: 'Do zero', 'letras-e-
 /* ------------------------------ moldura das áreas (D028): cada perfil tem a sua, com menu próprio e "Sair" ------------------------------ */
 type AreaId = 'familia' | 'professor';
 const AREAS: Record<AreaId, { nome: string; cena: string; menu: [string, string, string][] }> = {
-  familia: { nome: 'Área da Família', cena: 'varanda', menu: [['familia', 'pessoa', 'Crianças'], ['familia/cadastro', 'mais', 'Adicionar criança'], ['familia/config', 'engrenagem', 'Configurações']] },
-  professor: { nome: 'Área do Professor', cena: 'biblioteca', menu: [['professor', 'pessoa', 'Turma'], ['professor/fila', 'chapeu', 'Mostra pro professor'], ['professor/habilidades', 'grafico', 'Habilidades'], ['professor/palavras', 'caderno', 'Palavras difíceis'], ['professor/config', 'engrenagem', 'Configurações']] }
+  familia: { nome: 'Área da Família', cena: 'varanda', menu: [['familia', 'pessoa', 'Crianças'], ['familia/cadastro', 'mais', 'Adicionar criança'], ['familia/sons', 'microfone', 'Sons das letras'], ['familia/config', 'engrenagem', 'Configurações']] },
+  professor: { nome: 'Área do Professor', cena: 'biblioteca', menu: [['professor', 'pessoa', 'Turma'], ['professor/fila', 'chapeu', 'Mostra pro professor'], ['professor/habilidades', 'grafico', 'Habilidades'], ['professor/palavras', 'caderno', 'Palavras difíceis'], ['professor/sons', 'microfone', 'Sons das letras'], ['professor/config', 'engrenagem', 'Configurações']] }
 };
 
 export function Area({ area, atual, children }: { area: AreaId; atual: string; children: ReactNode }) {
@@ -386,7 +386,8 @@ export function Configuracoes({ area = 'familia' }: { area?: AreaId }) {
           <fieldset className="campo config-grupo" data-testid="config-alfabeto"><legend><Icone nome="caderno" />Trilha do Alfabeto</legend>
             <p className="nota-mic">A jornada começa pelo alfabeto: cada letra e o som de cada letra, de A a Z. Depois vêm as sílabas, as palavras, o nome e as frases.</p>
             <label className="opcao-linha"><input type="checkbox" data-testid="primeiras-palavrinhas" checked={configBruta.alfabeto?.primeirasPalavrinhas ?? true} onChange={(e) => set({ alfabeto: { primeirasPalavrinhas: e.target.checked } })} /> Primeiras palavrinhas: juntar as letras já conhecidas e ler (BABÁ depois do B, BEBÊ depois do E…)</label>
-            <p className="nota-mic" data-testid="aviso-sons-puros"><b>Sobre os sons das letras:</b> a dupla fala "B, de bola" e mostra a boca no Espelho do Som. O som puro de {sonsPurosPendentes().length} consoantes ({sonsPurosPendentes().map((l) => l.letra).join(', ')}) ainda será gravado por fonoaudióloga, porque a voz gerada por computador erra o som isolado. Em casa, fale o som (e não o nome da letra): "mmm", e não "eme".</p>
+            <p className="nota-mic" data-testid="aviso-sons-puros"><b>Sobre os sons das letras:</b> a criança ouve primeiro o som da letra ("mmm") e depois a dupla diz "M, de macaco". Os sons foram gerados por computador e conferidos por medidas; alguns ({sonsPurosPendentes().length} consoantes: {sonsPurosPendentes().map((l) => l.letra).join(', ')}) ficam melhores gravados por quem ensina. Em casa, fale o som (e não o nome da letra): "mmm", e não "eme".</p>
+            <div className="linha-botoes"><button className="btn" onClick={() => navegar(`${area}/sons`)} data-testid="abrir-estudio"><Icone nome="microfone" />Gravar os sons das letras</button></div>
           </fieldset>
 
           <fieldset className="campo config-grupo"><legend><Icone nome="lojinha" />Lojinha de brincadeira</legend>

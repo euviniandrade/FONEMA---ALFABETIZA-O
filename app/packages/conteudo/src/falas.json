@@ -87,7 +87,7 @@
   "id": "s-12yrr7u",
   "voz": "sofia",
   "texto": "Yasmin",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-138awz1",
@@ -123,7 +123,7 @@
   "id": "s-14qflpd",
   "voz": "sofia",
   "texto": "hipopótamo",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-14skhwc",
@@ -190,6 +190,12 @@
   "voz": "sofia",
   "texto": "Oi, [NOME]! O farol precisa das cinco vogais para acender.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-17b3h6e",
+  "voz": "sofia",
+  "texto": "Faz de conta que você morde uma maçã bem crocante.",
+  "origem": "AL-Q-C2"
  },
  {
   "id": "s-17jgt4r",
@@ -273,19 +279,25 @@
   "id": "s-1blvewq",
   "voz": "sofia",
   "texto": "abacaxi",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1bo2j0f",
   "voz": "sofia",
   "texto": "elefante",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1bvb9y2",
   "voz": "sofia",
   "texto": "Wesley",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1bye8hv",
+  "voz": "sofia",
+  "texto": "Wagner",
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1c6z85m",
@@ -432,6 +444,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1fhr3jx",
+  "voz": "sofia",
+  "texto": "Faz de conta que você é uma cobrinha.",
+  "origem": "AL-S-C2"
+ },
+ {
   "id": "s-1fszss8",
   "voz": "sofia",
   "texto": "Escuta, [NOME]. Qual começa com o som?",
@@ -459,18 +477,12 @@
   "id": "s-1h2qlq",
   "voz": "sofia",
   "texto": "yakisoba",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1hey3cw",
   "voz": "sofia",
   "texto": "Você montou a palavra!",
-  "origem": "telas (E2E)"
- },
- {
-  "id": "s-1hs1iuo",
-  "voz": "sofia",
-  "texto": "As moedinhas vão para o cofrinho-tatu!",
   "origem": "telas (E2E)"
  },
  {
@@ -516,6 +528,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1jtlc75",
+  "voz": "sofia",
+  "texto": "Faz de conta que você ganhou um troféu!",
+  "origem": "AL-E-C2"
+ },
+ {
   "id": "s-1jzaxhx",
   "voz": "sofia",
   "texto": "Agora é a sua vez, [NOME]!",
@@ -556,6 +574,12 @@
   "voz": "sofia",
   "texto": "G, de gato.",
   "origem": "AL-FESTA-C4b"
+ },
+ {
+  "id": "s-1mic20x",
+  "voz": "sofia",
+  "texto": "Faz de conta que você esqueceu o lanche em casa.",
+  "origem": "AL-Y-C2"
  },
  {
   "id": "s-1myt00d",
@@ -705,7 +729,7 @@
   "id": "s-1qah38z",
   "voz": "sofia",
   "texto": "lua",
-  "origem": "palavras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1qah3sf",
@@ -747,13 +771,19 @@
   "id": "s-1qah5r1",
   "voz": "sofia",
   "texto": "ovo",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1qah78q",
   "voz": "sofia",
   "texto": "aaa",
   "origem": "sons"
+ },
+ {
+  "id": "s-1qahaaq",
+  "voz": "sofia",
+  "texto": "ema",
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1qahai6",
@@ -771,7 +801,7 @@
   "id": "s-1qahl0t",
   "voz": "sofia",
   "texto": "rua",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1qahlf9",
@@ -789,7 +819,7 @@
   "id": "s-1qahm4b",
   "voz": "sofia",
   "texto": "sol",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1qahn1z",
@@ -801,7 +831,7 @@
   "id": "s-1qahnex",
   "voz": "sofia",
   "texto": "uva",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1qahnjy",
@@ -894,6 +924,18 @@
   "origem": "voltou"
  },
  {
+  "id": "s-1t1o0jj",
+  "voz": "sofia",
+  "texto": "ketchup",
+  "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1tqmk5t",
+  "voz": "sofia",
+  "texto": "Repita comigo!",
+  "origem": "AL-Y-C2"
+ },
+ {
   "id": "s-1tssiez",
   "voz": "sofia",
   "texto": "Esta letra aparece em nomes.",
@@ -921,19 +963,19 @@
   "id": "s-1uqfwe4",
   "voz": "sofia",
   "texto": "iglu",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqg207",
   "voz": "sofia",
   "texto": "ilha",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqg2xc",
   "voz": "sofia",
   "texto": "ioiô",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqg4ej",
@@ -945,7 +987,7 @@
   "id": "s-1uqgj4y",
   "voz": "sofia",
   "texto": "jaca",
-  "origem": "AL-R2-C5p"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqgtjf",
@@ -954,16 +996,22 @@
   "origem": "sons"
  },
  {
+  "id": "s-1uqheef",
+  "voz": "sofia",
+  "texto": "kart",
+  "origem": "alfabeto: palavras"
+ },
+ {
   "id": "s-1uqhl93",
   "voz": "sofia",
   "texto": "kiwi",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqhz5a",
   "voz": "sofia",
   "texto": "leão",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqi5u3",
@@ -988,6 +1036,12 @@
   "voz": "sofia",
   "texto": "lola",
   "origem": "R2a-F02-C8"
+ },
+ {
+  "id": "s-1uqiath",
+  "voz": "sofia",
+  "texto": "lobo",
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqicf1",
@@ -1029,7 +1083,7 @@
   "id": "s-1uqizoy",
   "voz": "sofia",
   "texto": "moto",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqj0ve",
@@ -1068,6 +1122,12 @@
   "origem": "sons"
  },
  {
+  "id": "s-1uqkeen",
+  "voz": "sofia",
+  "texto": "olho",
+  "origem": "alfabeto: palavras"
+ },
+ {
   "id": "s-1uqm3pn",
   "voz": "sofia",
   "texto": "aaaa",
@@ -1095,7 +1155,7 @@
   "id": "s-1uqmqiz",
   "voz": "sofia",
   "texto": "bola",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqms90",
@@ -1107,7 +1167,7 @@
   "id": "s-1uqnf1m",
   "voz": "sofia",
   "texto": "cola",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqnfco",
@@ -1137,7 +1197,13 @@
   "id": "s-1uqnk9n",
   "voz": "sofia",
   "texto": "casa",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1uqo36u",
+  "voz": "sofia",
+  "texto": "doce",
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqo3tr",
@@ -1149,13 +1215,13 @@
   "id": "s-1uqo8ap",
   "voz": "sofia",
   "texto": "dedo",
-  "origem": "AL-R3-C5p"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqobgl",
   "voz": "sofia",
   "texto": "dado",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqpl55",
@@ -1173,7 +1239,7 @@
   "id": "s-1uqpmn4",
   "voz": "sofia",
   "texto": "foca",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqpmqy",
@@ -1203,7 +1269,7 @@
   "id": "s-1uqprvy",
   "voz": "sofia",
   "texto": "faca",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqpsi3",
@@ -1212,10 +1278,16 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1uqqmi6",
+  "voz": "sofia",
+  "texto": "galo",
+  "origem": "alfabeto: palavras"
+ },
+ {
   "id": "s-1uqqn3q",
   "voz": "sofia",
   "texto": "gato",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqr763",
@@ -1230,10 +1302,16 @@
   "origem": "sons"
  },
  {
+  "id": "s-1uqsxl5",
+  "voz": "sofia",
+  "texto": "zero",
+  "origem": "alfabeto: palavras"
+ },
+ {
   "id": "s-1uqxk01",
   "voz": "sofia",
   "texto": "pato",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqyrdk",
@@ -1245,13 +1323,13 @@
   "id": "s-1uqz077",
   "voz": "sofia",
   "texto": "rato",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqz1zn",
   "voz": "sofia",
   "texto": "roda",
-  "origem": "AL-R4-C5p"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqzgsr",
@@ -1263,7 +1341,7 @@
   "id": "s-1uqzlfl",
   "voz": "sofia",
   "texto": "suco",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1uqzq7a",
@@ -1275,7 +1353,7 @@
   "id": "s-1uqzv52",
   "voz": "sofia",
   "texto": "sapo",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1ur0atf",
@@ -1287,19 +1365,25 @@
   "id": "s-1ur0mqn",
   "voz": "sofia",
   "texto": "tatu",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1ur1174",
   "voz": "sofia",
   "texto": "urso",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1ur11zf",
   "voz": "sofia",
   "texto": "uuuu",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1ur148p",
+  "voz": "sofia",
+  "texto": "unha",
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1ur1r4b",
@@ -1317,19 +1401,19 @@
   "id": "s-1ur1xqv",
   "voz": "sofia",
   "texto": "vovó",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1ur1zyt",
   "voz": "sofia",
   "texto": "vela",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1ur23jy",
   "voz": "sofia",
   "texto": "vaca",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1ur33j0",
@@ -1408,6 +1492,12 @@
   "voz": "sofia",
   "texto": "FILA",
   "origem": "R2a-F05-C4a"
+ },
+ {
+  "id": "s-1urf0ik",
+  "voz": "sofia",
+  "texto": "Yuri",
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-1urhhwl",
@@ -1572,6 +1662,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1yowk78",
+  "voz": "sofia",
+  "texto": "Faz de conta que você é um macaquinho.",
+  "origem": "AL-W-C2"
+ },
+ {
   "id": "s-2aajyj",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Eu sou a Sofia.",
@@ -1716,16 +1812,34 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-9n2i3",
+  "voz": "sofia",
+  "texto": "horta",
+  "origem": "alfabeto: palavras"
+ },
+ {
   "id": "s-9p2wlb",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje você vai ler uma palavra inteirinha.",
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-9rut2x",
+  "voz": "sofia",
+  "texto": "jacaré",
+  "origem": "alfabeto: palavras"
+ },
+ {
   "id": "s-9ryn7q",
   "voz": "sofia",
   "texto": "janela",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-9uxkcu",
+  "voz": "sofia",
+  "texto": "Faz de conta que você chama um amigo lá longe.",
+  "origem": "AL-O-C2"
  },
  {
   "id": "s-a5a82h",
@@ -1773,7 +1887,7 @@
   "id": "s-bv2fhl",
   "voz": "sofia",
   "texto": "macaco",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-by1ls9",
@@ -1827,19 +1941,37 @@
   "id": "s-dawq4y",
   "voz": "sofia",
   "texto": "ovelha",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-dhn2s",
   "voz": "sofia",
   "texto": "navio",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-dn0nh0",
   "voz": "sofia",
   "texto": "O farol apagou, [NOME]. São 4 andares. Você vai devagar e dá certo.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-dn8rp",
+  "voz": "sofia",
+  "texto": "ninho",
+  "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-dqbda",
+  "voz": "sofia",
+  "texto": "nuvem",
+  "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-dqsoiq",
+  "voz": "sofia",
+  "texto": "Faz de conta que você toma um gole de água.",
+  "origem": "AL-G-C2"
  },
  {
   "id": "s-dvw91j",
@@ -1869,7 +2001,7 @@
   "id": "s-ecxytk",
   "voz": "sofia",
   "texto": "abelha",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-ej9sf4",
@@ -1899,13 +2031,13 @@
   "id": "s-ey0vns",
   "voz": "sofia",
   "texto": "banana",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-ezfwfj",
   "voz": "sofia",
   "texto": "boneca",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-ezk40g",
@@ -1918,6 +2050,12 @@
   "voz": "sofia",
   "texto": "Você escutou o final das palavras!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-fc6qa",
+  "voz": "sofia",
+  "texto": "Faz de conta que a comida está uma delícia.",
+  "origem": "AL-M-C2"
  },
  {
   "id": "s-ff5ofq",
@@ -1935,7 +2073,7 @@
   "id": "s-fo3mps",
   "voz": "sofia",
   "texto": "caneca",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-fuzudm",
@@ -1953,7 +2091,7 @@
   "id": "s-g35tl",
   "voz": "sofia",
   "texto": "avião",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-ganutj",
@@ -2031,13 +2169,25 @@
   "id": "s-ibqskb",
   "voz": "sofia",
   "texto": "xilofone",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-ievpp9",
+  "voz": "sofia",
+  "texto": "Faz de conta que você está no médico: abre bem a boca!",
+  "origem": "AL-A-C2"
+ },
+ {
+  "id": "s-iwrpiz",
+  "voz": "sofia",
+  "texto": "xadrez",
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-j0b53",
   "voz": "sofia",
   "texto": "folha",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-j7stzy",
@@ -2082,10 +2232,16 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-lhkva0",
+  "voz": "sofia",
+  "texto": "As moedinhas vão para o porquinho!",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-lnk9rj",
   "voz": "sofia",
   "texto": "xícara",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-lz4a3j",
@@ -2103,7 +2259,7 @@
   "id": "s-m1g4l",
   "voz": "sofia",
   "texto": "zebra",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-m2l587",
@@ -2157,7 +2313,7 @@
   "id": "s-nx41rj",
   "voz": "sofia",
   "texto": "pipoca",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-o31obg",
@@ -2172,16 +2328,34 @@
   "origem": "figuras"
  },
  {
+  "id": "s-okjwy2",
+  "voz": "sofia",
+  "texto": "quiabo",
+  "origem": "alfabeto: palavras"
+ },
+ {
   "id": "s-okmtc6",
   "voz": "sofia",
   "texto": "queijo",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-okq0lz",
+  "voz": "sofia",
+  "texto": "quadro",
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-otn16y",
   "voz": "sofia",
   "texto": "Quando termina igual, a gente diz que RIMA.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-oxvob",
+  "voz": "sofia",
+  "texto": "zíper",
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-p3ocmo",
@@ -2223,7 +2397,19 @@
   "id": "s-qcywa",
   "voz": "sofia",
   "texto": "peixe",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-qhjskt",
+  "voz": "sofia",
+  "texto": "tomate",
+  "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-qny7tm",
+  "voz": "sofia",
+  "texto": "tapete",
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-qscwis",
@@ -2403,7 +2589,7 @@
   "id": "s-tdn7n3",
   "voz": "sofia",
   "texto": "helicóptero",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-tgzh8v",
@@ -2434,6 +2620,12 @@
   "voz": "sofia",
   "texto": "O som do meu nome. Descobrir o primeiro som do próprio nome.",
   "origem": "R0-F01"
+ },
+ {
+  "id": "s-v7r7w",
+  "voz": "sofia",
+  "texto": "wafer",
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-vkiuif",
@@ -2484,6 +2676,12 @@
   "origem": "AL-R3-C3a"
  },
  {
+  "id": "s-xo29nl",
+  "voz": "sofia",
+  "texto": "elástico",
+  "origem": "alfabeto: palavras"
+ },
+ {
   "id": "s-xtncm1",
   "voz": "sofia",
   "texto": "Juntar sílabas: primeiras palavras. Ler sozinho as primeiras palavras (MALA, LUA, FALA).",
@@ -2505,7 +2703,7 @@
   "id": "s-ynxsob",
   "voz": "sofia",
   "texto": "garrafa",
-  "origem": "figuras"
+  "origem": "alfabeto: palavras"
  },
  {
   "id": "s-yuxfl0",
@@ -2530,6 +2728,12 @@
   "voz": "sofia",
   "texto": "Qual rima com GATO, [NOME]?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-10kyqw8",
+  "voz": "tales",
+  "texto": "Faz de conta que você sopra as velinhas do bolo.",
+  "origem": "AL-F-C2"
  },
  {
   "id": "t-1208k4u",
@@ -2838,10 +3042,22 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-1e8mcch",
+  "voz": "tales",
+  "texto": "Vamos montar o seu boneco, [NOME]! Qual é a cor da sua pele?",
+  "origem": "avatar"
+ },
+ {
   "id": "t-1ei8zum",
   "voz": "tales",
   "texto": "Bo… la.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1f8sg8x",
+  "voz": "tales",
+  "texto": "Faz de conta que você pede silêncio.",
+  "origem": "AL-X-C2"
  },
  {
   "id": "t-1fc9pza",
@@ -2862,6 +3078,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-1gifurn",
+  "voz": "tales",
+  "texto": "Faz de conta que você fecha um zíper na boca.",
+  "origem": "AL-H-C2"
+ },
+ {
   "id": "t-1gmiezt",
   "voz": "tales",
   "texto": "/uuu/, biquinho de assobio. Sua vez, [NOME]!",
@@ -2880,6 +3102,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-1hrhmpd",
+  "voz": "tales",
+  "texto": "Faz de conta que você lambe um sorvete.",
+  "origem": "AL-L-C2"
+ },
+ {
   "id": "t-1hwduyx",
   "voz": "tales",
   "texto": "X, de xícara.",
@@ -2896,6 +3124,12 @@
   "voz": "tales",
   "texto": "Ma… ca… co",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1ijj1hr",
+  "voz": "tales",
+  "texto": "Faz de conta que você estoura bolhas de sabão.",
+  "origem": "AL-P-C2"
  },
  {
   "id": "t-1jpg70v",
@@ -2932,6 +3166,12 @@
   "voz": "tales",
   "texto": "Mais um anel do farol acendeu!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1lmase",
+  "voz": "tales",
+  "texto": "Faz de conta que você liga o motor de um carrinho.",
+  "origem": "AL-R-C2"
  },
  {
   "id": "t-1mo3es0",
@@ -3384,12 +3624,6 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "t-1xuz4l0",
-  "voz": "tales",
-  "texto": "Isso! Você entendeu o Bolota!",
-  "origem": "AL-R4-C3a"
- },
- {
   "id": "t-20jjsj",
   "voz": "tales",
   "texto": "A ponta da língua subiu!",
@@ -3424,6 +3658,12 @@
   "voz": "tales",
   "texto": "Agora é a sua vez, [NOME]!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-37r6a",
+  "voz": "tales",
+  "texto": "Faz de conta que você quica uma bola no chão.",
+  "origem": "AL-B-C2"
  },
  {
   "id": "t-3mtpwb",
@@ -3462,16 +3702,34 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-7egscg",
+  "voz": "tales",
+  "texto": "Faz de conta que você toca um tambor com os dedos.",
+  "origem": "AL-D-C2"
+ },
+ {
   "id": "t-7h98bw",
   "voz": "tales",
   "texto": "A tartaruga volta! Valeu, [NOME]!",
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-7ha75c",
+  "voz": "tales",
+  "texto": "Vamos ajudar o Bolota a fazer o guia da mata? Leia a figurinha!",
+  "origem": "R2a-F05-C7"
+ },
+ {
   "id": "t-7n00ko",
   "voz": "tales",
   "texto": "Agora o Bolota conhece a mata!",
   "origem": "R2a-F05-C7"
+ },
+ {
+  "id": "t-81ipbg",
+  "voz": "tales",
+  "texto": "Repita comigo!",
+  "origem": "AL-Z-C2"
  },
  {
   "id": "t-8495tb",
@@ -3484,12 +3742,6 @@
   "voz": "tales",
   "texto": "PI… PO… CA! Uma batida para cada pedacinho.",
   "origem": "telas (E2E)"
- },
- {
-  "id": "t-8xpboj",
-  "voz": "tales",
-  "texto": "Ajuda o Bolota a fazer o guia da mata? Lê a figurinha!",
-  "origem": "R2a-F05-C7"
  },
  {
   "id": "t-a34kgc",
@@ -3526,6 +3778,12 @@
   "voz": "tales",
   "texto": "Pega a lupa! O que mais começa com o som do seu nome, [NOME]?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-bshckn",
+  "voz": "tales",
+  "texto": "Faz de conta que você pilota um avião.",
+  "origem": "AL-V-C2"
  },
  {
   "id": "t-bueh2m",
@@ -3714,6 +3972,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-mddyqc",
+  "voz": "tales",
+  "texto": "Faz de conta que você bate na porta com um dedo.",
+  "origem": "AL-T-C2"
+ },
+ {
   "id": "t-mgoay",
   "voz": "tales",
   "texto": "M faz /mmm/!",
@@ -3816,6 +4080,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-shhxlu",
+  "voz": "tales",
+  "texto": "Faz de conta que você pilota um barco a motor.",
+  "origem": "AL-J-C2"
+ },
+ {
   "id": "t-skp9kf",
   "voz": "tales",
   "texto": "R, de rato.",
@@ -3876,6 +4146,12 @@
   "origem": "AL-R2-C3a"
  },
  {
+  "id": "t-wz2sfy",
+  "voz": "tales",
+  "texto": "Faz de conta que você é uma abelhinha.",
+  "origem": "AL-Z-C2"
+ },
+ {
   "id": "t-x44x86",
   "voz": "tales",
   "texto": "V, de vaca.",
@@ -3904,5 +4180,17 @@
   "voz": "tales",
   "texto": "E eu sou o Tales! Seja bem-vindo na Vila das Letras, [NOME]!",
   "origem": "chegada"
+ },
+ {
+  "id": "t-zpc5yz",
+  "voz": "tales",
+  "texto": "Isso! Você entendeu a fala do Bolota!",
+  "origem": "AL-R4-C3a"
+ },
+ {
+  "id": "t-zzm89g",
+  "voz": "tales",
+  "texto": "Faz de conta que você diz não com a boca fechada.",
+  "origem": "AL-N-C2"
  }
 ]
