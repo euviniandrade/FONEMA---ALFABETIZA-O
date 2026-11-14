@@ -2,7 +2,7 @@
 // Uso (depois de `npm run build`):  node web/e2e/capturas-avatar.mjs [filtro]
 // Sobe o próprio servidor de preview (porta 4188), grava crianças direto no banco do aparelho e fotografa:
 // boneco de frente / de lado / de costas, menino e menina montados, tela de montar (computador e celular),
-// Lojinha com cadeados e seção Acessibilidade.
+// Lojinha com cadeados e seção Acessibilidade.  `node web/e2e/capturas-avatar.mjs glb` prova o carregador de GLB.
 import { chromium } from '@playwright/test';
 import { spawn } from 'node:child_process';
 import { mkdirSync } from 'node:fs';
@@ -35,6 +35,38 @@ const CRIANCAS = [
   crianca('cap-trancas', 'Luana', 'f', { pele: 'pele-09', rosto: 'redondo', olhos: 'castanho-escuro', cabelo: 'f-trancas', corCabelo: 'preto', camisa: 'uniforme', calca: 'uniforme', calcado: 'tenis-branco', acessibilidade: ['pintura-no-rosto'] }),
   crianca('cap-limpo', 'Bia', 'f', { pele: null, rosto: null, olhos: null, cabelo: null, camisa: null, calca: null, calcado: null, pronto: false })
 ];
+
+/** GLB mínimo (glTF 2.0 binário): um bloco de 0,30 × 0,16 × 0,30 m sobre a cabeça, com material chamado "cabelo". */
+function glbDeTeste() {
+  const [x0, x1, y0, y1, z0, z1] = [-0.15, 0.15, 1.0, 1.16, -0.15, 0.15];
+  const faces = [ // normal, 4 cantos
+    [[0, 0, 1], [[x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1]]], [[0, 0, -1], [[x1, y0, z0], [x0, y0, z0], [x0, y1, z0], [x1, y1, z0]]],
+    [[1, 0, 0], [[x1, y0, z1], [x1, y0, z0], [x1, y1, z0], [x1, y1, z1]]], [[-1, 0, 0], [[x0, y0, z0], [x0, y0, z1], [x0, y1, z1], [x0, y1, z0]]],
+    [[0, 1, 0], [[x0, y1, z1], [x1, y1, z1], [x1, y1, z0], [x0, y1, z0]]], [[0, -1, 0], [[x0, y0, z0], [x1, y0, z0], [x1, y0, z1], [x0, y0, z1]]]
+  ];
+  const pos = [], nor = [], idx = [];
+  faces.forEach(([n, cantos], f) => { for (const c of cantos) { pos.push(...c); nor.push(...n); } idx.push(f * 4, f * 4 + 1, f * 4 + 2, f * 4, f * 4 + 2, f * 4 + 3); });
+  const bin = Buffer.concat([Buffer.from(new Float32Array(pos).buffer), Buffer.from(new Float32Array(nor).buffer), Buffer.from(new Uint16Array(idx).buffer)]);
+  const json = {
+    asset: { version: '2.0' }, scene: 0, scenes: [{ nodes: [0] }], nodes: [{ mesh: 0, name: 'cabelo-teste' }],
+    meshes: [{ primitives: [{ attributes: { POSITION: 0, NORMAL: 1 }, indices: 2, material: 0 }] }],
+    materials: [{ name: 'cabelo', pbrMetallicRoughness: { baseColorFactor: [1, 1, 1, 1], roughnessFactor: 0.6, metallicFactor: 0 } }],
+    buffers: [{ byteLength: bin.length }],
+    bufferViews: [{ buffer: 0, byteOffset: 0, byteLength: 288, target: 34962 }, { buffer: 0, byteOffset: 288, byteLength: 288, target: 34962 }, { buffer: 0, byteOffset: 576, byteLength: 72, target: 34963 }],
+    accessors: [
+      { bufferView: 0, componentType: 5126, count: 24, type: 'VEC3', min: [x0, y0, z0], max: [x1, y1, z1] },
+      { bufferView: 1, componentType: 5126, count: 24, type: 'VEC3' },
+      { bufferView: 2, componentType: 5123, count: 36, type: 'SCALAR' }
+    ]
+  };
+  let j = Buffer.from(JSON.stringify(json));
+  j = Buffer.concat([j, Buffer.alloc((4 - (j.length % 4)) % 4, 0x20)]);
+  const cab = Buffer.alloc(12);
+  cab.writeUInt32LE(0x46546c67, 0); cab.writeUInt32LE(2, 4); cab.writeUInt32LE(12 + 8 + j.length + 8 + bin.length, 8);
+  const cj = Buffer.alloc(8); cj.writeUInt32LE(j.length, 0); cj.writeUInt32LE(0x4e4f534a, 4);
+  const cb = Buffer.alloc(8); cb.writeUInt32LE(bin.length, 0); cb.writeUInt32LE(0x004e4942, 4);
+  return Buffer.concat([cab, cj, j, cb, bin]);
+}
 
 async function subir() {
   if (BASE) return;
@@ -165,6 +197,20 @@ async function main() {
       await foto(page, `lojinha-${rotulo}-acessibilidade-em-uso`);
       await ctx.close();
     }
+  }
+
+  // 5. prova do carregador de GLB: um manifesto e um .glb de teste (um bloco com material "cabelo") servidos só
+  //    neste teste entram no lugar do cabelo provisório, já pintados com a cor do cabelo da criança.
+  if (FILTRO === 'glb') {
+    const { ctx, page } = await novo(900, 900);
+    await ctx.route('**/assets/avatar3d/manifesto.json', (r) => r.fulfill({ contentType: 'application/json', body: JSON.stringify({ versao: 1, pecas: { 'cabelo-f-ondulado': { arquivo: 'teste.glb' } } }) }));
+    await ctx.route('**/assets/avatar3d/teste.glb', (r) => r.fulfill({ contentType: 'model/gltf-binary', body: glbDeTeste() }));
+    await page.goto(BASE + '#/c/cap-ruiva/avatar');
+    await esperarBoneco(page);
+    await girar(page, 0.6);
+    await page.waitForTimeout(400);
+    await foto(page, 'glb-teste-bloco-no-lugar-do-cabelo', '.boneco3d');
+    await ctx.close();
   }
 
   // 4. miniaturas: cartões dos alunos na entrada

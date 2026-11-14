@@ -495,7 +495,7 @@ export function criarCorpo(a: Aparencia, sentado: boolean): THREE.Group {
     b.add(mao);
     g.add(b);
     const { coxa, joelho } = perna(lado, sentado);
-    coxa.add(malha(capsula(0.05, -0.01, -M.coxa), pele));
+    coxa.add(malha(capsula(0.05, -0.04, -M.coxa), pele));
     joelho.add(malha(capsula(0.043, 0, -M.canela + 0.02), pele));
     const pe = malha(new THREE.SphereGeometry(1, 20, 14), pele);
     pe.scale.set(0.04, 0.03, 0.074);
@@ -637,7 +637,7 @@ export function criarCalca(a: Aparencia, sentado: boolean): THREE.Group {
   for (const lado of [-1, 1]) {
     const { coxa, joelho } = perna(lado, sentado);
     const justa = p.modelo === 'legging';
-    coxa.add(malha(capsula(justa ? 0.053 : 0.059, 0, -M.coxa + (p.modelo === 'bermuda' ? 0.025 : 0)), mat));
+    coxa.add(malha(capsula(justa ? 0.053 : 0.059, -0.045, -M.coxa + (p.modelo === 'bermuda' ? 0.025 : 0)), mat));
     if (p.modelo !== 'bermuda') joelho.add(malha(capsula(justa ? 0.046 : 0.052, 0.005, -M.canela + 0.045), mat));
     g.add(coxa);
   }
