@@ -9,7 +9,7 @@
   "id": "s-10ey3dz",
   "voz": "sofia",
   "texto": "Ouça e toque na letra.",
-  "origem": "AL-Y-C3"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-10qey9r",
@@ -39,7 +39,7 @@
   "id": "s-117uxj5",
   "voz": "sofia",
   "texto": "Esta letra tem outro som, que vem depois.",
-  "origem": "AL-S-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-11cpcp",
@@ -51,7 +51,7 @@
   "id": "s-11g97a",
   "voz": "sofia",
   "texto": "Esta letra tem dois sons: o de elefante e o de pé.",
-  "origem": "AL-E-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-11idavc",
@@ -105,7 +105,7 @@
   "id": "s-144yigd",
   "voz": "sofia",
   "texto": "Amanhã tem outra letra!",
-  "origem": "AL-Z"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-149xfaz",
@@ -321,7 +321,7 @@
   "id": "s-1cw53da",
   "voz": "sofia",
   "texto": "Letra E.",
-  "origem": "AL-R1-C4b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1cw53f0",
@@ -333,13 +333,13 @@
   "id": "s-1cw53gq",
   "voz": "sofia",
   "texto": "Letra A.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1cw53ig",
   "voz": "sofia",
   "texto": "Letra C.",
-  "origem": "AL-R1-C4b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1cw53k6",
@@ -429,7 +429,7 @@
   "id": "s-1e5e9fr",
   "voz": "sofia",
   "texto": "Qual figura começa com o som desta letra?",
-  "origem": "AL-Y-C4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1egnpj4",
@@ -474,6 +474,12 @@
   "origem": "figuras"
  },
  {
+  "id": "s-1hey3cw",
+  "voz": "sofia",
+  "texto": "Você montou a palavra!",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-1hs1iuo",
   "voz": "sofia",
   "texto": "As moedinhas vão para o cofrinho-tatu!",
@@ -507,7 +513,7 @@
   "id": "s-1j3jd2a",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje tem letra nova!",
-  "origem": "AL-Y"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1jbedh7",
@@ -519,7 +525,7 @@
   "id": "s-1jqjx0n",
   "voz": "sofia",
   "texto": "Você está pronta para conhecer as letras?",
-  "origem": "chegada"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1jzaxhx",
@@ -669,7 +675,7 @@
   "id": "s-1q81nh8",
   "voz": "sofia",
   "texto": "Tem a grande e a pequena.",
-  "origem": "AL-Y-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1q87b55",
@@ -873,7 +879,7 @@
   "id": "s-1qyl7uj",
   "voz": "sofia",
   "texto": "C, de casa.",
-  "origem": "AL-FESTA-C4c"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1rdj39n",
@@ -1095,7 +1101,7 @@
   "id": "s-1uqmowb",
   "voz": "sofia",
   "texto": "babá",
-  "origem": "AL-R1-C5p"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqmqiz",
@@ -1107,7 +1113,7 @@
   "id": "s-1uqms90",
   "voz": "sofia",
   "texto": "bebê",
-  "origem": "AL-R1-C5p"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqnf1m",
@@ -1137,7 +1143,7 @@
   "id": "s-1uqnju6",
   "voz": "sofia",
   "texto": "cabe",
-  "origem": "AL-R1-C5p"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uqnk9n",
@@ -1380,6 +1386,18 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1ur9r57",
+  "voz": "sofia",
+  "texto": "Bola",
+  "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1urakvv",
+  "voz": "sofia",
+  "texto": "Casa",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-1urawgv",
   "voz": "sofia",
   "texto": "LULA",
@@ -1402,6 +1420,12 @@
   "voz": "sofia",
   "texto": "FILA",
   "origem": "R2a-F05-C4a"
+ },
+ {
+  "id": "s-1urhhwl",
+  "voz": "sofia",
+  "texto": "Dado",
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-1uro2ln",
@@ -1713,7 +1737,7 @@
   "id": "s-a5a82h",
   "voz": "sofia",
   "texto": "As letras juntas viram palavra! Monte comigo.",
-  "origem": "AL-U-C5p"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-abhhy1",
@@ -1725,13 +1749,13 @@
   "id": "s-akj70g",
   "voz": "sofia",
   "texto": "Agora desenhe a letra com o dedo.",
-  "origem": "AL-Y-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-aohc9t",
   "voz": "sofia",
   "texto": "Olha a minha boca fazendo o som.",
-  "origem": "AL-Y-C2b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-b1gma7",
@@ -1923,7 +1947,7 @@
   "id": "s-fuzudm",
   "voz": "sofia",
   "texto": "A, de abelha.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-fyskcb",
@@ -2043,7 +2067,7 @@
   "id": "s-jvlm91",
   "voz": "sofia",
   "texto": "Toque na letra que está brilhando.",
-  "origem": "trilha do alfabeto"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-ki86cd",
@@ -2061,7 +2085,7 @@
   "id": "s-lbara2",
   "voz": "sofia",
   "texto": "Isso! Você fez o som!",
-  "origem": "AL-Y-C2b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-lnk9rj",
@@ -2121,7 +2145,7 @@
   "id": "s-mwekd5",
   "voz": "sofia",
   "texto": "E, de elefante.",
-  "origem": "AL-R1-C4c"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-n0mlr6",
@@ -2169,7 +2193,7 @@
   "id": "s-p3ocmo",
   "voz": "sofia",
   "texto": "Tudo pronto para conhecer as letras?",
-  "origem": "chegada"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-q0ov03",
@@ -2367,7 +2391,7 @@
   "id": "s-smnbvq",
   "voz": "sofia",
   "texto": "Olha só a letra de hoje!",
-  "origem": "AL-Y-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "s-sztnpj",
@@ -2472,6 +2496,12 @@
   "origem": "R2a-F04"
  },
  {
+  "id": "s-xuuulk",
+  "voz": "sofia",
+  "texto": "Abelha",
+  "origem": "telas (E2E)"
+ },
+ {
   "id": "s-ymomve",
   "voz": "sofia",
   "texto": "O de boca redonda: ó e ô. Ligar os sons /ó/ e /ô/ à letra O.",
@@ -2547,7 +2577,7 @@
   "id": "t-12zjly4",
   "voz": "tales",
   "texto": "Olha a minha boca fazendo o som.",
-  "origem": "AL-Z-C2b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-13lfqkc",
@@ -2643,7 +2673,7 @@
   "id": "t-17z2dez",
   "voz": "tales",
   "texto": "Mostrar a letra de hoje e dizer a palavra dela.",
-  "origem": "AL-Z"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1915jp5",
@@ -2733,13 +2763,13 @@
   "id": "t-1a3hmac",
   "voz": "tales",
   "texto": "Letra B.",
-  "origem": "AL-R1-C4b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1a3hmc2",
   "voz": "tales",
   "texto": "Letra D.",
-  "origem": "AL-R1-C4b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1a3hmds",
@@ -2829,7 +2859,7 @@
   "id": "t-1flovpg",
   "voz": "tales",
   "texto": "As letras juntas viram palavra! Monte comigo.",
-  "origem": "AL-FESTA-C5p"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1fotjb7",
@@ -2841,7 +2871,7 @@
   "id": "t-1g26fuf",
   "voz": "tales",
   "texto": "B, de bola.",
-  "origem": "AL-R1-C4c"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1gmiezt",
@@ -3255,7 +3285,7 @@
   "id": "t-1qx44il",
   "voz": "tales",
   "texto": "Agora desenhe a letra com o dedo.",
-  "origem": "AL-Z-C5"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1rhvgay",
@@ -3339,7 +3369,7 @@
   "id": "t-1wobflr",
   "voz": "tales",
   "texto": "D, de dado.",
-  "origem": "AL-R1-C4c"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-1xf18nl",
@@ -3357,7 +3387,7 @@
   "id": "t-1xnnj65",
   "voz": "tales",
   "texto": "Com qual letra começa?",
-  "origem": "AL-FESTA-C4c"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-20jjsj",
@@ -3381,7 +3411,7 @@
   "id": "t-2pj13u",
   "voz": "tales",
   "texto": "Qual figura começa com o som desta letra?",
-  "origem": "AL-FESTA-C4b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-35m31w",
@@ -3423,7 +3453,7 @@
   "id": "t-5u00xz",
   "voz": "tales",
   "texto": "Isso! Você fez o som!",
-  "origem": "AL-Z-C2b"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-6e3ybz",
@@ -3513,7 +3543,7 @@
   "id": "t-cjkncx",
   "voz": "tales",
   "texto": "Hoje é dia de brincar com as letras que você já conhece!",
-  "origem": "AL-R4"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-cw2zz7",
@@ -3573,7 +3603,7 @@
   "id": "t-edau3f",
   "voz": "tales",
   "texto": "Olha só a letra de hoje!",
-  "origem": "AL-Z-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-en5dqv",
@@ -3633,7 +3663,7 @@
   "id": "t-gq1xne",
   "voz": "tales",
   "texto": "Ouça e toque na letra.",
-  "origem": "AL-FESTA-C4a"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-hohrig",
@@ -3747,7 +3777,7 @@
   "id": "t-orq89r",
   "voz": "tales",
   "texto": "Oi, [NOME]! Hoje tem letra nova!",
-  "origem": "AL-Z"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-owq6nk",
@@ -3831,7 +3861,7 @@
   "id": "t-t1isch",
   "voz": "tales",
   "texto": "Tem a grande e a pequena.",
-  "origem": "AL-Z-C2"
+  "origem": "telas (E2E)"
  },
  {
   "id": "t-t59sgr",
