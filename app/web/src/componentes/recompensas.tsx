@@ -226,6 +226,11 @@ export function CelebracaoSelos({ itens, letra }: { itens: Array<{ conquista: Co
     if (pousados < itens.length) pousar(pousados, 12000);
     return () => window.clearTimeout(relogio.current);
   }, [pousados, itens.length]);
+  // no celular a fila fica abaixo da dobra: quando um selo pousa, a tela desce até ele
+  const fila = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (pousados > 0 && !semGiro) fila.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, [pousados, semGiro]);
   const atual = pousados < itens.length ? itens[pousados] : null;
   // lado a lado: 1 selo bem grande, 2 grandes, 3–4 menores; sempre cabem dois por linha no celular
   const [lado] = useState(() => {
@@ -236,7 +241,7 @@ export function CelebracaoSelos({ itens, letra }: { itens: Array<{ conquista: Co
   });
   return (
     <>
-      <div className={`selos-linha selos-novos n${itens.length}`}>
+      <div ref={fila} className={`selos-linha selos-novos n${itens.length}`}>
         {itens.slice(0, pousados).map((it) => (
           <div key={it.conquista.id} className="selo-novo" data-testid="selo-novo">
             <Selo conquista={it.conquista} ganha={it.ganha} letra={letra} tamanho={lado} ampliavel />
