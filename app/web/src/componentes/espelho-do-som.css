@@ -5,5 +5,5 @@
 .mec-espelho .espelho-boca.espelho-3d{height:clamp(260px,46vh,470px)}
 .corpo-palco .espelho-boca.espelho-3d{height:clamp(280px,52vh,520px)}
 @media (max-width:760px) and (orientation:portrait){
-  .espelho-boca.espelho-3d,.mec-espelho .espelho-boca.espelho-3d,.corpo-palco .espelho-boca.espelho-3d{height:clamp(380px,58vh,560px)}
+  .espelho-boca.espelho-3d,.mec-espelho .espelho-boca.espelho-3d,.corpo-palco .espelho-boca.espelho-3d{height:clamp(340px,52vh,500px)}
 }
