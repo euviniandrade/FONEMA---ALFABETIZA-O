@@ -143,8 +143,14 @@ def fonetico(w):
 NUMEROS = {'1': 'um', '2': 'dois', '3': 'tres', '4': 'quatro', '5': 'cinco', '6': 'seis', '7': 'sete', '8': 'oito', '9': 'nove', '10': 'dez'}
 
 
+# nome da letra dito por extenso ("gê", "quê", "ípsilon", "dáblio", "agá") = a letra (o transcritor escreve "G", "Q", "Y", "W", "H")
+NOME_DE_LETRA = {'ge': 'g', 'ke': 'k', 'ipsilon': 'i', 'dablio': 'u', 'aga': '', 'xis': 'x', 'jota': 'j'}
+
+
 def chaves(texto):
-    return [fonetico(NUMEROS.get(w, w)) for w in normalizar(texto) if fonetico(NUMEROS.get(w, w))]
+    ks = [fonetico(NUMEROS.get(w, w)) for w in normalizar(texto)]
+    ks = [NOME_DE_LETRA.get(k, k) if (i == 0 or ks[i - 1] == 'letra') else k for i, k in enumerate(ks)]
+    return [k for k in ks if k]
 
 
 def comparar(esperado, ouvido, eh_nome=False):

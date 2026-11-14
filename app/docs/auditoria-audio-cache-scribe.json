@@ -29,6 +29,11 @@
 0.1,
 0.48
 ],
+"01d4b45cf5759b12": [
+"V de vaca",
+0.14,
+1.44
+],
 "01e13f149f7d24c8": [
 "Vinícius",
 0.1,
@@ -44,10 +49,20 @@
 0.1,
 0.66
 ],
+"03275529ced64cc9": [
+"Vader Wesley",
+0.2,
+0.9
+],
 "034fe8211c85e190": [
 "Artur?",
 0.1,
 0.66
+],
+"036d96cff7362596": [
+"Dedo",
+0.1,
+0.62
 ],
 "04a81d55a50c8109": [
 "O que rima com rua?",
@@ -59,6 +74,11 @@
 0.18,
 0.52
 ],
+"050f4c439be93fc1": [
+"Hipopótamo",
+0.1,
+0.98
+],
 "052ecf64d44a0923": [
 "Alice",
 0.16,
@@ -68,6 +88,11 @@
 "Fernando",
 0.1,
 0.84
+],
+"06170d35b40fc7d7": [
+"Uóuou!",
+0.2,
+0.62
 ],
 "0630a3ed89718618": [
 "Devagar. M de macaco. Amã! L de lua. A la mala",
@@ -104,6 +129,11 @@
 0.26,
 0.54
 ],
+"09953fa06d9a413a": [
+"Miss Scott",
+0.08,
+0.62
+],
 "09dce54d9045b966": [
 "Lua",
 0.08,
@@ -113,6 +143,11 @@
 "Bate uma palma para cada pedacinho do seu nome",
 0.08,
 3.28
+],
+"09f6ec8775dc29d0": [
+"Ah, de abelha",
+0.08,
+0.82
 ],
 "0a71edc0f91fdf8f": [
 "Avião",
@@ -144,6 +179,11 @@ null
 0.14,
 0.68
 ],
+"0b343032008fbf93": [
+"Ouça e toque na letra",
+0.08,
+1.28
+],
 "0b3f6ef386fd05bd": [
 "Isadora",
 0.1,
@@ -158,6 +198,11 @@ null
 "Xá, sá!",
 0.08,
 1.06
+],
+"0cbf2104254884ca": [
+"Você conhece o alfabeto inteiro",
+0.1,
+2.58
 ],
 "0cff63891f1032e9": [
 "Camila",
@@ -214,6 +259,11 @@ null
 0.12,
 0.3
 ],
+"11c2b14e01b0a47e": [
+"Letra O",
+0.08,
+0.86
+],
 "1229464f18ed0986": [
 "Ô",
 0.1,
@@ -233,6 +283,11 @@ null
 "Gustavo",
 0.1,
 0.8
+],
+"12697887f708aa7d": [
+"Yasmin",
+0.08,
+0.84
 ],
 "12c3f7df81cd9371": [
 "M de macaco",
@@ -289,6 +344,11 @@ null
 0.1,
 0.7
 ],
+"1806a7b3fe5b5c1a": [
+"Kiwi",
+0.2,
+0.74
+],
 "19037decfa074656": [
 "Quantas palmas tem o seu nome?",
 0.08,
@@ -344,15 +404,30 @@ null
 0.08,
 0.82
 ],
+"1ea54d2ca2f1a1c0": [
+"Letra G",
+0.08,
+0.62
+],
 "1f69bf846d8cb9ae": [
 "O Paçoca quer a ba-na-na",
 0.1,
 3.8
 ],
+"2070536e38ec3f40": [
+"Ops, eu disse que bola rima com mesa. Me ensina",
+0.12,
+4.54
+],
 "20ae02c78fe50c1c": [
 "Débora",
 0.1,
 0.68
+],
+"20ba9c8a5f2124d8": [
+"Mola! Monta e o gol vale",
+0.08,
+3.26
 ],
 "21a34ac533c3f60a": [
 "Enzo",
@@ -389,10 +464,20 @@ null
 0.08,
 0.66
 ],
+"24dabee9f617b7e3": [
+"Hoje tem letra nova",
+0.04,
+1.34
+],
 "258e7b678f5766fb": [
 "Foca lua",
 0.12,
 2.16
+],
+"25d017167f91ca1b": [
+"Xícara",
+0.14,
+0.68
 ],
 "263898f7737d4194": [
 "Otávio",
@@ -409,6 +494,16 @@ null
 0.12,
 0.4
 ],
+"26e809fe9e0c9793": [
+"Hoje é dia de brincar com as letras que você já conhece",
+0.06,
+3.56
+],
+"26eaf12f8e5d473d": [
+"Ah, agora eu entendi. Obrigado",
+0.12,
+2.82
+],
 "274badc439d919b8": [
 "Ovo",
 0.12,
@@ -424,6 +519,11 @@ null
 0.08,
 0.88
 ],
+"2844e5ea920ff06b": [
+"Mostrar a letra de hoje e dizer a palavra dela",
+0.1,
+3.34
+],
 "28a05a91cb24649d": [
 "Catarina",
 0.08,
@@ -434,6 +534,11 @@ null
 0.04,
 0.62
 ],
+"29d42b3fff984570": [
+"Pietra",
+0.12,
+0.98
+],
 "2a556a1a7f4e3853": [
 "Guilherme",
 0.1,
@@ -443,6 +548,11 @@ null
 "Olha a minha boca",
 0.08,
 0.88
+],
+"2aa08a46e3461f05": [
+"Café",
+0.18,
+0.66
 ],
 "2abc320461f21bbe": [
 "Enche o peito de ar e solta devagar. Estica os braços bem alto",
@@ -458,6 +568,11 @@ null
 "Me escuta",
 0.06,
 0.62
+],
+"2b92fccbd5cc0c23": [
+"Tała",
+0.06,
+0.56
 ],
 "2bf86076870dbc21": [
 "Valentina",
@@ -554,10 +669,20 @@ null
 0.1,
 0.58
 ],
+"3140d5d147af4a07": [
+"Letra K",
+0.08,
+0.54
+],
 "3194be1133acbc1f": [
 "Ryan",
 0.1,
 0.64
+],
+"3276784ca0692424": [
+"Bebê",
+0.1,
+0.72
 ],
 "328bc7ddf3da0f8e": [
 "O que rima com leão?",
@@ -569,10 +694,20 @@ null
 0.04,
 1.94
 ],
+"32def5f1b87629db": [
+"Ó o diabo!",
+0.18,
+0.72
+],
 "3384cbeba68fc68b": [
 "Gato! Qual rima com gato?",
 0.08,
 1.64
+],
+"3430d540050b7ebf": [
+"Uuuu, biquinho de assobio? Sua vez",
+0.14,
+3.44
 ],
 "344eece1c3daafa4": [
 "Bernardo",
@@ -644,6 +779,11 @@ null
 0.08,
 0.68
 ],
+"3ab0bae35305044c": [
+"Ha Wu!",
+0.08,
+0.58
+],
 "3abf4a9634113579": [
 "Benjamin",
 0.08,
@@ -684,10 +824,20 @@ null
 0.14,
 2.0
 ],
+"3d03f0f5be6cdc5f": [
+"Letra I",
+0.1,
+0.72
+],
 "3d18088ff4211788": [
 "Rebecca",
 0.04,
 0.66
+],
+"3d6054e575fe2052": [
+"Letra C",
+0.08,
+0.74
 ],
 "3d76a88716370656": [
 "E Jasmine?",
@@ -704,6 +854,16 @@ null
 0.06,
 3.98
 ],
+"3eb8edbfc5eec22f": [
+"As letras juntas viram palavra. Monte comigo",
+0.1,
+3.8
+],
+"3ed390ab6f897992": [
+"Letra I",
+0.1,
+0.72
+],
 "3f56789dc30822b2": [
 "O Paçoca quer a janela",
 0.1,
@@ -713,6 +873,11 @@ null
 "Z de zebra",
 0.12,
 0.8
+],
+"404f7afefd7ceddf": [
+"B de bola",
+0.1,
+1.26
 ],
 "40503cfa64466631": [
 "Oba!",
@@ -748,6 +913,11 @@ null
 "Manuela",
 0.06,
 0.72
+],
+"425d2bd0fd9a8615": [
+"Hoje é a festa do alfabeto. Você conhece todas as letras de A a Z?",
+0.06,
+5.82
 ],
 "429c38166c366636": [
 "Sofia",
@@ -834,10 +1004,25 @@ null
 0.1,
 2.06
 ],
+"49c1e0faa1958719": [
+"Roda",
+0.08,
+0.54
+],
 "49e70f8aff33a2f5": [
 "Ler Lua e Mala em voz alta",
 0.1,
 2.42
+],
+"4a3f2408cd1b9485": [
+"F de foca",
+0.26,
+1.4
+],
+"4a505b2a86de27c6": [
+"Ei, Ri",
+0.16,
+0.66
 ],
 "4ab09160cae1400c": [
 "A concha abriu",
@@ -848,6 +1033,11 @@ null
 "E aí?",
 0.08,
 0.5
+],
+"4b3ee246c96ba17e": [
+"Benício",
+0.1,
+0.9
 ],
 "4b573619c3f77504": [
 "Antonella",
@@ -879,10 +1069,20 @@ null
 0.12,
 1.5
 ],
+"4e5f0308c29cec00": [
+"Passa a bola",
+0.1,
+0.94
+],
 "4e93defccd251d9f": [
 "Lofo",
 0.1,
 0.68
+],
+"4fe65d070f89d1dd": [
+"Ops, eu acho que esse som é do A. Me ensina?",
+0.14,
+3.54
 ],
 "50139d7d53a822b6": [
 "Ovelha",
@@ -913,6 +1113,11 @@ null
 "Caneca. Boneca",
 0.08,
 2.48
+],
+"515206baf953bb36": [
+"Hora de brincar com as letras",
+0.0,
+1.82
 ],
 "517007af69c48c25": [
 "Lucas",
@@ -949,6 +1154,21 @@ null
 0.08,
 0.72
 ],
+"535cc4eb926e5a09": [
+"Qual figura começa com o som desta letra?",
+0.12,
+2.68
+],
+"5391bcb4a705ff90": [
+"E ou E? Repara no meu sorriso. Sua vez",
+0.12,
+4.36
+],
+"539806e20a8946bb": [
+"Festa do alfabeto",
+0.08,
+1.72
+],
 "5475f4ff1d9cfa9a": [
 "Pedro",
 0.08,
@@ -964,10 +1184,20 @@ null
 0.16,
 0.68
 ],
+"54c9af1111798c68": [
+"Letra U",
+0.08,
+0.78
+],
 "54ef3ac2dc823d83": [
 "Arthur",
 0.06,
 0.58
+],
+"55a7579c5ecfddfd": [
+"Andar um. Qual letra?",
+0.1,
+2.26
 ],
 "55f120767d222e9a": [
 "Maria",
@@ -999,6 +1229,11 @@ null
 0.08,
 7.74
 ],
+"56d5b675fcfd9b4b": [
+"É CD запо",
+0.0,
+0.8
+],
 "57546c3c8e2782b9": [
 "Mão, pão",
 0.1,
@@ -1014,10 +1249,20 @@ null
 0.06,
 0.84
 ],
+"57f097bafc91dc64": [
+"Bala",
+0.08,
+0.62
+],
 "581f670efd45f71f": [
 "Mateus",
 0.06,
 0.7
+],
+"586004d854da9bd5": [
+"Sai de casa",
+0.08,
+0.76
 ],
 "58da3b4734b6c98e": [
 "Ayla",
@@ -1039,6 +1284,11 @@ null
 0.14,
 0.3
 ],
+"5ac81e732d43d957": [
+"T de tatu",
+0.1,
+1.28
+],
 "5ac87cd600be8cbe": [
 "Fa",
 0.24,
@@ -1054,23 +1304,53 @@ null
 0.22,
 0.86
 ],
+"5b547ec4ea5b1a36": [
+"Tudo pronto para conhecer as letras?",
+0.1,
+1.86
+],
 "5b77eedfa45e9e52": [
 "Motto",
 0.08,
 0.56
+],
+"5b8e87ea96059c2a": [
+"M de macaco",
+0.12,
+1.0
 ],
 "5da0ded32a2376f3": [
 "Hum.",
 0.08,
 0.44
 ],
+"5dc4db952d32de2b": [
+"Hoje tem letra nova",
+0.08,
+1.38
+],
 "5dd6643771d49d6d": [
 "Sapo? Mala",
 0.12,
 1.58
 ],
+"5e077b131a70b8cd": [
+"L de lua",
+0.32,
+1.24
+],
+"5e12120dab908b0f": [
+"Ryan!",
+0.12,
+0.6
+],
 "5fbb2715cc19e124": [
 "Lara",
+0.08,
+0.66
+],
+"60383200f5fa6a51": [
+"Come on!",
 0.08,
 0.66
 ],
@@ -1082,6 +1362,11 @@ null
 "607796b4ae1dbf56": [
 "Carlos",
 0.12,
+0.76
+],
+"60b24f84be7a5c61": [
+"Xilofone?",
+0.08,
 0.76
 ],
 "60e2e2eadac505ea": [
@@ -1103,6 +1388,11 @@ null
 "Yasmin",
 0.1,
 0.68
+],
+"621f8bce258e0133": [
+"Qual figura começa com esta letra?",
+0.06,
+2.18
 ],
 "62206c2d74b37836": [
 "Aurora",
@@ -1129,6 +1419,11 @@ null
 0.1,
 0.42
 ],
+"62c641700e1d9d64": [
+"Gato. Qual rima com gato?",
+0.1,
+2.5
+],
 "62edf3f550cd9cd4": [
 "Moto",
 0.14,
@@ -1148,6 +1443,11 @@ null
 "Tem alguém chamando lá do outro lado da ponte",
 0.1,
 3.0
+],
+"6470cffbf746ef52": [
+"H de hipopótamo",
+0.52,
+1.68
 ],
 "66001bf23d1734f9": [
 "I, E e E. Ligar os sons E e E à letra E",
@@ -1189,6 +1489,11 @@ null
 0.14,
 0.74
 ],
+"68516de83cf72826": [
+"Yasmin!",
+0.08,
+0.68
+],
 "6852fa8ba37aca8b": [
 "Maya",
 0.1,
@@ -1214,10 +1519,20 @@ null
 0.12,
 0.64
 ],
+"6a62f54f43e31f7e": [
+"Cadê Kiwi?",
+0.06,
+0.64
+],
 "6a7966a373fa3b69": [
 "Emily",
 0.1,
 0.62
+],
+"6b03b67c1c4188f9": [
+"Letra Q",
+0.08,
+0.78
 ],
 "6b317b6211734b68": [
 "X de chave",
@@ -1233,6 +1548,16 @@ null
 "Mariana",
 0.08,
 0.74
+],
+"6b8d202d9eecced2": [
+"Letra L",
+0.08,
+0.8
+],
+"6c209f47a4d5b755": [
+"Agatha",
+0.08,
+0.62
 ],
 "6d3bd8c9151c69d4": [
 "Ma-ca-co",
@@ -1254,10 +1579,20 @@ null
 0.1,
 5.68
 ],
+"6fb7ee2c294e67d1": [
+"Letra M",
+0.08,
+0.94
+],
 "700c1266108e0981": [
 "Olha como a boca faz cada som. Os lábios, os dentes e a língua mudam de lugar. Escolha um som",
 0.24,
 6.24
+],
+"70420a7df83c2ce2": [
+"Letra P",
+0.08,
+0.8
 ],
 "705e8835d1b1bd8e": [
 "Lei de Loire?",
@@ -1273,6 +1608,16 @@ null
 "Jade",
 0.1,
 0.52
+],
+"710685f393f29016": [
+"Copo",
+0.08,
+0.6
+],
+"714cbc5c8d550aad": [
+"Esta letra tem outro som que vem depois",
+0.18,
+3.14
 ],
 "7208598568793ea7": [
 "Isadora",
@@ -1298,6 +1643,21 @@ null
 "Aurora",
 0.06,
 0.64
+],
+"737128992bc4c1ae": [
+"Letra Z",
+0.08,
+0.64
+],
+"74416d103ee907a4": [
+"D de dado",
+0.08,
+1.26
+],
+"7498dc2b0b4cc06e": [
+"Nicole",
+0.1,
+0.66
 ],
 "74d8208472efbf6f": [
 "Vamos mostrar pro professor?",
@@ -1349,6 +1709,16 @@ null
 0.08,
 0.68
 ],
+"7640660cdc862c59": [
+"Esta letra tem outro som que vem depois",
+0.08,
+2.12
+],
+"76b371d2eeb7a593": [
+"Isso, você fez o som",
+0.1,
+1.56
+],
 "776901fd96d265ab": [
 "Me ajuda a fazer o guia da mata? Lê a figurinha",
 0.06,
@@ -1368,6 +1738,11 @@ null
 "Lona",
 0.12,
 0.6
+],
+"78bcf9a2dc1cc32f": [
+"Olha a minha boca fazendo o som",
+0.12,
+2.0
 ],
 "7962f7726db584aa": [
 "Bola. Qual rima com bola?",
@@ -1419,6 +1794,11 @@ null
 0.1,
 0.7
 ],
+"7e63ea41708f71fa": [
+"Menina",
+0.06,
+0.78
+],
 "7ea73340a456a160": [
 "Vovô",
 0.08,
@@ -1428,6 +1808,11 @@ null
 "Amanhã o Davi vem com o pandeiro. Ele diz que as palavras têm pedacinhos",
 0.0,
 5.44
+],
+"7f2f64cba3705de9": [
+"Luã!",
+0.1,
+0.28
 ],
 "7f942f2749e85a2f": [
 "Uma casa para cada pedacinho",
@@ -1448,6 +1833,11 @@ null
 "Você. O sorriso fecha um pouquinho. É!",
 0.1,
 3.0
+],
+"80b3127ce9db84f9": [
+"Cu de queijo",
+0.14,
+0.88
 ],
 "80cab0c94e89d5c8": [
 "Emanuelli",
@@ -1473,6 +1863,11 @@ null
 "É?",
 0.22,
 0.28
+],
+"8290f7025695d0a8": [
+"O H não faz som sozinho",
+0.1,
+2.04
 ],
 "834e0149c82a547a": [
 "Brian",
@@ -1514,15 +1909,35 @@ null
 0.08,
 0.86
 ],
+"85a88214f21d95f8": [
+"Letra Dálio",
+0.1,
+0.94
+],
 "85c22af298b7f175": [
 "Sofia?",
 0.12,
 0.62
 ],
+"86457492ea86fb1d": [
+"Z de zebra",
+0.1,
+1.32
+],
 "87015bef3943c01e": [
 "Nicolas",
 0.08,
 0.78
+],
+"87f7a3b424ef3c5e": [
+"L de lua? A língua sobe e fica lá. Sua vez",
+0.3,
+4.44
+],
+"8802e3a38d60b4e8": [
+"Isis",
+0.08,
+0.74
 ],
 "880a98ec8a9b31c4": [
 "Olívia",
@@ -1548,6 +1963,11 @@ null
 "Malu",
 0.1,
 0.66
+],
+"89629d54c781c572": [
+"E de elefante",
+0.06,
+0.9
 ],
 "896b42658f27c50d": [
 "Enche o peito de ar",
@@ -1594,6 +2014,11 @@ null
 0.12,
 0.74
 ],
+"8bb020532a8f7343": [
+"Olha só a letra de hoje",
+0.08,
+1.22
+],
 "8beafcb8e259e79d": [
 "Pietro",
 0.1,
@@ -1608,6 +2033,11 @@ null
 "A da boca bem aberta. Ligar o som a A letra A",
 0.08,
 3.0
+],
+"8c8f18ce770a0172": [
+"Oi!",
+0.12,
+0.38
 ],
 "8cd4d4926f33a0b1": [
 "Oh!",
@@ -1654,6 +2084,11 @@ null
 0.12,
 4.56
 ],
+"906790908bb4a268": [
+"Luna",
+0.1,
+0.84
+],
 "90b5bc83b48efec9": [
 "Eu sou a Sofia. So-fi-a. Três palmas",
 0.06,
@@ -1679,6 +2114,11 @@ null
 0.1,
 0.76
 ],
+"929e52b9bc79588e": [
+"Olha a minha boca fazendo o som",
+0.08,
+1.62
+],
 "92f80bcf4a2c3e75": [
 "Fernando",
 0.1,
@@ -1693,6 +2133,11 @@ null
 "Luiza",
 0.08,
 0.66
+],
+"93c1f0c68b3ffeb3": [
+"Tem a grande e a pequena",
+0.1,
+1.44
 ],
 "953fb4a035f0f6ca": [
 "Ficou a sua cara! Tudo pronto pra começar?",
@@ -1809,6 +2254,11 @@ null
 0.08,
 3.06
 ],
+"9c1953316072ae69": [
+"Qual figura começa com o som desta letra?",
+0.08,
+2.06
+],
 "9c2558dcd3bdda35": [
 "Mu",
 0.1,
@@ -1818,6 +2268,11 @@ null
 "Stella",
 0.14,
 0.66
+],
+"9d2bc4106e327423": [
+"Letra D",
+0.08,
+0.72
 ],
 "9d379a53f92ad1f3": [
 "Luna",
@@ -1864,6 +2319,11 @@ null
 0.1,
 0.84
 ],
+"a04269e7f0e537e1": [
+"Olha só a letra de hoje",
+0.1,
+1.8
+],
 "a082292fd302ec70": [
 "E eu sou o Thales. Que bom ter você na Vila das Letras",
 0.1,
@@ -1899,6 +2359,11 @@ null
 0.04,
 0.54
 ],
+"a3973e83934f50d4": [
+"Letra",
+0.1,
+0.72
+],
 "a3b1db24550c8f06": [
 "Janela",
 0.06,
@@ -1929,10 +2394,20 @@ null
 0.1,
 0.92
 ],
+"a564435d6e235086": [
+"O que vem sempre com o U",
+0.06,
+1.16
+],
 "a57a1c749ef46552": [
 "É, de navio",
 0.1,
 0.88
+],
+"a634f89df9ed3b50": [
+"Vice",
+0.1,
+0.38
 ],
 "a6adff9b00090370": [
 "How?",
@@ -1959,10 +2434,20 @@ null
 0.34,
 1.52
 ],
+"a79854f7d93279f7": [
+"Queijo",
+0.18,
+0.7
+],
 "a81ad06a16b87670": [
 "Mi!",
 0.2,
 0.5
+],
+"a834e923810f10f1": [
+"Letra R",
+0.08,
+0.52
 ],
 "a8bd6b2c6863d2f9": [
 "Liz",
@@ -1979,6 +2464,21 @@ null
 0.08,
 0.8
 ],
+"a8ed3607c575eb5d": [
+"Cabe",
+0.1,
+0.48
+],
+"a904aa53f68b1319": [
+"Noah",
+0.1,
+0.54
+],
+"a905c78f50a38791": [
+"Tchau!",
+0.08,
+0.54
+],
 "a981d73c7fcea454": [
 "Oliver",
 0.1,
@@ -1994,6 +2494,11 @@ null
 0.1,
 0.56
 ],
+"aba74a09c000b775": [
+"As letras juntas viram palavra. Monte comigo",
+0.08,
+2.58
+],
 "abda7d29640690ea": [
 "Tem um fio que faz F de foca",
 0.1,
@@ -2004,6 +2509,11 @@ null
 0.28,
 1.34
 ],
+"ac6a63f82680846d": [
+"爸爸",
+0.2,
+0.64
+],
 "ac6b54b6df155a20": [
 "Lu",
 0.12,
@@ -2013,6 +2523,11 @@ null
 "Mateo",
 0.1,
 0.7
+],
+"ac935048e0567a0e": [
+"Doze",
+0.12,
+0.58
 ],
 "ac9f93ff08219d06": [
 "Uuuu!",
@@ -2048,6 +2563,11 @@ null
 "Gabriely",
 0.1,
 0.84
+],
+"aff0fabef08057ad": [
+"Tem a grande e a pequena",
+0.06,
+1.8
 ],
 "aff28483c7eef4ed": [
 "Zoe!",
@@ -2129,6 +2649,11 @@ null
 0.1,
 0.58
 ],
+"b5f30b70aa95c1f4": [
+"Letra N",
+0.14,
+0.8
+],
 "b5f99013e6377203": [
 "Yeah!",
 0.12,
@@ -2149,6 +2674,11 @@ null
 0.08,
 0.58
 ],
+"b73a770c7c672c53": [
+"J de janela",
+0.08,
+1.56
+],
 "b7bfe75702ce68fe": [
 "Emily",
 0.14,
@@ -2163,6 +2693,11 @@ null
 "Manuela",
 0.08,
 0.68
+],
+"b8ae910428f8b771": [
+"Jaca",
+0.1,
+0.54
 ],
 "b8f08f5bacf231d0": [
 "Qual começa com M de macaco?",
@@ -2214,6 +2749,16 @@ null
 0.1,
 1.9
 ],
+"bb51dc2306e1a03a": [
+"Letra T",
+0.1,
+0.68
+],
+"bc180cddcd80780c": [
+"E de jasmim",
+0.06,
+0.94
+],
 "bc1d3723db837cda": [
 "Ops, eu acho que esse som é do, ah, Mimcina",
 0.1,
@@ -2244,6 +2789,21 @@ null
 0.08,
 0.68
 ],
+"bc95aaef1d04b2ae": [
+"Wesley",
+0.1,
+0.56
+],
+"bd7bda80725dba9b": [
+"Agora a gente vai juntar as letras e fazer sílabas",
+0.14,
+2.82
+],
+"bd870eb2ede0c912": [
+"Chi de gato",
+0.14,
+0.82
+],
 "be3c2a8244aa8fd3": [
 "Sofia",
 0.1,
@@ -2253,6 +2813,16 @@ null
 "Noah",
 0.1,
 0.54
+],
+"bea66654d8ef2f18": [
+"Sopa",
+0.12,
+0.68
+],
+"beb943b2e2b795f2": [
+"A tartaruga volta. Valeu",
+0.12,
+3.56
 ],
 "bee86f449944f830": [
 "Lavínia",
@@ -2264,10 +2834,25 @@ null
 0.06,
 0.58
 ],
+"bf411fbfee5baf24": [
+"N de navio",
+0.26,
+1.36
+],
+"bf51273a144542ec": [
+"Letra J",
+0.12,
+0.76
+],
 "bf88b56970b4ac15": [
 "Vovó",
 0.1,
 0.54
+],
+"c042fae244536c23": [
+"Sorriso aberto. Ééé. Sua vez",
+0.12,
+4.46
 ],
 "c0b841d28af14b84": [
 "Uou!",
@@ -2279,20 +2864,65 @@ null
 0.14,
 0.74
 ],
+"c0cc84e3d4b8c848": [
+"Olha só o que chegou para você",
+0.14,
+1.64
+],
+"c11d96772553eaa9": [
+"Letra X",
+0.12,
+0.74
+],
+"c12f1c9e10ea4d20": [
+"Letra S",
+0.1,
+0.8
+],
+"c15fd31f441beb3c": [
+"Letra F",
+0.08,
+0.86
+],
 "c1a988c718685bd4": [
 "Emanuele",
 0.16,
 0.94
+],
+"c1b1fbbd7996705a": [
+"Gato? Qual rima com gato",
+0.12,
+2.98
 ],
 "c1bd1f079ca1cc9f": [
 "Lorenzo",
 0.12,
 0.72
 ],
+"c2ae5e5eb6dff0fa": [
+"Oh",
+0.08,
+0.44
+],
+"c2d11ff89afad56e": [
+"Com qual letra começa?",
+0.06,
+1.36
+],
+"c2f79fdc59ef6b51": [
+"Laura!",
+0.06,
+0.44
+],
 "c32f68395477043f": [
 "Gael",
 0.08,
 0.6
+],
+"c3484ba1da43b88e": [
+"Letra E",
+0.08,
+0.78
 ],
 "c38e085f982ebdf8": [
 "Ginga",
@@ -2303,6 +2933,11 @@ null
 "Elefante",
 0.08,
 0.82
+],
+"c40ff129f45361e3": [
+"Gauê!",
+0.12,
+0.72
 ],
 "c41956067ef71074": [
 "Isso! O sorriso abriu",
@@ -2344,6 +2979,11 @@ null
 0.1,
 4.54
 ],
+"c69303a8e274abc4": [
+"E a Kisuba?",
+0.04,
+0.68
+],
 "c6b0ad1b195b99bd": [
 "Pietro",
 0.06,
@@ -2369,6 +3009,16 @@ null
 0.12,
 2.58
 ],
+"c890ec97b086a4d0": [
+"Isso, você fez o som",
+0.18,
+1.74
+],
+"c947190fa9b8a912": [
+"Teu",
+0.1,
+0.54
+],
 "c9959052b94b81b0": [
 "Tá!",
 0.08,
@@ -2378,6 +3028,11 @@ null
 "Yoyo",
 0.1,
 0.54
+],
+"c9e52393b5a77da6": [
+"O Paçoca escondeu tudo que começa com F, de foca. Bora",
+0.1,
+5.26
 ],
 "c9ebbcf928f24313": [
 "Analu",
@@ -2449,6 +3104,11 @@ null
 0.08,
 3.64
 ],
+"cdcb69bfc44a9e4a": [
+"Esta letra aparece em nomes",
+0.08,
+1.46
+],
 "ce0bb5901b80ad48": [
 "Elisa",
 0.1,
@@ -2458,6 +3118,11 @@ null
 "Benício",
 0.12,
 0.88
+],
+"cf00b2d35ddd2aa1": [
+"Agora desenhe a letra com o dedo",
+0.12,
+2.2
 ],
 "d01dbe25f9b2dd6b": [
 "Daniela",
@@ -2488,6 +3153,11 @@ null
 "Elefante",
 0.1,
 0.76
+],
+"d3079d4881934d02": [
+"Leia pra H",
+0.08,
+0.74
 ],
 "d32c2f2dbb6a99e2": [
 "Iglu",
@@ -2523,6 +3193,11 @@ null
 "Que sorriso! Ih",
 0.08,
 1.38
+],
+"d631e019e8046691": [
+"Letra V",
+0.06,
+0.66
 ],
 "d68dba7c60cff3ac": [
 "É isso. Você me entendeu?",
@@ -2589,6 +3264,11 @@ null
 0.08,
 0.64
 ],
+"dc78f7698e7b74d0": [
+"Igor",
+0.12,
+0.56
+],
 "dd99b5bcf7657fdc": [
 "[música de introdução]",
 null,
@@ -2639,15 +3319,30 @@ null
 0.08,
 2.98
 ],
+"e14f3df297e192f5": [
+"Maba",
+0.14,
+0.64
+],
 "e1de00f4e5444b54": [
 "Joaquim",
 0.1,
 0.78
 ],
+"e25f2429073a6cf6": [
+"Você está pronto pra conhecer as letras?",
+0.08,
+2.0
+],
 "e274ea4e7842075b": [
 "O que rima com pão?",
 0.06,
 1.12
+],
+"e2d7863bf2fbb6a3": [
+"Liz",
+0.14,
+0.6
 ],
 "e4ecc1b3bca88859": [
 "Giovanna",
@@ -2658,6 +3353,21 @@ null
 "[silêncio]",
 null,
 null
+],
+"e5535d3d0abcb2e7": [
+"Você me ensinou. Valeu",
+0.06,
+1.62
+],
+"e5a46acd82596816": [
+"Esses são nomes de bichinhos da mata. Lê pra mim",
+0.08,
+3.16
+],
+"e5d557af344272da": [
+"X de xícara",
+0.04,
+1.48
 ],
 "e60795d91ac7a933": [
 "Marcin",
@@ -2674,6 +3384,11 @@ null
 0.1,
 0.62
 ],
+"e7667e533d7e2453": [
+"Amanhã tem outra letra",
+0.08,
+1.2
+],
 "e78842eb8f631144": [
 "Ihhh!",
 0.16,
@@ -2689,15 +3404,35 @@ null
 0.1,
 0.52
 ],
+"e8254dc05f88bde8": [
+"E dele",
+0.08,
+0.5
+],
 "e86f926ba66878fa": [
 "Fi!",
 0.1,
 0.36
 ],
+"e89546b844c80d92": [
+"P de pato",
+0.1,
+1.22
+],
 "e8c0644f06e765d0": [
 "Não",
 0.1,
 0.34
+],
+"e8c2dcb3fd7bc3b7": [
+"Ouviu isso?",
+0.1,
+0.84
+],
+"e8df2ef573701ef9": [
+"Ouça e toque na letra",
+0.14,
+1.66
 ],
 "e9acd46c9118176f": [
 "Eduarda",
@@ -2714,10 +3449,20 @@ null
 0.12,
 0.8
 ],
+"eb084df799798132": [
+"Helloá!",
+0.08,
+0.66
+],
 "eb12098a64f223ea": [
 "Chefe, Cachoeira das Sílabas: ler palavras e nomes de bichinhos da mata e escrever quatro palavras",
 0.08,
 6.46
+],
+"ebbad9cfffde73cd": [
+"Helicóptero",
+0.06,
+0.9
 ],
 "ebbe90c32605a699": [
 "Mirela",
@@ -2727,6 +3472,16 @@ null
 "ec16aaa0557d7303": [
 "Eloá",
 0.08,
+0.6
+],
+"ec3270143c702af1": [
+"Letra B",
+0.08,
+0.6
+],
+"ecacf91e9c6de0cb": [
+"Henrique",
+0.1,
 0.6
 ],
 "ecae6296687e5bdd": [
@@ -2754,6 +3509,16 @@ null
 0.1,
 0.3
 ],
+"ef67790822a84a9b": [
+"Agora desenhe a letra com o dedo",
+0.08,
+1.62
+],
+"f0e5c0d3c9b92bb9": [
+"O eco falou: qual letra",
+0.12,
+2.28
+],
 "f12e0b69cb84f8ae": [
 "Rafaela",
 0.1,
@@ -2769,6 +3534,16 @@ null
 0.14,
 0.56
 ],
+"f25a827ea78e13a5": [
+"R de rato",
+0.62,
+1.28
+],
+"f2798311102683c8": [
+"Esta letra tem dois sons, o de ovo e o de vovó",
+0.08,
+3.04
+],
 "f3c70b2141c3aa94": [
 "Lara!",
 0.1,
@@ -2778,6 +3553,11 @@ null
 "Valentina",
 0.1,
 0.84
+],
+"f46e72347f3da6f5": [
+"Esta letra tem dois sons, o de elefante e o de pé",
+0.2,
+2.62
 ],
 "f474aa0c5896a39b": [
 "Ouviu isso?",
@@ -2824,10 +3604,20 @@ null
 0.06,
 0.8
 ],
+"f8832c780c243a3f": [
+"Ludova",
+0.02,
+0.64
+],
 "f95a780b6236ad62": [
 "Cecília",
 0.1,
 0.72
+],
+"fa8a88fbbab8617c": [
+"Os dois são O. Sua vez",
+0.08,
+1.52
 ],
 "fa97bc5414702607": [
 "Zoe",
@@ -2849,6 +3639,11 @@ null
 0.12,
 2.88
 ],
+"fb28275341296de7": [
+"Ei!",
+0.08,
+0.52
+],
 "fbbdd628e378f726": [
 "Augusto",
 0.06,
@@ -2859,10 +3654,20 @@ null
 0.06,
 0.74
 ],
+"fdb1b5548e9c9417": [
+"Você está pronta pra conhecer as letras?",
+0.08,
+1.96
+],
 "fdf4a8d9e50c86c3": [
 "Gabriele",
 0.08,
 0.8
+],
+"fe037b6a99d7ba50": [
+"Ah!",
+0.12,
+0.36
 ],
 "fe27d2c16557b0d8": [
 "Bye!",
@@ -2883,5 +3688,10 @@ null
 "Raul",
 0.3,
 0.76
+],
+"fff014df07baa08a": [
+"Toque na letra que está brilhando",
+0.08,
+1.74
 ]
 }

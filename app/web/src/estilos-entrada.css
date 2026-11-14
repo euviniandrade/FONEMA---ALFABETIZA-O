@@ -327,3 +327,5 @@ html.contraste .camada-veu{background:rgba(0,0,0,.8)}
   .area-sair span{display:inline}.area-sair{padding:0 12px 0 8px;font-size:15px}
   .area-marca img{display:none}.area-dir{gap:6px}
 }
+@media (max-width:560px){.fluxo-corpo .tecla{min-height:clamp(42px,5.6vh,54px)}.fluxo-corpo .teclado{gap:6px}}
+.pin-cartao>.pin{width:min(100%,220px)}.pin .pin-caixa{width:100%;max-width:220px}
