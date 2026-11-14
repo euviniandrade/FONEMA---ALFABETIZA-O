@@ -100,10 +100,10 @@ def recortar(quad):
     # o que o separa do brilho especular é a LARGURA da mancha
     Hq, Wq = s.shape
     zona = np.zeros_like(neutro)
-    zona[int(Hq * .665):int(Hq * .80), int(Wq * .24):int(Wq * .76)] = True
+    zona[int(Hq * .745):int(Hq * .85), int(Wq * .2):int(Wq * .8)] = True
     palido = (s < .34) & (v > .6) & zona
-    miolo = ndi.binary_opening(palido, iterations=7)
-    neutro |= ndi.binary_dilation(miolo, iterations=10, mask=palido)
+    miolo = ndi.binary_opening(palido, iterations=5)
+    neutro |= ndi.binary_dilation(miolo, iterations=14, mask=palido)
     rot2, n2 = ndi.label(neutro)
     tam2 = ndi.sum(neutro, rot2, range(1, n2 + 1))
     for i in range(1, n2 + 1):
