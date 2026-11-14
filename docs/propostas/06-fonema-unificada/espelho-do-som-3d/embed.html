@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>FONEMA · Espelho do Som</title>
+<!-- Componente embutível (iframe). Parâmetros: ?f=<fonema>&vista=frente|lado&quem=sofia|tales&compacto=1
+     &audioBase=<pasta dos mp3 + manifesto.json>&lento=1&rotulos=0|1. Mensagens: veja embed.js. -->
+<link rel="stylesheet" href="espelho.css">
+<style>html,body{margin:0;height:100%;background:transparent;overflow:hidden}#espelho{position:absolute;inset:0;padding:8px}body.compacto #espelho{padding:0}</style>
+</head>
+<body>
+<div id="espelho"></div>
+<script src="fonemas.js"></script>
+<script src="espelho-frente.js"></script>
+<script src="espelho-lado.js"></script>
+<script src="espelho-audio.js"></script>
+<script src="embed.js"></script>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search), compacto = q.get('compacto') === '1' || q.get('compacto') === 'true', manda = function () {};
+  if (compacto) document.body.classList.add('compacto');
+  var api = EspelhoDoSom.montar(document.getElementById('espelho'), {
+    fonema: q.get('f') || q.get('fonema') || 'a', vista: q.get('vista'), quem: q.get('quem'), compacto: compacto,
+    lento: q.get('lento') === '1', rotulos: q.has('rotulos') ? q.get('rotulos') !== '0' : undefined,
+    // pasta dos áudios oficiais; padrão: os mp3 do app neste repositório (sirva a partir da raiz do repositório)
+    audioBase: q.get('audioBase') || '../../../../app/web/public/audio/falas/',
+    aoMudar: function (e) { manda({ tipo: 'espelho:mudou', f: e.f, vista: e.vista, quem: e.quem }); }
+  });
+  manda = EspelhoDoSom.ligarMensagens(api);
+  manda({ tipo: 'espelho:pronto', fonemas: Object.keys(FonemasPT.F) });
+  window.ESPELHO = api;
+})();
+</script>
+</body>
+</html>

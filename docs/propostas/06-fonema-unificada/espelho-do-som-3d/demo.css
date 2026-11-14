@@ -1,7 +1,4 @@
-@font-face{font-family:Andika;src:url(../lojinha-emblemas/fontes/fonts/andika-latin-400-normal.woff2) format('woff2');font-weight:400}
-@font-face{font-family:Andika;src:url(../lojinha-emblemas/fontes/fonts/andika-latin-700-normal.woff2) format('woff2');font-weight:700}
-@font-face{font-family:Fredoka;src:url(../lojinha-emblemas/fontes/fonts/fredoka-latin-600-normal.woff2) format('woff2');font-weight:600}
-@font-face{font-family:Fredoka;src:url(../lojinha-emblemas/fontes/fonts/fredoka-latin-700-normal.woff2) format('woff2');font-weight:700}
+/* FONEMA · Espelho do Som — estilos da demo (as fontes vêm de espelho.css) */
 :root{--marinho:#1B3160;--marinho2:#284A86;--azul-claro:#A8D5F2;--ouro:#F4B73C;--ouro-claro:#FFE08A;--creme:#FFF8EA;--coral:#FF7F8C;--verde:#3E9A63}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
@@ -12,7 +9,6 @@ button{font:inherit;cursor:pointer}
 .titulo .logo{font-size:30px;width:48px;height:48px;border-radius:16px;background:var(--marinho);display:grid;place-items:center}
 .titulo b{font:700 26px/1 Fredoka,sans-serif;display:block}
 .titulo small{font-size:14px;color:#4A6390}
-.aviso-fono{margin:0 auto;background:#FFF3D0;border:2px solid var(--ouro);border-radius:999px;padding:6px 14px;font:700 15px Fredoka,sans-serif;color:#7A4E00}
 .ajustes{display:flex;gap:8px}
 .chip{border:2px solid #C6DCF0;background:#fff;border-radius:999px;padding:8px 14px;font:600 15px Fredoka,sans-serif;color:var(--marinho);min-height:44px}
 .chip[aria-pressed=true]{background:var(--ouro-claro);border-color:var(--ouro)}
@@ -79,27 +75,36 @@ button{font:inherit;cursor:pointer}
 .tecla small{display:block;font:600 11px Andika;color:#4A6390}
 .tecla.on{background:var(--ouro-claro);box-shadow:0 4px 0 #C98A12}
 .rodape-nota{margin:2px 0 6px;text-align:center;font-size:12px;color:#5B6F92}
-@media (max-width:980px){body{overflow:auto}.tela{grid-template-columns:1fr}.palco-area{height:62vh}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-.vista{opacity:0;pointer-events:none;transition:opacity .45s}
+.vista{opacity:0;pointer-events:none;transition:opacity .35s}
 .vista.on{opacity:1;pointer-events:auto}
-.frente-ilustrada{display:flex;align-items:center;justify-content:center;gap:0;padding:20px 24px 80px;background:radial-gradient(120% 90% at 50% 35%,#DDF0FC,#B9DDF5 60%,#9CCBEB)}
-.frente-ilustrada::before{display:none}
-.retrato{margin:0;width:30%;max-width:250px;flex:none;border-radius:26px;overflow:hidden;box-shadow:0 6px 0 #0001,0 0 0 5px #fff;position:relative;align-self:center;background:#cfe6f8}
-.retrato img{width:100%;display:block}
-.retrato figcaption{position:absolute;left:8px;top:8px;background:#fffc;border-radius:999px;padding:2px 10px;font:700 14px Fredoka,sans-serif}
-.lupa-liga{width:5%;height:14px;background:linear-gradient(#F4C55A,#C98A12);border-radius:7px;flex:none;box-shadow:0 2px 0 #0002}
-.lupa{margin:0;flex:1;max-width:560px;aspect-ratio:11/8;border-radius:50%;overflow:hidden;border:12px solid #E9C77A;box-shadow:0 0 0 5px #fff,0 0 0 11px #C98A12,0 14px 30px #0B163855,inset 0 0 30px #0004;position:relative;background:#c98}
-.lupa img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02)}
-.lupa::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(60% 45% at 30% 22%,#fff8,#fff0 60%);pointer-events:none}
-.lupa img.troca{animation:lupaTroca .55s cubic-bezier(.2,1.4,.4,1)}
-@keyframes lupaTroca{0%{transform:scale(.86);filter:brightness(1.25) blur(1.5px);opacity:.4}100%{transform:scale(1.02);opacity:1}}
-.quem{position:absolute;right:16px;top:14px;display:flex;background:#FFF8EAee;border-radius:18px;padding:4px;box-shadow:0 4px 0 #0003;z-index:3}
-.quem button{border:0;background:none;border-radius:14px;padding:8px 14px;font:700 17px Fredoka,sans-serif;color:var(--marinho);min-height:44px}
-.quem button.on{background:var(--ouro-claro)}
-.modos{z-index:3}
-.modos .sep{align-self:center;font:700 14px Fredoka,sans-serif;color:#fff;background:#1B316099;border-radius:10px;padding:4px 8px}
-.modos button{padding:8px 12px;min-height:48px;font-size:15px}
-
-.palco.claro{background:#EAF5FD}.palco.claro::before{display:none}
+.palco{border-radius:28px;overflow:hidden;background:#DCEEFB}
+.modos{left:14px;top:14px;bottom:auto;z-index:3;background:#FFF8EAee;border-radius:20px;padding:5px;gap:4px;box-shadow:0 4px 0 #0003}
+.modos button{padding:8px 14px;min-height:46px;font-size:16px;background:none;box-shadow:none;border-radius:15px}
+.modos button.on{background:var(--ouro-claro);box-shadow:inset 0 -3px 0 #E0A52A}
+.quem{position:absolute;right:14px;top:14px;display:none;background:#FFF8EAee;border-radius:20px;padding:5px;gap:4px;box-shadow:0 4px 0 #0003;z-index:3}
+.quem.on{display:flex}
+.quem button{border:0;background:none;border-radius:15px;padding:8px 14px;font:700 16px Fredoka,sans-serif;color:var(--marinho);min-height:46px}
+.quem button.on{background:var(--ouro-claro);box-shadow:inset 0 -3px 0 #E0A52A}
+.aviso-fono{position:absolute;right:14px;bottom:8px;margin:0;z-index:2;background:#ffffffa6;border:0;border-radius:8px;padding:1px 8px;font:400 11.5px Andika,sans-serif;color:#1B3160;opacity:.7;pointer-events:none}
+.topo{justify-content:space-between}
+.ouvir[disabled]{background:#E7EEF6;box-shadow:0 5px 0 #C3D0DF;color:#7186A6;font-size:15px;cursor:default}
+.tecla.com-audio::after{content:"";display:block;width:6px;height:6px;border-radius:50%;background:#F4B73C;margin:1px auto 0}
+.tecla{height:54px}
+@media (max-width:980px){
+  body{display:flex;flex-direction:column;overflow:auto;min-height:100vh}
+  .tela{display:contents}
+  .topo{padding:6px 10px;gap:8px}.titulo .logo{width:36px;height:36px;font-size:22px;border-radius:12px}.titulo b{font-size:19px}.titulo small{display:none}
+  .chip{padding:5px 10px;font-size:13px;min-height:40px}
+  .palco-area{order:1;height:auto;aspect-ratio:4/3;max-height:52vh;margin:0 8px;flex:none}
+  .palco{border-radius:20px}
+  .teclado{order:2;padding:8px 6px 2px;gap:5px}
+  .lado{order:3;padding:8px;flex:none}
+  .rodape-nota{order:4;padding:0 10px}
+  .painel{overflow:visible;flex:none}
+  .modos{left:8px;top:8px;padding:3px}.quem{right:8px;top:8px;padding:3px}
+  .modos button,.quem button{min-height:38px;padding:5px 9px;font-size:13.5px}
+  .grupo div{gap:4px;flex-wrap:wrap}.tecla{min-width:44px;height:50px;font-size:19px;padding:0 6px}
+  .aviso-fono{font-size:9.5px;right:8px;bottom:3px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

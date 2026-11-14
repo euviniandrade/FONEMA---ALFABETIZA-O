@@ -4,37 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>FONEMA · Espelho do Som 3D — a boca de frente, de lado (raio-X) e por dentro</title>
-<!-- Protótipo local. Nada é gravado nem enviado: a câmera (opcional) fica só nesta tela. -->
-<script type="importmap">{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }</script>
+<title>FONEMA · Espelho do Som — como a boca faz cada som</title>
+<!-- Protótipo local, sem dependências externas. Nada é gravado nem enviado: a câmera (opcional) fica só nesta tela. -->
 <link rel="stylesheet" href="espelho.css">
 <link rel="stylesheet" href="demo.css">
 </head>
 <body>
 <header class="topo">
   <div class="titulo"><span class="logo" aria-hidden="true">🪞</span><div><b>Espelho do Som</b><small>como a boca faz cada som</small></div></div>
-  <p class="aviso-fono" role="note">⚠️ Posições simplificadas — validar com fonoaudióloga</p>
   <div class="ajustes">
     <button class="chip" id="bNomes" aria-pressed="true">🏷️ Nomes</button>
     <button class="chip" id="bLento" aria-pressed="false">🐢 Câmera lenta</button>
-    <button class="chip" id="bMudo" aria-pressed="false">🔊 Voz ligada</button>
   </div>
 </header>
 
 <main class="tela">
   <section class="palco-area">
     <div id="vFrente" class="palco vista on" aria-label="Boca gigante de frente"></div>
-    <div id="vRaiox" class="palco vista" aria-label="Raio-X de lado"></div>
-    <div id="palco" class="palco vista" aria-label="Boca em 3D"></div>
+    <div id="vLado" class="palco vista" aria-label="De lado, com a janelinha na bochecha"></div>
     <nav class="modos" aria-label="Como olhar a boca">
       <button data-modo="frente" class="on">😮 De frente</button>
-      <button data-modo="lado">👧 De lado</button>
-      <span class="sep">3D:</span>
-      <button data-modo="frente3d">👄 Boca 3D</button>
-      <button data-modo="dentro">🔍 Dentro da boca</button>
-      <button data-modo="corpo">🫁 Pulmão → boca</button>
-      <button id="bGirar" aria-pressed="false">🔄 360°</button>
+      <button data-modo="lado">🔍 De lado</button>
     </nav>
+    <div class="quem" id="quem" role="group" aria-label="Quem mostra"><button data-q="sofia" class="on">Sofia</button><button data-q="tales">Tales</button></div>
+    <p class="aviso-fono" role="note">posições simplificadas — validar com fonoaudióloga</p>
   </section>
 
   <aside class="lado">
@@ -62,12 +55,12 @@
 
 <footer class="teclado" id="teclado" aria-label="Escolha um som"></footer>
 
-<p class="rodape-nota">Voz sintetizada só para simular · no produto: áudio gravado por fonoaudióloga e vozes oficiais da Sofia e do Tales. Câmera opcional, só neste aparelho.</p>
+<p class="rodape-nota">“Ouvir” toca as vozes oficiais da Sofia e do Tales (só os sons que já têm gravação). Câmera opcional, só neste aparelho.</p>
 
 <script src="fonemas.js"></script>
-<script src="espelho-svg.js"></script>
 <script src="espelho-frente.js"></script>
-<script src="espelho.js"></script>
+<script src="espelho-lado.js"></script>
+<script src="espelho-audio.js"></script>
 <script src="demo.js"></script>
 </body>
 </html>

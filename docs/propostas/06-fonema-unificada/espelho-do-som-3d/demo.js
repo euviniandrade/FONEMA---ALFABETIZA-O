@@ -1,32 +1,27 @@
 /* FONEMA · Espelho do Som — demo com exercícios.
- * Voz: speechSynthesis pt-BR só como SIMULAÇÃO. No produto, cada som e cada fala serão áudios gravados
- * (fonoaudióloga + vozes oficiais da Sofia e do Tales), sincronizados com a boca.
+ * Vistas: De frente ("Boca gigante", espelho-frente.js) e De lado (perfil 3D com janelinha, espelho-lado.js).
+ * Áudio: SEM speechSynthesis. O botão "Ouvir" toca só os mp3 das vozes oficiais (espelho-audio.js); se o som
+ * ainda não tem gravação, não toca nada. As instruções dos exercícios aparecem escritas.
+ * Parâmetros: ?f=<fonema>&m=frente|lado&quem=sofia|tales&aba=explorar|lingua|voz|imite|corpo&audioBase=<pasta>
  */
-(async function () {
+(function () {
   'use strict';
   const P = window.FonemasPT, F = P.F;
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const q = new URLSearchParams(location.search);
-  // três vistas sincronizadas: rosto ilustrado de frente (zoom na boca), raio-X híbrido (Sofia/Tales) e 3D (opcional)
-  // De frente: "Boca gigante" (D020) · De lado: "3D fofinho" (Sofia de perfil com a janelinha na bochecha)
-  const fr = EspelhoFrente.criar($('#vFrente'), { fonema: q.get('f') || 'a' });
-  const rx = EspelhoSVG.criar($('#vRaiox'), { fonema: q.get('f') || 'a', personagem: q.get('p') || 'lado3d' });
-  $('#vRaiox').classList.add('esp-palco', 'claro'); $('#vFrente').classList.add('claro');
-  let e3 = null;
-  if (!q.has('2d')) { try { e3 = await EspelhoSom.criar($('#palco'), { fonema: q.get('f') || 'a', modo: 'frente', capturas: q.has('cap'), pausado: () => !$('#palco').classList.contains('on') }); if (e3.tipo !== '3d') { e3.destruir(); e3 = null; } } catch (e) { e3 = null; } }
-  let atual = q.get('f') || 'a', mudo = q.has('mudo'), lento = false, aba = 'explorar', vista = 'frente', pers = 'sofia';
-  const vista3d = () => ['frente3d', 'dentro', 'corpo'].includes(vista);
+  let atual = F[q.get('f')] ? q.get('f') : 'a', lento = false, aba = 'explorar', vista = 'frente', pers = q.get('quem') === 'tales' ? 'tales' : 'sofia';
+  const fr = EspelhoFrente.criar($('#vFrente'), { fonema: atual });
+  const rx = EspelhoLado.criar($('#vLado'), { fonema: atual, quem: pers });
+  const audio = EspelhoAudio.criar({ audioBase: q.get('audioBase') || '../../../../app/web/public/audio/falas/' });
   const esp = { // fachada: as duas vistas mexem juntas
-    fonema: (id, o) => { fr.fonema(id, o); rx.fonema(id, o); if (e3) e3.fonema(id, o); },
-    lento: (v) => { fr.lento(v); rx.lento(v); if (e3) e3.lento(v); },
-    destacar: (z, ok) => { (vista3d() && e3 ? e3 : vista === 'frente' ? fr : rx).destacar(z, ok); },
-    rotulos: (v) => { rx.rotulos(v); if (e3) e3.rotulos(v); },
-    girar: (v) => { if (e3) e3.girar(v); },
-    onToque: (cb) => { fr.onToque(cb); rx.onToque(cb); if (e3) e3.onToque(cb); },
-    pose: (a, b, f) => { fr.pose(a, b, f); rx.pose(a, b, f); if (e3) e3.pose(a, b, f); }
+    fonema: (id, o) => { fr.fonema(id, o); rx.fonema(id, o); },
+    lento: (v) => { fr.lento(v); rx.lento(v); },
+    destacar: (z, ok) => { (vista === 'frente' ? fr : rx).destacar(z, ok); },
+    rotulos: (v) => { rx.rotulos(v); },
+    onToque: (cb) => { fr.onToque(cb); rx.onToque(cb); },
+    pose: (a, b, f) => { fr.pose(a, b, f); rx.pose(a, b, f); }
   };
-  window.ESPELHO_MUDO = mudo;
-  const falar = (t, o) => (mudo ? Promise.resolve() : P.falar(t, Object.assign({ lento }, o)));
+  const falar = () => Promise.resolve(); // as falas dos exercícios ficam escritas (áudio só gravado, nunca sintetizado)
   const espera = (ms) => new Promise((r) => setTimeout(r, ms * (lento ? 2.2 : 1)));
 
   /* ---------- rostos ilustrados de frente (poucas bocas prontas: escolhe a mais parecida) ---------- */
@@ -45,6 +40,7 @@
   $('#teclado').innerHTML = P.GRUPOS.map(([nome, ids]) => `<div class="grupo"><small>${nome}</small><div>${ids.map((id) =>
     `<button class="tecla" data-f="${id}" aria-label="Som ${F[id].letra}, como em ${F[id].ex}">${F[id].letra}<small>/${F[id].ipa}/</small></button>`).join('')}</div></div>`).join('');
   $('#teclado').addEventListener('click', (e) => { const b = e.target.closest('.tecla'); if (b) { selecionar(b.dataset.f); ouvir(); } });
+  audio.pronto.then(() => { $$('.tecla').forEach((b) => b.classList.toggle('com-audio', audio.tem(b.dataset.f))); pintaOuvir(); });
 
   const AR = { oral: '💨 ar pela boca', nasal: '👃 ar pelo nariz', 'oral+nasal': '💨👃 boca e nariz', lateral: '↔️ ar pelos lados', nenhum: '—' };
   function selecionar(id, { instantaneo = false } = {}) {
@@ -55,41 +51,39 @@
     $('#cLetra').textContent = f.letra; $('#cIpa').textContent = `/${f.ipa}/`; $('#cEx').textContent = 'como em ' + f.ex;
     $('#cVoz').textContent = f.voz ? '🐝 tem voz (vibra)' : '🤫 sem voz (só ar)'; $('#cVoz').classList.toggle('sim', f.voz);
     $('#cAr').textContent = (f.modo === 'plosiva' ? '💥 ' : '') + AR[f.ar];
-    poeRosto();
+    poeRosto(); pintaOuvir();
     if (aba === 'explorar') painelExplorar();
   }
-  function ouvir() { const f = F[atual]; return falar(`${f.fala}... ${f.ex.replace(/\(.*\)/, '')}`); }
+  // "Ouvir": só áudio gravado das vozes oficiais; sem gravação, não toca nada
+  function ouvir() { return audio.tocar(atual, pers, { lento }); }
+  function pintaOuvir() { const tem = audio.tem(atual), b = $('#bOuvir'); b.disabled = !tem; b.textContent = tem ? '🔊 Ouvir' : '🔇 Sem gravação'; b.title = tem ? 'Ouvir a voz oficial' : 'Este som ainda não tem gravação oficial'; }
   $('#bOuvir').addEventListener('click', ouvir);
-  function trocaPers(p) { pers = p; } // no Imite: bocas de frente ilustradas da Sofia ou do Tales
+  function trocaPers(p) { pers = p === 'tales' ? 'tales' : 'sofia'; rx.quem(pers); $$('#quem button').forEach((b) => b.classList.toggle('on', b.dataset.q === pers)); if (aba === 'imite') exImite(); }
+  $$('#quem button').forEach((b) => b.addEventListener('click', () => trocaPers(b.dataset.q)));
 
   /* ---------- vistas ---------- */
   function modo(m) {
-    if (!e3 && ['frente3d', 'dentro', 'corpo'].includes(m)) m = 'lado';
-    vista = m;
-    $('#vFrente').classList.toggle('on', m === 'frente'); $('#vRaiox').classList.toggle('on', m === 'lado');
-    $('#palco').classList.toggle('on', vista3d());
-    if (e3 && vista3d()) e3.modo(m === 'frente3d' ? 'frente' : m);
-    $$('.modos [data-modo]').forEach((b) => b.classList.toggle('on', b.dataset.modo === m));
+    vista = m === 'lado' ? 'lado' : 'frente';
+    $('#vFrente').classList.toggle('on', vista === 'frente'); $('#vLado').classList.toggle('on', vista === 'lado');
+    $('#quem').classList.toggle('on', vista === 'lado'); $('#bNomes').style.visibility = vista === 'lado' ? '' : 'hidden';
+    $$('.modos [data-modo]').forEach((b) => b.classList.toggle('on', b.dataset.modo === vista));
   }
   $$('.modos [data-modo]').forEach((b) => b.addEventListener('click', () => modo(b.dataset.modo)));
-  $('#bGirar').addEventListener('click', (e) => { const v = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', v); if (v && !vista3d()) modo('frente3d'); esp.girar(v); });
   $('#bNomes').addEventListener('click', (e) => { const v = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', v); esp.rotulos(v); });
   $('#bLento').addEventListener('click', (e) => { lento = !lento; e.currentTarget.setAttribute('aria-pressed', lento); esp.lento(lento); });
-  $('#bMudo').addEventListener('click', (e) => { mudo = !mudo; window.ESPELHO_MUDO = mudo; e.currentTarget.setAttribute('aria-pressed', mudo); e.currentTarget.textContent = mudo ? '🔇 Voz desligada' : '🔊 Voz ligada'; if (mudo) speechSynthesis.cancel(); });
-  if (!e3) $$('.modos [data-modo=frente3d],.modos [data-modo=dentro],.modos [data-modo=corpo],#bGirar,.modos .sep').forEach((b) => (b.style.display = 'none'));
 
   /* ---------- abas ---------- */
   $$('.abas button').forEach((b) => b.addEventListener('click', () => abrirAba(b.dataset.aba)));
   function abrirAba(a) {
     aba = a; $$('.abas button').forEach((b) => b.classList.toggle('on', b.dataset.aba === a));
-    toque = null; esp.rotulos(true);
+    toque = null; esp.rotulos($('#bNomes').getAttribute('aria-pressed') === 'true');
     ({ explorar: painelExplorar, lingua: exLingua, voz: exVoz, imite: exImite, corpo: exCorpo })[a]();
   }
-  let toque = null; // função do exercício que recebe o toque no 3D
+  let toque = null; // função do exercício que recebe o toque no desenho
   esp.onToque((e) => { if (toque) toque(e); else if (aba === 'explorar' && PARTES[e.zona]) { esp.destacar(e.zona); falar(PARTES[e.zona][0] + '! ' + PARTES[e.zona][1]); } });
 
   // sequências de transição (ex.: m → a): a boca muda de um som para outro, como na fala
-  async function sequencia(ids) { for (const id of ids) { selecionar(id); falar(F[id].fala.slice(0, 3)); await espera(1300); } }
+  async function sequencia(ids) { for (const id of ids) { selecionar(id); await espera(1300); } }
   function painelExplorar() {
     const f = F[atual], t = f.t;
     $('#painel').innerHTML = `<h3>Som ${f.letra} <span style="color:#B04A63">/${f.ipa}/</span></h3>
@@ -111,7 +105,7 @@
     const quem = f.zona === 'labios' ? 'os lábios se encostam' : f.zona === 'dentes' ? 'o lábio de baixo encosta' : f.zona === 'garganta' ? 'o som raspa' : 'a língua encosta';
     $('#painel').innerHTML = `<h3>Onde está a língua? <span class="estrelas">⭐ ${estrelas}</span></h3>
       <p>Para fazer o <b style="font-size:22px">${f.letra}</b> de <b>${f.ex}</b>, onde ${quem}?</p>
-      <p><b>Toque no lugar certo no raio-X!</b></p>
+      <p><b>Toque no lugar certo na janelinha!</b></p>
       <div class="retorno" id="ret"></div>
       <button class="btn-grande" id="bProx">Próximo som →</button>`;
     falar(`Para fazer o som de ${f.ex}, onde ${quem}? Toque no lugar certo!`);
@@ -146,8 +140,8 @@
       <div class="retorno" id="ret"></div>
       <div class="seq"><button id="bOuvirV">🔊 Ouvir de novo</button><button id="bPar">${F[par[0]].letra} × ${F[par[1]].letra}</button><button id="bProx">Próximo →</button></div>`;
     falar(`Ponha a mão na garganta e fale junto: ${f.fala}`);
-    $('#bOuvirV').addEventListener('click', () => falar(f.fala));
-    $('#bPar').addEventListener('click', async () => { modo('lado'); for (const k of [par[0], par[1], par[0], par[1]]) { selecionar(k); falar(F[k].fala); await espera(1500); } });
+    $('#bOuvirV').addEventListener('click', ouvir); $('#bOuvirV').style.display = audio.tem(id) ? '' : 'none';
+    $('#bPar').addEventListener('click', async () => { modo('lado'); for (const k of [par[0], par[1], par[0], par[1]]) { selecionar(k); await espera(1500); } });
     $$('.op button').forEach((b) => b.addEventListener('click', () => {
       const ok = (b.dataset.r === '1') === f.voz;
       b.classList.add(ok ? 'certo' : 'quase');
@@ -166,7 +160,7 @@
   function paraCamera() { if (fluxo) { fluxo.getTracks().forEach((t) => t.stop()); fluxo = null; } }
   function exImite() {
     const id = IMITE[iI % IMITE.length]; modo('frente'); selecionar(id); const quadro = rostoDe(pers, id), nomeP = pers === 'sofia' ? 'Sofia' : 'Tales';
-    $('#painel').innerHTML = `<h3>Imite ${pers === 'sofia' ? 'a Sofia' : 'o Tales'}!</h3><p>Faça a boca do <b style="font-size:22px">${F[id].letra}</b> como a Sofia.</p>
+    $('#painel').innerHTML = `<h3>Imite ${pers === 'sofia' ? 'a Sofia' : 'o Tales'}!</h3><p>Faça a boca do <b style="font-size:22px">${F[id].letra}</b> como ${pers === 'sofia' ? 'a Sofia' : 'o Tales'}.</p>
       <div class="camera"><figure><div class="mold"><img src="recortes/boca-${pers}-${quadro}.jpg" alt="Boca de frente"></div>${nomeP}</figure>
       <figure><div class="mold" id="moldCam">${fluxo ? '' : '<span>seu espelho</span>'}</div>Você</figure></div>
       <button class="btn-grande" id="bCam">${fluxo ? '📷 Desligar meu espelho' : '📷 Ligar meu espelho (câmera)'}</button>
@@ -193,28 +187,32 @@
     alveolo: ['Atrás dos dentes', 'Aquele montinho atrás dos dentes de cima. A ponta da língua bate ali no T, no D, no N, no L e no R de arara.'],
     veu: ['Véu, o céu mole', 'Fica lá no fundo. Ele sobe para fechar o nariz, e desce no M e no N para o som sair pelo nariz.'],
     nariz: ['Nariz', 'No M, no N e no NH, o som sai por aqui. Tampe o nariz e tente falar mmm!'],
-    garganta: ['Garganta', 'Um tubo por onde o ar sobe dos pulmões até a boca.'],
-    pregas: ['Pregas vocais', 'Duas cortininhas na garganta que tremem e fazem a voz. Ponha a mão no pescoço e diga aaa!'],
+    garganta: ['Garganta', 'Um tubo por onde o ar sobe dos pulmões até a boca. O RR de rato raspa lá no fundo.'],
+    pregas: ['Voz', 'Na garganta há duas cortininhas (as pregas vocais) que tremem e fazem a voz. Ponha a mão no pescoço e diga aaa!'],
     pulmoes: ['Pulmões', 'Enchem de ar como balões. O ar sobe pela garganta e vira som na boca.'],
     baixo: ['Língua deitadinha', 'Nas vogais abertas, como o A, a língua fica deitada lá embaixo.']
   };
   function exCorpo() {
-    modo(e3 ? 'corpo' : 'lado'); selecionar('a');
-    const ordem = ['labios', 'dentes', 'lingua', 'palato', 'nariz', 'pulmoes', 'pregas', 'veu'];
-    $('#painel').innerHTML = `<h3>Conheça seu corpo</h3><p>Toque numa parte no desenho ou aqui:</p>
+    modo('lado'); selecionar('a'); if (innerWidth >= 700) { $('#bNomes').setAttribute('aria-pressed', true); esp.rotulos(true); }
+    const ordem = ['labios', 'dentes', 'lingua', 'alveolo', 'palato', 'veu', 'nariz', 'garganta', 'pregas'];
+    $('#painel').innerHTML = `<h3>Conheça seu corpo</h3><p>Toque numa parte na janelinha ou aqui:</p>
       <div class="partes">${ordem.map((k) => `<button data-p="${k}">${PARTES[k][0]}</button>`).join('')}</div>
-      <div class="retorno" id="ret"></div>`;
+      <div class="retorno" id="ret"></div>
+      <div class="seq"><button id="bSofiaCorpo">🔊 Ouvir a Sofia</button></div>`;
     const mostra = (k) => {
       if (!PARTES[k]) return;
       $$('.partes button').forEach((b) => b.classList.toggle('on', b.dataset.p === k));
-      esp.destacar(k, true); $('#ret').innerHTML = `<b>${PARTES[k][0]}:</b> ${PARTES[k][1]}`; falar(`${PARTES[k][0]}! ${PARTES[k][1]}`);
+      esp.destacar(k, true); $('#ret').innerHTML = `<b>${PARTES[k][0]}:</b> ${PARTES[k][1]}`;
     };
     $$('.partes button').forEach((b) => b.addEventListener('click', () => mostra(b.dataset.p)));
+    $('#bSofiaCorpo').addEventListener('click', () => audio.fala('sofia', 'Aqui você vê por dentro como o som é feito: lábios, dentes, língua, céu da boca, nariz e garganta. Escolha um som!', 'sofia-5xs6if.mp3'));
     toque = (e) => mostra(e.zona);
   }
 
+  if (innerWidth < 700) { $('#bNomes').setAttribute('aria-pressed', false); esp.rotulos(false); } // no celular, os nomes começam desligados
   selecionar(atual, { instantaneo: true });
   abrirAba(q.get('aba') || 'explorar');
-  if (q.get('m')) modo(q.get('m'));
-  window.DEMO = { esp, fr, rx, e3, selecionar, abrirAba, modo, trocaPers, sequencia };
+  if (q.get('m')) modo(q.get('m')); else if (!q.get('aba')) modo('frente');
+  trocaPers(pers);
+  window.DEMO = { esp, fr, rx, audio, selecionar, abrirAba, modo, trocaPers, sequencia };
 })();
