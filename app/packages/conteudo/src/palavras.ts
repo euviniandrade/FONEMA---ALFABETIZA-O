@@ -35,7 +35,7 @@ export const FIGURAS: Record<string, Palavra> = Object.fromEntries(
     p('vaca', 'va-ca', '🐄'), p('zebra', 'ze-bra', '🦓'), p('rato', 'ra-to', '🐭'),
     // Trilha do Alfabeto (D027): palavras-exemplo de H, K, Q, W, X e Y (figuras 3D em web/public/assets/figuras)
     p('hipopótamo', 'hi-po-pó-ta-mo', '🦛'), p('kiwi', 'ki-wi', '🥝'), p('queijo', 'quei-jo', '🧀'), p('xícara', 'xí-ca-ra', '🍵'),
-    p('waffle', 'waf-fle', '🧇'), p('yakisoba', 'ya-ki-so-ba', '🍜'), p('xilofone', 'xi-lo-fo-ne', '🎹'), p('helicóptero', 'he-li-cóp-te-ro', '🚁')
+    p('Wesley', 'Wes-ley', '🪪'), p('Yasmin', 'Yas-min', '🪪'), p('yakisoba', 'ya-ki-so-ba', '🍜'), p('xilofone', 'xi-lo-fo-ne', '🎹'), p('helicóptero', 'he-li-cóp-te-ro', '🚁')
   ].map((w) => [w.texto, w])
 );
 

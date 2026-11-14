@@ -13,6 +13,12 @@
  *   O som puro de consoante sai errado na voz sintética, então fica MARCADO para gravação por fonoaudióloga
  *   (`somPuro.gravado`), com aviso só na área do adulto.
  *
+ * Palavras-chave, gestos e dicas de boca alinhados à tabela A–Z da pesquisa (docs/pesquisa/44a-tabela-alfabeto.md):
+ * som inicial igual em todo o Brasil, sílaba simples, figura com um só nome, dentro dos valores do projeto.
+ * W e Y são letras de NOMES: a figura é um crachá ("Wesley", "Yasmin"), feito por web/scripts/cracha-nome.py.
+ * Diferenças conscientes em relação à tabela (ver app/README.md): J usa "janela" (não há arte de jacaré ainda);
+ * E e O entram só com o som principal (ê, ô), e o outro som (é, ó) vem na etapa das sílabas (D027 §1).
+ *
  * ⚠️ Posições de boca e escolhas de palavra: validar com fonoaudióloga (D020).
  */
 import type { ChaveFonema } from './tipos.ts';
@@ -49,32 +55,32 @@ type Base = Omit<LetraAlfabeto, 'minuscula' | 'voz' | 'somPuro'>;
 const L = (letra: string, tipo: LetraAlfabeto['tipo'], ipa: string | null, fonema: string | null, palavra: string, dicaBoca: string, gesto: string, extra: Partial<Base> = {}): Base => ({ letra, tipo, ipa, fonema, palavra, dicaBoca, gesto, ...extra });
 
 const BASE: Base[] = [
-  L('A', 'vogal', '/a/', 'a', 'abelha', 'Boca bem aberta, como um bocejo.', 'Abrir os braços bem grande, como a boca.', { outraPalavra: 'avião' }),
-  L('B', 'consoante', '/b/', 'b', 'bola', 'Lábios fechadinhos, depois abrem; a garganta vibra.', 'Quicar uma bola de mentira.', { outraPalavra: 'banana' }),
-  L('C', 'consoante', '/k/', 'k', 'casa', 'O fundo da língua sobe e solta o ar de uma vez.', 'Fazer um telhado com as mãos.', { outraPalavra: 'caneca', outroSom: 'C com som de /s/ antes de E e I (cebola, cinema) e o dígrafo CH', nota: 'outro-som' }),
-  L('D', 'consoante', '/d/', 'd', 'dado', 'A ponta da língua bate atrás dos dentes de cima, e a garganta vibra.', 'Jogar um dado de mentira.'),
-  L('E', 'vogal', '/e/', 'e', 'elefante', 'Sorriso meio aberto.', 'Fazer a tromba do elefante com o braço.', { outroSom: 'E aberto /ɛ/ (égua, pé) e E nasal', nota: 'outro-som' }),
-  L('F', 'consoante', '/f/', 'f', 'foca', 'Dentes de cima no lábio de baixo, e um ventinho.', 'Soprar a mão, sentindo o ventinho.', { outraPalavra: 'fogo' }),
-  L('G', 'consoante', '/g/', 'g', 'gato', 'O fundo da língua sobe e solta, e a garganta vibra.', 'Fazer as garrinhas do gato.', { outraPalavra: 'garrafa', outroSom: 'G com som de /ʒ/ antes de E e I (gelo, girafa) e o GU', nota: 'outro-som' }),
-  L('H', 'muda', null, null, 'hipopótamo', 'O H não faz som sozinho: a boca já faz o som da letra seguinte.', 'Dedo na frente da boca: silêncio.', { outroSom: 'Dígrafos CH, LH e NH', nota: 'muda' }),
-  L('I', 'vogal', '/i/', 'i', 'ilha', 'Sorriso grande.', 'Apontar o sorriso com os dois dedos.', { outraPalavra: 'iglu' }),
-  L('J', 'consoante', '/ʒ/', 'j', 'janela', 'Biquinho, o ar passa e a garganta vibra.', 'Abrir uma janela de mentira.'),
-  L('K', 'nomes', '/k/', 'k', 'kiwi', 'O fundo da língua sobe e solta o ar de uma vez (igual ao C de casa).', 'Fazer um telhado com as mãos, como no C.', { nota: 'nomes' }),
-  L('L', 'consoante', '/l/', 'l', 'lua', 'Ponta da língua para cima, atrás dos dentes de cima.', 'Desenhar a lua no ar.', { outraPalavra: 'leão', outroSom: 'L no fim da sílaba (sol) e o dígrafo LH' }),
-  L('M', 'consoante', '/m/', 'm', 'macaco', 'Lábios fechados; o som sai pelo nariz.', 'Passar a mão na barriga: mmm!', { outraPalavra: 'mala' }),
-  L('N', 'consoante', '/n/', 'n', 'navio', 'Língua atrás dos dentes de cima; o som sai pelo nariz.', 'Fazer as ondas do mar com a mão.', { outroSom: 'N no fim da sílaba (canto) e o dígrafo NH' }),
-  L('O', 'vogal', '/o/', 'o', 'ovo', 'Boca redondinha.', 'Fazer uma bolinha com as mãos.', { outraPalavra: 'ovelha', outroSom: 'O aberto /ɔ/ (óculos, vovó) e O nasal', nota: 'outro-som' }),
-  L('P', 'consoante', '/p/', 'p', 'pato', 'Lábios fechados, depois abrem com um soprinho.', 'Abrir e fechar a mão, como o bico do pato.', { outraPalavra: 'peixe' }),
-  L('Q', 'consoante', '/k/', 'k', 'queijo', 'O fundo da língua sobe e solta (igual ao C de casa). O Q vem sempre com o U.', 'Dar as mãos: o Q e o U andam juntos.', { outroSom: 'QUA (quatro), em que o U é falado', nota: 'com-u' }),
-  L('R', 'consoante', '/ʁ/', 'rr', 'rato', 'O som vem lá do fundo da garganta. Todo sotaque vale!', 'Mão na garganta para sentir o motorzinho.', { outraPalavra: 'rua', outroSom: 'R fraco entre vogais (arara), RR e R no fim da sílaba', nota: 'outro-som' }),
-  L('S', 'consoante', '/s/', 's', 'sapo', 'Dentinhos quase fechados, língua escondida, como uma cobrinha.', 'Fazer a cobrinha com o braço.', { outraPalavra: 'sol', outroSom: 'S com som de /z/ entre vogais (casa) e SS', nota: 'outro-som' }),
-  L('T', 'consoante', '/t/', 't', 'tatu', 'A ponta da língua toca atrás dos dentes de cima e solta.', 'Bater um dedo no outro: t, t.'),
-  L('U', 'vogal', '/u/', 'u', 'uva', 'Biquinho de assobio.', 'Fazer biquinho e apontar para ele.', { outraPalavra: 'urso' }),
-  L('V', 'consoante', '/v/', 'v', 'vaca', 'Dentes de cima no lábio de baixo, e a garganta vibra.', 'Mão na garganta para sentir tremer.', { outraPalavra: 'vela' }),
-  L('W', 'nomes', '/v/ ou /u/', 'u', 'waffle', 'Em waffle e Wilson soa como U; em Wagner soa como V.', 'Fazer o W com os dedos das duas mãos.', { nota: 'nomes' }),
-  L('X', 'consoante', '/ʃ/', 'x', 'xícara', 'Biquinho de quem pede silêncio.', 'Dedo na frente da boca: xiii!', { outroSom: 'X com outros sons (táxi, exame, próximo) e o dígrafo CH', nota: 'outro-som' }),
-  L('Y', 'nomes', '/i/', 'i', 'yakisoba', 'Sorriso grande (igual ao I de ilha).', 'Apontar o sorriso, como no I.', { nota: 'nomes' }),
-  L('Z', 'consoante', '/z/', 'z', 'zebra', 'Dentinhos juntos, como uma abelhinha, e a garganta vibra.', 'Voar como a abelhinha: zzz.')
+  L('A', 'vogal', '/a/', 'a', 'abelha', 'Boca bem aberta, língua deitada.', 'Abrir os braços bem grande, junto com a boca.', { outraPalavra: 'avião', outroSom: 'A nasal (ã, AM, AN)' }),
+  L('B', 'consoante', '/b/', 'b', 'bola', 'Lábios fecham e abrem; a garganta vibra.', 'Quicar uma bola de mentira: b, b, b.', { outraPalavra: 'banana', outroSom: 'BR e BL' }),
+  L('C', 'consoante', '/k/', 'k', 'casa', 'O fundo da língua sobe e solta o ar de uma vez, sem voz.', 'Bater à porta da casa: toc-toc.', { outraPalavra: 'caneca', outroSom: 'C com som de /s/ antes de E e I (cebola, cinema), Ç e o dígrafo CH', nota: 'outro-som' }),
+  L('D', 'consoante', '/d/', 'd', 'dado', 'A ponta da língua bate atrás dos dentes de cima; a garganta vibra.', 'Chacoalhar e jogar um dado de mentira.', { outroSom: 'DI, que soa "dji" em muitas regiões, e DR' }),
+  L('E', 'vogal', '/e/', 'e', 'elefante', 'Sorriso meio aberto.', 'Braço esticado como a tromba do elefante.', { outroSom: 'E aberto /ɛ/ (pé, ela), E nasal e E final com som de I', nota: 'outro-som' }),
+  L('F', 'consoante', '/f/', 'f', 'foca', 'Dentes de cima no lábio de baixo; sai um ventinho, sem voz.', 'Soprar a palma da mão e sentir o ventinho.', { outraPalavra: 'folha', outroSom: 'FR e FL' }),
+  L('G', 'consoante', '/g/', 'g', 'gato', 'O fundo da língua sobe e solta; a garganta vibra.', 'Dedo no gogó: g, g, g.', { outraPalavra: 'garrafa', outroSom: 'G com som de /ʒ/ antes de E e I (gelo, girafa), GU, GR e GL', nota: 'outro-som' }),
+  L('H', 'muda', null, null, 'hipopótamo', 'O H não tem boca própria: a boca já faz o som da letra seguinte.', 'Mão aberta cobrindo a boca: letra calada.', { outraPalavra: 'helicóptero', outroSom: 'Dígrafos CH, LH e NH', nota: 'muda' }),
+  L('I', 'vogal', '/i/', 'i', 'ilha', 'Sorriso grande, dentes quase juntos.', 'Desenhar o pingo do i no ar, sorrindo.', { outroSom: 'I nasal (IM, IN) e I em ditongo (pai, lei)' }),
+  L('J', 'consoante', '/ʒ/', 'j', 'janela', 'Biquinho para a frente; o ar passa e a garganta vibra.', 'Abrir e fechar os braços, como a boca do jacaré.', { outroSom: 'GE e GI escrevem o mesmo som' }),
+  L('K', 'nomes', '/k/', 'k', 'kiwi', 'Igual ao C de casa: o fundo da língua sobe e solta.', 'O mesmo do C: bater à porta.', { nota: 'nomes' }),
+  L('L', 'consoante', '/l/', 'l', 'lua', 'A ponta da língua sobe atrás dos dentes de cima e fica; o ar sai pelos lados.', 'Reger com o dedo: lá, lá, lá.', { outraPalavra: 'leão', outroSom: 'L no fim da sílaba (sol soa "sou"), LH e os encontros BL, CL, FL, PL' }),
+  L('M', 'consoante', '/m/', 'm', 'macaco', 'Lábios fechados; o som sai pelo nariz.', 'Mão na barriga: mmm, que gostoso!', { outraPalavra: 'mala', outroSom: 'AM, EM, IM, OM, UM' }),
+  L('N', 'consoante', '/n/', 'n', 'navio', 'Ponta da língua atrás dos dentes de cima; o som sai pelo nariz.', 'Dedo encostado no nariz, sentindo vibrar.', { outroSom: 'AN, EN, IN, ON, UN e o dígrafo NH' }),
+  L('O', 'vogal', '/o/', 'o', 'ovo', 'Boca redonda e fechadinha.', 'Mãos formando um ovo.', { outraPalavra: 'ovelha', outroSom: 'O aberto /ɔ/ (óculos, vovó), O nasal e O final com som de U', nota: 'outro-som' }),
+  L('P', 'consoante', '/p/', 'p', 'pato', 'Lábios fecham e estouram, sem voz; sai um soprinho.', 'Estourar uma bolha com o dedo: p!', { outraPalavra: 'peixe', outroSom: 'PR e PL' }),
+  L('Q', 'consoante', '/k/', 'k', 'queijo', 'Igual ao C de casa. O Q vem sempre com o U.', 'Dois dedos enganchados: o Q e o U de mãos dadas.', { outroSom: 'QUA e QUO, em que o U é falado (quatro)', nota: 'com-u' }),
+  L('R', 'consoante', '/ʁ/', 'rr', 'rato', 'O som vem lá do fundo da garganta (ou com a língua tremendo). Todo sotaque vale!', 'Girar as mãos como uma roda: rrr.', { outraPalavra: 'rua', outroSom: 'R fraco entre vogais (arara), RR, R no fim da sílaba (porta) e os encontros PR, BR, TR', nota: 'outro-som' }),
+  L('S', 'consoante', '/s/', 's', 'sapo', 'Dentes quase fechados, língua escondida, sem voz.', 'Mão em zigue-zague, como o ar saindo do balão: sss.', { outraPalavra: 'sol', outroSom: 'S com som de /z/ entre vogais (casa), SS e S no fim da sílaba', nota: 'outro-som' }),
+  L('T', 'consoante', '/t/', 't', 'tatu', 'A ponta da língua bate atrás dos dentes de cima, sem voz.', 'Bater a ponta do dedo na palma: t, t, t.', { outroSom: 'TI, que soa "tchi" em muitas regiões, e TR' }),
+  L('U', 'vogal', '/u/', 'u', 'uva', 'Biquinho bem para a frente.', 'Mãos em concha em volta do biquinho: uuu.', { outraPalavra: 'urso', outroSom: 'U nasal (UM, UN), U em ditongo e U calado em QUE e GUE' }),
+  L('V', 'consoante', '/v/', 'v', 'vaca', 'Dentes de cima no lábio de baixo; a garganta vibra.', 'Braços como asas de avião que treme: vvv.', { outraPalavra: 'vela' }),
+  L('W', 'nomes', '/w/ (som de U) ou /v/', 'u', 'Wesley', 'Em Wesley e em kiwi soa como U; em Wagner soa como V.', 'Desenhar duas ondas no ar com as mãos.', { nota: 'nomes' }),
+  L('X', 'consoante', '/ʃ/', 'x', 'xícara', 'Biquinho de quem pede silêncio; o ar passa, sem voz.', 'Dedo na frente dos lábios: xxx.', { outraPalavra: 'xilofone', outroSom: 'X com outros sons (táxi, exame, próximo) e o dígrafo CH', nota: 'outro-som' }),
+  L('Y', 'nomes', '/i/', 'i', 'Yasmin', 'Igual ao I de ilha: sorriso grande.', 'Braços para cima, em forma de Y.', { outraPalavra: 'yakisoba', nota: 'nomes' }),
+  L('Z', 'consoante', '/z/', 'z', 'zebra', 'Igual ao S, mas a garganta vibra.', 'Dedo voando como abelha: zzz.', { outroSom: 'S entre vogais e Z no fim (luz, nariz)' })
 ];
 
 export const ALFABETO: LetraAlfabeto[] = BASE.map((b, i) => ({

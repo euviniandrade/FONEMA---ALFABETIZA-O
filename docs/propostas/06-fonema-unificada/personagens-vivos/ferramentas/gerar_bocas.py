@@ -13,13 +13,14 @@ Para cada mp3 do manifesto (app/web/public/audio/falas/manifesto.json: "voz|text
   2. ÁUDIO -> envoltória de energia (RMS a cada 10 ms).
   3. Alinhamento por programação dinâmica: cada visema tem uma "energia esperada" (vogal alta, M/P/B quase zero,
      pausa zero) e uma duração provável; o caminho de menor custo coloca as vogais nos picos e as pausas nos silêncios.
-  4. Saída: uma letra por quadro de 40 ms (25 qps). Silêncio sempre vira '.', vogal fraca abre menos.
+  4. Saída (bocas.json): { qps: 25, clipes: { "falas/x.mp3": [impressão digital, "uma letra por quadro de 40 ms", texto] } }.
+     Silêncio sempre vira '.', vogal fraca abre menos. A impressão digital (tamanho + hash do meio do arquivo) identifica o clipe quando ele toca por blob.
 
   python3 gerar_bocas.py <app/web/public> <saida bocas.json>
 
 Não é reconhecimento de fala: é um alinhamento aproximado, bom o bastante para a boca abrir e fechar junto com a voz.
 """
-import json, re, subprocess, sys, unicodedata
+import json, os, re, subprocess, sys, unicodedata
 import numpy as np
 
 PUB, SAIDA = sys.argv[1], sys.argv[2]
@@ -142,15 +143,21 @@ def boca(texto, arq):
         out.append(v)
     return ''.join(out)
 
+def marca(arq):
+    """impressão digital do clipe: tamanho + FNV-1a de 256 bytes do meio (o app calcula igual quando o áudio toca por blob)."""
+    b = open(arq, 'rb').read(); m = len(b) // 2; h = 0x811c9dc5
+    for x in b[m:m + 256]: h = ((h ^ x) * 0x01000193) & 0xffffffff
+    return f'{len(b)}-{h:x}'
+
 if __name__ == '__main__':
     saida = {}
     falas = json.load(open(f'{PUB}/audio/falas/manifesto.json'))
     for chave, arq in falas.items():
         texto = chave.split('|', 1)[1]
-        saida[f'falas/{arq}'] = boca(texto, f'{PUB}/audio/falas/{arq}')
+        saida[f'falas/{arq}'] = [marca(f'{PUB}/audio/falas/{arq}'), boca(texto, f'{PUB}/audio/falas/{arq}'), texto]
     nomes = json.load(open(f'{PUB}/audio/nomes/manifesto.json'))
     for voz, lista in nomes.items():
         for nome in lista:
-            saida[f'nomes/{voz}/{nome}.mp3'] = boca(nome, f'{PUB}/audio/nomes/{voz}/{nome}.mp3')
+            saida[f'nomes/{voz}/{nome}.mp3'] = [marca(f'{PUB}/audio/nomes/{voz}/{nome}.mp3'), boca(nome, f'{PUB}/audio/nomes/{voz}/{nome}.mp3'), '']
     json.dump({'qps': 25, 'clipes': saida}, open(SAIDA, 'w'), ensure_ascii=False, separators=(',', ':'))
     print(len(saida), 'clipes')
