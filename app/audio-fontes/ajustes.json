@@ -1,7 +1,8 @@
 {
  "falas": {
   "tales|É ou ê? Repara no meu sorriso. Sua vez,": {
-   "versao": 2
+   "versao": 3,
+   "texto": "É ou ê? Repara no meu sorriso. Sua vez…"
   },
   "tales|Oi,": {
    "versao": 2,
@@ -17,43 +18,52 @@
    "versao": 2
   },
   "tales|/llll/, a língua sobe e fica lá. Sua vez,": {
-   "versao": 2
+   "versao": 3,
+   "texto": "L, de lua, a língua sobe e fica lá. Sua vez…"
   },
   "tales|A tartaruga volta! Valeu,": {
-   "versao": 2
+   "versao": 3,
+   "texto": "A tartaruga volta! Valeu…"
   },
   "tales|Ops! Eu disse que BOLA rima com MESA. Me ensina,": {
-   "versao": 2
+   "versao": 3,
+   "texto": "Ops! Eu disse que bola rima com mesa. Me ensina…"
   },
   "tales|gato… qual rima com gato?": {
    "versao": 2
   },
   "tales|Esses são nomes de bichinhos da mata. Lê pra mim,": {
-   "versao": 2
+   "versao": 3,
+   "texto": "Esses são nomes de bichinhos da mata. Lê pra mim…"
   },
   "tales|Olha só o que chegou para você,": {
-   "versao": 2
+   "versao": 3,
+   "texto": "Olha só o que chegou para você…"
   },
   "tales|Passa a bola,": {
    "versao": 2
   },
   "tales|Você me ensinou! Valeu,": {
-   "versao": 2
+   "versao": 3,
+   "texto": "Você me ensinou! Valeu…"
   },
   "tales|Ahh, agora eu entendi! Obrigado,": {
    "versao": 2
   },
   "tales|Sorriso aberto: éééé. Sua vez,": {
-   "versao": 2
+   "versao": 3,
+   "texto": "Sorriso aberto: Ééééé. Sua vez…"
   },
   "tales|Me escuta,": {
    "versao": 2
   },
   "tales|O Paçoca escondeu tudo que começa com /ffff/. Bora,": {
-   "versao": 2
+   "versao": 3,
+   "texto": "O Paçoca escondeu tudo que começa com F, de foca. Bora…"
   },
   "tales|Ouviu isso,": {
-   "versao": 2
+   "versao": 3,
+   "texto": "Ouviu isso…"
   },
   "tales|Gato… qual rima com gato?": {
    "versao": 2
@@ -76,6 +86,46 @@
   "sofia|óóóó": {
    "versao": 2,
    "texto": "Óóó!"
+  },
+  "sofia|U, de uva.": {
+   "versao": 2,
+   "texto": "U! De uva."
+  },
+  "sofia|Q, de queijo.": {
+   "versao": 2,
+   "texto": "Quê! De queijo."
+  },
+  "sofia|Y, de Yasmin.": {
+   "versao": 2,
+   "texto": "Ípsilon! De Yasmin."
+  },
+  "sofia|W, de Wesley.": {
+   "versao": 2,
+   "texto": "Dáblio! De Wesley."
+  },
+  "sofia|G, de gato.": {
+   "versao": 2,
+   "texto": "Gê! De gato."
+  },
+  "sofia|O, de ovo.": {
+   "versao": 2,
+   "texto": "Ó! De ovo."
+  },
+  "sofia|C, de casa.": {
+   "versao": 2,
+   "texto": "Cê! De casa."
+  },
+  "sofia|Letra A.": {
+   "versao": 2,
+   "texto": "Letra Á."
+  },
+  "sofia|Letra W.": {
+   "versao": 2,
+   "texto": "Letra dáblio."
+  },
+  "tales|Letra H.": {
+   "versao": 2,
+   "texto": "Letra agá."
   }
  },
  "nomes": {

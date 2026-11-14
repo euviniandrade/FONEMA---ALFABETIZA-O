@@ -130,6 +130,8 @@ async function main() {
     if (existsSync(`${FONTES}/falas/${arq}`)) { manFalas[chave] = arq; continue; }
     const tts = aj?.texto ? { texto: aj.texto, lento: aj.lento ?? aj.texto.split(/\s+/).length <= 2 } : paraTTS(k);
     if (!tts) { semAudio.add(k); continue; }
+    // o Eleven v3 (Tales) corta o fim da fala quando o texto acaba em vírgula (trecho antes do nome): reticências resolvem
+    if (voz === 'tales' && !aj?.texto) tts.texto = tts.texto.replace(/,\s*$/, '…');
     tarefas.push({ voz, ...tts, destino: `${FONTES}/falas/${arq}`, registrar: () => { manFalas[chave] = arq; textos[chave] = tts.texto; } });
   }
   const manNomesArq = `${FONTES}/nomes/manifesto.json`;
