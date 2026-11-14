@@ -3,8 +3,8 @@
  * e NUNCA desce na tela da criança. Nível ≠ termômetro: o nível mede esforço; o termômetro, o que ela lê.
  */
 export const FAIXAS_TERMOMETRO: Record<number, string> = {
-  0: 'Ponto de partida: brinca com os sons das palavras (rimas, palmas, primeiro som).',
-  1: 'Reconhece o som das 5 vogais e o primeiro som das palavras.',
+  0: 'Ponto de partida: está conhecendo as letras do alfabeto e o som de cada uma.',
+  1: 'Conhece as letras do alfabeto e o som principal de cada uma.',
   2: 'Lê as primeiras palavras simples (MALA, LUA, FALA) juntando os sons.',
   3: 'Lê palavras com V, S, N e bilhetes de 2 palavras.',
   4: 'Lê palavras com P, T, B, D sem trocar.',

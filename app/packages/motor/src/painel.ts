@@ -2,17 +2,15 @@
  * Resumos para a família e o professor (D004, D018; jogo-completo/06).
  * Nunca: comparação com colegas, nota, rótulo ou diagnóstico.
  */
-import { CONQUISTA_POR_ID, FASE_POR_ID, FALAS, HABILIDADES } from '@fonema/conteudo';
+import { ALFABETO, CONQUISTA_POR_ID, FASES, FASE_POR_ID, FALAS, HABILIDADES } from '@fonema/conteudo';
 import type { ConfigPlataforma } from '@fonema/conteudo';
 import type { Crianca, Demonstracao, Evento, Progresso } from './estado.ts';
 import { DIA_MS } from './estado.ts';
 import { avaliarDominio } from './dominio.ts';
 import { calcularNivel } from './nivel.ts';
 import { descreverTermometro } from './termometro.ts';
-import { fasesConcluidas } from './sequencia.ts';
+import { fasesConcluidas, missaoInicialFeita } from './sequencia.ts';
 import { renderFala } from './falas.ts';
-import { infoNome } from './resolver.ts';
-import { SONS } from '@fonema/conteudo';
 
 export interface ResumoFamilia {
   nome: string;
@@ -30,7 +28,7 @@ export interface ResumoFamilia {
 }
 
 export function resumoFamilia(c: Crianca, p: Progresso, eventos: Evento[], cfg: ConfigPlataforma, agora: number): ResumoFamilia {
-  const nivel = calcularNivel(p.desafios, p.fases['R0-F01']?.estado === 'concluida', fasesConcluidas(p));
+  const nivel = calcularNivel(p.desafios, missaoInicialFeita(p), fasesConcluidas(p));
   const fase = FASE_POR_ID[p.faseAtual];
   const ctx = { nome: c.nome, genero: c.genero };
   const jaSabe = HABILIDADES.filter((h) => p.habilidades[h.id]?.dominadaEm).map((h) => renderFala(`[NOME] ${h.paraFamilia}`, ctx));
@@ -43,11 +41,9 @@ export function resumoFamilia(c: Crianca, p: Progresso, eventos: Evento[], cfg: 
     .sort((a, b) => b.em - a.em)
     .slice(0, 6)
     .map((g) => CONQUISTA_POR_ID[g.id]?.nome ?? g.id);
-  const n = infoNome(c.nome, c.pronuncia.grafia);
-  const som = (SONS[n.chave] ?? SONS.a).esticado;
   const msg =
     p.sessoesFeitas <= 1
-      ? renderFala(FALAS.familia.primeiroDia, { ...ctx, extras: { SOM: som } })
+      ? renderFala(FALAS.familia.primeiroDia, { ...ctx, extras: { LETRA: ALFABETO[0].letra, PALAVRA: ALFABETO[0].palavra, MISSAO: FASES[0].emCasa } })
       : renderFala(
           `Oi! Resumo da semana de [NOME] no FONEMA: ${semana.filter((e) => e.tipo === 'atividade').length} atividades. ` +
             (selosRecentes[0] ? `Conquista nova: ${selosRecentes[0]}. ` : '') +
@@ -81,7 +77,7 @@ export function filaProfessor(ds: Demonstracao[], agora: number, cfg: ConfigPlat
 export function mapaHabilidades(itens: { crianca: Crianca; progresso: Progresso }[], cfg: ConfigPlataforma) {
   return itens.map(({ crianca, progresso }) => ({
     crianca,
-    nivel: calcularNivel(progresso.desafios, progresso.fases['R0-F01']?.estado === 'concluida', fasesConcluidas(progresso)),
+    nivel: calcularNivel(progresso.desafios, missaoInicialFeita(progresso), fasesConcluidas(progresso)),
     termometro: progresso.termometro,
     faseAtual: FASE_POR_ID[progresso.faseAtual]?.titulo ?? progresso.faseAtual,
     habilidades: HABILIDADES.map((h) => {

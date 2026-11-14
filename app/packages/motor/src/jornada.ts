@@ -8,7 +8,7 @@ import type { ConquistaGanha, Demonstracao, Progresso, Tentativa } from './estad
 import { avaliarDominio, novaHabilidade, proporcao, registrarTentativa } from './dominio.ts';
 import { agendarRevisao, resultadoRevisao } from './revisao.ts';
 import { creditarEmBloco } from './moedinhas.ts';
-import { concluirFase, fasesConcluidas, regiaoConcluida } from './sequencia.ts';
+import { concluirFase, fasesConcluidas, missaoInicialFeita, regiaoConcluida } from './sequencia.ts';
 import { avaliarConquistas } from './conquistas.ts';
 import { calcularNivel } from './nivel.ts';
 import { resultadoProvaRelampago } from './trilha-expressa.ts';
@@ -100,7 +100,7 @@ export function fecharSessao(
   agora: number
 ): { progresso: Progresso; relatorio: RelatorioSessao } {
   const fase = FASE_POR_ID[args.faseId];
-  const antes = calcularNivel(p0.desafios, p0.fases['R0-F01']?.estado === 'concluida', fasesConcluidas(p0));
+  const antes = calcularNivel(p0.desafios, missaoInicialFeita(p0), fasesConcluidas(p0));
   const termometroAntes = p0.termometro;
   let p: Progresso = {
     ...p0,
@@ -176,7 +176,7 @@ export function fecharSessao(
   p = ac.progresso;
 
   // 5. Nível e surpresas (P1-b: chegam depois, sem anúncio)
-  const depois = calcularNivel(p.desafios, p.fases['R0-F01']?.estado === 'concluida', fasesConcluidas(p));
+  const depois = calcularNivel(p.desafios, missaoInicialFeita(p), fasesConcluidas(p));
   const surpresas = SURPRESAS.filter((s) => s.nivel <= depois.nivel && !p.surpresas.includes(s.id));
   if (surpresas.length) {
     p = {

@@ -831,3 +831,106 @@ html.menos-movimento .splash-nuvens,html.menos-movimento .splash-petalas,html.me
   .splash-logo{top:10px}.logo-g{--lt:clamp(48px,14vh,90px)}
   .btn.enorme{min-height:76px}
 }
+
+/* ============================== Trilha do Alfabeto (D027) ============================== */
+/* ---- a tela da letra (mecânica "letra") ---- */
+.mec-letra .linha-botoes{justify-content:center}
+.letra-palco{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(14px,2.4vw,28px);align-items:stretch;margin:14px 0 12px}
+.letra-dupla{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:clamp(12px,2vw,26px);padding:clamp(18px,3vw,34px) clamp(12px,2vw,26px) clamp(22px,3vw,34px);border-radius:var(--r-x);background:radial-gradient(120% 100% at 50% 0%,#F4FAFF,#DCEEFB 70%,#C9E3F7);box-shadow:inset 0 2px 0 #fff,inset 0 -6px 0 rgba(12,26,64,.06),var(--s2)}
+.letra-bloco{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;max-width:260px;aspect-ratio:1/1.08;border-radius:clamp(26px,3.4vw,44px);transform:scale(.86);opacity:.55;transition:transform .55s var(--mola),opacity .4s ease}
+.letra-bloco b{font-family:var(--f-leitura);font-weight:700;font-size:clamp(104px,15.5vw,208px);line-height:1}
+.letra-bloco small{font-family:var(--f-titulo);font-weight:600;font-size:clamp(14px,1.5vw,18px);letter-spacing:.4px;margin-top:2px;opacity:.85}
+.letra-bloco.maiuscula{background:radial-gradient(circle at 32% 22%,#FFF7CF,#FFD652 58%,#F6A91B);color:#3B2500;box-shadow:0 10px 0 var(--ipe-esc),0 26px 30px -14px rgba(120,70,0,.6),inset 0 3px 0 rgba(255,255,255,.85)}
+.letra-bloco.minuscula{background:radial-gradient(circle at 32% 22%,#fff,#CFE6FA 58%,#9CCBF0);color:var(--marinho);box-shadow:0 10px 0 #5E93C6,0 26px 30px -14px rgba(12,26,64,.5),inset 0 3px 0 rgba(255,255,255,.9)}
+.letra-dupla.acesa .letra-bloco{transform:none;opacity:1}
+.letra-dupla.pulando .letra-bloco{animation:letraPula .9s var(--mola) 1}
+.letra-dupla.pulando .letra-bloco.minuscula{animation-delay:.45s}
+@keyframes letraPula{35%{transform:translateY(-22px) scale(1.06)}70%{transform:translateY(0) scale(.98)}}
+.letra-do-nome{position:absolute;top:-14px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;background:var(--marinho);color:#FFE08A;border-radius:var(--r-pilula);padding:5px 16px;font-family:var(--f-titulo);font-weight:600;font-size:15px;box-shadow:var(--s1)}
+.letra-do-nome .ic{width:18px;height:18px}
+.letra-exemplo{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px;border-radius:var(--r-x);background:linear-gradient(180deg,#fff,#F3F8FD);box-shadow:0 6px 0 #C4D6E8,var(--s2),inset 0 2px 0 #fff;opacity:0;transform:scale(.7) rotate(-6deg);transition:all .55s var(--mola)}
+.letra-exemplo.visivel{opacity:1;transform:none}
+.letra-figura{width:min(100%,clamp(130px,19vw,230px));aspect-ratio:1;filter:drop-shadow(0 14px 12px rgba(12,26,64,.22))}
+.letra-palavra{font-family:var(--f-leitura);font-weight:700;font-size:clamp(26px,3.4vw,42px);color:var(--marinho);line-height:1.15;text-align:center}
+.letra-palavra b{color:var(--ipe-esc)}.letra-palavra em{font-style:normal;color:var(--ipe-esc);text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:6px}
+.letra-nota{display:flex;align-items:center;justify-content:center;gap:10px;margin:2px auto 12px;max-width:640px;background:var(--ipe-claro);border:1.5px solid #F2CE6B;border-radius:var(--r-m);padding:10px 18px;font-size:19px;color:#5A3A00;opacity:0;transform:translateY(8px);transition:all .4s var(--suave)}
+.letra-nota.visivel{opacity:1;transform:none}.letra-nota .ic{color:var(--ipe-esc)}
+.letra-guia.minuscula{font-size:min(280px,60vw);padding-bottom:6%}
+.figura-pergunta{width:clamp(120px,18vw,180px);aspect-ratio:1;padding:12px;border-radius:var(--r-g);background:linear-gradient(180deg,#fff,#F3F8FD);box-shadow:0 6px 0 #C4D6E8,var(--s2),inset 0 2px 0 #fff}
+.figura-pergunta .fig{width:100%;height:100%}
+
+/* ---- a trilha (26 marcos) ---- */
+.tela-alfabeto .palco{max-width:1180px}
+.alfabeto-cartao{padding-top:clamp(14px,2vw,24px)}
+.alfabeto-cab{display:grid;grid-template-columns:auto 1fr auto;gap:clamp(12px,2vw,24px);align-items:center;margin-bottom:clamp(14px,2.4vw,26px)}
+.alfabeto-dupla{width:clamp(84px,11vw,150px);filter:drop-shadow(0 10px 10px rgba(12,26,64,.25))}
+.alfabeto-cab .pergunta-guia{margin:4px 0 10px}
+.alfabeto-progresso{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.alfabeto-progresso b{font-family:var(--f-titulo);font-size:18px;color:var(--marinho)}
+.alfabeto-barra{flex:1;min-width:140px;max-width:420px;height:20px;border-radius:var(--r-pilula);background:#DDE9F5;box-shadow:inset 0 2px 4px rgba(12,26,64,.18);overflow:hidden}
+.alfabeto-barra i{display:block;height:100%;min-width:20px;border-radius:inherit;background:linear-gradient(180deg,#FFE27A,#F6A91B);box-shadow:inset 0 2px 0 rgba(255,255,255,.7);transition:width .8s var(--suave)}
+.alfabeto-trilha{--passo:clamp(74px,12.4vw,140px);list-style:none;display:grid;grid-template-columns:repeat(var(--colunas),1fr);row-gap:clamp(18px,2.6vw,30px);padding:clamp(14px,2vw,26px) clamp(6px,1.4vw,20px);border-radius:var(--r-x);background:radial-gradient(130% 100% at 50% 0%,#EAF7EE,#D5EEDC 60%,#C3E6CF);box-shadow:inset 0 3px 10px rgba(23,96,58,.18),inset 0 0 0 2px rgba(255,255,255,.7)}
+.marco{position:relative;display:flex;justify-content:center;min-height:calc(var(--disco) + 34px);--disco:clamp(58px,8.2vw,96px);animation:surge .5s var(--mola) both;animation-delay:calc(var(--i)*18ms)}
+/* o caminho: tracejado entre um marco e o anterior */
+.marco::before{content:"";position:absolute;top:calc(var(--disco)/2 - 4px);height:8px;width:100%;border-radius:4px;background:repeating-linear-gradient(90deg,#fff 0 10px,transparent 10px 20px);opacity:.95;z-index:0}
+.marco.vem-esquerda::before{right:50%}.marco.vem-direita::before{left:50%}
+.marco.vem-cima::before{left:calc(50% - 4px);top:auto;bottom:calc(100% - var(--disco)/2);width:8px;height:calc(34px + clamp(18px,2.6vw,30px) + var(--disco)/2);background:repeating-linear-gradient(180deg,#fff 0 10px,transparent 10px 20px)}
+.marco.vem-inicio::before{display:none}
+.marco.feita::before,.marco.atual::before{background:repeating-linear-gradient(90deg,#F6B93B 0 10px,transparent 10px 20px)}
+.marco.feita.vem-cima::before,.marco.atual.vem-cima::before{background:repeating-linear-gradient(180deg,#F6B93B 0 10px,transparent 10px 20px)}
+.marco-btn{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;min-width:0;border-radius:var(--r-m);transition:transform .2s var(--mola)}
+.marco-btn:not(:disabled):hover{transform:translateY(-4px)}.marco-btn:not(:disabled):active{transform:translateY(3px)}
+.marco-btn:disabled{cursor:default}
+.marco-disco{position:relative;display:grid;place-items:center;width:var(--disco);height:var(--disco);border-radius:50%;background:radial-gradient(circle at 34% 26%,#fff,#E3EDF7 60%,#C9D8E8);color:#8192A8;box-shadow:0 6px 0 #AFC2D6,0 14px 16px -8px rgba(12,26,64,.35),inset 0 2px 0 #fff}
+.marco-disco b{display:flex;align-items:baseline;gap:1px;font-family:var(--f-leitura);font-weight:700;font-size:calc(var(--disco)*.5);line-height:1}
+.marco-disco b small{font-size:.62em;font-weight:700;opacity:.8}
+.marco-disco>.ic{width:52%;height:52%}
+.marco.feita .marco-disco{background:radial-gradient(circle at 34% 26%,#FFF7CF,#FFD652 55%,#F6A91B);color:#3B2500;box-shadow:0 6px 0 var(--ipe-esc),0 0 0 4px #fff,0 0 22px 6px rgba(255,206,74,.75),0 14px 16px -8px rgba(120,70,0,.5),inset 0 2px 0 rgba(255,255,255,.85)}
+.marco.feita .marco-disco::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.8) 50%,transparent 62%);background-size:260% 100%;animation:marcoBrilho 3.2s ease-in-out infinite;animation-delay:calc(var(--i)*120ms)}
+@keyframes marcoBrilho{0%,55%{background-position:130% 0}100%{background-position:-130% 0}}
+.marco.atual .marco-disco{background:radial-gradient(circle at 34% 26%,#fff,#BDE8CC 55%,#37A862);color:#0E4526;box-shadow:0 6px 0 var(--folha-esc),0 0 0 4px #fff,0 0 0 9px rgba(55,168,98,.35),0 14px 16px -8px rgba(12,60,30,.5),inset 0 2px 0 rgba(255,255,255,.85);animation:pulsa 1.4s ease-in-out infinite}
+.marco.liberada .marco-disco,.marco.aberta .marco-disco{background:radial-gradient(circle at 34% 26%,#fff,#CFE6FA 58%,#9CCBF0);color:var(--marinho);box-shadow:0 6px 0 #5E93C6,0 0 0 4px #fff,0 14px 16px -8px rgba(12,26,64,.4),inset 0 2px 0 #fff}
+.marco.revisao .marco-disco,.marco.festa .marco-disco{border-radius:32%;transform:rotate(45deg)}
+.marco.revisao .marco-disco>*,.marco.festa .marco-disco>*{transform:rotate(-45deg)}
+.marco.revisao{--disco:clamp(46px,6.4vw,74px);padding-top:clamp(6px,.9vw,11px)}
+.marco.revisao::before{top:calc(var(--disco)/2 + clamp(6px,.9vw,11px) - 4px)}
+.marco.festa.feita .marco-disco,.marco.festa.atual .marco-disco{color:#3B2500}
+.marco-check,.marco-cadeado{position:absolute;right:-6px;bottom:-6px;display:grid;place-items:center;width:38%;height:38%;min-width:24px;min-height:24px;border-radius:50%;background:#fff;box-shadow:var(--s1)}
+.marco-check{background:var(--folha);color:#fff}.marco-check .ic{width:66%;height:66%;stroke-width:3.6}
+.marco-cadeado .ic{width:74%;height:74%}
+.marco-figura{position:absolute;left:calc(50% + var(--disco)*.22);top:calc(var(--disco)*-.16);width:calc(var(--disco)*.5);height:calc(var(--disco)*.5);filter:drop-shadow(0 3px 3px rgba(12,26,64,.3));pointer-events:none}
+.marco-rotulo{min-height:20px;font-family:var(--f-titulo);font-weight:600;font-size:clamp(11px,1.25vw,15px);color:var(--folha-esc);line-height:1.15;text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.marco.atual .marco-rotulo{background:var(--folha);color:#fff;border-radius:var(--r-pilula);padding:1px 10px}
+.marco.trancada .marco-rotulo{color:#7D8FA5}
+.alfabeto-rodape{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:clamp(14px,2vw,24px)}
+.jornada-etapas{list-style:none;display:flex;flex-wrap:wrap;gap:8px 26px;align-items:stretch}
+.jornada-etapas li{position:relative;display:flex;flex-direction:column;padding:6px 14px;border-radius:var(--r-p);background:#EEF4FA;color:var(--cinza);line-height:1.2}
+.jornada-etapas li b{font-family:var(--f-titulo);font-size:16px;color:var(--marinho)}.jornada-etapas li small{font-size:12.5px}
+.jornada-etapas li+li::before{content:"";position:absolute;left:-19px;top:50%;width:10px;height:10px;border-top:3px solid #9DB6CF;border-right:3px solid #9DB6CF;transform:translateY(-50%) rotate(45deg)}
+.jornada-etapas li.agora{background:var(--ipe-claro);box-shadow:0 0 0 2px #F2CE6B}
+.jornada-etapas li.feita{background:var(--folha-claro)}.jornada-etapas li.feita b{color:var(--folha-esc)}
+.jornada-etapas li.breve{opacity:.7;border:1.5px dashed #B9CADB;background:transparent}
+.doca-abc{display:grid;place-items:center;width:52px;height:52px;font-family:var(--f-leitura);font-weight:700;font-size:26px;color:#3B2500;border-radius:16px;background:radial-gradient(circle at 32% 22%,#FFF7CF,#FFD652 58%,#F6A91B);box-shadow:0 3px 0 var(--ipe-esc),inset 0 2px 0 rgba(255,255,255,.8)}
+/* álbum: os 26 selos das letras em grade compacta */
+.album-regiao[data-regiao="AL"] .grade-conquistas{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+.album-regiao[data-regiao="AL"] .conquista-item{padding:8px 4px 6px}
+.album-regiao[data-regiao="AL"] .conquista-item .selo{width:92px!important}
+.album-regiao[data-regiao="AL"] .conquista-item .dica-cadeado{font-size:12px}
+html.contraste .marco-disco{box-shadow:0 0 0 3px #000}html.contraste .marco-rotulo,html.contraste .letra-palavra{color:#000}
+@media (max-width:1000px){
+  .letra-palco{grid-template-columns:1fr}
+  .letra-exemplo{flex-direction:row;gap:16px;padding:10px 18px}.letra-figura{width:clamp(96px,22vw,150px)}
+}
+@media (max-width:560px){
+  .letra-dupla{padding:22px 10px 20px;gap:10px;border-radius:30px}
+  .letra-bloco b{font-size:clamp(96px,30vw,150px)}
+  .letra-nota{font-size:16px;padding:8px 12px}
+  .alfabeto-cab{grid-template-columns:auto 1fr}.alfabeto-cab .ouvir{display:none}
+  .alfabeto-cab .pergunta-guia{font-size:16px}
+  .alfabeto-trilha{--colunas:4;padding:14px 2px}
+  .marco{--disco:clamp(54px,17vw,70px)}.marco.revisao{--disco:clamp(44px,13.5vw,56px)}
+  .alfabeto-rodape .btn{width:100%}
+  .jornada-etapas{gap:8px 22px}.jornada-etapas li{padding:5px 10px}.jornada-etapas li b{font-size:14px}
+  .doca-abc{width:40px;height:40px;font-size:20px;border-radius:12px}
+  .album-regiao[data-regiao="AL"] .grade-conquistas{grid-template-columns:repeat(3,1fr)}
+}

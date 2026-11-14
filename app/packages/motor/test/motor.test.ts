@@ -4,7 +4,7 @@ import {
   aplicarSondagem, avaliarDominio, calcularNivel, concluirFase, creditarEmBloco, custoNivel, DIA_MS, faseEmExpressa,
   fecharSessao, infoNome, MARCAS_DE_GENERO, montarSessao, novaHabilidade, opcoesPronuncia, progressoInicial,
   registrarTentativa, renderFala, resultadoProvaRelampago, resultadoRevisao, agendarRevisao, revisoesVencidas,
-  silabas, somInicial, subirTermometro, aplicarAtividade, avaliarConquistas, comprar
+  silabas, somInicial, subirTermometro, aplicarAtividade, avaliarConquistas, comprar, aplicarNivelInicial
 } from '../src/index.ts';
 import type { Crianca, Tentativa } from '../src/index.ts';
 
@@ -96,16 +96,17 @@ describe('critério de domínio', () => {
 describe('sequência sem pular fases (D021)', () => {
   it('só a primeira fase começa aberta', () => {
     const p = progressoInicial('c1', T0);
-    expect(p.fases['R0-F01'].estado).toBe('aberta');
-    expect(p.fases['R0-F02'].estado).toBe('bloqueada');
+    expect(p.faseAtual).toBe('AL-A');
+    expect(p.fases['AL-A'].estado).toBe('aberta');
+    expect(FASES.slice(1).every((f) => p.fases[f.id].estado === 'bloqueada')).toBe(true);
   });
   it('não conclui fora de ordem e abre só a próxima', () => {
     let p = progressoInicial('c1', T0);
-    expect(() => concluirFase(p, 'R0-F03', T0)).toThrow(/pular|bloqueada/i);
-    p = concluirFase(p, 'R0-F01', T0);
-    expect(p.fases['R0-F02'].estado).toBe('aberta');
-    expect(p.fases['R0-F03'].estado).toBe('bloqueada');
-    expect(p.faseAtual).toBe('R0-F02');
+    expect(() => concluirFase(p, 'AL-C', T0)).toThrow(/pular|bloqueada/i);
+    p = concluirFase(p, 'AL-A', T0);
+    expect(p.fases['AL-B'].estado).toBe('aberta');
+    expect(p.fases['AL-C'].estado).toBe('bloqueada');
+    expect(p.faseAtual).toBe('AL-B');
   });
 });
 
@@ -135,13 +136,13 @@ describe('nível, títulos neutros e portões (D019, D022)', () => {
     expect(custoNivel(8)).toBe(8);
     expect(custoNivel(200)).toBe(24);
   });
-  it('nível 1 após a primeira missão; portão da Festa das Rimas segura o título', () => {
+  it('nível 1 após a primeira missão; portão da Festa do Alfabeto segura o título', () => {
     expect(calcularNivel(50, false, new Set()).nivel).toBe(0);
-    const semFesta = calcularNivel(5 + 2 + 3 + 4 + 5 + 6 + 12, true, new Set(['R0-F01']));
+    const semFesta = calcularNivel(5 + 2 + 3 + 4 + 5 + 6 + 12, true, new Set(['AL-A']));
     expect(semFesta.nivel).toBe(6);
     expect(semFesta.rotulo).toMatch(/^Primeiros Sons III ★2$/);
-    expect(semFesta.portao?.nome).toBe('Festa das Rimas');
-    const comFesta = calcularNivel(5 + 2 + 3 + 4 + 5 + 6 + 6, true, new Set(['R0-F01', 'R0-F06']));
+    expect(semFesta.portao?.nome).toBe('Festa do Alfabeto');
+    const comFesta = calcularNivel(5 + 2 + 3 + 4 + 5 + 6 + 6, true, new Set(['AL-A', 'AL-FESTA']));
     expect(comFesta.nivel).toBe(7);
     expect(comFesta.titulo).toBe('Caça às Sílabas');
   });
@@ -172,30 +173,31 @@ describe('Trilha Expressa (D021 §2–3)', () => {
   it('sondagem marca regiões; primeira missão e chefes nunca são expressos', () => {
     const p = aplicarSondagem(progressoInicial('c1', T0), 3, T0);
     expect(p.expressa.regioes).toEqual(['R0', 'R1']);
+    expect(faseEmExpressa(p, 'AL-A')).toBe(false);
     expect(faseEmExpressa(p, 'R0-F01')).toBe(false);
-    expect(faseEmExpressa(p, 'R0-F02')).toBe(true);
-    expect(faseEmExpressa(p, 'R0-F06')).toBe(false);
+    expect(faseEmExpressa(p, 'R1-F02')).toBe(true);
+    expect(faseEmExpressa(p, 'R1-F07')).toBe(false);
     expect(faseEmExpressa(p, 'R2a-F01')).toBe(false);
   });
   it('passou → fase feita e desafios contam; errou → desacelera sem perder', () => {
     let p = aplicarSondagem(progressoInicial('c1', T0), 5, T0);
-    p = concluirFase(p, 'R0-F01', T0);
-    const ok = resultadoProvaRelampago(p, 'R0-F02', 5, 6, T0, cfg);
+    for (const f of FASES.filter((x) => x.regiao === 'AL')) p = concluirFase(p, f.id, T0);
+    const ok = resultadoProvaRelampago(p, 'R1-F02', 5, 6, T0, cfg);
     expect(ok.passou).toBe(true);
-    expect(ok.progresso.fases['R0-F02'].estado).toBe('concluida');
-    expect(ok.progresso.habilidades.rima.dominadaEm).toBe(T0);
+    expect(ok.progresso.fases['R1-F02'].estado).toBe('concluida');
+    expect(ok.progresso.habilidades['vogal-o'].dominadaEm).toBe(T0);
     expect(ok.progresso.desafios).toBeGreaterThan(0);
-    const nao = resultadoProvaRelampago(ok.progresso, 'R0-F03', 2, 6, T0, cfg);
+    const nao = resultadoProvaRelampago(ok.progresso, 'R1-F03', 2, 6, T0, cfg);
     expect(nao.passou).toBe(false);
     expect(nao.progresso.expressa.ativa).toBe(false);
-    expect(nao.progresso.fases['R0-F02'].estado).toBe('concluida');
+    expect(nao.progresso.fases['R1-F02'].estado).toBe('concluida');
   });
 });
 
-describe('sessão C0–C9 e primeira missão completa', () => {
+describe('sessão C0–C9 e a missão do nome', () => {
   it('monta acolhida, cenas resolvidas com o nome e ritual de fim', () => {
     const c = crianca();
-    const p = progressoInicial(c.id, T0);
+    const p = aplicarNivelInicial(progressoInicial(c.id, T0), 'le-palavras', T0); // "Meu nome" fica liberado para visitar
     const s = montarSessao(p, c, 'R0-F01', cfg, T0);
     expect(s.etapas[0].tipo).toBe('acolhida');
     expect(s.etapas.at(-1)!.tipo).toBe('ritual');
@@ -207,9 +209,11 @@ describe('sessão C0–C9 e primeira missão completa', () => {
     expect(caca.tipo === 'escolher' && caca.itens.length).toBe(4);
   });
 
-  it('fecha a primeira missão: fase concluída, moedinhas, selo Meu Nome e nível 1', () => {
+  it('fecha a missão do nome (depois das palavras): fase concluída, moedinhas e selo Meu Nome', () => {
     const c = crianca();
     let p = progressoInicial(c.id, T0);
+    for (const f of FASES.slice(0, -1)) p = concluirFase(p, f.id, T0);
+    expect(p.faseAtual).toBe('R0-F01');
     const s = montarSessao(p, c, 'R0-F01', cfg, T0);
     const todas: Tentativa[] = [];
     let atividades = 0;
@@ -222,11 +226,10 @@ describe('sessão C0–C9 e primeira missão completa', () => {
     }
     const { progresso, relatorio } = fecharSessao(p, { faseId: 'R0-F01', sessao: s.id, atividades, tentativasDaSessao: todas, expressa: false, demonstracoes: [] }, cfg, T0);
     expect(relatorio.faseConcluida).toBe(true);
-    expect(progresso.fases['R0-F02'].estado).toBe('aberta');
-    expect(relatorio.moedinhas).toBe(atividades);
+    expect(progresso.fases['R0-F01'].estado).toBe('concluida');
+    expect(relatorio.moedinhas).toBe(Math.min(cfg.moedinhas.tetoDia, atividades + cfg.moedinhas.regiao));
     expect(relatorio.conquistasNovas.map((x) => x.id)).toEqual(expect.arrayContaining(['S-R0-01', 'TI-R0-01', 'S-R0-10']));
-    expect(relatorio.nivelDepois).toBe(1);
-    expect(relatorio.surpresas.map((x) => x.id)).toContain('placa-da-porta');
+    expect(relatorio.nivelDepois).toBeGreaterThanOrEqual(1);
     // conquista nunca volta a ter cadeado
     const de2 = avaliarConquistas(progresso, [], T0 + DIA_MS);
     expect(de2.novas).toHaveLength(0);
@@ -235,16 +238,17 @@ describe('sessão C0–C9 e primeira missão completa', () => {
 
   it('chefe: abaixo de 85% não passa, nada se perde', () => {
     let p = progressoInicial('c1', T0);
-    for (const f of FASES.slice(0, 5)) p = concluirFase(p, f.id, T0);
-    const ts = [...Array(10)].map((_, i) => t('rima', i < 7, 'sx'));
-    const r = fecharSessao(p, { faseId: 'R0-F06', sessao: 'sx', atividades: 4, tentativasDaSessao: ts, expressa: false, demonstracoes: [] }, cfg, T0);
+    const chefe = FASES.findIndex((f) => f.id === 'R1-F07');
+    for (const f of FASES.slice(0, chefe)) p = concluirFase(p, f.id, T0);
+    const ts = [...Array(10)].map((_, i) => t('vogais', i < 7, 'sx'));
+    const r = fecharSessao(p, { faseId: 'R1-F07', sessao: 'sx', atividades: 4, tentativasDaSessao: ts, expressa: false, demonstracoes: [] }, cfg, T0);
     expect(r.relatorio.chefe?.passou).toBe(false);
-    expect(r.progresso.fases['R0-F06'].estado).toBe('aberta');
+    expect(r.progresso.fases['R1-F07'].estado).toBe('aberta');
     expect(r.progresso.desafios).toBe(p.desafios);
-    const ts2 = [...Array(10)].map((_, i) => t('rima', i < 9, 'sy'));
-    const r2 = fecharSessao(r.progresso, { faseId: 'R0-F06', sessao: 'sy', atividades: 4, tentativasDaSessao: ts2, expressa: false, demonstracoes: [] }, cfg, T0);
+    const ts2 = [...Array(10)].map((_, i) => t('vogais', i < 9, 'sy'));
+    const r2 = fecharSessao(r.progresso, { faseId: 'R1-F07', sessao: 'sy', atividades: 4, tentativasDaSessao: ts2, expressa: false, demonstracoes: [] }, cfg, T0);
     expect(r2.relatorio.chefe?.passou).toBe(true);
-    expect(r2.progresso.fases['R1-F01'].estado).toBe('aberta');
-    expect(r2.relatorio.conquistasNovas.map((x) => x.id)).toContain('M-R0-01');
+    expect(r2.progresso.fases['R2a-F01'].estado).toBe('aberta');
+    expect(r2.relatorio.conquistasNovas.map((x) => x.id)).toContain('M-R1-01');
   });
 });

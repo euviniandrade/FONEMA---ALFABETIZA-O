@@ -24,8 +24,9 @@ export function Escolher({ atividade, crianca, sessao, cenaId, revisao, onFim }:
   const item = atividade.itens[i];
   const ehLeitura = !!item?.mostrar;
 
+  const quemOuvir = item?.quem ?? atividade.enunciado.quem;
   const tocarItem = () => {
-    if (item?.ouvir) return voz.falar(textoVoz(item.ouvir, crianca), { quem: atividade.enunciado.quem });
+    if (item?.ouvir) return voz.falar(textoVoz(item.ouvir, crianca), { quem: quemOuvir });
     if (item?.mostrar && i === 0) return falar(atividade.enunciado, crianca);
     return Promise.resolve();
   };
@@ -34,7 +35,7 @@ export function Escolher({ atividade, crianca, sessao, cenaId, revisao, onFim }:
     let vivo = true;
     (async () => {
       if (i === 0) await falar(atividade.enunciado, crianca);
-      if (vivo && item?.ouvir) await voz.falar(textoVoz(item.ouvir, crianca), { quem: atividade.enunciado.quem });
+      if (vivo && item?.ouvir) await voz.falar(textoVoz(item.ouvir, crianca), { quem: quemOuvir });
     })();
     return () => { vivo = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,8 +70,8 @@ export function Escolher({ atividade, crianca, sessao, cenaId, revisao, onFim }:
     if (e === 1) {
       const dica = item.dica ?? FALAS.erro1;
       setAviso(dica);
-      await voz.falar(textoVoz(dica, crianca), { quem: 'sofia' });
-      if (item.ouvir) await voz.falar(textoVoz(item.ouvir, crianca), { quem: 'sofia' });
+      await voz.falar(textoVoz(dica, crianca), { quem: item.dica ? item.quemDica ?? 'sofia' : 'sofia' });
+      if (item.ouvir) await voz.falar(textoVoz(item.ouvir, crianca), { quem: item.quem ?? 'sofia' });
       else if (item.mostrar) await voz.falar(item.mostrar.split(/[\s(]/)[0].toLowerCase().replace(/_/g, ''), { quem: 'sofia', rate: 0.7 });
     } else {
       setAviso(FALAS.erro2);
@@ -86,7 +87,8 @@ export function Escolher({ atividade, crianca, sessao, cenaId, revisao, onFim }:
       <div className="pergunta">
         {item.ouvir ? <BotaoOuvir onClick={tocarItem} rotulo="Ouvir de novo" /> : null}
         {ehLeitura ? <div className="palavra-grande" data-testid="palavra-lida">{item.mostrar}</div> : null}
-        {item.ouvir && !ehLeitura ? <span className="dica-ouvir">Toque no alto-falante para ouvir de novo</span> : null}
+        {item.mostrarFigura ? <div className="figura-pergunta" data-testid="figura-pergunta"><Figura palavra={item.mostrarFigura} /></div> : null}
+        {item.ouvir && !ehLeitura && !item.mostrarFigura ? <span className="dica-ouvir">Toque no alto-falante para ouvir de novo</span> : null}
       </div>
       <div className={`opcoes n${item.opcoes.length}`} role="group" aria-label="Opções">
         {item.opcoes.map((o) => {

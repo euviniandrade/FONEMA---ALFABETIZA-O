@@ -2,7 +2,7 @@
  * Desbloqueio de conquistas DEPOIS do fato (D018, D019). Cada regra olha só para aprendizagem e esforço:
  * nada por abrir o app, tempo de tela, dias seguidos ou gastar moedas. Conquista nunca volta a ter cadeado.
  */
-import { CONQUISTA_POR_ID } from '@fonema/conteudo';
+import { ALFABETO, CONQUISTA_POR_ID, SELO_ALFABETO_COMPLETO, faseDaLetra, seloDaLetra } from '@fonema/conteudo';
 import type { ConquistaGanha, Demonstracao, Progresso } from './estado.ts';
 import { fasesConcluidas } from './sequencia.ts';
 
@@ -43,6 +43,9 @@ const se = (cond: boolean, n: Nivel = 'unico'): Nivel | null => (cond ? n : null
 
 /** Regras do MVP. As que não estão aqui ficam como "em breve" (mistério) no Álbum. */
 export const REGRAS: Record<string, (f: Fatos) => Nivel | null> = {
+  // AL · Trilha do Alfabeto (D027): um selo por letra concluída + o troféu do alfabeto inteiro
+  ...Object.fromEntries(ALFABETO.map((l) => [seloDaLetra(l.letra), (f: Fatos) => se(f.concluidas.has(faseDaLetra(l.letra)))])),
+  [SELO_ALFABETO_COMPLETO]: (f) => se(f.concluidas.has('AL-FESTA')),
   // R0
   'S-R0-01': (f) => se(f.concluidas.has('R0-F01'), 'bronze'),
   'TI-R0-01': (f) => se(f.concluidas.has('R0-F01')),

@@ -32,7 +32,10 @@ export const FIGURAS: Record<string, Palavra> = Object.fromEntries(
     p('garrafa', 'gar-ra-fa', '🧴'), p('concha', 'con-cha', '🐚'), p('caranguejo', 'ca-ran-gue-jo', '🦀'),
     p('copo plástico', 'co-po', '🥤'), p('sacola', 'sa-co-la', '🛍️'), p('mamãe', 'ma-mãe', '👩'), p('papai', 'pa-pai', '👨'),
     p('peteca', 'pe-te-ca', '🏸'), p('ginga', 'gin-ga', '🤸'), p('esquiva', 'es-qui-va', '🤸'), p('vela', 've-la', '🕯️'),
-    p('vaca', 'va-ca', '🐄'), p('zebra', 'ze-bra', '🦓'), p('rato', 'ra-to', '🐭')
+    p('vaca', 'va-ca', '🐄'), p('zebra', 'ze-bra', '🦓'), p('rato', 'ra-to', '🐭'),
+    // Trilha do Alfabeto (D027): palavras-exemplo de H, K, Q, W, X e Y (figuras 3D em web/public/assets/figuras)
+    p('hipopótamo', 'hi-po-pó-ta-mo', '🦛'), p('kiwi', 'ki-wi', '🥝'), p('queijo', 'quei-jo', '🧀'), p('xícara', 'xí-ca-ra', '🍵'),
+    p('waffle', 'waf-fle', '🧇'), p('yakisoba', 'ya-ki-so-ba', '🍜'), p('xilofone', 'xi-lo-fo-ne', '🎹'), p('helicóptero', 'he-li-cóp-te-ro', '🚁')
   ].map((w) => [w.texto, w])
 );
 
@@ -53,6 +56,8 @@ export function figura(texto: string): Palavra {
 
 /** Grafemas conhecidos ao FIM de cada região (para o linter de decodificabilidade). */
 export const GRAFEMAS_DA_REGIAO: Record<string, string[]> = {
+  // Trilha do Alfabeto: as letras aparecem SOLTAS ("B b"), nunca em palavras para ler
+  AL: [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ', ' '],
   R0: [],
   R1: ['A', 'E', 'I', 'O', 'U'],
   R2a: ['A', 'E', 'I', 'O', 'U', 'M', 'L', 'F']

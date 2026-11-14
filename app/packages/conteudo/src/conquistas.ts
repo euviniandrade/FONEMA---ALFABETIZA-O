@@ -7,6 +7,7 @@
  */
 import catalogo from './dados/conquistas-catalogo.json';
 import type { Conquista, ConquistaCatalogo } from './tipos.ts';
+import { ALFABETO, seloDaLetra } from './alfabeto.ts';
 
 const MOTIVO_POR_CATEGORIA: Record<string, string> = {
   fonema: '👂', silaba: '👏', palavra: '📖', leitura: '📚', compreensao: '💡', valores: '🤝', esporte: '⚽',
@@ -73,10 +74,28 @@ function primeiraFrase(t: string): string {
   return s.split(/[.;(]/)[0].trim();
 }
 
-export const CONQUISTAS: Conquista[] = (catalogo as ConquistaCatalogo[]).map((c) => ({
-  ...c,
-  dica: DICAS[c.id]?.dica ?? primeiraFrase(c.criterio),
-  motivo: DICAS[c.id]?.motivo ?? MOTIVO_POR_CATEGORIA[c.categoria] ?? '★'
-}));
+/** Trilha do Alfabeto (D027): um selo por letra + o troféu "Alfabeto Completo" (fora do catálogo antigo). */
+export const SELO_ALFABETO_COMPLETO = 'T-ALFABETO';
+const CONQUISTAS_ALFABETO: Conquista[] = [
+  ...ALFABETO.map((l): Conquista => ({
+    id: seloDaLetra(l.letra), nome: `Letra ${l.letra}`, tipo: 'selo', categoria: 'fonema', regiao: 'AL',
+    criterio: `Completar a missão da letra ${l.letra} na Trilha do Alfabeto.`, niveis: ['unico'], visivel_antes: 'visivel',
+    dica: `Conhecer a letra ${l.letra}`, motivo: l.letra
+  })),
+  {
+    id: SELO_ALFABETO_COMPLETO, nome: 'Alfabeto Completo', tipo: 'trofeu', categoria: 'fonema', regiao: 'AL',
+    criterio: 'Conhecer as 26 letras e vencer a Festa do Alfabeto.', niveis: ['unico'], visivel_antes: 'visivel',
+    dica: 'Conhecer todas as letras, de A a Z', motivo: 'AZ'
+  }
+];
+
+export const CONQUISTAS: Conquista[] = [
+  ...CONQUISTAS_ALFABETO,
+  ...(catalogo as ConquistaCatalogo[]).map((c) => ({
+    ...c,
+    dica: DICAS[c.id]?.dica ?? primeiraFrase(c.criterio),
+    motivo: DICAS[c.id]?.motivo ?? MOTIVO_POR_CATEGORIA[c.categoria] ?? '★'
+  }))
+];
 
 export const CONQUISTA_POR_ID: Record<string, Conquista> = Object.fromEntries(CONQUISTAS.map((c) => [c.id, c]));

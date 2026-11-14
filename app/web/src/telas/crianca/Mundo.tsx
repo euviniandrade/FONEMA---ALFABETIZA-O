@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { CONQUISTA_POR_ID, FALAS, FASES, FASE_POR_ID, REGIOES, REGIAO_POR_ID, type Fala } from '@fonema/conteudo';
-import { calcularNivel, faseEmExpressa, fasesConcluidas, infoNome, podeEntrar, type Crianca, type Progresso } from '@fonema/motor';
+import { calcularNivel, faseEmExpressa, fasesConcluidas, missaoInicialFeita, infoNome, podeEntrar, type Crianca, type Progresso } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Ajustes, AvatarMini, Balao, BotaoOuvir, Carregando, Moedinhas, Rosto, Topo } from '../../componentes/basicos.tsx';
@@ -10,7 +10,7 @@ import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
 import { falar, falarVarias, textoTela } from '../../util.ts';
 
 function nivelDe(p: Progresso) {
-  return calcularNivel(p.desafios, p.fases['R0-F01']?.estado === 'concluida', fasesConcluidas(p));
+  return calcularNivel(p.desafios, missaoInicialFeita(p), fasesConcluidas(p));
 }
 
 /** Cenário 3D (assets/cenas) de cada cenário do conteúdo. */
@@ -162,6 +162,7 @@ export function Vila({ criancaId }: { criancaId: string }) {
         <nav className="hud-doca vidro" aria-label="Lugares da vila">
           <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/album`)}><Icone nome="album" />Álbum</button>
           {config.lojinha.naVila ? <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/lojinha`)}><Icone nome="lojinha" />Lojinha</button> : null}
+          <button className="doca-btn doca-alfabeto" onClick={() => navegar(`c/${criancaId}/alfabeto`)} data-ponto="alfabeto"><span className="doca-abc" aria-hidden="true">Aa</span>Alfabeto</button>
           <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mapa`)}><Icone nome="mapa" />Ilhas</button>
           {mundo3d ? <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mundo`)} data-ponto="mundo3d"><Icone nome="cubo" />Passear 3D</button> : null}
           <button className="btn ipe doca-missao brilha" onClick={() => navegar(`c/${criancaId}/fase/${fase.id}`)} data-testid="ir-missao"><Icone nome="play" />Missão</button>
@@ -172,8 +173,8 @@ export function Vila({ criancaId }: { criancaId: string }) {
 }
 
 /** Onde cada região fica na arte do arquipélago (em % da imagem) e as ilhas futuras (com névoa e cadeado). */
-const ILHA: Record<string, { x: number; y: number }> = { R0: { x: 17, y: 36 }, R1: { x: 39, y: 30 }, R2a: { x: 59, y: 33 } };
-const ILHAS_FUTURAS = [{ x: 76, y: 47 }, { x: 46.5, y: 54 }, { x: 16, y: 70 }, { x: 37, y: 88 }, { x: 62.5, y: 80 }, { x: 87.5, y: 74 }, { x: 88.5, y: 27 }];
+const ILHA: Record<string, { x: number; y: number }> = { AL: { x: 17, y: 36 }, R1: { x: 39, y: 30 }, R2a: { x: 59, y: 33 }, R0: { x: 76, y: 47 } };
+const ILHAS_FUTURAS = [{ x: 46.5, y: 54 }, { x: 16, y: 70 }, { x: 37, y: 88 }, { x: 62.5, y: 80 }, { x: 87.5, y: 74 }, { x: 88.5, y: 27 }];
 
 /** Mapa do arquipélago: regiões abertas por domínio; as ilhas futuras aparecem com névoa e cadeado. */
 export function Arquipelago({ criancaId }: { criancaId: string }) {
@@ -287,7 +288,7 @@ export function EntradaFase({ criancaId, faseId }: { criancaId: string; faseId: 
   const { crianca, progresso } = useCrianca(criancaId);
   const fase = FASE_POR_ID[faseId];
   const letra = useMemo(() => (crianca ? infoNome(crianca.nome, crianca.pronuncia.grafia).letras : 'A'), [crianca]);
-  useEffect(() => { if (crianca && fase && progresso && podeEntrar(progresso, faseId)) falar({ quem: 'sofia', texto: `${fase.titulo}. ${fase.objetivo}.` }, crianca); // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { if (crianca && fase && progresso && podeEntrar(progresso, faseId)) falar(fase.falaEntrada ?? { quem: 'sofia', texto: `${fase.titulo}. ${fase.objetivo}.` }, crianca); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [crianca, fase]);
   const trancada = !!progresso && !!fase && !podeEntrar(progresso, faseId);
   useEffect(() => { if (trancada) navegar(`c/${criancaId}/vila`); }, [trancada, criancaId]);
@@ -299,7 +300,7 @@ export function EntradaFase({ criancaId, faseId }: { criancaId: string; faseId: 
   return (
     <div className="tela-fase">
       <Fundo cena={cena} desfoque={12} tom="claro" />
-      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/vila`} titulo={`${REGIAO_POR_ID[fase.regiao].nome}`} />
+      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={fase.alfabeto ? `c/${criancaId}/alfabeto` : `c/${criancaId}/vila`} titulo={`${REGIAO_POR_ID[fase.regiao].nome}`} />
       <main className="palco">
         <section className="cartao entrada-fase">
           <div className="entrada-capa" style={{ backgroundImage: `url(${asset(`cenas/${cena}.webp`)})` }}>

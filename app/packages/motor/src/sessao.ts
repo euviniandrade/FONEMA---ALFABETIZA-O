@@ -84,7 +84,8 @@ export function montarSessao(p: Progresso, c: Crianca, faseId: string, cfg: Conf
       const atividade = cena.atividade ? limitarItens(cena.atividade, maxItens) : undefined;
       etapas.push({ tipo: 'cena', cena: resolverCena({ ...cena, atividade }, n) });
     }
-    if (!fase.cenas.some((x) => x.tipo === 'C6')) {
+    // missões curtas (Trilha do Alfabeto) não ganham pausa ativa automática
+    if (!fase.curta && !fase.cenas.some((x) => x.tipo === 'C6')) {
       etapas.push({
         tipo: 'cena',
         cena: {

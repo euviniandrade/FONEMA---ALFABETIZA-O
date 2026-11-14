@@ -1,6 +1,6 @@
 /**
  * Nível inicial escolhido pelo adulto (D026, ajusta a D021 §2–3).
- * O padrão é DO ZERO (R0-F01). Quando o adulto escolhe um nível mais adiante, as fases anteriores ficam
+ * O padrão é DO ZERO: a letra A da Trilha do Alfabeto (D027). Quando o adulto escolhe um nível mais adiante, as fases anteriores ficam
  * LIBERADAS: abertas para visitar e revisar, com os selos ainda por conquistar — não contam como concluídas
  * nem como dominadas (o termômetro e os títulos só sobem pelo que a criança fizer de verdade).
  * Dentro do nível escolhido a progressão continua sequencial, uma fase por vez.
@@ -10,11 +10,11 @@ import type { NivelInicial, Progresso, ProgressoFase } from './estado.ts';
 
 export const NIVEIS_INICIAIS: { id: NivelInicial; titulo: string; resumo: string; perguntas: string[] }[] = [
   {
-    id: 'zero', titulo: 'Do zero', resumo: 'Começa pelos sons, rimas, sílabas e primeiras letras.',
+    id: 'zero', titulo: 'Do zero', resumo: 'Começa pelo alfabeto: cada letra e o som de cada letra, de A a Z.',
     perguntas: ['Ainda não conhece todas as letras?', 'Ainda confunde o som das letras?', 'Está na dúvida? Comece por aqui.']
   },
   {
-    id: 'letras-e-sons', titulo: 'Já conhece as letras e os sons', resumo: 'Começa em juntar sons e ler sílabas e palavras.',
+    id: 'letras-e-sons', titulo: 'Já conhece as letras e os sons', resumo: 'Pula o alfabeto (fica aberto para revisar) e começa em juntar letras: sílabas e palavras.',
     perguntas: ['Reconhece as vogais e fala o som de cada uma?', 'Sabe o som de várias letras (não só o nome)?', 'Ainda não lê palavras sem ajuda?']
   },
   {
@@ -31,9 +31,10 @@ export function faseInicial(nivel: NivelInicial): string {
     if (f) return f.id;
   }
   if (nivel === 'le-palavras') {
-    // a fase mais avançada disponível que ainda ensina (o chefe final fica como desafio, depois dela)
-    const semChefe = FASES.filter((x) => !x.chefe);
-    const f = semChefe[semChefe.length - 1];
+    // o ponto mais avançado de LEITURA disponível que ainda ensina (frases, quando existirem); o chefe fica como
+    // desafio depois dela, e "Meu nome" vem em seguida
+    const leitura = FASES.filter((x) => !x.chefe && x.habilidades.some((h) => h.startsWith('leitura-')));
+    const f = leitura[leitura.length - 1];
     if (f) return f.id;
   }
   return FASES[0].id;

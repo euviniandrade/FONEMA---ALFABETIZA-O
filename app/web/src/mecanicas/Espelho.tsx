@@ -23,10 +23,12 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
   const [fase, setFase] = useState<'mostra' | 'vez' | 'feito'>('mostra');
   const [dica, setDica] = useState(false);
 
+  const quem = atividade.voz ?? 'sofia';
   const mostrar = async (lento = false) => {
     setFalando(true);
-    for (let k = 0; k < 2; k++) {
-      await voz.falar(s.esticado, { quem: 'sofia', rate: lento ? 0.6 : 0.8 });
+    // Trilha do Alfabeto: consoante usa "B, de bola." (uma vez) no lugar do som isolado, até a gravação da fonoaudióloga
+    for (let k = 0; k < (atividade.falaSom ? 1 : 2); k++) {
+      await voz.falar(atividade.falaSom ?? s.esticado, { quem, rate: lento ? 0.6 : 0.8 });
       setLetra(true);
       await espera(300);
     }
@@ -37,9 +39,10 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
     (async () => {
       await falar(atividade.enunciado, crianca);
       await mostrar();
-      await voz.falar(ehNome ? `${crianca.pronuncia.fala}!` : `${s.esticado}… ${atividade.ancora.texto}!`, { quem: 'sofia' });
-      if (nome.nota && ehNome) await voz.falar(nome.nota, { quem: 'sofia' });
-      await voz.falar(textoVoz('Agora é a sua vez, [NOME]!', crianca), { quem: 'sofia' });
+      if (atividade.falaAncora !== undefined) { if (atividade.falaAncora) await voz.falar(atividade.falaAncora, { quem }); }
+      else await voz.falar(ehNome ? `${crianca.pronuncia.fala}!` : `${s.esticado}… ${atividade.ancora.texto}!`, { quem });
+      if (nome.nota && ehNome) await voz.falar(nome.nota, { quem });
+      await voz.falar(textoVoz('Agora é a sua vez, [NOME]!', crianca), { quem });
       setFase('vez');
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,7 +74,7 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
       <div className="linha-botoes">
         <button className="btn" onClick={() => mostrar()}><Icone nome="som" />Ouvir o som</button>
         <button className="btn" onClick={() => mostrar(true)}><Icone nome="tartaruga" />Bem devagar</button>
-        {fase !== 'mostra' ? <button className="btn" onClick={async () => { setDica(true); await voz.falar(s.correcao, { quem: 'sofia' }); }}><Icone nome="dica" />Dica de boca</button> : null}
+        {fase !== 'mostra' && !atividade.falaSom && atividade.falaAncora === undefined ? <button className="btn" onClick={async () => { setDica(true); await voz.falar(s.correcao, { quem: 'sofia' }); }}><Icone nome="dica" />Dica de boca</button> : null}
         <button className="btn grande verde" onClick={fiz} disabled={fase !== 'vez'} data-testid="fiz-o-som"><Icone nome="check" />Eu fiz o som!</button>
       </div>
       {fase === 'feito' ? <Brilho ativo /> : null}

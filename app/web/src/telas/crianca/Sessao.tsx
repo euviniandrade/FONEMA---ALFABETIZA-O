@@ -16,6 +16,7 @@ import { Ditado } from '../../mecanicas/Ditado.tsx';
 import { Falar } from '../../mecanicas/Falar.tsx';
 import { Espelho } from '../../mecanicas/Espelho.tsx';
 import { Tracar } from '../../mecanicas/Tracar.tsx';
+import { Letra } from '../../mecanicas/Letra.tsx';
 import { Pausa } from '../../mecanicas/Pausa.tsx';
 import type { ResultadoMecanica } from '../../mecanicas/comum.tsx';
 import { Ritual } from './Ritual.tsx';
@@ -94,6 +95,7 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
       case 'falar': return <Falar key={etapa.cena!.id} {...props(a)} />;
       case 'espelho': return <Espelho key={etapa.cena!.id} {...props(a)} />;
       case 'tracar': return <Tracar key={etapa.cena!.id} {...props(a)} />;
+      case 'letra': return <Letra key={etapa.cena!.id} {...props(a)} />;
       case 'pausa': return <Pausa key={etapa.cena!.id} {...props(a)} />;
     }
   };
@@ -101,7 +103,7 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
   const cenas = sessao.etapas.filter((e) => e.tipo === 'cena');
   const posCena = sessao.etapas.slice(0, idx).filter((e) => e.tipo === 'cena').length;
   const cenario = etapa.cena?.cenario ?? 'quintal';
-  const limpo = cenario === 'licao' || etapa.cena?.atividade?.tipo === 'espelho';
+  const limpo = cenario === 'licao' || etapa.cena?.atividade?.tipo === 'espelho' || etapa.cena?.atividade?.tipo === 'letra';
 
   if (etapa.tipo === 'ritual') {
     return relatorio && progFinal ? <Ritual crianca={crianca} progresso={progFinal} relatorio={relatorio} fase={fase} expressa={sessao.expressa} /> : <Carregando />;

@@ -128,8 +128,8 @@ export function Album({ criancaId }: { criancaId: string }) {
           {REGIOES.map((r) => {
             const lista = CONQUISTAS.filter((c) => c.regiao === r.id && c.visivel_antes !== 'oculto');
             return (
-              <div key={r.id} className="album-regiao">
-                <h2 className="t">{r.nome}</h2>
+              <div key={r.id} className="album-regiao" data-regiao={r.id}>
+                <h2 className="t">{r.id === 'AL' ? 'Letras do alfabeto' : r.nome}</h2>
                 <div className="grade-conquistas">
                   {lista.map((c) => {
                     const g = progresso.conquistas[c.id];

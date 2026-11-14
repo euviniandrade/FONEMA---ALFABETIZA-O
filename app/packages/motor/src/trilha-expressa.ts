@@ -1,9 +1,9 @@
 /**
  * Sondagem lúdica ("Missão das Placas da Vila") e Trilha Expressa (D021 §2–3; jogo-completo/01 §5).
- * Toda criança vive a jornada desde R0-F01, na mesma ordem; quem já sabe passa por prova-relâmpago.
+ * Toda criança vive a jornada desde a primeira fase (D027: a letra A), na mesma ordem; quem já sabe passa por prova-relâmpago.
  * O chefe é feito INTEIRO também na Trilha Expressa.
  */
-import { FASE_POR_ID } from '@fonema/conteudo';
+import { FASES, FASE_POR_ID } from '@fonema/conteudo';
 import type { ConfigPlataforma } from '@fonema/conteudo';
 import type { Progresso } from './estado.ts';
 import { concluirFase } from './sequencia.ts';
@@ -35,7 +35,7 @@ export function aplicarSondagem(p: Progresso, maiorDegrau: number, agora: number
 
 export function faseEmExpressa(p: Progresso, faseId: string): boolean {
   const f = FASE_POR_ID[faseId];
-  if (!f || f.chefe || faseId === 'R0-F01') return false; // a primeira missão e os chefes são sempre completos
+  if (!f || f.chefe || faseId === 'R0-F01' || faseId === FASES[0].id) return false; // a primeira missão e os chefes são sempre completos
   return p.expressa.ativa && p.expressa.regioes.includes(f.regiao);
 }
 

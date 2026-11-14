@@ -1,6 +1,6 @@
 import { Icone } from '../componentes/ui.tsx';
 import { useEffect, useRef, useState } from 'react';
-import type { AtividadeTracar } from '@fonema/conteudo';
+import { LETRA_POR_ID, falaChave, type AtividadeTracar } from '@fonema/conteudo';
 import { Balao, Brilho } from '../componentes/basicos.tsx';
 import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
@@ -69,7 +69,10 @@ export function Tracar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
     setOk(true);
     efeitos.acerto();
     tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, 0));
-    await voz.falar(SOM[letra] ?? letra, { quem: 'tales' });
+    // Trilha do Alfabeto: "B, de bola." na voz de quem apresentou a letra (o som puro fica para a fonoaudióloga)
+    const al = atividade.habilidade.startsWith('letra-') ? LETRA_POR_ID[letra.toUpperCase()] : undefined;
+    if (al) await voz.falar(falaChave(al), { quem: al.voz });
+    else await voz.falar(SOM[letra] ?? letra, { quem: 'tales' });
     await espera(400);
     if (i + 1 < atividade.letras.length) setI(i + 1);
     else onFim({ tentativas: tents.current, tentouDeNovo: 0, extras: { tracados: atividade.letras.length } });
@@ -80,7 +83,7 @@ export function Tracar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
       <Balao fala={atividade.enunciado} crianca={crianca} />
       <Progressinho atual={i} total={atividade.letras.length} />
       <div className="areia">
-        <span className="letra-guia" aria-hidden="true">{letra}</span>
+        <span className={`letra-guia ${letra !== letra.toUpperCase() ? 'minuscula' : ''}`} aria-hidden="true">{letra}</span>
         <canvas
           ref={canvas}
           width={360}

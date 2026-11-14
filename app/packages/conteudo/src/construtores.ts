@@ -17,7 +17,7 @@ export const pescadora = fala('pescadora');
 
 /** Posição determinística da resposta certa (sem sorte, sem padrão fixo). */
 let contador = 0;
-function posiciona<T>(certa: T, outras: T[]): T[] {
+export function posiciona<T>(certa: T, outras: T[]): T[] {
   const lista = [...outras];
   const pos = contador++ % (outras.length + 1);
   lista.splice(pos, 0, certa);

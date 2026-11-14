@@ -29,6 +29,11 @@ export function progressoInicial(criancaId: string, agora: number): Progresso {
   };
 }
 
+/** A primeira missão da jornada (hoje: a letra A) já foi feita? É o que leva ao nível 1. */
+export function missaoInicialFeita(p: Progresso): boolean {
+  return p.fases[FASES[0].id]?.estado === 'concluida';
+}
+
 export function indiceFase(faseId: string): number {
   const i = FASES.findIndex((f) => f.id === faseId);
   if (i < 0) throw new Error(`Fase desconhecida: ${faseId}`);

@@ -16,12 +16,17 @@ function palavrasLidas(f: Fase): string[] {
 }
 
 describe('conteúdo da jornada', () => {
-  it('tem as regiões R0, R1 e R2a em ordem, com 6 + 7 + 5 fases', () => {
-    expect(REGIOES.map((r) => r.id)).toEqual(['R0', 'R1', 'R2a']);
-    expect(FASES.filter((f) => f.regiao === 'R0')).toHaveLength(6);
-    expect(FASES.filter((f) => f.regiao === 'R1')).toHaveLength(7);
+  it('D027: Alfabeto → Sílabas (vogais, M-L-F) → Palavras → Meu nome, sem ids repetidos', () => {
+    expect(REGIOES.map((r) => r.id)).toEqual(['AL', 'R1', 'R2a', 'R0']);
+    expect(REGIOES.map((r) => r.etapa)).toEqual(['Alfabeto', 'Sílabas', 'Sílabas e palavras', 'Meu nome']);
+    expect(FASES.filter((f) => f.regiao === 'AL')).toHaveLength(31);
+    expect(FASES.filter((f) => f.regiao === 'R1').map((f) => f.id)).toEqual(['R1-F02', 'R1-F03', 'R1-F06', 'R1-F07']);
     expect(FASES.filter((f) => f.regiao === 'R2a')).toHaveLength(5);
+    expect(FASES.filter((f) => f.regiao === 'R0').map((f) => f.id)).toEqual(['R0-F01']);
+    expect(FASES.at(-1)!.id).toBe('R0-F01');
     expect(new Set(FASES.map((f) => f.id)).size).toBe(FASES.length);
+    // as regiões cobrem a jornada inteira, na mesma ordem
+    expect(REGIOES.flatMap((r) => r.fases)).toEqual(FASES.map((f) => f.id));
   });
 
   it('toda palavra lida é decodificável com os grafemas da região', () => {

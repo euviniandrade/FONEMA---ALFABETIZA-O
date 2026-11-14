@@ -3,6 +3,7 @@ import { Inicio, AdultoHome, PainelFamilia, Porteira, Professor, Configuracoes }
 import { Cadastro } from './telas/adulto/Cadastro.tsx';
 import { Avatar } from './telas/crianca/Avatar.tsx';
 import { Arquipelago, Chegada, EntradaFase, Regiao, Vila } from './telas/crianca/Mundo.tsx';
+import { TrilhaAlfabeto } from './telas/crianca/Alfabeto.tsx';
 import { Sessao } from './telas/crianca/Sessao.tsx';
 import { Album, ConhecaSeuCorpo, Lojinha, MostraProfessor, Mundo3D, Sondagem } from './telas/crianca/Extras.tsx';
 
@@ -28,7 +29,8 @@ function tela(r: string[]) {
       case 'avatar': return <Avatar criancaId={id} />;
       case 'chegada': return <Chegada criancaId={id} />;
       case 'mapa': return <Arquipelago criancaId={id} />;
-      case 'regiao': return <Regiao criancaId={id} regiaoId={arg} />;
+      case 'alfabeto': return <TrilhaAlfabeto criancaId={id} />;
+      case 'regiao': return arg === 'AL' ? <TrilhaAlfabeto criancaId={id} /> : <Regiao criancaId={id} regiaoId={arg} />;
       case 'fase': return <EntradaFase key={arg} criancaId={id} faseId={arg} />;
       case 'sessao': return <Sessao key={arg + location.hash} criancaId={id} faseId={arg} />;
       case 'lojinha': return <Lojinha criancaId={id} />;

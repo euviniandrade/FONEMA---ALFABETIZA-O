@@ -60,7 +60,7 @@ export interface Habilidade {
   seloMaestria?: string;
 }
 
-export type RegiaoId = 'R0' | 'R1' | 'R2a';
+export type RegiaoId = 'AL' | 'R0' | 'R1' | 'R2a';
 
 /* ----------------------------- mecânicas ----------------------------- */
 
@@ -84,8 +84,14 @@ export interface ItemEscolha {
   opcoes: Opcao[];
   correta: string;
   pseudo?: boolean;
+  /** Figura grande mostrada como pergunta ("com qual letra começa?"): palavra do banco de figuras. */
+  mostrarFigura?: string;
   /** Dica de 1º erro (fala da dupla). */
   dica?: string;
+  /** Quem fala `ouvir` neste item (padrão: quem fala o enunciado). */
+  quem?: Personagem;
+  /** Quem fala a `dica` (padrão: Sofia). */
+  quemDica?: Personagem;
   habilidade?: HabilidadeId;
 }
 
@@ -139,6 +145,24 @@ export interface AtividadeEspelho extends AtividadeBase {
   fonema: ChaveFonema;
   letra: string;
   ancora: { texto: string; figura: string };
+  /**
+   * Trilha do Alfabeto (D027): fala usada NO LUGAR do som esticado ("B, de bola."), porque o som isolado de
+   * consoante sai errado na voz sintética (o som puro fica para a gravação da fonoaudióloga).
+   */
+  falaSom?: string;
+  /** Fala da palavra-exemplo depois do som ("A, de abelha."). Vazio = não repete. */
+  falaAncora?: string;
+  /** Quem mostra o som (padrão: Sofia). */
+  voz?: 'sofia' | 'tales';
+}
+
+/** Trilha do Alfabeto (D027): apresentação da letra (maiúscula e minúscula grandes) com a palavra-exemplo. */
+export interface AtividadeLetra extends AtividadeBase {
+  tipo: 'letra';
+  /** Letra maiúscula; os dados (minúscula, palavra, figura) vêm de `alfabeto.ts`. */
+  letra: string;
+  /** Falas ditas em sequência depois do enunciado. */
+  falas: Fala[];
 }
 
 export interface AtividadeTracar extends AtividadeBase {
@@ -160,6 +184,7 @@ export type Atividade =
   | AtividadeDitado
   | AtividadeFalar
   | AtividadeEspelho
+  | AtividadeLetra
   | AtividadeTracar
   | AtividadePausa;
 
@@ -202,6 +227,12 @@ export interface Fase {
   habilidades: HabilidadeId[];
   cenas: Cena[];
   criterio: CriterioFase;
+  /** Fala curta dita na entrada da fase, no lugar de "título. objetivo." (letras: "Letra B."). */
+  falaEntrada?: Fala;
+  /** Missão curta (Trilha do Alfabeto): sem pausa ativa automática. */
+  curta?: boolean;
+  /** Trilha do Alfabeto: letra desta missão, ou 'revisao' / 'festa'. */
+  alfabeto?: { letra?: string; tipo: 'letra' | 'revisao' | 'festa' };
   /** Fala de abertura (C0) e de gancho (C9). */
   acolhida: Fala;
   gancho: Fala;
@@ -232,6 +263,8 @@ export interface Regiao {
   chefe: string;
   zumZumViraAmigo: string;
   ganchoProxima: string;
+  /** Etapa da jornada (D027): Alfabeto → Sílabas → Palavras → Meu nome → Frases. */
+  etapa: string;
 }
 
 /* ---------------------------- conquistas ---------------------------- */

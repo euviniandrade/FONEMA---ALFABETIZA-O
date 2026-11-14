@@ -1,7 +1,7 @@
 import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { useEffect, useMemo, useState } from 'react';
 import { CONQUISTA_POR_ID, FASE_POR_ID, FALAS, type Fase } from '@fonema/conteudo';
-import { calcularNivel, fasesConcluidas, infoNome, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
+import { calcularNivel, fasesConcluidas, missaoInicialFeita, infoNome, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Topo } from '../../componentes/basicos.tsx';
@@ -19,7 +19,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
   const { config } = useApp();
   const [passo, setPasso] = useState(0);
   const [moedasAnim, setMoedasAnim] = useState(0);
-  const nivel = useMemo(() => calcularNivel(progresso.desafios, progresso.fases['R0-F01']?.estado === 'concluida', fasesConcluidas(progresso)), [progresso]);
+  const nivel = useMemo(() => calcularNivel(progresso.desafios, missaoInicialFeita(progresso), fasesConcluidas(progresso)), [progresso]);
   const proxima = FASE_POR_ID[progresso.faseAtual];
   const letra = infoNome(crianca.nome, crianca.pronuncia.grafia).letras;
   const saldoAntes = progresso.moedinhas.saldo - relatorio.moedinhas;

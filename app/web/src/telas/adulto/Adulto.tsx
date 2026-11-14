@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CONFIG_PADRAO, CONQUISTA_POR_ID, FASE_POR_ID, type ConfigPlataforma } from '@fonema/conteudo';
-import { NIVEIS_INICIAIS, aplicarNivelInicial, avaliarConquistas, calcularNivel, fasesConcluidas, filaProfessor, mapaHabilidades, progressoInicial, resumoFamilia, type Crianca, type Demonstracao, type Evento, type NivelInicial, type Progresso, type StatusDemonstracao } from '@fonema/motor';
+import { NIVEIS_INICIAIS, aplicarNivelInicial, avaliarConquistas, calcularNivel, fasesConcluidas, missaoInicialFeita, filaProfessor, mapaHabilidades, progressoInicial, resumoFamilia, type Crianca, type Demonstracao, type Evento, type NivelInicial, type Progresso, type StatusDemonstracao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Ajustes, AvatarMini, Carregando, Topo } from '../../componentes/basicos.tsx';
@@ -41,7 +41,7 @@ export function Porteira({ children }: { children: ReactNode }) {
 }
 
 /* ------------------------------ entrada (splash) ------------------------------ */
-const nivelDe = (p?: Progresso) => (p ? calcularNivel(p.desafios, p.fases['R0-F01']?.estado === 'concluida', fasesConcluidas(p)) : null);
+const nivelDe = (p?: Progresso) => (p ? calcularNivel(p.desafios, missaoInicialFeita(p), fasesConcluidas(p)) : null);
 
 export function Inicio() {
   const { repo, pronto, prefs } = useApp();

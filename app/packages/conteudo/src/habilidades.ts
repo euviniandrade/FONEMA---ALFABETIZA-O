@@ -3,8 +3,15 @@
  * Base: jogo-completo/02 (tabelas "Como a aprendizagem é medida").
  */
 import type { Habilidade } from './tipos.ts';
+import { ALFABETO, habilidadeLetra } from './alfabeto.ts';
 
 export const HABILIDADES: Habilidade[] = [
+  // AL · Trilha do Alfabeto (D027): uma habilidade por letra (letra ↔ som principal)
+  ...ALFABETO.map((l): Habilidade => ({
+    id: habilidadeLetra(l.letra), regiao: 'AL', exigePseudo: false,
+    nome: l.ipa && l.tipo !== 'nomes' ? `Letra ${l.letra} ↔ som ${l.ipa}` : `Letra ${l.letra}`,
+    paraFamilia: l.tipo === 'muda' ? `conhece a letra ${l.letra} (que não faz som sozinha)` : `conhece a letra ${l.letra} e o som dela, como em "${l.palavra}"`
+  })),
   // R0 · consciência fonológica oral
   { id: 'nome-silabas', regiao: 'R0', nome: 'Palmas no próprio nome', paraFamilia: 'bate as palmas das sílabas do próprio nome', exigePseudo: false },
   { id: 'som-do-nome', regiao: 'R0', nome: 'Primeiro som do nome', paraFamilia: 'sabe o primeiro som do próprio nome', exigePseudo: false },

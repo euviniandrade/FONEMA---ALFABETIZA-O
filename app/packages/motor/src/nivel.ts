@@ -4,10 +4,10 @@
  * Títulos só mudam ao passar um PORTÃO de domínio (chefe de região).
  */
 
-import { FASE_POR_ID } from '@fonema/conteudo';
+import { FASES } from '@fonema/conteudo';
 
 /** Os desafios da primeira missão levam ao nível 1 (o nível 2 pede 2 desafios DEPOIS dela). */
-export const DESAFIOS_NIVEL_1 = FASE_POR_ID['R0-F01'].cenas.filter((c) => c.atividade).length;
+export const DESAFIOS_NIVEL_1 = FASES[0].cenas.filter((c) => c.atividade).length;
 
 export const TITULOS = [
   { nome: 'Primeiros Sons', inicio: 1, sub: [1, 4, 6] },
@@ -21,7 +21,7 @@ export const TITULOS = [
 
 /** Portões: para CHEGAR ao nível N é preciso ter vencido este chefe. */
 export const PORTOES: Record<number, { fase: string; nome: string }> = {
-  7: { fase: 'R0-F06', nome: 'Festa das Rimas' },
+  7: { fase: 'AL-FESTA', nome: 'Festa do Alfabeto' },
   16: { fase: 'R2a-F05', nome: 'Cachoeira das Sílabas' },
   25: { fase: 'R3-F10', nome: 'Ventania que Embaralha' },
   34: { fase: 'R6-F08', nome: 'Feira do Cordel' },

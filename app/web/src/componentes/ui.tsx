@@ -21,6 +21,7 @@ const TRACO: Record<string, ReactNode> = {
   apagar: <><path d="M9 6h11v12H9l-5-6z" /><path d="M12.5 10l4 4m0-4l-4 4" /></>,
   microfone: <><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor" /><path d="M6 11a6 6 0 0 0 12 0M12 17v4" /></>,
   dica: <><path d="M12 3a6 6 0 0 0-3.5 10.9V15h7v-1.1A6 6 0 0 0 12 3z" /><path d="M9.5 18.5h5M10.5 21h3" /></>,
+  trofeu: <><path d="M7 4h10v5a5 5 0 0 1-10 0z" fill="currentColor" /><path d="M7 6H4v1.5A3.5 3.5 0 0 0 7.5 11M17 6h3v1.5a3.5 3.5 0 0 1-3.5 3.5M12 14v4M8 20.5h8" /></>,
   estrela: <path d="M12 2.8l2.8 5.8 6.4.9-4.6 4.5 1.1 6.3L12 17.3 6.3 20.3l1.1-6.3L2.8 9.5l6.4-.9z" fill="currentColor" />,
   alvo: <><circle cx="12" cy="12" r="8.5" /><circle cx="12" cy="12" r="4.5" /><circle cx="12" cy="12" r="1" fill="currentColor" /></>,
   raio: <path d="M13 2.5L4.5 13.5H11l-1 8 8.5-11H12z" fill="currentColor" />,
@@ -57,7 +58,7 @@ export function Icone({ nome, tam, className = '' }: { nome: string; tam?: numbe
 
 /* ------------------------------------------------------------------ figuras 3D das atividades */
 const semAcento = (t: string) => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z ]/g, '').trim();
-const TEM = new Set('abacaxi abelha alto-falante aviao banana bola boneca caneca caranguejo casa chave cola concha copo dado elefante escada estrela faca fala feijao fila foca fofo fogo folha formiga garrafa gato ginga iglu ilha ioio janela joinha lama leao lua lula lupa macaco mala mamae mao mel mesa mofo mola moto muda mula navio ovelha ovo pandeiro panela pao papai papel pare pato pe peixe peteca pipoca rato rua sacola sapato sapo sol suco tatu urso uva vaca vela vovo-f vovo-m zebra'.split(' '));
+const TEM = new Set('abacaxi abelha alto-falante aviao banana bola boneca caneca caranguejo casa chave cola concha copo dado elefante escada estrela faca fala feijao fila foca fofo fogo folha formiga garrafa gato ginga helicoptero hipopotamo iglu ilha ioio janela joinha kiwi lama leao lua lula lupa macaco mala mamae mao mel mesa mofo mola moto muda mula navio ovelha ovo pandeiro panela pao papai papel pare pato pe peixe peteca pipoca queijo rato rua sacola sapato sapo sol suco tatu urso uva vaca vela vovo-f vovo-m waffle xicara xilofone yakisoba zebra'.split(' '));
 const POR_PALAVRA: Record<string, string> = { 'vovó': 'vovo-f', 'vovô': 'vovo-m', bolota: 'tatu', esquiva: 'ginga', sim: 'joinha', nao: 'pare', 'não': 'pare', 'copo plastico': 'copo' };
 const POR_EMOJI: Record<string, string> = {
   '🐱': 'gato', '🦆': 'pato', '✋': 'mao', '🍞': 'pao', '⚽': 'bola', '🧴': 'cola', '🏠': 'casa', '🏡': 'casa', '🪑': 'mesa', '🐸': 'sapo', '🌙': 'lua', '🛣': 'rua', '🪟': 'janela',
