@@ -66,7 +66,7 @@ export function Entrada() {
               <Icone nome="seta" className="porta-seta" />
             </button>
             <button className="porta porta-professor" onClick={() => navegar('professor')} data-testid="entrar-professor">
-              <span className="porta-arte"><img src={asset('recompensas/bau-livros.webp')} alt="" /></span>
+              <span className="porta-arte"><img src={asset('arte/icones/album.webp')} alt="" /></span>
               <span className="porta-texto"><b>Sou professor(a)</b><small>Área do Professor</small></span>
               <Icone nome="seta" className="porta-seta" />
             </button>
@@ -227,7 +227,7 @@ export function CriarConta({ tipoFixo, aoCriar, voltar = '', aviso }: { tipoFixo
                   <b>Pai, mãe ou responsável</b>
                 </button>
                 <button type="button" className="tipo" aria-pressed={tipo === 'professor'} onClick={() => setTipo('professor')} data-tipo="professor">
-                  <img src={asset('recompensas/bau-livros.webp')} alt="" />
+                  <img src={asset('arte/icones/album.webp')} alt="" />
                   <b>Professor(a)</b>
                 </button>
               </div>
@@ -305,7 +305,7 @@ export function TelaPin({ contas, tipo, aoEntrar, titulo, sub, voltar = '' }: { 
   const mudar = (v: string) => { setPin(v); setMsg(''); if (v.length === 4) void tentar(v); };
   const novoOk = pinValido(novo) && novo === novo2;
 
-  const arte = tipo === 'professor' ? <img src={asset('recompensas/bau-livros.webp')} alt="" /> : tipo === 'responsavel' ? <span className="porta-par"><img src={asset('figuras/mamae.webp')} alt="" /><img src={asset('figuras/papai.webp')} alt="" /></span> : <img src={asset('arte/icones/cadeado.webp')} alt="" />;
+  const arte = tipo === 'professor' ? <img src={asset('arte/icones/album.webp')} alt="" /> : tipo === 'responsavel' ? <span className="porta-par"><img src={asset('figuras/mamae.webp')} alt="" /><img src={asset('figuras/papai.webp')} alt="" /></span> : <img src={asset('arte/icones/cadeado.webp')} alt="" />;
   return (
     <div className="tela-fluxo tela-pin" data-testid="tela-pin">
       <Fundo cena="arte/hero-paisagem" desfoque={16} tom="escuro" />
