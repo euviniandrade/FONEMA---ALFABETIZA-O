@@ -51,7 +51,7 @@ npm run verificar    # lint + typecheck + testes + build
 
 **Publicar:** `web/dist/` é um site estático com caminhos relativos (`base: './'`) e rotas por hash (`#/c/...`), então funciona em qualquer subcaminho (GitHub Pages, S3, Netlify, pendrive com servidor local). O service worker também usa caminhos relativos.
 
-**Primeiro uso:** "Começar a aventura" → portão "Área para adultos" (segurar o botão por 3 segundos, sem conta) → cadastro em 5 passos (nome · como falar · gênero · de onde começa · autorização) → "Entregar para [nome]". Para testar todas as fases depressa, ligue **Configurações → Modo demonstração** (o domínio passa a valer com 1 sessão).
+**Primeiro uso (D028):** a primeira página é "Quem vai entrar?" (Sou aluno(a) · Sou pai, mãe ou responsável · Sou professor(a) · Primeira vez aqui). "Primeira vez aqui" → conta do adulto (nome, tipo, PIN de 4 números; fica só neste aparelho, `web/src/servicos/conta.ts`) → cadastro da criança em 3 passos (quem vai aprender · de onde começa · tudo certo) → "Entregar para [nome]". Depois, a criança entra pelo cartão dela; a Área da Família (`#/familia`) e a Área do Professor (`#/professor`) pedem o PIN. Para testar todas as fases depressa, ligue **Configurações → Modo demonstração** (o domínio passa a valer com 1 sessão).
 
 ## O que está pronto
 
