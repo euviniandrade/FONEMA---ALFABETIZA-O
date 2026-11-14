@@ -23,3 +23,9 @@ Data: 2026-11-14. Origem: o dono testou o site publicado e enviou correções.
 
 ## 5. Vozes
 - Na fala dos personagens, **só as vozes da Sofia e do Tales**. Nenhuma voz diferente (acabam as variações de tom/ritmo usadas para Bolota, Dona Cida etc.).
+
+## 6. Selos, prêmios e cofrinho (acréscimo do mesmo dia)
+- Os selos planos do aplicativo estão **errados**: valem os selos **3D aprovados** (docs/propostas/06-fonema-unificada/recompensas-3d).
+- **Todo prêmio é 360°**: selo, medalha, troféu, moeda, baú e cofrinho giram e podem ser vistos de vários ângulos.
+- O cofrinho deixa de ser o tatu e passa a ser um **porquinho de cofrinho** clássico, bonito e convidativo.
+- O boneco e os prêmios devem vir de **modelos 3D de plataforma/artista**, não de desenho feito em código (o código só monta, gira e ilumina).
