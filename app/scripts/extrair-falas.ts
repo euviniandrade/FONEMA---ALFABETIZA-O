@@ -6,7 +6,7 @@
  * Uso: npx tsx scripts/extrair-falas.ts
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { NOMES_COMUNS, FASES, FALAS, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
+import { NOMES_COMUNS, FASES, FALAS, FALAS_ALFABETO, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
 import { concordar, silabas } from '@fonema/motor';
 
 const VOZ: Record<string, 'sofia' | 'tales'> = { sofia: 'sofia', tales: 'tales', bolota: 'tales', davi: 'tales', 'dona-cida': 'sofia', pescadora: 'sofia', 'guarda-parque': 'tales', 'zum-zum': 'tales' };
@@ -24,18 +24,21 @@ const addF = (f: Fala | undefined, origem: string) => f && add(f.quem, f.texto, 
 
 for (const f of FASES) {
   addF(f.acolhida, f.id); addF(f.gancho, f.id);
-  add('sofia', `${f.titulo}. ${f.objetivo}.`, f.id);
+  // entrada da fase: fala curta própria (Trilha do Alfabeto: "Letra B.") ou "título. objetivo."
+  if (f.falaEntrada) addF(f.falaEntrada, f.id); else add('sofia', `${f.titulo}. ${f.objetivo}.`, f.id);
   if (f.uau) add('tales', f.uau, f.id);
   for (const c of f.cenas) {
     c.assiste?.roteiro.forEach((r) => addF(r, c.id));
     const a = c.atividade;
     if (!a) continue;
     addF(a.enunciado, c.id); addF(a.comemora, c.id);
-    if (a.tipo === 'escolher') a.itens.forEach((i) => { add(a.enunciado.quem, i.ouvir, c.id); add('sofia', i.dica, c.id); i.opcoes.forEach((o) => add('sofia', o.falar, c.id)); });
+    if (a.tipo === 'escolher') a.itens.forEach((i) => { add(i.quem ?? a.enunciado.quem, i.ouvir, c.id); add(i.quemDica ?? 'sofia', i.dica, c.id); i.opcoes.forEach((o) => add('sofia', o.falar, c.id)); });
     if (a.tipo === 'palmas') a.palavras.forEach((w) => { if (!w.startsWith('$')) { add('tales', w, c.id); silabas(w).forEach((s) => add('sofia', s, c.id)); } });
     if (a.tipo === 'montar') a.palavras.forEach((w) => !w.startsWith('$') && add('sofia', w.toLowerCase(), c.id));
     if (a.tipo === 'ditado') a.palavras.forEach((w) => add('sofia', w.toLowerCase(), c.id));
     if (a.tipo === 'falar') a.itens.forEach((i) => add('sofia', i.falar, c.id));
+    if (a.tipo === 'letra') a.falas.forEach((x) => addF(x, c.id));
+    if (a.tipo === 'espelho') { add(a.voz ?? 'sofia', a.falaSom, c.id); add(a.voz ?? 'sofia', a.falaAncora, c.id); if (a.voz) add(a.voz, 'Agora é a sua vez, [NOME]!', c.id); }
     if (a.tipo === 'pausa') a.sequencia.forEach((s) => add('tales', s.falar, c.id));
   }
   // dicas do cadeado: geradas só se sobrar orçamento (DICAS=1)
@@ -53,6 +56,7 @@ PALAVRAS_R2A.forEach((w) => add('sofia', w.texto.toLowerCase(), 'palavras'));
 void ITENS_LOJA;
 Object.values(SONS).forEach((x) => { add('sofia', x.esticado, 'sons'); add('tales', x.esticado, 'sons'); });
 ['A', 'E', 'I', 'O', 'U', 'M', 'L', 'F', 'S', 'V', 'N'].forEach((l) => add('sofia', l.toLowerCase().repeat(3), 'sons'));
+add('sofia', FALAS_ALFABETO.trilha, 'trilha do alfabeto');
 add('sofia', FALAS.conquista, 'ritual'); add('tales', FALAS.surpresa, 'ritual');
 
 const coletadas = 'web/e2e/falas-coletadas.json';

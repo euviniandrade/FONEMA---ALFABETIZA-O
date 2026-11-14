@@ -103,7 +103,7 @@ def alinhar(un, env):
             desp = fala * PESO[u] / soma
             dmin = 2 if u in 'ml-' else 3; dmax = int(max(dmin + 2, min(70, desp * 3 + 8)))
         novo = np.full(T + 1, INF); tt = np.arange(T + 1)
-        for d in range(dmin, dmax + 1):
+        for d in range(dmin, min(dmax, T) + 1):
             cand = np.full(T + 1, INF)
             if d == 0: cand = melhor.copy()
             else: cand[d:] = melhor[:T + 1 - d] + (pref[d:] - pref[:T + 1 - d])

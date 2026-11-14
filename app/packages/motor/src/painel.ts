@@ -42,7 +42,7 @@ export function resumoFamilia(c: Crianca, p: Progresso, eventos: Evento[], cfg: 
     .slice(0, 6)
     .map((g) => CONQUISTA_POR_ID[g.id]?.nome ?? g.id);
   const msg =
-    p.sessoesFeitas <= 1
+    p.sessoesFeitas <= 1 && missaoInicialFeita(p)
       ? renderFala(FALAS.familia.primeiroDia, { ...ctx, extras: { LETRA: ALFABETO[0].letra, PALAVRA: ALFABETO[0].palavra, MISSAO: FASES[0].emCasa } })
       : renderFala(
           `Oi! Resumo da semana de [NOME] no FONEMA: ${semana.filter((e) => e.tipo === 'atividade').length} atividades. ` +
