@@ -1,6 +1,6 @@
 // FONEMA · teste E2E (Playwright + Chromium do ambiente, sem `playwright install`).
 // D027: a jornada começa pela TRILHA DO ALFABETO.
-// Percorre: cadastro do adulto → avatar → chegada → letra A completa (apresentação, Espelho do Som, ache a letra,
+// Percorre (D028): primeira vez → conta do responsável com PIN → cadastro da criança em 3 passos → avatar → chegada → letra A completa (apresentação, Espelho do Som, ache a letra,
 // ache a figura, traçar) → selo da letra A no ritual → Mostra pro professor → professor (1 toque) → painel da família
 // → lojinha → álbum → letra B liberada (C ainda trancada) → letras B–E → revisão A–E → letra F liberada
 // → jornada inteira (modo demonstração) → nível inicial: "já conhece as letras e os sons" pula para as sílabas.
@@ -62,32 +62,48 @@ async function capA(page, nome, espera = 450) {
   await page.screenshot({ path: `${DIR_CAP}/alfabeto-${nome}.png` });
 }
 
-/** Portão do adulto (sem cálculo): segurar o botão até o anel completar. */
-async function passarPorteira(page) {
-  const botao = page.getByTestId('segurar-adulto');
-  await Promise.race([botao.waitFor({ timeout: 2500 }).catch(() => {}), page.waitForTimeout(600)]);
-  if (!(await botao.count())) return;
-  await botao.dispatchEvent('pointerdown', { pointerId: 1, isPrimary: true });
-  await page.getByTestId('portao-adulto').waitFor({ state: 'detached', timeout: 5000 });
+/**
+ * Acesso do adulto (D028): na primeira vez cria a conta (nome + PIN 1234); depois, digita o PIN.
+ * Serve para qualquer rota de adulto (#/familia, #/professor e as antigas #/adulto/...).
+ */
+async function passarPorteira(page, { nome = 'Ana', pin = '1234' } = {}) {
+  for (let i = 0; i < 4; i++) {
+    const criar = page.getByTestId('conta-nome');
+    const campoPin = page.getByTestId('pin');
+    await Promise.race([criar.waitFor({ timeout: 1500 }).catch(() => {}), campoPin.waitFor({ timeout: 1500 }).catch(() => {}), page.waitForTimeout(700)]);
+    if (await criar.count()) {
+      await criar.fill(nome);
+      await page.getByTestId('conta-continuar').click();
+      await page.getByTestId('conta-pin').fill(pin);
+      await page.getByTestId('conta-pin2').fill(pin);
+      await page.getByTestId('conta-criar').click();
+      await page.getByTestId('criar-conta').waitFor({ state: 'detached', timeout: 8000 });
+      continue;
+    }
+    if (await campoPin.count()) {
+      await campoPin.fill(pin);
+      await page.getByTestId('tela-pin').waitFor({ state: 'detached', timeout: 8000 });
+      continue;
+    }
+    return;
+  }
 }
 
-/** Cadastro em passos: nome → como falar → gênero → de onde começa → autorização. */
-async function cadastrar(page, nome, genero, { previa, capturas = false, nivel } = {}) {
+/** Cadastro da criança em 3 passos: quem vai aprender (nome, idade, como a dupla fala) → de onde começa → tudo certo (autorização). */
+async function cadastrar(page, nome, genero, { previa, capturas = false, nivel, idade = 5 } = {}) {
+  await passarPorteira(page);
   await page.getByTestId('campo-nome').fill(nome);
-  if (capturas) await cap(page, 'cadastro-1-nome');
-  await page.getByTestId('cadastro-continuar').click();
-  if (capturas) { await page.locator('[data-pronuncia="1-sofia"]').click(); await cap(page, 'cadastro-2-como-falar'); }
-  await page.getByTestId('nome-continuar').click();
+  await page.locator(`[data-idade="${idade}"]`).click();
   await page.locator(`[data-genero="${genero}"]`).click();
   if (previa) ok((await page.locator('.previa').innerText()).includes(previa), `prévia da concordância: "${previa}"`);
-  if (capturas) await cap(page, 'cadastro-3-genero');
-  await page.getByTestId('genero-continuar').click();
+  if (capturas) await cap(page, 'cadastro-1-quem-vai-aprender');
+  await page.getByTestId('cadastro-continuar').click();
   ok(await page.locator('[data-nivel="zero"][aria-pressed="true"]').count() === 1, '"Do zero" vem pré-selecionado como nível inicial (D026)');
   if (nivel) await page.locator(`[data-nivel="${nivel}"]`).click();
-  if (capturas) await cap(page, 'cadastro-4-de-onde-comeca');
+  if (capturas) await cap(page, 'cadastro-2-de-onde-comeca');
   await page.getByTestId('nivel-continuar').click();
   await page.getByTestId('cons-responsavel').check();
-  if (capturas) await cap(page, 'cadastro-5-autorizacao');
+  if (capturas) await cap(page, 'cadastro-3-tudo-certo');
   await page.getByTestId('salvar-crianca').click();
   if (capturas) await cap(page, 'cadastro-entrega');
   await page.getByTestId('entregar').click();
@@ -207,14 +223,27 @@ async function main() {
 
   console.log('1. Cadastro pelo adulto');
   await page.goto(BASE);
-  await page.getByTestId('jogar').waitFor();
-  if (CAPTURAS) await page.waitForTimeout(2200); // a entrada tem animação (logo cai, botão sobe)
+  await page.getByTestId('primeira-vez').waitFor();
+  if (CAPTURAS) await page.waitForTimeout(2200); // a entrada tem animação (logo cai, painel sobe)
   await cap(page, 'entrada');
-  await page.getByTestId('jogar').click();
-  await page.getByTestId('segurar-adulto').waitFor();
-  ok(!(await page.getByTestId('conta').count()) && !/[×x]\s*\d/.test(await page.getByTestId('portao-adulto').innerText()), 'portão do adulto sem conta de matemática (segurar por 3 segundos)');
-  await cap(page, 'portao-adulto');
+  ok(await page.locator('.porta').count() === 4, 'a primeira página é "Quem vai entrar?" com os 4 caminhos (D028)');
+  await page.getByTestId('entrar-aluno').click();
+  await page.getByTestId('alunos-vazio').waitFor();
+  ok(true, 'sem criança cadastrada, "Sou aluno(a)" explica que um adulto cadastra primeiro');
+  await page.getByTestId('ir-primeira-vez').click();
+  await page.getByTestId('conta-nome').waitFor();
+  await cap(page, 'primeira-vez-conta-do-adulto');
   await passarPorteira(page);
+  await page.getByTestId('campo-nome').waitFor();
+  ok(/familia\/cadastro/.test(page.url()), 'primeira vez: conta do responsável com PIN → cadastro da criança');
+  // configurações: o painel abre por cima de tudo e fecha com Esc
+  await page.getByTestId('abrir-ajustes').click();
+  await page.getByTestId('ajustes-painel').waitFor();
+  ok(await page.evaluate(() => { const c = document.querySelector('.camada-caixa').getBoundingClientRect(); const el = document.elementFromPoint(c.left + c.width / 2, c.top + c.height / 2); return !!el && !!el.closest('.camada-caixa') && document.querySelector('.camada').parentElement === document.body; }), 'configurações abrem por cima do cadastro (camada no body)');
+  await cap(page, 'configuracoes-sobre-o-cadastro');
+  await page.keyboard.press('Escape');
+  await page.getByTestId('ajustes-painel').waitFor({ state: 'detached' });
+  ok(true, 'configurações fecham com a tecla Esc');
   await cadastrar(page, 'Mariana Souza', 'f', { previa: 'pronta, Mariana', capturas: true });
 
   console.log('2. Avatar e chegada');
@@ -278,7 +307,14 @@ async function main() {
   ok(true, 'professor marcou "Aprendeu!" em 1 toque');
 
   console.log('5. Painel da família');
-  await page.goto(BASE + '#/adulto');
+  await page.getByTestId('sair').click();
+  await page.getByTestId('entrar-familia').click();
+  await page.getByTestId('pin').waitFor();
+  await page.getByTestId('pin').fill('0000');
+  await page.getByText('PIN incorreto').waitFor();
+  ok(true, 'Área da Família pede o PIN e recusa o PIN errado');
+  await passarPorteira(page);
+  await page.getByTestId('area-familia').waitFor();
   await page.getByTestId('painel-Mariana').click();
   await page.getByTestId('painel-familia').waitFor();
   await page.getByText('Letra A').first().waitFor({ timeout: 5000 }).catch(() => {});
@@ -294,6 +330,8 @@ async function main() {
 
   console.log('6. Vila, recado do professor, lojinha e álbum');
   await page.goto(BASE + '#/');
+  await page.getByTestId('entrar-aluno').click();
+  ok(await page.getByTestId('jogar').getAttribute('data-perfil') === 'Mariana', 'o aluno entra pelo cartão dele, com "Continuar a aventura" em destaque');
   await page.locator('[data-perfil="Mariana"]').click();
   await page.locator('iframe.mundo3d, [data-testid="vila"]').first().waitFor();
   const id = page.url().split('/c/')[1].split('/')[0];
@@ -372,6 +410,7 @@ async function main() {
   await page.waitForTimeout(300);
   await cap(page, 'regiao-trilha-fases');
   await page.goto(BASE + '#/adulto/config');
+  await passarPorteira(page);
   await cap(page, 'configuracoes-padroes-mvp');
 
   const JORNADA = !process.argv.includes('--sem-jornada');
@@ -488,6 +527,55 @@ async function main() {
     await p3.goto(BASE + `#/c/${idk}/vila`);
     await p3.getByTestId('vila').waitFor();
     await capC(0, '16-vila-com-alfabeto');
+    await cel.close();
+  }
+
+  if (CAPTURAS_V2) {
+    const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR' });
+    await cel.addInitScript(() => localStorage.setItem('fonema-teste-rapido', '1'));
+    const p2 = await cel.newPage();
+    // o celular tem o próprio banco: cadastro rápido
+    await p2.goto(BASE + '#/adulto/cadastro');
+    await passarPorteira(p2);
+    await cadastrar(p2, 'Kauã', 'm');
+    const capCel = async (nome, espera = 400) => { await p2.waitForTimeout(espera); await p2.screenshot({ path: `${DIR_CAP}/v2-celular-${nome}.png`, fullPage: false }); };
+    await capCel('04-avatar');
+    await p2.getByTestId('avatar-pronto').click();
+    await p2.getByTestId('primeira-missao').waitFor();
+    await capCel('05-chegada');
+    const idc = p2.url().split('/c/')[1].split('/')[0];
+    await p2.getByTestId('primeira-missao').click();
+    await p2.getByTestId('comecar-sessao').waitFor();
+    await capCel('06-sessao-acolhida');
+    await jogarSessao(p2, { espelho: '09-espelho-do-som', escolher: '10-escolher', pausa: '10b-pausa', montar: '11-montar', tirarCom: (_, nome) => capCel(nome, 250) });
+    await p2.getByTestId('selo-novo').first().waitFor({ timeout: 15000 });
+    await capCel('12-ritual', 1500);
+    await p2.getByTestId('voltar-vila').click();
+    await p2.getByTestId('vila').waitFor();
+    await capCel('13-vila', 1200);
+    for (const [rota, nome] of [['album', '14-album'], ['lojinha', '15-lojinha'], ['mapa', '16-arquipelago'], ['regiao/R2a', '17-regiao'], ['fase/AL-B', '18-entrada-da-fase']]) {
+      await p2.goto(BASE + `#/c/${idc}/${rota}`);
+      await capCel(nome, 900);
+    }
+    await p2.goto(BASE + `#/adulto/familia/${idc}`);
+    await p2.getByTestId('painel-familia').waitFor();
+    await capCel('19-painel-familia', 700);
+    await p2.goto(BASE + '#/adulto');
+    await capCel('20-area-do-adulto', 700);
+    await p2.goto(BASE + '#/');
+    await p2.getByTestId('primeira-vez').waitFor();
+    await capCel('01-entrada', 2400);
+    await p2.evaluate(() => sessionStorage.clear());
+    await p2.getByTestId('entrar-familia').click();
+    await p2.getByTestId('pin').waitFor();
+    await capCel('02-pin-do-adulto', 600);
+    await passarPorteira(p2);
+    await p2.goto(BASE + '#/familia/cadastro');
+    await p2.getByTestId('campo-nome').fill('Bia');
+    await p2.locator('[data-idade="6"]').click();
+    await p2.locator('[data-genero="f"]').click();
+    await p2.getByTestId('cadastro-continuar').click();
+    await capCel('03-cadastro-de-onde-comeca', 500);
     await cel.close();
   }
 

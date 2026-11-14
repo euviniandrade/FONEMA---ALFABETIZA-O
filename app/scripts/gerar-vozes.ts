@@ -2,15 +2,19 @@
  * Gera os áudios OFICIAIS das falas e dos nomes com a API do ElevenLabs
  * (vozes "Sofia — FONEMA" e "Tales — FONEMA", escolhidas pelo dono).
  *
- * - Falas: packages/conteudo/src/falas.json → web/public/audio/falas/{voz}-{hash}.mp3 + manifesto.json
+ * - Falas: packages/conteudo/src/falas.json → audio-fontes/falas/{voz}-{hash}.mp3 + manifesto.json (bruto do TTS)
  *   (cada fala é dividida no [NOME]: o trecho antes e o depois viram clipes separados)
- * - Nomes: NOMES_COMUNS → web/public/audio/nomes/{voz}/{nome}.mp3 + manifesto.json
+ * - Nomes: NOMES_COMUNS → audio-fontes/nomes/{voz}/{nome}.mp3 + manifesto.json
  * - Nunca regenera o que já existe (cache em disco). Para quando atingir o orçamento.
+ * - Regravar um clipe com defeito: audio-fontes/ajustes.json (arquivo novo com sufixo -r<versão>; nada é apagado).
+ * - No fim roda ferramentas/masterizar-audio.py (→ web/public/audio) e pede a auditoria (ferramentas/auditar-audio.py).
+ *   --so-ajustes: gera só o que está em ajustes.json (não toca nas falas novas do conteúdo).
  *
  * A chave da API NÃO fica no repositório: neste ambiente ela é injetada pelo proxy.
  * Uso: npx tsx scripts/gerar-vozes.ts --orcamento 18000 [--simular]
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { NOMES_COMUNS, SONS } from '@fonema/conteudo';
 
 const VOZES = { sofia: 'nlRJzw7MAFZF6truVWij', tales: 'HUKUk1tOcZ0szNQgemif' } as const;
@@ -22,13 +26,13 @@ type Voz = keyof typeof VOZES;
 const MODELO: Record<Voz, string> = { sofia: 'eleven_multilingual_v2', tales: 'eleven_v3' };
 /** Sufixo de versão no nome do arquivo: muda quando o modelo da voz muda, para regerar sem apagar nada. */
 const VERSAO: Record<Voz, string> = { sofia: '', tales: '-v3' };
-const REFAZER_NOMES_TALES = process.argv.includes('--refazer-nomes-tales');
 const API = 'https://api.elevenlabs.io/v1';
 const CHAVE = process.env.ELEVENLABS_API_KEY ?? 'proxy-injected';
 const arg = (n: string, d?: string) => { const i = process.argv.indexOf(n); return i >= 0 ? process.argv[i + 1] : d; };
-const ORCAMENTO = Number(arg('--orcamento', '18000'));
+const ORCAMENTO = Number(arg('--orcamento', '2000'));
 const SIMULAR = process.argv.includes('--simular');
-const PUB = 'web/public/audio';
+/** Clipes BRUTOS do TTS (nunca apagados). Os que vão ao ar saem de ferramentas/masterizar-audio.py → web/public/audio. */
+const FONTES = 'audio-fontes';
 
 const chaveTrecho = (t: string) => t.replace(/^[\s,.!?;:…]+/, '').replace(/\s+/g, ' ').replace(/(\p{L})\1{2,}/giu, '$1$1$1$1').trim();
 
@@ -48,7 +52,7 @@ function paraTTS(k: string): { texto: string; lento: boolean } | null {
     const som = Object.values(SONS).find((x) => x.chave === low || x.letra.toLowerCase() === low);
     return antes + (som ? `${som.letra}, de ${som.palavras[0][0]}` : l.toUpperCase());
   });
-  t = t.replace(/\//g, '').replace(/\b\p{Lu}{2,}\b/gu, (w) => w.toLowerCase());
+  t = t.replace(/\//g, '').replace(/(?<!\p{L})\p{Lu}{2,}(?!\p{L})/gu, (w) => w.toLowerCase());
   const palavras = t.split(/\s+/).filter(Boolean);
   const lento = palavras.length <= 2;
   if (lento) t = t.charAt(0).toUpperCase() + t.slice(1).replace(/[.,!?…]?$/, (m) => m || '.');
@@ -84,48 +88,70 @@ async function tts(voz: Voz, texto: string, destino: string, lento = false) {
 
 const semAudio = new Set<string>();
 
+type Ajuste = { texto?: string; versao: number; lento?: boolean };
+/**
+ * Regravações (audio-fontes/ajustes.json): { falas: { "voz|chave": { texto?, versao } }, nomes: { "voz|nome": { texto?, versao } } }.
+ * Um ajuste gera um arquivo NOVO (sufixo -r<versao>), sem apagar o anterior, e o manifesto das fontes passa a apontar para ele.
+ * "texto" troca só o que vai para o TTS (pontuação/contexto para a fala não sair cortada); a chave continua a mesma.
+ */
+const AJUSTES: { falas: Record<string, Ajuste>; nomes: Record<string, Ajuste> } = existsSync(`${FONTES}/ajustes.json`) ? JSON.parse(readFileSync(`${FONTES}/ajustes.json`, 'utf8')) : { falas: {}, nomes: {} };
+const lerJson = <T,>(arq: string, padrao: T): T => (existsSync(arq) ? JSON.parse(readFileSync(arq, 'utf8')) : padrao);
+
+/** Texto enviado ao TTS para uma chave do manifesto (o registrado na geração, o do ajuste ou o calculado). */
+function textoDe(chave: string, registrados: Record<string, string>): string {
+  const k = chave.slice(chave.indexOf('|') + 1);
+  return registrados[chave] ?? AJUSTES.falas[chave]?.texto ?? paraTTS(k)?.texto ?? k;
+}
 /** --textos: imprime { "voz|chave": textoEnviadoAoTTS } para a auditoria (ferramentas/auditar-audio.py). Não gasta créditos. */
 function imprimirTextos() {
-  const man = JSON.parse(readFileSync(`${PUB}/falas/manifesto.json`, 'utf8')) as Record<string, string>;
-  const out: Record<string, string> = {};
-  for (const chave of Object.keys(man)) { const k = chave.slice(chave.indexOf('|') + 1); out[chave] = paraTTS(k)?.texto ?? k; }
-  console.log(JSON.stringify(out));
+  const man = lerJson<Record<string, string>>(`${FONTES}/falas/manifesto.json`, {});
+  const reg = lerJson<Record<string, string>>(`${FONTES}/falas/textos.json`, {});
+  console.log(JSON.stringify(Object.fromEntries(Object.keys(man).map((c) => [c, textoDe(c, reg)]))));
 }
 
 async function main() {
   if (process.argv.includes('--textos')) return imprimirTextos();
+  const SO_AJUSTES = process.argv.includes('--so-ajustes');
   const falas = JSON.parse(readFileSync('packages/conteudo/src/falas.json', 'utf8')) as { voz: Voz; texto: string }[];
-  mkdirSync(`${PUB}/falas`, { recursive: true });
-  const manFalasArq = `${PUB}/falas/manifesto.json`;
-  const manFalas: Record<string, string> = existsSync(manFalasArq) ? JSON.parse(readFileSync(manFalasArq, 'utf8')) : {};
+  mkdirSync(`${FONTES}/falas`, { recursive: true });
+  const manFalasArq = `${FONTES}/falas/manifesto.json`;
+  const manFalas = lerJson<Record<string, string>>(manFalasArq, {});
+  const textosArq = `${FONTES}/falas/textos.json`;
+  const textos = lerJson<Record<string, string>>(textosArq, {});
   const tarefas: { voz: Voz; texto: string; lento: boolean; destino: string; registrar: () => void }[] = [];
 
-  for (const f of falas) {
-    for (const parte of f.texto.split('[NOME]')) {
-      const k = chaveTrecho(parte);
-      if (!k) continue;
-      const chave = `${f.voz}|${k}`;
-      const arq = `${f.voz}-${hash(chave)}${VERSAO[f.voz]}.mp3`;
-      const refazer = process.argv.includes('--refazer-maiusculas') && /\b\p{Lu}{2,3}\b/u.test(k);
-      if (!refazer && existsSync(`${PUB}/falas/${arq}`)) { manFalas[chave] = arq; continue; }
-      if (tarefas.some((t) => t.destino.endsWith(arq))) continue;
-      const tts = paraTTS(k);
-      if (!tts) { semAudio.add(k); continue; }
-      tarefas.push({ voz: f.voz, ...tts, destino: `${PUB}/falas/${arq}`, registrar: () => (manFalas[chave] = arq) });
-    }
+  const chaves = new Set<string>(Object.keys(AJUSTES.falas));
+  if (!SO_AJUSTES) for (const f of falas) for (const parte of f.texto.split('[NOME]')) { const k = chaveTrecho(parte); if (k) chaves.add(`${f.voz}|${k}`); }
+  for (const chave of chaves) {
+    const voz = chave.slice(0, chave.indexOf('|')) as Voz;
+    const k = chave.slice(chave.indexOf('|') + 1);
+    const aj = AJUSTES.falas[chave];
+    const arq = `${voz}-${hash(chave)}${VERSAO[voz]}${aj ? `-r${aj.versao}` : ''}.mp3`;
+    if (existsSync(`${FONTES}/falas/${arq}`)) { manFalas[chave] = arq; continue; }
+    const tts = aj?.texto ? { texto: aj.texto, lento: aj.lento ?? aj.texto.split(/\s+/).length <= 2 } : paraTTS(k);
+    if (!tts) { semAudio.add(k); continue; }
+    tarefas.push({ voz, ...tts, destino: `${FONTES}/falas/${arq}`, registrar: () => { manFalas[chave] = arq; textos[chave] = tts.texto; } });
   }
-  const manNomesArq = `${PUB}/nomes/manifesto.json`;
-  const manNomes: Record<Voz, string[]> = existsSync(manNomesArq) ? JSON.parse(readFileSync(manNomesArq, 'utf8')) : { sofia: [], tales: [] };
+  const manNomesArq = `${FONTES}/nomes/manifesto.json`;
+  const manNomes = lerJson<Record<Voz, Record<string, string>>>(manNomesArq, { sofia: {}, tales: {} });
   for (const voz of Object.keys(VOZES) as Voz[]) {
-    mkdirSync(`${PUB}/nomes/${voz}`, { recursive: true });
+    mkdirSync(`${FONTES}/nomes/${voz}`, { recursive: true });
     for (const nome of NOMES_COMUNS) {
       const k = chaveNome(nome);
-      const destino = `${PUB}/nomes/${voz}/${k}.mp3`;
-      const registrar = () => { if (!manNomes[voz].includes(k)) manNomes[voz].push(k); };
-      if (existsSync(destino) && !(REFAZER_NOMES_TALES && voz === 'tales')) { registrar(); continue; }
-      tarefas.push({ voz, texto: `${nome}.`, lento: true, destino, registrar });
+      const aj = AJUSTES.nomes[`${voz}|${k}`];
+      if (SO_AJUSTES && !aj) continue;
+      const arq = `${k}${aj ? `-r${aj.versao}` : ''}.mp3`;
+      const destino = `${FONTES}/nomes/${voz}/${arq}`;
+      const registrar = () => { manNomes[voz][k] = arq; };
+      if (existsSync(destino)) { registrar(); continue; }
+      tarefas.push({ voz, texto: aj?.texto ?? `${nome}.`, lento: true, destino, registrar });
     }
   }
+  const gravar = () => {
+    writeFileSync(manFalasArq, JSON.stringify(manFalas, null, 1));
+    writeFileSync(textosArq, JSON.stringify(textos, null, 1));
+    writeFileSync(manNomesArq, JSON.stringify(manNomes, null, 1));
+  };
   if (semAudio.size) console.log(`sem áudio (sequências de sons para a fonoaudióloga): ${[...semAudio].join(' | ')}`);
   const total = tarefas.reduce((s, t) => s + t.texto.length, 0);
   const antes = await creditos();
@@ -144,20 +170,18 @@ async function main() {
       gastos += t.texto.length;
       await tts(t.voz, t.texto, t.destino, t.lento);
       t.registrar();
-      if (++feitos % 25 === 0) {
-        console.log(`  ${feitos}/${tarefas.length} (${gastos} caracteres)`);
-        writeFileSync(manFalasArq, JSON.stringify(manFalas, null, 1));
-        writeFileSync(manNomesArq, JSON.stringify(manNomes, null, 1));
-      }
+      if (++feitos % 25 === 0) { console.log(`  ${feitos}/${tarefas.length} (${gastos} caracteres)`); gravar(); }
     }
   }
   try {
     await Promise.all([trabalhador(), trabalhador(), trabalhador()]);
   } finally {
-    writeFileSync(manFalasArq, JSON.stringify(manFalas, null, 1));
-    writeFileSync(manNomesArq, JSON.stringify(manNomes, null, 1));
+    gravar();
     const depois = await creditos();
     console.log(`gerados ${feitos} clipes (${gastos} caracteres enviados) · créditos usados depois: ${depois.usados} (gasto real: ${depois.usados - antes.usados})`);
+    // os clipes brutos nunca vão ao ar direto: masterização (fade, silêncio nas pontas, volume) e depois a AUDITORIA
+    execFileSync('python3', ['ferramentas/masterizar-audio.py'], { stdio: 'inherit' });
+    console.log('agora rode a auditoria: python3 ferramentas/auditar-audio.py  (nenhum áudio vai ao ar sem ela)');
   }
 }
 

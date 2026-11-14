@@ -7,7 +7,7 @@ import { chaveNome, chaveTrecho } from './voz.ts';
 
 const PUB = resolve(__dirname, '../../public/audio');
 const man = JSON.parse(readFileSync(`${PUB}/falas/manifesto.json`, 'utf8')) as Record<string, string>;
-const nomes = JSON.parse(readFileSync(`${PUB}/nomes/manifesto.json`, 'utf8')) as Record<string, string[]>;
+const nomes = JSON.parse(readFileSync(`${PUB}/nomes/manifesto.json`, 'utf8')) as Record<string, string[]> & { arquivos: Record<string, Record<string, string>> };
 const seqSons = (k: string) => { const ts = k.split(/[\s…,.!?-]+/).filter(Boolean); return ts.length > 1 && ts.every((t) => /^(\p{L})\1{2,}$/iu.test(t)); };
 
 describe('vozes oficiais pré-geradas (ElevenLabs)', () => {
@@ -27,7 +27,7 @@ describe('vozes oficiais pré-geradas (ElevenLabs)', () => {
     for (const voz of ['sofia', 'tales']) {
       for (const n of NOMES_COMUNS) {
         expect(nomes[voz], `${voz}/${n}`).toContain(chaveNome(n));
-        expect(existsSync(`${PUB}/nomes/${voz}/${chaveNome(n)}.mp3`)).toBe(true);
+        expect(existsSync(`${PUB}/nomes/${voz}/${nomes.arquivos[voz][chaveNome(n)]}`), `${voz}/${n} masterizado`).toBe(true);
       }
     }
   });

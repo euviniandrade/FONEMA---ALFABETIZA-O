@@ -125,6 +125,15 @@ function carregar(url: string): Promise<HTMLAudioElement> {
   });
 }
 
+/**
+ * Aviso para quem anima os personagens (boca falando): no começo de CADA clipe sai o evento de janela
+ * 'fonema:fala' { quem, voz, texto, audio (HTMLAudioElement), arquivo ("audio/falas/x.mp3"), inicio (performance.now()),
+ * trecho, trechos } e, quando a fala inteira acaba ou é interrompida, 'fonema:fala-fim' { quem }.
+ */
+function avisar(tipo: 'fonema:fala' | 'fonema:fala-fim', detail: Record<string, unknown>) {
+  try { window.dispatchEvent(new CustomEvent(tipo, { detail })); } catch { /* sem janela (teste) */ }
+}
+
 /** Fala em andamento menor que isto é deixada terminar (nunca cortar uma sílaba, um som ou o fim de uma frase). */
 const DEIXA_TERMINAR_S = 1.0;
 /** Ao interromper uma fala longa, o volume desce nesse tempo (sem estalo). */
@@ -158,7 +167,7 @@ export class ProvedorPreGerado implements ProvedorVoz {
     this.pronto = Promise.all([
       fetch('./audio/falas/manifesto.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
       fetch('./audio/nomes/manifesto.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({}))
-    ]).then(([f, n]) => { this.falas = f; this.nomes = { sofia: n.sofia ?? [], tales: n.tales ?? [] }; this.arqNomes = n.arquivos ?? {}; });
+    ]).then(([f, n]: any[]) => { this.falas = f; this.nomes = { sofia: n.sofia ?? [], tales: n.tales ?? [] }; this.arqNomes = n.arquivos ?? {}; });
   }
   /** Caminho do clipe do nome (o manifesto diz o arquivo; sem ele, <nome>.mp3). */
   arquivoDoNome(voz: 'sofia' | 'tales', nome: string): string {
@@ -222,9 +231,11 @@ export class ProvedorPreGerado implements ProvedorVoz {
       this.cauda = fim;
       el.playbackRate = rate;
       (el as any).preservesPitch = rate === 1;
+      avisar('fonema:fala', { quem, voz: (VOZ_DO_PERSONAGEM[quem] ?? VOZ_DO_PERSONAGEM.sofia).voz, texto, audio: el, arquivo: plano[i].arquivo.replace(/^\.\//, ''), inicio: performance.now(), trecho: i, trechos: els.length });
       el.play().catch(() => el.onerror?.(new Event('error')));
       await fim;
       if (this.atual === el) this.atual = null;
+      if (g !== this.geracao || i === els.length - 1) avisar('fonema:fala-fim', { quem });
       if (plano[i].pausaMs && g === this.geracao) await new Promise((r) => setTimeout(r, plano[i].pausaMs));
     }
   }
@@ -257,9 +268,12 @@ export class ProvedorPreGerado implements ProvedorVoz {
     const fim = new Promise<void>((resolve) => { el.onended = () => resolve(); el.onerror = () => resolve(); el.onpause = () => { if (!el.ended) resolve(); }; });
     this.atual = el;
     this.cauda = fim;
+    const quem = /nomes\/(sofia|tales)\//.exec(caminho)?.[1] ?? 'sofia';
+    avisar('fonema:fala', { quem, voz: quem, texto: '', audio: el, arquivo: caminho.replace(/^\.\//, ''), inicio: performance.now(), trecho: 0, trechos: 1 });
     el.play().catch(() => el.onerror?.(new Event('error')));
     await fim;
     if (this.atual === el) this.atual = null;
+    avisar('fonema:fala-fim', { quem });
   }
 }
 

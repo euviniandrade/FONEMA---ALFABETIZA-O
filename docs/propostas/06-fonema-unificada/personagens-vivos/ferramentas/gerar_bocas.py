@@ -3,7 +3,7 @@
 Pré-calcula a BOCA de cada clipe de voz oficial (lip-sync offline).
 
 Para cada mp3 do manifesto (app/web/public/audio/falas/manifesto.json: "voz|texto" -> arquivo) e cada nome gravado
-(audio/nomes/<voz>/<nome>.mp3):
+(audio/nomes/<voz>/<arquivo do manifesto>):
   1. TEXTO -> sequência de visemas pelas regras do português do Brasil (dígrafos, "qu/gu", o/e finais reduzidos,
      m/n nasais no fim da sílaba...). Visemas = posições do Espelho do Som (D020):
         .  descanso (boca fechada)      m  M/P/B (lábios juntos)        a  A aberta
@@ -160,8 +160,9 @@ if __name__ == '__main__':
         texto = chave.split('|', 1)[1]
         juntar(f'falas/{arq}', f'{PUB}/audio/falas/{arq}', texto, texto)
     nomes = json.load(open(f'{PUB}/audio/nomes/manifesto.json'))
-    for voz, lista in nomes.items():
-        for nome in lista:
-            juntar(f'nomes/{voz}/{nome}.mp3', f'{PUB}/audio/nomes/{voz}/{nome}.mp3', nome, '')
+    for voz in ('sofia', 'tales'):
+        for nome in nomes.get(voz, []):
+            arq = nomes.get('arquivos', {}).get(voz, {}).get(nome, f'{nome}.mp3')   # o manifesto diz o arquivo de cada nome
+            juntar(f'nomes/{voz}/{arq}', f'{PUB}/audio/nomes/{voz}/{arq}', nome, '')
     json.dump({'qps': 25, 'clipes': saida}, open(SAIDA, 'w'), ensure_ascii=False, separators=(',', ':'))
     print(len(saida), 'clipes;', faltam, 'arquivos do manifesto não encontrados')

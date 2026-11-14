@@ -4,9 +4,10 @@
  *  - modo="corpo": corpo inteiro em laço de vídeo com fundo transparente (parado respirando, acenando, palmas, pensando…);
  *  - modo="giro":  giro de 360° que a criança arrasta com o dedo (e que gira sozinho, devagar).
  *
- * Fala: o componente escuta o evento window 'fonema:fala' { quem, texto?, audio?, arquivo?, duracao? } e 'fonema:fala-fim'.
- * Enquanto o serviço de voz não dispara esses eventos, uma PONTE observa os <audio> que tocam e descobre o clipe sozinha
- * (pelo caminho do arquivo ou, no pacote único, pela impressão digital do blob). A ponte se desliga no primeiro evento oficial.
+ * Fala: o componente escuta os eventos window 'fonema:fala' { quem, texto, audio, arquivo, inicio… } e 'fonema:fala-fim'
+ * que o serviço de voz (servicos/voz.ts) dispara a cada clipe. Rede de segurança: se esses eventos não vierem, uma PONTE
+ * observa os <audio> que tocam e descobre o clipe sozinha (pelo caminho ou, no pacote único, pela impressão digital do blob).
+ * A ponte se desliga no primeiro evento oficial.
  *
  * Respeita "Menos movimento" (html.menos-movimento / prefers-reduced-motion) e pausa tudo fora da tela.
  * Arquivos: public/assets/vivos/{busto,corpo,giro}/ e bocas.json (gerados por docs/.../personagens-vivos/ferramentas).
@@ -108,7 +109,8 @@ async function aoFalar(d: DetalheFala) {
   const quem = d.quem === 'sofia' || d.quem === 'tales' ? d.quem : '';
   if (!quem) { ativa = null; avisar(); return; }
   const b = await carregarBocas();
-  const chave = d.arquivo?.replace(/^.*audio\//, '');
+  const arquivo = d.arquivo ?? (d.audio ? await arquivoDoAudio(d.audio) : undefined);
+  const chave = arquivo?.replace(/^.*audio\//, '');
   const clipe = chave ? b.clipes[chave] : undefined;
   // o clipe do NOME da criança não tem texto: continua no mesmo balão da fala em andamento
   const texto = d.texto || clipe?.[2] || ultimoTexto;
@@ -156,7 +158,7 @@ function ligarPonte() {
   const criar = URL.createObjectURL.bind(URL);
   URL.createObjectURL = (obj: Blob | MediaSource) => {
     const url = criar(obj);
-    if (!oficial && obj instanceof Blob && obj.type === 'audio/mpeg') {
+    if (obj instanceof Blob && obj.type === 'audio/mpeg') {
       const m = Math.floor(obj.size / 2);
       marcaDoBlob.set(url, obj.slice(m, m + 256).arrayBuffer().then((buf) => {
         let h = 0x811c9dc5;
@@ -172,15 +174,17 @@ function ligarPonte() {
     return tocar.apply(this);
   };
 }
-async function anunciar(el: HTMLAudioElement) {
+/** Qual clipe é este <audio>? Pelo caminho ou, no pacote único (blob), pela impressão digital. */
+async function arquivoDoAudio(el: HTMLAudioElement): Promise<string | undefined> {
   const src = el.currentSrc || el.src;
-  let arquivo = /audio\/(falas|nomes)\/[^?#]+\.mp3/.exec(src)?.[0];
-  if (!arquivo && src.startsWith('blob:')) {
-    const marca = await marcaDoBlob.get(src);
-    const b = await carregarBocas();
-    const k = marca ? b.porMarca.get(marca) : undefined;
-    if (k) arquivo = `audio/${k}`;
-  }
+  const direto = /audio\/(falas|nomes)\/[^?#]+\.mp3/.exec(src)?.[0];
+  if (direto || !src.startsWith('blob:')) return direto;
+  const marca = await marcaDoBlob.get(src);
+  const k = marca ? (await carregarBocas()).porMarca.get(marca) : undefined;
+  return k ? `audio/${k}` : undefined;
+}
+async function anunciar(el: HTMLAudioElement) {
+  const arquivo = await arquivoDoAudio(el);
   if (!arquivo || oficial) return;
   // voz em outro ritmo = outro personagem emprestando a voz (Bolota, Dona Cida…): não mexe a boca da dupla
   if (Math.abs(el.playbackRate - 1) > 0.01 && !/nomes\//.test(arquivo)) return;
