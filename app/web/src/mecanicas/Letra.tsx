@@ -11,6 +11,7 @@ import { tentativa, type PropsMecanica } from './comum.tsx';
 
 const NOTA: Record<string, { icone: string; texto: string }> = {
   'outro-som': { icone: 'dica', texto: 'Esta letra tem outro som, que vem depois.' },
+  'dois-sons': { icone: 'boca', texto: '' },
   nomes: { icone: 'estrela', texto: 'Esta letra aparece em nomes.' },
   muda: { icone: 'boca', texto: 'O H não faz som sozinho.' },
   'com-u': { icone: 'coracao', texto: 'O Q vem sempre com o U.' }
@@ -56,7 +57,7 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
   };
 
   // passos: 0 = "Letra B." · 1 = "Tem a grande e a pequena." · 2 = "B, de bola." · 3 = aviso da letra
-  const nota = l.nota ? NOTA[l.nota] : null;
+  const nota = l.nota ? { ...NOTA[l.nota], texto: l.segundoSom ? `Esta letra tem dois sons: o de ${l.palavra} e o de ${l.segundoSom.palavra}.` : NOTA[l.nota].texto } : null;
   const resto = l.palavra.slice(1);
   return (
     <div className="mec mec-letra licao" data-letra={l.letra}>
@@ -72,7 +73,7 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
           <p className="letra-palavra"><b>{l.letra}</b>, de <span><em>{l.palavra[0]}</em>{resto}</span></p>
         </div>
       </div>
-      {nota ? <p className={`letra-nota ${passo >= 3 ? 'visivel' : ''}`}><Icone nome={nota.icone} /><span>{nota.texto}</span></p> : null}
+      {nota ? <p className={`letra-nota ${passo >= 3 ? 'visivel' : ''}`}>{l.segundoSom ? <Figura palavra={l.segundoSom.palavra} className="letra-nota-fig" /> : <Icone nome={nota.icone} />}<span>{nota.texto}</span></p> : null}
       <div className="linha-botoes">
         <button className="btn" onClick={apresentar}><Icone nome="som" />Ouvir de novo</button>
         <button className="btn grande verde" onClick={continuar} disabled={!pronto || feito} data-testid="conheci-a-letra"><Icone nome="check" />Já conheci!</button>

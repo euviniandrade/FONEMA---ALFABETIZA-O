@@ -17,7 +17,8 @@
  * som inicial igual em todo o Brasil, sílaba simples, figura com um só nome, dentro dos valores do projeto.
  * W e Y são letras de NOMES: a figura é um crachá ("Wesley", "Yasmin"), feito por web/scripts/cracha-nome.py.
  * Diferenças conscientes em relação à tabela (ver app/README.md): J usa "janela" (não há arte de jacaré ainda);
- * E e O entram só com o som principal (ê, ô), e o outro som (é, ó) vem na etapa das sílabas (D027 §1).
+ * E e O apresentam as DUAS vozes já na missão da letra (ê de elefante e é de pé; ô de ovo e ó de vovó), com o
+ * som principal no Espelho do Som; a distinção fina (é × ê, ó × ô) é treinada depois, na Ilha das Vogais.
  *
  * ⚠️ Posições de boca e escolhas de palavra: validar com fonoaudióloga (D020).
  */
@@ -44,7 +45,9 @@ export interface LetraAlfabeto {
   /** O que vem DEPOIS, na etapa das sílabas (não é ensinado na Trilha do Alfabeto). */
   outroSom?: string;
   /** Observação curta mostrada na tela da letra (H, K, Q, W, Y e letras com mais de um som). */
-  nota?: 'outro-som' | 'muda' | 'nomes' | 'com-u';
+  nota?: 'outro-som' | 'dois-sons' | 'muda' | 'nomes' | 'com-u';
+  /** E e O: a segunda "voz" da vogal, apresentada já na missão da letra (ê de elefante e é de pé; ô de ovo e ó de vovó). */
+  segundoSom?: { ipa: string; fonema: ChaveFonema; palavra: string };
   /** Quem apresenta a letra (a dupla alterna). */
   voz: 'sofia' | 'tales';
   /** Som puro da letra: fica para a gravação da fonoaudióloga (hoje a fala usa "B, de bola."). */
@@ -59,7 +62,7 @@ const BASE: Base[] = [
   L('B', 'consoante', '/b/', 'b', 'bola', 'Lábios fecham e abrem; a garganta vibra.', 'Quicar uma bola de mentira: b, b, b.', { outraPalavra: 'banana', outroSom: 'BR e BL' }),
   L('C', 'consoante', '/k/', 'k', 'casa', 'O fundo da língua sobe e solta o ar de uma vez, sem voz.', 'Bater à porta da casa: toc-toc.', { outraPalavra: 'caneca', outroSom: 'C com som de /s/ antes de E e I (cebola, cinema), Ç e o dígrafo CH', nota: 'outro-som' }),
   L('D', 'consoante', '/d/', 'd', 'dado', 'A ponta da língua bate atrás dos dentes de cima; a garganta vibra.', 'Chacoalhar e jogar um dado de mentira.', { outroSom: 'DI, que soa "dji" em muitas regiões, e DR' }),
-  L('E', 'vogal', '/e/', 'e', 'elefante', 'Sorriso meio aberto.', 'Braço esticado como a tromba do elefante.', { outroSom: 'E aberto /ɛ/ (pé, ela), E nasal e E final com som de I', nota: 'outro-som' }),
+  L('E', 'vogal', '/e/', 'e', 'elefante', 'Sorriso meio aberto.', 'Braço esticado como a tromba do elefante.', { segundoSom: { ipa: '/ɛ/', fonema: 'E', palavra: 'pé' }, outroSom: 'E nasal (EM, EN) e E final com som de I', nota: 'dois-sons' }),
   L('F', 'consoante', '/f/', 'f', 'foca', 'Dentes de cima no lábio de baixo; sai um ventinho, sem voz.', 'Soprar a palma da mão e sentir o ventinho.', { outraPalavra: 'folha', outroSom: 'FR e FL' }),
   L('G', 'consoante', '/g/', 'g', 'gato', 'O fundo da língua sobe e solta; a garganta vibra.', 'Dedo no gogó: g, g, g.', { outraPalavra: 'garrafa', outroSom: 'G com som de /ʒ/ antes de E e I (gelo, girafa), GU, GR e GL', nota: 'outro-som' }),
   L('H', 'muda', null, null, 'hipopótamo', 'O H não tem boca própria: a boca já faz o som da letra seguinte.', 'Mão aberta cobrindo a boca: letra calada.', { outraPalavra: 'helicóptero', outroSom: 'Dígrafos CH, LH e NH', nota: 'muda' }),
@@ -69,7 +72,7 @@ const BASE: Base[] = [
   L('L', 'consoante', '/l/', 'l', 'lua', 'A ponta da língua sobe atrás dos dentes de cima e fica; o ar sai pelos lados.', 'Reger com o dedo: lá, lá, lá.', { outraPalavra: 'leão', outroSom: 'L no fim da sílaba (sol soa "sou"), LH e os encontros BL, CL, FL, PL' }),
   L('M', 'consoante', '/m/', 'm', 'macaco', 'Lábios fechados; o som sai pelo nariz.', 'Mão na barriga: mmm, que gostoso!', { outraPalavra: 'mala', outroSom: 'AM, EM, IM, OM, UM' }),
   L('N', 'consoante', '/n/', 'n', 'navio', 'Ponta da língua atrás dos dentes de cima; o som sai pelo nariz.', 'Dedo encostado no nariz, sentindo vibrar.', { outroSom: 'AN, EN, IN, ON, UN e o dígrafo NH' }),
-  L('O', 'vogal', '/o/', 'o', 'ovo', 'Boca redonda e fechadinha.', 'Mãos formando um ovo.', { outraPalavra: 'ovelha', outroSom: 'O aberto /ɔ/ (óculos, vovó), O nasal e O final com som de U', nota: 'outro-som' }),
+  L('O', 'vogal', '/o/', 'o', 'ovo', 'Boca redonda e fechadinha.', 'Mãos formando um ovo.', { outraPalavra: 'ovelha', segundoSom: { ipa: '/ɔ/', fonema: 'O', palavra: 'vovó' }, outroSom: 'O nasal (OM, ON) e O final com som de U', nota: 'dois-sons' }),
   L('P', 'consoante', '/p/', 'p', 'pato', 'Lábios fecham e estouram, sem voz; sai um soprinho.', 'Estourar uma bolha com o dedo: p!', { outraPalavra: 'peixe', outroSom: 'PR e PL' }),
   L('Q', 'consoante', '/k/', 'k', 'queijo', 'Igual ao C de casa. O Q vem sempre com o U.', 'Dois dedos enganchados: o Q e o U de mãos dadas.', { outroSom: 'QUA e QUO, em que o U é falado (quatro)', nota: 'com-u' }),
   L('R', 'consoante', '/ʁ/', 'rr', 'rato', 'O som vem lá do fundo da garganta (ou com a língua tremendo). Todo sotaque vale!', 'Girar as mãos como uma roda: rrr.', { outraPalavra: 'rua', outroSom: 'R fraco entre vogais (arara), RR, R no fim da sílaba (porta) e os encontros PR, BR, TR', nota: 'outro-som' }),
@@ -114,4 +117,26 @@ export const GRUPOS_ALFABETO: string[][] = ['ABCDE', 'FGHIJ', 'KLMNO', 'PQRST', 
 /** Sons puros que ainda faltam gravar com fonoaudióloga (aviso na área do adulto). */
 export function sonsPurosPendentes(): LetraAlfabeto[] {
   return ALFABETO.filter((l) => l.fonema && l.tipo !== 'vogal' && !l.somPuro.gravado);
+}
+
+/**
+ * PRIMEIRAS PALAVRINHAS (pesquisa 44 §4.3): palavras que a criança já consegue ler com as letras vistas ATÉ aquela
+ * letra, para juntar as letras e ler desde cedo (liga/desliga em config.ts › alfabeto.primeirasPalavrinhas).
+ * Regras da 1ª volta (conferidas no teste): só letras já vistas; nada de CE, CI, GE, GI, QUE, QUI, GUE, GUI;
+ * S e R só no COMEÇO da palavra (no meio o som é outro).
+ */
+export const PALAVRINHAS: Record<string, string[]> = {
+  B: ['BABÁ'], E: ['BEBÊ'], F: ['CAFÉ', 'FACA'], I: ['BIFE'], J: ['JACA'], L: ['BALA', 'FILA'], M: ['MALA', 'CAMA'], N: ['BANANA', 'MENINA'],
+  O: ['BOLA', 'DADO'], P: ['COPO', 'MAPA'], R: ['RODA', 'REI'], S: ['SAPO', 'SOPA'], T: ['GATO', 'PATO'], U: ['LUA', 'TATU'], V: ['UVA', 'VACA'], X: ['PEIXE'], Z: ['DOZE']
+};
+/** Palavrinhas das revisões (uma por grupo de letras) e da Festa do Alfabeto. */
+export const PALAVRINHAS_REVISAO: string[][] = [['BABÁ', 'BEBÊ', 'CABE'], ['CAFÉ', 'BIFE', 'JACA'], ['BALA', 'BOLA', 'DEDO'], ['PATO', 'RODA', 'SAPO'], ['LUA', 'UVA', 'VACA']];
+
+/** A palavra respeita as regras da 1ª volta com as letras vistas até `ate` (inclusive)? */
+export function palavrinhaPermitida(palavra: string, ate: string): boolean {
+  const w = palavra.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+  const vistas = ALFABETO.slice(0, ALFABETO.findIndex((l) => l.letra === ate) + 1).map((l) => l.letra);
+  if (![...w].every((ch) => vistas.includes(ch))) return false;
+  if (/C[EI]|G[EI]|[QG]U[EI]|H|K|W|Y/.test(w)) return false;
+  return !/[SR]/.test(w.slice(1));
 }

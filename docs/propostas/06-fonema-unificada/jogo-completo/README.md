@@ -6,6 +6,8 @@
 >
 > **Base (não contradiz):** decisões [001–022](../../../decisoes/), a [jornada](../jornada/README.md) (R0–R10, N1–N12, sessão e semana), a [série Sofia e Tales](../serie-sofia-e-tales/README.md), [esporte, respeito e ambiente](../esporte-respeito-ambiente/README.md), [imersivo](../imersivo/README.md), [Academia](../academia/README.md), [lojinha e emblemas](../lojinha-emblemas/README.md), [avatar 3D](../avatar-3d/README.md) e o [documento mestre](../../../sintese/00-documento-mestre.md) §4.2–4.8. Tudo aqui é **[proposta de roteiro]**: tempos, contagens e limiares são hipóteses a calibrar no piloto. O avanço é **por domínio, nunca por tempo**.
 
+> **D027 (14/11/2026): a jornada começa pela Trilha do Alfabeto.** O dono decidiu, depois de testar o protótipo, que a criança conhece primeiro **cada letra, de A a Z, e o som de cada letra**; só depois vêm as sílabas, as palavras, o nome e as frases. A ordem nova é **Alfabeto → Sílabas → Palavras → Meu nome → Frases**. As brincadeiras de escuta de R0 (rimas, palmas, primeiro som) viram **aquecimentos** dentro das missões, e "O som do meu nome" passa a vir depois das primeiras palavras. Os documentos desta pasta descrevem a ordem antiga (R0 → R1 → R2…) e continuam valendo como **banco de cenas**; a ordem em vigor está na [Decisão 027](../../../decisoes/027-alfabeto-primeiro-personagens-vivos.md), em `app/packages/conteudo/src/regioes.ts` e no [README do app](../../../../app/README.md) (seção "D027").
+
 ## Arquivos desta pasta
 
 | Arquivo | O que tem |

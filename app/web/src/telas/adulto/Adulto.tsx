@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { CONFIG_PADRAO, CONQUISTA_POR_ID, FASE_POR_ID, type ConfigPlataforma } from '@fonema/conteudo';
+import { CONFIG_PADRAO, CONQUISTA_POR_ID, FASE_POR_ID, type ConfigPlataforma, sonsPurosPendentes } from '@fonema/conteudo';
 import { NIVEIS_INICIAIS, aplicarNivelInicial, avaliarConquistas, calcularNivel, fasesConcluidas, missaoInicialFeita, filaProfessor, mapaHabilidades, progressoInicial, resumoFamilia, type Crianca, type Demonstracao, type Evento, type NivelInicial, type Progresso, type StatusDemonstracao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
@@ -389,6 +389,12 @@ export function Configuracoes() {
               <button className="btn" onClick={() => voz.falar('Oi! Eu sou a Sofia.', { quem: 'sofia' })}><Icone nome="som" />Ouvir a Sofia</button>
               <button className="btn" onClick={() => voz.falar('E eu sou o Tales!', { quem: 'tales' })}><Icone nome="som" />Ouvir o Tales</button>
             </div>
+          </fieldset>
+
+          <fieldset className="campo config-grupo" data-testid="config-alfabeto"><legend><Icone nome="caderno" />Trilha do Alfabeto</legend>
+            <p className="nota-mic">A jornada começa pelo alfabeto: cada letra e o som de cada letra, de A a Z. Depois vêm as sílabas, as palavras, o nome e as frases.</p>
+            <label className="opcao-linha"><input type="checkbox" data-testid="primeiras-palavrinhas" checked={configBruta.alfabeto?.primeirasPalavrinhas ?? true} onChange={(e) => set({ alfabeto: { primeirasPalavrinhas: e.target.checked } })} /> Primeiras palavrinhas: juntar as letras já conhecidas e ler (BABÁ depois do B, BEBÊ depois do E…)</label>
+            <p className="nota-mic" data-testid="aviso-sons-puros"><b>Sobre os sons das letras:</b> a dupla fala "B, de bola" e mostra a boca no Espelho do Som. O som puro de {sonsPurosPendentes().length} consoantes ({sonsPurosPendentes().map((l) => l.letra).join(', ')}) ainda será gravado por fonoaudióloga, porque a voz gerada por computador erra o som isolado. Em casa, fale o som (e não o nome da letra): "mmm", e não "eme".</p>
           </fieldset>
 
           <fieldset className="campo config-grupo"><legend><Icone nome="lojinha" />Lojinha de brincadeira</legend>

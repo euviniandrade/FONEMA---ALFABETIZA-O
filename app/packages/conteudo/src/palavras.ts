@@ -57,7 +57,7 @@ export function figura(texto: string): Palavra {
 /** Grafemas conhecidos ao FIM de cada região (para o linter de decodificabilidade). */
 export const GRAFEMAS_DA_REGIAO: Record<string, string[]> = {
   // Trilha do Alfabeto: as letras aparecem SOLTAS ("B b"), nunca em palavras para ler
-  AL: [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ', ' '],
+  AL: [...'ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÊ', ' '],
   R0: [],
   R1: ['A', 'E', 'I', 'O', 'U'],
   R2a: ['A', 'E', 'I', 'O', 'U', 'M', 'L', 'F']

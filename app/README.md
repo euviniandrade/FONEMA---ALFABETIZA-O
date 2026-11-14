@@ -9,6 +9,28 @@ Funciona **offline** (PWA instalável no tablet/celular), sem servidor: os dados
 
 ![Mapa da vila](docs/capturas/v2-23-vila-mapa.png)
 
+## D027: a jornada começa pela Trilha do Alfabeto
+
+Decisão do dono (14/11/2026, [D027](../docs/decisoes/027-alfabeto-primeiro-personagens-vivos.md)): **primeiro o alfabeto** (cada letra e o som de cada letra, de A a Z), depois sílabas, palavras, o nome e as frases. O que mudou no app (o restante deste README descreve a versão anterior e continua valendo onde não é contradito aqui):
+
+- **Ordem da jornada** (`packages/conteudo/src/regioes.ts`): **Alfabeto** (`AL`: 26 letras + revisão a cada 5 letras + Festa do Alfabeto) → **Sílabas** (`R1`: as duas vozes do E e do O e as 5 vogais misturadas; `R2a`: M, L, F) → **Palavras** (`R2a-F04`, chefe `R2a-F05`) → **Meu nome** (`R0-F01`) → Frases (em breve).
+- **Uma missão por letra** (`fases/alfabeto.ts`, gerada dos dados de `alfabeto.ts`): a dupla apresenta a letra (maiúscula e minúscula) → o som no Espelho do Som → "ouça e toque na letra" → "qual figura começa com o som?" → traçar com o dedo → selo da letra. Missões curtas, sem pausa automática.
+- **Dados fáceis de trocar** (`alfabeto.ts`): letra, som (IPA e chave do Espelho), palavra-chave, segunda palavra, dica de boca, gesto, o que vem depois e quem apresenta. Alinhado à tabela A–Z da pesquisa ([44a](../docs/pesquisa/44a-tabela-alfabeto.md)). Para trocar uma palavra: mude `palavra`, garanta a figura em `web/public/assets/figuras/` e rode o gerador de vozes.
+- **Regras fônicas:** som principal de cada letra (C de casa, G de gato, R forte de rato, S de sapo, X de xícara); E e O apresentam as duas vozes (ê de elefante e é de pé; ô de ovo e ó de vovó); H não faz som sozinho; Q vem sempre com U; K, W e Y são letras de nomes (W e Y com crachá: Wesley, Yasmin). A dupla **nunca** diz o nome da letra como se fosse o som: fala "B, de bola". O **som puro das consoantes fica para a gravação da fonoaudióloga** (`somPuro.gravado` em `alfabeto.ts`; aviso em Configurações, só para o adulto).
+- **Primeiras palavrinhas** (pesquisa 44 §4.3): assim que as letras vistas permitem, a missão ganha uma brincadeira de juntar as letras e ler (BABÁ depois do B, BEBÊ depois do E, CAFÉ depois do F, BALA e FILA depois do L…), sem CE, CI, GE, GI, QUE, GUE nem S ou R no meio. Liga e desliga em `config.ts` › `alfabeto.primeirasPalavrinhas` e em Configurações (padrão: ligado; o dono ainda vai confirmar).
+- **Revisões** (`AL-R1`…`AL-R4`, `AL-FESTA`): aquecimento com uma brincadeira de escuta de R0 (palmas, rima, primeiro som, fala de tatu) → ache a letra → ligue a letra à figura → com qual letra começa? → palavrinhas. A Festa dá o troféu **Alfabeto Completo**, sobe o termômetro para 1 e abre o título seguinte.
+- **"O som do meu nome"** vem **depois das primeiras palavras** (ordem pedida pelo dono: sílabas, palavras, o nome). Motivo: nessa hora a criança já conhece todas as letras (inclusive K, W, Y e o H mudo) e monta o próprio nome entendendo cada som; e a sequência fica igual para todas as crianças (sem pular fases, D021). Na missão da letra inicial do nome aparece o aviso "A letra do seu nome!".
+- **Nível inicial (D026)** (`packages/motor/src/nivel-inicial.ts`): **Do zero** = letra A · **Já conhece as letras e os sons** = pula o Alfabeto (as 31 fases ficam abertas para revisar) e começa nas sílabas (`R2a-F01`) · **Já lê palavras** = começa no ponto de leitura mais avançado (`R2a-F04`).
+- **Telas:** Trilha do Alfabeto (`#/c/:id/alfabeto`, `telas/crianca/Alfabeto.tsx`: 26 marcos, revisões e festa; as concluídas brilham), tela da letra (`mecanicas/Letra.tsx`), selos das letras no Álbum, botão "Alfabeto" na vila.
+- **Vozes:** frases genéricas gravadas uma vez por voz (`FALAS_ALFABETO`) + dois clipes curtos por letra ("Letra B." e "B, de bola."); a Sofia e o Tales alternam entre as letras.
+- **Capturas:** `npm run capturas` gera `docs/capturas/alfabeto-*.png` (1280×800 e 390×844). As capturas `v2-*` são anteriores à D027 (`node e2e/fluxo.e2e.mjs --capturas-v2`).
+
+![Trilha do Alfabeto](docs/capturas/alfabeto-11-trilha-depois-da-revisao.png)
+
+![A letra A](docs/capturas/alfabeto-03-letra-a-apresentacao.png)
+
+Pendências da Trilha do Alfabeto: som puro das consoantes (fonoaudióloga); figura do **jacaré** para o J (hoje "janela"; a geração de imagens estava sem cota); frase completa "o nome dela é… o som dela é…" (depende do som puro gravado); missões-duelo de letras parecidas (M×N, P×Q, B×D); medir retenção das letras depois de 1 e 4 semanas.
+
 ## Como rodar
 
 Requisitos: Node 20+ (testado com 22) e npm. A partir desta pasta (`app/`):
@@ -22,7 +44,7 @@ npm test             # testes Vitest do motor e do conteúdo
 npm run lint         # ESLint
 npm run typecheck    # TypeScript (conteúdo, motor e web)
 npm run e2e          # teste de ponta a ponta com Playwright (precisa do build antes)
-npm run capturas     # o mesmo E2E salvando as capturas em docs/capturas/
+npm run capturas     # o mesmo E2E salvando as capturas da Trilha do Alfabeto em docs/capturas/alfabeto-*.png
 npm run assets       # (re)converte as artes de docs/ em WebP leves (Python 3 + Pillow)
 npm run verificar    # lint + typecheck + testes + build
 ```

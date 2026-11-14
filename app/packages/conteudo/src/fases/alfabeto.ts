@@ -15,7 +15,7 @@
  * As brincadeiras de escuta de R0 (palmas, rimas, primeiro som, fala de tatu) entram como AQUECIMENTO das revisões.
  */
 import type { Atividade, AtividadeEscolher, Cena, Fala, Fase, ItemEscolha, Opcao } from '../tipos.ts';
-import { ALFABETO, GRUPOS_ALFABETO, LETRAS_PARECIDAS, LETRA_POR_ID, SONS_PARECIDOS, falaChave, falaNomeLetra, faseDaLetra, habilidadeLetra, seloDaLetra, type LetraAlfabeto } from '../alfabeto.ts';
+import { ALFABETO, GRUPOS_ALFABETO, PALAVRINHAS, PALAVRINHAS_REVISAO, LETRAS_PARECIDAS, LETRA_POR_ID, SONS_PARECIDOS, falaChave, falaNomeLetra, faseDaLetra, habilidadeLetra, seloDaLetra, type LetraAlfabeto } from '../alfabeto.ts';
 import { opFig, posiciona } from '../construtores.ts';
 import { FASES_R0 } from './r0.ts';
 
@@ -28,6 +28,9 @@ export const FALAS_ALFABETO = {
   olha: 'Olha só a letra de hoje!',
   grandePequena: 'Tem a grande e a pequena.',
   outroSom: 'Esta letra tem outro som, que vem depois.',
+  doisSonsE: 'Esta letra tem dois sons: o de elefante e o de pé.',
+  doisSonsO: 'Esta letra tem dois sons: o de ovo e o de vovó.',
+  palavrinha: 'As letras juntas viram palavra! Monte comigo.',
   nomes: 'Esta letra aparece em nomes.',
   muda: 'O H não faz som sozinho.',
   comU: 'O Q vem sempre com o U.',
@@ -101,7 +104,16 @@ function itemComQualLetra(l: LetraAlfabeto, pool?: string[]): ItemEscolha {
   };
 }
 
-const NOTA: Record<NonNullable<LetraAlfabeto['nota']>, string> = {
+/** Cena das PRIMEIRAS PALAVRINHAS: juntar as letras já vistas e ler (o motor tira esta cena se a chave estiver desligada). */
+export const MARCADOR_PALAVRINHAS = 'palavrinhas';
+function cenaPalavrinhas(id: string, habilidade: string, quem: Voz, palavras: string[]): Cena {
+  return {
+    id, tipo: 'C5', titulo: 'Primeiras palavrinhas', cenario: 'quintal', marcador: MARCADOR_PALAVRINHAS,
+    atividade: { tipo: 'montar', habilidade, palavras, mostrarModelo: true, semSomDasPecas: true, enunciado: f(quem, FALAS_ALFABETO.palavrinha) }
+  };
+}
+
+const NOTA: Record<Exclude<NonNullable<LetraAlfabeto['nota']>, 'dois-sons'>, string> = {
   'outro-som': FALAS_ALFABETO.outroSom, nomes: FALAS_ALFABETO.nomes, muda: FALAS_ALFABETO.muda, 'com-u': FALAS_ALFABETO.comU
 };
 
@@ -115,7 +127,7 @@ function faseDaLetraAl(l: LetraAlfabeto, numero: number): Fase {
       id: `${id}-C2`, tipo: 'C2', titulo: `A letra ${l.letra}`, cenario: 'licao', contaDominio: true,
       atividade: {
         tipo: 'letra', habilidade: hab, letra: l.letra, enunciado: f(q, FALAS_ALFABETO.olha),
-        falas: [f(q, falaNomeLetra(l)), f(q, FALAS_ALFABETO.grandePequena), f(q, falaChave(l)), ...(l.nota ? [f(q, NOTA[l.nota])] : [])]
+        falas: [f(q, falaNomeLetra(l)), f(q, FALAS_ALFABETO.grandePequena), f(q, falaChave(l)), ...(l.nota ? [f(q, l.nota === 'dois-sons' ? (l.letra === 'E' ? FALAS_ALFABETO.doisSonsE : FALAS_ALFABETO.doisSonsO) : NOTA[l.nota])] : [])]
       }
     }
   ];
@@ -147,6 +159,7 @@ function faseDaLetraAl(l: LetraAlfabeto, numero: number): Fase {
       atividade: { tipo: 'tracar', habilidade: hab, letras: [l.letra, l.minuscula], enunciado: f(q, FALAS_ALFABETO.trace) }
     }
   );
+  if (PALAVRINHAS[l.letra]) cenas.push(cenaPalavrinhas(`${id}-C5p`, hab, q, PALAVRINHAS[l.letra]));
   const somTexto = l.tipo === 'muda' ? 'que ela não faz som sozinha' : l.tipo === 'nomes' ? 'onde ela aparece' : 'o som dela';
   return {
     id, regiao: 'AL', numero, titulo: `Letra ${l.letra}`, objetivo: `Conhecer a letra ${l.letra} e ${somTexto}, como em ${l.palavra.toUpperCase()}`,
@@ -207,6 +220,7 @@ function faseDeRevisao(g: number, numero: number): Fase {
       atividade: escolher(hab, 'tocar', FALAS_ALFABETO.comQualLetra, (festa ? [...letras.slice(2, 4), ...deTodos(2)] : letras).map((l) => itemComQualLetra(l, festa ? todas : pool)))
     }
   ];
+  cenas.push(cenaPalavrinhas(`${id}-C5p`, hab, 'tales', PALAVRINHAS_REVISAO[g]));
   const de = letras[0].letra;
   const ate = letras[letras.length - 1].letra;
   return {

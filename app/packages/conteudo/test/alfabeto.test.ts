@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
-  ALFABETO, CONQUISTA_POR_ID, FALAS_ALFABETO, FASES, FASES_ALFABETO, FIGURAS, GRUPOS_ALFABETO, HABILIDADE_POR_ID, LETRAS_PARECIDAS, SONS, SONS_PARECIDOS,
+  ALFABETO, MARCADOR_PALAVRINHAS, PALAVRINHAS, PALAVRINHAS_REVISAO, palavrinhaPermitida, CONQUISTA_POR_ID, FALAS_ALFABETO, FASES, FASES_ALFABETO, FIGURAS, GRUPOS_ALFABETO, HABILIDADE_POR_ID, LETRAS_PARECIDAS, SONS, SONS_PARECIDOS,
   falaChave, falaNomeLetra, faseDaLetra, habilidadeLetra, seloDaLetra, sonsPurosPendentes
 } from '../src/index.ts';
 import type { AtividadeEscolher, Fase } from '../src/index.ts';
@@ -30,7 +30,7 @@ describe('Trilha do Alfabeto (D027)', () => {
     revisoes.forEach((r, g) => {
       // a revisão mistura as letras do grupo: achar a letra, ligar letra-figura e "com qual letra começa?"
       expect(r.habilidades).toEqual(GRUPOS_ALFABETO[g].map(habilidadeLetra));
-      expect(r.cenas.map((c) => c.titulo).slice(1)).toEqual(['Ache a letra', 'Ligue a letra à figura', 'Com qual letra começa?']);
+      expect(r.cenas.map((c) => c.titulo).slice(1)).toEqual(['Ache a letra', 'Ligue a letra à figura', 'Com qual letra começa?', 'Primeiras palavrinhas']);
       // as brincadeiras de escuta de R0 viram aquecimento (não contam para a conclusão)
       expect(r.cenas[0].titulo).toMatch(/^Aquecimento/);
       expect(r.cenas[0].contaDominio).toBeFalsy();
@@ -48,13 +48,16 @@ describe('Trilha do Alfabeto (D027)', () => {
     for (const f of letras) {
       const l = ALFABETO.find((x) => x.letra === f.alfabeto!.letra)!;
       const tipos = f.cenas.map((c) => c.atividade!.tipo);
-      expect(tipos, f.id).toEqual(l.fonema ? ['letra', 'espelho', 'escolher', 'escolher', 'tracar'] : ['letra', 'escolher', 'escolher', 'tracar']);
-      expect(f.cenas.every((c) => c.contaDominio), f.id).toBe(true);
+      const base = l.fonema ? ['letra', 'espelho', 'escolher', 'escolher', 'tracar'] : ['letra', 'escolher', 'escolher', 'tracar'];
+      expect(tipos, f.id).toEqual(PALAVRINHAS[l.letra] ? [...base, 'montar'] : base);
+      // as palavrinhas são um extra (não contam para concluir a missão: a chave de config pode desligá-las)
+      expect(f.cenas.filter((c) => c.marcador !== MARCADOR_PALAVRINHAS).every((c) => c.contaDominio), f.id).toBe(true);
+      expect(f.cenas.filter((c) => c.marcador === MARCADOR_PALAVRINHAS).every((c) => !c.contaDominio), f.id).toBe(true);
       expect(f.criterio.tipo).toBe('missao');
       expect(f.conquistas).toEqual([seloDaLetra(l.letra)]);
       expect(CONQUISTA_POR_ID[seloDaLetra(l.letra)].motivo).toBe(l.letra);
       expect(HABILIDADE_POR_ID[habilidadeLetra(l.letra)].regiao).toBe('AL');
-      const tracar = f.cenas.at(-1)!.atividade!;
+      const tracar = f.cenas.find((c) => c.atividade?.tipo === 'tracar')!.atividade!;
       expect(tracar.tipo === 'tracar' && tracar.letras).toEqual([l.letra, l.minuscula]);
       const [acheLetra, acheFigura] = escolher(f);
       expect(acheLetra.itens.map((i) => i.opcoes.length)).toEqual([3, 4]);
@@ -101,7 +104,17 @@ describe('Trilha do Alfabeto (D027)', () => {
     expect(ALFABETO.filter((l) => l.tipo === 'nomes').map((l) => l.letra)).toEqual(['K', 'W', 'Y']);
     expect(ALFABETO.filter((l) => l.tipo === 'muda').map((l) => l.letra)).toEqual(['H']);
     // letras com mais de um som avisam que o outro som vem depois (D027 §1)
-    for (const letra of ['C', 'G', 'R', 'S', 'X', 'E', 'O']) expect(ALFABETO.find((l) => l.letra === letra)!.nota).toBe('outro-som');
+    for (const letra of ['C', 'G', 'R', 'S', 'X']) expect(ALFABETO.find((l) => l.letra === letra)!.nota).toBe('outro-som');
+    // E e O apresentam as duas vozes já na missão (pesquisa 44a): ê de elefante e é de pé; ô de ovo e ó de vovó
+    expect(ALFABETO.find((l) => l.letra === 'E')!.segundoSom).toEqual({ ipa: '/ɛ/', fonema: 'E', palavra: 'pé' });
+    expect(ALFABETO.find((l) => l.letra === 'O')!.segundoSom).toEqual({ ipa: '/ɔ/', fonema: 'O', palavra: 'vovó' });
+    for (const l of ALFABETO) if (l.segundoSom) { expect(FIGURAS[l.segundoSom.palavra]).toBeDefined(); expect(SONS[l.segundoSom.fonema]).toBeDefined(); }
+    // gestos: um diferente para cada letra (K repete o do C de propósito: é o mesmo som)
+    const gestos = ALFABETO.filter((l) => l.letra !== 'K').map((l) => l.gesto);
+    expect(new Set(gestos).size).toBe(gestos.length);
+    // W e Y são letras de nomes: a figura é um crachá
+    expect(ALFABETO.find((l) => l.letra === 'W')!.palavra).toBe('Wesley');
+    expect(ALFABETO.find((l) => l.letra === 'Y')!.palavra).toBe('Yasmin');
     for (const letra of ['C', 'G', 'R', 'S', 'X']) expect(ALFABETO.find((l) => l.letra === letra)!.outroSom).toBeTruthy();
   });
 
@@ -119,6 +132,26 @@ describe('Trilha do Alfabeto (D027)', () => {
     expect(sonsPurosPendentes().map((l) => l.letra).join('')).toBe('BCDFGJKLMNPQRSTVWXYZ');
     // nenhuma fala da trilha tem som entre barras ou consoante esticada
     for (const t of Object.values(FALAS_ALFABETO)) expect(t).not.toMatch(/\/|([bcdfgjklmnpqrstvxz])\1\1/i);
+  });
+
+  it('primeiras palavrinhas: só letras já vistas, sem CE/CI/GE/GI/QUE/GUE e sem S ou R no meio', () => {
+    expect(PALAVRINHAS.B).toEqual(['BABÁ']);
+    expect(PALAVRINHAS.E).toEqual(['BEBÊ']);
+    expect(PALAVRINHAS.F).toContain('CAFÉ');
+    expect(PALAVRINHAS.L).toEqual(['BALA', 'FILA']);
+    for (const [letra, palavras] of Object.entries(PALAVRINHAS)) {
+      for (const w of palavras) {
+        expect(palavrinhaPermitida(w, letra), `${w} depois de ${letra}`).toBe(true);
+        expect(w.normalize('NFD').toUpperCase(), `${w} usa a letra ${letra}`).toContain(letra);
+      }
+    }
+    PALAVRINHAS_REVISAO.forEach((palavras, g) => palavras.forEach((w) => expect(palavrinhaPermitida(w, GRUPOS_ALFABETO[g].at(-1)!), `${w} na revisão ${g + 1}`).toBe(true)));
+    // o filtro recusa o que engana na 1ª volta
+    for (const w of ['CEBOLA', 'GELO', 'QUEIJO', 'CASA', 'ARARA', 'CIDADE', 'GUIA']) expect(palavrinhaPermitida(w, 'Z'), w).toBe(false);
+    expect(palavrinhaPermitida('BOLA', 'L')).toBe(false); // o O ainda não foi visto
+    expect(palavrinhaPermitida('SAPO', 'S')).toBe(true);
+    // as peças não falam (nada de nome de letra): a dupla junta e fala a palavra
+    for (const f of FASES_ALFABETO) for (const c of f.cenas) if (c.marcador === MARCADOR_PALAVRINHAS) expect(c.atividade?.tipo === 'montar' && c.atividade.semSomDasPecas).toBe(true);
   });
 
   it('vozes: a dupla alterna entre as letras e as falas novas cabem no orçamento (≤ 9.000 caracteres)', () => {

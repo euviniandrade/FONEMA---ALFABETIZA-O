@@ -3,7 +3,7 @@
  * C0 acolhida → C1 Jardim da Revisão (se houver revisão vencida) → cenas da fase → C6 pausa ativa
  * → C9 ritual de fim. Na Trilha Expressa, a fase vira prova-relâmpago (4–6 itens) + história curta.
  */
-import { FASES, FASE_POR_ID } from '@fonema/conteudo';
+import { FASES, FASE_POR_ID, MARCADOR_PALAVRINHAS } from '@fonema/conteudo';
 import type { Atividade, Cena, ConfigPlataforma, ItemEscolha } from '@fonema/conteudo';
 import type { Crianca, Progresso } from './estado.ts';
 import { infoNome, resolverCena } from './resolver.ts';
@@ -81,6 +81,8 @@ export function montarSessao(p: Progresso, c: Crianca, faseId: string, cfg: Conf
   } else {
     for (const cena of fase.cenas) {
       if (cena.tipo === 'C1' && revisao.length) continue;
+      // "primeiras palavrinhas" da Trilha do Alfabeto: liga/desliga em config (o dono ainda vai confirmar)
+      if (cena.marcador === MARCADOR_PALAVRINHAS && cfg.alfabeto?.primeirasPalavrinhas === false) continue;
       const atividade = cena.atividade ? limitarItens(cena.atividade, maxItens) : undefined;
       etapas.push({ tipo: 'cena', cena: resolverCena({ ...cena, atividade }, n) });
     }

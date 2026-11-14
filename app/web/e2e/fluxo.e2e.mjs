@@ -114,7 +114,7 @@ async function jogarSessao(page, capturar = {}) {
     }
     const conheci = page.getByTestId('conheci-a-letra');
     if (await conheci.isVisible().catch(() => false)) {
-      if (await conheci.isEnabled({ timeout: 500 }).catch(() => false)) { await page.waitForTimeout(650); await tirar('letra'); await conheci.click({ timeout: 3000 }).catch(() => {}); }
+      if (await conheci.isEnabled({ timeout: 500 }).catch(() => false)) { if (capturar.letra) await page.waitForTimeout(650); await tirar('letra'); await conheci.click({ timeout: 3000 }).catch(() => {}); }
       else await page.waitForTimeout(80);
       continue;
     }
@@ -162,10 +162,10 @@ async function jogarSessao(page, capturar = {}) {
     if (await tracei.isVisible().catch(() => false)) {
       const box = await page.locator('.areia canvas').boundingBox({ timeout: 500 }).catch(() => null);
       if (!box) continue;
-      for (let y = 0.1; y < 0.95; y += 0.05) {
-        await page.mouse.move(box.x + box.width * 0.2, box.y + box.height * y);
+      for (let y = 0.1; y < 0.95; y += 0.06) {
+        await page.mouse.move(box.x + box.width * 0.12, box.y + box.height * y);
         await page.mouse.down();
-        await page.mouse.move(box.x + box.width * 0.8, box.y + box.height * y, { steps: 12 });
+        await page.mouse.move(box.x + box.width * 0.88, box.y + box.height * y, { steps: 16 });
         await page.mouse.up();
       }
       await tirar('tracar');

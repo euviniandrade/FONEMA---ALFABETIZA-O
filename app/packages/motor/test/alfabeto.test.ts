@@ -55,6 +55,19 @@ describe('Trilha do Alfabeto no motor (D027)', () => {
     expect(r.progresso.contadores.tracados).toBe(2); // maiúscula e minúscula
   });
 
+  it('primeiras palavrinhas: entram quando as letras permitem e saem com a chave de config desligada', () => {
+    let p = progressoInicial('c1', T0);
+    p = concluirFase(p, 'AL-A', T0);
+    const comB = montarSessao(p, crianca, 'AL-B', cfg, T0);
+    const montar = comB.etapas.map((e) => e.cena?.atividade).find((a) => a?.tipo === 'montar');
+    expect(montar?.tipo === 'montar' && montar.palavras).toEqual(['BABÁ']);
+    const semB = montarSessao(p, crianca, 'AL-B', { ...cfg, alfabeto: { primeirasPalavrinhas: false } }, T0);
+    expect(semB.etapas.some((e) => e.cena?.atividade?.tipo === 'montar')).toBe(false);
+    // ligada ou desligada, a missão conclui do mesmo jeito (as palavrinhas não contam para o critério)
+    expect(jogar(p, 'AL-B').relatorio.faseConcluida).toBe(true);
+    expect(cfg.alfabeto.primeirasPalavrinhas).toBe(true);
+  });
+
   it('a ordem é A–Z sem pular: depois de E vem a revisão, e F só abre depois dela', () => {
     let p = progressoInicial('c1', T0);
     expect(() => concluirFase(p, 'AL-B', T0)).toThrow();

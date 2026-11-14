@@ -23,6 +23,11 @@ export interface ConfigPlataforma {
   demonstracao: { horasParaValerCriterio: number };
   /** Voz: 'navegador' simula com speechSynthesis; 'pre-gerada' usa os mp3 das vozes oficiais quando existirem. */
   voz: { provedor: 'navegador' | 'pre-gerada'; velocidade: number };
+  /**
+   * Trilha do Alfabeto (D027). `primeirasPalavrinhas`: assim que as letras conhecidas permitem, a missão ganha uma
+   * brincadeira curta de juntar as letras e ler (BABÁ depois do B, BEBÊ depois do E…). Padrão: ligado (o dono ainda vai confirmar).
+   */
+  alfabeto: { primeirasPalavrinhas: boolean };
   /** Modo demonstração: libera mais de uma sessão por dia e conta 1 sessão como 2 (para testar a jornada inteira). */
   modoDemonstracao: boolean;
 }
@@ -38,6 +43,7 @@ export const CONFIG_PADRAO: ConfigPlataforma = {
   revisao: { intervalosDias: [1, 2, 4, 8, 16, 32, 60], maxItensPorSessao: 4 },
   demonstracao: { horasParaValerCriterio: 72 },
   voz: { provedor: 'pre-gerada', velocidade: 0.95 },
+  alfabeto: { primeirasPalavrinhas: true },
   modoDemonstracao: false
 };
 

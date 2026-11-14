@@ -123,6 +123,8 @@ export interface AtividadeMontar extends AtividadeBase {
   /** Palavras (ou sílabas) a montar. "$NOME" monta o nome da criança. */
   palavras: string[];
   mostrarModelo: boolean;
+  /** Primeiras palavrinhas (Trilha do Alfabeto): as peças não falam (nada de nome de letra); a dupla junta e fala a palavra. */
+  semSomDasPecas?: boolean;
   /** Peças são sílabas (tábua de sílabas) em vez de letras. */
   porSilaba?: boolean;
   distratoras?: string[];

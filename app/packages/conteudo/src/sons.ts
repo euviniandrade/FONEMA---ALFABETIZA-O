@@ -3,6 +3,9 @@
  * Origem: prototipo-jogavel/regras-som.js + jogo-completo/README §5.2 (dicas de boca)
  * + espelho-do-som-3d/fonemas.js (chaves e quadros de frente).
  *
+ * Palavras-figura revistas pela pesquisa 44a: saíram "escada" e "estrela" (soam "is…"), "iglu" e "ioiô", e "girafa"
+ * (som de J com a letra G). "chave" e "chuva" valem para o SOM /ʃ/ (nomes com CH), nunca como exemplo da LETRA X.
+ *
  * ⚠️ Dicas e posições SIMPLIFICADAS — validar com fonoaudióloga (D020).
  * No produto, cada som isolado é GRAVADO por fonoaudióloga; aqui a voz do navegador "estica" a escrita.
  */
@@ -13,10 +16,10 @@ const s = (o: Som): Som => o;
 export const SONS: Record<string, Som> = {
   a: s({ chave: 'a', ipa: '/a/', letra: 'A', esticado: 'aaaa', bocaFrente: 'A', dica: 'Boca bem aberta, como um bocejo: aaa.', correcao: 'Abre mais a boca, como a minha.', palavras: [['abelha', '🐝'], ['avião', '✈️'], ['abacaxi', '🍍']] }),
   'a~': s({ chave: 'a~', ipa: '/ã/', letra: 'A', esticado: 'ãããã', bocaFrente: 'A', dica: 'Boca aberta, e o som passa pelo nariz: ããã.', correcao: 'Deixa um pouco do ar sair pelo nariz; sente?', palavras: [['âncora', '⚓'], ['antena', '📡']] }),
-  E: s({ chave: 'E', ipa: '/ɛ/', letra: 'E', esticado: 'éééé', bocaFrente: 'A', dica: 'Sorriso aberto: ééé, como em PÉ.', correcao: 'Abre um pouquinho mais.', palavras: [['égua', '🐴'], ['escada', '🪜']] }),
-  e: s({ chave: 'e', ipa: '/e/', letra: 'E', esticado: 'êêêê', bocaFrente: 'S', dica: 'Sorriso meio aberto: êêê, como em VOCÊ.', correcao: 'Fecha um pouquinho.', palavras: [['elefante', '🐘'], ['estrela', '⭐']] }),
+  E: s({ chave: 'E', ipa: '/ɛ/', letra: 'E', esticado: 'éééé', bocaFrente: 'A', dica: 'Sorriso aberto: ééé, como em PÉ.', correcao: 'Abre um pouquinho mais.', palavras: [['égua', '🐴']] }),
+  e: s({ chave: 'e', ipa: '/e/', letra: 'E', esticado: 'êêêê', bocaFrente: 'S', dica: 'Sorriso meio aberto: êêê, como em VOCÊ.', correcao: 'Fecha um pouquinho.', palavras: [['elefante', '🐘']] }),
   'e~': s({ chave: 'e~', ipa: '/ẽ/', letra: 'E', esticado: 'ẽẽẽẽ', bocaFrente: 'S', dica: 'Sorriso pequeno, e o som passa pelo nariz.', correcao: 'Deixa o som sair pelo nariz.', palavras: [['envelope', '✉️']] }),
-  i: s({ chave: 'i', ipa: '/i/', letra: 'I', esticado: 'iiii', bocaFrente: 'S', dica: 'Sorriso grande: iii.', correcao: 'Estica o sorriso.', palavras: [['ilha', '🏝️'], ['iglu', '🧊'], ['ioiô', '🪀']] }),
+  i: s({ chave: 'i', ipa: '/i/', letra: 'I', esticado: 'iiii', bocaFrente: 'S', dica: 'Sorriso grande: iii.', correcao: 'Estica o sorriso.', palavras: [['ilha', '🏝️']] }),
   'i~': s({ chave: 'i~', ipa: '/ĩ/', letra: 'I', esticado: 'ĩĩĩĩ', bocaFrente: 'S', dica: 'Sorriso largo, e o som passa pelo nariz.', correcao: 'Deixa o som sair pelo nariz.', palavras: [['inseto', '🦗']] }),
   O: s({ chave: 'O', ipa: '/ɔ/', letra: 'O', esticado: 'óóóó', bocaFrente: 'O', dica: 'Bolinha aberta: óóó, como em VOVÓ.', correcao: 'Abre a bolinha.', palavras: [['óculos', '👓'], ['ônibus', '🚌']] }),
   o: s({ chave: 'o', ipa: '/o/', letra: 'O', esticado: 'ôôôô', bocaFrente: 'O', dica: 'Boca redondinha: ôôô, como em VOVÔ.', correcao: 'Fecha mais a boca, redondinha.', palavras: [['ovo', '🥚'], ['ovelha', '🐑'], ['olho', '👁️']] }),
@@ -27,7 +30,7 @@ export const SONS: Record<string, Som> = {
   d: s({ chave: 'd', ipa: '/d/', letra: 'D', esticado: 'dá', bocaFrente: 'S', dica: 'A ponta da língua bate atrás dos dentes de cima, e vibra.', correcao: 'A ponta da língua bate atrás dos dentes de cima.', palavras: [['dado', '🎲'], ['dente', '🦷'], ['doce', '🍬']] }),
   f: s({ chave: 'f', ipa: '/f/', letra: 'F', esticado: 'ffff', bocaFrente: 'S', dica: 'Dentes de cima no lábio de baixo, um ventinho: fff.', correcao: 'Encosta os dentinhos de cima no lábio de baixo e sopra.', palavras: [['foca', '🦭'], ['formiga', '🐜'], ['folha', '🍃']] }),
   g: s({ chave: 'g', ipa: '/g/', letra: 'G', esticado: 'gá', bocaFrente: 'A', dica: 'O fundo da língua sobe e solta, e vibra.', correcao: 'O fundo da língua sobe e solta.', palavras: [['gato', '🐱'], ['galinha', '🐔'], ['gota', '💧']] }),
-  j: s({ chave: 'j', ipa: '/ʒ/', letra: 'J', esticado: 'jjjj', bocaFrente: 'O', dica: 'Biquinho, o ar passa e a garganta vibra: jjj.', correcao: 'Biquinho pra frente, e a garganta vibra.', palavras: [['jacaré', '🐊'], ['janela', '🪟'], ['girafa', '🦒']] }),
+  j: s({ chave: 'j', ipa: '/ʒ/', letra: 'J', esticado: 'jjjj', bocaFrente: 'O', dica: 'Biquinho, o ar passa e a garganta vibra: jjj.', correcao: 'Biquinho pra frente, e a garganta vibra.', palavras: [['jacaré', '🐊'], ['janela', '🪟']] }),
   k: s({ chave: 'k', ipa: '/k/', letra: 'C', esticado: 'cá', bocaFrente: 'A', dica: 'O fundo da língua sobe e solta o ar de uma vez.', correcao: 'O fundo da língua sobe e solta.', palavras: [['casa', '🏠'], ['cavalo', '🐴'], ['coelho', '🐰']] }),
   l: s({ chave: 'l', ipa: '/l/', letra: 'L', esticado: 'llll', bocaFrente: 'S', dica: 'Ponta da língua para cima, atrás dos dentes de cima: lll.', correcao: 'Ponta da língua atrás dos dentinhos de cima.', palavras: [['lua', '🌙'], ['leão', '🦁'], ['livro', '📖']] }),
   lh: s({ chave: 'lh', ipa: '/ʎ/', letra: 'LH', esticado: 'lhá', bocaFrente: 'S', dica: 'A língua sobe no meio e o ar escapa pelos lados.', correcao: 'A língua sobe no meio.', palavras: [['lhama', '🦙']] }),
@@ -39,7 +42,7 @@ export const SONS: Record<string, Som> = {
   s: s({ chave: 's', ipa: '/s/', letra: 'S', esticado: 'ssss', bocaFrente: 'S', dica: 'Dentinhos quase fechados, língua escondida, como uma cobrinha: sss.', correcao: 'Fecha mais os dentinhos e esconde a língua.', palavras: [['sapo', '🐸'], ['sol', '☀️'], ['suco', '🧃']] }),
   t: s({ chave: 't', ipa: '/t/', letra: 'T', esticado: 'tá', bocaFrente: 'S', dica: 'A língua toca atrás dos dentes de cima e solta: t!', correcao: 'A ponta da língua bate atrás dos dentes de cima.', palavras: [['tatu', '🦔'], ['tomate', '🍅'], ['tartaruga', '🐢']] }),
   v: s({ chave: 'v', ipa: '/v/', letra: 'V', esticado: 'vvvv', bocaFrente: 'S', dica: 'Dentes de cima no lábio de baixo, e a garganta vibra: vvv.', correcao: 'Igual ao F, mas a garganta treme; sente?', palavras: [['vaca', '🐄'], ['vela', '🕯️'], ['violão', '🎸']] }),
-  x: s({ chave: 'x', ipa: '/ʃ/', letra: 'X', esticado: 'xxxx', bocaFrente: 'O', dica: 'Biquinho do "xiii", como quem pede silêncio.', correcao: 'Biquinho pra frente.', palavras: [['chave', '🔑'], ['chuva', '🌧️'], ['xícara', '☕']] }),
+  x: s({ chave: 'x', ipa: '/ʃ/', letra: 'X', esticado: 'xxxx', bocaFrente: 'O', dica: 'Biquinho do "xiii", como quem pede silêncio.', correcao: 'Biquinho pra frente.', palavras: [['xícara', '☕'], ['chave', '🔑'], ['chuva', '🌧️']] }),
   z: s({ chave: 'z', ipa: '/z/', letra: 'Z', esticado: 'zzzz', bocaFrente: 'S', dica: 'Dentinhos juntos, como uma abelhinha, e a garganta vibra: zzz.', correcao: 'Liga o motorzinho da garganta.', palavras: [['zebra', '🦓'], ['zíper', '🤐']] })
 };
 
