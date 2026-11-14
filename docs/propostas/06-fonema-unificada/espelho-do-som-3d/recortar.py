@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """Prepara as imagens do Espelho do Som (Pillow + numpy). Uso: python3 recortar.py
 
-1. Raio-X híbrido: nas bases v2-raio-x-*.png o exterior (cabeça de vidro, cabelo, estrelas) é ótimo, mas o
-   interior da boca (dentes de dentadura, língua) não é confiável. Aqui "apagamos" a boca e a garganta:
-   o buraco é preenchido por difusão a partir da borda (tom do vidro), com borda suave e um leve
-   escurecimento. Por cima, o boneco animado (espelho-svg.js) desenha as posições corretas.
-2. Rostos de frente: recorta cada retrato das pranchas e um close da boca (zoom 3x).
+1. Rostos de frente (exercício "Imite"): recorta cada retrato das pranchas e um close da boca (zoom 3x).
+2. "Boca gigante" (frente): camada da frente com a cavidade vazada, para a língua passar por trás dos dentes.
+3. Perfil 3D (lado): recorte alinhado da Sofia e do Tales.
 """
 import os
 import numpy as np
@@ -14,47 +12,6 @@ from PIL import Image, ImageDraw, ImageFilter
 AQUI = os.path.dirname(os.path.abspath(__file__))
 IMG, OUT = os.path.join(AQUI, 'imagens'), os.path.join(AQUI, 'recortes')
 os.makedirs(OUT, exist_ok=True)
-
-# região a apagar (boca, dentes, língua, garganta) em pixels da imagem 1376×768
-APAGAR = {
-    'sofia': ('v2-raio-x-sofia.png', [
-        [(632, 338), (700, 322), (800, 318), (870, 326), (906, 350), (912, 410), (900, 460), (862, 498), (780, 508), (690, 496), (648, 462), (630, 410)],
-        [(905, 400), (950, 395), (1000, 430), (1005, 620), (940, 630), (912, 520)]]),
-    'tales': ('v2-raio-x-tales-L.png', [
-        [(520, 382), (560, 366), (650, 362), (712, 376), (726, 430), (716, 484), (680, 504), (600, 508), (545, 498), (522, 462), (516, 420)],
-        [(690, 500), (770, 505), (780, 585), (700, 590)]]),
-}
-
-
-def apaga(nome, arq, polis):
-    im = Image.open(os.path.join(IMG, arq)).convert('RGB')
-    W, H = im.size
-    m = Image.new('L', (W, H), 0)
-    d = ImageDraw.Draw(m)
-    for p in polis:
-        d.polygon(p, fill=255)
-    m = m.filter(ImageFilter.MaxFilter(9))
-    a = np.asarray(im).astype(np.float32)
-    mk = np.asarray(m) > 0
-    # difusão: preenche o buraco com as cores da borda (várias passadas de desfoque em escala reduzida)
-    f = 4
-    peq = a[::f, ::f].copy()
-    mp = mk[::f, ::f]
-    peq[mp] = peq[~mp].mean(axis=0)
-    for _ in range(220):
-        b = np.asarray(Image.fromarray(peq.astype(np.uint8)).filter(ImageFilter.BoxBlur(2))).astype(np.float32)
-        peq[mp] = b[mp]
-    cheio = np.asarray(Image.fromarray(peq.astype(np.uint8)).resize((W, H), Image.BICUBIC).filter(ImageFilter.GaussianBlur(6))).astype(np.float32)
-    # tom de "vidro" um pouco mais escuro e azulado dentro da boca
-    cheio = cheio * 0.86 + np.array([8, 18, 40], np.float32) * 0.14
-    suave = np.asarray(m.filter(ImageFilter.GaussianBlur(10))).astype(np.float32)[..., None] / 255.0
-    out = a * (1 - suave) + cheio * suave
-    Image.fromarray(out.clip(0, 255).astype(np.uint8)).save(os.path.join(OUT, f'raiox-{nome}-limpo.jpg'), quality=90)
-    print('raio-X limpo:', nome)
-
-
-for nome, (arq, polis) in APAGAR.items():
-    apaga(nome, arq, polis)
 
 # rostos de frente: (arquivo, caixa do retrato, centro da boca)
 ROSTOS = {
@@ -115,41 +72,26 @@ def boca_gigante():
     vis = vis & ~(dente & ~np.asarray(Image.fromarray((vis * 255).astype(np.uint8)).filter(ImageFilter.MinFilter(15))).astype(bool))
     m = Image.fromarray((vis * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(1.2))
     rgba = im.convert('RGBA'); rgba.putalpha(Image.eval(m, lambda v: 255 - v))
-    rgba.save(os.path.join(OUT, 'frente-camada.png'), optimize=True)
+    rgba.crop((480, 120, 920, 680)).save(os.path.join(OUT, 'frente-camada.png'), optimize=True)  # só a região da boca: x 480–920, y 120–680
     im.save(os.path.join(OUT, 'frente-fundo.jpg'), quality=92)
+    for v in 'UOMFI':  # as outras bocas (visemas) em JPG leve
+        Image.open(os.path.join(OPC, f'base-frente-{v}.png')).convert('RGB').save(os.path.join(OUT, f'frente-{v}.jpg'), quality=90)
     print('boca gigante: camada da frente com a cavidade vazada')
 
 
-def lado_3d():
-    """Janelinha da bochecha da Sofia 3D: apaga os dentes de IA e as notinhas do pescoço (difusão
-    suave a partir da borda). O boneco fiel (espelho-svg.js, personagem 'lado3d') é desenhado por cima."""
-    arq = 'base-lado-3d-vazia.png'
-    polis = [[(610, 215), (660, 182), (760, 168), (880, 168), (960, 196), (985, 250), (990, 330), (975, 400), (930, 450), (840, 472), (720, 466), (640, 430), (606, 360), (600, 280)],
-             [(565, 538), (705, 538), (705, 628), (565, 628)]]
-    im = Image.open(os.path.join(OPC, arq)).convert('RGB')
-    W, H = im.size
-    m = Image.new('L', (W, H), 0); d = ImageDraw.Draw(m)
-    for p in polis:
-        d.polygon(p, fill=255)
-    a = np.asarray(im).astype(np.float32); mk = np.asarray(m) > 0
-    f = 4; peq = a[::f, ::f].copy(); mp = mk[::f, ::f]
-    peq[mp] = peq[~mp].mean(axis=0)
-    for _ in range(220):
-        b = np.asarray(Image.fromarray(peq.astype(np.uint8)).filter(ImageFilter.BoxBlur(2))).astype(np.float32)
-        peq[mp] = b[mp]
-    cheio = np.asarray(Image.fromarray(peq.astype(np.uint8)).resize((W, H), Image.BICUBIC).filter(ImageFilter.GaussianBlur(5))).astype(np.float32)
-    # dentro da janela: rosa macio com profundidade (mais escuro no fundo da boca)
-    yy, xx = np.mgrid[0:H, 0:W]
-    r = np.clip(np.sqrt(((xx - 760) / 260.0) ** 2 + ((yy - 320) / 170.0) ** 2), 0, 1)[..., None]
-    rosa = np.array([150, 62, 92], np.float32) * (1 - r) + np.array([236, 168, 180], np.float32) * r
-    janela = np.zeros((H, W), np.uint8); ImageDraw.Draw(Image.fromarray(janela)); mj = Image.new('L', (W, H), 0); ImageDraw.Draw(mj).polygon(polis[0], fill=255)
-    pj = np.asarray(mj.filter(ImageFilter.GaussianBlur(14))).astype(np.float32)[..., None] / 255.0
-    cheio = cheio * (1 - pj) + rosa * pj
-    suave = np.asarray(m.filter(ImageFilter.GaussianBlur(6))).astype(np.float32)[..., None] / 255.0
-    out = a * (1 - suave) + cheio * suave
-    Image.fromarray(out.clip(0, 255).astype(np.uint8)).save(os.path.join(OUT, 'lado3d-sofia-limpo.jpg'), quality=92)
-    print('3D fofinho: janela limpa')
+def lado_perfil():
+    """Perfil 3D (Sofia e Tales) para a vista DE LADO: recorta a cabeça de modo que o meio dos lábios caia
+    sempre no mesmo ponto (1130, 760) de uma imagem 1800×1200. A janelinha e a boca por dentro são
+    desenhadas por código (espelho-lado.js) por cima."""
+    # meio dos lábios em pixels da base 2752×1536
+    for nome, (lx, ly) in {'sofia': (1686, 771), 'tales': (1710, 892)}.items():
+        im = Image.open(os.path.join(OPC, f'base-lado-{nome}-perfil.jpg')).convert('RGB')
+        f = 1.376 / 2  # pixels da base por pixel do recorte
+        x0, y0 = lx - 1130 * f, ly - 760 * f
+        c = im.crop((round(x0), round(y0), round(x0 + 1800 * f), round(y0 + 1200 * f))).resize((1800, 1200), Image.LANCZOS)
+        c.save(os.path.join(OUT, f'lado-{nome}.jpg'), quality=88)
+        print('perfil de lado:', nome)
 
 
 boca_gigante()
-lado_3d()
+lado_perfil()

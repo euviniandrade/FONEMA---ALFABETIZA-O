@@ -28,7 +28,7 @@
   'use strict';
 
   // superfície de cima da língua em repouso (boca quase fechada)
-  const REPOUSO = [[-0.62, -0.28], [-1.2, 0.02], [-2.1, 0.32], [-3.2, 0.42], [-4.35, -0.3], [-4.55, -1.6]];
+  const REPOUSO = [[-0.88, -0.42], [-1.2, 0.02], [-2.1, 0.32], [-3.2, 0.42], [-4.35, -0.3], [-4.55, -1.6]];
   const LAB = (ab, lg, arr = 0, ld = 0) => ({ ab, lg, arr, ld });
 
   const F = {};
@@ -36,19 +36,19 @@
 
   /* ---------- VOGAIS ORAIS (7) ---------- */
   def('a', { ipa: 'a', letra: 'A', ex: 'abelha', fala: 'aaaa', jaw: 13, lab: LAB(1.0, 1.05),
-    lin: [[-0.66, -0.36], [-1.3, -0.32], [-2.2, -0.24], [-3.3, 0.0], [-4.6, -0.5], [-4.75, -1.7]],
+    lin: [[-0.88, -0.46], [-1.4, -0.36], [-2.2, -0.24], [-3.3, 0.0], [-4.6, -0.5], [-4.75, -1.7]],
     t: { labios: 'bem abertos', lingua: 'baixa e no meio, ponta atrás dos dentes de baixo', contato: 'nenhum (o ar passa livre)' },
     boca: ['A', true], zona: 'baixo', dica: 'Boca bem aberta, a língua deitadinha lá embaixo: aaa.' });
   def('E', { ipa: 'ɛ', letra: 'É', ex: 'é, pé', fala: 'éééé', jaw: 9, lab: LAB(0.7, 1.12),
-    lin: [[-0.62, -0.3], [-1.2, -0.04], [-2.0, 0.22], [-3.1, 0.16], [-4.35, -0.5], [-4.55, -1.7]],
+    lin: [[-0.88, -0.44], [-1.3, -0.08], [-2.0, 0.22], [-3.1, 0.16], [-4.35, -0.5], [-4.55, -1.7]],
     t: { labios: 'abertos, esticados', lingua: 'frente, meio-baixa', contato: 'nenhum' }, boca: ['A', false], zona: 'baixo',
     dica: 'Boca aberta, sorrindo um pouco: éééé.' });
   def('e', { ipa: 'e', letra: 'Ê', ex: 'elefante', fala: 'êêêê', jaw: 6, lab: LAB(0.45, 1.15),
-    lin: [[-0.6, -0.28], [-1.15, 0.12], [-1.9, 0.56], [-3.0, 0.46], [-4.25, -0.42], [-4.45, -1.6]],
+    lin: [[-0.88, -0.44], [-1.25, 0.08], [-1.9, 0.56], [-3.0, 0.46], [-4.25, -0.42], [-4.45, -1.6]],
     t: { labios: 'meio abertos, sorriso pequeno', lingua: 'frente, meio-alta', contato: 'nenhum' }, boca: ['S', false], zona: 'baixo',
     dica: 'Sorriso pequeno, boca meio aberta: êêê.' });
   def('i', { ipa: 'i', letra: 'I', ex: 'ilha', fala: 'iiii', jaw: 3, lab: LAB(0.24, 1.32),
-    lin: [[-0.6, -0.25], [-1.1, 0.32], [-1.8, 0.96], [-2.9, 0.86], [-4.05, -0.2], [-4.25, -1.5]],
+    lin: [[-0.88, -0.44], [-1.2, 0.28], [-1.8, 0.96], [-2.9, 0.86], [-4.05, -0.2], [-4.25, -1.5]],
     t: { labios: 'esticados (sorriso largo)', lingua: 'frente e alta, pertinho do céu da boca', contato: 'lados da língua nos dentes de cima' },
     boca: ['S', false], zona: 'baixo', dica: 'Sorriso bem largo, a língua sobe na frente: iii.' });
   def('O', { ipa: 'ɔ', letra: 'Ó', ex: 'óculos', fala: 'óóóó', jaw: 10, lab: LAB(0.78, 0.72, 0.55),
@@ -73,7 +73,7 @@
   });
 
   /* ---------- CONSOANTES ---------- */
-  const fechada = [[-0.62, -0.26], [-1.2, 0.05], [-2.1, 0.34], [-3.2, 0.42], [-4.35, -0.3], [-4.55, -1.6]];
+  const fechada = [[-0.88, -0.42], [-1.2, 0.05], [-2.1, 0.34], [-3.2, 0.42], [-4.35, -0.3], [-4.55, -1.6]];
   def('p', { ipa: 'p', letra: 'P', ex: 'pato', fala: 'pá', jaw: 1, lab: LAB(0, 1.0), lin: fechada, voz: false, modo: 'plosiva',
     t: { labios: 'fechados, depois abrem com um soprinho', lingua: 'descansando', contato: 'lábio com lábio' }, boca: ['M', true], zona: 'labios',
     dica: 'Lábios fechadinhos, depois abrem com um soprinho, sem vibrar: p!' });
@@ -90,7 +90,8 @@
     t: { labios: 'lábio de baixo encosta nos dentes de cima', lingua: 'descansando', contato: 'lábio de baixo + dentes de cima' }, boca: ['S', false], zona: 'dentes',
     dica: 'Dentes de cima no lábio de baixo, e a garganta vibra: vvv.' });
 
-  const alveolar = [[-0.8, 0.5], [-1.3, 0.8], [-2.1, 0.78], [-3.2, 0.5], [-4.3, -0.3], [-4.5, -1.6]];
+  // T/D/N: ponta no alvéolo e a língua mais PLANA, deitada perto do céu da boca
+  const alveolar = [[-0.8, 0.5], [-1.3, 0.84], [-2.1, 0.84], [-3.2, 0.52], [-4.3, -0.3], [-4.5, -1.6]];
   def('t', { ipa: 't', letra: 'T', ex: 'tatu', fala: 'tá', jaw: 2, tj: 0, lab: LAB(0.25, 1.06), lin: alveolar, voz: false, modo: 'plosiva',
     t: { labios: 'entreabertos', lingua: 'ponta sobe', contato: 'ponta da língua atrás dos dentes de cima (alvéolo)' }, boca: ['S', false], zona: 'alveolo',
     dica: 'Ponta da língua atrás dos dentes de cima, um toquinho, sem vibrar: t!' });
@@ -101,29 +102,32 @@
     t: { labios: 'entreabertos', lingua: 'ponta sobe', contato: 'ponta da língua no alvéolo' }, boca: ['S', false], zona: 'alveolo',
     dica: 'Ponta da língua atrás dos dentes de cima, e o som sai pelo nariz: nnn.' });
   def('l', { ipa: 'l', letra: 'L', ex: 'lua', fala: 'llllá', jaw: 3, tj: 0, lab: LAB(0.32, 1.06), larg: 0.68, ar: 'lateral', modo: 'lateral',
-    lin: [[-0.8, 0.5], [-1.3, 0.66], [-2.1, 0.36], [-3.2, 0.36], [-4.4, -0.4], [-4.55, -1.6]],
+    // L: só a PONTA sobe e toca o alvéolo; o dorso fica BAIXO (bem diferente do K)
+    lin: [[-0.8, 0.5], [-1.22, 0.42], [-2.1, -0.18], [-3.2, -0.2], [-4.4, -0.62], [-4.55, -1.7]],
     t: { labios: 'entreabertos', lingua: 'ponta encosta, lados descem', contato: 'ponta da língua no alvéolo; o ar passa pelos lados' }, boca: ['S', false], zona: 'alveolo',
     dica: 'A ponta da língua encosta atrás dos dentes de cima, e o ar passa pelos ladinhos: lll.' });
   def('r', { ipa: 'ɾ', letra: 'R', ex: 'arara (r fraco)', fala: 'ará', jaw: 3, tj: 0, lab: LAB(0.32, 1.06), modo: 'tepe',
-    lin: [[-0.95, 0.16], [-1.45, 0.5], [-2.2, 0.6], [-3.2, 0.42], [-4.35, -0.35], [-4.55, -1.6]],
+    lin: [[-0.98, 0.1], [-1.45, 0.3], [-2.2, 0.32], [-3.2, 0.3], [-4.35, -0.4], [-4.55, -1.6]],
     t: { labios: 'entreabertos', lingua: 'a ponta bate uma vez, rapidinho', contato: 'toque rápido da ponta no alvéolo' }, boca: ['S', false], zona: 'alveolo',
     dica: 'O "r" fraquinho de arara: a ponta da língua dá uma batidinha atrás dos dentes de cima.' });
   def('s', { ipa: 's', letra: 'S', ex: 'sapo', fala: 'ssss', jaw: 1.5, tj: 0, lab: LAB(0.28, 1.22), voz: false, modo: 'fricativa',
-    lin: [[-0.72, 0.27], [-1.2, 0.64], [-2.0, 0.66], [-3.1, 0.48], [-4.3, -0.32], [-4.5, -1.6]],
+    lin: [[-0.76, 0.3], [-1.22, 0.62], [-2.0, 0.68], [-3.1, 0.48], [-4.3, -0.32], [-4.5, -1.6]],
     t: { labios: 'sorriso, dentes juntinhos', lingua: 'ponta perto do alvéolo, sem encostar', contato: 'quase: fica um caminho fininho para o ar' }, boca: ['S', true], zona: 'alveolo',
     dica: 'Dentes juntinhos, a ponta da língua pertinho, e o ar sai como uma cobrinha: sss.' });
   def('z', { ipa: 'z', letra: 'Z', ex: 'zebra', fala: 'zzzz', jaw: 1.5, tj: 0, lab: LAB(0.28, 1.22), modo: 'fricativa',
-    lin: [[-0.72, 0.27], [-1.2, 0.64], [-2.0, 0.66], [-3.1, 0.48], [-4.3, -0.32], [-4.5, -1.6]],
+    lin: [[-0.76, 0.3], [-1.22, 0.62], [-2.0, 0.68], [-3.1, 0.48], [-4.3, -0.32], [-4.5, -1.6]],
     t: { labios: 'sorriso, dentes juntinhos', lingua: 'ponta perto do alvéolo, sem encostar', contato: 'quase: caminho fininho para o ar' }, boca: ['S', true], zona: 'alveolo',
     dica: 'Dentes juntinhos, como uma abelhinha, e a garganta vibra: zzz.' });
-  const posAlv = [[-1.0, 0.36], [-1.5, 0.84], [-2.2, 0.96], [-3.2, 0.62], [-4.35, -0.3], [-4.55, -1.6]];
+  // CH/J: língua mais recuada e alta (sem encostar)
+  const posAlv = [[-1.08, 0.42], [-1.55, 0.9], [-2.3, 1.04], [-3.2, 0.72], [-4.35, -0.25], [-4.55, -1.6]];
   def('x', { ipa: 'ʃ', letra: 'CH/X', ex: 'chuva', fala: 'xxxx', jaw: 2, tj: 0, lab: LAB(0.32, 0.66, 0.8), lin: posAlv, voz: false, modo: 'fricativa',
     t: { labios: 'biquinho', lingua: 'ponta mais para trás, lâmina perto do céu da boca', contato: 'quase, atrás do alvéolo' }, boca: ['O', false], zona: 'palato',
     dica: 'Boca em biquinho, a língua um pouco mais para trás, o ar sai como quem pede silêncio: xxx.' });
   def('j', { ipa: 'ʒ', letra: 'J', ex: 'jacaré', fala: 'jjjj', jaw: 2, tj: 0, lab: LAB(0.32, 0.66, 0.8), lin: posAlv, modo: 'fricativa',
     t: { labios: 'biquinho', lingua: 'ponta mais para trás, lâmina perto do céu da boca', contato: 'quase, atrás do alvéolo' }, boca: ['O', false], zona: 'palato',
     dica: 'Boca em biquinho, o ar passa e a garganta vibra: jjj.' });
-  const velar = [[-0.65, -0.3], [-1.3, -0.08], [-2.3, 0.45], [-3.95, 1.16], [-4.6, 0.25], [-4.72, -1.5]];
+  // K/G: ponta BAIXA atrás dos dentes de baixo; o DORSO sobe e toca o véu (fundo do céu da boca)
+  const velar = [[-0.95, -0.68], [-1.55, -0.5], [-2.65, 0.55], [-3.7, 1.27], [-4.6, 0.55], [-4.75, -1.4]];
   def('k', { ipa: 'k', letra: 'C/K', ex: 'casa', fala: 'cá', jaw: 4, tj: 0, lab: LAB(0.42, 1.05), lin: velar, voz: false, modo: 'plosiva',
     t: { labios: 'entreabertos', lingua: 'o fundo (dorso) sobe', contato: 'dorso da língua no véu (céu mole)' }, boca: ['A', false], zona: 'veu',
     dica: 'O fundo da língua sobe, encosta no céu mole e solta o ar de uma vez, sem vibrar: k!' });
@@ -131,17 +135,35 @@
     t: { labios: 'entreabertos', lingua: 'o fundo (dorso) sobe', contato: 'dorso da língua no véu (céu mole)' }, boca: ['A', false], zona: 'veu',
     dica: 'O fundo da língua sobe e solta o ar, e a garganta vibra: g!' });
   def('rr', { ipa: 'ʁ', letra: 'RR', ex: 'rato, carro', fala: 'rrrá', jaw: 5, tj: 0.4, lab: LAB(0.45, 1.05), voz: false, modo: 'vibrante',
-    lin: [[-0.66, -0.32], [-1.3, -0.22], [-2.3, 0.12], [-3.6, 0.62], [-4.82, 0.5], [-4.85, -1.4]],
+    lin: [[-0.95, -0.72], [-1.55, -0.5], [-2.5, 0.0], [-3.7, 0.62], [-4.82, 0.5], [-4.85, -1.4]],
     t: { labios: 'entreabertos', lingua: 'a raiz vai para trás, perto da úvula', contato: 'quase: o ar raspa no fundo da garganta' }, boca: ['A', false], zona: 'garganta',
     dica: 'O "rr" de rato: o som raspa lá no fundo da garganta, como um motorzinho. (Em muitos sotaques soa como um sopro raspado.)' });
   def('nh', { ipa: 'ɲ', letra: 'NH', ex: 'ninho', fala: 'nhá', jaw: 2, tj: 0, lab: LAB(0.25, 1.06), vel: 1, ar: 'nasal', modo: 'nasal',
-    lin: [[-0.65, -0.24], [-1.2, 0.56], [-1.95, 1.24], [-3.0, 0.92], [-4.2, -0.22], [-4.45, -1.6]],
+    lin: [[-0.92, -0.5], [-1.3, 0.5], [-2.0, 1.25], [-3.0, 0.95], [-4.2, -0.22], [-4.45, -1.6]],
     t: { labios: 'entreabertos', lingua: 'o meio sobe; a ponta fica embaixo', contato: 'meio da língua no céu da boca duro' }, boca: ['S', false], zona: 'palato',
     dica: 'O meio da língua encosta no céu da boca, e o som sai pelo nariz: nh.' });
   def('lh', { ipa: 'ʎ', letra: 'LH', ex: 'palhaço', fala: 'lhá', jaw: 2, tj: 0, lab: LAB(0.25, 1.06), larg: 0.7, ar: 'lateral', modo: 'lateral',
-    lin: [[-0.65, -0.22], [-1.2, 0.56], [-1.95, 1.24], [-3.0, 0.84], [-4.25, -0.3], [-4.45, -1.6]],
+    lin: [[-0.92, -0.5], [-1.3, 0.5], [-2.0, 1.25], [-3.0, 0.86], [-4.25, -0.3], [-4.45, -1.6]],
     t: { labios: 'entreabertos', lingua: 'o meio sobe; os lados descem', contato: 'meio da língua no céu da boca; o ar passa pelos lados' }, boca: ['S', false], zona: 'palato',
     dica: 'O meio da língua encosta no céu da boca, e o ar passa pelos ladinhos: lh.' });
+
+
+  // frase curtinha de cada som (aparece embaixo da boca, nas duas vistas)
+  const FRASES = {
+    a: 'Boca bem aberta! A língua fica deitadinha.', E: 'Boca aberta, sorrindo um pouquinho.', e: 'Sorriso pequeno. A língua sobe um pouco.',
+    i: 'Sorriso grande! A língua sobe na frente.', O: 'Boca redonda e aberta.', o: 'Boca redondinha!', u: 'Biquinho! A língua vai lá para trás.',
+    'a~': 'Boca aberta. O som sai também pelo nariz!', 'e~': 'Sorriso pequeno. O som sai também pelo nariz!', 'i~': 'Sorriso grande. O som sai também pelo nariz!',
+    'o~': 'Boca redondinha. O som sai também pelo nariz!', 'u~': 'Biquinho. O som sai também pelo nariz!',
+    p: 'Lábios fechados… e soltam o ar!', b: 'Lábios fechados… soltam, e a garganta vibra!', m: 'Lábios fechados, o ar sai pelo nariz.',
+    f: 'Dentes de cima no lábio de baixo. Sai um ventinho!', v: 'Dentes de cima no lábio de baixo. A garganta vibra!',
+    t: 'A ponta da língua sobe… e solta!', d: 'A ponta da língua sobe, solta, e a garganta vibra!', n: 'A ponta da língua sobe, o ar sai pelo nariz.',
+    l: 'A língua sobe! O ar passa pelos ladinhos.', r: 'A pontinha da língua bate rapidinho!',
+    s: 'Dentes juntinhos, o ar sai fininho.', z: 'Dentes juntinhos, e a garganta vibra.',
+    x: 'Biquinho! O ar sai fazendo “shhh”.', j: 'Biquinho, e a garganta vibra.',
+    nh: 'O meio da língua sobe, o ar sai pelo nariz.', lh: 'O meio da língua sobe no céu da boca.',
+    k: 'O fundo da língua sobe lá atrás!', g: 'O fundo da língua sobe, e a garganta vibra!', rr: 'O som raspa lá no fundo da garganta.'
+  };
+  for (const k in F) F[k].frase = FRASES[k] || '';
 
   // nomes falados (para a criança) dos pontos do exercício "Onde está a língua?"
   const ZONAS = {
@@ -187,27 +209,5 @@
     return CEU[CEU.length - 1][1];
   }
 
-  // voz sintetizada só como SIMULAÇÃO; no produto: áudio gravado (fonoaudióloga / vozes oficiais da Sofia e do Tales)
-  let vozPt = null;
-  function achaVoz() {
-    if (!('speechSynthesis' in global)) return null;
-    const vs = speechSynthesis.getVoices();
-    return vs.find((v) => /pt[-_]BR/i.test(v.lang)) || vs.find((v) => /^pt/i.test(v.lang)) || null;
-  }
-  if ('speechSynthesis' in global) { vozPt = achaVoz(); speechSynthesis.onvoiceschanged = () => { vozPt = achaVoz(); }; }
-  function falar(texto, { lento = false, tom = 1.25 } = {}) {
-    return new Promise((ok) => {
-      if (!('speechSynthesis' in global) || global.ESPELHO_MUDO) return ok();
-      try {
-        speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(texto);
-        u.lang = 'pt-BR'; if (vozPt) u.voice = vozPt; u.rate = lento ? 0.6 : 0.95; u.pitch = tom;
-        u.onend = u.onerror = () => ok();
-        speechSynthesis.speak(u);
-        setTimeout(ok, 6000);
-      } catch (e) { ok(); }
-    });
-  }
-
-  global.FonemasPT = { F, GRUPOS, ZONAS, REPOUSO, CEU, DOBRA, pose, mistura, suave, giraMand, ceuY, falar };
+  global.FonemasPT = { F, GRUPOS, ZONAS, REPOUSO, CEU, DOBRA, pose, mistura, suave, giraMand, ceuY };
 })(typeof window !== 'undefined' ? window : globalThis);
