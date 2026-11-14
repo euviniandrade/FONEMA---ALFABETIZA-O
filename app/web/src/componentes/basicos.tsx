@@ -56,7 +56,7 @@ export function BotaoOuvir({ onClick, rotulo = 'Ouvir' }: { onClick: () => void;
 export function Moedinhas({ valor, id }: { valor: number; id?: string }) {
   return (
     <div className="moedas" id={id} aria-live="polite" data-testid="moedinhas">
-      <img src={asset('recompensas/cofrinho-tatu.webp')} alt="" />
+      <img src={asset('recompensas/cofrinho-porquinho.webp')} alt="" />
       <b>{valor}</b>
       <span className="sr">moedinhas</span>
     </div>
