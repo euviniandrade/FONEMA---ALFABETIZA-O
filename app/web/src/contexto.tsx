@@ -50,7 +50,7 @@ export function ProvedorApp({ children, repo }: { children: ReactNode; repo: Rep
     const reduz = prefs.menosMovimento || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || modoTeste();
     document.documentElement.classList.toggle('contraste', prefs.contraste);
     document.documentElement.classList.toggle('menos-movimento', !!reduz);
-    localStorage.setItem('fonema-prefs', JSON.stringify(prefs));
+    try { localStorage.setItem('fonema-prefs', JSON.stringify(prefs)); } catch { /* sem armazenamento */ }
   }, [prefs, configBruta]);
 
   const salvarConfig = useCallback(async (c: Partial<ConfigPlataforma>) => {

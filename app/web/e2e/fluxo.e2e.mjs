@@ -215,7 +215,7 @@ async function main() {
   await subirServidor();
   const browser = await chromium.launch({ executablePath: EXEC, args: ['--autoplay-policy=no-user-gesture-required'] });
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: CAPTURAS ? 2 : 1, locale: 'pt-BR' });
-  await ctx.addInitScript((c) => { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); }, COLETAR);
+  await ctx.addInitScript((c) => { try { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); } catch { } }, COLETAR);
   const page = await ctx.newPage();
   const erros = [];
   page.on('pageerror', (e) => erros.push(String(e)));
@@ -417,7 +417,7 @@ async function main() {
   {
   console.log('9. Jornada inteira: Alfabeto → Sílabas → Palavras → Meu nome (modo demonstração: domínio em 1 sessão)');
     const ctx2 = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: 'pt-BR' });
-    await ctx2.addInitScript((c) => { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); }, COLETAR);
+    await ctx2.addInitScript((c) => { try { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); } catch { } }, COLETAR);
     const pj = await ctx2.newPage();
     pj.on('pageerror', (e) => erros.push(String(e)));
     await pj.goto(BASE + '#/adulto/config');
@@ -493,7 +493,7 @@ async function main() {
 
   if (CAPTURAS_AL) {
     const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR' });
-    await cel.addInitScript(() => localStorage.setItem('fonema-teste-rapido', '1'));
+    await cel.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { } });
     const p3 = await cel.newPage();
     const capC = (_, nome) => capA(p3, `celular-${nome}`, 500);
     await p3.goto(BASE + '#/adulto/cadastro');
@@ -532,7 +532,7 @@ async function main() {
 
   if (CAPTURAS_V2) {
     const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR' });
-    await cel.addInitScript(() => localStorage.setItem('fonema-teste-rapido', '1'));
+    await cel.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { } });
     const p2 = await cel.newPage();
     // o celular tem o próprio banco: cadastro rápido
     await p2.goto(BASE + '#/adulto/cadastro');
@@ -581,7 +581,7 @@ async function main() {
 
   if (CAPTURAS_V2) {
     const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR' });
-    await cel.addInitScript(() => localStorage.setItem('fonema-teste-rapido', '1'));
+    await cel.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { } });
     const p2 = await cel.newPage();
     // o celular tem o próprio banco: cadastro rápido
     await p2.goto(BASE + '#/adulto/cadastro');
