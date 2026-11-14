@@ -82,6 +82,34 @@ export function chaveNome(n: string): string {
 }
 
 /**
+ * Pacote de áudio opcional (publicação em página única): se existir ./audio/pacote.json
+ * ({ arquivo, itens: { "audio/falas/x.mp3": [inicio, tamanho] } }), os clipes são lidos de um único
+ * arquivo binário e tocados por blob. Sem o pacote, cada clipe é carregado pelo próprio caminho.
+ */
+let pacote: Promise<{ dados: ArrayBuffer; itens: Record<string, [number, number]> } | null> | null = null;
+const blobs = new Map<string, string>();
+function carregarPacote() {
+  pacote ??= fetch('./audio/pacote.json')
+    .then((r) => (r.ok ? r.json() : null))
+    .then(async (idx) => {
+      if (!idx?.arquivo) return null;
+      const dados = await (await fetch(`./audio/${idx.arquivo}`)).arrayBuffer();
+      return { dados, itens: idx.itens as Record<string, [number, number]> };
+    })
+    .catch(() => null);
+  return pacote;
+}
+export async function urlDoAudio(caminho: string): Promise<string> {
+  const p = await carregarPacote();
+  const chave = caminho.replace(/^\.\//, '');
+  const it = p?.itens[chave];
+  if (!p || !it) return caminho;
+  let u = blobs.get(chave);
+  if (!u) { u = URL.createObjectURL(new Blob([p.dados.slice(it[0], it[0] + it[1])], { type: 'audio/mpeg' })); blobs.set(chave, u); }
+  return u;
+}
+
+/**
  * Vozes OFICIAIS pré-geradas (ElevenLabs: "Sofia — FONEMA" e "Tales — FONEMA").
  * A fala é dividida no nome da criança: [trecho] + [clipe do nome] + [trecho]. Se o nome não tem clipe,
  * toca a variante sem o nome (o nome continua escrito na tela). Só cai no speechSynthesis se faltar um trecho.
@@ -134,8 +162,10 @@ export class ProvedorPreGerado implements ProvedorVoz {
     const rate = (VOZ_DO_PERSONAGEM[quem]?.rate ?? 1) * (o.rate && o.rate < 0.85 ? 0.85 : 1);
     for (const a of arqs) {
       if (g !== this.geracao) return;
+      const url = await urlDoAudio(a);
+      if (g !== this.geracao) return;
       await new Promise<void>((resolve) => {
-        const el = new Audio(a);
+        const el = new Audio(url);
         this.atual = el;
         el.playbackRate = rate;
         (el as any).preservesPitch = rate === 1;
