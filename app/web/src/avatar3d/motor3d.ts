@@ -22,7 +22,8 @@ function descartar(obj: THREE.Object3D) {
     }
     m.geometry.dispose();
     for (const mat of mats) {
-      (mat as THREE.MeshStandardMaterial).map?.dispose();
+      const mapa = (mat as THREE.MeshStandardMaterial).map;
+      if (mapa && !mapa.userData.compartilhada) mapa.dispose();
       mat.dispose();
     }
   });
@@ -362,22 +363,15 @@ export function desenharMiniatura(a: Aparencia, tipo: Enquadramento, largura: nu
     const { cena, canvas } = foraDaTela;
     const boneco = new Boneco();
     try {
-      const T: number[] = [performance.now()];
       await boneco.aplicar(a);
-      T.push(performance.now());
       boneco.parado();
       boneco.raiz.rotation.y = giro;
       cena.cena.add(boneco.raiz);
       cena.renderizador.setPixelRatio(1);
       cena.renderizador.setSize(largura, altura, false);
       cena.enquadrar(tipo, largura / altura, boneco.sentado);
-      T.push(performance.now());
       cena.desenhar();
-      T.push(performance.now());
-      const u = canvas.toDataURL('image/webp', 0.9);
-      T.push(performance.now());
-      ((window as unknown as { __medidas: number[][] }).__medidas ??= []).push(T.map((x) => Math.round(x - T[0])));
-      return u;
+      return canvas.toDataURL('image/webp', 0.9);
     } finally {
       cena.cena.remove(boneco.raiz);
       boneco.descartar();

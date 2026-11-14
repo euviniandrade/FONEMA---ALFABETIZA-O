@@ -66,7 +66,22 @@ const dirAzEl = (az: number, el: number) => new THREE.Vector3(Math.sin(az) * Mat
 const noRosto = (rosto: string | null, az: number, el: number, f = 1) => naCabeca(rosto, dirAzEl(az, el), f);
 
 /** Textura do olho (íris com degradê, pupila e brilhos) para uma esfera: o centro da íris fica virado para +Z. */
+const texturas = new Map<string, THREE.CanvasTexture>();
+/** Texturas desenhadas em canvas são guardadas e compartilhadas entre os bonecos (palco e miniaturas): desenha e envia à placa uma vez só. */
+function compartilhada(chave: string, criar: () => THREE.CanvasTexture): THREE.CanvasTexture {
+  let t = texturas.get(chave);
+  if (!t) {
+    t = criar();
+    t.userData.compartilhada = true;
+    texturas.set(chave, t);
+  }
+  return t;
+}
+
 function texturaOlho(hexIris: string): THREE.CanvasTexture {
+  return compartilhada(`olho:${hexIris}`, () => desenharOlho(hexIris));
+}
+function desenharOlho(hexIris: string): THREE.CanvasTexture {
   const c = document.createElement('canvas');
   c.width = 1024; c.height = 512;
   const g = c.getContext('2d')!;
@@ -495,6 +510,9 @@ export function criarCorpo(a: Aparencia, sentado: boolean): THREE.Group {
 
 function texturaTecido(p: PecaVestida): THREE.CanvasTexture | null {
   if (!p.estampa) return null;
+  return compartilhada(`tecido:${p.estampa}:${p.cor}:${p.cor2}`, () => desenharTecido(p));
+}
+function desenharTecido(p: PecaVestida): THREE.CanvasTexture {
   const c = document.createElement('canvas');
   c.width = 512; c.height = 512;
   const g = c.getContext('2d')!;
