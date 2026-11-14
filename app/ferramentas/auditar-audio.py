@@ -209,7 +209,7 @@ def transcrever(arq, tentativas=4):
         except Exception as e:  # rede/limite: tenta de novo
             erro = e
             corpo_erro = getattr(e, 'read', lambda: b'')()
-            if b'spending cap' in corpo_erro or b'RESOURCE_EXHAUSTED' in corpo_erro and b'quota' in corpo_erro.lower():
+            if getattr(e, 'code', 0) == 429 or b'spending cap' in corpo_erro or b'RESOURCE_EXHAUSTED' in corpo_erro:
                 raise SemCota('o projeto do Gemini atingiu o teto de gasto/cota')
             time.sleep(2 * (t + 1))
     raise RuntimeError(f'transcrição falhou: {erro}')
