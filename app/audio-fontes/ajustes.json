@@ -1,0 +1,167 @@
+{
+ "falas": {
+  "tales|É ou ê? Repara no meu sorriso. Sua vez,": {
+   "versao": 2
+  },
+  "tales|Oi,": {
+   "versao": 2,
+   "texto": "Oi!"
+  },
+  "tales|Andar 1! Qual letra,": {
+   "versao": 2
+  },
+  "tales|O eco falou! Qual letra,": {
+   "versao": 2
+  },
+  "tales|/uuuu/, biquinho de assobio. Sua vez,": {
+   "versao": 2
+  },
+  "tales|/llll/, a língua sobe e fica lá. Sua vez,": {
+   "versao": 2
+  },
+  "tales|A tartaruga volta! Valeu,": {
+   "versao": 2
+  },
+  "tales|Ops! Eu disse que BOLA rima com MESA. Me ensina,": {
+   "versao": 2
+  },
+  "tales|gato… qual rima com gato?": {
+   "versao": 2
+  },
+  "tales|Esses são nomes de bichinhos da mata. Lê pra mim,": {
+   "versao": 2
+  },
+  "tales|Olha só o que chegou para você,": {
+   "versao": 2
+  },
+  "tales|Passa a bola,": {
+   "versao": 2
+  },
+  "tales|Você me ensinou! Valeu,": {
+   "versao": 2
+  },
+  "tales|Ahh, agora eu entendi! Obrigado,": {
+   "versao": 2
+  },
+  "tales|Sorriso aberto: éééé. Sua vez,": {
+   "versao": 2
+  },
+  "tales|Me escuta,": {
+   "versao": 2
+  },
+  "tales|O Paçoca escondeu tudo que começa com /ffff/. Bora,": {
+   "versao": 2
+  },
+  "tales|Ouviu isso,": {
+   "versao": 2
+  },
+  "tales|Gato… qual rima com gato?": {
+   "versao": 2
+  },
+  "tales|AAAA": {
+   "versao": 2
+  },
+  "sofia|U ou O,": {
+   "versao": 2
+  },
+  "sofia|Os dois são O. Sua vez,": {
+   "versao": 2
+  },
+  "tales|Ops! Eu acho que esse som é do A… Me ensina?": {
+   "versao": 2
+  },
+  "tales|mo… la! Monta e o gol vale!": {
+   "versao": 2
+  },
+  "sofia|óóóó": {
+   "versao": 2,
+   "texto": "Óóó!"
+  }
+ },
+ "nomes": {
+  "tales|kaua": {
+   "versao": 2,
+   "texto": "Kauã!"
+  },
+  "tales|raul": {
+   "versao": 2,
+   "texto": "Raul!"
+  },
+  "tales|caua": {
+   "versao": 2,
+   "texto": "Cauã!"
+  },
+  "tales|enrico": {
+   "versao": 2,
+   "texto": "Enrico!"
+  },
+  "tales|liz": {
+   "versao": 2,
+   "texto": "Liz!"
+  },
+  "tales|noah": {
+   "versao": 2,
+   "texto": "Noah!"
+  },
+  "tales|pietra": {
+   "versao": 2,
+   "texto": "Pietra!"
+  },
+  "tales|eloa": {
+   "versao": 2,
+   "texto": "Eloá!"
+  },
+  "tales|yasmin": {
+   "versao": 2,
+   "texto": "Yasmin!"
+  },
+  "tales|theo": {
+   "versao": 2,
+   "texto": "Théo!"
+  },
+  "tales|henry": {
+   "versao": 2,
+   "texto": "Henry!"
+  },
+  "tales|luna": {
+   "versao": 2,
+   "texto": "Luna!"
+  },
+  "tales|ryan": {
+   "versao": 2,
+   "texto": "Ryan!"
+  },
+  "tales|nicole": {
+   "versao": 2,
+   "texto": "Nicole!"
+  },
+  "tales|luan": {
+   "versao": 2,
+   "texto": "Luan!"
+  },
+  "tales|igor": {
+   "versao": 2,
+   "texto": "Igor!"
+  },
+  "sofia|theo": {
+   "versao": 2,
+   "texto": "Théo!"
+  },
+  "sofia|laura": {
+   "versao": 2,
+   "texto": "Laura!"
+  },
+  "sofia|benicio": {
+   "versao": 2,
+   "texto": "Benício!"
+  },
+  "sofia|isis": {
+   "versao": 2,
+   "texto": "Ísis!"
+  },
+  "sofia|agatha": {
+   "versao": 2,
+   "texto": "Agatha!"
+  }
+ }
+}
