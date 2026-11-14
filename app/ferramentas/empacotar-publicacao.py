@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Prepara o dist/ para publicar como página única: junta os mp3 de audio/falas e audio/nomes num pacote
-(audio/pacote.bin + audio/pacote.json) e remove os arquivos soltos. Uso: empacotar-publicacao.py <dist> <saida>"""
+(audio/pacote.mp3 + audio/pacote.json) e remove os arquivos soltos. Uso: empacotar-publicacao.py <dist> <saida>"""
 import json, os, shutil, sys
 src, out = sys.argv[1], sys.argv[2]
 if os.path.exists(out): sys.exit(f'{out} já existe: escolha uma pasta nova')
@@ -18,8 +18,8 @@ for base in ('audio/falas', 'audio/nomes'):
             p = os.path.join(raiz, a); d = open(p, 'rb').read()
             itens[os.path.relpath(p, out).replace(os.sep, '/')] = [len(blob), len(d)]; blob += d
             if a not in manter: os.remove(p)
-open(os.path.join(out, 'audio/pacote.bin'), 'wb').write(blob)
-json.dump({'arquivo': 'pacote.bin', 'itens': itens}, open(os.path.join(out, 'audio/pacote.json'), 'w'))
+open(os.path.join(out, 'audio/pacote.mp3'), 'wb').write(blob)
+json.dump({'arquivo': 'pacote.mp3', 'itens': itens}, open(os.path.join(out, 'audio/pacote.json'), 'w'))
 for f in ('sw.js', 'registerSW.js'):
     pass  # o service worker não roda na página publicada; os arquivos ficam, sem efeito
 n = sum(len(fs) for _, _, fs in os.walk(out))
