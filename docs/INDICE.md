@@ -1,5 +1,7 @@
 # Índice do repositório FONEMA
 
+> **Comece por aqui:** [ESTADO-ATUAL.md](ESTADO-ATUAL.md) — o que está no ar, o que está pela metade e como retomar.
+
 Mapa navegável de todas as pastas e documentos principais. Comece pelo [README da raiz](../README.md). Regras de organização: [CONVENCOES.md](CONVENCOES.md). Qualidade e pendências: [QUALIDADE.md](QUALIDADE.md).
 
 ## 1. Guias do repositório
