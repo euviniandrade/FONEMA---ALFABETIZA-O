@@ -99,7 +99,8 @@ describe('Trilha do Alfabeto no motor (D027)', () => {
     expect(r.relatorio.termometroDepois).toBe(1);
     expect(descreverTermometro(1)).toMatch(/alfabeto/i);
     // depois do alfabeto: sílabas (vogais abertas e fechadas → M, L, F), palavras e só então o nome
-    expect(r.progresso.faseAtual).toBe('R1-F02');
+    // D030: depois do Alfabeto vem a Trilha dos Sons (a trilha fônica que ensina a ler)
+    expect(r.progresso.faseAtual).toBe('TF-01');
     const depois = FASES.slice(al.length).map((f) => f.id);
     expect(depois.indexOf('R2a-F01')).toBeLessThan(depois.indexOf('R2a-F04'));
     expect(depois.at(-1)).toBe('R0-F01');

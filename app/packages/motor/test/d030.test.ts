@@ -173,7 +173,7 @@ describe('concluída × dominada', () => {
       const a = e.cena?.atividade;
       if (!a) continue;
       const n = a.tipo === 'escolher' ? Math.max(1, a.itens.length) : 1;
-      const ts: Tentativa[] = Array.from({ length: n }, (_, k) => ({ em: agora, sessao: id, habilidade: (a.tipo === 'escolher' ? a.itens[k]?.habilidade : undefined) ?? a.habilidade, acertou: true, cena: e.cena!.id }));
+      const ts: Tentativa[] = Array.from({ length: n }, (_, k) => ({ em: agora, sessao: id, habilidade: (a.tipo === 'escolher' ? a.itens[k]?.habilidade : undefined) ?? a.habilidade, acertou: true, cena: e.cena!.id, ...(a.tipo === 'escolher' && a.itens[k]?.pseudo ? { pseudo: true } : {}) }));
       p = aplicarAtividade(p, { sessao: id, cena: e.cena!, tentativas: ts, tentouDeNovo: 0 }, cfg, agora);
       if (e.cena!.contaDominio) { atividades++; todas.push(...ts); }
     }

@@ -63,7 +63,7 @@ export const PALAVRAS_TF: EntradaBanco[] = [
   // TF-19 · C (ca, co, cu)
   e('faca', 'f a k a', { figura: 'faca' }), e('vaca', 'v a k a', { figura: 'vaca' }), e('macaco', 'm a k a k u', { figura: 'macaco' }), e('suco', 's u k u', { figura: 'suco' }),
   e('jaca', 'ʒ a k a', { figura: 'jaca' }), e('boca', 'b o k a'), e('caju', 'k a ʒ u', ox), e('come', 'k o m i'),
-  pseudo('cufa', 'k u f a'), pseudo('cavu', 'k a v u', true),
+  pseudo('cafu', 'k a f u', true), pseudo('cavu', 'k a v u', true),
   // TF-20 · D
   e('dado', 'd a d u', { figura: 'dado' }), e('dedo', 'd e d u', { figura: 'dedo' }), e('vida', 'v i d a'), e('nada', 'n a d a'), e('lado', 'l a d u'),
   pseudo('dufa', 'd u f a'), pseudo('midu', 'm i d u', true),
@@ -84,7 +84,7 @@ export const PALAVRAS_TF: EntradaBanco[] = [
  */
 export const PALAVRAS_OUTRAS_TRILHAS: EntradaBanco[] = [
   // Vale do M-L-F (R2a) e Meu nome
-  e('ma', 'm a'), e('mo', 'm o'), e('mu', 'm u'), e('mola', 'm ɔ l a'),
+  e('ma', 'm a'), e('mo', 'm o'), e('mu', 'm u'), e('mola', 'm ɔ l a'), e('fofa', 'f ɔ f a'),
   pseudo('lufo', 'l u f u'), pseudo('folu', 'f o l u', true), pseudo('femo', 'f e m u'), pseudo('fuli', 'f u l i', true),
   // primeiras palavrinhas da Trilha A–Z (vocabulário para montar)
   e('babá', 'b a b a'), e('bebê', 'b e b e'), e('café', 'k a f ɛ'), e('bife', 'b i f i'), e('cama', 'k a m a'), e('banana', 'b a n a n a'),

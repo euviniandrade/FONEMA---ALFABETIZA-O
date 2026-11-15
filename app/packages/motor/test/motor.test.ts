@@ -182,7 +182,7 @@ describe('Trilha Expressa (D021 §2–3)', () => {
   });
   it('passou → fase feita e desafios contam; errou → desacelera sem perder', () => {
     let p = aplicarSondagem(progressoInicial('c1', T0), 5, T0);
-    for (const f of FASES.filter((x) => x.regiao === 'AL')) p = concluirFase(p, f.id, T0);
+    for (const f of FASES.filter((x) => x.regiao === 'AL' || x.regiao === 'TF')) p = concluirFase(p, f.id, T0);
     const ok = resultadoProvaRelampago(p, 'R1-F02', 5, 6, T0, cfg);
     expect(ok.passou).toBe(true);
     expect(ok.progresso.fases['R1-F02'].estado).toBe('concluida');

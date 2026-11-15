@@ -280,7 +280,7 @@ export const LICOES_TF: Licao[] = [
     unidade: 'TF-19', tipo: 'consoante', bloco: 3, letra: 'C', rotulo: 'c', titulo: 'O som /k/ (ca, co, cu)', objetivo: 'Ligar o som /k/ à letra C antes de A, O e U',
     sintese: [['vaca', 'vaca', 'faca', 'jaca'], ['suco', 'suco', 'sapo', 'uva'], ['macaco', 'macaco', 'pato', 'vaca']],
     leitura: [{ palavra: 'faca', outras: ['vaca', 'jaca'] }, { palavra: 'macaco', outras: ['pato', 'vaca'] }, { palavra: 'suco', outras: ['sapo', 'jaca'] }, { palavra: 'jaca', outras: ['faca', 'vaca'] }],
-    pseudo: [['cufa', 'gufa', 'cufo'], ['cavu', 'cafu', 'gavu']],
+    pseudo: [['cafu', 'gafu', 'cafa'], ['cavu', 'cafi', 'gavu']],
     caixas: ['vaca', 'suco', 'boca'],
     desafio: {
       frase: frase('O macaco come a jaca.', 'O que o macaco come?', 'jaca', ['jaca', 'uva', 'faca']),
@@ -303,7 +303,6 @@ export const LICOES_TF: Licao[] = [
     caixas: ['gato', 'galo', 'lago'],
     desafio: {
       trocas: [troca('trocar', 'mato', 'gato', 0, 'G', ['G', 'C', 'P'], ['gato', 'mato', 'cato']), troca('trocar', 'gato', 'galo', 2, 'L', ['L', 'T', 'M'], ['galo', 'gato', 'gamo'])],
-      pares: [par('ler', 'galo', 'calo', ['g', 'k'], 'par-minimo-k-g'), par('ler', 'gata', 'cata', ['g', 'k'], 'par-minimo-k-g')],
       frase: frase('O gato viu o galo.', 'Quem o gato viu?', 'galo', ['galo', 'pato', 'sapo'])
     }
   },
@@ -329,7 +328,7 @@ export const LICOES_TF: Licao[] = [
     pseudo: [['tufa', 'tafa', 'pufa'], ['gufa', 'cufa', 'gufo']],
     ditado: ['PATO', 'BOLO', 'FACA', 'GATO', 'DEDO'],
     desafio: {
-      pares: [par('ler', 'pato', 'bato', ['p', 'b'], 'par-minimo-p-b'), par('ouvir', 'faca', 'vaca', ['f', 'v'], 'par-minimo-f-v'), par('ler', 'nata', 'nada', ['t', 'd'], 'par-minimo-t-d'), par('ler', 'galo', 'calo', ['g', 'k'], 'par-minimo-k-g')],
+      pares: [par('ler', 'pato', 'bato', ['p', 'b'], 'par-minimo-p-b'), par('ouvir', 'faca', 'vaca', ['f', 'v'], 'par-minimo-f-v'), par('ler', 'nata', 'nada', ['t', 'd'], 'par-minimo-t-d'), par('ler', 'galo', 'calo', ['g', 'k'], 'par-minimo-k-g'), par('ler', 'gata', 'cata', ['g', 'k'], 'par-minimo-k-g')],
       trocas: [troca('trocar', 'pato', 'mato', 0, 'M', ['M', 'N', 'B'], ['mato', 'pato', 'nato']), troca('trocar', 'mato', 'gato', 0, 'G', ['G', 'C', 'D'], ['gato', 'mato', 'cato'])],
       frase: frase('O gato viu a vaca.', 'Quem o gato viu?', 'vaca', ['vaca', 'faca', 'pato']), eco: true
     }

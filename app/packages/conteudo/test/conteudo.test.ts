@@ -19,10 +19,11 @@ function palavrasLidas(f: Fase): string[] {
 }
 
 describe('conteúdo da jornada', () => {
-  it('D027: Alfabeto → Sílabas (vogais, M-L-F) → Palavras → Meu nome, sem ids repetidos', () => {
-    expect(REGIOES.map((r) => r.id)).toEqual(['AL', 'R1', 'R2a', 'R0']);
-    expect(REGIOES.map((r) => r.etapa)).toEqual(['Alfabeto', 'Sílabas', 'Sílabas e palavras', 'Meu nome']);
+  it('D027 + D030: Alfabeto → Trilha dos Sons → vogais abertas → Palavras → Meu nome, sem ids repetidos', () => {
+    expect(REGIOES.map((r) => r.id)).toEqual(['AL', 'TF', 'R1', 'R2a', 'R0']);
+    expect(REGIOES.map((r) => r.etapa)).toEqual(['Alfabeto', 'Ler e escrever', 'Vogais abertas', 'Palavras', 'Meu nome']);
     expect(FASES.filter((f) => f.regiao === 'AL')).toHaveLength(31);
+    expect(FASES.filter((f) => f.regiao === 'TF')).toHaveLength(24);
     expect(FASES.filter((f) => f.regiao === 'R1').map((f) => f.id)).toEqual(['R1-F02', 'R1-F03', 'R1-F06', 'R1-F07']);
     expect(FASES.filter((f) => f.regiao === 'R2a')).toHaveLength(5);
     expect(FASES.filter((f) => f.regiao === 'R0').map((f) => f.id)).toEqual(['R0-F01']);
@@ -62,11 +63,13 @@ describe('conteúdo da jornada', () => {
 
   it('valores sonoros: toda palavra montada ou lida está marcada no conteúdo, e a marcação cobre o que a escrita mostra', () => {
     const palavras = new Set<string>([...Object.values(PALAVRINHAS).flat(), ...PALAVRINHAS_REVISAO.flat(), ...PALAVRAS_R2A.map((w) => w.texto)]);
-    for (const f of FASES) for (const c of f.cenas) {
+    // a Trilha dos Sons é conferida pelo verificador completo, unidade por unidade (decodificabilidade.test.ts)
+    const antigas = FASES.filter((f) => f.regiao !== 'TF');
+    for (const f of antigas) for (const c of f.cenas) {
       const a = c.atividade;
       if (a?.tipo === 'montar' || a?.tipo === 'ditado') a.palavras.filter((w) => !w.startsWith('$')).forEach((w) => palavras.add(w));
     }
-    for (const f of FASES) for (const l of leituras(f)) palavras.add(l.palavra);
+    for (const f of antigas) for (const l of leituras(f)) palavras.add(l.palavra);
     for (const w of palavras) {
       expect(VALORES_DAS_PALAVRAS[w.toUpperCase()], `"${w}" sem o campo de valores sonoros`).toBeDefined();
       for (const v of valoresInferidos(w)) expect(VALORES_DAS_PALAVRAS[w.toUpperCase()], `"${w}" usa ${v}`).toContain(v);
@@ -91,6 +94,7 @@ describe('conteúdo da jornada', () => {
   it('LEITURA autônoma em todas as fases: só palavras cujos valores sonoros já foram ensinados', () => {
     let total = 0;
     for (const f of FASES) {
+      if (f.regiao === 'TF') continue; // conferida unidade por unidade em decodificabilidade.test.ts
       for (const l of leituras(f)) {
         total++;
         const faltam = valoresDaPalavra(l.palavra).filter((v) => !VALORES_ENSINADOS[f.regiao].includes(v) && !VALORES_SO_AVISO.includes(v));
