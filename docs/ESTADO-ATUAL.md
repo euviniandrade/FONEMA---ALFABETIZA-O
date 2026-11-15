@@ -1,6 +1,6 @@
 # FONEMA — Estado atual e passagem de bastão
 
-Atualizado em 2026-11-14 (noite). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
+Atualizado em 2026-11-15 (seção 4b, D030). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
 Tudo o que foi feito está neste repositório, no ramo `claude/eager-brahmagupta-3d2lhr` (commit e push a cada mudança). Nada depende
 da memória da conversa anterior.
 
@@ -14,7 +14,8 @@ dupla **Sofia e Tales** (+ Bolota, o tatu; vilão leve Zum-Zum), em estilo de **
 
 | O quê | Onde |
 |---|---|
-| Decisões do dono (valem como lei) | `docs/decisoes/001…029` — **a 029 é a mais recente e está em execução** |
+| Decisões do dono (valem como lei) | `docs/decisoes/001…030` — **a 030 é a mais recente** (arquitetura pedagógica); a 029 continua em execução |
+| **Pedagogia (ler antes de mexer em conteúdo ou mecânica)** | `docs/pedagogia/` — princípios, trilha fônica, habilidades, sons, atividades, decodificabilidade, avaliação, fontes |
 | Pesquisa (45 arquivos) e síntese | `docs/pesquisa/`, `docs/sintese/` — a 44 é o método fônico; a **45 é o vídeo de referência dos sons das letras** |
 | Proposta unificada, artes, voz, músicas, universo | `docs/propostas/06-fonema-unificada/`, `docs/universo/` |
 | Revisão geral e 10 perguntas ao dono (sem resposta) | `docs/revisao/` |
@@ -66,7 +67,7 @@ ligação com os sons puros, sincronização no script `web/scripts/sincronizar-
 Pedidos: (a) na fala dos personagens **só Sofia e Tales** (acabam as vozes com tom alterado de Bolota, Dona Cida etc.);
 (b) **som real (fonema) de cada letra**, como no vídeo de referência — outra voz é permitida só para o som da letra;
 (c) **setas numeradas e ponto de início** no traçado.
-Feito até agora: `app/ferramentas/gerar-sons-letras.py`, 25 clipes em `app/web/public/audio/sons/`, `app/docs/auditoria-sons-letras.md`,
+Feito até agora: `app/ferramentas/gerar-sons-letras.py`, 24 clipes em `app/web/public/audio/sons/`, `app/docs/auditoria-sons-letras.md`,
 `web/src/servicos/sons-letras.ts` (+ teste), `servicos/estudio-sons.ts` e `telas/adulto/EstudioSons.tsx` (**estúdio para o adulto gravar
 os sons pelo microfone**), `packages/conteudo/src/tracos.ts` (+ teste), `mecanicas/Tracar.tsx`, `mecanicas/Letra.tsx`, mudanças em `voz.ts`,
 falas e fases.
@@ -83,6 +84,45 @@ Feito até agora: porquinho gerado e no app (`assets/recompensas/cofrinho-porqui
 `estilos-recompensas.css`, `bancada-selos.html`.
 Falta: conferir as capturas (4 formatos × 4 metais, nomes longos, giro em 5 ângulos), tela "Fase concluída", Álbum, testes.
 O porquinho só balança; 360° real dele precisa de modelo 3D.
+
+## 4b. D030 — arquitetura pedagógica fônica e a pasta `docs/pedagogia/`
+
+Em 15/11 o dono pediu um diagnóstico pedagógico, enviou sete materiais de alfabetização e aprovou ("Sim, vamos implementar tudo") a
+decisão [D030](decisoes/030-arquitetura-pedagogica-fonica-todos-os-metodos.md): o núcleo do FONEMA é **instrução fônica explícita e
+sistemática**, somando em camadas os métodos de todos os materiais; **nada é removido**.
+
+**O diagnóstico achou** (resumo; íntegra em `docs/pedagogia/fontes/01-diagnostico-do-codigo.md`): as atividades do Alfabeto tocam o
+nome da letra e não o som; figura, dica, brilho e posição fixa entregam a resposta; 32 de 41 fases concluem só por participação e o
+domínio conta autorrelato; a ordem é alfabética e só M, L e F são usados para ler; o verificador de decodificabilidade só confere
+letras e não vale para o Alfabeto; não há frases, textos, fluência nem compreensão; a sondagem é única e não há reforço dirigido.
+
+**Pasta `docs/pedagogia/` (etapa 1, entregue):** `README.md` (índice e regras), `00-principios`, `01-escopo-e-sequencia` (trilha fônica
+em 53 unidades, TF-01 a TF-53), `02-matriz-de-habilidades`, `03-inventario-de-sons-pb`, `04-tipos-de-atividade`,
+`05-regras-de-decodificabilidade`, `06-avaliacao-e-intervencao`, `07-fontes` e `fontes/` (cinco fichas de leitura na íntegra).
+As regras permanentes estão no `CLAUDE.md` da raiz.
+
+**Como fica o app:** a Trilha A–Z continua como "conhecer as letras"; ao lado entra a **trilha fônica** (vogais → consoantes que se
+prolongam → oclusivas → abertas e nasais → R e H → dígrafos → regras de posição → encontros), que é a que libera leitura e escrita.
+
+**Plano em 9 etapas** (estado em 15/11; detalhes em `docs/pedagogia/00-principios.md` §7):
+1. Documentos e regras — **entregue**.
+2. Registro detalhado de erros — em andamento no código (`app/packages/motor`).
+3. Som no lugar do nome da letra — a fazer / em andamento.
+4. Distratores, sorteio e fim do modelo permanente — a fazer / em andamento.
+5. Exposição fora do domínio — a fazer.
+6. Trilha fônica — a fazer (sequência definida).
+7. Verificador de decodificabilidade em tudo — a fazer (regras definidas).
+8. Frases, textos, fluência e compreensão — a fazer.
+9. Sondagem periódica e reforço dirigido — a fazer (desenho definido).
+Quem concluir uma etapa atualiza esta lista e a tabela de `00-principios.md` §7.
+
+**Limites ditos com honestidade:** a sequência e as palavras de exemplo foram montadas pelo projeto a partir dos materiais e ainda não
+foram revistas por alfabetizadora; vários pontos estão marcados "decisão do projeto" porque os materiais não dão base (lista em
+`01-escopo-e-sequencia.md` §5); nenhum som puro foi ouvido por pessoa; as citações do *Alfaletrar* foram transcritas a olho.
+
+**Pendências do dono (D030):** validar de ouvido os sons puros (de preferência fonoaudióloga); créditos de voz para as falas novas;
+e as decisões listadas em `docs/pedagogia/07-fontes.md` §5 (posição dos dígrafos, pronúncia de "ti/di" e do R na voz da dupla,
+palavras como "cama" antes das nasais, lista de palavras frequentes, exemplar regular do *Alfaletrar*, revisão por especialista).
 
 ## 5. Como retomar (passo a passo)
 
@@ -108,6 +148,9 @@ O porquinho só balança; 360° real dele precisa de modelo 3D.
   não copiar áudio/imagem de vídeos de terceiros.
 - **Servidor/banco de dados real com contas**: só com confirmação explícita do dono (ainda não deu). Hoje a conta e o PIN ficam no aparelho.
 - **Git**: commit e push no ramo a cada mudança; sem nome de modelo em commits/código.
+- **Pedagogia (D030)**: as nove regras permanentes do `CLAUDE.md` (som antes do nome da letra; nenhuma palavra com valor sonoro não
+  ensinado; figura, dica e posição não entregam a resposta; exposição não é domínio; verificador e testes sempre; sem famílias silábicas
+  como método; não remover funcionalidades; não inventar referências; materiais de terceiros não são copiados).
 
 ## 7. Recursos e cotas (situação em 14/11)
 
@@ -125,7 +168,8 @@ O porquinho só balança; 360° real dele precisa de modelo 3D.
 2. Aumentar a cota do Google AI Studio ou do Cloudinary para o resto das artes.
 3. Quem grava os sons puros das letras no estúdio (o dono, uma professora, uma fonoaudióloga)? Ou pedir autorização ao canal do vídeo?
 4. Servidor e banco de dados para login em qualquer aparelho (precisa de confirmação + LGPD).
-5. As 10 perguntas de `docs/revisao/`; nome do universo; idade da Sofia; emblema próprio; nomes repetidos de personagens.
+5. Decisões pedagógicas da D030: lista em `docs/pedagogia/07-fontes.md` §5.
+6. As 10 perguntas de `docs/revisao/`; nome do universo; idade da Sofia; emblema próprio; nomes repetidos de personagens.
 
 ## 9. Pendências menores conhecidas
 

@@ -79,7 +79,7 @@ Não se prolongam e só se pronunciam com apoio de vogal (ABC p. 127; MOR p. 53,
 | TF-16 | /p/ | p | TF-15 | pai, pia, pula, papai, lupa, mapa, sapo, pulo | "Quem sabe ler pula, sabe ler lupa" (ABC p. 317) |
 | TF-17 | /t/ | t (antes de a, o, u; e de "e" não final) | TF-16 | pato, pata, tatu, mato, tapa, luta | **Sem "ti" e sem "te" no fim** (tia, leite): em boa parte do Brasil soam "tchi" (ABC p. 114; MOR p. 61). Ficam para TF-22 |
 | TF-18 | /b/ | b | TF-17 | boi, bala, baba, bolo, lobo, sabia, bife | Par de P: contraste p/b (MOR p. 214) |
-| TF-19 | /k/ | c antes de a, o, u | TF-18 | cuia, saco, suco, boca, bico, cabo | Só "ca, co, cu" (VT-1A p. 117, 246; AO p. 4). CE/CI ficam para TF-45; K e Q, para TF-41 e TF-48 |
+| TF-19 | /k/ | c antes de a, o, u | TF-18 | cuia, saco, suco, boca, bico, cabo | Só "ca, co, cu" (VT-1A p. 117, 246; AO p. 4). CE/CI ficam para TF-45; QU, para TF-40; K, para TF-48 |
 | TF-20 | /d/ | d (antes de a, o, u; e de "e" não final) | TF-19 | dado, dedo, vida, cada, dava | **Sem "di" e sem "de" no fim** (dia, tarde): ficam para TF-22. Par de T; B e D têm forma espelhada, por isso não são vizinhos (ABC p. 320–321) |
 | TF-21 | /g/ | g antes de a, o, u | TF-20 | gato, gota, fogo, figo, galo | Só "ga, go, gu" (VT-1A p. 117; AO p. 10). GE/GI → TF-44; GUE/GUI → TF-42. Par de C |
 | TF-22 | "ti" e "di" (e "te", "de" no fim) | t, d antes do som /i/ | TF-21, TF-12 | tia, dia, tatu × tia, dedo × dia, leite, bate, tarde (depois de TF-33) | O Vamos Todos só traz os símbolos [ʧ] "tia" e [ʤ] "dia" numa tabela, sem lição (VT-PE p. 18); o ABC diz que [tʃ] é variante de /t/ (ABC p. 114); Morais registra a variação regional (MOR p. 61). **Lição e posição são [DP].** O app aceita as duas pronúncias (ver 03 §4) |
@@ -132,7 +132,7 @@ Divergência sobre os dígrafos: depois das letras simples (ABC p. 320; VT-1A p.
 | Un. | Som | Letras | Pré | Palavras possíveis | Regra do português brasileiro |
 |---|---|---|---|---|---|
 | TF-43 | (revisão) C e G: dois sons | ca/co/cu × ce/ci; ga/go/gu × ge/gi | TF-42 | — | Dois cartazes por letra, separados pela vogal seguinte (AO p. 4–5, 10–11) |
-| TF-44 | /ʒ/ | ge, gi | TF-43 | gelo, gema, girafa, mágico | G antes de E, I soa como J (VT-1A p. 225; ABC p. 122, 409). Escrever com G ou J não tem regra (ABC p. 417) |
+| TF-44 | /ʒ/ | ge, gi | TF-43 | gelo, gema, girafa, página | G antes de E, I soa como J (VT-1A p. 225; ABC p. 122, 409). Escrever com G ou J não tem regra (ABC p. 417) |
 | TF-45 | /s/ | ce, ci | TF-44 | cedo, cinema, cebola, você | C antes de E, I soa /s/ (VT-1A p. 246; AO p. 5) |
 | TF-46 | /s/ | ss, ç | TF-45 | osso, massa, moça, laço | SS só entre vogais; Ç só antes de A, O, U e nunca no início (VT-1A p. 253) |
 | TF-47 | /z/ | s entre vogais | TF-46 | casa, mesa, rosa, vaso | VT-1A p. 225; ABC p. 122, 409. Escrever /z/ com S, Z ou X não tem regra (ABC p. 417; SOA p. 160) |

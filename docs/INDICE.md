@@ -15,7 +15,7 @@ Mapa navegável de todas as pastas e documentos principais. Comece pelo [README 
 ## 2. Decisões do dono (`decisoes/`) — fonte de verdade
 | Documento | O que é |
 |---|---|
-| [decisoes/README.md](decisoes/README.md) | Tabela 001–024 com status, resumo e quadro de conflitos entre decisões |
+| [decisoes/README.md](decisoes/README.md) | Tabela das decisões com status, resumo e quadro de conflitos entre decisões |
 | [001](decisoes/001-jornada-e-modelo-de-precos.md) | Jornada de 2 anos e modelo de preços mensal |
 | [002](decisoes/002-economia-virtual-avatar-educacao-financeira.md) | Cadastro pelo adulto, economia de moedinhas, avatar e educação financeira |
 | [003](decisoes/003-formacao-integral-e-aprendizagem-profunda.md) | Formação integral e aprendizagem profunda (não decoreba) |
@@ -40,6 +40,26 @@ Mapa navegável de todas as pastas e documentos principais. Comece pelo [README 
 | [022](decisoes/022-titulos-neutros-curva.md) | Títulos neutros pela ação e curva de desafios |
 | [023](decisoes/023-escadas-de-patentes-por-area.md) | Escada de patentes em cada área (Aprendiz → Lenda) |
 | [024](decisoes/024-musica-danca-multissensorial.md) | Música, dança e todos os sentidos |
+| [025](decisoes/025-padrao-visual-premium.md) | Padrão visual de animação 3D em tudo |
+| [026](decisoes/026-ensino-do-zero-e-nivel-inicial.md) | Ensino do zero e nível inicial |
+| [027](decisoes/027-alfabeto-primeiro-personagens-vivos.md) | Alfabeto primeiro e personagens vivos |
+| [028](decisoes/028-primeira-pagina-entrar-ou-cadastrar.md) | Primeira página: entrar ou cadastrar |
+| [029](decisoes/029-avatar-3d-montavel-sons-reais-boca-3d.md) | Avatar 3D montável, sons reais das letras e boca em 3D |
+| [030](decisoes/030-arquitetura-pedagogica-fonica-todos-os-metodos.md) | Arquitetura pedagógica: instrução fônica explícita e sistemática, somando os métodos de todos os materiais |
+
+## 2b. Pedagogia (`pedagogia/`) — ler antes de mexer em conteúdo ou mecânica (D030)
+| Documento | O que é |
+|---|---|
+| [pedagogia/README.md](pedagogia/README.md) | Índice da pasta, siglas das fontes e regras |
+| [00 · Princípios](pedagogia/00-principios.md) | Fônico explícito e sistemático, os 9 eixos, camadas de métodos, divergências, plano em 9 etapas |
+| [01 · Escopo e sequência](pedagogia/01-escopo-e-sequencia.md) | Trilha fônica em 53 unidades, com fonte e página; o que é decisão do projeto |
+| [02 · Matriz de habilidades](pedagogia/02-matriz-de-habilidades.md) | Habilidades com identificador, pré-requisitos, critério de domínio e medida |
+| [03 · Inventário de sons](pedagogia/03-inventario-de-sons-pb.md) | Sons do português brasileiro, letras, regularidade e situação de cada clipe |
+| [04 · Tipos de atividade](pedagogia/04-tipos-de-atividade.md) | Regras de não entregar a resposta, veredito das mecânicas, atividades novas |
+| [05 · Decodificabilidade](pedagogia/05-regras-de-decodificabilidade.md) | Quando uma palavra pode aparecer, casos-armadilha, verificador automático |
+| [06 · Avaliação e intervenção](pedagogia/06-avaliacao-e-intervencao.md) | Registro, sondagem, domínio, correção do erro, reforço, alertas, painel |
+| [07 · Fontes](pedagogia/07-fontes.md) | Referências, direitos, quadro de concordâncias, pontos para o dono decidir |
+| [pedagogia/fontes/](pedagogia/fontes/) | Cinco fichas de leitura (diagnóstico do código e seis materiais) |
 
 ## 3. Universo (`universo/`) — Bíblia canônica (D016)
 | Documento | O que é |
