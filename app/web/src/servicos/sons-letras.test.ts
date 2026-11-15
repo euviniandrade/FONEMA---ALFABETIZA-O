@@ -59,3 +59,24 @@ describe('Estúdio de sons: preparo da gravação', () => {
     expect(wav.size).toBe(44 + y.length * 2);
   });
 });
+
+describe('som real nas atividades (D030 §1)', () => {
+  it('todo fonema usado como estímulo, botão de som ou cena tem clipe publicado no mapa', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { FASES, SONS_SEM_CLIPE, FALAS_DOS_PARES } = await import('@fonema/conteudo');
+    const mapa = JSON.parse(readFileSync(new URL('../../public/audio/sons/mapa.json', import.meta.url), 'utf8')) as { fonemas: Record<string, unknown> };
+    const usados = new Set<string>(Object.keys(FALAS_DOS_PARES));
+    for (const f of FASES) for (const c of f.cenas) {
+      const a = c.atividade;
+      if (a?.tipo === 'escolher') for (const i of a.itens) {
+        if (i.somAlvo) usados.add(i.somAlvo);
+        if (i.somCorreta) usados.add(i.somCorreta);
+        for (const o of i.opcoes) if (o.botaoDeSom && o.som) usados.add(o.som);
+      }
+      if (a?.tipo === 'ligar') for (const p of a.pares) if (p.fonema) usados.add(p.fonema);
+    }
+    expect(usados.size).toBeGreaterThanOrEqual(20);
+    for (const x of usados) expect(mapa.fonemas[x], `fonema ${x} sem clipe em public/audio/sons/mapa.json`).toBeDefined();
+    for (const x of SONS_SEM_CLIPE) expect(mapa.fonemas[x], `${x} ganhou clipe: tire de SONS_SEM_CLIPE`).toBeUndefined();
+  });
+});
