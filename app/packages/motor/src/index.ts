@@ -1,4 +1,5 @@
 export * from './estado.ts';
+export * from './tentativas.ts';
 export * from './falas.ts';
 export * from './primeiro-som.ts';
 export * from './dominio.ts';
