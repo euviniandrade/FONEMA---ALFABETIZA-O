@@ -3,7 +3,7 @@
  * Funções puras: recebem tentativas (ou o progresso) e devolvem números para o painel do adulto e para o reforço.
  * Só entram tentativas AVALIADAS que tenham `alvo` — dado antigo (sem alvo) não inventa confusão.
  */
-import { LETRA_POR_ID, PARES_CONFUSOS, SONS } from '@fonema/conteudo';
+import { LETRA_POR_ID, PARES_CONFUSOS, PARES_DE_VOZ, SONS } from '@fonema/conteudo';
 import type { CategoriaAlvo, Progresso, Tentativa } from './estado.ts';
 import { ehAvaliada, respostasErradas } from './tentativas.ts';
 
@@ -57,6 +57,31 @@ export function parceiroProvavel(alvo: string, categoria?: CategoriaAlvo): strin
   return ehLetra ? SONS[outro]?.letra ?? outro : outro;
 }
 
+/** Tipos de erro de docs/pedagogia/06 §1 que dá para reconhecer só pelo par (alvo, resposta). */
+export type TipoDeErro = 'E-VOZ' | 'E-NAS' | 'E-VOG' | 'E-VIS';
+
+export const NOME_DO_ERRO: Record<TipoDeErro, string> = {
+  'E-VOZ': 'troca de som com voz e sem voz',
+  'E-NAS': 'troca entre sons do nariz',
+  'E-VOG': 'troca de vogal',
+  'E-VIS': 'letras de desenho parecido'
+};
+
+/** Classifica a troca: voz (p/b, t/d, f/v, s/z, x/j, c/g), nasal (m/n/nh), vogal, ou desenho (b/d, p/q). */
+export function tipoDeErro(alvo: string, escolhido: string, categoria?: CategoriaAlvo): TipoDeErro | undefined {
+  const a = chaveDoSom(alvo, categoria);
+  const b = chaveDoSom(escolhido, categoria);
+  if (a && b && a !== b) {
+    if (mesmoPar(PARES_DE_VOZ, a, b)) return 'E-VOZ';
+    const nasal = (x: string) => x === 'm' || x === 'n' || x === 'nh';
+    if (nasal(a) && nasal(b)) return 'E-NAS';
+    const vogal = (x: string) => /^[aeiou]~?$/i.test(x);
+    if (vogal(a) && vogal(b)) return 'E-VOG';
+  }
+  if (alvo.length === 1 && escolhido.length === 1 && mesmoPar(PARES_DE_DESENHO, alvo.toLowerCase(), escolhido.toLowerCase())) return 'E-VIS';
+  return undefined;
+}
+
 /* ------------------------------ matriz de confusão ------------------------------ */
 
 export interface CelulaConfusao {
@@ -108,6 +133,8 @@ export interface ParConfundido {
   habilidades: string[];
   categoria?: CategoriaAlvo;
   conhecido?: 'som' | 'desenho';
+  /** Tipo de erro (docs/pedagogia/06 §1), quando o par deixa reconhecer. */
+  erro?: TipoDeErro;
 }
 
 /**
@@ -130,6 +157,7 @@ export function paresConfundidos(tentativas: Tentativa[], minimo = 2): ParConfun
   }
   return [...m.values()]
     .filter((x) => x.vezes >= minimo)
+    .map((x) => ({ ...x, erro: tipoDeErro(x.alvo, x.escolhido, x.categoria) }))
     .sort((a, b) => b.vezes - a.vezes || (b.conhecido ? 1 : 0) - (a.conhecido ? 1 : 0) || b.ultimaEm - a.ultimaEm);
 }
 

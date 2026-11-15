@@ -247,6 +247,7 @@ export function faseMede(fase: Fase, habilidade: string, pseudo = false): boolea
     if (a.tipo === 'escolher') {
       return itens.some((i) => (i.habilidade ?? a.habilidade) === habilidade && (!pseudo || !!i.pseudo));
     }
+    if (a.tipo === 'ligar') return !pseudo && a.pares.some((x) => (x.habilidade ?? a.habilidade) === habilidade);
     return a.habilidade === habilidade && !pseudo;
   });
 }

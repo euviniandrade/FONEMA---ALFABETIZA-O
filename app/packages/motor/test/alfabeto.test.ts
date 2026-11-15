@@ -45,7 +45,8 @@ describe('Trilha do Alfabeto no motor (D027)', () => {
   it('missão da letra A: curta (sem pausa automática), fecha com o selo da letra, nível 1 e a letra B liberada', () => {
     const r = jogar(progressoInicial('c1', T0), 'AL-A');
     const tipos = r.sessao.etapas.map((e) => e.cena?.atividade?.tipo ?? e.tipo);
-    expect(tipos).toEqual(['acolhida', 'letra', 'espelho', 'escolher', 'escolher', 'tracar', 'ritual']);
+    // D030: a missão ganhou a cena letra → som (AL-A-C3b)
+    expect(tipos).toEqual(['acolhida', 'letra', 'espelho', 'escolher', 'escolher', 'escolher', 'tracar', 'ritual']);
     expect(r.relatorio.faseConcluida).toBe(true);
     expect(r.relatorio.conquistasNovas.map((c) => c.id)).toContain(seloDaLetra('A'));
     expect(r.relatorio.nivelDepois).toBe(1);

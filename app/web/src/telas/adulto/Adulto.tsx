@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { Fragment, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { CONFIG_PADRAO, CONQUISTA_POR_ID, FASE_POR_ID, type ConfigPlataforma, sonsPurosPendentes } from '@fonema/conteudo';
 import { AREAS_SONDAGEM, NIVEIS_INICIAIS, aplicarNivelInicial, avaliarConquistas, dificuldadesDaTurma, filaProfessor, mapaHabilidades, progressoInicial, resumoAprendizagem, resumoFamilia, type CategoriaAlvo, type Crianca, type Demonstracao, type Evento, type NivelInicial, type Progresso, type StatusDemonstracao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
@@ -325,6 +325,7 @@ export function Professor({ aba = 'turma' }: { aba?: AbaProfessor }) {
   const [turma, setTurma] = useState<{ crianca: Crianca; progresso: Progresso }[] | null>(null);
   const [eventos, setEventos] = useState<Evento[]>([]);
   const [tocando, setTocando] = useState<string | null>(null);
+  const [aberto, setAberto] = useState<string | null>(null);
   const carregar = async () => {
     const cs = await repo.listarCriancas();
     setTurma(await Promise.all(cs.map(async (c) => ({ crianca: c, progresso: (await repo.obterProgresso(c.id)) ?? progressoInicial(c.id, Date.now()) }))));
@@ -382,7 +383,8 @@ export function Professor({ aba = 'turma' }: { aba?: AbaProfessor }) {
           ) : null}
           <div className="lista-criancas">
             {[...turma].sort((a, b) => a.crianca.nome.localeCompare(b.crianca.nome)).map(({ crianca: c, progresso: p }) => (
-              <div key={c.id} className="linha-crianca">
+              <Fragment key={c.id}>
+              <div className="linha-crianca">
                 <AvatarMini crianca={c} tamanho={64} />
                 <div>
                   <b>{c.nome}</b>
@@ -401,10 +403,12 @@ export function Professor({ aba = 'turma' }: { aba?: AbaProfessor }) {
                   })()}
                 </div>
                 <div className="linha-botoes">
-                  <button className="btn" onClick={() => navegar(`familia/crianca/${c.id}`)} data-testid={`painel-prof-${c.nome}`}><Icone nome="grafico" />Ver o painel</button>
+                  <button className="btn" onClick={() => setAberto(aberto === c.id ? null : c.id)} aria-expanded={aberto === c.id} data-testid={`painel-prof-${c.nome}`}><Icone nome="grafico" />{aberto === c.id ? 'Fechar' : 'Como está aprendendo'}</button>
                   <button className="btn ipe" onClick={() => navegar(`c/${c.id}/vila`)}><Icone nome="tocar" />Entregar o aparelho</button>
                 </div>
               </div>
+              {aberto === c.id ? <div className="painel painel-grade painel-aluno" data-testid={`aprendizagem-${c.nome}`}><BlocosAprendizagem c={c} p={p} config={config} /></div> : null}
+              </Fragment>
             ))}
           </div>
           {turma.length ? <p className="nota-mic">Em ordem alfabética, sem ranking: serve para planejar a aula.</p> : null}

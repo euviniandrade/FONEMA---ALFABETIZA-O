@@ -12,7 +12,7 @@ import {
   migrarProgresso, montarSessao, normalizarTentativa, novaHabilidade, palavrasDificeis, parConhecido, parceiroProvavel, paresConfundidos,
   praticasRecomendadas, preRequisitoDe, progressoInicial, proporcao, proximaPratica, recalcularP, registrarSondagem, registrarTentativa,
   resultadoPorArea, resumoAprendizagem, resumoFamilia, sessoesSeguidasComErro, situacaoDasFases, situacaoSondagem, tempoMedioPorHabilidade,
-  termometroMaximoDoConteudo, tipoDaTentativa
+  termometroMaximoDoConteudo, tipoDaTentativa, tipoDeErro
 } from '../src/index.ts';
 import type { Crianca, EstadoHabilidade, Progresso, Tentativa } from '../src/index.ts';
 
@@ -374,6 +374,7 @@ describe('matriz de confusão', () => {
     expect(parceiroProvavel('P')).toBe('B');
     expect(parceiroProvavel('f')).toBe('v');
     expect(parceiroProvavel('A')).toBeUndefined();
+    expect([tipoDeErro('P', 'B'), tipoDeErro('C', 'G'), tipoDeErro('M', 'N'), tipoDeErro('b', 'd'), tipoDeErro('A', 'M')]).toEqual(['E-VOZ', 'E-VOZ', 'E-NAS', 'E-VIS', undefined]);
   });
 
   it('sons e letras mais errados × palavras difíceis (palavras de verdade)', () => {
@@ -408,20 +409,22 @@ describe('matriz de confusão', () => {
 
 describe('reforço dirigido e pré-requisito', () => {
   it('par confundido vira prática com os dois lado a lado', () => {
-    const p = comTentativas([troca('letra-b', 'B', 'D', 's1'), troca('letra-b', 'B', 'D', 's2'), certo('letra-b', 'B', 's2')]);
+    const duas = comTentativas([troca('letra-b', 'B', 'D', 's1'), troca('letra-b', 'B', 'D', 's2'), certo('letra-b', 'B', 's2')]);
+    expect(proximaPratica(duas, cfg, T0)).toBeNull(); // 2 trocas ainda não são padrão (docs/pedagogia/06 §5: 3)
+    const p = comTentativas([troca('letra-b', 'B', 'D', 's2')], duas);
     const pratica = proximaPratica(p, cfg, T0)!;
     expect(pratica.motivo).toBe('par-confundido');
-    expect(pratica.foco).toMatchObject({ alvo: 'B', confundidoCom: 'D', vezes: 2, conhecido: 'desenho' });
+    expect(pratica.foco).toMatchObject({ alvo: 'B', confundidoCom: 'D', vezes: 3, conhecido: 'desenho' });
     expect(pratica.habilidade).toBe('letra-b');
     expect(pratica.faseId).toBe('AL-B');
-    expect(pratica.paraAdulto).toMatch(/Troca D por B/);
+    expect(pratica.paraAdulto).toMatch(/Troca B por D/);
     expect(pratica.itens.length).toBeLessThanOrEqual(cfg.reforco.maxItens);
     const itens = itensDoPar('B', 'D', 6);
     for (const i of itens) expect(i.opcoes.some((o) => o.id === i.correta && /^[bd]$/i.test(o.letra ?? o.id))).toBe(true);
   });
 
   it('som muito errado sem troca repetida: supõe o parceiro de PARES_CONFUSOS', () => {
-    const p = comTentativas([t('letra-f', false, 's1', { alvo: 'F', escolhido: 'M' }), t('letra-f', false, 's1', { alvo: 'F', escolhido: 'L' })]);
+    const p = comTentativas([t('letra-f', false, 's1', { alvo: 'F', escolhido: 'M' }), t('letra-f', false, 's1', { alvo: 'F', escolhido: 'L' }), t('letra-f', false, 's1', { alvo: 'F', escolhido: 'A' })]);
     const pratica = praticasRecomendadas(p, cfg, T0).find((x) => x.foco?.suposto);
     expect(pratica?.foco).toMatchObject({ alvo: 'F', confundidoCom: 'V', suposto: true });
   });
@@ -591,17 +594,41 @@ describe('revisão espaçada além do Escolher', () => {
   });
 });
 
+describe("mecânica nova 'ligar' (Liga o som)", () => {
+  it('é avaliada, entra no registro e no domínio, e a revisão que a traz monta sessão', () => {
+    const fase = FASES.find((f) => f.cenas.some((c) => c.atividade?.tipo === 'ligar'));
+    expect(fase, 'nenhuma fase com Liga o som').toBeDefined();
+    const cena = fase!.cenas.find((c) => c.atividade?.tipo === 'ligar')!;
+    expect(mecanicaDaCena(cena.id)).toBe('ligar');
+    expect(tipoDaTentativa({ cena: cena.id })).toBe('avaliada');
+    const a = cena.atividade!;
+    const hab = a.tipo === 'ligar' ? a.pares[0].habilidade ?? a.habilidade : a.habilidade;
+    let p = progressoInicial('c1', T0);
+    p = aplicarAtividade(p, { sessao: 's1', cena, tentativas: [{ em: T0, sessao: 's1', habilidade: hab, acertou: true, alvo: 'Z', escolhido: 'S', respostas: ['S', 'Z'], comAjuda: true }], tentouDeNovo: 1 }, cfg, T0);
+    expect(p.habilidades[hab].tentativas[0]).toMatchObject({ mecanica: 'ligar', tipo: 'avaliada', tentativaNumero: 2 });
+    expect(p.habilidades[hab].p).not.toBe(novaHabilidade().p);
+    expect(matrizDeConfusao(p.habilidades[hab].tentativas)[0]).toMatchObject({ alvo: 'Z', escolhido: 'S', conhecido: 'som' });
+    const focoCurto = { ...crianca, apoios: { ...crianca.apoios, focoCurto: true } };
+    let q = progressoInicial('c1', T0);
+    for (const f of FASES) { if (f.id === fase!.id) break; q = concluirFase(q, f.id, T0); }
+    const s = montarSessao(q, focoCurto, fase!.id, cfg, T0);
+    const ligar = s.etapas.find((e) => e.cena?.atividade?.tipo === 'ligar')?.cena?.atividade;
+    expect(ligar?.tipo === 'ligar' && ligar.pares.length).toBeGreaterThanOrEqual(Math.min(3, a.tipo === 'ligar' ? a.pares.length : 3));
+  });
+});
+
 describe('painel do adulto: resumo de aprendizagem', () => {
   it('junta pares, palavras, tempo, concluído × dominado, alerta, prática, sondagem e o teto do termômetro', () => {
     let p = concluirFase(progressoInicial('c1', T0), 'AL-A', T0);
     p = comTentativas([
-      troca('letra-b', 'B', 'D', 's1'), { ...troca('letra-b', 'B', 'D', 's2'), tempoMs: 5000 }, certo('letra-b', 'B', 's2', { tempoMs: 3000 }),
+      troca('letra-b', 'B', 'D', 's1'), troca('letra-b', 'B', 'D', 's1'), { ...troca('letra-b', 'B', 'D', 's2'), tempoMs: 5000 }, certo('letra-b', 'B', 's2', { tempoMs: 3000 }),
       t('leitura-cvcv', false, 's2', { alvo: 'MALA', escolhido: 'LUA' }), t('letra-a', true, 's1', { mecanica: 'tracar' }), t('leitura-cvcv', true, 's2', { mecanica: 'falar' })
     ], p);
     const r = resumoAprendizagem(crianca, { ...p, sessoesFeitas: 2, ultimaSessao: T0 }, cfg, T0);
     expect(r.fases).toMatchObject({ concluidas: 1, dominadas: 0, total: FASES.length });
     expect(r.fases.aReforcar[0].id).toBe('AL-A');
-    expect(r.tentativas).toMatchObject({ avaliadas: 4, exposicao: 1, autorrelato: 1, comDetalhe: 4, comTempo: 2 });
+    expect(r.tentativas).toMatchObject({ avaliadas: 5, exposicao: 1, autorrelato: 1, comDetalhe: 5, comTempo: 2 });
+    expect(r.pares[0].erro).toBe('E-VIS');
     expect(r.pares[0].par).toEqual(['B', 'D']);
     expect(r.palavras.map((x) => x.alvo)).toEqual(['MALA']);
     expect(r.sonsELetras[0].alvo).toBe('B');

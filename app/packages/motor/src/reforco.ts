@@ -3,7 +3,7 @@
  * Funções puras: dado o histórico, devolvem a "próxima prática recomendada" para as telas consumirem.
  *
  * DECISÕES DO PROJETO (não vêm de material citado; números em config › reforco e config › risco, a calibrar com uso):
- *  - um par vira "confusão" com 2 trocas; a prática foca nesse par (itens que põem os dois lado a lado);
+ *  - um par vira "confusão" com 3 trocas (docs/pedagogia/06 §5); a prática foca nesse par (itens que põem os dois lado a lado);
  *  - 2 sessões seguidas com menos da metade de acertos sem ajuda na mesma habilidade → volta ao pré-requisito;
  *  - o alerta nunca é diagnóstico: diz o que foi observado e o que fazer em casa ou na aula.
  */
@@ -168,7 +168,7 @@ const nome = (h: string) => HABILIDADE_POR_ID[h]?.nome ?? h;
 function textoPar(par: { alvo: string; confundidoCom: string; conhecido?: 'som' | 'desenho' }): string {
   const porque = par.conhecido === 'som' ? ' São sons parecidos na boca: vale comparar os dois devagar, olhando a boca.'
     : par.conhecido === 'desenho' ? ' São letras de desenho parecido: vale traçar as duas, uma ao lado da outra.' : '';
-  return `Troca ${par.confundidoCom} por ${par.alvo}.${porque}`;
+  return `Troca ${par.alvo} por ${par.confundidoCom} (era ${par.alvo}, respondeu ${par.confundidoCom}).${porque}`;
 }
 
 /**
@@ -291,7 +291,7 @@ export function alertaDeRisco(p: Progresso, cfg: ConfigPlataforma, agora: number
     }
   }
   const trocas: ParConfundido[] = paresConfundidos(todasAsTentativas(p), k.trocasMin).filter((x) => x.sessoes >= 2);
-  for (const t of trocas.slice(0, 3)) sinais.push({ tipo: 'troca-repetida', habilidade: t.habilidades[0], texto: `Troca ${t.escolhido} por ${t.alvo} com frequência (${t.vezes} vezes).` });
+  for (const t of trocas.slice(0, 3)) sinais.push({ tipo: 'troca-repetida', habilidade: t.habilidades[0], texto: `Troca ${t.alvo} por ${t.escolhido} com frequência (${t.vezes} vezes).` });
   const dias = p.ultimaSessao ? Math.floor((agora - p.ultimaSessao) / DIA_MS) : 0;
   if (p.sessoesFeitas > 0 && dias >= k.diasSemJogar) sinais.push({ tipo: 'sem-jogar', texto: `${dias} dias sem jogar. Pouco e sempre funciona melhor do que muito de uma vez.` });
   const deAprendizagem = sinais.filter((s) => s.tipo !== 'sem-jogar').length;

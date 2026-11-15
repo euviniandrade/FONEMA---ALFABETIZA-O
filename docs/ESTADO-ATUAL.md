@@ -106,14 +106,21 @@ prolongam → oclusivas → abertas e nasais → R e H → dígrafos → regras 
 
 **Plano em 9 etapas** (estado em 15/11; detalhes em `docs/pedagogia/00-principios.md` §7):
 1. Documentos e regras — **entregue**.
-2. Registro detalhado de erros — em andamento no código (`app/packages/motor`).
+2. Registro detalhado de erros — **motor e painel entregues** (15/11): contrato `DetalheTentativa` em `app/packages/motor/src/estado.ts`
+   (alvo, escolhido, respostas, distratores, tempoMs, tentativaNumero, tipo, mecanica, categoria), migração dos dados salvos (versão 1 → 2,
+   `migracao.ts`), matriz de confusão e tempo (`confusao.ts`). Depende das mecânicas passarem os campos (frente de `web/src/mecanicas`).
 3. Som no lugar do nome da letra — a fazer / em andamento.
 4. Distratores, sorteio e fim do modelo permanente — a fazer / em andamento.
-5. Exposição fora do domínio — a fazer.
+5. Exposição fora do domínio — **entregue no motor** (15/11): só tentativa avaliada conta (`tentativas.ts`, `dominio.ts`); Letra, Espelho,
+   Traçar e Falar ficam como participação; fases marcam concluída × dominada; domínio antigo sem resposta conferida vira "a confirmar".
 6. Trilha fônica — a fazer (sequência definida).
 7. Verificador de decodificabilidade em tudo — a fazer (regras definidas).
 8. Frases, textos, fluência e compreensão — a fazer.
-9. Sondagem periódica e reforço dirigido — a fazer (desenho definido).
+9. Sondagem periódica e reforço dirigido — **parcial** (15/11): o motor agenda a sondagem (a cada 8 fases ou 30 dias, em `config.ts`),
+   guarda o resultado por área (`sondagem.ts`), calcula a próxima prática recomendada, a volta ao pré-requisito e o alerta ao adulto
+   (`reforco.ts`), e o painel do adulto mostra tudo (capturas `app/docs/capturas/v5-painel-*.png`, script `web/e2e/capturas-painel.mjs`).
+   **Falta:** a tela da sondagem ainda é a Missão das Placas (mede sons das letras, leitura e segmentação; pseudopalavras e ditado sem
+   placas); a prática recomendada ainda não vira rodada jogável para a criança; os números do alerta são decisão do projeto, sem calibragem.
 Quem concluir uma etapa atualiza esta lista e a tabela de `00-principios.md` §7.
 
 **Limites ditos com honestidade:** a sequência e as palavras de exemplo foram montadas pelo projeto a partir dos materiais e ainda não

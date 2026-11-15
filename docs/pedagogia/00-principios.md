@@ -127,13 +127,13 @@ Estado em 2026-11-15. O estado vivo fica em [`../ESTADO-ATUAL.md`](../ESTADO-ATU
 | # | Etapa | O que resolve (achado do diagnóstico) | Estado |
 |---|---|---|---|
 | 1 | Documentos (`docs/pedagogia/`) e regras no `CLAUDE.md` | Não havia arquitetura pedagógica escrita | **Entregue** (esta pasta) |
-| 2 | Registro detalhado de erros | Não se guarda a opção escolhida, o tipo de erro nem o tempo (DIAG §6) | A fazer no código (ver 06 §1) |
+| 2 | Registro detalhado de erros | Não se guarda a opção escolhida, o tipo de erro nem o tempo (DIAG §6) | **Motor e painel entregues**: contrato `DetalheTentativa`, migração, matriz de confusão e tempo; falta as mecânicas passarem todos os campos |
 | 3 | Som no lugar do nome da letra | "Letra B." é o estímulo de 196 itens (DIAG §2, §8.1) | A fazer no código |
 | 4 | Distratores, sorteio e fim do modelo permanente | Posições fixas, distratores fáceis, modelo na tela, brilho entrega a resposta (DIAG §2) | A fazer no código |
-| 5 | Exposição fora do domínio | Letra, Espelho, Traçar e Falar contam sempre como acerto (DIAG §4) | A fazer no código |
+| 5 | Exposição fora do domínio | Letra, Espelho, Traçar e Falar contam sempre como acerto (DIAG §4) | **Entregue no motor**: só tentativa avaliada conta; concluída × dominada; "a confirmar" para dado antigo |
 | 6 | Trilha fônica | Ordem alfabética; 23 letras sem prática de leitura (DIAG §4, §8.9) | A fazer (sequência definida em 01) |
 | 7 | Verificador de decodificabilidade em tudo | O verificador não vale para o Alfabeto e só olha letras (DIAG §4) | A fazer (regras em 05) |
 | 8 | Frases, textos, fluência e compreensão | Não existem (DIAG §7) | A fazer |
-| 9 | Sondagem periódica e reforço dirigido | Sondagem única; sem volta ao pré-requisito (DIAG §6) | A fazer (desenho em 06) |
+| 9 | Sondagem periódica e reforço dirigido | Sondagem única; sem volta ao pré-requisito (DIAG §6) | **Parcial**: agendamento, resultado por área, prática recomendada, pré-requisito e alerta no motor e no painel; falta a tela nova da sondagem (pseudopalavras, ditado) e a rodada de reforço jogável |
 
 Pendências que dependem do dono (D030): validação de ouvido dos sons puros, de preferência por fonoaudióloga; créditos de voz para as falas novas.

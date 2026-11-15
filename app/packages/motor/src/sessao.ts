@@ -79,6 +79,8 @@ function limitarItens(a: Atividade, max: number): Atividade {
   if (a.tipo === 'falar') return { ...a, itens: a.itens.slice(0, max) };
   if (a.tipo === 'palmas' || a.tipo === 'montar' || a.tipo === 'ditado') return { ...a, palavras: a.palavras.slice(0, max) } as Atividade;
   if (a.tipo === 'tracar') return { ...a, letras: a.letras.slice(0, max) };
+  // Liga o som: precisa de pelo menos 3 pares para ser um jogo de ligar
+  if (a.tipo === 'ligar') return { ...a, pares: a.pares.slice(0, Math.max(3, max)) };
   return a;
 }
 

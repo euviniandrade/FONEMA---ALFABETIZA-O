@@ -6,7 +6,7 @@ import {
   registrarTentativa, renderFala, resultadoProvaRelampago, resultadoRevisao, agendarRevisao, revisoesVencidas,
   silabas, somInicial, subirTermometro, aplicarAtividade, avaliarConquistas, comprar, aplicarNivelInicial
 } from '../src/index.ts';
-import { AVATAR_LIMPO } from '../src/index.ts';
+import { AVATAR_LIMPO, DESAFIOS_NIVEL_1 } from '../src/index.ts';
 import type { Crianca, Tentativa } from '../src/index.ts';
 
 const T0 = new Date('2026-11-13T15:00:00').getTime();
@@ -139,11 +139,11 @@ describe('nível, títulos neutros e portões (D019, D022)', () => {
   });
   it('nível 1 após a primeira missão; portão da Festa do Alfabeto segura o título', () => {
     expect(calcularNivel(50, false, new Set()).nivel).toBe(0);
-    const semFesta = calcularNivel(5 + 2 + 3 + 4 + 5 + 6 + 12, true, new Set(['AL-A']));
+    const semFesta = calcularNivel(DESAFIOS_NIVEL_1 + 2 + 3 + 4 + 5 + 6 + 12, true, new Set(['AL-A']));
     expect(semFesta.nivel).toBe(6);
     expect(semFesta.rotulo).toMatch(/^Primeiros Sons III ★2$/);
     expect(semFesta.portao?.nome).toBe('Festa do Alfabeto');
-    const comFesta = calcularNivel(5 + 2 + 3 + 4 + 5 + 6 + 6, true, new Set(['AL-A', 'AL-FESTA']));
+    const comFesta = calcularNivel(DESAFIOS_NIVEL_1 + 2 + 3 + 4 + 5 + 6 + 6, true, new Set(['AL-A', 'AL-FESTA']));
     expect(comFesta.nivel).toBe(7);
     expect(comFesta.titulo).toBe('Caça às Sílabas');
   });

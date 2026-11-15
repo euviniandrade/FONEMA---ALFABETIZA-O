@@ -32,3 +32,6 @@ html.contraste .ficha,html.contraste .bloco .pares li{border-color:#000}
   .par{font-size:24px}
   .bloco .pares li{grid-template-columns:1fr}
 }
+.painel-aluno{margin:4px 0 18px;min-width:0}
+.painel-aluno .bloco{min-width:0;overflow-wrap:anywhere}
+@media (max-width:640px){.painel-aluno .bloco{padding:18px 16px}}
