@@ -20,3 +20,6 @@ export * from './confusao.ts';
 export * from './reforco.ts';
 export * from './sondagem.ts';
 export * from './painel.ts';
+export * from './sondagem-itens.ts';
+export * from './ajuda.ts';
+export * from './reforco-treino.ts';

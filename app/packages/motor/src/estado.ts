@@ -55,7 +55,33 @@ export interface DetalheTentativa {
   tempoMs?: number;
   /** Em qual tentativa o item foi resolvido: 1 = de primeira, 2 = na segunda… (igual a nº de erros + 1). */
   tentativaNumero?: number;
+
+  /* ---- campos de 15/11 (D030 etapa 9; docs/pedagogia/06 §1). Todos OPCIONAIS: quem não grava continua válido. ---- */
+
+  /**
+   * Maior ajuda que o item recebeu (escada de docs/pedagogia/06 §4), da menor para a maior:
+   * 'nenhuma' · 'repetiu' (ouviu o estímulo de novo por conta do app) · 'contraste' (1º erro: o app tocou o escolhido e o
+   * certo) · 'caminho' (2º erro: mostrou como achar, som por som) · 'resposta-mostrada' (brilho/resposta: NÃO conta como acerto).
+   * Ausente = o motor deduz por `tentativaNumero`/`comAjuda` (ver ajuda.ts › nivelDeAjuda).
+   */
+  nivelAjuda?: NivelAjuda;
+  /** Quantas vezes a CRIANÇA pediu para ouvir de novo (botão "ouvir de novo") neste item. Sinal de dúvida, não de erro. */
+  ouviuDeNovo?: number;
+  /** Posição da resposta certa nas opções mostradas (0 = a primeira, na ordem de leitura da tela). */
+  posicaoCerta?: number;
+  /** Posição da PRIMEIRA opção tocada (0 = a primeira). Junto com `posicaoCerta`, mostra chute por posição (E-CHU). */
+  posicaoEscolhida?: number;
+  /** Quantas opções havia na tela (chance de chute = 1/nOpcoes; docs/pedagogia/04 §1 R8). */
+  nOpcoes?: number;
+  /** Onde a tentativa aconteceu: trilha (fase), revisão, sondagem ou reforço (treino rápido). Não misturar treino com medida. */
+  contexto?: ContextoTentativa;
 }
+
+/** Escada de ajuda (docs/pedagogia/06 §4). A ordem importa: é da menor para a maior. */
+export type NivelAjuda = 'nenhuma' | 'repetiu' | 'contraste' | 'caminho' | 'resposta-mostrada';
+export const NIVEIS_AJUDA: NivelAjuda[] = ['nenhuma', 'repetiu', 'contraste', 'caminho', 'resposta-mostrada'];
+
+export type ContextoTentativa = 'trilha' | 'revisao' | 'sondagem' | 'reforco';
 
 export interface Tentativa extends DetalheTentativa {
   /** Momento (ms desde 1970). */
@@ -146,6 +172,8 @@ export interface Progresso {
   expressa: { regioes: string[]; ativa: boolean; sondagemEm?: number; degrau?: number };
   /** D030: sondagens periódicas feitas (sondagem.ts), da mais antiga para a mais nova. */
   sondagens?: ResultadoSondagem[];
+  /** D030: treinos rápidos com a Sofia feitos (reforco-treino.ts), só o resumo (as respostas vão para `habilidades`). */
+  treinos?: { em: number; habilidade: string; motivo: string; acertos: number; total: number }[];
   sessoesFeitas: number;
   ultimaSessao?: number;
   criadoEm: number;
@@ -162,6 +190,13 @@ export interface ItemSondagem {
   escolhido?: string;
   acertou: boolean;
   tempoMs?: number;
+  /** Ditado: o que a criança escreveu (letras na ordem), para o adulto ver ao lado da forma certa. */
+  escrito?: string;
+  /** Posição da resposta certa e da escolhida (0 = a primeira opção). */
+  posicaoCerta?: number;
+  posicaoEscolhida?: number;
+  /** Vezes que a criança pediu para ouvir de novo. */
+  ouviuDeNovo?: number;
 }
 
 export interface ResultadoAreaSondagem {
@@ -182,6 +217,8 @@ export interface ResultadoSondagem {
   areas: Partial<Record<AreaSondagem, ResultadoAreaSondagem>>;
   /** Degrau da "Missão das Placas" (sondagem lúdica antiga), quando a tela usada foi ela. */
   degrau?: number;
+  /** Qual tela mediu: a Missão das Placas (primeira sondagem) ou a sondagem periódica em blocos (sondagem-itens.ts). */
+  tela?: 'placas' | 'blocos';
 }
 
 /**

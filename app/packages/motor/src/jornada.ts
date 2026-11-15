@@ -6,7 +6,7 @@ import { FASE_POR_ID, HABILIDADE_POR_ID, REGIAO_POR_ID, SURPRESAS } from '@fonem
 import type { Atividade, Cena, ConfigPlataforma, Fase, Surpresa } from '@fonema/conteudo';
 import type { ConquistaGanha, Demonstracao, Progresso, Tentativa } from './estado.ts';
 import { avaliarDominio, dominadaDeVerdade, novaHabilidade, paraProva, proporcao, registrarTentativa } from './dominio.ts';
-import { TIPO_POR_MECANICA, ehAvaliada, normalizarTentativa } from './tentativas.ts';
+import { TIPO_POR_MECANICA, acertoSozinho, ehAvaliada, normalizarTentativa } from './tentativas.ts';
 import { agendarRevisao, resultadoRevisao } from './revisao.ts';
 import { creditarEmBloco } from './moedinhas.ts';
 import { concluirFase, fasesConcluidas, missaoInicialFeita, regiaoConcluida } from './sequencia.ts';
@@ -31,7 +31,10 @@ function inc(c: Record<string, number>, k: string, v = 1): Record<string, number
 /** Marcadores de esforço por mecânica (alimentam os selos). */
 function contadoresDa(a: Atividade | undefined, cena: Cena, r: ResultadoAtividade, c: Record<string, number>): Record<string, number> {
   let out = c;
-  const certas = r.tentativas.filter((t) => t.acertou).length;
+  // D030 (selos sem exposição): só conta resposta CONFERIDA, certa e sem ajuda. A mecânica pode não ter gravado
+  // `tipo`: aí vale o padrão da mecânica da cena (Letra, Espelho, Traçar e Falar nunca contam aqui).
+  const conferidas = r.tentativas.map((t) => normalizarTentativa(t, cena));
+  const certas = conferidas.filter(acertoSozinho).length;
   if (cena.marcador) out = inc(out, cena.marcador);
   if (cena.id.endsWith('-C7') && cena.id.startsWith('R0-F06')) out = inc(out, 'album-familia');
   if (cena.id.startsWith('R2a-F05-C7')) out = inc(out, 'guia-da-mata');
@@ -48,6 +51,10 @@ function contadoresDa(a: Atividade | undefined, cena: Cena, r: ResultadoAtividad
   if (a.tipo === 'montar' && a.porSilaba) out = inc(out, 'silabas-montadas', a.palavras.length * 2);
   if (a.tipo === 'montar' && !a.porSilaba && a.habilidade === 'silaba-cv') out = inc(out, 'silabas-montadas', a.palavras.length);
   if (a.tipo === 'falar' && a.habilidade === 'leitura-cvcv' && r.tentativas.some((t) => t.acertou && !t.comAjuda)) out = inc(out, 'leu-sozinho');
+  // contadores CONFERIDOS (D030): os selos de habilidade usam estes; os de cima ficam como registro de participação
+  if (a.tipo === 'ditado') out = inc(out, 'ditado-acertos', certas);
+  if (a.tipo === 'montar' && (a.porSilaba || a.habilidade === 'silaba-cv')) out = inc(out, 'silabas-montadas-certas', certas);
+  if (a.habilidade === 'leitura-cvcv' && a.tipo !== 'falar' && certas > 0) out = inc(out, 'leu-sozinho-conferido', certas);
   return out;
 }
 

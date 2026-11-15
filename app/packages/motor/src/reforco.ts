@@ -15,6 +15,8 @@ import { avaliarDominio, dominadaDeVerdade } from './dominio.ts';
 import { ehAvaliada } from './tentativas.ts';
 import { paresConfundidos, parceiroProvavel, fonemasEGrafemasMaisErrados, todasAsTentativas, type ParConfundido } from './confusao.ts';
 import { revisoesVencidas } from './revisao.ts';
+import { QUEDA_MINIMA as QUEDA_TXT, quedasEntreSondagens } from './sondagem.ts';
+import { CHUTE, sinaisDeChute } from './ajuda.ts';
 
 /* ------------------------------ pré-requisitos ------------------------------ */
 
@@ -259,7 +261,7 @@ export function proximaPratica(p: Progresso, cfg: ConfigPlataforma, agora: numbe
 export interface AlertaDeRisco {
   /** 'nenhum' = nada a apontar; 'atencao' = 1 sinal; 'risco' = 2 ou mais sinais de aprendizagem. */
   nivel: 'nenhum' | 'atencao' | 'risco';
-  sinais: { tipo: 'sem-dominio' | 'erro-seguido' | 'troca-repetida' | 'sem-jogar'; habilidade?: string; texto: string }[];
+  sinais: { tipo: 'sem-dominio' | 'erro-seguido' | 'troca-repetida' | 'sem-jogar' | 'queda-sondagem' | 'chute'; habilidade?: string; texto: string; sugestao?: string }[];
   /** Como o alerta é calculado, em linguagem simples (aparece no painel). */
   criterio: string;
 }
@@ -292,9 +294,28 @@ export function alertaDeRisco(p: Progresso, cfg: ConfigPlataforma, agora: number
   }
   const trocas: ParConfundido[] = paresConfundidos(todasAsTentativas(p), k.trocasMin).filter((x) => x.sessoes >= 2);
   for (const t of trocas.slice(0, 3)) sinais.push({ tipo: 'troca-repetida', habilidade: t.habilidades[0], texto: `Troca ${t.alvo} por ${t.escolhido} com frequência (${t.vezes} vezes).` });
+  // queda entre as duas últimas sondagens (docs/pedagogia/06 §5 e §7): sugere ao adulto voltar de fase
+  for (const q of quedasEntreSondagens(p)) {
+    sinais.push({
+      tipo: 'queda-sondagem',
+      texto: `"${q.nome}" caiu da sondagem de ${new Date(q.antes.em).toLocaleDateString('pt-BR')} (${q.antes.acertos} de ${q.antes.total}) para a de ${new Date(q.agora.em).toLocaleDateString('pt-BR')} (${q.agora.acertos} de ${q.agora.total}).`,
+      sugestao: 'Vale voltar uma fase e refazer com calma, junto com a criança. Nada do que ela ganhou se perde.'
+    });
+  }
+  // muitos chutes (E-CHU): sinal de atenção, não de aprendizagem
+  const chute = sinaisDeChute(todasAsTentativas(p));
+  if (chute.chutando) {
+    sinais.push({
+      tipo: 'chute',
+      texto: chute.motivo === 'posicao'
+        ? `Nas últimas respostas tocou ${chute.mesmaPosicao} vezes seguidas no mesmo lugar da tela, mesmo com a resposta mudando de lugar.`
+        : `Muitas respostas rápidas e erradas (${chute.rapidasErradas} de ${chute.itens} com menos de ${CHUTE.rapidaMs / 1000} s).`,
+      sugestao: 'Pode ser cansaço ou pressa. Sugestão: jogar junto alguns minutos, pedindo para ouvir antes de tocar.'
+    });
+  }
   const dias = p.ultimaSessao ? Math.floor((agora - p.ultimaSessao) / DIA_MS) : 0;
   if (p.sessoesFeitas > 0 && dias >= k.diasSemJogar) sinais.push({ tipo: 'sem-jogar', texto: `${dias} dias sem jogar. Pouco e sempre funciona melhor do que muito de uma vez.` });
-  const deAprendizagem = sinais.filter((s) => s.tipo !== 'sem-jogar').length;
+  const deAprendizagem = sinais.filter((s) => s.tipo !== 'sem-jogar' && s.tipo !== 'chute').length;
   return {
     nivel: deAprendizagem >= 2 ? 'risco' : sinais.length ? 'atencao' : 'nenhum',
     sinais,
@@ -302,6 +323,7 @@ export function alertaDeRisco(p: Progresso, cfg: ConfigPlataforma, agora: number
       `Critério do FONEMA (decisão do projeto, não é diagnóstico): aparece "atenção" com 1 sinal e "precisa de apoio" com 2 ou mais. ` +
       `Sinais: ${k.sessoesSemDominio} sessões na mesma habilidade sem firmar e menos de ${Math.round(k.acertoMin * 100)}% de acerto; ` +
       `${cfg.reforco.sessoesSeguidasParaPreRequisito} sessões seguidas com mais erro do que acerto; a mesma troca ${k.trocasMin} vezes ou mais; ` +
-      `${k.diasSemJogar} dias sem jogar.`
+      `${k.diasSemJogar} dias sem jogar; queda de ${Math.round(QUEDA_TXT * 100)} pontos ou mais numa área entre duas sondagens; ` +
+      `muitas respostas rápidas e erradas, ou o mesmo lugar tocado ${CHUTE.mesmaPosicaoSeguidas} vezes seguidas (chute). Sem jogar e chute sozinhos dão só "atenção".`
   };
 }

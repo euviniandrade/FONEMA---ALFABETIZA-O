@@ -5,6 +5,7 @@
 import { ALFABETO, CONQUISTA_POR_ID, SELO_ALFABETO_COMPLETO, faseDaLetra, seloDaLetra } from '@fonema/conteudo';
 import type { ConquistaGanha, Demonstracao, Progresso } from './estado.ts';
 import { fasesConcluidas } from './sequencia.ts';
+import { acertoSozinho } from './tentativas.ts';
 
 type Nivel = ConquistaGanha['nivel'];
 
@@ -22,8 +23,9 @@ export function fatosDe(p: Progresso, demonstracoes: Demonstracao[] = []): Fatos
   const concluidas = fasesConcluidas(p);
   return {
     concluidas,
-    acertos: (h) => (p.habilidades[h]?.tentativas ?? []).filter((t) => t.acertou && !t.comAjuda).length,
-    sessoesCom: (h) => new Set((p.habilidades[h]?.tentativas ?? []).map((t) => t.sessao)).size,
+    // D030: só resposta CONFERIDA, certa e sem ajuda (exposição e autorrelato não contam para selo de habilidade)
+    acertos: (h) => (p.habilidades[h]?.tentativas ?? []).filter(acertoSozinho).length,
+    sessoesCom: (h) => new Set((p.habilidades[h]?.tentativas ?? []).filter(acertoSozinho).map((t) => t.sessao)).size,
     dominada: (h) => !!p.habilidades[h]?.dominadaEm,
     contador: (n) => p.contadores[n] ?? 0,
     moedinhasTotal: p.moedinhas.total,
@@ -40,6 +42,14 @@ function degraus(valor: number, limiares: [number, number?, number?]): Nivel | n
   return null;
 }
 const se = (cond: boolean, n: Nivel = 'unico'): Nivel | null => (cond ? n : null);
+
+/**
+ * D030 (regra 4 do CLAUDE.md): selos de PARTICIPAÇÃO — premiam o esforço de ver, imitar a boca ou traçar. Continuam
+ * existindo (nada é removido), mas não são selos de habilidade: o Álbum e o painel os mostram como participação e
+ * eles não entram em nenhuma medida de domínio. Todos os OUTROS selos de habilidade só contam resposta conferida.
+ */
+export const SELOS_DE_PARTICIPACAO: string[] = ['S-R1-02', 'S-R1-05', 'S-R2a-01', 'S-R0-07', 'S-R0-13', 'S-R0-15', 'S-R1-12', 'S-R2a-09', 'S-R0-10', 'S-R1-10'];
+export const ehSeloDeParticipacao = (id: string) => SELOS_DE_PARTICIPACAO.includes(id);
 
 /** Regras do MVP. As que não estão aqui ficam como "em breve" (mistério) no Álbum. */
 export const REGRAS: Record<string, (f: Fatos) => Nivel | null> = {
@@ -88,11 +98,12 @@ export const REGRAS: Record<string, (f: Fatos) => Nivel | null> = {
   'S-R2a-01': (f) => se(f.contador('espelho-mlf') >= 3, 'bronze'),
   'S-R2a-02': (f) => degraus(f.acertos('gpc-m') + f.acertos('gpc-l') + f.acertos('gpc-f'), [10, 20]),
   'S-R2a-03': (f) => degraus(f.acertos('silaba-cv'), [10, 20]),
-  'S-R2a-04': (f) => degraus(f.contador('silabas-montadas'), [8, 16]),
-  'M-R2a-01': (f) => se(f.contador('leu-sozinho') >= 1),
+  'S-R2a-04': (f) => degraus(f.contador('silabas-montadas-certas'), [8, 16]),
+  // "Ler a primeira palavra sem ajuda": leitura CONFERIDA (Escolher/Ligar), não o "Li!" do Falar (autorrelato)
+  'M-R2a-01': (f) => se(f.contador('leu-sozinho-conferido') >= 1 || f.acertos('leitura-cvcv') >= 1),
   'S-R2a-05': (f) => (f.sessoesCom('leitura-cvcv') >= 2 ? degraus(f.acertos('leitura-cvcv'), [10, 20, 40]) : null),
   'S-R2a-06': (f) => degraus(f.contador('palavra-que-faz'), [3, 8]),
-  'S-R2a-07': (f) => degraus(f.contador('ditado-palavras'), [5, 10]),
+  'S-R2a-07': (f) => degraus(f.contador('ditado-acertos'), [5, 10]),
   'M-R2a-02': (f) => se(f.concluidas.has('R2a-F05')),
   'S-R2a-08': (f) => se(f.concluidas.has('R2a-F05'), 'bronze'),
   'TI-R2a-01': (f) => se(f.concluidas.has('R2a-F05')),

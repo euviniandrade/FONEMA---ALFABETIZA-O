@@ -81,12 +81,12 @@ export function resultadoPorArea(itens: (ItemSondagem & { area: AreaSondagem })[
  */
 export function registrarSondagem(
   p: Progresso,
-  r: { id: string; areas: ResultadoSondagem['areas']; degrau?: number; motivo?: ResultadoSondagem['motivo'] },
+  r: { id: string; areas: ResultadoSondagem['areas']; degrau?: number; motivo?: ResultadoSondagem['motivo']; tela?: ResultadoSondagem['tela'] },
   agora: number
 ): Progresso {
   const primeira = !(p.sondagens ?? []).length && p.expressa.sondagemEm === undefined;
   const motivo = r.motivo ?? (primeira ? 'inicial' : 'adulto');
-  const feita: ResultadoSondagem = { id: r.id, em: agora, motivo, faseAtual: p.faseAtual, fasesConcluidas: fasesConcluidas(p).size, areas: r.areas, degrau: r.degrau };
+  const feita: ResultadoSondagem = { id: r.id, em: agora, motivo, faseAtual: p.faseAtual, fasesConcluidas: fasesConcluidas(p).size, areas: r.areas, degrau: r.degrau, ...(r.tela ? { tela: r.tela } : {}) };
   const q = primeira && r.degrau !== undefined ? aplicarSondagem(p, r.degrau, agora) : p;
   return { ...q, sondagens: [...(p.sondagens ?? []), feita] };
 }
@@ -108,4 +108,37 @@ export function evolucaoSondagens(p: Pick<Progresso, 'sondagens'>): EvolucaoArea
       .map((s) => ({ em: s.em, acertos: s.areas[id]!.acertos, total: s.areas[id]!.total, proporcao: s.areas[id]!.acertos / s.areas[id]!.total }));
     return { area: id, nome, medidas, variacao: medidas.length >= 2 ? medidas[medidas.length - 1].proporcao - medidas[0].proporcao : undefined };
   });
+}
+
+/* ------------------------------ queda entre sondagens (docs/pedagogia/06 §5 e §7) ------------------------------ */
+
+/**
+ * DECISÃO DO PROJETO (sem número nos materiais; a calibrar com uso): há "queda" numa área quando a proporção de acertos
+ * caiu QUEDA_MINIMA ou mais entre as duas últimas sondagens que mediram a área, e as duas tiveram ao menos
+ * ITENS_MIN_QUEDA itens (com menos itens a diferença é sorte).
+ */
+export const QUEDA_MINIMA = 0.25;
+export const ITENS_MIN_QUEDA = 3;
+
+export interface QuedaArea {
+  area: AreaSondagem;
+  nome: string;
+  antes: { em: number; acertos: number; total: number };
+  agora: { em: number; acertos: number; total: number };
+  /** Diferença em proporção (negativa). */
+  variacao: number;
+}
+
+/** Áreas em que a criança foi pior na última sondagem do que na anterior (para o alerta e para "voltar de fase"). */
+export function quedasEntreSondagens(p: Pick<Progresso, 'sondagens'>, minima = QUEDA_MINIMA, itensMin = ITENS_MIN_QUEDA): QuedaArea[] {
+  const out: QuedaArea[] = [];
+  for (const { id, nome } of AREAS_SONDAGEM) {
+    const m = (p.sondagens ?? []).filter((s) => (s.areas[id]?.total ?? 0) >= itensMin);
+    if (m.length < 2) continue;
+    const a = m[m.length - 2]; const b = m[m.length - 1];
+    const ra = a.areas[id]!; const rb = b.areas[id]!;
+    const variacao = rb.acertos / rb.total - ra.acertos / ra.total;
+    if (variacao <= -minima) out.push({ area: id, nome, antes: { em: a.em, acertos: ra.acertos, total: ra.total }, agora: { em: b.em, acertos: rb.acertos, total: rb.total }, variacao });
+  }
+  return out;
 }

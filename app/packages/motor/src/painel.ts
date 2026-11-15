@@ -10,7 +10,8 @@ import { generoDaFala } from './avatar.ts';
 import { avaliarDominio, dominadaDeVerdade } from './dominio.ts';
 import { coberturaDoDetalhe, fonemasEGrafemasMaisErrados, palavrasDificeis, paresConfundidos, tempoMedioPorHabilidade, todasAsTentativas, type ItemErrado, type ParConfundido } from './confusao.ts';
 import { alertaDeRisco, praticasRecomendadas, type AlertaDeRisco, type PraticaRecomendada } from './reforco.ts';
-import { evolucaoSondagens, situacaoSondagem, type EvolucaoArea, type SituacaoSondagem } from './sondagem.ts';
+import { evolucaoSondagens, quedasEntreSondagens, situacaoSondagem, type EvolucaoArea, type QuedaArea, type SituacaoSondagem } from './sondagem.ts';
+import { resumoDaAjuda, posicoesDaRespostaCerta, sinaisDeChute, type ResumoAjuda, type SinalDeChute } from './ajuda.ts';
 import { tipoDaTentativa } from './tentativas.ts';
 import { calcularNivel } from './nivel.ts';
 import { descreverTermometro, termometroMaximoDoConteudo } from './termometro.ts';
@@ -135,7 +136,12 @@ export interface ResumoAprendizagem {
   tempoMedioMs?: number;
   alerta: AlertaDeRisco;
   praticas: PraticaRecomendada[];
-  sondagem: SituacaoSondagem & { evolucao: EvolucaoArea[] };
+  sondagem: SituacaoSondagem & { evolucao: EvolucaoArea[]; quedas: QuedaArea[]; feitas: number };
+  /** Ajuda graduada, "ouviu de novo" e posição da resposta certa (só onde as mecânicas gravam). */
+  ajuda: ResumoAjuda & { posicoes: number[] };
+  chute: SinalDeChute;
+  /** Treinos rápidos com a Sofia (prática recomendada jogada pela criança), do mais novo para o mais antigo. */
+  treinos: NonNullable<Progresso['treinos']>;
   termometro: { valor: number; maximoDoConteudo: number; explicacao: string };
 }
 
@@ -170,7 +176,10 @@ export function resumoAprendizagem(c: Pick<Crianca, 'anoNascimento'>, p: Progres
     tempoMedioMs: itensComTempo ? Math.round(tempos.reduce((s, t) => s + t.mediaMs * t.itens, 0) / itensComTempo) : undefined,
     alerta: alertaDeRisco(p, cfg, agora),
     praticas: praticasRecomendadas(p, cfg, agora),
-    sondagem: { ...situacaoSondagem(p, cfg, agora, idade), evolucao: evolucaoSondagens(p) },
+    sondagem: { ...situacaoSondagem(p, cfg, agora, idade), evolucao: evolucaoSondagens(p), quedas: quedasEntreSondagens(p), feitas: (p.sondagens ?? []).length },
+    ajuda: { ...resumoDaAjuda(ts), posicoes: posicoesDaRespostaCerta(ts) },
+    chute: sinaisDeChute(ts),
+    treinos: [...(p.treinos ?? [])].reverse(),
     termometro: {
       valor: p.termometro,
       maximoDoConteudo: maximo,
