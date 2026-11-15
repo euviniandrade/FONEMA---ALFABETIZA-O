@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import type { Conquista } from '@fonema/conteudo';
 import type { ConquistaGanha, InfoNivel } from '@fonema/motor';
 import { asset } from '../servicos/ambiente.ts';
 import { caminhoFigura } from './ui.tsx';
-import { carregarImagem, geoPremio, geoSelo, novoCanvas, pintarFrente, pintarVerso, prepararSelo, relevoEstrela, type ArteSelo, type Forma, type Metal, type Motivo } from './selo-pintura.ts';
-import type { Modo, Peca, Vista } from './premio3d.ts';
+import { carregarImagem, figuraSemChao, geoPremio, geoSelo, novoCanvas, pintarFrente, pintarVerso, prepararSelo, relevoEstrela, type ArteSelo, type Forma, type Metal, type Motivo } from './selo-pintura.ts';
+import type { Modo, Peca, PecaModelo, Vista } from './premio3d.ts';
 
 /* ============================== selos 3D (D025/D029) ============================== */
 const NOME_NIVEL: Record<string, string> = { bronze: 'Bronze', prata: 'Prata', ouro: 'Ouro', diamante: 'Diamante' };
@@ -48,7 +48,8 @@ const chaveArte = (a: ArteSelo) => JSON.stringify(a);
 const dpr = () => Math.min(2, typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1);
 const calmo = () => typeof document !== 'undefined' && (document.documentElement.classList.contains('menos-movimento') || !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
 
-interface Montada { peca: Peca; frente: HTMLCanvasElement | HTMLImageElement }
+/** O que o Objeto3D precisa: a peça extrudada (selo, moeda) OU um modelo GLB, e a imagem parada de reserva. */
+interface Montada { peca?: Peca; modelo?: PecaModelo; frente: HTMLCanvasElement | HTMLImageElement | null }
 async function montarSelo(arte: ArteSelo): Promise<Montada> {
   const im = await prepararSelo(arte, true);
   const g = geoSelo(arte.forma);
@@ -60,12 +61,14 @@ async function montarSelo(arte: ArteSelo): Promise<Montada> {
 }
 
 /** Objeto que GIRA em 360° (frente, borda e verso). Sem WebGL, fica a frente parada. */
-function Objeto3D({ chave, montar, proporcao, largura, modo, angulo, rotulo, aoAssentar, className = '' }: {
-  chave: string; montar: () => Promise<Montada>; proporcao: number; largura: number; modo: Modo; angulo?: number; rotulo: string; aoAssentar?: () => void; className?: string;
+function Objeto3D({ chave, montar, proporcao, largura, modo, angulo, rotulo, aoAssentar, aoVista, className = '' }: {
+  chave: string; montar: () => Promise<Montada>; proporcao: number; largura: number; modo: Modo; angulo?: number; rotulo: string; aoAssentar?: () => void; aoVista?: (v: Vista | null) => void; className?: string;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const assentar = useRef(aoAssentar);
   assentar.current = aoAssentar;
+  const avisar = useRef(aoVista);
+  avisar.current = aoVista;
   useEffect(() => {
     const canvas = ref.current;
     if (!canvas) return;
@@ -74,15 +77,20 @@ function Objeto3D({ chave, montar, proporcao, largura, modo, angulo, rotulo, aoA
     canvas.width = Math.round(largura * MARGEM_3D * dpr());
     canvas.height = Math.round(canvas.width / proporcao);
     (async () => {
-      const { peca, frente } = await montar();
+      const { peca, modelo, frente } = await montar();
       if (!vivo) return;
       const ctx = canvas.getContext('2d');
-      const m = (1 - 1 / MARGEM_3D) / 2;
-      ctx?.drawImage(frente, canvas.width * m, canvas.height * m, canvas.width / MARGEM_3D, canvas.height / MARGEM_3D);
+      // reserva e primeiro quadro: a imagem parada (o modelo GLB traz o quadro inteiro, já com a margem)
+      const m = modelo ? 0 : (1 - 1 / MARGEM_3D) / 2;
+      if (frente) ctx?.drawImage(frente, canvas.width * m, canvas.height * m, canvas.width * (1 - 2 * m), canvas.height * (1 - 2 * m));
       try {
         const motor = await import('./premio3d.ts');
         if (!vivo) return;
-        vista = motor.criarVista(canvas, peca, { modo, angulo, calmo: calmo(), aoAssentar: () => assentar.current?.() });
+        const op = { modo, angulo, calmo: calmo(), aoAssentar: () => assentar.current?.() };
+        const v = modelo ? await motor.criarVistaModelo(canvas, modelo, op) : motor.criarVista(canvas, peca!, op);
+        if (!vivo) { v.destruir(); return; }
+        vista = v;
+        avisar.current?.(v);
         canvas.dataset.giro = '3d';
         if (calmo() || modo !== 'entrada') assentar.current?.();
       } catch {
@@ -90,7 +98,7 @@ function Objeto3D({ chave, montar, proporcao, largura, modo, angulo, rotulo, aoA
         assentar.current?.();
       }
     })();
-    return () => { vivo = false; vista?.destruir(); };
+    return () => { vivo = false; avisar.current?.(null); vista?.destruir(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chave, largura, modo, angulo]);
   return <canvas ref={ref} className={`premio-3d ${className}`} style={{ width: largura * MARGEM_3D, aspectRatio: String(proporcao) }} role="img" aria-label={rotulo} data-testid="premio-3d" />;
@@ -103,32 +111,56 @@ export function SeloGirando({ conquista, ganha, letra, bloqueado = false, tamanh
   return <Objeto3D chave={chaveArte(arte)} montar={() => montarSelo(arte)} proporcao={g.w / g.h} largura={tamanho} modo={modo} angulo={angulo} aoAssentar={aoAssentar} rotulo={`Selo ${conquista.nome}${bloqueado ? ' (ainda não conquistado)' : ''}`} />;
 }
 
-const PREMIOS = {
-  moeda: { arquivo: 'moeda', rotulo: 'Moedinha', espessura: 0.07, borda: 0xe2a52c, modo: 'auto' },
-  trofeu: { arquivo: 'trofeu', rotulo: 'Troféu', espessura: 0.1, borda: 0xd9982a, modo: 'balanco' },
-  bau: { arquivo: 'bau-livros', rotulo: 'Baú de livros', espessura: 0.1, borda: 0x2a3f78, modo: 'balanco' }
+/* ============================== modelos 3D de verdade (GLB) ============================== */
+/**
+ * Porquinho, troféu, baú e Bolota: modelos GLB (plataforma de 3D), comprimidos por scripts/comprimir-modelos.sh.
+ * `quadro` é a imagem parada tirada do PRÓPRIO modelo (scripts/gerar-miniaturas-modelos.mjs): é o que aparece
+ * antes de o three.js chegar e quando não há WebGL; por isso a troca imagem → 3D não "pula".
+ */
+const MODELOS = {
+  porquinho: { rotulo: 'Cofrinho de porquinho', frente: -62 },
+  trofeu: { rotulo: 'Troféu', frente: -74 },
+  bau: { rotulo: 'Baú de livros', frente: -60 },
+  bolota: { rotulo: 'Bolota, o tatu', frente: -58 }
 } as const;
+export type QualModelo = keyof typeof MODELOS;
 
 /**
- * Moeda, troféu e baú como objetos com espessura, no mesmo motor dos selos.
- * A MOEDA dá a volta inteira (verso liso com estrela em relevo). TROFÉU e BAÚ são uma imagem só, com letras:
- * balançam de um lado para o outro mostrando a borda, sem virar de costas (a volta inteira pede modelo 3D).
+ * Modelo 3D girando 360° de verdade: arrastar gira com inércia, giro lento automático, luz de estúdio e sombra de
+ * contato. Serve para qualquer tela (ex.: `<Modelo3D qual="bolota" tamanho={260} />`). Carrega three.js e o GLB
+ * só quando aparece; sem WebGL fica a imagem parada.
  */
-export function Premio3D({ tipo, tamanho = 160, modo, angulo }: { tipo: keyof typeof PREMIOS; tamanho?: number; modo?: Modo; angulo?: number }) {
-  const p = PREMIOS[tipo];
+export function Modelo3D({ qual, tamanho = 220, modo = 'auto', angulo, aoVista, semSombra = false }: { qual: QualModelo; tamanho?: number; modo?: Modo; angulo?: number; aoVista?: (v: Vista | null) => void; semSombra?: boolean }) {
+  const m = MODELOS[qual];
+  const montar = async (): Promise<Montada> => ({ frente: await carregarImagem(asset(`modelos3d/${qual}.webp`)), modelo: { url: asset(`modelos3d/${qual}.glb`), frente: m.frente, semSombra } });
+  return <Objeto3D chave={`${qual}${semSombra ? '-s' : ''}`} montar={montar} proporcao={1} largura={tamanho} modo={modo} angulo={angulo} rotulo={m.rotulo} aoVista={aoVista} className={`premio-modelo premio-${qual}`} />;
+}
+
+const MOEDA = { arquivo: 'moeda', rotulo: 'Moedinha', espessura: 0.07, borda: 0xe2a52c };
+
+/**
+ * Prêmios em 360°. TROFÉU e BAÚ são modelos 3D de verdade (volta inteira). A MOEDA é a arte aprovada com espessura
+ * (frente, borda e verso liso com estrela em relevo).
+ */
+export function Premio3D({ tipo, tamanho = 160, modo = 'auto', angulo }: { tipo: 'moeda' | 'trofeu' | 'bau'; tamanho?: number; modo?: Modo; angulo?: number }) {
+  if (tipo !== 'moeda') return <Modelo3D qual={tipo} tamanho={tamanho} modo={modo} angulo={angulo} />;
+  return <Moeda3D tamanho={tamanho} modo={modo} angulo={angulo} />;
+}
+function Moeda3D({ tamanho, modo, angulo }: { tamanho: number; modo: Modo; angulo?: number }) {
+  const p = MOEDA;
   const g = geoPremio(p.arquivo);
   const montar = async (): Promise<Montada> => {
     const [f, v] = await Promise.all([carregarImagem(asset(`recompensas/${p.arquivo}.webp`)), carregarImagem(asset(`recompensas/${p.arquivo}-verso.webp`))]);
     if (!f) throw new Error('sem imagem');
     let verso: HTMLCanvasElement | HTMLImageElement = v ?? f;
-    if (tipo === 'moeda' && v) {
+    if (v) {
       const c = novoCanvas(g.w * 2, g.h * 2);
       const x = c.getContext('2d');
       if (x) { x.drawImage(v, 0, 0, c.width, c.height); relevoEstrela(x, c.width * 0.5, c.height * 0.47, c.height * 0.2); verso = c; }
     }
     return { frente: f, peca: { frente: f, verso, contorno: g.contorno, proporcao: g.w / g.h, espessura: p.espessura, borda: p.borda } };
   };
-  return <Objeto3D chave={tipo} montar={montar} proporcao={g.w / g.h} largura={tamanho} modo={modo ?? p.modo} angulo={angulo} rotulo={p.rotulo} className={`premio-${tipo}`} />;
+  return <Objeto3D chave="moeda" montar={montar} proporcao={g.w / g.h} largura={tamanho} modo={modo} angulo={angulo} rotulo={p.rotulo} className="premio-moeda" />;
 }
 
 /**
@@ -178,34 +210,88 @@ function tamanhoGrande(): number {
   return Math.round(Math.max(170, Math.min(340, window.innerWidth * 0.62, window.innerHeight * 0.42)));
 }
 
-/** Selo aberto, grande, em 360°: nome, nível e como foi conquistado (Álbum / Minhas Conquistas / fim da fase). */
-export function SeloAmpliado({ conquista, ganha, letra, bloqueado = false, aoFechar }: { conquista: Conquista; ganha?: ConquistaGanha; letra?: string; bloqueado?: boolean; aoFechar: () => void }) {
-  const [tam] = useState(tamanhoGrande);
-  const mist = bloqueado && conquista.visivel_antes === 'misterio';
+/** Casca do prêmio aberto: fundo escuro, raios, o objeto girando e os textos. Esc, "Fechar" ou tocar fora fecham. */
+function Ampliado({ rotulo, objeto, children, aoFechar }: { rotulo: string; objeto: ReactNode; children: ReactNode; aoFechar: () => void }) {
   useEffect(() => {
     const tecla = (e: KeyboardEvent) => { if (e.key === 'Escape') aoFechar(); };
     window.addEventListener('keydown', tecla);
     return () => window.removeEventListener('keydown', tecla);
   }, [aoFechar]);
-  const nivel = ganha && NOME_NIVEL[ganha.nivel];
   return createPortal(
-    <div className="selo-ampliado" role="dialog" aria-modal="true" aria-label={mist ? 'Mistério' : conquista.nome} data-testid="selo-ampliado" onClick={(e) => { e.stopPropagation(); if (e.target === e.currentTarget) aoFechar(); }}>
+    <div className="selo-ampliado" role="dialog" aria-modal="true" aria-label={rotulo} data-testid="selo-ampliado" onClick={(e) => { e.stopPropagation(); if (e.target === e.currentTarget) aoFechar(); }} onKeyDown={(e) => e.stopPropagation()}>
       <div className="selo-ampliado-cartao">
         <div className="selo-ampliado-palco">
           <div className="selo-raios" aria-hidden="true" />
-          <SeloGirando conquista={conquista} ganha={ganha} letra={letra} bloqueado={bloqueado} tamanho={tam} modo="auto" />
+          {objeto}
         </div>
         <p className="selo-ampliado-gire" aria-hidden="true">Arraste para girar</p>
-        <h2 className="t">{mist ? 'Mistério' : conquista.nome}</h2>
-        {bloqueado
-          ? <p className="selo-ampliado-nivel bloqueado">Ainda não conquistado</p>
-          : <p className={`selo-ampliado-nivel ${ganha?.nivel ?? 'unico'}`}>{nivel ? `Nível ${nivel}` : 'Conquistado'}{ganha ? ` · ${new Date(ganha.em).toLocaleDateString('pt-BR')}` : ''}</p>}
-        <p className="selo-ampliado-como"><b>{bloqueado ? 'Como conquistar: ' : 'Como você conquistou: '}</b>{mist ? 'Continue a trilha para descobrir!' : conquista.dica}</p>
+        {children}
         <button className="btn grande ipe" onClick={aoFechar} data-testid="fechar-selo" autoFocus>Fechar</button>
       </div>
     </div>,
     document.body
   );
+}
+
+/** Selo aberto, grande, em 360°: nome, nível e como foi conquistado (Álbum / Minhas Conquistas / fim da fase). */
+export function SeloAmpliado({ conquista, ganha, letra, bloqueado = false, aoFechar }: { conquista: Conquista; ganha?: ConquistaGanha; letra?: string; bloqueado?: boolean; aoFechar: () => void }) {
+  const [tam] = useState(tamanhoGrande);
+  const mist = bloqueado && conquista.visivel_antes === 'misterio';
+  const nivel = ganha && NOME_NIVEL[ganha.nivel];
+  // troféu conquistado: abre o TROFÉU 3D de verdade (o selo continua sendo a miniatura do Álbum)
+  const objeto = conquista.tipo === 'trofeu' && !bloqueado
+    ? <Modelo3D qual="trofeu" tamanho={tam} />
+    : <SeloGirando conquista={conquista} ganha={ganha} letra={letra} bloqueado={bloqueado} tamanho={tam} modo="auto" />;
+  return (
+    <Ampliado rotulo={mist ? 'Mistério' : conquista.nome} objeto={objeto} aoFechar={aoFechar}>
+      <h2 className="t">{mist ? 'Mistério' : conquista.nome}</h2>
+      {bloqueado
+        ? <p className="selo-ampliado-nivel bloqueado">Ainda não conquistado</p>
+        : <p className={`selo-ampliado-nivel ${ganha?.nivel ?? 'unico'}`}>{nivel ? `Nível ${nivel}` : 'Conquistado'}{ganha ? ` · ${new Date(ganha.em).toLocaleDateString('pt-BR')}` : ''}</p>}
+      <p className="selo-ampliado-como"><b>{bloqueado ? 'Como conquistar: ' : 'Como você conquistou: '}</b>{mist ? 'Continue a trilha para descobrir!' : conquista.dica}</p>
+    </Ampliado>
+  );
+}
+
+/** Porquinho, troféu, baú ou Bolota aberto, grande, girando 360° (ex.: tocar no cofrinho do topo). */
+export function PremioAmpliado({ qual, titulo, children, aoFechar }: { qual: QualModelo; titulo: string; children?: ReactNode; aoFechar: () => void }) {
+  const [tam] = useState(tamanhoGrande);
+  return (
+    <Ampliado rotulo={titulo} objeto={<Modelo3D qual={qual} tamanho={tam} />} aoFechar={aoFechar}>
+      <h2 className="t">{titulo}</h2>
+      {children ? <div className="selo-ampliado-como">{children}</div> : null}
+    </Ampliado>
+  );
+}
+
+/** Miniatura parada (imagem tirada do próprio modelo) que abre o prêmio em 360° ao toque. */
+export function MiniaturaPremio({ qual, titulo, tamanho = 96, children }: { qual: QualModelo; titulo: string; tamanho?: number; children?: ReactNode }) {
+  const [aberto, setAberto] = useState(false);
+  return (
+    <>
+      <button type="button" className="premio-mini" style={{ width: tamanho, height: tamanho }} onClick={() => setAberto(true)} aria-label={`${titulo}. Tocar para ver de perto e girar.`} data-testid={`premio-mini-${qual}`}>
+        <img src={asset(`modelos3d/${qual}.webp`)} alt="" draggable={false} />
+      </button>
+      {aberto ? <PremioAmpliado qual={qual} titulo={titulo} aoFechar={() => setAberto(false)}>{children}</PremioAmpliado> : null}
+    </>
+  );
+}
+
+/** Figura 3D sem o "chão" branco que vem recortado junto (ex.: a estrela do topo da Fase concluída). */
+export function FiguraLimpa({ src, className = '' }: { src: string; className?: string }) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    let vivo = true;
+    void carregarImagem(src).then((im) => {
+      const c = ref.current;
+      if (!vivo || !c || !im) return;
+      const limpa = figuraSemChao(im);
+      c.width = limpa.width; c.height = limpa.height;
+      c.getContext('2d')?.drawImage(limpa, 0, 0);
+    });
+    return () => { vivo = false; };
+  }, [src]);
+  return <canvas ref={ref} className={className} aria-hidden="true" />;
 }
 
 /**
@@ -259,24 +345,22 @@ export function CelebracaoSelos({ itens, letra }: { itens: Array<{ conquista: Co
   );
 }
 
-/** Cofrinho de porquinho (D029): balança em 3D com sombra; arrastar inclina. (É uma imagem só: ver nota no CSS.) */
-export function Cofrinho({ saldo, animar = 0 }: { saldo: number; animar?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const arrasto = useRef<{ x: number; g: number } | null>(null);
-  const girar = (g: number | null) => {
-    const el = ref.current;
-    if (!el) return;
-    if (g === null) { el.classList.remove('arrastando'); el.style.removeProperty('--giro'); } else { el.classList.add('arrastando'); el.style.setProperty('--giro', `${g.toFixed(1)}deg`); }
-  };
+/**
+ * Cofrinho de porquinho (D029): modelo 3D de verdade, girando 360° (arrastar gira). Quando as moedinhas chegam,
+ * o porquinho dá pulinhos. Antes de o 3D carregar (e sem WebGL) aparece a imagem do próprio modelo.
+ */
+export function Cofrinho({ saldo, animar = 0, tamanho = 210 }: { saldo: number; animar?: number; tamanho?: number }) {
+  const vista = useRef<Vista | null>(null);
+  useEffect(() => {
+    if (!animar || calmo()) return;
+    const n = Math.min(animar, 12);
+    const relogios: number[] = [];
+    for (let i = 0; i < n; i += 3) relogios.push(window.setTimeout(() => vista.current?.pular(), 950 + i * 120));
+    return () => relogios.forEach((r) => window.clearTimeout(r));
+  }, [animar]);
   return (
-    <div
-      className="cofrinho cofrinho-3d" id="cofrinho" data-testid="cofrinho" ref={ref}
-      onPointerDown={(e) => { arrasto.current = { x: e.clientX, g: 0 }; try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* ponteiro sintético */ } }}
-      onPointerMove={(e) => { const a = arrasto.current; if (a) girar(Math.max(-38, Math.min(38, (e.clientX - a.x) * 0.45))); }}
-      onPointerUp={() => { arrasto.current = null; girar(null); }}
-      onPointerCancel={() => { arrasto.current = null; girar(null); }}
-    >
-      <img className="cofre" src={asset('recompensas/cofrinho-porquinho.webp')} alt="Cofrinho de porquinho" draggable={false} />
+    <div className="cofrinho cofrinho-3d" id="cofrinho" data-testid="cofrinho">
+      <Modelo3D qual="porquinho" tamanho={tamanho} aoVista={(v) => { vista.current = v; }} />
       <b>{saldo}</b>
       {Array.from({ length: Math.min(animar, 12) }, (_, i) => (
         <img key={i} className="moeda-voando" style={{ animationDelay: `${i * 0.12}s` }} src={asset('recompensas/moeda.webp')} alt="" aria-hidden="true" />

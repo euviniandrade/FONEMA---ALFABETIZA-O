@@ -54,16 +54,21 @@
 .selo-ampliado-como{font-family:var(--f-crianca,var(--f-titulo));font-size:clamp(17px,2.4vw,21px);line-height:1.3;max-width:460px;margin:2px 0 8px;color:#fff}
 .selo-ampliado-como b{color:#FFE08A;font-family:var(--f-titulo)}
 
-/* ---------------- porquinho: balanço 3D com sombra ---------------- */
-/* 360° real do porquinho exige modelo 3D (ou várias imagens por ângulo): com uma imagem só, ele balança e inclina. */
-.cofrinho.cofrinho-3d{perspective:700px;touch-action:pan-y;cursor:grab;-webkit-tap-highlight-color:transparent}
-.cofrinho.cofrinho-3d::before{content:"";position:absolute;left:14%;right:14%;bottom:1%;height:13%;border-radius:50%;background:radial-gradient(closest-side,rgba(40,24,6,.42),rgba(40,24,6,0));animation:cofreSombra 4.6s ease-in-out infinite alternate;pointer-events:none}
-.cofrinho.cofrinho-3d>img.cofre{position:relative;filter:none;transform-origin:50% 86%;animation:cofreBalanca 4.6s ease-in-out infinite alternate;-webkit-user-drag:none;user-select:none}
-@keyframes cofreBalanca{0%{transform:rotateY(-17deg) rotateZ(-2.2deg) translateY(0)}50%{transform:rotateY(0deg) rotateZ(0deg) translateY(-5px)}100%{transform:rotateY(17deg) rotateZ(2.2deg) translateY(0)}}
-@keyframes cofreSombra{0%{transform:translateX(5%) scaleX(.94)}50%{transform:translateX(0) scaleX(.86);opacity:.8}100%{transform:translateX(-5%) scaleX(.94)}}
-.cofrinho.cofrinho-3d.arrastando{cursor:grabbing}
-.cofrinho.cofrinho-3d.arrastando>img.cofre{animation:none;transform:rotateY(var(--giro,0deg)) rotateZ(calc(var(--giro,0deg) * .12));transition:transform .08s linear}
-.cofrinho.cofrinho-3d:not(.arrastando)>img.cofre{transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+/* ---------------- porquinho, troféu, baú, Bolota: modelos 3D de verdade ---------------- */
+.premio-modelo{filter:none}
+.cofrinho.cofrinho-3d{display:inline-block;line-height:0}
+.cofrinho.cofrinho-3d>.premio-3d{margin:-7% -8% -5%}
+.cofrinho.cofrinho-3d>b{line-height:1.2;z-index:1}
+.selo-ampliado-palco .premio-modelo{margin:-3% 0}
+.premio-mini{display:inline-grid;place-items:center;padding:0;border:0;background:none;cursor:pointer;border-radius:18px;transition:transform .18s var(--mola,ease-out);flex:none}
+.premio-mini img{width:118%;max-width:none;height:auto;display:block;filter:drop-shadow(0 6px 5px rgba(12,26,64,.28))}
+.premio-mini:hover{transform:translateY(-3px) scale(1.05)}
+.premio-mini:active{transform:scale(.96)}
+.premio-mini:focus-visible{outline:4px solid #F4B73C;outline-offset:2px}
+.moedas[role="button"]{cursor:pointer}
+.moedas[role="button"]:focus-visible{outline:4px solid #F4B73C;outline-offset:3px}
+.surpresas-bau{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+canvas.ritual-trofeu{height:auto}
 
 /* moedinha que gira ao lado do total ganho */
 .ritual-moeda-3d{display:inline-block;vertical-align:middle;margin:-10px 2px -6px -6px}
@@ -71,9 +76,8 @@
 
 /* ---------------- menos movimento ---------------- */
 html.menos-movimento .selo-raios{animation:none}
-html.menos-movimento .cofrinho.cofrinho-3d>img.cofre,html.menos-movimento .cofrinho.cofrinho-3d::before{animation:none;transform:none}
 @media (prefers-reduced-motion:reduce){
-  .selo-raios,.cofrinho.cofrinho-3d>img.cofre,.cofrinho.cofrinho-3d::before,.selos-novos .selo-novo,.selo-palco,.selo-ampliado{animation:none}
+  .selo-raios,.selos-novos .selo-novo,.selo-palco,.selo-ampliado{animation:none}
 }
 
 /* ---------------- telas pequenas ---------------- */

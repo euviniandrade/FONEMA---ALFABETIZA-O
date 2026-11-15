@@ -5,7 +5,7 @@ import { calcularNivel, fasesConcluidas, missaoInicialFeita, infoNome, situacaoS
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Topo } from '../../componentes/basicos.tsx';
-import { BarraObjetivo, CelebracaoSelos, Cofrinho, Premio3D, Termometro } from '../../componentes/recompensas.tsx';
+import { BarraObjetivo, CelebracaoSelos, Cofrinho, FiguraLimpa, MiniaturaPremio, Premio3D, Termometro } from '../../componentes/recompensas.tsx';
 import { asset, espera } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
 import { voz } from '../../servicos/voz.ts';
@@ -64,7 +64,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
       <main className="palco ritual">
         <section className="cartao ritual-cartao">
           <div className="ritual-raios" aria-hidden="true" />
-          {relatorio.faseConcluida ? <img className="ritual-trofeu" src={asset('figuras/estrela.webp')} alt="" /> : null}
+          {relatorio.faseConcluida ? <FiguraLimpa className="ritual-trofeu" src={asset('figuras/estrela.webp')} /> : null}
           <h1 className="t">{relatorio.faseConcluida ? `Fase concluída: ${fase.titulo}!` : 'Missão de hoje feita!'}</h1>
           <Balao fala={{ quem: 'sofia', texto: FALAS.ritual.recap }} crianca={crianca} />
           <p className="ritual-desafios">Hoje: <b>{relatorio.atividades}</b> desafios feitos</p>
@@ -84,6 +84,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
               ) : passo >= 2 ? <p className="ritual-sem">Cada desafio é um passo a mais na leitura.</p> : null}
               {passo >= 2 && relatorio.surpresas.length ? (
                 <div className="surpresas">
+                  <MiniaturaPremio qual="bau" titulo="Baú de surpresas" tamanho={84}><p>As surpresas que você ganha saem daqui.</p></MiniaturaPremio>
                   {relatorio.surpresas.map((s) => (
                     <div key={s.id} className="surpresa" data-testid="surpresa">
                       <img src={asset(s.imagem ?? 'arte/icones/casa.webp')} alt="" />

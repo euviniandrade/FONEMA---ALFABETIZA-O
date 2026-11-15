@@ -6,8 +6,7 @@
  * registrar a peça no manifesto: nenhuma tela muda.
  */
 import * as THREE from 'three';
-import { GLTFLoader, type GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+import { esquecerGLB, lerGLB as lerGLBComum } from '../componentes/glb-comum.ts';
 import { clone as clonarComEsqueleto } from 'three/examples/jsm/utils/SkeletonUtils.js';
 
 export const PASTA_AVATAR3D = './assets/avatar3d/';
@@ -38,23 +37,10 @@ export function carregarManifesto(): Promise<ManifestoAvatar3D> {
   return manifesto;
 }
 /** Só para testes: esquece o manifesto e os modelos já lidos. */
-export function esquecerManifesto() { manifesto = null; modelos.clear(); }
+export function esquecerManifesto() { manifesto = null; esquecerGLB(); }
 
-let loader: GLTFLoader | null = null;
-const modelos = new Map<string, Promise<GLTF | null>>();
-
-function lerGLB(arquivo: string): Promise<GLTF | null> {
-  let p = modelos.get(arquivo);
-  if (!p) {
-    loader ??= new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-    p = loader.loadAsync(PASTA_AVATAR3D + arquivo).catch((e) => {
-      console.warn(`[avatar3d] não consegui ler ${arquivo}; uso o modelo provisório.`, e);
-      return null;
-    });
-    modelos.set(arquivo, p);
-  }
-  return p;
-}
+/** Leitura pelo carregador compartilhado do app (componentes/glb-comum.ts): o mesmo dos prêmios em 360°. */
+const lerGLB = (arquivo: string) => lerGLBComum(PASTA_AVATAR3D + arquivo, '[avatar3d]');
 
 /** Cores que o app aplica nos materiais do GLB, pelo NOME do material (contrato). */
 export interface CoresPeca {

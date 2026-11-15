@@ -5,13 +5,13 @@
  */
 import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { CONQUISTAS, FASE_POR_ID, type Conquista } from '@fonema/conteudo';
+import { CONQUISTAS, FASE_POR_ID, SURPRESAS, type Conquista } from '@fonema/conteudo';
 import { AVATAR_LIMPO, progressoInicial, type ConquistaGanha, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
 import { ProvedorApp, criarRepositorio } from './contexto.tsx';
 import { Ritual } from './telas/crianca/Ritual.tsx';
 import './estilos.css';
 import './estilos-recompensas.css';
-import { CelebracaoSelos, Cofrinho, Premio3D, Selo, SeloGirando, formaDoSelo } from './componentes/recompensas.tsx';
+import { CelebracaoSelos, Cofrinho, Modelo3D, Premio3D, Selo, SeloGirando, formaDoSelo, type QualModelo } from './componentes/recompensas.tsx';
 import { ajustarNome, fontePronta, type Forma } from './componentes/selo-pintura.ts';
 
 const c = (id: string, nome: string, tipo: Conquista['tipo'], motivo: string, visivel: Conquista['visivel_antes'] = 'visivel'): Conquista =>
@@ -63,21 +63,30 @@ function Angulos() {
   );
 }
 
+const QUAIS: QualModelo[] = ['porquinho', 'trofeu', 'bau', 'bolota'];
 function Premios() {
   return (
     <div data-pronto="premios">
-      {(['moeda', 'trofeu', 'bau'] as const).map((p) => (
+      {QUAIS.map((p) => (
         <div key={p} className="b-grade" style={{ gridTemplateColumns: 'repeat(5, 1fr)' }}>
-          {[0, 45, 90, 135, 180].map((a) => <figure key={a}><Premio3D tipo={p} tamanho={210} angulo={a} /><figcaption>{p} · {a}°</figcaption></figure>)}
+          {[0, 45, 90, 135, 180].map((a) => <figure key={a}><Modelo3D qual={p} tamanho={210} angulo={a} /><figcaption>{p} · {a}°</figcaption></figure>)}
         </div>
       ))}
+      <div className="b-grade" style={{ gridTemplateColumns: 'repeat(5, 1fr)' }}>
+        {[0, 45, 90, 135, 180].map((a) => <figure key={a}><Premio3D tipo="moeda" tamanho={170} angulo={a} /><figcaption>moeda · {a}°</figcaption></figure>)}
+      </div>
       <div className="b-grade" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
-        <figure><Cofrinho saldo={30} /><figcaption>porquinho (balanço 3D)</figcaption></figure>
+        <figure><Cofrinho saldo={30} /><figcaption>cofrinho (gira; arraste)</figcaption></figure>
         <figure><Premio3D tipo="moeda" tamanho={150} /><figcaption>moeda girando (arraste)</figcaption></figure>
         <figure><SeloGirando conquista={c('liv', 'Meu Nome', 'selo', 'K')} ganha={g('liv', 'ouro')} tamanho={220} modo="parado" /><figcaption>selo (arraste; volta de frente)</figcaption></figure>
       </div>
     </div>
   );
+}
+
+/** Um modelo só, na pose de descanso, sem fundo: é daqui que scripts/gerar-miniaturas-modelos.mjs tira as imagens paradas. */
+function Mini({ qual, semSombra }: { qual: QualModelo; semSombra: boolean }) {
+  return <div data-pronto="mini" style={{ width: 640 }}><Modelo3D qual={qual} tamanho={640 / 1.16} angulo={0} semSombra={semSombra} /></div>;
 }
 
 function Celebracao() {
@@ -89,7 +98,7 @@ function Celebracao() {
 /* ---- telas reais com dados semeados (para capturas sem passar pelo fluxo inteiro) ---- */
 const ID = 'bancada-selos';
 const AGORA = Date.UTC(2026, 10, 14, 15);
-const GANHAS: Array<[string, ConquistaGanha['nivel']]> = [['S-LETRA-A', 'unico'], ['S-R0-01', 'bronze'], ['S-R0-10', 'prata'], ['TI-R0-01', 'ouro'], ['S-R0-03', 'diamante'], ['M-R0-01', 'unico']];
+const GANHAS: Array<[string, ConquistaGanha['nivel']]> = [['S-LETRA-A', 'unico'], ['S-R0-01', 'bronze'], ['S-R0-10', 'prata'], ['TI-R0-01', 'ouro'], ['S-R0-03', 'diamante'], ['M-R0-01', 'unico'], ['T-ALFABETO', 'unico']];
 function dados(): { crianca: Crianca; progresso: Progresso } {
   const crianca = {
     id: ID, nome: 'Kauã', genero: 'm', anoNascimento: 2020, pronuncia: { grafia: 'Kauã', fala: 'Kauã', rate: 1, pitchExtra: 0, voz: 'sofia' },
@@ -113,7 +122,7 @@ function TelaRitual({ quantos }: { quantos: number }) {
   const d = dados();
   const fase = FASE_POR_ID['AL-A'] ?? Object.values(FASE_POR_ID)[0];
   const novas = (quantos > 1 ? ['S-LETRA-A', 'S-R0-10', 'S-R0-01', 'TI-R0-01'] : ['S-LETRA-A']).slice(0, quantos).map((i) => d.progresso.conquistas[i]);
-  const relatorio: RelatorioSessao = { faseId: fase.id, atividades: 6, moedinhas: 10, moedinhasCalculadas: 10, dominadasAgora: [], faseConcluida: true, conquistasNovas: novas, surpresas: [], nivelAntes: 0, nivelDepois: 0, termometroAntes: 0, termometroDepois: 0 };
+  const relatorio: RelatorioSessao = { faseId: fase.id, atividades: 6, moedinhas: 10, moedinhasCalculadas: 10, dominadasAgora: [], faseConcluida: true, conquistasNovas: novas, surpresas: SURPRESAS.slice(0, 1), nivelAntes: 0, nivelDepois: 0, termometroAntes: 0, termometroDepois: 0 };
   return <div data-pronto="ritual"><ProvedorApp repo={repo}><Ritual crianca={d.crianca} progresso={d.progresso} relatorio={relatorio} fase={fase} expressa={false} /></ProvedorApp></div>;
 }
 
@@ -140,6 +149,7 @@ function Bancada() {
   const qual = location.hash.replace('#', '') || 'todos';
   if (qual.startsWith('ritual')) return <TelaRitual quantos={Number(qual.slice(6)) || 1} />;
   if (qual === 'semear') return <Semear />;
+  if (qual.startsWith('mini-')) return <Mini qual={qual.slice(5).replace('-recorte', '') as QualModelo} semSombra={qual.endsWith('-recorte')} />;
   return (
     <main className="b-selos">
       <style>{`body{margin:0;background:radial-gradient(120% 90% at 50% 0%,#2C4C94,#16285A 60%,#0E1C44)}

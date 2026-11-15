@@ -138,6 +138,22 @@ def metal(rgba, ouro, nome):
     p2, p98 = np.percentile(L[ouro], [1.5, 99.2])
     t = np.clip((L - p2) / (p98 - p2), 0, 1)
     t = t * t * (3 - 2 * t) * .35 + t * .65  # contraste de metal polido
+    if nome == 'diamante':
+        # cristal lapidado: o metal vira um mosaico de FACETAS (células de Voronoi), cada uma com a sua luz,
+        # e um fio de brilho nas arestas entre elas
+        H, W = L.shape
+        rng = np.random.default_rng(11)
+        n = max(60, (H * W) // 2600)
+        pts = np.column_stack([rng.uniform(0, H, n), rng.uniform(0, W, n)])
+        from scipy.spatial import cKDTree
+        yy, xx = np.mgrid[0:H, 0:W]
+        d, idx = cKDTree(pts).query(np.column_stack([yy.ravel(), xx.ravel()]), k=2)
+        cel = idx[:, 0].reshape(H, W)
+        aresta = np.clip(1 - (d[:, 1] - d[:, 0]).reshape(H, W) / 2.2, 0, 1)
+        luz = rng.uniform(-.2, .2, n)[cel]
+        inc = rng.uniform(-1, 1, (n, 2))
+        rampinha = ((yy - pts[cel, 0]) * inc[cel, 0] + (xx - pts[cel, 1]) * inc[cel, 1]) / 60 * .1
+        t = np.clip(t * .82 + .1 + luz + rampinha + aresta * .28, 0, 1)
     novo = rampa(t, RAMPAS[nome])
     if nome == 'diamante':
         # cristal: reflexo frio mais marcado nas zonas claras
@@ -317,7 +333,7 @@ def main():
         peq = reduzir(np.dstack([m, centro, faixa, m]).astype(float), ALTURA)
         geo[nome] = geometria(peq[..., 0] > .5, peq[..., 1] > .5, peq[..., 2] > .5)
         print(nome, geo[nome]['w'], geo[nome]['h'], geo[nome]['centro'], {k2: (round(v2, 5) if isinstance(v2, float) else v2) for k2, v2 in geo[nome]['faixa'].items()}, len(geo[nome]['contorno']), 'pontos')
-    for nome in ('moeda', 'trofeu', 'bau-livros'):
+    for nome in ('moeda',):  # troféu e baú agora são modelos 3D (GLB): não precisam de contorno nem de verso
         premio(nome, geo)
         print(nome, len(geo[nome]['contorno']), 'pontos')
     with open(GEO, 'w') as f:

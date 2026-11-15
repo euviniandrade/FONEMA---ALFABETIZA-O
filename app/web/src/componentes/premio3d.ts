@@ -9,6 +9,7 @@
  */
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { lerGLB } from './glb-comum.ts';
 
 export interface Peca {
   frente: HTMLCanvasElement | HTMLImageElement;
@@ -34,7 +35,18 @@ export interface OpcoesVista {
   angulo?: number;
   aoAssentar?: () => void;
 }
-export interface Vista { destruir(): void; angulo(graus: number): void }
+export interface Vista { destruir(): void; angulo(graus: number): void; /** Pulinho (a moedinha entrou no porquinho). */ pular(): void }
+
+/** Modelo 3D de verdade (GLB): gira 360° com luz de estúdio e sombra de contato. */
+export interface PecaModelo {
+  /** Endereço do .glb (comprimido: meshopt + WebP). */
+  url: string;
+  /** Giro (graus) que põe o modelo na pose de descanso: de frente para a câmera, levemente de lado. */
+  frente?: number;
+  /** Sem a sombra de contato (para tirar a imagem recortada do modelo). */
+  semSombra?: boolean;
+}
+interface Conteudo { objeto: THREE.Object3D; descartar: () => void; inclinar: number; sombra?: { y: number; raio: number } }
 
 const DIST = 5.46; // a peça (altura 2) ocupa 86% da altura do canvas: sobra margem para a perspectiva e o quique
 const FOV = 24;
@@ -82,44 +94,43 @@ function face(mapa: THREE.Texture): THREE.MeshStandardMaterial {
 class VistaInterna implements Vista {
   cena = new THREE.Scene();
   camera: THREE.PerspectiveCamera;
+  /** base: inclinação fixa e sombra · grupo: o que gira, cresce e pula */
+  base = new THREE.Group();
   grupo = new THREE.Group();
+  sombra: THREE.Mesh | null = null;
+  pulo = -1;
   ctx: CanvasRenderingContext2D;
   ang = 0; vel = 0; escala = 1; sobe = 0;
   t0 = -1; pintou = false; fixo = false; assentou = false; sujo = true; morta = false;
   arrastando = false; ultimoX = 0; ultimoT = 0;
   descartar: Array<() => void> = [];
 
-  constructor(public canvas: HTMLCanvasElement, peca: Peca, public op: OpcoesVista) {
-    const r = motor();
+  constructor(public canvas: HTMLCanvasElement, conteudo: Conteudo, public op: OpcoesVista) {
+    motor();
     const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('sem canvas 2D');
     this.ctx = ctx;
-    const a = peca.proporcao;
     this.camera = new THREE.PerspectiveCamera(FOV, canvas.width / canvas.height, 0.1, 50);
     this.camera.position.set(0, 0, DIST);
     this.cena.environment = ambiente;
     const chave = new THREE.DirectionalLight(0xfff4e0, 2.2); chave.position.set(-2.5, 3.5, 5); this.cena.add(chave);
     const contra = new THREE.DirectionalLight(0xbcd4ff, 1.1); contra.position.set(3.5, -1, 3); this.cena.add(contra);
-
-    // corpo: silhueta extrudada com chanfro = a BORDA metálica
-    const forma = new THREE.Shape(peca.contorno.map(([x, y]) => new THREE.Vector2((x - 0.5) * 2 * a, (0.5 - y) * 2)));
-    const esp = peca.espessura * 2;
-    const chanfro = Math.min(0.03, esp * 0.28);
-    const geo = new THREE.ExtrudeGeometry(forma, { depth: esp - chanfro * 2, bevelEnabled: true, bevelThickness: chanfro, bevelSize: 0.022, bevelSegments: 3, curveSegments: 1, steps: 1 });
-    geo.translate(0, 0, -(esp - chanfro * 2) / 2);
-    const metal = new THREE.MeshStandardMaterial({ color: peca.borda, metalness: 1, roughness: 0.26, envMapIntensity: 1.25 });
-    const corpo = new THREE.Mesh(geo, metal);
-    this.grupo.add(corpo);
-
-    const plano = new THREE.PlaneGeometry(2 * a, 2);
-    const tf = textura(peca.frente, r); const tv = textura(peca.verso, r);
-    const mf = face(tf); const mv = face(tv);
-    const frente = new THREE.Mesh(plano, mf); frente.position.z = esp / 2 + 0.004; frente.renderOrder = 2;
-    const verso = new THREE.Mesh(plano, mv); verso.position.z = -(esp / 2 + 0.004); verso.rotation.y = Math.PI; verso.renderOrder = 2;
-    this.grupo.add(frente, verso);
-    this.grupo.rotation.x = 0.05;
-    this.cena.add(this.grupo);
-    this.descartar.push(() => { geo.dispose(); plano.dispose(); metal.dispose(); mf.dispose(); mv.dispose(); tf.dispose(); tv.dispose(); });
+    this.grupo.add(conteudo.objeto);
+    this.base.add(this.grupo);
+    this.base.rotation.x = conteudo.inclinar;
+    if (conteudo.sombra) {
+      // sombra de contato: mancha macia no "chão", que não gira com o modelo e encolhe quando ele pula
+      const mat = new THREE.MeshBasicMaterial({ map: texturaSombra(), transparent: true, depthWrite: false, opacity: 0.6 });
+      const geoS = new THREE.PlaneGeometry(conteudo.sombra.raio * 3, conteudo.sombra.raio * 3);
+      this.sombra = new THREE.Mesh(geoS, mat);
+      this.sombra.rotation.x = -Math.PI / 2;
+      this.sombra.position.y = conteudo.sombra.y;
+      this.sombra.renderOrder = -1;
+      this.base.add(this.sombra);
+      this.descartar.push(() => { geoS.dispose(); mat.dispose(); });
+    }
+    this.cena.add(this.base);
+    this.descartar.push(conteudo.descartar);
 
     if (op.angulo !== undefined) { this.fixo = true; this.ang = (op.angulo * Math.PI) / 180; this.assentou = true; }
     else if (op.calmo || op.modo === 'parado') { this.assentou = true; }
@@ -153,6 +164,15 @@ class VistaInterna implements Vista {
 
   /** Avança a física; devolve true enquanto ainda há movimento. */
   passo(agora: number, dt: number): boolean {
+    const girando = this.fisica(agora, dt);
+    if (this.pulo < 0) return girando;
+    this.pulo += dt / 0.55;
+    if (this.pulo >= 1) this.pulo = -1;
+    this.sujo = true;
+    return true;
+  }
+
+  private fisica(agora: number, dt: number): boolean {
     if (this.fixo) return false;
     if (!this.assentou) {
       // o relógio da entrada só anda depois do primeiro quadro desenhado e em passos curtos: a compilação
@@ -203,8 +223,13 @@ class VistaInterna implements Vista {
     if (tam.x !== w || tam.y !== h) r.setSize(w, h, false);
     this.camera.aspect = w / h; this.camera.updateProjectionMatrix();
     this.grupo.rotation.y = this.ang;
-    this.grupo.scale.setScalar(this.escala);
-    this.grupo.position.y = this.sobe;
+    // pulinho: sobe em arco, com um leve "amassa e estica"
+    const p = this.pulo < 0 ? 0 : this.pulo;
+    const alto = Math.sin(Math.PI * p);
+    const estica = 1 + 0.07 * Math.sin(Math.PI * 2 * p);
+    this.grupo.scale.set(this.escala / Math.sqrt(estica), this.escala * estica, this.escala / Math.sqrt(estica));
+    this.grupo.position.y = this.sobe + alto * 0.2;
+    if (this.sombra) { const k = this.escala * (1 - alto * 0.22); this.sombra.scale.set(k, k, k); (this.sombra.material as THREE.MeshBasicMaterial).opacity = 0.6 * (1 - alto * 0.35); }
     r.render(this.cena, this.camera);
     this.ctx.clearRect(0, 0, w, h);
     this.ctx.drawImage(r.domElement, 0, 0);
@@ -212,6 +237,7 @@ class VistaInterna implements Vista {
     this.pintou = true;
   }
 
+  pular() { if (this.pulo < 0 && !this.op.calmo) { this.pulo = 0; acordar(); } }
   angulo(graus: number) { this.fixo = true; this.ang = (graus * Math.PI) / 180; this.sujo = true; acordar(); }
   destruir() { this.morta = true; vistas.delete(this); this.descartar.forEach((f) => f()); }
 }
@@ -236,9 +262,71 @@ function laco(agora: number) {
 function acordar() { if (!quadro) quadro = requestAnimationFrame(laco); }
 if (typeof document !== 'undefined') document.addEventListener('visibilitychange', () => { if (!document.hidden && vistas.size) acordar(); });
 
+let sombraTex: THREE.CanvasTexture | null = null;
+function texturaSombra(): THREE.CanvasTexture {
+  if (sombraTex) return sombraTex;
+  const c = document.createElement('canvas');
+  c.width = c.height = 128;
+  const x = c.getContext('2d');
+  if (x) {
+    const g = x.createRadialGradient(64, 64, 4, 64, 64, 64);
+    g.addColorStop(0, 'rgba(6,12,36,.8)'); g.addColorStop(0.4, 'rgba(6,12,36,.5)'); g.addColorStop(0.72, 'rgba(6,12,36,.14)'); g.addColorStop(1, 'rgba(6,12,36,0)');
+    x.fillStyle = g; x.fillRect(0, 0, 128, 128);
+  }
+  sombraTex = new THREE.CanvasTexture(c);
+  return sombraTex;
+}
+
+/** Selo, moeda: silhueta extrudada com chanfro (a BORDA metálica) + frente e verso pintados. */
+function conteudoSelo(peca: Peca, r: THREE.WebGLRenderer): Conteudo {
+  const a = peca.proporcao;
+  const objeto = new THREE.Group();
+  const forma = new THREE.Shape(peca.contorno.map(([x, y]) => new THREE.Vector2((x - 0.5) * 2 * a, (0.5 - y) * 2)));
+  const esp = peca.espessura * 2;
+  const chanfro = Math.min(0.03, esp * 0.28);
+  const geo = new THREE.ExtrudeGeometry(forma, { depth: esp - chanfro * 2, bevelEnabled: true, bevelThickness: chanfro, bevelSize: 0.022, bevelSegments: 3, curveSegments: 1, steps: 1 });
+  geo.translate(0, 0, -(esp - chanfro * 2) / 2);
+  const metal = new THREE.MeshStandardMaterial({ color: peca.borda, metalness: 1, roughness: 0.26, envMapIntensity: 1.25 });
+  objeto.add(new THREE.Mesh(geo, metal));
+  const plano = new THREE.PlaneGeometry(2 * a, 2);
+  const tf = textura(peca.frente, r); const tv = textura(peca.verso, r);
+  const mf = face(tf); const mv = face(tv);
+  const frente = new THREE.Mesh(plano, mf); frente.position.z = esp / 2 + 0.004; frente.renderOrder = 2;
+  const verso = new THREE.Mesh(plano, mv); verso.position.z = -(esp / 2 + 0.004); verso.rotation.y = Math.PI; verso.renderOrder = 2;
+  objeto.add(frente, verso);
+  return { objeto, inclinar: 0.05, descartar: () => { geo.dispose(); plano.dispose(); metal.dispose(); mf.dispose(); mv.dispose(); tf.dispose(); tv.dispose(); } };
+}
+
 /** Cria a peça 3D no canvas dado (o canvas já deve estar com width/height em pixels). Lança erro sem WebGL. */
 export function criarVista(canvas: HTMLCanvasElement, peca: Peca, opcoes: OpcoesVista): Vista {
-  const v = new VistaInterna(canvas, peca, opcoes);
+  const v = new VistaInterna(canvas, conteudoSelo(peca, motor()), opcoes);
+  vistas.add(v);
+  acordar();
+  return v;
+}
+
+/**
+ * Cria a vista de um MODELO GLB: centralizado, do tamanho do quadro, com sombra de contato.
+ * Lança erro sem WebGL ou se o arquivo não carregar (quem chama mostra a imagem de reserva).
+ */
+export async function criarVistaModelo(canvas: HTMLCanvasElement, peca: PecaModelo, opcoes: OpcoesVista): Promise<Vista> {
+  motor();
+  const gltf = await lerGLB(peca.url, '[premio3d]');
+  if (!gltf) throw new Error('modelo indisponível');
+  const modelo = gltf.scene.clone(true); // geometrias, materiais e texturas ficam no cache (não descartar)
+  const caixa = new THREE.Box3().setFromObject(modelo);
+  const tam = caixa.getSize(new THREE.Vector3());
+  const meio = caixa.getCenter(new THREE.Vector3());
+  const raio = Math.hypot(tam.x, tam.z) / 2;
+  // cabe em pé e de lado; a diagonal (rabo do Bolota, alças do troféu) não pode sair do quadro ao girar
+  const k = Math.min(1.74 / Math.max(tam.y, tam.x, tam.z), 2.16 / (raio * 2));
+  modelo.position.set(-meio.x, -meio.y, -meio.z);
+  const giro = new THREE.Group();
+  giro.add(modelo);
+  giro.rotation.y = ((peca.frente ?? 0) * Math.PI) / 180;
+  giro.scale.setScalar(k);
+  giro.position.y = 0.06;
+  const v = new VistaInterna(canvas, { objeto: giro, inclinar: 0.27, sombra: peca.semSombra ? undefined : { y: 0.06 - (tam.y * k) / 2 - 0.01, raio: (Math.max(tam.x, tam.z) / 2) * k }, descartar: () => undefined }, opcoes);
   vistas.add(v);
   acordar();
   return v;

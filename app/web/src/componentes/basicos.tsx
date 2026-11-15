@@ -10,6 +10,7 @@ import { Camada } from './Camada.tsx';
 import { PersonagemVivo, temBustoVivo } from './PersonagemVivo.tsx';
 import { RetratoBoneco } from './Boneco3D.tsx';
 import { aparenciaDe } from '../avatar3d/modelo.ts';
+import { PremioAmpliado } from './recompensas.tsx';
 
 const BUSTO: Partial<Record<Personagem, string>> = { sofia: 'dupla/sofia-busto-alegre.webp', tales: 'dupla/tales-busto-alegre.webp' };
 const COR: Record<string, string> = { bolota: '#A06A3B', 'dona-cida': '#B5512E', davi: '#2E7A4C', 'guarda-parque': '#1F5A37', pescadora: '#3D7CC4', 'zum-zum': '#6B7A2E' };
@@ -56,11 +57,14 @@ export function BotaoOuvir({ onClick, rotulo = 'Ouvir' }: { onClick: () => void;
 }
 
 export function Moedinhas({ valor, id }: { valor: number; id?: string }) {
+  // tocar no cofrinho abre o porquinho 3D grande, girando 360° (componente da frente de recompensas)
+  const [aberto, setAberto] = useState(false);
   return (
-    <div className="moedas" id={id} aria-live="polite" data-testid="moedinhas">
+    <div className="moedas" id={id} aria-live="polite" data-testid="moedinhas" role="button" tabIndex={0} onClick={() => setAberto(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setAberto(true); } }}>
       <img src={asset('recompensas/cofrinho-porquinho.webp')} alt="" />
       <b>{valor}</b>
       <span className="sr">moedinhas</span>
+      {aberto ? <PremioAmpliado qual="porquinho" titulo="Meu cofrinho" aoFechar={() => setAberto(false)}><p>Você tem <b>{valor}</b> {valor === 1 ? 'moedinha guardada' : 'moedinhas guardadas'}.</p></PremioAmpliado> : null}
     </div>
   );
 }

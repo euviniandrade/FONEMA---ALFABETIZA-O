@@ -220,6 +220,7 @@ function pintarLetra(ctx: Ctx, texto: string, cx: number, cy: number, r: number,
  * vira uma mancha: tiramos as manchas brancas e neutras grandes da metade de baixo (o selo põe a própria sombra).
  */
 const limpas = new Map<string, HTMLCanvasElement | HTMLImageElement>();
+export function figuraSemChao(im: HTMLImageElement): HTMLCanvasElement | HTMLImageElement { return semChao(im); }
 function semChao(im: HTMLImageElement): HTMLCanvasElement | HTMLImageElement {
   const pronta = limpas.get(im.src);
   if (pronta) return pronta;
