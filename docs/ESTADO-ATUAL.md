@@ -4,6 +4,57 @@ Atualizado em 2026-11-15 (seção 4b, D030). **Leia este arquivo primeiro ao ret
 Tudo o que foi feito está neste repositório, no ramo `claude/eager-brahmagupta-3d2lhr` (commit e push a cada mudança). Nada depende
 da memória da conversa anterior.
 
+## 0. Situação agora (15/11/2026, 22h UTC) — leia isto primeiro
+
+O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
+**Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
+
+**No ar:** https://fonema.vercel.app = commit `841c099` (publicado em 15/11, 21h50 UTC). Verificado antes de publicar: typecheck, lint,
+144 testes, build e E2E completo (na 2ª rodada passou inclusive o troféu da Festa do Alfabeto; a 1ª rodada falhou só nesse ponto,
+por ordem de tentativas do próprio teste).
+
+**O que entrou nesta versão (tudo feito em 15/11):**
+- D030: `docs/pedagogia/` (princípios, trilha fônica em 53 unidades TF-01…TF-53, matriz de habilidades, inventário de sons, tipos de
+  atividade, decodificabilidade, avaliação, fontes) e regras pedagógicas no `CLAUDE.md`. Etapas 1 a 5 do plano feitas; 9 parcial.
+- Motor: registro detalhado da tentativa, concluído × dominado, matriz de confusão, reforço recomendado, sondagem agendada, painel do adulto novo.
+- Mecânicas: som da letra como estímulo, letra → som, correção contrastiva, sorteio, pares e letras parecidos, montar sem modelo,
+  jogo **Liga o som** (cenas em `assets/figuras/`), verificador de conteúdo mais rígido.
+- Avatar: **modelos 3D reais** (GLB) menino/menina padrão (roupa branca com o A azul, D029 §7), recoloração por máscaras (pele em 10 tons,
+  olhos, cabelo, camiseta, calça, calçado), Lojinha, miniaturas. Prêmios 3D reais (porquinho, troféu, baú) girando 360°. Selos 3D.
+- Modelos 3D gerados no Higgsfield (Tripo, imagem → GLB): `app/web/public/assets/modelos3d/` (comprimidos) e originais em
+  `docs/propostas/06-fonema-unificada/{recompensas-3d,personagens-3d,avatar-3d/padrao}/modelos/`. Sofia, Tales e Bolota existem em GLB,
+  mas **ainda não estão em nenhuma tela**. Ferramenta de prévia: `recompensas-3d/ferramentas/capturar-glb.mjs`.
+- 24 figuras novas das letras + 17 cenas de som pela MiniMax (`app/ferramentas/gerar-figura-minimax.py`, recorte por rembg).
+
+**Próximos passos, em ordem:**
+1. **Trilha fônica nova** (D030 etapas 6–8): as 53 unidades de `docs/pedagogia/01-escopo-e-sequencia.md` como fases, com síntese,
+   segmentação (caixas de sons), ditado, pares mínimos de palavras, frases e textos decodificáveis, fluência e compreensão; jogos dos
+   materiais (batalha de palavras, palavra dentro de palavra, rimas, troca-letras). Verificador completo de decodificabilidade.
+2. **Etapa 9**: tela própria de sondagem (pseudopalavras e ditado), prática recomendada virar rodada jogável, selos sem contar exposição.
+3. **Boca (Espelho do Som)**: o dono reprovou a versão em código ("horríveis"). Conceitos em
+   `docs/propostas/06-fonema-unificada/espelho-do-som-conceitos/` (A professora / B mascote / C massinha) — **aguardando a escolha dele**
+   e quem opera o pacote Adobe (Character Animator). Gerador de imagem não obedece à posição da boca.
+4. **Avatar**: tipos de cabelo e modelos-base de pele morena/negra pelo fluxo que funcionou — editar a arte padrão no Higgsfield
+   (`generate_image`, modelo `nano_banana_2`, com a imagem de referência; 1,5 crédito) e converter em 3D (`generate_3d`,
+   `tripo_h3_1_image_to_3d`, 9 créditos; 18 no detalhado). Depois registrar em `avatares.json` (ver `app/docs/avatar-3d-contrato.md`).
+   Refazer a menina com o "A" maior; modelo sentado para a cadeira de rodas; troféu sem o texto "Mestre Leitor".
+5. Colocar Sofia, Tales e Bolota 3D nas telas; esqueleto/animação (Meshy no Higgsfield, ~38 créditos por personagem) se o dono quiser.
+6. Refazer as figuras `cena-o` e `cena-n`; estrela do topo da Fase concluída (halo); falas pendentes (`app/docs/falas-pendentes.md`).
+
+**Decisões que o dono ainda não respondeu:** direção de arte da boca; quem valida/regrava os sons puros (nenhum foi ouvido por pessoa:
+13 "aprovados" por medição, 11 duvidosos, R fraco/LH/NH sem clipe); LH/NH/CH depois do R ou antes; "cama/banana" (nasal antes de M/N)
+avisa ou bloqueia; números de alerta/reforço/sondagem (definidos pelo projeto, ver relatório do motor em 4b); servidor/banco para login
+em qualquer aparelho; lista em `docs/pedagogia/07-fontes.md` §5.
+
+**Saldos (15/11, 22h UTC):** Higgsfield ≈ 8,5 créditos (plano Lite, sem ilimitado); ElevenLabs ≈ 12,6 mil caracteres (recarga prometida
+ainda não entrou); MiniMax (chave do plano, `api.minimax.io`) funcionando para imagem `image-01`; Google AI Studio e Cloudinary sem cota.
+Rede liberada no ambiente para: `upload.higgsfield.ai`, `d2ol7oe51mr4n9.cloudfront.net`, `d8j0ntlcm91z4.cloudfront.net`,
+`upload-us-east-1.cloudinary.com`, `res.cloudinary.com`. Chaves só pelo proxy (nunca em código).
+
+**Como os agentes trabalharam (vale manter):** frentes paralelas com dono de arquivos, `git pull --rebase --autostash` antes de cada commit,
+commit por caminho, capturas olhadas antes de relatar, relatório honesto do que não ficou bom. E2E completo leva ~20 min
+(`npm run e2e` em `app/`); o curto é `timeout 300 node web/e2e/fluxo.e2e.mjs --sem-jornada`.
+
 ## 1. O que é o projeto
 
 Plataforma educativa completa (web + app) de alfabetização pelo **método fônico** para crianças brasileiras (Maternal → 2º ano), com a
