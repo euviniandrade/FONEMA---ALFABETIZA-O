@@ -1,0 +1,22 @@
+<!doctype html><meta charset="utf-8"><title>Ver GLB</title>
+<style>html,body{margin:0;background:#2b4a8c}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"/app/node_modules/three/build/three.module.js","three/addons/":"/app/node_modules/three/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const q = new URLSearchParams(location.search), ang = +(q.get('ang') || 0), elev = +(q.get('elev') || 12);
+const r = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true }); r.setSize(innerWidth, innerHeight); document.body.appendChild(r.domElement);
+r.toneMapping = THREE.ACESFilmicToneMapping; r.outputColorSpace = THREE.SRGBColorSpace;
+const cena = new THREE.Scene(); cena.background = new THREE.Color(q.get('fundo') || '#2b4a8c');
+cena.environment = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), 0.04).texture;
+const luz = new THREE.DirectionalLight(0xffffff, 1.6); luz.position.set(3, 5, 4); cena.add(luz);
+const cam = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, 0.01, 100);
+new GLTFLoader().load(q.get('glb'), (g) => {
+  const o = g.scene, cx = new THREE.Box3().setFromObject(o), t = cx.getSize(new THREE.Vector3()), c = cx.getCenter(new THREE.Vector3());
+  o.position.sub(c); const piv = new THREE.Group(); piv.add(o); piv.rotation.y = ang * Math.PI / 180; cena.add(piv);
+  const d = Math.max(t.x, t.y, t.z) * 2.6, e = elev * Math.PI / 180; cam.position.set(0, Math.sin(e) * d, Math.cos(e) * d); cam.lookAt(0, 0, 0);
+  let tri = 0; o.traverse((m) => { if (m.isMesh) tri += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3; });
+  r.render(cena, cam); document.title = 'pronto ' + Math.round(tri) + ' tri ' + [t.x, t.y, t.z].map((v) => v.toFixed(2)).join('x');
+}, undefined, (err) => { document.title = 'erro ' + err; });
+</script>
