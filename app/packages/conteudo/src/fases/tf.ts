@@ -655,7 +655,7 @@ function faseDaLicao(li: Licao, numero: number): Fase {
   ];
   const tipoTrilha = revisaoDeBloco || li.tipo === 'revisao-vogais' ? 'revisao' : li.tipo.startsWith('regra') ? 'regra' : 'licao';
   return {
-    id, regiao: 'TF', numero, titulo: li.titulo, objetivo: li.objetivo, sessoesPrevistas: '1 lição (o avanço é por domínio)',
+    id, regiao: 'TF', numero, titulo: li.titulo, objetivo: li.objetivo, sessoesPrevistas: '1 lição (o avanço é por domínio)', curta: true,
     habilidades: [habPrincipal, ...habilidades.filter((h) => h !== habPrincipal)], cenas,
     criterio: criterio.length ? { tipo: 'dominio', habilidades: criterio } : { tipo: 'missao' },
     trilhaSons: { unidade: li.unidade, bloco: li.bloco, tipo: tipoTrilha, rotulo: li.rotulo },

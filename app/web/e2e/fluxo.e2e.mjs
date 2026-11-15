@@ -428,7 +428,7 @@ async function trechoTrilhaSons(browser, erros) {
     }
     return concluiu;
   };
-  ok(await jogar('TF-01'), 'TF-01 (o som /a/): som novo, som → letra, letra → som, som inicial e traçado');
+  ok(await jogar('TF-01'), 'TF-01 (o som /a/): som novo, som → letra e som inicial');
   const ordem = ['TF-06', ...Array.from({ length: 9 }, (_, k) => `TF-${String(k + 7).padStart(2, '0')}`), 'TF-R2', ...Array.from({ length: 7 }, (_, k) => `TF-${k + 16}`)];
   for (const f of ordem) {
     const c = await jogar(f);

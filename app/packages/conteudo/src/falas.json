@@ -1275,13 +1275,13 @@
   "id": "s-1qah7xr",
   "voz": "sofia",
   "texto": "boi",
-  "origem": "TF-18-C5t"
+  "origem": "TF-18-C4c"
  },
  {
   "id": "s-1qah9gn",
   "voz": "sofia",
   "texto": "dia",
-  "origem": "TF-22-C5p"
+  "origem": "TF-22-C4c"
  },
  {
   "id": "s-1qaha4j",
@@ -1362,12 +1362,6 @@
   "origem": "TF-16-C4c"
  },
  {
-  "id": "s-1qahjp9",
-  "voz": "sofia",
-  "texto": "poi",
-  "origem": "TF-18-C5t"
- },
- {
   "id": "s-1qahl0t",
   "voz": "sofia",
   "texto": "rua",
@@ -1419,7 +1413,7 @@
   "id": "s-1qahmwn",
   "voz": "sofia",
   "texto": "tia",
-  "origem": "TF-22-C5p"
+  "origem": "TF-22-C4c"
  },
  {
   "id": "s-1qahn1z",
@@ -1821,7 +1815,7 @@
   "id": "s-1uqi61f",
   "voz": "sofia",
   "texto": "lata",
-  "origem": "TF-17-C5t"
+  "origem": "TF-17-C4c"
  },
  {
   "id": "s-1uqi64j",
@@ -1948,12 +1942,6 @@
   "voz": "sofia",
   "texto": "mala",
   "origem": "telas (E2E)"
- },
- {
-  "id": "s-1uqj12q",
-  "voz": "sofia",
-  "texto": "mata",
-  "origem": "TF-17-C5t"
  },
  {
   "id": "s-1uqj130",
@@ -2452,12 +2440,6 @@
   "voz": "sofia",
   "texto": "gota",
   "origem": "TF-21-C3s"
- },
- {
-  "id": "s-1uqqmbz",
-  "voz": "sofia",
-  "texto": "gamo",
-  "origem": "TF-21-C5t"
  },
  {
   "id": "s-1uqqmi6",
@@ -4443,7 +4425,7 @@
   "id": "s-rpt9m5",
   "voz": "sofia",
   "texto": "oi",
-  "origem": "TF-18-C5t"
+  "origem": "TF-18-C4b"
  },
  {
   "id": "s-rpt9n2",
