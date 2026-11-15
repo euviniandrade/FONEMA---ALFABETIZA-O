@@ -97,7 +97,7 @@ export const FALAS_FONICAS = {
   tentaDeNovo: 'Escuta os dois e tenta de novo.',
   semVoz: 'Este não tem voz:',
   comVoz: 'Este tem voz:',
-  maoNoPescoco: 'Põe a mão no pescoço para sentir.',
+  maoNoPescoco: 'Ponha a mão no pescoço para sentir.',
   bocaMuda: 'Olha a boca: ela se mexe diferente em cada som.',
   desenhoParecido: 'Essas letras se parecem. Olha bem o desenho de cada uma.',
   // apoio depois do acerto (na voz de quem apresenta a letra) — em seguida toca o clipe "Letra B."

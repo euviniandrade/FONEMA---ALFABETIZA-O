@@ -133,6 +133,7 @@ async function jogarSessao(page, capturar = {}) {
   for (let passo = 0; passo < 400; passo++) {
     if (await page.getByTestId('ritual').count()) return;
     const cena = (await page.locator('[data-cena]').getAttribute('data-cena', { timeout: 1000 }).catch(() => null)) ?? '';
+    if (capturar.gancho) await capturar.gancho(page, cena);
     const tirar = async (chave) => {
       // também aceita a chave pela cena exata (ex.: 'cena:AL-R1-C4c')
       for (const k of [chave, `cena:${cena}`]) if (capturar[k] && !vistos.has(k)) { vistos.add(k); await (capturar.tirarCom ?? cap)(page, capturar[k]); }
@@ -249,10 +250,102 @@ async function jogarSessao(page, capturar = {}) {
   throw new Error('a sessão não chegou ao ritual de fim');
 }
 
+/**
+ * Capturas das mecânicas fônicas (D030, etapas 3 e 4): `node e2e/fluxo.e2e.mjs --mecanicas`.
+ * Cadastra uma criança que "já conhece as letras e os sons" (o Alfabeto fica aberto para revisar), joga algumas
+ * missões e fotografa as telas novas em docs/capturas/v5-mecanicas-*.png e v5-liga-o-som-*.png (+ "-celular").
+ */
+async function capturasMecanicas(browser) {
+  mkdirSync(DIR_CAP, { recursive: true });
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: 'pt-BR' });
+  await ctx.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { /* sem armazenamento */ } });
+  const page = await ctx.newPage();
+  const erros = [];
+  page.on('pageerror', (e) => erros.push(String(e)));
+  await page.goto(BASE + '#/adulto/config');
+  await passarPorteira(page);
+  await page.getByTestId('avancado').locator('summary').click();
+  await page.getByTestId('modo-demo').click();
+  await page.goto(BASE + '#/adulto/cadastro');
+  await cadastrar(page, 'Helena', 'f', { nivel: 'letras-e-sons' });
+  await montarAvatar(page);
+  await page.getByTestId('primeira-missao').waitFor();
+  const id = page.url().split('/c/')[1].split('/')[0];
+  const feitos = new Set();
+  const foto = async (nome) => {
+    await page.waitForTimeout(700);
+    await page.screenshot({ path: `${DIR_CAP}/v5-${nome}.png` });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: `${DIR_CAP}/v5-${nome}-celular.png` });
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.waitForTimeout(300);
+    console.log(`  captura v5-${nome}`);
+  };
+  const uma = async (chave, fn) => { if (!feitos.has(chave)) { feitos.add(chave); await fn(); } };
+  const errar = () => page.locator('.mec-escolher button.opcao:not([data-correta])').first().click({ timeout: 2000 }).catch(() => {});
+  const gancho = async (pg, cena) => {
+    const fmt = await pg.locator('.mec-escolher').getAttribute('data-formato', { timeout: 150 }).catch(() => null);
+    if (fmt === 'som-letra') await uma('som-letra', async () => { await foto('mecanicas-som-letra'); await errar(); await foto('mecanicas-correcao-contrastiva'); });
+    if (fmt === 'letra-som') await uma('letra-som', async () => { await errar(); await foto('mecanicas-letra-som'); });
+    if (fmt === 'som-figura') await uma('som-figura', async () => { await foto('mecanicas-som-figura'); await errar(); await foto('mecanicas-som-figura-correcao'); });
+    if (fmt === 'figura-letra') await uma('figura-letra', async () => { await foto('mecanicas-figura-letra'); });
+    if (fmt === 'par-minimo') await uma(`par-minimo-${cena}`, async () => { await foto('mecanicas-par-minimo'); await errar(); await foto('mecanicas-par-minimo-correcao'); });
+    if (fmt === 'espelho-letras') await uma('espelho', async () => { await foto('mecanicas-letras-em-espelho'); await errar(); await foto('mecanicas-letras-em-espelho-correcao'); });
+    if (fmt === 'som-cena') await uma('som-cena', async () => { await foto('liga-o-som-ouvir-e-achar-a-cena'); });
+    if (fmt === 'cena-letra') await uma('cena-letra', async () => { await foto('liga-o-som-ver-a-cena-e-achar-a-letra'); });
+    if (fmt === 'silaba-falta') await uma('silaba-falta', async () => { await foto('mecanicas-silaba-que-falta'); });
+    if (fmt === 'fonema-falta') await uma('fonema-falta', async () => { await foto('mecanicas-som-que-falta'); await errar(); await foto('mecanicas-som-que-falta-correcao'); });
+    if (fmt === 'ouvir-leituras') await uma(`ouvir-leituras-${cena}`, async () => { await errar(); await foto(cena.includes('F04') ? 'mecanicas-pseudopalavra-ouvir-leituras' : 'mecanicas-bolota-ouvir-leituras'); });
+    const modelo = await pg.locator('.mec-montar').getAttribute('data-modelo', { timeout: 150 }).catch(() => null);
+    if (modelo === 'demonstracao') await uma('montar-demo', async () => { await foto('mecanicas-montar-demonstracao'); });
+    if (modelo === 'sem') {
+      await uma('montar-sem', async () => { await foto('mecanicas-montar-sem-modelo'); });
+      // 3ª tentativa: depois de dois erros seguidos a peça certa brilha
+      await uma('montar-brilho', async () => {
+        const alvo = (await pg.getByTestId('espacos').getAttribute('data-alvo')).split('|');
+        const ja = await pg.locator('.espaco.cheio').count();
+        const errada = pg.locator(`.peca:not(.usada):not([data-peca="${alvo[ja]}"])`).first();
+        if (!(await errada.count())) { feitos.delete('montar-brilho'); return; }
+        await errada.click(); await pg.waitForTimeout(700); await errada.click(); await pg.waitForTimeout(700);
+        await foto('mecanicas-montar-terceira-tentativa-brilho');
+      });
+    }
+    if (await pg.getByTestId('liga-o-som').isVisible().catch(() => false)) {
+      await uma('liga-inicio', async () => { await foto('liga-o-som-inicio'); });
+      const prontas = await pg.locator('[data-liga-letra][data-feita]').count();
+      if (prontas === 1) await uma('liga-erro', async () => {
+        const letras = await pg.locator('[data-liga-letra]:not([data-feita])').evaluateAll((els) => els.map((e) => e.dataset.ligaLetra));
+        if (letras.length < 2) return;
+        await pg.locator(`[data-liga-letra="${letras[0]}"]`).click();
+        await pg.locator(`[data-liga-cena="${letras[1]}"]`).click();
+        await foto('liga-o-som-correcao');
+      });
+      if (prontas === 2) await uma('liga-meio', async () => { await foto('liga-o-som-ligando'); });
+    }
+  };
+  for (const f of ['AL-B', 'AL-R1', 'AL-R2', 'AL-R4', 'R2a-F02', 'R2a-F03', 'R2a-F04']) {
+    await page.goto(BASE + `#/c/${id}/sessao/${f}`);
+    await jogarSessao(page, { gancho });
+    console.log(`  fase ${f} jogada`);
+  }
+  // a cena do som na apresentação da letra: sem o modo rápido, para a tela parar no faz de conta
+  await page.evaluate(() => localStorage.removeItem('fonema-teste-rapido'));
+  await ctx.addInitScript(() => { try { localStorage.removeItem('fonema-teste-rapido'); } catch { /* nada */ } });
+  await page.goto(BASE + `#/c/${id}/sessao/AL-S`);
+  await page.reload();
+  await page.getByTestId('comecar-sessao').click({ timeout: 20000 });
+  await page.locator('.letra-som .letra-cena').waitFor({ timeout: 60000 });
+  await foto('liga-o-som-cena-na-apresentacao-da-letra');
+  ok(erros.length === 0, `capturas das mecânicas sem erro de página${erros.length ? ': ' + erros.join(' | ') : ''}`);
+  await ctx.close();
+}
+
 async function main() {
   if (CAPTURAS) mkdirSync(DIR_CAP, { recursive: true });
   await subirServidor();
   const browser = await chromium.launch({ executablePath: EXEC, args: ['--autoplay-policy=no-user-gesture-required'] });
+  if (process.argv.includes('--mecanicas')) { await capturasMecanicas(browser); await browser.close(); servidor?.kill(); return; }
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: CAPTURAS ? 2 : 1, locale: 'pt-BR' });
   await ctx.addInitScript((c) => { try { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); } catch { /* sem armazenamento */ } }, COLETAR);
   const page = await ctx.newPage();

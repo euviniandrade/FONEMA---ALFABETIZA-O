@@ -294,6 +294,12 @@
   "origem": "R1-F07"
  },
  {
+  "id": "s-1adv423",
+  "voz": "sofia",
+  "texto": "Ponha a mão no pescoço para sentir.",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "s-1asmjqs",
   "voz": "sofia",
   "texto": "llll… lua!",
@@ -508,12 +514,6 @@
   "voz": "sofia",
   "texto": "yakisoba",
   "origem": "alfabeto: palavras"
- },
- {
-  "id": "s-1h6mw43",
-  "voz": "sofia",
-  "texto": "Põe a mão no pescoço para sentir.",
-  "origem": "falas fônicas (D030)"
  },
  {
   "id": "s-1hey3cw",
@@ -1020,6 +1020,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1upee47",
+  "voz": "sofia",
+  "texto": "Você leu o nome do bichinho da mata!",
+  "origem": "R2a-F04-C5b"
+ },
+ {
   "id": "s-1uqfwe4",
   "voz": "sofia",
   "texto": "iglu",
@@ -1104,6 +1110,12 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1uqiceh",
+  "voz": "sofia",
+  "texto": "lifa",
+  "origem": "R2a-F04-C5b"
+ },
+ {
   "id": "s-1uqicf1",
   "voz": "sofia",
   "texto": "lifu",
@@ -1174,6 +1186,12 @@
   "voz": "sofia",
   "texto": "mufe",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1uqjb04",
+  "voz": "sofia",
+  "texto": "mufa",
+  "origem": "R2a-F04-C5b"
  },
  {
   "id": "s-1uqjb5q",
@@ -1338,6 +1356,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1uqprgp",
+  "voz": "sofia",
+  "texto": "fali",
+  "origem": "R2a-F04-C5b"
+ },
+ {
   "id": "s-1uqprvy",
   "voz": "sofia",
   "texto": "faca",
@@ -1348,6 +1372,12 @@
   "voz": "sofia",
   "texto": "ffff",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1uqq1q9",
+  "voz": "sofia",
+  "texto": "fulu",
+  "origem": "R2a-F04-C5b"
  },
  {
   "id": "s-1uqq1r1",
@@ -1524,12 +1554,6 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "s-1ur76v2",
-  "voz": "sofia",
-  "texto": "MULA",
-  "origem": "R2a-F05-C7"
- },
- {
   "id": "s-1ur94bv",
   "voz": "sofia",
   "texto": "Aaaa",
@@ -1548,28 +1572,10 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "s-1urawgv",
-  "voz": "sofia",
-  "texto": "LULA",
-  "origem": "R2a-F05-C7"
- },
- {
   "id": "s-1urbenf",
   "voz": "sofia",
   "texto": "Llll",
   "origem": "telas (E2E)"
- },
- {
-  "id": "s-1urbxad",
-  "voz": "sofia",
-  "texto": "FOFA",
-  "origem": "R2a-F05-C4a"
- },
- {
-  "id": "s-1urc26h",
-  "voz": "sofia",
-  "texto": "FILA",
-  "origem": "R2a-F05-C4a"
  },
  {
   "id": "s-1urf0ik",

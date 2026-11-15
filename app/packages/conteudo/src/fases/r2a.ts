@@ -3,7 +3,7 @@
  * Toda palavra LIDA aqui usa só M, L, F e vogais (linter de decodificabilidade).
  */
 import type { Fase } from '../tipos.ts';
-import { itemFonema, itemLer, itemLetra, itemOuvirLeituras, itemSilaba, sofia, tales } from '../construtores.ts';
+import { itemFonema, itemLer, itemLerPseudo, itemLetra, itemOuvirLeituras, itemSilaba, sofia, tales } from '../construtores.ts';
 import { FALAS_FONICAS } from '../sons.ts';
 
 export const FASES_R2A: Fase[] = [
@@ -127,6 +127,17 @@ export const FASES_R2A: Fase[] = [
       {
         id: 'R2a-F04-C5', tipo: 'C5', titulo: 'Só você e as letras', cenario: 'licao', contaDominio: true,
         atividade: { tipo: 'falar', leitura: true, habilidade: 'leitura-cvcv', enunciado: sofia('Sem ponte, sem bola. Só você e as letras, [NOME].'), itens: [{ texto: 'LUA', falar: 'lua' }, { texto: 'FALA', falar: 'fala' }, { texto: 'LIFU', falar: 'lifu', pseudo: true }], comemora: sofia('Até o nome do bichinho da mata você leu!') }
+      },
+      {
+        // pseudopalavras com resposta CONFERIDA: vê o nome do bichinho, ouve três leituras e escolhe (só valores já ensinados)
+        // Ainda sem `contaDominio`: as respostas ficam gravadas na habilidade (valem para "dominada de verdade"), mas a fase
+        // não passa a EXIGIR a pseudopalavra enquanto o teste do motor (d030.test.ts › jogar) não gravar `pseudo` nos itens.
+        id: 'R2a-F04-C5b', tipo: 'C5', titulo: 'Qual é o nome do bichinho?', cenario: 'mata',
+        atividade: {
+          tipo: 'escolher', estilo: 'tocar', habilidade: 'leitura-cvcv', enunciado: sofia(FALAS_FONICAS.ouvirLeituras),
+          itens: [itemLerPseudo('LIFU', 'lifa', 'fuli'), itemLerPseudo('FOLU', 'fulu', 'lufo'), itemLerPseudo('MIFA', 'mufa', 'mufe'), itemLerPseudo('FULI', 'fali', 'lifu')],
+          sortear: 3, comemora: sofia('Você leu o nome do bichinho da mata!')
+        }
       }
     ],
     gancho: tales('A cachoeira tem pedras com sílabas… Amanhã a gente atravessa!'),

@@ -26,7 +26,8 @@ export function posiciona<T>(certa: T, outras: T[]): T[] {
 
 export function opFig(texto: string): Opcao {
   const w = figura(texto);
-  return { id: texto, rotulo: texto, figura: w.figura, falar: texto };
+  // palavras de leitura (MALA, FOFA) são ditas pelo clipe em minúsculas, que é o conferido na auditoria
+  return { id: texto, rotulo: texto, figura: w.figura, falar: texto === texto.toUpperCase() ? texto.toLowerCase() : texto };
 }
 
 const LETRA_SOM: Record<string, string> = { A: 'a', E: 'E', I: 'i', O: 'O', U: 'u', M: 'm', L: 'l', F: 'f', S: 's', V: 'v' };
@@ -82,4 +83,12 @@ export function itemFonema(mostrar: string, palavra: string, certa: string, ...o
 export function itemOuvirLeituras(palavra: string, ...erradas: string[]): ItemEscolha {
   const op = (t: string): Opcao => ({ id: t.toLowerCase(), rotulo: '', falar: t.toLowerCase(), botaoDeSom: true });
   return { mostrar: palavra.toUpperCase(), correta: palavra.toLowerCase(), opcoes: posiciona(op(palavra), erradas.map(op)), leitura: true, formato: 'ouvir-leituras' };
+}
+
+/**
+ * PSEUDOPALAVRA CONFERIDA (pedido do motor, D030): a criança vê o "nome de bichinho" escrito, ouve três leituras e
+ * escolhe a certa. É a decodificação de palavra inventada com resposta conferida pelo app (no Falar é autorrelato).
+ */
+export function itemLerPseudo(palavra: string, ...erradas: string[]): ItemEscolha {
+  return { ...itemOuvirLeituras(palavra, ...erradas), pseudo: true };
 }
