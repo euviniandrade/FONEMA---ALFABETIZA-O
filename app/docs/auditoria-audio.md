@@ -3,7 +3,7 @@
 Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai ao ar sem esta auditoria**.
 
 - Clipes auditados: **1264** (974 falas + 290 nomes; vozes Sofia e Tales)
-- Graves (defeito audível provável): **40** · a conferir de ouvido (palavra/som solto com transcrição diferente): **72** · leves (higiene do sinal): **0** · sem defeito: **1152**
+- Graves (defeito audível provável): **38** · a conferir de ouvido (palavra/som solto com transcrição diferente): **72** · leves (higiene do sinal): **0** · sem defeito: **1154**
 - Conteúdo conferido por transcrição: **1264** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
 - Volume (clipes ≥ 0,4 s): mediana -17.4 LUFS, de -22.8 a -14.6 (alvo -16)
 
@@ -12,7 +12,7 @@ Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai
 | Tipo | Antes | Agora |
 |---|---|---|
 | começo seco | 184 | 0 |
-| conteúdo: palavra trocada | 69 | 86 |
+| conteúdo: palavra trocada | 69 | 83 |
 | volume fora da média | 135 | 0 |
 | sem respiro no começo | 113 | 0 |
 | sem respiro no fim | 69 | 0 |
@@ -24,9 +24,9 @@ Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai
 | conteúdo: sílaba faltando no começo | 4 | 5 |
 | conteúdo: sobrando | 5 | 3 |
 | conteúdo: transcrição vazia | 2 | 1 |
-| conteúdo: fim faltando | 0 | 2 |
 | curto demais | 0 | 2 |
-| conteúdo: sílaba faltando no meio | 0 | 1 |
+| conteúdo: fim faltando | 0 | 2 |
+| conteúdo: sílaba faltando no meio | 0 | 2 |
 | conteúdo: palavra faltando | 0 | 1 |
 | mudo | 1 | 0 |
 
@@ -38,9 +38,7 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 
 | Voz | Texto esperado | Ouvido | Problemas | Arquivo |
 |---|---|---|---|---|
-| sofia | Achar m, l e f no começo das palavras | Achar Melefi no começo das palavras | palavra trocada (“n l e f” → “melefi”) | `falas/sofia-oj0aq5-m1.mp3` |
-| sofia | Conhecer a letra R | Conhecer a letra E | palavra trocada (“r” → “e”) | `falas/sofia-2my0ul-m1.mp3` |
-| sofia | Conhecer a letra Y | Conhecer a letra It | palavra trocada (“i” → “it”) | `falas/sofia-2my0ue-m1.mp3` |
+| sofia | Conhecer a letra érre. | Conhecer a letra R | sílaba faltando no meio (“ere” → “r”) | `falas/sofia-2my0ul-r2-m1.mp3` |
 | sofia | Continue a trilha para descobrir! | Continue a trilha para descobrir | curto demais | `falas/sofia-16c3ruf-m1.mp3` |
 | sofia | Cá! De kiwi. | K de kiwi | sílaba faltando no fim (“ka” → “k”) | `falas/sofia-1wuhvy7-r2-m1.mp3` |
 | sofia | Devagar: M, de macaco-Aaaaa, ma. L, de lua-Aaaaa, la. mala! | Devagar, hem, de macaco ama. Ele de lua ala, mala | palavra trocada (“n” → “en”); palavra trocada (“a ma l” → “ama ele”) | `falas/sofia-guzzxu-m1.mp3` |

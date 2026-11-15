@@ -41,4 +41,5 @@ A lista completa, com medidas de cada clipe, está em `docs/auditoria-audio.md` 
 
 ## 4. Saldo
 
-Ver o relatório da rodada (créditos gastos e saldo final) em `docs/ESTADO-ATUAL.md` §7.
+Rodada de 15/11: 2.330 caracteres gastos (de 116.029 para 118.359 usados, de 131.000). **Saldo: 12.641 caracteres.** Sobrou porque
+todas as falas fixas do conteúdo já têm clipe; o que falta acima não se resolve gerando de novo com a mesma voz.

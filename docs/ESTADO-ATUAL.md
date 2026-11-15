@@ -179,7 +179,9 @@ palavras como "cama" antes das nasais, lista de palavras frequentes, exemplar re
 - **Google AI Studio** (imagem `gemini-3-pro-image`, vídeo, música, transcrição): **cota mensal esgotada** (429/402). O dono precisa aumentar o limite.
 - **Cloudinary** (geração de imagem pela conta do dono): restam **27 de 50** (≈1–2 imagens). Download liberado pelo dono em
   `upload-us-east-1.cloudinary.com` e `res.cloudinary.com`.
-- **ElevenLabs**: ≈115 mil de 131 mil caracteres usados; sobra pouco (≈16 mil).
+- **ElevenLabs** (15/11, depois das vozes da D030): 118.359 de 131.000 caracteres usados; **sobram 12.641**. A rodada das mecânicas
+  gastou 2.330 (falas fônicas, falas das telas e do boneco, dicas dos cadeados, apoio por letra, regravações). O que continua sem voz
+  está em `app/docs/falas-pendentes.md`.
 - **vidIQ**: usado para assistir o vídeo de referência (transcrição + análise visual).
 - **Plataforma de 3D**: nenhuma conectada. Recomendação: Meshy (ou Tripo). O dono também citou "Muse AI" (1 bilhão de tokens) —
   **falta ele dizer o site e o que gera**; se gerar imagem ou 3D, resolve selos/figuras/boneco.
