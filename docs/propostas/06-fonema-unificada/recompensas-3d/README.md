@@ -39,3 +39,29 @@ O dono achou o selo plano do protótipo "feio". Esta rodada define o **padrão v
 - **Menos movimento:** respeita `prefers-reduced-motion` e a classe `body.calmo` (mostra o resultado final, sem giros nem confete).
 - **Simulado:** sons de conquista sintetizados (WebAudio); no produto, efeitos gravados. Arte provisória de IA.
 - **Capturas:** `node ferramentas/capturar.js` → `capturas/` (1280×800, `deviceScaleFactor 2`).
+
+## No aplicativo (D029): selos 3D e prêmios em 360°
+
+O que esta pasta aprovou está no app em `app/web/src/componentes/recompensas.tsx` (+ `estilos-recompensas.css`).
+
+| O quê | Como |
+|---|---|
+| **Selos** | Bases 3D (`imagens/bases-selo-em-branco.png`) recortadas e recoloridas por `app/web/scripts/gerar-selos.py` (ouro, bronze, prata, diamante lapidado, bloqueado, verso). O motivo e o nome na faixa são pintados por cima (`selo-pintura.ts`). Parado é pintura leve; aberto, gira 360° com espessura, borda e verso. |
+| **Porquinho, troféu, baú, Bolota** | **Modelos 3D de verdade** (GLB de plataforma de 3D). Originais em `modelos/` (3–4 MB); comprimidos por `app/web/scripts/comprimir-modelos.sh` (meshopt + WebP 1024, ≈0,3–0,4 MB) em `app/web/public/assets/modelos3d/`. |
+| **Imagens paradas** | Tiradas do próprio modelo por `app/web/scripts/gerar-miniaturas-modelos.mjs` (a miniatura bate com o que gira). São a reserva sem WebGL e o primeiro quadro antes de o three.js carregar. |
+| **Motor** | `premio3d.ts`: um único WebGL compartilhado, carregado sob demanda (nada de three.js na entrada do app). `glb-comum.ts`: o mesmo carregador de GLB do avatar. |
+| **Bancada** | `npx vite -c vite.selos.config.ts --port 5199` → `/bancada-selos.html#metais`, `#doze`, `#angulos`, `#premios`, `#ritual1`, `#semear`. |
+
+**Usar em outra tela** (exemplo com o Bolota):
+
+```tsx
+import { Modelo3D, MiniaturaPremio } from '../componentes/recompensas.tsx';
+
+<Modelo3D qual="bolota" tamanho={260} />                         {/* gira 360°; arrastar gira com inércia */}
+<MiniaturaPremio qual="bolota" titulo="Bolota" tamanho={96} />    {/* imagem parada; abre grande em 360° ao toque */}
+```
+
+`qual` aceita `porquinho`, `trofeu`, `bau` e `bolota`. Modelo novo: pôr o GLB em `modelos/`, comprimir, registrar em `MODELOS`
+(com o giro `frente` que deixa o modelo de frente) e gerar a imagem parada.
+
+**Pendente de arte:** o troféu traz escrito "MESTRE LEITOR" (rótulo antigo, anterior à D022) — pedir à plataforma uma versão sem texto.

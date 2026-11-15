@@ -70,7 +70,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
           <p className="ritual-desafios">Hoje: <b>{relatorio.atividades}</b> desafios feitos</p>
           <div className="ritual-grade">
             <div className="ritual-moedas">
-              <Cofrinho saldo={saldoAntes + (passo >= 1 ? relatorio.moedinhas : 0)} animar={moedasAnim} />
+              <Cofrinho saldo={saldoAntes + (passo >= 1 ? relatorio.moedinhas : 0)} animar={moedasAnim} tamanho={250} />
               <p data-testid="moedinhas-ganhas"><span className="ritual-moeda-3d" aria-hidden="true"><Premio3D tipo="moeda" tamanho={44} /></span><b>+{relatorio.moedinhas}</b> moedinhas no cofrinho</p>
               {relatorio.moedinhasCalculadas > relatorio.moedinhas ? <small>Hoje o cofrinho já está cheio; amanhã tem mais.</small> : null}
             </div>

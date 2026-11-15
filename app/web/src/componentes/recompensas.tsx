@@ -349,7 +349,7 @@ export function CelebracaoSelos({ itens, letra }: { itens: Array<{ conquista: Co
  * Cofrinho de porquinho (D029): modelo 3D de verdade, girando 360° (arrastar gira). Quando as moedinhas chegam,
  * o porquinho dá pulinhos. Antes de o 3D carregar (e sem WebGL) aparece a imagem do próprio modelo.
  */
-export function Cofrinho({ saldo, animar = 0, tamanho = 210 }: { saldo: number; animar?: number; tamanho?: number }) {
+export function Cofrinho({ saldo, animar = 0, tamanho = 230 }: { saldo: number; animar?: number; tamanho?: number }) {
   const vista = useRef<Vista | null>(null);
   useEffect(() => {
     if (!animar || calmo()) return;
