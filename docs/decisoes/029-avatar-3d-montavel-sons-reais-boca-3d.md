@@ -29,3 +29,10 @@ Data: 2026-11-14. Origem: o dono testou o site publicado e enviou correções.
 - **Todo prêmio é 360°**: selo, medalha, troféu, moeda, baú e cofrinho giram e podem ser vistos de vários ângulos.
 - O cofrinho deixa de ser o tatu e passa a ser um **porquinho de cofrinho** clássico, bonito e convidativo.
 - O boneco e os prêmios devem vir de **modelos 3D de plataforma/artista**, não de desenho feito em código (o código só monta, gira e ilumina).
+
+## 7. Ajuste do dono em 15/11 sobre o começo do boneco (substitui "começa limpo" do item 1)
+- O boneco **não começa careca nem sem rosto**. Começa num **padrão completo**: olhos pretos, nariz, boca, um cabelo padrão e
+  **roupa toda branca com o "A" azul**, como o uniforme da Sofia e do Tales.
+- A partir desse padrão a criança **vai personalizando** (cor dos olhos, sorriso, boca, cabelo, roupa…), como nos criadores de personagem
+  de The Sims / GTA / Habbo, sempre em **3D estilo filme de animação**.
+- A roupa branca do padrão serve de base para as cores: muda-se a cor sem trocar o modelo.
