@@ -46,8 +46,12 @@ seção **"Acessibilidade"** da Lojinha (grátis, opcional).
 Feito até agora: `app/packages/conteudo/src/avatar.ts`, `app/packages/motor/src/avatar.ts` (+ testes),
 `app/web/src/avatar3d/` (`glb.ts`, `modelo.ts`, `motor3d.ts`, `procedural.ts`), `componentes/Boneco3D.tsx`, `telas/crianca/Avatar.tsx`,
 `telas/crianca/Lojinha.tsx`, `estilos-avatar.css`, `public/assets/avatar3d/manifesto.json`, `e2e/capturas-avatar.mjs`.
-Parou em: testes do avatar. Falta: conferir capturas, miniaturas, migração dos avatares antigos, remover "Prefiro não informar" em
-todo lugar, E2E, documento `app/docs/avatar-3d-contrato.md` (o que um artista/plataforma precisa entregar em GLB).
+**Estrutura concluída e verificada (15/11):** montagem em 7 passos obrigatórios + vitrine da Lojinha, só menino/menina no cadastro,
+migração dos cadastros antigos (sexo "n" → pergunta uma vez; recorte → boneco equivalente), Lojinha com cadeados por fase + moedas e
+seção Acessibilidade, miniaturas em imagem (um WebGL fora da tela, com cache), carregador de GLB provado com arquivo de teste,
+contrato em `app/docs/avatar-3d-contrato.md`, E2E (`--sem-jornada`) e capturas `app/docs/capturas/v4-avatar-*.png`.
+Falta: os modelos GLB de verdade (70 arquivos, lista no contrato) e os áudios das 3 falas novas da montagem
+(`FALAS.avatar`, `avatarSexo`, `avatarLojinha` e as perguntas de `PASSOS_AVATAR`). Os recortes antigos em `public/assets/avatar/` não são mais usados.
 **Decisão do dono:** boneco desenhado em código "fica ruim" → os modelos devem vir de **plataforma de 3D** (Meshy/Tripo) ou artista;
 o código só monta, gira e ilumina. O boneco procedural é reserva provisória. Aguardando o dono criar a conta e informar.
 

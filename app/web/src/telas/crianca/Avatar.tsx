@@ -56,7 +56,7 @@ function Montador({ crianca, progresso, salvarCrianca }: { crianca: Crianca; pro
   const escolher = async (cat: Exclude<CategoriaAvatar, 'acessibilidade'>, peca: PecaAvatar) => {
     const e = estadoPeca(peca, progresso);
     if (e.estado !== 'livre' && e.estado !== 'tem') {
-      const texto = e.estado === 'fase' ? `${peca.nome}: ${rotuloCadeado(e).toLowerCase()}. Você encontra na Lojinha.` : `${peca.nome} custa ${e.preco} moedinhas. Você troca na Lojinha.`;
+      const texto = e.estado === 'fase' ? `${peca.nome}: ${rotuloCadeado(e).replace(/^A/, 'a')}. Você encontra na Lojinha.` : `${peca.nome} custa ${e.preco} moedinhas. Você troca na Lojinha.`;
       setAviso(texto);
       efeitos.toque();
       return;

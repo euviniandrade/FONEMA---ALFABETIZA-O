@@ -62,7 +62,7 @@ svg.boneco3d-reserva{position:absolute;inset:6% 0 12%;height:82%;width:100%}
 .opcao-peca:hover{transform:translateY(-2px)}
 .opcao-peca.sel{background:linear-gradient(180deg,#FFF3C4,#FFFBEA);box-shadow:0 5px 0 #D79A1F,0 0 0 4px #FFD652}
 .opcao-arte{display:block;width:100%;height:clamp(60px,13vh,140px);border-radius:16px;overflow:hidden}
-.montar-opcoes.corpo .opcao-arte,.vitrine-lista .opcao-arte{height:clamp(72px,17vh,180px)}
+.montar-opcoes.corpo .opcao-arte,.vitrine-lista .opcao-arte{height:clamp(72px,13.5vh,170px)}
 .opcao-peca b{font-family:var(--f-titulo);font-weight:600;font-size:clamp(13px,1.7vh,16px);line-height:1.1;color:var(--marinho)}
 .opcao-peca.trancada{background:linear-gradient(180deg,#F5F8FB,#E6EDF4);box-shadow:0 4px 0 #C9D8E7,inset 0 2px 0 #fff}
 .opcao-peca.trancada .opcao-arte{filter:grayscale(.75) opacity(.62)}
@@ -120,7 +120,7 @@ html.contraste .opcao-cor.sel{box-shadow:0 0 0 4px #fff,0 0 0 8px #000}
   .montar-pergunta .ouvir .ic{width:34px;height:34px}
   .montar-corpo{gap:6px;padding:2px}
   .montar-opcoes{gap:6px}
-  .montar-opcoes.com-retrato{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .montar-opcoes.com-retrato{grid-template-columns:repeat(5,minmax(0,1fr))}
   .montar-opcoes.com-retrato.corpo,.vitrine-lista{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
   .montar-opcoes.cores{grid-template-columns:repeat(5,1fr)}
   .montar-opcoes.cor-cabelo{grid-template-columns:repeat(7,1fr);padding-top:6px}
@@ -128,7 +128,7 @@ html.contraste .opcao-cor.sel{box-shadow:0 0 0 4px #fff,0 0 0 8px #000}
   .cor-cabelo .opcao-cor .ic{width:22px;height:22px}
   .opcao-peca{padding:3px 2px 5px;border-radius:14px;box-shadow:0 3px 0 #B9CEE2,inset 0 2px 0 #fff}
   .opcao-peca.sel{box-shadow:0 3px 0 #D79A1F,0 0 0 3px #FFD652}
-  .opcao-peca b{font-size:11.5px}
+  .opcao-peca b{font-size:11px;overflow-wrap:anywhere}
   .opcao-arte{height:clamp(44px,6.4vh,60px);border-radius:10px}
   .montar-opcoes.corpo .opcao-arte,.vitrine-lista .opcao-arte{height:clamp(60px,9.5vh,88px)}
   .cadeado{font-size:10px;gap:2px}.cadeado .ic{width:14px;height:14px}
