@@ -88,7 +88,9 @@ const opLetraAl = (letra: string, minuscula = false): Opcao => {
 const opSom = (fonema: string): Opcao => ({ id: `som:${fonema}`, rotulo: '', som: fonema, botaoDeSom: true });
 /** Figura como opção, com o som do começo da palavra (para a correção contrastiva). */
 const opFigDe = (palavra: string, l?: LetraAlfabeto): Opcao => ({ ...opFig(palavra), ...(l?.fonema ? { som: l.fonema } : {}) });
-const apoioDe = (l: LetraAlfabeto): Fala => f(l.voz, falaNomeLetra(l));
+/** Apoio dito DEPOIS do acerto, com o nome da letra: "Isso! Esse é o som do B." */
+export const falaApoio = (l: LetraAlfabeto) => `Isso! Esse é o som do ${l.letra}.`;
+const apoioDe = (l: LetraAlfabeto): Fala => f(l.voz, falaApoio(l));
 /** Só letras que entram nos jogos de som real (sem H e sem as letras de nomes). */
 const comSom = (pool?: string[]) => (pool ?? ALFABETO.map((x) => x.letra)).filter((x) => usaSomReal(LETRA_POR_ID[x]));
 

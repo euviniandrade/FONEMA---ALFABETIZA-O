@@ -85,7 +85,7 @@ describe('Trilha do Alfabeto (D027)', () => {
       // D030 §1: o estímulo é o SOM REAL; o nome da letra só entra como apoio depois do acerto
       for (const i of [...acheLetra.itens, ...acheFigura.itens]) {
         expect(i.somAlvo, f.id).toBe(l.fonema);
-        expect(i.apoio).toEqual({ quem: l.voz, texto: falaNomeLetra(l) });
+        expect(i.apoio).toEqual({ quem: l.voz, texto: `Isso! Esse é o som do ${l.letra}.` });
         expect(i.dica, `${f.id}: a dica não pode entregar a resposta`).toBeUndefined();
       }
       // letra → som: vê a letra e escolhe entre 2–3 botões de som, sem nada escrito

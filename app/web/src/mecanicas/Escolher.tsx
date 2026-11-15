@@ -144,10 +144,10 @@ export function Escolher({ atividade, crianca, sessao, cenaId, revisao, onFim }:
       // tocar na figura fala o nome dela (a criança confirma o que escolheu)
       if (!o.letra && !o.botaoDeSom && o.falar && (item.somAlvo || item.formato === 'som-figura')) { await voz.falar(o.falar, { quem: 'sofia' }); await espera(150); }
       if (item.apoio && erros <= 1) {
-        // apoio depois do acerto: "Isso! Esse é o som desta letra." + o nome da letra ("Letra B.")
+        // apoio depois do acerto, com o nome da letra: "Isso! Esse é o som do B."
         const quem = item.apoio.quem === 'tales' ? 'tales' : 'sofia';
-        await diz(F.essaEALetra, quem);
-        await diz(item.apoio.texto, quem);
+        if (voz.temTodas([item.apoio.texto], quem)) await diz(item.apoio.texto, quem);
+        else await diz(F.essaEALetra, quem);
       } else {
         const frase = erros > 1 ? FALAS.erroJunto.replace('?', '!') : atividade.comemora?.texto ?? FALAS.acertos[i % FALAS.acertos.length];
         await voz.falar(textoVoz(frase, crianca), { quem: atividade.comemora?.quem ?? 'sofia' });

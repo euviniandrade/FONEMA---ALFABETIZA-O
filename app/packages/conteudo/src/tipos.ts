@@ -122,7 +122,7 @@ export interface ItemEscolha {
    * clipe aprovado nem gravação do adulto, vale `ouvir` (comportamento antigo).
    */
   somAlvo?: ChaveFonema;
-  /** Dito DEPOIS do acerto, como apoio (o nome da letra: "Letra B."), precedido de "Isso! Esse é o som desta letra.". */
+  /** Dito DEPOIS do acerto, como apoio, com o nome da letra: "Isso! Esse é o som do B." (sem clipe: a frase genérica). */
   apoio?: Fala;
 
   /** Explicação do contraste entre dois sons/letras parecidos (par mínimo), dita na correção. */

@@ -445,7 +445,7 @@ async function main() {
   await capA(page, '08-ritual-selo-da-letra', 600);
   ok(await page.locator('[data-testid="selo-novo"] [data-conquista="S-LETRA-A"]').count() === 1, 'selo da letra A conquistado depois da missão');
   const ganhas = Number((await page.getByTestId('moedinhas-ganhas').innerText()).match(/\+(\d+)/)[1]);
-  ok(ganhas === 5, `moedinhas fixas em bloco: +${ganhas} (5 atividades × 1)`);
+  ok(ganhas === 6, `moedinhas fixas em bloco: +${ganhas} (6 atividades × 1)`);
   ok(await page.getByTestId('surpresa').count() >= 1, 'surpresa de nível entregue depois (P1-b)');
   ok(!(await page.getByText(/continuar jogando/i).count()), 'sem botão "continuar jogando" no ritual');
 
@@ -507,20 +507,20 @@ async function main() {
   await cap(page, 'lojinha');
   // D029: Lojinha do boneco — cadeados por fase + moedas, e Acessibilidade sempre grátis
   ok(/Abre na Letra C · 6 moedas/.test(await page.locator('[data-testid="loja-boneco"] [data-peca="camiseta-listrada"]').innerText()), 'Lojinha: camiseta listrada com cadeado "Abre na Letra C · 6 moedas"');
-  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="camiseta-ipe"][data-estado="pode"]').count() === 1, 'Lojinha: com a Letra B aberta e 5 moedinhas, a camiseta amarela (4) já pode ser trocada');
+  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="camiseta-ipe"][data-estado="pode"]').count() === 1, 'Lojinha: com a Letra B aberta e 6 moedinhas, a camiseta amarela (4) já pode ser trocada');
   ok(await page.locator('[data-testid="loja-boneco"] [data-peca="polo-terra"]').count() === 0, 'Lojinha: a menina não vê roupa de menino');
   await page.locator('[data-aba="acessibilidade"]').click();
   ok(await page.locator('[data-testid="loja-acessibilidade"] [data-acess]').count() === 4 && await page.locator('[data-testid="loja-acessibilidade"] [aria-checked="true"]').count() === 0, 'Acessibilidade: óculos, aparelho auditivo, cadeira de rodas e pintura no rosto, grátis e desligados de entrada');
   await page.locator('[data-acess="oculos"] button').click();
   await page.locator('[data-acess="oculos"] [aria-checked="true"]').waitFor();
-  ok((await page.getByTestId('moedinhas').first().innerText()).match(/\d+/)[0] === '5', 'colocar os óculos não custa moedinhas');
+  ok((await page.getByTestId('moedinhas').first().innerText()).match(/\d+/)[0] === '6', 'colocar os óculos não custa moedinhas');
   await page.locator('[data-acess="oculos"] button').click();
   await page.locator('[data-acess="oculos"] [aria-checked="false"]').waitFor();
   await page.locator('[data-aba="utensilios"]').click();
   await page.locator('[data-item="caderno"] button').click();
   await page.getByTestId('confirmar-troca').click();
   await page.locator('[data-item="caderno"].tem').waitFor();
-  ok((await page.getByTestId('moedinhas').first().innerText()).match(/\d+/)[0] === '1', 'troca de 4 moedinhas pelo caderno (saldo 1)');
+  ok((await page.getByTestId('moedinhas').first().innerText()).match(/\d+/)[0] === '2', 'troca de 4 moedinhas pelo caderno (saldo 2)');
   await page.goto(BASE + `#/c/${id}/album`);
   await page.getByTestId('album').waitFor();
   await cap(page, 'album-conquistas');

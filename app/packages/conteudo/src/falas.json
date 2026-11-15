@@ -405,7 +405,7 @@
   "id": "s-1cw53nm",
   "voz": "sofia",
   "texto": "Letra I.",
-  "origem": "AL-FESTA-C4c"
+  "origem": "AL-R2-C4f"
  },
  {
   "id": "s-1cw53pc",
@@ -472,6 +472,72 @@
   "voz": "sofia",
   "texto": "Oi, [NOME]! Sente o ventinho? /fff/…",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1duq14f",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do Q.",
+  "origem": "AL-FESTA-C4e"
+ },
+ {
+  "id": "s-1duq165",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do S.",
+  "origem": "AL-FESTA-C4d"
+ },
+ {
+  "id": "s-1duq17v",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do U.",
+  "origem": "AL-FESTA-C4d"
+ },
+ {
+  "id": "s-1duq1bb",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do Y.",
+  "origem": "AL-FESTA-C4f"
+ },
+ {
+  "id": "s-1duq1j3",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do A.",
+  "origem": "AL-FESTA-C4b"
+ },
+ {
+  "id": "s-1duq1kt",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do C.",
+  "origem": "AL-FESTA-C4c"
+ },
+ {
+  "id": "s-1duq1mj",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do E.",
+  "origem": "AL-R1-C4c"
+ },
+ {
+  "id": "s-1duq1o9",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do G.",
+  "origem": "AL-FESTA-C4b"
+ },
+ {
+  "id": "s-1duq1pz",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do I.",
+  "origem": "AL-FESTA-C4c"
+ },
+ {
+  "id": "s-1duq1tf",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do M.",
+  "origem": "AL-FESTA-C4b"
+ },
+ {
+  "id": "s-1duq1v5",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do O.",
+  "origem": "AL-FESTA-C4d"
  },
  {
   "id": "s-1dxf71a",
@@ -4444,6 +4510,78 @@
   "voz": "tales",
   "texto": "L, de lua.",
   "origem": "AL-L-C2b"
+ },
+ {
+  "id": "t-qfk4xb",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som do L.",
+  "origem": "AL-R4-C4d"
+ },
+ {
+  "id": "t-qfk4z1",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som do N.",
+  "origem": "AL-R3-C4f"
+ },
+ {
+  "id": "t-qfk52h",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som do J.",
+  "origem": "AL-FESTA-C4d"
+ },
+ {
+  "id": "t-qfk547",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som do D.",
+  "origem": "AL-FESTA-C4e"
+ },
+ {
+  "id": "t-qfk55x",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som do F.",
+  "origem": "AL-FESTA-C4d"
+ },
+ {
+  "id": "t-qfk59d",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som do B.",
+  "origem": "AL-FESTA-C4e"
+ },
+ {
+  "id": "t-qfk5ff",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som do X.",
+  "origem": "AL-FESTA-C4d"
+ },
+ {
+  "id": "t-qfk5h5",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som do Z.",
+  "origem": "AL-FESTA-C4d"
+ },
+ {
+  "id": "t-qfk5iv",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som do T.",
+  "origem": "AL-FESTA-C4d"
+ },
+ {
+  "id": "t-qfk5kl",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som do V.",
+  "origem": "AL-FESTA-C4f"
+ },
+ {
+  "id": "t-qfk5mb",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som do P.",
+  "origem": "AL-FESTA-C4e"
+ },
+ {
+  "id": "t-qfk5o1",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som do R.",
+  "origem": "AL-R4-C4d"
  },
  {
   "id": "t-qi864h",
