@@ -6,6 +6,7 @@ import './estilos.css';
 import './estilos-entrada.css';
 import './estilos-recompensas.css';
 import './estilos-mecanicas.css';
+import './estilos-avaliacao.css';
 
 const repo = criarRepositorio();
 

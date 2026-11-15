@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { CONFIG_PADRAO, CONQUISTA_POR_ID, FASE_POR_ID, type ConfigPlataforma, sonsPurosPendentes } from '@fonema/conteudo';
-import { AREAS_SONDAGEM, NIVEIS_INICIAIS, aplicarNivelInicial, avaliarConquistas, dificuldadesDaTurma, filaProfessor, mapaHabilidades, progressoInicial, resumoAprendizagem, resumoFamilia, type CategoriaAlvo, type Crianca, type Demonstracao, type Evento, type NivelInicial, type Progresso, type StatusDemonstracao } from '@fonema/motor';
+import { AREAS_SONDAGEM, NIVEIS_AJUDA, NIVEIS_INICIAIS, aplicarNivelInicial, avaliarConquistas, dificuldadesDaTurma, filaProfessor, mapaHabilidades, progressoInicial, resumoAprendizagem, resumoFamilia, type CategoriaAlvo, type Crianca, type Demonstracao, type Evento, type NivelInicial, type Progresso, type StatusDemonstracao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Ajustes, AvatarMini, Carregando } from '../../componentes/basicos.tsx';
@@ -110,11 +110,14 @@ const segundos = (ms: number) => `${(ms / 1000).toLocaleString('pt-BR', { maximu
 const ROTULO_CATEGORIA: Record<CategoriaAlvo, string> = { fonema: 'som', grafema: 'letra', silaba: 'sílaba', palavra: 'palavra', pseudopalavra: 'palavra inventada', outro: 'item' };
 const PORQUE_PAR = { som: 'sons parecidos na boca', desenho: 'letras de desenho parecido' } as const;
 const ROTULO_PRATICA = { 'pre-requisito': 'Voltar um passo', 'par-confundido': 'Comparar os dois', reforco: 'Reforçar', revisao: 'Relembrar' } as const;
+const ROTULO_AJUDA = { nenhuma: 'sem ajuda', repetiu: 'ouviu a pergunta de novo', contraste: 'comparou os dois sons', caminho: 'fez junto, passo a passo', 'resposta-mostrada': 'a resposta foi mostrada' } as const;
 
 export function BlocosAprendizagem({ c, p, config }: { c: Crianca; p: Progresso; config: ConfigPlataforma }) {
   const r = useMemo(() => resumoAprendizagem(c, p, config, Date.now()), [c, p, config]);
   const semDetalhe = r.tentativas.comDetalhe === 0;
   const s = r.sondagem;
+  const sondagens = (p.sondagens ?? []).slice(-3);
+  const ditado = (sondagens[sondagens.length - 1]?.areas.ditado?.itens ?? []).filter((d) => d.escrito !== undefined);
   const proximaSondagem = s.devida
     ? 'Está na hora de fazer.'
     : [config.sondagem.aCadaFases > 0 ? `faltam ${Math.max(0, config.sondagem.aCadaFases - s.fasesDesde)} fases` : '', config.sondagem.aCadaDias > 0 && s.proximaEm ? `ou até ${new Date(s.proximaEm).toLocaleDateString('pt-BR')}` : ''].filter(Boolean).join(' ') || 'Sem data marcada.';
@@ -123,7 +126,7 @@ export function BlocosAprendizagem({ c, p, config }: { c: Crianca; p: Progresso;
       {r.alerta.nivel !== 'nenhum' ? (
         <div className={`bloco bloco-largo alerta-adulto ${r.alerta.nivel}`} data-testid="alerta-adulto" data-nivel={r.alerta.nivel} role="status">
           <h2><Icone nome="sino" />{r.alerta.nivel === 'risco' ? `${c.nome} precisa de apoio agora` : 'Para ficar de olho'}</h2>
-          <ul>{r.alerta.sinais.map((x) => <li key={x.texto}><Icone nome="olho" /><span>{x.texto}</span></li>)}</ul>
+          <ul>{r.alerta.sinais.map((x) => <li key={x.texto} data-sinal={x.tipo}><Icone nome="olho" /><span>{x.texto}{x.sugestao ? <small className="sugestao-alerta"> {x.sugestao}</small> : null}</span></li>)}</ul>
           <details className="criterio-alerta"><summary>Como este aviso é calculado</summary><p>{r.alerta.criterio}</p></details>
           <p className="nota-mic">Isto não é diagnóstico nem nota: é um aviso para ajudar mais cedo. Se a dificuldade continuar, vale conversar com a professora.</p>
         </div>
@@ -196,16 +199,61 @@ export function BlocosAprendizagem({ c, p, config }: { c: Crianca; p: Progresso;
         ) : <p>Nada a reforçar agora. É só seguir a jornada.</p>}
       </div>
 
-      <div className="bloco" data-testid="sondagem-periodica">
+      <div className="bloco bloco-largo" data-testid="sondagem-periodica">
         <h2><Icone nome="placa" />Sondagem periódica</h2>
         <p>{s.ultima ? `Última: ${new Date(s.ultima.em).toLocaleDateString('pt-BR')}.` : p.expressa.sondagemEm ? `Última: ${new Date(p.expressa.sondagemEm).toLocaleDateString('pt-BR')} (sem resultado por área).` : 'Ainda não foi feita.'} Próxima: {proximaSondagem}</p>
-        <ul className="areas-sondagem">{AREAS_SONDAGEM.map((a) => {
-          const m = s.evolucao.find((e) => e.area === a.id)?.medidas ?? [];
-          const ult = m[m.length - 1];
-          return <li key={a.id} data-area={a.id}><Icone nome={ult ? 'check' : 'relogio'} /><span><b>{a.nome}</b><small>{ult ? `${m.length > 1 ? `${m[0].acertos}/${m[0].total} → ` : ''}${ult.acertos}/${ult.total}` : 'ainda não medida'} · {a.oQueMede}</small></span></li>;
-        })}</ul>
+        {sondagens.length ? (
+          <table className="sondagem-comparada" data-testid="sondagens-comparadas">
+            <thead><tr><th>Área</th>{sondagens.map((x) => <th key={x.id}>{new Date(x.em).toLocaleDateString('pt-BR')}{x.tela === 'placas' || x.degrau !== undefined ? <small> (placas)</small> : null}</th>)}<th>Mudou?</th></tr></thead>
+            <tbody>{AREAS_SONDAGEM.map((a) => {
+              const caiu = s.quedas.find((q) => q.area === a.id);
+              const med = s.evolucao.find((e) => e.area === a.id)?.medidas ?? [];
+              const dif = med.length >= 2 ? med[med.length - 1].proporcao - med[med.length - 2].proporcao : undefined;
+              return (
+                <tr key={a.id} data-area={a.id}>
+                  <td><b>{a.nome}</b><br /><small>{a.oQueMede}</small></td>
+                  {sondagens.map((x) => {
+                    const v = x.areas[a.id];
+                    return <td key={x.id} className="num">{v && v.total ? <>{v.acertos} de {v.total}<span className="barra"><i style={{ width: `${(v.acertos / v.total) * 100}%` }} /></span></> : <small>não medida</small>}</td>;
+                  })}
+                  <td className={caiu ? 'caiu' : dif !== undefined && dif > 0 ? 'subiu' : ''}>{caiu ? 'caiu' : dif === undefined ? '—' : dif > 0 ? 'subiu' : dif < 0 ? 'oscilou' : 'igual'}</td>
+                </tr>
+              );
+            })}</tbody>
+          </table>
+        ) : null}
+        {ditado.length ? (
+          <>
+            <h3>O que {c.nome} escreveu no ditado</h3>
+            <div className="escrita-lado" data-testid="ditado-escrito">{ditado.map((d, k) => <span key={k}>{d.escrito || '(nada)'}<small>{d.acertou ? 'igual à forma certa' : `forma certa: ${d.alvo}`}</small></span>)}</div>
+          </>
+        ) : null}
+        {s.quedas.length ? <p className="nota-mic caiu"><b>Caiu desde a sondagem anterior:</b> {s.quedas.map((q) => q.nome).join(', ')}. Vale voltar uma fase e refazer com calma, junto. Nada do que a criança ganhou se perde.</p> : null}
         <div className="linha-botoes"><button className="btn" onClick={() => navegar(`c/${c.id}/sondagem`)} data-testid="abrir-sondagem"><Icone nome="placa" />Fazer a sondagem agora</button></div>
-        <p className="nota-mic">É uma brincadeira curta (a Missão das Placas), repetida a cada {config.sondagem.aCadaFases} fases ou {config.sondagem.aCadaDias} dias, para comparar o antes e o agora. Hoje ela mede sons das letras, leitura de palavras e segmentação; pseudopalavras e ditado ainda não têm placas.</p>
+        <p className="nota-mic">É uma brincadeira curta com 5 placas (sons das letras, leitura de palavras, nomes de bichinhos inventados, quantos sons tem a palavra e ditado), repetida a cada {config.sondagem.aCadaFases} fases ou {config.sondagem.aCadaDias} dias para comparar o antes e o agora. Só entram letras e sons que {c.nome} já estudou. A criança não vê nota nem "errado": vê só "missão cumprida". Os números são para você acompanhar a evolução, não para comparar com outras crianças. A primeira sondagem é a Missão das Placas antiga (ela decide se a criança pode ir mais rápido).</p>
+      </div>
+
+      <div className="bloco" data-testid="ajuda-graduada">
+        <h2><Icone nome="dica" />Quanta ajuda precisou</h2>
+        {r.ajuda.itens ? (
+          <>
+            <div className="ajuda-niveis">{NIVEIS_AJUDA.map((n) => <span key={n} data-nivel={n}><b>{r.ajuda.porNivel[n]}</b><small>{ROTULO_AJUDA[n]}</small></span>)}</div>
+            {r.ajuda.ouviuDeNovo.comDado ? <p className="nota-mic">Pediu para ouvir de novo em {r.ajuda.ouviuDeNovo.itens} de {r.ajuda.ouviuDeNovo.comDado} respostas medidas. Ouvir de novo é bom: mostra atenção, não erro.</p> : null}
+            {r.chute.chutando ? <p className="nota-mic caiu" data-testid="sinal-chute">Parece que {c.nome} anda tocando sem ouvir (respostas muito rápidas ou sempre no mesmo lugar). Jogar junto alguns minutos costuma resolver.</p> : null}
+            {r.ajuda.posicoes.length > 1 ? <p className="nota-mic">A resposta certa muda de lugar a cada pergunta (sorteio): {r.ajuda.posicoes.map((n, k) => `${n} na ${k + 1}ª posição`).join(', ')}.</p> : null}
+          </>
+        ) : <p>Ainda sem dados.</p>}
+        <p className="nota-mic">"Sem ajuda" é o que conta para dizer que a criança já sabe. Quando o app mostra a resposta, a pergunta volta depois e não conta como acerto.</p>
+      </div>
+
+      <div className="bloco" data-testid="treinos-rapidos">
+        <h2><Icone nome="repetir" />Treino rápido com a Sofia</h2>
+        {r.treinos.length ? (
+          <ul className="praticas">{r.treinos.slice(0, 4).map((x) => (
+            <li key={x.em}><Icone nome="check" /><span><b>{new Date(x.em).toLocaleDateString('pt-BR')}: {ROTULO_PRATICA[x.motivo as keyof typeof ROTULO_PRATICA] ?? 'Treino'}</b><small>{x.total} perguntas conferidas · {x.acertos} certas sem ajuda</small></span></li>
+          ))}</ul>
+        ) : <p>Ainda não treinou. O botão "Treino rápido" aparece na vila quando há algo para reforçar (no máximo uma vez por dia).</p>}
+        <p className="nota-mic">O treino usa a "próxima prática recomendada": poucas perguntas, focadas no que {c.nome} confunde, com volta ao passo anterior quando precisa. Não dá nem tira moedinhas.</p>
       </div>
     </>
   );

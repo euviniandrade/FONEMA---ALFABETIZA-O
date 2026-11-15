@@ -8,6 +8,8 @@ import { Selo } from '../../componentes/recompensas.tsx';
 import { PersonagemVivo } from '../../componentes/PersonagemVivo.tsx';
 import { Fundo, Icone, MapaNavegavel, type Marcador } from '../../componentes/ui.tsx';
 import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
+import { BotaoTreino } from './Treino.tsx';
+import { Dupla3DGiravel } from '../../componentes/Personagem3D.tsx';
 import { falar, falarVarias, textoTela } from '../../util.ts';
 
 function nivelDe(p: Progresso) {
@@ -29,7 +31,8 @@ export function Chegada({ criancaId }: { criancaId: string }) {
       <Fundo cena="arte/hero-paisagem" desfoque={6} tom="claro" />
       <Topo crianca={crianca} titulo="Vila das Letras" />
       <main className="palco chegada">
-        <PersonagemVivo quem="dupla" modo="corpo" estado="acenando" gestos className="dupla-corpo" style={{ height: '62vh', animation: 'none' }} />
+        {/* D029/D025: a dupla em 3D de verdade (arrastar gira); quem fala com a boca é o busto do balão */}
+        <Dupla3DGiravel altura={Math.round(Math.min(window.innerHeight * 0.62, 640))} className="dupla-corpo-3d" />
         <div className="baloes">
           {FALAS.chegada.map((f, i) => <div key={i} className={i <= k ? 'aparece' : 'espera'}><Balao fala={f} crianca={crianca} /></div>)}
         </div>
@@ -166,6 +169,7 @@ export function Vila({ criancaId }: { criancaId: string }) {
           <button className="doca-btn doca-alfabeto" onClick={() => navegar(`c/${criancaId}/alfabeto`)} data-ponto="alfabeto"><span className="doca-abc" aria-hidden="true">Aa</span>Alfabeto</button>
           <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mapa`)}><Icone nome="mapa" />Ilhas</button>
           {mundo3d ? <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mundo`)} data-ponto="mundo3d"><Icone nome="cubo" />Passear 3D</button> : null}
+          <BotaoTreino criancaId={criancaId} progresso={progresso} />
           <button className="btn ipe doca-missao brilha" onClick={() => navegar(`c/${criancaId}/fase/${fase.id}`)} data-testid="ir-missao"><Icone nome="play" />Missão</button>
         </nav>
       </div>

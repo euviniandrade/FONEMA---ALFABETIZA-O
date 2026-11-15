@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { PersonagemVivo } from '../../componentes/PersonagemVivo.tsx';
 import { CONQUISTAS, FASE_POR_ID, REGIOES, SONS, SURPRESAS } from '@fonema/conteudo';
-import { AREA_DO_DEGRAU, infoNome, podeEntrar, registrarSondagem, resultadoPorArea, situacaoSondagem, type AreaSondagem, type ItemSondagem } from '@fonema/motor';
+import { AREA_DO_DEGRAU, ehSeloDeParticipacao, infoNome, podeEntrar, registrarSondagem, resultadoPorArea, situacaoSondagem, type AreaSondagem, type ItemSondagem } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { AvatarGrande, Balao, BotaoOuvir, Carregando, Topo } from '../../componentes/basicos.tsx';
 import { Figura, Fundo, Icone } from '../../componentes/ui.tsx';
-import { Selo } from '../../componentes/recompensas.tsx';
+import { Modelo3D, Selo } from '../../componentes/recompensas.tsx';
 import { EspelhoBoca, useEspelhoEmbed } from '../../componentes/EspelhoDoSom.tsx';
 import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
@@ -39,9 +39,10 @@ export function Album({ criancaId }: { criancaId: string }) {
           </div>
           <div className="conheca-dupla" data-testid="conheca-dupla">
             <h2 className="t">Conheça a Sofia e o Tales</h2>
-            <figure><PersonagemVivo quem="sofia" modo="giro" tamanho={230} /><figcaption>Sofia</figcaption></figure>
-            <figure><PersonagemVivo quem="tales" modo="giro" tamanho={230} /><figcaption>Tales</figcaption></figure>
-            <figure><PersonagemVivo quem="bolota" modo="giro" tamanho={150} /><figcaption>Bolota</figcaption></figure>
+            {/* modelos 3D de verdade, girando devagar (arrastar gira); o Zum-Zum ainda não tem modelo 3D */}
+            <figure data-modelo="sofia"><Modelo3D qual="sofia" tamanho={190} modo="auto" /><figcaption>Sofia</figcaption></figure>
+            <figure data-modelo="tales"><Modelo3D qual="tales" tamanho={190} modo="auto" /><figcaption>Tales</figcaption></figure>
+            <figure data-modelo="bolota"><Modelo3D qual="bolota" tamanho={200} modo="auto" /><figcaption>Bolota</figcaption></figure>
             <figure><PersonagemVivo quem="zum-zum" modo="giro" tamanho={96} /><figcaption>Zum-Zum</figcaption></figure>
             <small>Arraste com o dedo para girar.</small>
           </div>
@@ -57,6 +58,8 @@ export function Album({ criancaId }: { criancaId: string }) {
                       <div key={c.id} className={`conquista-item ${g ? 'ganha' : 'bloqueada'}`} data-conquista={c.id}>
                         <Selo conquista={c} ganha={g} bloqueado={!g} letra={letra} tamanho={110} ampliavel />
                         <p className="dica-cadeado">{g ? `${g.nivel === 'unico' ? '' : g.nivel + ' · '}${new Date(g.em).toLocaleDateString('pt-BR')}` : c.visivel_antes === 'misterio' ? 'Mistério' : c.dica}</p>
+                        {/* D030: selo de participação (ver, imitar, traçar) não é selo de habilidade */}
+                        {ehSeloDeParticipacao(c.id) ? <p className="selo-participacao">participação</p> : null}
                       </div>
                     );
                   })}

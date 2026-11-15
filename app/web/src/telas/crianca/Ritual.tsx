@@ -10,6 +10,7 @@ import { asset, espera } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
 import { voz } from '../../servicos/voz.ts';
 import { textoTela, textoVoz } from '../../util.ts';
+import { BotaoTreino } from './Treino.tsx';
 
 /**
  * C9 · Ritual de fim: recapitula, moedinhas EM BLOCO voando ao porquinho (cofrinho), conquistas e surpresas
@@ -110,6 +111,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
             <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/album`)}><Icone nome="album" />Álbum</button>
             {config.lojinha.noFimDaSessao ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/lojinha`)} data-testid="ir-lojinha"><Icone nome="lojinha" />Lojinha</button> : null}
             {situacaoSondagem(progresso, config, Date.now(), idade).devida ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/sondagem`)}><Icone nome="placa" />Missão das Placas</button> : null}
+            <BotaoTreino criancaId={crianca.id} progresso={progresso} className="btn grande btn-treino" />
             <button className="btn grande ipe" onClick={() => navegar(`c/${crianca.id}/vila`)} data-testid="voltar-vila"><Icone nome="casa" />{textoTela('Tchau! Voltar para a vila', crianca)}</button>
           </div>
         </section>

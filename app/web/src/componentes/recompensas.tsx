@@ -117,12 +117,16 @@ export function SeloGirando({ conquista, ganha, letra, bloqueado = false, tamanh
  * `quadro` é a imagem parada tirada do PRÓPRIO modelo (scripts/gerar-miniaturas-modelos.mjs): é o que aparece
  * antes de o three.js chegar e quando não há WebGL; por isso a troca imagem → 3D não "pula".
  */
+interface InfoModelo { rotulo: string; frente: number; proporcao?: number; inclinar?: number; respirar?: boolean }
 const MODELOS = {
   porquinho: { rotulo: 'Cofrinho de porquinho', frente: -62 },
   trofeu: { rotulo: 'Troféu', frente: -74 },
   bau: { rotulo: 'Baú de livros', frente: -60 },
-  bolota: { rotulo: 'Bolota, o tatu', frente: -58 }
-} as const;
+  bolota: { rotulo: 'Bolota, o tatu', frente: -58, respirar: true },
+  // personagens (D029/D025): modelos sem esqueleto — giram, respiram de leve; o quadro é mais alto que largo
+  sofia: { rotulo: 'Sofia', frente: -72, proporcao: 0.62, inclinar: 0.06, respirar: true },
+  tales: { rotulo: 'Tales', frente: -108, proporcao: 0.62, inclinar: 0.06, respirar: true }
+} satisfies Record<string, InfoModelo>;
 export type QualModelo = keyof typeof MODELOS;
 
 /**
@@ -130,10 +134,10 @@ export type QualModelo = keyof typeof MODELOS;
  * contato. Serve para qualquer tela (ex.: `<Modelo3D qual="bolota" tamanho={260} />`). Carrega three.js e o GLB
  * só quando aparece; sem WebGL fica a imagem parada.
  */
-export function Modelo3D({ qual, tamanho = 220, modo = 'auto', angulo, aoVista, semSombra = false }: { qual: QualModelo; tamanho?: number; modo?: Modo; angulo?: number; aoVista?: (v: Vista | null) => void; semSombra?: boolean }) {
-  const m = MODELOS[qual];
-  const montar = async (): Promise<Montada> => ({ frente: await carregarImagem(asset(`modelos3d/${qual}.webp`)), modelo: { url: asset(`modelos3d/${qual}.glb`), frente: m.frente, semSombra } });
-  return <Objeto3D chave={`${qual}${semSombra ? '-s' : ''}`} montar={montar} proporcao={1} largura={tamanho} modo={modo} angulo={angulo} rotulo={m.rotulo} aoVista={aoVista} className={`premio-modelo premio-${qual}`} />;
+export function Modelo3D({ qual, tamanho = 220, modo = 'auto', angulo, aoVista, semSombra = false, frente }: { qual: QualModelo; tamanho?: number; modo?: Modo; angulo?: number; aoVista?: (v: Vista | null) => void; semSombra?: boolean; /** Giro de descanso diferente do padrão (ex.: Sofia e Tales virados um para o outro). */ frente?: number }) {
+  const m: InfoModelo = MODELOS[qual];
+  const montar = async (): Promise<Montada> => ({ frente: await carregarImagem(asset(`modelos3d/${qual}.webp`)), modelo: { url: asset(`modelos3d/${qual}.glb`), frente: frente ?? m.frente, semSombra, inclinar: m.inclinar, respirar: m.respirar } });
+  return <Objeto3D chave={`${qual}${semSombra ? '-s' : ''}${frente ?? ''}`} montar={montar} proporcao={m.proporcao ?? 1} largura={tamanho} modo={modo} angulo={angulo} rotulo={m.rotulo} aoVista={aoVista} className={`premio-modelo premio-${qual}`} />;
 }
 
 const MOEDA = { arquivo: 'moeda', rotulo: 'Moedinha', espessura: 0.07, borda: 0xe2a52c };

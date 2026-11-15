@@ -9,7 +9,9 @@ import { Avatar } from './telas/crianca/Avatar.tsx';
 import { Arquipelago, Chegada, EntradaFase, Regiao, Vila } from './telas/crianca/Mundo.tsx';
 import { TrilhaAlfabeto } from './telas/crianca/Alfabeto.tsx';
 import { Sessao } from './telas/crianca/Sessao.tsx';
-import { Album, ConhecaSeuCorpo, MostraProfessor, Mundo3D, Sondagem } from './telas/crianca/Extras.tsx';
+import { Album, ConhecaSeuCorpo, MostraProfessor, Mundo3D } from './telas/crianca/Extras.tsx';
+import { SondagemDaVila } from './telas/crianca/Sondagem.tsx';
+import { Treino } from './telas/crianca/Treino.tsx';
 import { Lojinha } from './telas/crianca/Lojinha.tsx';
 import { useCrianca } from './contexto.tsx';
 
@@ -74,7 +76,8 @@ function telaCrianca(cid: string, t: string | undefined, arg: string) {
     case 'album': return <Album criancaId={cid} />;
     case 'corpo': return <ConhecaSeuCorpo criancaId={cid} />;
     case 'mostra': return <MostraProfessor criancaId={cid} faseId={arg} />;
-    case 'sondagem': return <Sondagem criancaId={cid} />;
+    case 'sondagem': return <SondagemDaVila criancaId={cid} />;
+    case 'treino': return <Treino criancaId={cid} />;
     case 'mundo': return <Mundo3D criancaId={cid} />;
     default: return <Vila criancaId={cid} />;
   }

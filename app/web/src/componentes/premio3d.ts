@@ -45,8 +45,19 @@ export interface PecaModelo {
   frente?: number;
   /** Sem a sombra de contato (para tirar a imagem recortada do modelo). */
   semSombra?: boolean;
+  /** Inclinação da câmera sobre o modelo (radianos). Padrão 0,27 (prêmio visto um pouco de cima); personagem: quase de frente. */
+  inclinar?: number;
+  /**
+   * Personagem sem esqueleto (Sofia, Tales, Bolota): "respira" — a escala sobe e desce de leve, devagar, como peito
+   * enchendo. Desligado em "menos movimento".
+   */
+  respirar?: boolean;
+  /** Aproximação (1 = cabe inteiro). Maior que 1 enquadra mais de perto, cortando embaixo (ex.: do joelho para cima). */
+  zoom?: number;
+  /** Altura do ponto de foco quando há zoom (0 = centro do modelo, 1 = topo). */
+  foco?: number;
 }
-interface Conteudo { objeto: THREE.Object3D; descartar: () => void; inclinar: number; sombra?: { y: number; raio: number } }
+interface Conteudo { objeto: THREE.Object3D; descartar: () => void; inclinar: number; sombra?: { y: number; raio: number }; respirar?: boolean }
 
 const DIST = 5.46; // a peça (altura 2) ocupa 86% da altura do canvas: sobra margem para a perspectiva e o quique
 const FOV = 24;
@@ -103,6 +114,7 @@ class VistaInterna implements Vista {
   ang = 0; vel = 0; escala = 1; sobe = 0;
   t0 = -1; pintou = false; fixo = false; assentou = false; sujo = true; morta = false;
   arrastando = false; ultimoX = 0; ultimoT = 0;
+  respirar = false; fase0 = Math.random() * 10; objeto: THREE.Object3D | null = null; escalaObjeto = 1;
   descartar: Array<() => void> = [];
 
   constructor(public canvas: HTMLCanvasElement, conteudo: Conteudo, public op: OpcoesVista) {
@@ -131,6 +143,8 @@ class VistaInterna implements Vista {
     }
     this.cena.add(this.base);
     this.descartar.push(conteudo.descartar);
+    this.respirar = !!conteudo.respirar && !op.calmo && op.angulo === undefined;
+    this.objeto = conteudo.objeto; this.escalaObjeto = conteudo.objeto.scale.x;
 
     if (op.angulo !== undefined) { this.fixo = true; this.ang = (op.angulo * Math.PI) / 180; this.assentou = true; }
     else if (op.calmo || op.modo === 'parado') { this.assentou = true; }
@@ -164,7 +178,8 @@ class VistaInterna implements Vista {
 
   /** Avança a física; devolve true enquanto ainda há movimento. */
   passo(agora: number, dt: number): boolean {
-    const girando = this.fisica(agora, dt);
+    const girando = this.fisica(agora, dt) || this.respirar;
+    if (this.respirar) this.sujo = true;
     if (this.pulo < 0) return girando;
     this.pulo += dt / 0.55;
     if (this.pulo >= 1) this.pulo = -1;
@@ -226,6 +241,13 @@ class VistaInterna implements Vista {
     // pulinho: sobe em arco, com um leve "amassa e estica"
     const p = this.pulo < 0 ? 0 : this.pulo;
     const alto = Math.sin(Math.PI * p);
+    // respiração (personagem sem esqueleto): ~3,6 s por ciclo, 1,4% de altura — perceptível, sem parecer "pulsar"
+    // (aplicada no próprio modelo, cuja origem está nos pés: ele cresce para cima e não afunda no chão)
+    if (this.respirar && this.objeto) {
+      const resp = 1 + 0.014 * (0.5 - 0.5 * Math.cos((performance.now() / 1000 + this.fase0) * ((Math.PI * 2) / 3.6)));
+      const b = this.escalaObjeto;
+      this.objeto.scale.set(b / Math.sqrt(resp), b * resp, b / Math.sqrt(resp));
+    }
     const estica = 1 + 0.07 * Math.sin(Math.PI * 2 * p);
     this.grupo.scale.set(this.escala / Math.sqrt(estica), this.escala * estica, this.escala / Math.sqrt(estica));
     this.grupo.position.y = this.sobe + alto * 0.2;
@@ -320,13 +342,18 @@ export async function criarVistaModelo(canvas: HTMLCanvasElement, peca: PecaMode
   const raio = Math.hypot(tam.x, tam.z) / 2;
   // cabe em pé e de lado; a diagonal (rabo do Bolota, alças do troféu) não pode sair do quadro ao girar
   const k = Math.min(1.74 / Math.max(tam.y, tam.x, tam.z), 2.16 / (raio * 2));
-  modelo.position.set(-meio.x, -meio.y, -meio.z);
+  // o modelo fica com os pés no "chão" do giro (a respiração cresce para cima, sem afundar)
+  modelo.position.set(-meio.x, -caixa.min.y, -meio.z);
   const giro = new THREE.Group();
   giro.add(modelo);
   giro.rotation.y = ((peca.frente ?? 0) * Math.PI) / 180;
-  giro.scale.setScalar(k);
-  giro.position.y = 0.06;
-  const v = new VistaInterna(canvas, { objeto: giro, inclinar: 0.27, sombra: peca.semSombra ? undefined : { y: 0.06 - (tam.y * k) / 2 - 0.01, raio: (Math.max(tam.x, tam.z) / 2) * k }, descartar: () => undefined }, opcoes);
+  const zoom = peca.zoom ?? 1;
+  giro.scale.setScalar(k * zoom);
+  const altura = tam.y * k * zoom;
+  // sem zoom: centralizado; com zoom: o ponto de foco (ex.: o rosto) vai para o centro do quadro
+  const yPe = zoom === 1 ? 0.06 - (tam.y * k) / 2 : -altura * (peca.foco ?? 0.5) + 0.06;
+  giro.position.y = yPe;
+  const v = new VistaInterna(canvas, { objeto: giro, inclinar: peca.inclinar ?? 0.27, respirar: peca.respirar, sombra: peca.semSombra ? undefined : { y: yPe - 0.01, raio: (Math.max(tam.x, tam.z) / 2) * k * zoom }, descartar: () => undefined }, opcoes);
   vistas.add(v);
   acordar();
   return v;

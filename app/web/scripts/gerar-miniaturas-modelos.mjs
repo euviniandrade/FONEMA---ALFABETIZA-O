@@ -23,7 +23,7 @@ async function tirar(q, recorte) {
   const r = await pagina.evaluate((justo) => {
     const c = document.querySelector('canvas[data-giro="3d"]');
     const copia = (sx, sy, sw, sh, dw, dh) => { const k = document.createElement('canvas'); k.width = dw; k.height = dh; const g = k.getContext('2d'); g.imageSmoothingQuality = 'high'; g.drawImage(c, sx, sy, sw, sh, 0, 0, dw, dh); return k.toDataURL('image/webp', 0.9); };
-    if (!justo) return { url: copia(0, 0, c.width, c.height, 512, 512), tam: [512, 512] };
+    if (!justo) { const h = Math.round((512 * c.height) / c.width); return { url: copia(0, 0, c.width, c.height, 512, h), tam: [512, h] }; }
     const dados = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
     let x0 = c.width, y0 = c.height, x1 = 0, y1 = 0;
     for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) if (dados[(y * c.width + x) * 4 + 3] > 10) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
@@ -38,6 +38,6 @@ for (const q of quais) {
   grava(`modelos3d/${q}.webp`, quadro.url);
   let nota = '';
   if (RECORTE[q]) { const r = await tirar(q, true); grava(`recompensas/${RECORTE[q]}.webp`, r.url); nota = `· recorte ${r.tam.join('×')} → recompensas/${RECORTE[q]}.webp`; }
-  console.log(q, 'quadro 512×512', nota);
+  console.log(q, `quadro ${quadro.tam.join('×')}`, nota);
 }
 await navegador.close();
