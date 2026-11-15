@@ -10,7 +10,7 @@ export function progressoInicial(criancaId: string, agora: number): Progresso {
   FASES.forEach((f, i) => (fases[f.id] = { estado: i === 0 ? 'aberta' : 'bloqueada', sessoes: 0, abertaEm: i === 0 ? agora : undefined }));
   return {
     criancaId,
-    versao: 1,
+    versao: 2,
     faseAtual: FASES[0].id,
     fases,
     habilidades: {},
@@ -24,6 +24,7 @@ export function progressoInicial(criancaId: string, agora: number): Progresso {
     surpresas: [],
     contadores: {},
     expressa: { regioes: [], ativa: false },
+    sondagens: [],
     sessoesFeitas: 0,
     criadoEm: agora
   };

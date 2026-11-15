@@ -203,3 +203,31 @@ export function palavrinhaPermitida(palavra: string, ate: string): boolean {
   if (/C[EI]|G[EI]|[QG]U[EI]|H|K|W|Y/.test(w)) return false;
   return !/[SR]/.test(w.slice(1));
 }
+
+/* ------------------------------------------------------------------------------------------------------------
+ * D030 (etapas 3 e 4): som real como estímulo, cenas do som ("Liga o som") e contraste fino.
+ * ---------------------------------------------------------------------------------------------------------- */
+
+/**
+ * Letras que ficam no COMPORTAMENTO ANTIGO nos jogos de som (o estímulo é "Letra H." e a dica é "H, de hipopótamo."):
+ * H não faz som sozinho; K, W e Y são letras de nomes (o som delas é o de C, U/V e I, treinado nessas letras).
+ */
+export const LETRAS_NO_COMPORTAMENTO_ANTIGO: string[] = ['H', 'K', 'W', 'Y'];
+/** A letra entra nos jogos de SOM REAL (som → letra, letra → som, som → figura)? */
+export const usaSomReal = (l: LetraAlfabeto): boolean => !!l.fonema && !LETRAS_NO_COMPORTAMENTO_ANTIGO.includes(l.letra);
+
+/**
+ * CENA DO SOM de cada letra (jogo "Liga o som"): a figura do faz de conta em `BRINCADEIRAS`
+ * (web/public/assets/figuras/<nome>.webp). C = K = Q, I = Y e U = W dividem a cena. H é o zíper na boca: sem som.
+ */
+export const CENAS_DO_SOM: Record<string, string> = {
+  A: 'cena-a', B: 'bola', C: 'maca-mordida', D: 'tambor', E: 'trofeu-taca', F: 'bolo-velinhas', G: 'copo-agua', H: 'ziper',
+  I: 'cena-i', J: 'barco-motor', K: 'maca-mordida', L: 'sorvete', M: 'cupcake', N: 'cena-n', O: 'cena-o', P: 'bolhas-sabao',
+  Q: 'maca-mordida', R: 'carrinho', S: 'cobra', T: 'porta', U: 'macaco', V: 'aviao', W: 'macaco', X: 'cena-x', Y: 'cena-i', Z: 'abelha'
+};
+
+/** Letras em espelho (minúsculas): treinadas juntas DEPOIS do primeiro contato, com a correção "olha o desenho". */
+export const LETRAS_EM_ESPELHO: string[] = ['B', 'D', 'P', 'Q'];
+
+/** Palavras-exemplo que não servem para "começa com o som" (a vogal inicial átona muda de som: "ilástico"). */
+export const PALAVRAS_FORA_DO_SOM_INICIAL: string[] = ['elástico', 'Wagner', 'wafer', 'Yuri'];

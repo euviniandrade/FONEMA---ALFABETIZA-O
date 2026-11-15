@@ -75,7 +75,28 @@ export interface Opcao {
   letra?: string;
   /** O que a voz fala ao tocar a opção. */
   falar?: string;
+  /**
+   * Fonema que a opção representa (D030): na correção contrastiva o app toca o som ESCOLHIDO e o som CERTO.
+   * Numa opção-letra é o som da letra; numa figura, o som do começo da palavra.
+   */
+  som?: ChaveFonema;
+  /**
+   * Opção de OUVIR (D030): aparece como botão de som, sem nada escrito. Tocar só toca o som (`som`) ou a fala
+   * (`falar`); a criança escolhe e confirma em "É este!". Usado em letra → som e em "o Bolota leu errado".
+   */
+  botaoDeSom?: boolean;
 }
+
+/**
+ * Valores sonoros que NÃO são o som principal da letra (D030 §6). Uma palavra só entra em LEITURA autônoma
+ * quando todos os valores dela já foram ensinados na etapa (ver `VALORES_ENSINADOS` em palavras.ts).
+ */
+export type ValorSonoro =
+  | 'e-aberto' | 'o-aberto' | 'e-final-i' | 'o-final-u' | 'e-reduzido' | 'nasal' | 'ditongo' | 's-som-z' | 'r-fraco' | 'r-final'
+  | 'l-final' | 'c-som-s' | 'g-som-j' | 'digrafo' | 'h-mudo' | 'encontro' | 'x-outro-som' | 'letra-de-nomes' | 's-final';
+
+/** Tipo do registro da tentativa (contrato do motor, D030 etapa 2). */
+export type TipoRegistro = 'resposta' | 'autorrelato' | 'exposicao';
 
 export interface ItemEscolha {
   /** Pergunta falada (opcional; senão vale o enunciado da atividade). */
@@ -96,7 +117,31 @@ export interface ItemEscolha {
   /** Quem fala a `dica` (padrão: Sofia). */
   quemDica?: Personagem;
   habilidade?: HabilidadeId;
+  /**
+   * SOM REAL da letra como estímulo principal (D030 §1): tocado 2 vezes no lugar de `ouvir`. Se o fonema não tem
+   * clipe aprovado nem gravação do adulto, vale `ouvir` (comportamento antigo).
+   */
+  somAlvo?: ChaveFonema;
+  /** Dito DEPOIS do acerto, como apoio (o nome da letra: "Letra B."), precedido de "Isso! Esse é o som desta letra.". */
+  apoio?: Fala;
+  /** A dica antiga entrega a resposta ("B, de bola."): só é usada como reserva quando não há som real para a correção. */
+  dicaReserva?: string;
+  /** Explicação do contraste entre dois sons/letras parecidos (par mínimo), dita na correção. */
+  contraste?: Contraste;
+  /** Fonema do alvo quando a resposta certa não é uma opção com `som` (ex.: figura). */
+  somCorreta?: ChaveFonema;
+  /** Item de LEITURA autônoma (ler a palavra escrita e escolher): entra no verificador de valores sonoros. */
+  leitura?: boolean;
+  /** Rótulo do tipo de item para o registro e para o adulto. */
+  formato?: FormatoItem;
 }
+
+export type FormatoItem =
+  | 'som-letra' | 'letra-som' | 'som-figura' | 'figura-letra' | 'letra-figura' | 'par-minimo' | 'espelho-letras' | 'som-cena' | 'cena-letra'
+  | 'ler-figura' | 'silaba-falta' | 'fonema-falta' | 'ouvir-leituras' | 'outro';
+
+/** O que muda entre dois sons parecidos: voz (p/b, t/d, f/v, s/z, x/j, k/g), boca (m/n…) ou desenho (b/d/p/q). */
+export type Contraste = 'voz' | 'boca' | 'desenho';
 
 interface AtividadeBase {
   habilidade: HabilidadeId;
@@ -112,6 +157,23 @@ export interface AtividadeEscolher extends AtividadeBase {
   itens: ItemEscolha[];
   /** Gerador especial: monta os itens a partir do som do nome da criança. */
   gerador?: 'som-do-nome';
+  /**
+   * Banco maior que a rodada (D030 §4): sorteia este número de itens a cada tentativa da atividade.
+   * No modo de teste (determinístico) valem os primeiros.
+   */
+  sortear?: number;
+}
+
+/**
+ * LIGA O SOM (D030): ligar cada LETRA à CENA que faz o som dela (Z ↔ abelha zumbindo). Sem texto: a criança toca
+ * numa letra e numa cena (ou arrasta); cada ligação certa toca o SOM REAL da letra.
+ */
+export interface AtividadeLigar extends AtividadeBase {
+  tipo: 'ligar';
+  /** Pares da rodada (3–4). `cena` é o nome da figura da cena; `fonema` é o som que toca. */
+  pares: { letra: string; cena: string; fonema: ChaveFonema | null; habilidade?: HabilidadeId }[];
+  /** Banco maior: sorteia este número de pares por rodada. */
+  sortear?: number;
 }
 
 export interface AtividadePalmas extends AtividadeBase {
@@ -131,6 +193,18 @@ export interface AtividadeMontar extends AtividadeBase {
   /** Peças são sílabas (tábua de sílabas) em vez de letras. */
   porSilaba?: boolean;
   distratoras?: string[];
+  /**
+   * D030 §5 · como o modelo aparece quando `mostrarModelo` é true:
+   *  'demonstracao' (padrão): a 1ª palavra é demonstração guiada (modelo visível); nas seguintes o modelo SOME e a
+   *  criança monta ouvindo a palavra e o som das peças; a peça certa só brilha na 3ª tentativa, e conta como ajuda.
+   *  'sempre': modelo sempre visível (cópia) — só para apresentar a mecânica.
+   */
+  modelo?: 'demonstracao' | 'sempre';
+  /**
+   * As palavras usam valores sonoros ainda não ensinados (BIFE, GATO, BANANA…): ficam como VOCABULÁRIO para montar
+   * e ouvir, e o registro sai como exposição, sem contar como decodificação.
+   */
+  vocabulario?: boolean;
 }
 
 export interface AtividadeDitado extends AtividadeBase {
@@ -142,6 +216,8 @@ export interface AtividadeDitado extends AtividadeBase {
 export interface AtividadeFalar extends AtividadeBase {
   tipo: 'falar';
   itens: { texto: string; falar: string; figura?: string; pseudo?: boolean }[];
+  /** As palavras são LIDAS pela criança (leitura autônoma): entram no verificador de valores sonoros. */
+  leitura?: boolean;
 }
 
 export interface AtividadeEspelho extends AtividadeBase {
@@ -194,6 +270,7 @@ export type Atividade =
   | AtividadeFalar
   | AtividadeEspelho
   | AtividadeLetra
+  | AtividadeLigar
   | AtividadeTracar
   | AtividadePausa;
 

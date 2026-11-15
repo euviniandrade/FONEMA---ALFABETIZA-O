@@ -3,9 +3,10 @@
  * Toda a regra fica aqui (testável); a tela só mostra.
  */
 import { FASE_POR_ID, HABILIDADE_POR_ID, REGIAO_POR_ID, SURPRESAS } from '@fonema/conteudo';
-import type { Atividade, Cena, ConfigPlataforma, Surpresa } from '@fonema/conteudo';
+import type { Atividade, Cena, ConfigPlataforma, Fase, Surpresa } from '@fonema/conteudo';
 import type { ConquistaGanha, Demonstracao, Progresso, Tentativa } from './estado.ts';
-import { avaliarDominio, novaHabilidade, proporcao, registrarTentativa } from './dominio.ts';
+import { avaliarDominio, dominadaDeVerdade, novaHabilidade, paraProva, proporcao, registrarTentativa } from './dominio.ts';
+import { TIPO_POR_MECANICA, ehAvaliada, normalizarTentativa } from './tentativas.ts';
 import { agendarRevisao, resultadoRevisao } from './revisao.ts';
 import { creditarEmBloco } from './moedinhas.ts';
 import { concluirFase, fasesConcluidas, missaoInicialFeita, regiaoConcluida } from './sequencia.ts';
@@ -53,10 +54,14 @@ function contadoresDa(a: Atividade | undefined, cena: Cena, r: ResultadoAtividad
 /** Aplica UMA atividade concluída: tentativas no modelo do aluno + 1 desafio feito + marcadores. */
 export function aplicarAtividade(p: Progresso, r: ResultadoAtividade, cfg: ConfigPlataforma, agora: number): Progresso {
   const habilidades = { ...p.habilidades };
-  for (const t of r.tentativas) {
+  const ehRevisao = r.cena.tipo === 'C1' && r.cena.id.includes('-C1-revisao');
+  for (const bruta of r.tentativas) {
+    // D030: completa tipo/mecânica (avaliada × exposição × autorrelato) e marca a revisão mesmo quando a mecânica não marca
+    const t = normalizarTentativa(ehRevisao && !bruta.revisao ? { ...bruta, revisao: true } : bruta, r.cena);
     let h = habilidades[t.habilidade] ?? novaHabilidade();
     h = registrarTentativa(h, t);
-    if (t.revisao && h.dominadaEm) h = resultadoRevisao(h, t.acertou && !t.comAjuda, agora, cfg.revisao.intervalosDias);
+    // a revisão espaçada só anda com resposta conferida (qualquer mecânica avaliada, não só o Escolher)
+    if (t.revisao && h.dominadaEm && ehAvaliada(t)) h = resultadoRevisao(h, t.acertou && !t.comAjuda, agora, cfg.revisao.intervalosDias);
     habilidades[t.habilidade] = h;
   }
   const a = r.cena.atividade;
@@ -77,6 +82,10 @@ export interface RelatorioSessao {
   moedinhasCalculadas: number;
   dominadasAgora: string[];
   faseConcluida: boolean;
+  /** D030: a fase, além de concluída, está DOMINADA (todas as habilidades dela, com tentativas avaliadas). */
+  faseDominada: boolean;
+  /** D030: habilidades desta fase que ainda pedem reforço (concluiu por participação, sem domínio). */
+  reforco: string[];
   regiaoConcluida?: string;
   chefe?: { leitura: number; escrita?: number; passou: boolean };
   expressa?: { passou: boolean };
@@ -114,9 +123,13 @@ export function fecharSessao(
   const dominadasAgora: string[] = [];
   const habilidades = { ...p.habilidades };
   for (const [id, h] of Object.entries(habilidades)) {
-    if (h.dominadaEm) continue;
+    if (h.dominadaEm && !h.aConfirmar) continue;
     const exige = HABILIDADE_POR_ID[id]?.exigePseudo ?? false;
-    if (avaliarDominio(h, cfg.dominio, exige).dominado) {
+    if (!avaliarDominio(h, cfg.dominio, exige).dominado) continue;
+    if (h.dominadaEm) {
+      // já estava marcada (dado antigo ou chefe): agora o critério honesto confirmou
+      habilidades[id] = { ...h, aConfirmar: undefined };
+    } else {
       habilidades[id] = agendarRevisao({ ...h, dominadaEm: agora }, agora, cfg.revisao.intervalosDias);
       dominadasAgora.push(id);
     }
@@ -130,7 +143,7 @@ export function fecharSessao(
   const jaConcluida = p.fases[fase.id]?.estado === 'concluida';
   if (!jaConcluida) {
     if (args.expressa) {
-      const doms = args.tentativasDaSessao.filter((t) => !t.revisao);
+      const doms = paraProva(args.tentativasDaSessao.filter((t) => !t.revisao));
       const r = resultadoProvaRelampago(p, fase.id, doms.filter((t) => t.acertou && !t.comAjuda).length, doms.length, agora, cfg);
       p = r.progresso;
       faseConcluida = r.passou;
@@ -138,7 +151,7 @@ export function fecharSessao(
     } else if (fase.criterio.tipo === 'missao') {
       faseConcluida = args.atividades >= fase.cenas.filter((c) => c.contaDominio).length;
     } else if (fase.criterio.tipo === 'dominio') {
-      faseConcluida = fase.criterio.habilidades.every((h) => !!p.habilidades[h]?.dominadaEm);
+      faseConcluida = fase.criterio.habilidades.every((h) => criterioDaFaseCumprido(p, fase, h, cfg));
     } else if (fase.criterio.tipo === 'chefe') {
       const crit = fase.criterio;
       const doChefe = args.tentativasDaSessao.filter((t) => !t.revisao);
@@ -156,7 +169,11 @@ export function fecharSessao(
         for (const id of fase.habilidades) {
           const h = hs[id] ?? novaHabilidade();
           if (!h.dominadaEm) {
-            hs[id] = agendarRevisao({ ...h, dominadaEm: agora }, agora, cfg.revisao.intervalosDias);
+            // D030: o chefe confirma o domínio, menos a parte que ele não mediu com resposta conferida
+            // (pseudopalavra lida só por autorrelato): aí a habilidade fica "a confirmar".
+            const exige = HABILIDADE_POR_ID[id]?.exigePseudo ?? false;
+            const semPseudo = exige && avaliarDominio(h, cfg.dominio, true).pseudoCertas < cfg.dominio.pseudoMin;
+            hs[id] = agendarRevisao({ ...h, dominadaEm: agora, ...(semPseudo ? { aConfirmar: true } : {}) }, agora, cfg.revisao.intervalosDias);
             dominadasAgora.push(id);
           }
         }
@@ -165,6 +182,10 @@ export function fecharSessao(
     }
     if (faseConcluida && !args.expressa) p = concluirFase(p, fase.id, agora);
   }
+  // 2b. Concluída × dominada (D030): marca as fases concluídas cujas habilidades estão todas dominadas de verdade
+  p = marcarFasesDominadas(p, agora);
+  const faseDominada = !!p.fases[fase.id]?.dominadaEm;
+  const reforco = p.fases[fase.id]?.estado === 'concluida' ? fase.habilidades.filter((h) => !dominadaDeVerdade(p.habilidades[h])) : [];
 
   // 3. Moedinhas em bloco (teto/dia)
   const regiaoFechou = faseConcluida && regiaoConcluida(p, fase.regiao) ? fase.regiao : undefined;
@@ -196,6 +217,8 @@ export function fecharSessao(
       moedinhasCalculadas: credito.calculado,
       dominadasAgora,
       faseConcluida,
+      faseDominada,
+      reforco,
       regiaoConcluida: regiaoFechou ? REGIAO_POR_ID[regiaoFechou].nome : undefined,
       chefe,
       expressa,
@@ -208,6 +231,55 @@ export function fecharSessao(
       termometroDepois: p.termometro
     }
   };
+}
+
+/**
+ * A fase oferece item AVALIADO para a habilidade? (`pseudo`: item avaliado de pseudopalavra.)
+ * Serve para não travar a jornada pedindo uma prova que o conteúdo da fase não dá.
+ */
+export function faseMede(fase: Fase, habilidade: string, pseudo = false): boolean {
+  return fase.cenas.some((c) => {
+    const a = c.atividade;
+    if (!a || !c.contaDominio) return false;
+    if ((TIPO_POR_MECANICA[a.tipo] ?? 'avaliada') !== 'avaliada') return false;
+    if (a.tipo === 'montar' && a.vocabulario) return false;
+    const itens = (a.tipo === 'escolher' ? a.itens : []) as { habilidade?: string; pseudo?: boolean }[];
+    if (a.tipo === 'escolher') {
+      return itens.some((i) => (i.habilidade ?? a.habilidade) === habilidade && (!pseudo || !!i.pseudo));
+    }
+    return a.habilidade === habilidade && !pseudo;
+  });
+}
+
+/**
+ * Critério de uma fase de DOMÍNIO para uma habilidade (D030):
+ *  - regra geral: a habilidade está dominada (tentativas avaliadas);
+ *  - se a fase não tem item avaliado de PSEUDOPALAVRA para uma habilidade que exige pseudo, a fase conclui quando
+ *    só falta a pseudopalavra — a habilidade NÃO fica dominada (vai para reforço e para o painel);
+ *  - se a fase não tem NENHUM item avaliado da habilidade, ela não segura a fase (conclui por participação).
+ * Assim autorrelato nunca cumpre o critério, e a jornada não trava por falta de item conferido no conteúdo.
+ */
+export function criterioDaFaseCumprido(p: Progresso, fase: Fase, habilidade: string, cfg: ConfigPlataforma): boolean {
+  const h = p.habilidades[habilidade];
+  if (h?.dominadaEm) return true;
+  if (!faseMede(fase, habilidade)) return true;
+  const exige = HABILIDADE_POR_ID[habilidade]?.exigePseudo ?? false;
+  const av = avaliarDominio(h, cfg.dominio, exige);
+  if (av.dominado) return true;
+  return av.soFaltaPseudo && !faseMede(fase, habilidade, true);
+}
+
+/** Marca `dominadaEm` nas fases concluídas em que todas as habilidades estão dominadas de verdade. Nunca desmarca. */
+export function marcarFasesDominadas(p: Progresso, agora: number): Progresso {
+  let fases = p.fases;
+  for (const [id, f] of Object.entries(p.fases)) {
+    if (f.estado !== 'concluida' || f.dominadaEm) continue;
+    const fase = FASE_POR_ID[id];
+    if (!fase || !fase.habilidades.every((h) => dominadaDeVerdade(p.habilidades[h]))) continue;
+    if (fases === p.fases) fases = { ...p.fases };
+    fases[id] = { ...f, dominadaEm: agora };
+  }
+  return fases === p.fases ? p : { ...p, fases };
 }
 
 /** Configuração efetiva (modo demonstração: 1 sessão basta e menos tentativas, para testar a jornada). */

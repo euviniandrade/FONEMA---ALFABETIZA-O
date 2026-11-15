@@ -28,6 +28,24 @@ export interface ConfigPlataforma {
    * brincadeira curta de juntar as letras e ler (BABÁ depois do B, BEBÊ depois do E…). Padrão: ligado (o dono ainda vai confirmar).
    */
   alfabeto: { primeirasPalavrinhas: boolean };
+  /**
+   * Sondagem periódica (D030, etapa 9): fica DEVIDA a cada `aCadaFases` fases concluídas OU a cada `aCadaDias` dias
+   * desde a última (o que vier primeiro). 0 desliga o gatilho. `idadeMinima`: abaixo dela a sondagem não é oferecida
+   * à criança (o adulto ainda pode abrir). Números = decisão do projeto, a calibrar com uso real.
+   */
+  sondagem: { aCadaFases: number; aCadaDias: number; idadeMinima: number };
+  /**
+   * Reforço dirigido (D030, etapa 9; decisão do projeto): um par vira "confusão" com `errosMinPar` trocas;
+   * `sessoesSeguidasParaPreRequisito` sessões seguidas com menos de `acertoMinSessao` de acerto sem ajuda mandam
+   * a prática de volta ao pré-requisito; a prática recomendada tem até `maxItens` itens.
+   */
+  reforco: { errosMinPar: number; sessoesSeguidasParaPreRequisito: number; acertoMinSessao: number; maxItens: number };
+  /**
+   * Alerta para o adulto (decisão do projeto; NÃO é diagnóstico): `sessoesSemDominio` sessões avaliadas na mesma
+   * habilidade sem domínio e com menos de `acertoMin` nas últimas `janela` tentativas; mesmo par trocado `trocasMin`
+   * vezes; `diasSemJogar` dias parado.
+   */
+  risco: { sessoesSemDominio: number; acertoMin: number; janela: number; trocasMin: number; diasSemJogar: number };
   /** Modo demonstração: libera mais de uma sessão por dia e conta 1 sessão como 2 (para testar a jornada inteira). */
   modoDemonstracao: boolean;
 }
@@ -44,6 +62,9 @@ export const CONFIG_PADRAO: ConfigPlataforma = {
   demonstracao: { horasParaValerCriterio: 72 },
   voz: { provedor: 'pre-gerada', velocidade: 0.95 },
   alfabeto: { primeirasPalavrinhas: true },
+  sondagem: { aCadaFases: 8, aCadaDias: 30, idadeMinima: 6 },
+  reforco: { errosMinPar: 2, sessoesSeguidasParaPreRequisito: 2, acertoMinSessao: 0.5, maxItens: 6 },
+  risco: { sessoesSemDominio: 4, acertoMin: 0.6, janela: 10, trocasMin: 4, diasSemJogar: 14 },
   modoDemonstracao: false
 };
 
