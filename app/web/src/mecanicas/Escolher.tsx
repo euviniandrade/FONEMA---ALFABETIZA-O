@@ -1,12 +1,13 @@
 import { Figura, Icone, caminhoFigura } from '../componentes/ui.tsx';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { FALAS, FALAS_FONICAS, contrasteDosSons, surdoESonoro, type AtividadeEscolher, type ItemEscolha, type Opcao } from '@fonema/conteudo';
+import { FALAS, FALAS_DOS_PARES, FALAS_FONICAS, contrasteDosSons, type AtividadeEscolher, type ItemEscolha, type Opcao } from '@fonema/conteudo';
 import type { CategoriaAlvo } from '@fonema/motor';
 import { Balao, Brilho, BotaoOuvir } from '../componentes/basicos.tsx';
 import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
 import { falar, textoVoz } from '../util.ts';
+import { explicarContraste, temFrasesDoPar } from './contraste.ts';
 import { Progressinho, embaralhar, sementeDaTentativa, sortearItens, tentativa, type PropsMecanica } from './comum.tsx';
 
 const F = FALAS_FONICAS;
@@ -103,24 +104,21 @@ export function Escolher({ atividade, crianca, sessao, cenaId, revisao, onFim }:
         : 'São dois sons diferentes. Escute os dois e tente de novo.');
     // 1. o que a criança escolheu
     if (o.botaoDeSom) await diz(F.voceEscolheu);
-    else if (o.letra) await diz(F.letraFaz);
+    else if (o.letra) await diz(temFrasesDoPar(o.som, somCerto) && contraste !== 'desenho' ? FALAS_DOS_PARES[o.som].tocou : F.letraFaz);
     else if (item.formato === 'som-cena') await diz(F.cenaFaz);
     else { if (o.falar) await voz.falar(o.falar, { quem: 'sofia' }); await diz(F.figuraComeca); }
     if (!vivo.current) return true;
     await voz.somReal(o.som, 1);
     await espera(250);
     // 2. o que muda / o som certo
-    const par = contraste === 'voz' ? surdoESonoro(o.som, somCerto) : null;
-    if (par) {
-      await diz(F.semVoz); await voz.somReal(par[0], 1); await espera(200);
-      await diz(F.comVoz); await voz.somReal(par[1], 1); await espera(200);
-      await diz(F.maoNoPescoco);
+    if (contraste === 'voz' || (contraste === 'boca' && temFrasesDoPar(o.som, somCerto))) {
+      // par confundível: o som de cada um, com o que muda ("O P não tem voz:" + som; "O B tem voz:" + som)
+      await explicarContraste(o.som, somCerto, contraste);
     } else {
       await diz(certa.botaoDeSom ? F.somDaLetra : item.formato === 'figura-letra' ? F.palavraComeca : item.formato === 'fonema-falta' ? F.somQueFalta : F.euPedi);
       await voz.somReal(somCerto, 1);
       await espera(200);
-      if (contraste === 'boca') await diz(F.bocaMuda);
-      if (contraste === 'desenho') await diz(F.desenhoParecido);
+      if (contraste) await explicarContraste(o.som, somCerto, contraste);
     }
     if (!vivo.current) return true;
     await diz(F.tentaDeNovo);

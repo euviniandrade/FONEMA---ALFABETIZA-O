@@ -6,7 +6,7 @@
  * Uso: npx tsx scripts/extrair-falas.ts
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { ALFABETO, NOMES_COMUNS, FASES, FALAS, FALAS_ALFABETO, FALAS_FONICAS, VOZES_DAS_FALAS_FONICAS, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
+import { ALFABETO, NOMES_COMUNS, FASES, FALAS, FALAS_ALFABETO, FALAS_FONICAS, VOZES_DAS_FALAS_FONICAS, FALAS_DOS_PARES, FALA_ESPELHO_BD, FALAS_DAS_TELAS, PASSOS_AVATAR, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
 import { concordar, silabas } from '@fonema/motor';
 
 const VOZ: Record<string, 'sofia' | 'tales'> = { sofia: 'sofia', tales: 'tales', bolota: 'tales', davi: 'tales', 'dona-cida': 'sofia', pescadora: 'sofia', 'guarda-parque': 'tales', 'zum-zum': 'tales' };
@@ -47,7 +47,11 @@ for (const f of FASES) {
 }
 FALAS.chegada.forEach((f) => addF(f, 'chegada'));
 FALAS.voltou.forEach((f) => addF(f, 'voltou'));
-addF(FALAS.avatar, 'avatar'); addF(FALAS.avatarPronto, 'avatar'); addF(FALAS.suaVez, 'geral');
+addF(FALAS.avatar, 'avatar'); addF(FALAS.avatarPronto, 'avatar'); addF(FALAS.avatarSexo, 'avatar'); addF(FALAS.avatarLojinha, 'avatar');
+PASSOS_AVATAR.forEach((p) => add('tales', p.pergunta, 'avatar'));
+FALAS_DAS_TELAS.forEach((f) => addF(f, 'telas'));
+Object.values(FALAS_DOS_PARES).forEach((p) => { add('sofia', p.tocou, 'pares (D030)'); add('sofia', p.como, 'pares (D030)'); });
+add('sofia', FALA_ESPELHO_BD, 'pares (D030)'); addF(FALAS.suaVez, 'geral');
 FALAS.acertos.forEach((t) => add('sofia', t, 'acertos'));
 for (const k of ['erro1', 'erro2', 'erroJunto', 'naoOuvi', 'euFalei', 'professorAprendeu', 'professorTreinar', 'professorExplicou'] as const) add('sofia', FALAS[k], k);
 Object.values(FALAS.ritual).forEach((t) => add('sofia', t, 'ritual'));

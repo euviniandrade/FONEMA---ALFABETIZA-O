@@ -1,11 +1,12 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type PointerEvent as EventoPonteiro, type ReactNode } from 'react';
-import { FALAS, FALAS_FONICAS, contrasteDosSons, surdoESonoro, type AtividadeLigar } from '@fonema/conteudo';
+import { FALAS, FALAS_FONICAS, contrasteDosSons, type AtividadeLigar } from '@fonema/conteudo';
 import { Balao, Brilho } from '../componentes/basicos.tsx';
 import { Figura, Icone } from '../componentes/ui.tsx';
 import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
 import { falar, textoVoz } from '../util.ts';
+import { explicarContraste } from './contraste.ts';
 import { embaralhar, sementeDaTentativa, sortearItens, tentativa, type PropsMecanica } from './comum.tsx';
 
 type Lado = 'letra' | 'cena';
@@ -81,9 +82,7 @@ export function Ligar({ atividade, crianca, sessao, cenaId, revisao, onFim }: Pr
     setAviso(contraste === 'voz' ? 'Um som tem voz e o outro não. Escute os dois e tente de novo.' : 'São dois sons diferentes. Escute os dois e tente de novo.');
     await diz(F.letraFaz); await voz.somReal(a, 1); await espera(200);
     await diz(F.cenaFaz); await voz.somReal(b, 1); await espera(200);
-    const par = contraste === 'voz' ? surdoESonoro(a, b) : null;
-    if (par) { await diz(F.semVoz); await voz.somReal(par[0], 1); await diz(F.comVoz); await voz.somReal(par[1], 1); await diz(F.maoNoPescoco); }
-    else if (contraste === 'boca') await diz(F.bocaMuda);
+    if (contraste) await explicarContraste(a, b, contraste);
     await diz(F.tentaDeNovo);
   };
 

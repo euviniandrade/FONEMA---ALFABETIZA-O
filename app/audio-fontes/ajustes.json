@@ -12,7 +12,8 @@
    "versao": 2
   },
   "tales|O eco falou! Qual letra,": {
-   "versao": 2
+   "versao": 3,
+   "texto": "O eco falou! Qual letra…"
   },
   "tales|/uuuu/, biquinho de assobio. Sua vez,": {
    "versao": 2
@@ -72,7 +73,8 @@
    "versao": 2
   },
   "sofia|U ou O,": {
-   "versao": 2
+   "versao": 3,
+   "texto": "U, ou O…"
   },
   "sofia|Os dois são O. Sua vez,": {
    "versao": 2
@@ -132,22 +134,22 @@
    "texto": "Agora o Bolota sabe ler direitinho."
   },
   "tales|O Bolota leu \"LALA\"… Ops! Ensina para ele,": {
-   "versao": 2,
+   "versao": 3,
    "texto": "O Bolota leu \"lala\"… Ops! Ensina para ele…"
   },
   "sofia|kart": {
-   "versao": 2,
-   "texto": "Kart!",
+   "versao": 3,
+   "texto": "Kart.",
    "lento": true
   },
   "sofia|olho": {
-   "versao": 2,
-   "texto": "Olho!",
+   "versao": 3,
+   "texto": "Olho.",
    "lento": true
   },
   "sofia|unha": {
-   "versao": 2,
-   "texto": "Unha!",
+   "versao": 3,
+   "texto": "Unha.",
    "lento": true
   },
   "sofia|quiabo": {
@@ -156,9 +158,21 @@
    "lento": true
   },
   "sofia|doce": {
-   "versao": 2,
-   "texto": "Doce!",
+   "versao": 3,
+   "texto": "Doce.",
    "lento": true
+  },
+  "sofia|I, de ilha.": {
+   "versao": 2,
+   "texto": "I! De ilha."
+  },
+  "sofia|K, de kiwi.": {
+   "versao": 2,
+   "texto": "Cá! De kiwi."
+  },
+  "sofia|S, de sapo.": {
+   "versao": 2,
+   "texto": "Esse! De sapo."
   }
  },
  "nomes": {

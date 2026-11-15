@@ -54,6 +54,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-11ao0y9",
+  "voz": "sofia",
+  "texto": "No b, a barriga vem depois do pauzinho. No d, a barriga vem antes.",
+  "origem": "pares (D030)"
+ },
+ {
   "id": "s-11cpcp",
   "voz": "sofia",
   "texto": "Avião",
@@ -160,6 +166,12 @@
   "voz": "sofia",
   "texto": "[NOME]",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-159nwhv",
+  "voz": "sofia",
+  "texto": "O B tem voz:",
+  "origem": "pares (D030)"
  },
  {
   "id": "s-15ak9x9",
@@ -432,6 +444,12 @@
   "origem": "AL-FESTA-C4f"
  },
  {
+  "id": "s-1cxphfd",
+  "voz": "sofia",
+  "texto": "Olha: assim você escreveu, e assim os adultos escrevem. Repara na diferença.",
+  "origem": "telas"
+ },
+ {
   "id": "s-1dfc6n5",
   "voz": "sofia",
   "texto": "Qual letra faz /lll/, [NOME]?",
@@ -474,6 +492,12 @@
   "origem": "R0-F01-C2"
  },
  {
+  "id": "s-1etew6r",
+  "voz": "sofia",
+  "texto": "O P não tem voz:",
+  "origem": "pares (D030)"
+ },
+ {
   "id": "s-1ewan5d",
   "voz": "sofia",
   "texto": "Esta é a sua letra, [NOME]. E este é o som dela! Foi você que descobriu.",
@@ -484,6 +508,12 @@
   "voz": "sofia",
   "texto": "Faz de conta que você é uma cobrinha.",
   "origem": "AL-S-C2"
+ },
+ {
+  "id": "s-1fnwlqa",
+  "voz": "sofia",
+  "texto": "O Zum-Zum embaralhou as placas da vila! Me ajuda a pendurar, [NOME]?",
+  "origem": "telas"
  },
  {
   "id": "s-1fszss8",
@@ -514,6 +544,12 @@
   "voz": "sofia",
   "texto": "yakisoba",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1h81gfd",
+  "voz": "sofia",
+  "texto": "O S não tem voz, é só o ar:",
+  "origem": "pares (D030)"
  },
  {
   "id": "s-1hey3cw",
@@ -600,6 +636,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1kp8a7g",
+  "voz": "sofia",
+  "texto": "O Z tem voz, como uma abelhinha:",
+  "origem": "pares (D030)"
+ },
+ {
   "id": "s-1l8st3w",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Lembra do som que veio da mata? /mmm/…",
@@ -652,6 +694,12 @@
   "voz": "sofia",
   "texto": "Uma palma para cada pedacinho, [NOME]!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1nhdm5w",
+  "voz": "sofia",
+  "texto": "No N, a língua sobe atrás dos dentes:",
+  "origem": "pares (D030)"
  },
  {
   "id": "s-1nnazrj",
@@ -712,6 +760,12 @@
   "voz": "sofia",
   "texto": "copo plástico",
   "origem": "figuras"
+ },
+ {
+  "id": "s-1pmo6do",
+  "voz": "sofia",
+  "texto": "O boneco é menino ou menina?",
+  "origem": "avatar"
  },
  {
   "id": "s-1ps7nfy",
@@ -936,6 +990,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1qldywn",
+  "voz": "sofia",
+  "texto": "O T não tem voz:",
+  "origem": "pares (D030)"
+ },
+ {
   "id": "s-1qn9jre",
   "voz": "sofia",
   "texto": "Que sorriso! Iii!",
@@ -970,6 +1030,12 @@
   "voz": "sofia",
   "texto": "Quantas palmas tem esta palavra, [NOME]? Eu me perdi!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1sspl1",
+  "voz": "sofia",
+  "texto": "O D tem voz:",
+  "origem": "pares (D030)"
  },
  {
   "id": "s-1svhpmb",
@@ -1662,6 +1728,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1uv8jc",
+  "voz": "sofia",
+  "texto": "O V tem voz, a garganta treme:",
+  "origem": "pares (D030)"
+ },
+ {
   "id": "s-1uvr58r",
   "voz": "sofia",
   "texto": "ũũũũ",
@@ -1744,6 +1816,12 @@
   "voz": "sofia",
   "texto": "Faz de conta que você é um macaquinho.",
   "origem": "AL-W-C2"
+ },
+ {
+  "id": "s-1yq5rgm",
+  "voz": "sofia",
+  "texto": "No M, os lábios ficam fechados:",
+  "origem": "pares (D030)"
  },
  {
   "id": "s-2aajyj",
@@ -1834,6 +1912,12 @@
   "voz": "sofia",
   "texto": "Olha a boca: ela se mexe diferente em cada som.",
   "origem": "falas fônicas (D030)"
+ },
+ {
+  "id": "s-5iz85w",
+  "voz": "sofia",
+  "texto": "Vamos treinar mais um pouquinho e tentar de novo outro dia. Nada se perde!",
+  "origem": "telas"
  },
  {
   "id": "s-5qllno",
@@ -1996,6 +2080,12 @@
   "voz": "sofia",
   "texto": "macaco",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-bx5bup",
+  "voz": "sofia",
+  "texto": "Todas as placas no lugar! Obrigada pela ajuda, [NOME]!",
+  "origem": "telas"
  },
  {
   "id": "s-by1ls9",
@@ -2346,6 +2436,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-l2kpxj",
+  "voz": "sofia",
+  "texto": "Olha minha boca e escuta:",
+  "origem": "telas"
+ },
+ {
   "id": "s-lbara2",
   "voz": "sofia",
   "texto": "Isso! Você fez o som!",
@@ -2694,6 +2790,18 @@
   "origem": "AL-FESTA-C3a"
  },
  {
+  "id": "s-s6fjxd",
+  "voz": "sofia",
+  "texto": "Tudo bem! Toque em eu falei.",
+  "origem": "telas"
+ },
+ {
+  "id": "s-simqup",
+  "voz": "sofia",
+  "texto": "O F não tem voz, é só um ventinho:",
+  "origem": "pares (D030)"
+ },
+ {
   "id": "s-smnbvq",
   "voz": "sofia",
   "texto": "Olha só a letra de hoje!",
@@ -2722,6 +2830,12 @@
   "voz": "sofia",
   "texto": "helicóptero",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-tdsrue",
+  "voz": "sofia",
+  "texto": "Que escolha boa! Já está no seu boneco.",
+  "origem": "telas"
  },
  {
   "id": "s-tgzh8v",
@@ -2832,6 +2946,66 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-y5a2vg",
+  "voz": "sofia",
+  "texto": "Você tocou no Z.",
+  "origem": "pares (D030)"
+ },
+ {
+  "id": "s-y5a30m",
+  "voz": "sofia",
+  "texto": "Você tocou no P.",
+  "origem": "pares (D030)"
+ },
+ {
+  "id": "s-y5a342",
+  "voz": "sofia",
+  "texto": "Você tocou no T.",
+  "origem": "pares (D030)"
+ },
+ {
+  "id": "s-y5a351",
+  "voz": "sofia",
+  "texto": "Você tocou no S.",
+  "origem": "pares (D030)"
+ },
+ {
+  "id": "s-y5a35s",
+  "voz": "sofia",
+  "texto": "Você tocou no V.",
+  "origem": "pares (D030)"
+ },
+ {
+  "id": "s-y5a3dk",
+  "voz": "sofia",
+  "texto": "Você tocou no N.",
+  "origem": "pares (D030)"
+ },
+ {
+  "id": "s-y5a3ej",
+  "voz": "sofia",
+  "texto": "Você tocou no M.",
+  "origem": "pares (D030)"
+ },
+ {
+  "id": "s-y5a3h0",
+  "voz": "sofia",
+  "texto": "Você tocou no B.",
+  "origem": "pares (D030)"
+ },
+ {
+  "id": "s-y5a3iq",
+  "voz": "sofia",
+  "texto": "Você tocou no D.",
+  "origem": "pares (D030)"
+ },
+ {
+  "id": "s-y5a3kg",
+  "voz": "sofia",
+  "texto": "Você tocou no F.",
+  "origem": "pares (D030)"
+ },
+ {
   "id": "s-ymomve",
   "voz": "sofia",
   "texto": "O de boca redonda: ó e ô. Ligar os sons /ó/ e /ô/ à letra O.",
@@ -2872,6 +3046,12 @@
   "voz": "tales",
   "texto": "Faz de conta que você sopra as velinhas do bolo.",
   "origem": "AL-F-C2"
+ },
+ {
+  "id": "t-10t2pqd",
+  "voz": "tales",
+  "texto": "Calça, bermuda ou saia?",
+  "origem": "avatar"
  },
  {
   "id": "t-1208k4u",
@@ -3208,6 +3388,12 @@
   "voz": "tales",
   "texto": "Bo… la.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1eogb41",
+  "voz": "tales",
+  "texto": "Meta escolhida! Agora é juntar moedinhas aprendendo.",
+  "origem": "telas"
  },
  {
   "id": "t-1f8sg8x",
@@ -3756,6 +3942,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-1vgy87d",
+  "voz": "tales",
+  "texto": "Qual é a cor dos seus olhos?",
+  "origem": "avatar"
+ },
+ {
   "id": "t-1vpwe98",
   "voz": "tales",
   "texto": "Ler LUA e MALA em voz alta.",
@@ -3814,6 +4006,12 @@
   "voz": "tales",
   "texto": "Qual figura começa com o som desta letra?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-2t206s",
+  "voz": "tales",
+  "texto": "E nos pés?",
+  "origem": "avatar"
  },
  {
   "id": "t-35m31w",
@@ -3964,6 +4162,12 @@
   "voz": "tales",
   "texto": "Biquinho perfeito!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-bwqfde",
+  "voz": "tales",
+  "texto": "Escolha a camisa.",
+  "origem": "avatar"
  },
  {
   "id": "t-ca65q8",
@@ -4266,6 +4470,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-s8k98h",
+  "voz": "tales",
+  "texto": "Olha a Lojinha! A cada letra abrem coisas novas para o seu boneco.",
+  "origem": "avatar"
+ },
+ {
   "id": "t-shhxlu",
   "voz": "tales",
   "texto": "Faz de conta que você pilota um barco a motor.",
@@ -4288,6 +4498,12 @@
   "voz": "tales",
   "texto": "Pula com a gente, [NOME]! Uma casa para cada pedacinho.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-syczrc",
+  "voz": "tales",
+  "texto": "Qual é a cor da sua pele?",
+  "origem": "avatar"
  },
  {
   "id": "t-t1a9u3",
@@ -4372,6 +4588,18 @@
   "voz": "tales",
   "texto": "E eu sou o Tales! Seja bem-vindo na Vila das Letras, [NOME]!",
   "origem": "chegada"
+ },
+ {
+  "id": "t-z03xmf",
+  "voz": "tales",
+  "texto": "Como é o seu rosto?",
+  "origem": "avatar"
+ },
+ {
+  "id": "t-z4h5j8",
+  "voz": "tales",
+  "texto": "Como é o seu cabelo?",
+  "origem": "avatar"
  },
  {
   "id": "t-zpc5yz",

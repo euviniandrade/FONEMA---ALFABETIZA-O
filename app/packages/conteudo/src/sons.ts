@@ -161,3 +161,39 @@ export function fonemasDasLetras(palavra: string, abertas: { e?: boolean; o?: bo
     return ch in ACENTO_FONEMA ? ACENTO_FONEMA[ch] : null;
   });
 }
+
+/**
+ * CORREÇÃO CONTRASTIVA com frases completas para os pares mais confundidos (p/b, t/d, f/v, s/z, m/n): depois do som
+ * escolhido, a Sofia diz o que cada um tem de diferente, e toca o som de cada um ("O P não tem voz:" + clipe).
+ * `tocou` só é dito quando a criança tocou numa LETRA. Os outros pares (c/g, x/j, l/r, o/u) usam as frases genéricas.
+ */
+export const FALAS_DOS_PARES: Record<string, { tocou: string; como: string }> = {
+  p: { tocou: 'Você tocou no P.', como: 'O P não tem voz:' },
+  b: { tocou: 'Você tocou no B.', como: 'O B tem voz:' },
+  t: { tocou: 'Você tocou no T.', como: 'O T não tem voz:' },
+  d: { tocou: 'Você tocou no D.', como: 'O D tem voz:' },
+  f: { tocou: 'Você tocou no F.', como: 'O F não tem voz, é só um ventinho:' },
+  v: { tocou: 'Você tocou no V.', como: 'O V tem voz, a garganta treme:' },
+  s: { tocou: 'Você tocou no S.', como: 'O S não tem voz, é só o ar:' },
+  z: { tocou: 'Você tocou no Z.', como: 'O Z tem voz, como uma abelhinha:' },
+  m: { tocou: 'Você tocou no M.', como: 'No M, os lábios ficam fechados:' },
+  n: { tocou: 'Você tocou no N.', como: 'No N, a língua sobe atrás dos dentes:' }
+};
+/** Letras em espelho b × d: o que muda é o desenho. */
+export const FALA_ESPELHO_BD = 'No b, a barriga vem depois do pauzinho. No d, a barriga vem antes.';
+/** Falas ditas pelas telas fora do conteúdo das fases (para o gerador de vozes não depender do coletor do E2E). */
+export const FALAS_DAS_TELAS: { quem: 'sofia' | 'tales'; texto: string }[] = [
+  { quem: 'sofia', texto: 'Muito bem! Letra por letra.' },
+  { quem: 'sofia', texto: 'Olha: assim você escreveu, e assim os adultos escrevem. Repara na diferença.' },
+  { quem: 'sofia', texto: 'Olha minha boca e escuta:' },
+  { quem: 'sofia', texto: 'Tudo bem! Toque em eu falei.' },
+  { quem: 'sofia', texto: 'Você montou a palavra!' },
+  { quem: 'tales', texto: 'Aqui você troca as moedinhas que ganhou aprendendo. Pode esperar e juntar para algo maior!' },
+  { quem: 'sofia', texto: 'Que escolha boa! Já está na sua mochila.' },
+  { quem: 'tales', texto: 'Meta escolhida! Agora é juntar moedinhas aprendendo.' },
+  { quem: 'sofia', texto: 'Que escolha boa! Já está no seu boneco.' },
+  { quem: 'sofia', texto: 'Pronto! Seu professor vai ver e responder. Que orgulho de você, [NOME]!' },
+  { quem: 'sofia', texto: 'O Zum-Zum embaralhou as placas da vila! Me ajuda a pendurar, [NOME]?' },
+  { quem: 'sofia', texto: 'Todas as placas no lugar! Obrigada pela ajuda, [NOME]!' },
+  { quem: 'sofia', texto: 'Vamos treinar mais um pouquinho e tentar de novo outro dia. Nada se perde!' }
+];

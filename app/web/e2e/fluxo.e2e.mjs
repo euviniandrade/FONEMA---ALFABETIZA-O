@@ -431,7 +431,7 @@ async function main() {
   await page.waitForFunction(() => location.hash.includes('/sessao/'));
   ok(page.url().includes('/sessao/AL-A'), 'a primeira missão da jornada é a letra A');
   await page.getByTestId('comecar-sessao').waitFor();
-  ok((await page.locator('.trilha-dia li').count()) === 5, 'missão curta: 5 passos (letra, som, ache a letra, ache a figura, traçar)');
+  ok((await page.locator('.trilha-dia li').count()) === 6, 'missão curta: 6 passos (letra, som, som → letra, letra → som, som → figura, traçar)');
   await page.getByTestId('comecar-sessao').click();
   await page.getByTestId('letra-grande').waitFor();
   ok(/A\s*grande\s*a\s*pequena/.test(await page.getByTestId('letra-grande').innerText()), 'a letra aparece grande: maiúscula e minúscula');
