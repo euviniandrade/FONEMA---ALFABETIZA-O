@@ -53,7 +53,7 @@ export const PALAVRAS_R2A: Palavra[] = [
   // pseudopalavras ("nomes de bichinhos da mata")
   p('LUFO', 'LU-FO', '', true), p('FOLU', 'FO-LU', '', true), p('MUFE', 'MU-FE', '', true), p('LIFU', 'LI-FU', '', true), p('FEMO', 'FE-MO', '', true),
   // D030 §6: pseudopalavras só com valores sonoros já ensinados (sem E/O átono no fim)
-  p('MIFA', 'MI-FA', '', true), p('FULI', 'FU-LI', '', true)
+  p('MIFA', 'MI-FA', '', true), p('FULI', 'FU-LI', '', true), p('MUFA', 'MU-FA', '', true)
 ];
 
 export function figura(texto: string): Palavra {
@@ -126,7 +126,7 @@ export const VALORES_DAS_PALAVRAS: Record<string, ValorSonoro[]> = {
   UVA: [], VACA: [], PEIXE: ['ditongo', 'e-final-i', 'x-outro-som'], DOZE: ['e-final-i'], CABE: ['e-final-i'], DEDO: ['o-final-u'],
   // Vale do M-L-F
   MA: [], MO: [], MU: [], FALA: [], FOFO: ['o-final-u'], FOFA: [], MULA: [], LULA: [], MOLA: ['o-aberto'], LAMA: ['nasalizada'], MOFO: ['o-final-u'],
-  LUFO: ['o-final-u'], FOLU: [], MUFE: ['e-final-i'], LIFU: [], FEMO: ['nasalizada', 'o-final-u'], MIFA: [], FULI: []
+  LUFO: ['o-final-u'], FOLU: [], MUFE: ['e-final-i'], LIFU: [], FEMO: ['nasalizada', 'o-final-u'], MIFA: [], FULI: [], MUFA: []
 };
 
 /** Valores sonoros de uma palavra: os marcados no conteúdo + os que a escrita mostra. */

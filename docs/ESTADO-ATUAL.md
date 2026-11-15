@@ -108,13 +108,26 @@ prolongam → oclusivas → abertas e nasais → R e H → dígrafos → regras 
 1. Documentos e regras — **entregue**.
 2. Registro detalhado de erros — **motor e painel entregues** (15/11): contrato `DetalheTentativa` em `app/packages/motor/src/estado.ts`
    (alvo, escolhido, respostas, distratores, tempoMs, tentativaNumero, tipo, mecanica, categoria), migração dos dados salvos (versão 1 → 2,
-   `migracao.ts`), matriz de confusão e tempo (`confusao.ts`). Depende das mecânicas passarem os campos (frente de `web/src/mecanicas`).
-3. Som no lugar do nome da letra — a fazer / em andamento.
-4. Distratores, sorteio e fim do modelo permanente — a fazer / em andamento.
+   `migracao.ts`), matriz de confusão e tempo (`confusao.ts`). As mecânicas já passam os campos (15/11); faltam "ouviu de novo" e a
+   posição da resposta certa, que o contrato ainda não tem.
+3. Som no lugar do nome da letra — **entregue na Trilha A–Z** (15/11): em 22 letras o estímulo é o som real (2 vezes), nos dois sentidos
+   (som → letra; letra → som com botões de som), e o nome da letra só entra depois do acerto. **Ficam no comportamento antigo:** H (sem
+   som), K, W e Y (letras de nomes); R fraco, LH e NH não têm clipe. Código: `conteudo/src/fases/alfabeto.ts`, `web/src/mecanicas/Escolher.tsx`.
+4. Distratores, sorteio e fim do modelo permanente — **entregue** (15/11): posições e itens sorteados (fixos só no modo de teste);
+   pares confundíveis e letras em espelho nas revisões; correção contrastiva no 1º erro (toca o som escolhido e o certo e diz o que
+   muda), resposta só brilha na 3ª tentativa; "qual figura começa com o som" sem a letra e com outras figuras; Montar com demonstração
+   na 1ª vez e depois sem modelo, peças tocando o fonema; "O Bolota leu errado" e pseudopalavras por áudio; "qual som falta"; jogo
+   **"Liga o som"** (`mecanicas/Ligar.tsx`, cenas em `CENAS_DO_SOM`). Falas novas genéricas em `FALAS_FONICAS` (`sons.ts`), gravadas e
+   auditadas. Capturas: `app/docs/capturas/v5-mecanicas-*.png` e `v5-liga-o-som-*.png` (`node web/e2e/fluxo.e2e.mjs --mecanicas`).
+   **Limites:** nenhum som puro foi ouvido por pessoa (os das oclusivas estão como "duvidoso"); itens de R0 e R1 com figura e o
+   gerador do som do nome (motor) ainda usam a escada antiga; pares mínimos de palavras (faca × vaca) não foram feitos; a cena de
+   pseudopalavras conferidas (R2a-F04-C5b) ainda não é exigida para concluir a fase.
 5. Exposição fora do domínio — **entregue no motor** (15/11): só tentativa avaliada conta (`tentativas.ts`, `dominio.ts`); Letra, Espelho,
    Traçar e Falar ficam como participação; fases marcam concluída × dominada; domínio antigo sem resposta conferida vira "a confirmar".
 6. Trilha fônica — a fazer (sequência definida).
-7. Verificador de decodificabilidade em tudo — a fazer (regras definidas).
+7. Verificador de decodificabilidade em tudo — **parcial** (15/11): valores sonoros marcados em `palavras.ts` (`VALORES_DAS_PALAVRAS`) e
+   conferidos pelo teste em toda leitura autônoma, em todas as fases; o teste também falha se dica, letra, pista ou modelo entregarem
+   a resposta. Falta o formato completo de `05-regras-de-decodificabilidade.md` §6 (pronúncia anotada, unidades TF, frases e textos).
 8. Frases, textos, fluência e compreensão — a fazer.
 9. Sondagem periódica e reforço dirigido — **parcial** (15/11): o motor agenda a sondagem (a cada 8 fases ou 30 dias, em `config.ts`),
    guarda o resultado por área (`sondagem.ts`), calcula a próxima prática recomendada, a volta ao pré-requisito e o alerta ao adulto

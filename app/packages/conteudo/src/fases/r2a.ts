@@ -135,8 +135,9 @@ export const FASES_R2A: Fase[] = [
         id: 'R2a-F04-C5b', tipo: 'C5', titulo: 'Qual é o nome do bichinho?', cenario: 'mata',
         atividade: {
           tipo: 'escolher', estilo: 'tocar', habilidade: 'leitura-cvcv', enunciado: sofia(FALAS_FONICAS.ouvirLeituras),
-          itens: [itemLerPseudo('LIFU', 'lifa', 'fuli'), itemLerPseudo('FOLU', 'fulu', 'lufo'), itemLerPseudo('MIFA', 'mufa', 'mufe'), itemLerPseudo('FULI', 'fali', 'lifu')],
-          sortear: 3, comemora: sofia('Você leu o nome do bichinho da mata!')
+          // leituras que mudam UMA letra; só clipes aprovados na auditoria de áudio
+          itens: [itemLerPseudo('LIFU', 'lifa', 'mifa'), itemLerPseudo('MIFA', 'mufa', 'lifa'), itemLerPseudo('MUFA', 'mifa', 'mula')],
+          comemora: sofia('Você leu o nome do bichinho da mata!')
         }
       }
     ],

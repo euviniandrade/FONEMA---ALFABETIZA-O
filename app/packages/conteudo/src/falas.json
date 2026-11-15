@@ -1191,7 +1191,7 @@
   "id": "s-1uqjb04",
   "voz": "sofia",
   "texto": "mufa",
-  "origem": "R2a-F04-C5b"
+  "origem": "palavras"
  },
  {
   "id": "s-1uqjb5q",
@@ -1356,12 +1356,6 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "s-1uqprgp",
-  "voz": "sofia",
-  "texto": "fali",
-  "origem": "R2a-F04-C5b"
- },
- {
   "id": "s-1uqprvy",
   "voz": "sofia",
   "texto": "faca",
@@ -1372,12 +1366,6 @@
   "voz": "sofia",
   "texto": "ffff",
   "origem": "telas (E2E)"
- },
- {
-  "id": "s-1uqq1q9",
-  "voz": "sofia",
-  "texto": "fulu",
-  "origem": "R2a-F04-C5b"
  },
  {
   "id": "s-1uqq1r1",
