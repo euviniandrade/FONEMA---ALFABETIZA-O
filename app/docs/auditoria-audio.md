@@ -2,9 +2,9 @@
 
 Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai ao ar sem esta auditoria**.
 
-- Clipes auditados: **1178** (888 falas + 290 nomes; vozes Sofia e Tales)
-- Graves (defeito audível provável): **35** · a conferir de ouvido (palavra/som solto com transcrição diferente): **72** · leves (higiene do sinal): **0** · sem defeito: **1071**
-- Conteúdo conferido por transcrição: **1178** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
+- Clipes auditados: **1201** (911 falas + 290 nomes; vozes Sofia e Tales)
+- Graves (defeito audível provável): **37** · a conferir de ouvido (palavra/som solto com transcrição diferente): **72** · leves (higiene do sinal): **0** · sem defeito: **1092**
+- Conteúdo conferido por transcrição: **1201** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
 - Volume (clipes ≥ 0,4 s): mediana -17.4 LUFS, de -22.8 a -14.6 (alvo -16)
 
 ## Defeitos por tipo
@@ -12,22 +12,22 @@ Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai
 | Tipo | Antes | Agora |
 |---|---|---|
 | começo seco | 184 | 0 |
-| conteúdo: palavra trocada | 69 | 84 |
+| conteúdo: palavra trocada | 69 | 86 |
 | volume fora da média | 135 | 0 |
 | sem respiro no começo | 113 | 0 |
 | sem respiro no fim | 69 | 0 |
 | clipping | 63 | 2 |
 | fim seco | 35 | 0 |
-| fim cortado na gravação | 21 | 0 |
 | conteúdo: nome errado | 16 | 5 |
+| fim cortado na gravação | 21 | 0 |
 | conteúdo: sílaba faltando no fim | 6 | 6 |
 | conteúdo: sobrando | 5 | 4 |
 | conteúdo: sílaba faltando no começo | 4 | 5 |
 | conteúdo: transcrição vazia | 2 | 1 |
-| mudo | 1 | 0 |
-| conteúdo: começo faltando | 0 | 1 |
 | conteúdo: palavra faltando | 0 | 1 |
 | conteúdo: sílaba faltando no meio | 0 | 1 |
+| conteúdo: começo faltando | 0 | 1 |
+| mudo | 1 | 0 |
 
 Antes: 275 graves, 52 a conferir e 188 leves em 915 clipes (915 com transcrição).
 
@@ -42,6 +42,8 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 | sofia | E: é e ê. Ligar os sons é e ê à letra E. | É, iê! Liga os sons é e iê à letra E. / I, E e E. Ligar os sons E e E  | palavra trocada (“e” → “i”) | `falas/sofia-1svhpmb-m1.mp3` |
 | sofia | I do sorriso. Ligar o som i à letra I e traçar o I. | E do S o riso, ligar o som e a letra I, e traçar o U. / E do sorriso:  | palavra trocada (“i” → “e”) | `falas/sofia-15jw11t-m1.mp3` |
 | sofia | Iiiii, um sorriso grande. Sua vez, | E um sorriso grande. Sua vez. / E um sorriso grande. Sua vez | palavra trocada (“i” → “e”) | `falas/sofia-n7w6f5-m1.mp3` |
+| sofia | Isso! Esse é o som do Q. | Isso, esse é o som do quê? | palavra trocada (“k” → “ke”) | `falas/sofia-1duq14f-m1.mp3` |
+| sofia | Isso! Esse é o som do U. | Isso, esse é o som do urso | palavra trocada (“u” → “urso”) | `falas/sofia-1duq17v-m1.mp3` |
 | sofia | L, de lua | É de luar / Ele de lua | palavra trocada (“l” → “ele”) | `falas/sofia-1uqi87f-m1.mp3` |
 | sofia | L, de lua | Lei de Loire? | palavra trocada (“l” → “le”); palavra trocada (“lua” → “loire”) | `falas/sofia-1uraq2z-m1.mp3` |
 | sofia | L, de lua… lua! | É o de lua, lua | palavra trocada (“l” → “e o”) | `falas/sofia-1asmjqs-m1.mp3` |

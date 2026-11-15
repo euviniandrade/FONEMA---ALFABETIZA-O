@@ -174,9 +174,10 @@ async function jogarSessao(page, capturar = {}) {
       continue;
     }
     const esp = page.getByTestId('espacos').first();
-    if (await esp.isVisible().catch(() => false) && (await esp.getAttribute('data-alvo', { timeout: 500 }).catch(() => null))) {
+    const alvoTxt = (await esp.isVisible().catch(() => false)) ? await esp.getAttribute('data-alvo', { timeout: 500 }).catch(() => null) : null;
+    if (alvoTxt) {
       await tirar('montar');
-      const alvo = (await esp.getAttribute('data-alvo', { timeout: 500 }).catch(() => null)).split('|');
+      const alvo = alvoTxt.split('|');
       const ja = await page.locator('.espaco.cheio').count();
       if (ja >= alvo.length) { await page.waitForTimeout(80); continue; }
       const t = alvo[ja];
