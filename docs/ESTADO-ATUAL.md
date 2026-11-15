@@ -68,6 +68,10 @@ por ordem de tentativas do próprio teste).
 - **Vozes:** 237 clipes novos da Sofia (molduras genéricas, palavras, palavras inventadas, 9 frases) + 4 regravações; masterizado,
   auditado (sobram 2 graves da trilha: a dica "O som do U" e "Vamos conferir…" marcado como curto, que soa certo) e `bocas.json` refeito.
   ElevenLabs: ≈ 11,2 mil caracteres restantes. Figura nova: `bala` (MiniMax).
+- **Verificado (15/11, build próprio):** typecheck, lint, 206 testes; E2E `--trilha-sons` (TF-01, TF-06 → TF-22 em sequência, sem pular:
+  19 lições concluídas, 2 já douradas — dourada pede TODAS as habilidades firmes, o que leva mais sessões) e E2E `--sem-jornada` inteiro
+  (98 checagens, inclui o trecho da trilha). Capturas `app/docs/capturas/v7-trilha-*.png` (1850×980 e 390×844), olhadas e corrigidas
+  (`node web/e2e/fluxo.e2e.mjs --capturas-trilha`). O E2E completo (com a jornada inteira, ≈25 min) não foi rodado.
 - **Pendente:** ouvir as palavras inventadas e "tia/dia" (voz sintética); selos para as consoantes novas (regra fica no motor);
   sincronia real das palavras no eco; revisão das listas por alfabetizadora; blocos 4 a 8 (TF-23…TF-53).
 
