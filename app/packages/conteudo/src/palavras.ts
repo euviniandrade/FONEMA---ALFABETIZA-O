@@ -64,6 +64,8 @@ export function figura(texto: string): Palavra {
 
 /** Grafemas conhecidos ao FIM de cada região (para o linter de decodificabilidade). */
 export const GRAFEMAS_DA_REGIAO: Record<string, string[]> = {
+  // Trilha dos Sons: letras dos blocos 1–3 (o controle fino é por unidade, em decodificabilidade.ts)
+  TF: [...'AEIOUMFVLSNZJPTBCDG'],
   // Trilha do Alfabeto: as letras aparecem SOLTAS ("B b"), nunca em palavras para ler
   AL: [...'ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÊ', ' '],
   R0: [],
@@ -142,7 +144,9 @@ export function valoresDaPalavra(palavra: string): ValorSonoro[] {
  * trilha fônica; até lá, palavra com esses valores não entra em leitura autônoma.
  */
 export const VALORES_ENSINADOS: Record<RegiaoId, ValorSonoro[]> = {
-  AL: [], R1: ['e-aberto', 'o-aberto'], R2a: ['e-aberto', 'o-aberto'], R0: ['e-aberto', 'o-aberto']
+  // Trilha dos Sons (TF): o controle é por UNIDADE, no verificador completo (decodificabilidade.ts); aqui fica o que os
+  // blocos 1–3 ensinam na notação antiga, só para a conta geral
+  AL: [], TF: ['o-final-u', 'e-final-i', 'ditongo'], R1: ['e-aberto', 'o-aberto'], R2a: ['e-aberto', 'o-aberto'], R0: ['e-aberto', 'o-aberto']
 };
 /**
  * Valores que geram AVISO, não bloqueio (armadilha A5: vogal nasalizada pela consoante seguinte, "cama", "banana";

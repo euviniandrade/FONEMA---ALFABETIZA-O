@@ -33,7 +33,25 @@ export const HABILIDADES: Habilidade[] = [
   { id: 'gpc-f', regiao: 'R2a', nome: 'Letra F ↔ som /f/', paraFamilia: 'liga a letra F ao som /f/', exigePseudo: false, seloMaestria: 'S-SOM-F' },
   { id: 'silaba-cv', regiao: 'R2a', nome: 'Juntar consoante e vogal (MA, LU, FI)', paraFamilia: 'junta consoante e vogal em sílabas', exigePseudo: false },
   { id: 'leitura-cvcv', regiao: 'R2a', nome: 'Ler palavras como MALA e LUA', paraFamilia: 'lê palavras como MALA e LUA', exigePseudo: true },
-  { id: 'escrita-cvcv', regiao: 'R2a', nome: 'Escrever palavras com letras móveis', paraFamilia: 'escreve palavras simples com letras móveis', exigePseudo: false }
+  { id: 'escrita-cvcv', regiao: 'R2a', nome: 'Escrever palavras com letras móveis', paraFamilia: 'escreve palavras simples com letras móveis', exigePseudo: false },
+  // TF · Trilha dos Sons (D030; docs/pedagogia/02): som ↔ letra das consoantes novas, regras, segmentação, troca de
+  // sons, pares mínimos, frases e compreensão. M, L, F, vogais, síntese, leitura e escrita reaproveitam os ids acima.
+  ...(['V', 'S', 'N', 'Z', 'J', 'P', 'T', 'B', 'C', 'D', 'G'] as const).map((x): Habilidade => {
+    const som: Record<string, string> = { V: '/v/', S: '/s/', N: '/n/', Z: '/z/', J: '/ʒ/', P: '/p/', T: '/t/', B: '/b/', C: '/k/', D: '/d/', G: '/g/' };
+    return { id: `gpc-${x.toLowerCase()}`, regiao: 'TF', nome: `Letra ${x} ↔ som ${som[x]}`, paraFamilia: `liga a letra ${x} ao som ${som[x]}`, exigePseudo: false };
+  }),
+  { id: 'leitura-vogais', regiao: 'TF', nome: 'Ler duas vogais juntas (AI, OI, EU)', paraFamilia: 'lê duas vogais juntas, como AI e OI', exigePseudo: false },
+  { id: 'regra-vogal-final', regiao: 'TF', nome: 'O e E no fim soam U e I', paraFamilia: 'sabe que o O e o E do fim da palavra soam U e I (ovo, ele)', exigePseudo: false },
+  { id: 'regra-ti-di', regiao: 'TF', nome: 'T e D antes do I (tia, dia)', paraFamilia: 'lê T e D antes do som de I (tia, dia)', exigePseudo: false },
+  { id: 'segmentacao', regiao: 'TF', nome: 'Separar a palavra em sons (caixas de sons)', paraFamilia: 'separa a palavra em sons, um por um', exigePseudo: false },
+  { id: 'troca-de-som', regiao: 'TF', nome: 'Trocar ou pôr um som e ler a palavra nova', paraFamilia: 'troca um som e lê a palavra nova (pato → mato)', exigePseudo: false },
+  { id: 'par-minimo-f-v', regiao: 'TF', nome: 'Pares mínimos F × V', paraFamilia: 'ouve e lê a diferença entre F e V (faca, vaca)', exigePseudo: false },
+  { id: 'par-minimo-s-z', regiao: 'TF', nome: 'Pares mínimos S × Z', paraFamilia: 'ouve e lê a diferença entre S e Z (selo, zelo)', exigePseudo: false },
+  { id: 'par-minimo-p-b', regiao: 'TF', nome: 'Pares mínimos P × B', paraFamilia: 'ouve e lê a diferença entre P e B (pato, bato)', exigePseudo: false },
+  { id: 'par-minimo-t-d', regiao: 'TF', nome: 'Pares mínimos T × D', paraFamilia: 'ouve e lê a diferença entre T e D (nata, nada)', exigePseudo: false },
+  { id: 'par-minimo-k-g', regiao: 'TF', nome: 'Pares mínimos C × G', paraFamilia: 'ouve e lê a diferença entre C e G (calo, galo)', exigePseudo: false },
+  { id: 'leitura-frase', regiao: 'TF', nome: 'Ler uma frase curta', paraFamilia: 'lê uma frase curta sem ajuda', exigePseudo: false },
+  { id: 'compreensao-lida', regiao: 'TF', nome: 'Entender o que leu', paraFamilia: 'responde a uma pergunta sobre a frase que leu', exigePseudo: false }
 ];
 
 export const HABILIDADE_POR_ID: Record<string, Habilidade> = Object.fromEntries(HABILIDADES.map((h) => [h.id, h]));

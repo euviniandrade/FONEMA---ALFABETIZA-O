@@ -14,4 +14,7 @@ export { FASES_ALFABETO, FALAS_ALFABETO, MARCADOR_PALAVRINHAS, falaApoio } from 
 export { FASES_R0 } from './fases/r0.ts';
 export { FASES_R1 } from './fases/r1.ts';
 export { FASES_R2A } from './fases/r2a.ts';
+export { FASES_TF, FALAS_TRILHA_SONS, LICOES_TF, LETRAS_DA_TRILHA_SONS, SILABA_DO_SOM, SONS_DUVIDOSOS, comSons, habilidadeTF } from './fases/tf.ts';
+export { BANCO, PALAVRAS_TF, PALAVRAS_OUTRAS_TRILHAS } from './fases/tf-banco.ts';
+export * from './decodificabilidade.ts';
 export * from './nomes-comuns.ts';

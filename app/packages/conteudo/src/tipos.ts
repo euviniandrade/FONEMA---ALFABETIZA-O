@@ -63,7 +63,7 @@ export interface Habilidade {
   seloMaestria?: string;
 }
 
-export type RegiaoId = 'AL' | 'R0' | 'R1' | 'R2a';
+export type RegiaoId = 'AL' | 'TF' | 'R0' | 'R1' | 'R2a';
 
 /* ----------------------------- mecânicas ----------------------------- */
 
@@ -254,6 +254,135 @@ export interface AtividadeTracar extends AtividadeBase {
   letras: string[];
 }
 
+/* ------------------------- TRILHA DOS SONS (D030 etapas 6–8) ------------------------- */
+
+/**
+ * SOM NOVO (lição da trilha fônica, "eu faço"): faz de conta → SOM REAL da letra (3 vezes) com a boca do Espelho do
+ * Som → "Repita comigo!" → só DEPOIS aparece a letra que escreve o som (regra 1: som antes do nome da letra).
+ * Nas unidades de REGRA (TF-12, TF-22), mostra palavras com a letra destacada e o som que ela faz ali.
+ * É EXPOSIÇÃO: não conta para o domínio.
+ */
+export interface AtividadeSomNovo extends AtividadeBase {
+  tipo: 'somNovo';
+  /** Fonema apresentado (chave do mapa de sons). */
+  fonema: ChaveFonema;
+  /** Letra que escreve o som (maiúscula). */
+  letra: string;
+  /** Faz de conta do som (o clipe já gravado da Trilha A–Z). */
+  brincadeira?: Fala;
+  /** "Repita comigo!" */
+  repita?: Fala;
+  /** Fala dita quando a letra aparece ("Esta é a letra deste som."). */
+  revela: Fala;
+  /** Apoio com o nome da letra, depois do som ("M, de macaco."). */
+  apoio?: Fala;
+  /** Unidade de regra: explicações + palavras com a letra destacada e o som que ela faz ali. */
+  regra?: { partes: { explica: Fala; palavras: { palavra: string; destaque: number; som?: ChaveFonema }[] }[]; fecha?: Fala };
+}
+
+/** Uma palavra da trilha com os sons de cada letra (um fonema por letra; `null` = letra calada). */
+export interface PalavraComSons {
+  palavra: string;
+  sons: (ChaveFonema | null)[];
+}
+
+/**
+ * SÍNTESE com som prolongado (docs/pedagogia/04 N2): a criança toca as letras uma a uma, ouve cada som esticado e
+ * depois os sons emendados ("mmmaaalll…"), cada vez mais depressa; então escolhe a figura (ou a palavra falada) que
+ * os sons formaram, entre 2–3 opções com um som de diferença. A palavra inteira só é dita DEPOIS da resposta.
+ * Roteiro "eu faço, nós fazemos, você faz": 1º item demonstrado pela dupla, 2º guiado, os outros sozinho.
+ */
+export interface AtividadeSintese extends AtividadeBase {
+  tipo: 'sintese';
+  itens: (PalavraComSons & { opcoes: Opcao[]; correta: string; pseudo?: boolean })[];
+  /** Liga o roteiro eu faço / nós fazemos (padrão: ligado). */
+  roteiro?: boolean;
+  sortear?: number;
+}
+
+/**
+ * CAIXAS DE SONS (Elkonin, docs/pedagogia/04 N1): ouve a palavra, põe uma ficha por som nas caixas (há caixa
+ * sobrando: o número de sons não é dado) e depois troca cada ficha pela letra do som (segmentação → escrita).
+ */
+export interface AtividadeCaixas extends AtividadeBase {
+  tipo: 'caixas';
+  itens: (PalavraComSons & { figura?: string; letras: string[] })[];
+  /** Habilidade da parte de escrita (a da atividade mede a segmentação). */
+  habilidadeEscrita: HabilidadeId;
+  /** Caixas a mais, para o número de caixas não entregar o número de sons (padrão: 1). */
+  caixasExtras?: number;
+}
+
+/**
+ * PARES MÍNIMOS de palavras (docs/pedagogia/04 N3): duas palavras que mudam UM som (faca × vaca).
+ * `ouvir`: ouve uma e toca a figura certa. `ler`: vê a palavra escrita e escolhe a leitura certa entre duas.
+ */
+export interface ItemParMinimo {
+  modo: 'ouvir' | 'ler';
+  alvo: string;
+  outra: string;
+  /** Os dois sons que mudam (o do alvo primeiro), para a correção contrastiva. */
+  sons: [ChaveFonema, ChaveFonema];
+  /** Figuras (modo ouvir). */
+  figuraAlvo?: string;
+  figuraOutra?: string;
+  habilidade?: HabilidadeId;
+}
+export interface AtividadeParMinimo extends AtividadeBase {
+  tipo: 'parMinimo';
+  itens: ItemParMinimo[];
+  sortear?: number;
+}
+
+/**
+ * TROCA-LETRAS e MAIS-UMA-LETRA (docs/pedagogia/04 N4, N5): a dupla pede um SOM novo numa posição; a criança acha a
+ * letra desse som entre as letras móveis, a palavra muda na tela, e ela escolhe a leitura da palavra nova entre três
+ * (a palavra nova nunca é dita antes).
+ */
+export interface ItemTroca {
+  acao: 'trocar' | 'acrescentar';
+  de: string;
+  para: string;
+  /** Posição (0 = primeira letra) que muda ou onde a letra entra. */
+  posicao: number;
+  /** Som novo (chave do fonema) e a letra dele. */
+  som: ChaveFonema;
+  letra: string;
+  /** Letras móveis oferecidas (inclui a certa). */
+  letras: string[];
+  /** Leituras oferecidas (inclui `para`, e a palavra antiga). */
+  leituras: string[];
+  habilidade?: HabilidadeId;
+}
+export interface AtividadeTroca extends AtividadeBase {
+  tipo: 'troca';
+  itens: ItemTroca[];
+  /** Habilidade da parte "qual letra faz este som" (padrão: a da letra, `gpc-<letra>`). */
+  habilidadeLetra?: HabilidadeId;
+}
+
+/**
+ * LEITURA DE FRASE decodificável (docs/pedagogia/04 N11, N12): a criança lê a frase sozinha (tocar numa palavra toca
+ * os sons dela, um a um — ensina o caminho, não diz a palavra) e responde a uma pergunta literal tocando na figura.
+ * Com `eco`: depois, a dupla lê a frase com ritmo e a criança relê junto (registro de autorrelato: não vale nota).
+ */
+export interface ItemFrase {
+  frase: string;
+  pergunta: Fala;
+  correta: string;
+  /** Figuras (3), todas plausíveis. */
+  opcoes: string[];
+  /** Sons de cada palavra (para o "toque na palavra"). */
+  palavras: PalavraComSons[];
+}
+export interface AtividadeFrase extends AtividadeBase {
+  tipo: 'frase';
+  itens: ItemFrase[];
+  eco?: boolean;
+  /** Habilidade da pergunta de compreensão. */
+  habilidadeCompreensao: HabilidadeId;
+}
+
 export interface AtividadePausa extends AtividadeBase {
   tipo: 'pausa';
   acao: string;
@@ -271,7 +400,13 @@ export type Atividade =
   | AtividadeLetra
   | AtividadeLigar
   | AtividadeTracar
-  | AtividadePausa;
+  | AtividadePausa
+  | AtividadeSomNovo
+  | AtividadeSintese
+  | AtividadeCaixas
+  | AtividadeParMinimo
+  | AtividadeTroca
+  | AtividadeFrase;
 
 /* ------------------------------- cenas ------------------------------- */
 
@@ -318,6 +453,8 @@ export interface Fase {
   curta?: boolean;
   /** Trilha do Alfabeto: letra desta missão, ou 'revisao' / 'festa'. */
   alfabeto?: { letra?: string; tipo: 'letra' | 'revisao' | 'festa' };
+  /** Trilha dos Sons (D030): unidade da trilha fônica (TF-01…), bloco e o que aparece no disco da trilha. */
+  trilhaSons?: { unidade: string; bloco: number; tipo: 'licao' | 'regra' | 'revisao'; rotulo: string };
   /** Fala de abertura (C0) e de gancho (C9). */
   acolhida: Fala;
   gancho: Fala;
