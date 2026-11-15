@@ -216,6 +216,27 @@ async function jogarSessao(page, capturar = {}) {
     }
     const pausa = page.getByTestId('pausa-pronto');
     if (await pausa.isVisible().catch(() => false)) { await tirar('pausa'); await pausa.click({ timeout: 3000 }).catch(() => {}); continue; }
+    // LIGA O SOM (D030): toca numa letra e na cena do mesmo par, até fechar todos
+    const liga = page.getByTestId('liga-o-som');
+    if (await liga.isVisible().catch(() => false)) {
+      await tirar('ligar');
+      const letra = page.locator('[data-liga-letra]:not([data-feita])').first();
+      const l = await letra.getAttribute('data-liga-letra', { timeout: 500 }).catch(() => null);
+      if (!l) { await page.waitForTimeout(80); continue; }
+      await letra.click({ timeout: 3000 }).catch(() => {});
+      await page.locator(`[data-liga-cena="${l}"]`).click({ timeout: 3000 }).catch(() => {});
+      await page.waitForTimeout(120);
+      continue;
+    }
+    // botões de som (letra → som, ouvir as leituras): tocar OUVE; a resposta só vale em "É este!"
+    const confirmar = page.getByTestId('confirmar-som');
+    if (await confirmar.isVisible().catch(() => false)) {
+      await tirar('botoes-de-som');
+      if (await confirmar.isEnabled({ timeout: 300 }).catch(() => false)) await confirmar.click({ timeout: 3000 }).catch(() => {});
+      else await page.locator('button.opcao[data-correta="1"]').first().click({ timeout: 3000 }).catch(() => {});
+      await page.waitForTimeout(120);
+      continue;
+    }
     const correta = page.locator('button.opcao[data-correta="1"]').first();
     if (await correta.isVisible().catch(() => false)) {
       await tirar(cena.includes('C4') ? 'escolher' : 'escolher2');
