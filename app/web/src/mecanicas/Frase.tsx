@@ -153,8 +153,8 @@ export function Frase({ atividade, crianca, sessao, cenaId, revisao, onFim }: Pr
             return (
               <span key={k} className="frase-palavra-caixa">
                 <button className={`frase-palavra ${acesa === k ? 'acesa' : ''}`} onClick={() => void sonsDaPalavra(k)} disabled={etapa.startsWith('eco') || etapa === 'feito'} aria-label={`Ouvir os sons da palavra ${k + 1}`}>
-                  {[...limpa].map((ch, j) => <span key={j} className={acesa === k && letraAcesa === j ? 'letra-acesa' : ''}>{ch}</span>)}
-                </button>{pontuacao}
+                  {[...limpa].map((ch, j) => <span key={j} className={acesa === k && letraAcesa === j ? 'letra-acesa' : ''}>{ch}</span>)}{pontuacao}
+                </button>
               </span>
             );
           })}

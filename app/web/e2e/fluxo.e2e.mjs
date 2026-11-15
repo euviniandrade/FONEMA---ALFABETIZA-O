@@ -445,8 +445,11 @@ async function trechoTrilhaSons(browser, erros) {
   }
   await pg.goto(BASE + `#/c/${id}/sons`);
   await pg.getByTestId('trilha-sons').waitFor();
+  // concluída × dominada (D030): dourada só quando TODAS as habilidades da fase firmaram (síntese, escrita, pares…),
+  // o que pede mais sessões; nesta volta rápida a maioria fica verde (concluída, ainda treinando)
   const dominadas = await pg.locator('.sons-marco.dominada').count();
-  ok(dominadas >= 10, `concluída × dominada na trilha: ${dominadas} lições douradas (dominadas pelo motor)`);
+  const concluidas = await pg.locator('.sons-marco.feita').count() + dominadas;
+  ok(concluidas === 19 && dominadas >= 1, `concluída × dominada na trilha: ${concluidas} lições concluídas, ${dominadas} já douradas (dominadas pelo motor)`);
   ok(await pg.locator('[data-fase="TF-R3"][data-estado="atual"]').count() === 1, 'depois de TF-22 vem a revisão dos sons que estouram (TF-R3)');
   await guardarFalas(pg);
   await ctx.close();
@@ -483,7 +486,8 @@ async function capturasTrilhaSons(browser) {
       ['TF-07', { 'som-novo': '10-som-novo', 'sintese-tocar': '11-sintese-tocar', 'sintese-escolher': '12-sintese-escolher', 'cena:TF-07-C4b': '13-leitura-inventadas', 'caixas-fichas': '14-caixas-fichas', 'caixas-letras': '15-caixas-letras', 'troca-letra': '16-mais-uma-letra', 'troca-ler': '17-mais-uma-letra-ler' }],
       ['TF-09', { 'par-ouvir': '20-par-minimo-ouvir', 'par-ler': '21-par-minimo-ler' }],
       ['TF-12', { 'som-novo': '22-regra-o-e-final', 'cena:TF-12-C3r': '23-regra-letra-que-falta' }],
-      ['TF-17', { 'troca-letra': '24-troca-letras', 'frase': '25-frase-ler', 'frase-responder': '26-frase-pergunta' }],
+      ['TF-17', { 'frase': '25-frase-ler', 'frase-responder': '26-frase-pergunta' }],
+      ['TF-R2', { 'troca-letra': '24-troca-letras' }],
       ['TF-R2', { eco: '27-leitura-em-eco' }],
       ['TF-22', { 'som-novo': '28-regra-ti-di' }]
     ];
