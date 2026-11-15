@@ -29066,6 +29066,214 @@
   "gravidade": "ok"
  },
  {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "Ponha a mão no pescoço para sentir.",
+  "arquivo": "falas/sofia-1adv423-m1.mp3",
+  "esperado": "Ponha a mão no pescoço para sentir.",
+  "sinal": {
+   "dur": 1.966,
+   "silencio_ini_ms": 105,
+   "silencio_fim_ms": 130,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -2.8,
+   "rms_fala_db": -17.4,
+   "lufs": -17.1,
+   "ms_por_caractere": 62,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 50,
+   "subida_ini_ms": 104,
+   "problemas": [],
+   "desvio_volume_db": -0.1
+  },
+  "fonte": "falas/sofia-1adv423.mp3",
+  "sha": "8713e48c888c53b9",
+  "fonte_problemas": [],
+  "ouvido": "Ponha a mão no pescoço para sentir",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
+ },
+ {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "Você leu o nome do bichinho da mata!",
+  "arquivo": "falas/sofia-1upee47-m1.mp3",
+  "esperado": "Você leu o nome do bichinho da mata!",
+  "sinal": {
+   "dur": 2.415,
+   "silencio_ini_ms": 110,
+   "silencio_fim_ms": 130,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -5.8,
+   "rms_fala_db": -17.1,
+   "lufs": -16.3,
+   "ms_por_caractere": 78,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 90,
+   "subida_ini_ms": 169,
+   "problemas": [],
+   "desvio_volume_db": 0.2
+  },
+  "fonte": "falas/sofia-1upee47.mp3",
+  "sha": "d1df1152d465d3ec",
+  "fonte_problemas": [],
+  "ouvido": "Você leu o nome do bichinho da mata",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
+ },
+ {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "lifa",
+  "arquivo": "falas/sofia-1uqiceh-m1.mp3",
+  "esperado": "Lifa.",
+  "sinal": {
+   "dur": 0.869,
+   "silencio_ini_ms": 90,
+   "silencio_fim_ms": 135,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -5.7,
+   "rms_fala_db": -17.2,
+   "lufs": -16.6,
+   "ms_por_caractere": 161,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 55,
+   "subida_ini_ms": 189,
+   "problemas": [],
+   "desvio_volume_db": 0.1
+  },
+  "fonte": "falas/sofia-1uqiceh.mp3",
+  "sha": "e7eab2957368ed1a",
+  "fonte_problemas": [],
+  "ouvido": "Lifa?",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
+ },
+ {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "mufa",
+  "arquivo": "falas/sofia-1uqjb04-m1.mp3",
+  "esperado": "Mufa.",
+  "sinal": {
+   "dur": 0.918,
+   "silencio_ini_ms": 100,
+   "silencio_fim_ms": 130,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -4.0,
+   "rms_fala_db": -17.4,
+   "lufs": -17.9,
+   "ms_por_caractere": 172,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 80,
+   "subida_ini_ms": 129,
+   "problemas": [],
+   "desvio_volume_db": -0.1
+  },
+  "fonte": "falas/sofia-1uqjb04.mp3",
+  "sha": "435a32eeb211fb4d",
+  "fonte_problemas": [],
+  "ouvido": "Mufa",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
+ },
+ {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "fali",
+  "arquivo": "falas/sofia-1uqprgp-m1.mp3",
+  "esperado": "Fali.",
+  "sinal": {
+   "dur": 0.679,
+   "silencio_ini_ms": 85,
+   "silencio_fim_ms": 130,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -3.6,
+   "rms_fala_db": -17.5,
+   "lufs": -16.4,
+   "ms_por_caractere": 116,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 55,
+   "subida_ini_ms": 89,
+   "problemas": [],
+   "desvio_volume_db": -0.2
+  },
+  "fonte": "falas/sofia-1uqprgp.mp3",
+  "sha": "3fd019502a1cd7c6",
+  "fonte_problemas": [],
+  "ouvido": "Fale",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.25,
+  "conteudo": [
+   "palavra trocada (“fali” → “fale”)"
+  ],
+  "gravidade": "conferir"
+ },
+ {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "fulu",
+  "arquivo": "falas/sofia-1uqq1q9-m1.mp3",
+  "esperado": "Fulu.",
+  "sinal": {
+   "dur": 0.943,
+   "silencio_ini_ms": 100,
+   "silencio_fim_ms": 135,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -5.3,
+   "rms_fala_db": -17.1,
+   "lufs": -16.8,
+   "ms_por_caractere": 177,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 430,
+   "subida_ini_ms": 184,
+   "problemas": [],
+   "desvio_volume_db": 0.2
+  },
+  "fonte": "falas/sofia-1uqq1q9.mp3",
+  "sha": "0bf8c59fe1900411",
+  "fonte_problemas": [],
+  "ouvido": "[outro jingle]",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.867,
+  "conteudo": [
+   "palavra trocada (“fulu” → “otro jingle”)"
+  ],
+  "gravidade": "conferir"
+ },
+ {
   "tipo": "nome",
   "voz": "sofia",
   "chave": "helena",

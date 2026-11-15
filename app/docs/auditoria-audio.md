@@ -2,9 +2,9 @@
 
 Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai ao ar sem esta auditoria**.
 
-- Clipes auditados: **1135** (845 falas + 290 nomes; vozes Sofia e Tales)
-- Graves (defeito audível provável): **36** · a conferir de ouvido (palavra/som solto com transcrição diferente): **72** · leves (higiene do sinal): **0** · sem defeito: **1027**
-- Conteúdo conferido por transcrição: **1135** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
+- Clipes auditados: **1141** (851 falas + 290 nomes; vozes Sofia e Tales)
+- Graves (defeito audível provável): **36** · a conferir de ouvido (palavra/som solto com transcrição diferente): **74** · leves (higiene do sinal): **0** · sem defeito: **1031**
+- Conteúdo conferido por transcrição: **1141** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
 - Volume (clipes ≥ 0,4 s): mediana -17.4 LUFS, de -22.8 a -14.6 (alvo -16)
 
 ## Defeitos por tipo
@@ -12,7 +12,7 @@ Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai
 | Tipo | Antes | Agora |
 |---|---|---|
 | começo seco | 184 | 0 |
-| conteúdo: palavra trocada | 69 | 85 |
+| conteúdo: palavra trocada | 69 | 87 |
 | volume fora da média | 135 | 0 |
 | sem respiro no começo | 113 | 0 |
 | sem respiro no fim | 69 | 0 |
@@ -24,9 +24,9 @@ Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai
 | conteúdo: sílaba faltando no começo | 4 | 5 |
 | conteúdo: sobrando | 5 | 3 |
 | conteúdo: transcrição vazia | 2 | 1 |
-| conteúdo: sílaba faltando no meio | 0 | 1 |
 | conteúdo: palavra faltando | 0 | 1 |
 | mudo | 1 | 0 |
+| conteúdo: sílaba faltando no meio | 0 | 1 |
 
 Antes: 275 graves, 52 a conferir e 188 leves em 915 clipes (915 com transcrição).
 
@@ -90,10 +90,12 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 | sofia | Co. | So, / Tchau! | `falas/sofia-rpt9pj-m1.mp3` |
 | sofia | Doce! | Dote | `falas/sofia-1uqo36u-r2-m1.mp3` |
 | sofia | Eeeee. | Hum. / Ãhn | `falas/sofia-1uqp3d7-m1.mp3` |
+| sofia | Fali. | Fale | `falas/sofia-1uqprgp-m1.mp3` |
 | sofia | Fo. | Fu! / Fu! | `falas/sofia-rpt9s2-m1.mp3` |
 | sofia | Fofa. | Fafa | `falas/sofia-1urbxad-m1.mp3` |
 | sofia | Folu. | Follow / Follow | `falas/sofia-1uqpmxn-m1.mp3` |
 | sofia | Fuli. | Foli | `falas/sofia-1uqq1r1-m1.mp3` |
+| sofia | Fulu. | [outro jingle] | `falas/sofia-1uqq1q9-m1.mp3` |
 | sofia | Gin. | Quem / Quem? | `falas/sofia-1qahbzf-m1.mp3` |
 | sofia | Gá. | Já / Já! | `falas/sofia-rpt9pp-m1.mp3` |
 | sofia | Iglu. | Igloo / Íglo | `falas/sofia-1uqfwe4-m1.mp3` |

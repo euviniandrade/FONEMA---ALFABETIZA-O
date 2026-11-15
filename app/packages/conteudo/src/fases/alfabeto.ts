@@ -237,13 +237,18 @@ function itemCenaLetra(p: { letra: string; cena: string; fonema: string }, todos
 
 /** Cena das PRIMEIRAS PALAVRINHAS: juntar as letras já vistas e ler (o motor tira esta cena se a chave estiver desligada). */
 export const MARCADOR_PALAVRINHAS = 'palavrinhas';
-function cenaPalavrinhas(id: string, habilidade: string, quem: Voz, palavras: string[]): Cena {
+function cenaPalavrinhas(id: string, habilidade: string, quem: Voz, palavras: string[], ate: string): Cena {
+  // sem modelo, a bandeja precisa ter letras a mais (senão só resta acertar a ordem): duas letras já vistas, fora das palavras
+  const usadas = new Set(palavras.flatMap((w) => [...w.normalize('NFD').replace(/[\u0300-\u036f]/g, '')]));
+  const vistas = ALFABETO.slice(0, indice(ate) + 1).filter((l) => l.tipo === 'vogal' || l.tipo === 'consoante').map((l) => l.letra);
+  const distratoras = vistas.filter((x) => !usadas.has(x) && x !== 'Q').reverse().slice(0, 2);
   return {
     id, tipo: 'C5', titulo: 'Primeiras palavrinhas', cenario: 'quintal', marcador: MARCADOR_PALAVRINHAS,
     // D030 §5: a 1ª palavra é demonstração guiada; depois o modelo some e as peças tocam o SOM. Palavras com valores
     // sonoros ainda não ensinados (BIFE, GATO, BANANA…) ficam como vocabulário: não contam como decodificação.
     atividade: {
       tipo: 'montar', habilidade, palavras, mostrarModelo: true, modelo: 'demonstracao', enunciado: f(quem, FALAS_ALFABETO.palavrinha),
+      ...(distratoras.length ? { distratoras } : {}),
       ...(palavras.every((w) => leituraPermitida(w, 'AL')) ? {} : { vocabulario: true })
     }
   };
@@ -282,7 +287,8 @@ function faseDaLetraAl(l: LetraAlfabeto, numero: number): Fase {
   }
   cenas.push(
     {
-      id: `${id}-C3`, tipo: 'C3', titulo: `Ache a letra ${l.letra}`, cenario: 'quintal', contaDominio: true,
+      // o título aparece na tela: com som real ele não pode dizer a letra (a resposta)
+      id: `${id}-C3`, tipo: 'C3', titulo: real ? 'Ouça o som e ache a letra' : `Ache a letra ${l.letra}`, cenario: 'quintal', contaDominio: true,
       atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: hab, enunciado: f(q, FALAS_ALFABETO.acheALetra), itens: [itemAcheALetra(l), itemAcheALetra(l, true)] }
     },
     // letra → som (D030 §1): só para as letras com som real
@@ -305,7 +311,7 @@ function faseDaLetraAl(l: LetraAlfabeto, numero: number): Fase {
       atividade: { tipo: 'tracar', habilidade: hab, letras: [l.letra, l.minuscula], enunciado: f(q, FALAS_ALFABETO.trace) }
     }
   );
-  if (PALAVRINHAS[l.letra]) cenas.push(cenaPalavrinhas(`${id}-C5p`, hab, q, PALAVRINHAS[l.letra]));
+  if (PALAVRINHAS[l.letra]) cenas.push(cenaPalavrinhas(`${id}-C5p`, hab, q, PALAVRINHAS[l.letra], l.letra));
   const somTexto = l.tipo === 'muda' ? 'que ela não faz som sozinha' : l.tipo === 'nomes' ? 'onde ela aparece' : 'o som dela';
   return {
     id, regiao: 'AL', numero, titulo: `Letra ${l.letra}`, objetivo: `Conhecer a letra ${l.letra} e ${somTexto}, como em ${l.palavra.toUpperCase()}`,
@@ -396,7 +402,7 @@ function faseDeRevisao(g: number, numero: number): Fase {
       }
     );
   }
-  cenas.push(cenaPalavrinhas(`${id}-C5p`, hab, 'tales', PALAVRINHAS_REVISAO[g]));
+  cenas.push(cenaPalavrinhas(`${id}-C5p`, hab, 'tales', PALAVRINHAS_REVISAO[g], GRUPOS_ALFABETO[g].at(-1)!));
   const de = letras[0].letra;
   const ate = letras[letras.length - 1].letra;
   return {

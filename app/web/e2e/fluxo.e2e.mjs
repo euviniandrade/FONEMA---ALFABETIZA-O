@@ -324,7 +324,7 @@ async function capturasMecanicas(browser) {
       if (prontas === 2) await uma('liga-meio', async () => { await foto('liga-o-som-ligando'); });
     }
   };
-  for (const f of ['AL-B', 'AL-R1', 'AL-R2', 'AL-R4', 'R2a-F02', 'R2a-F03', 'R2a-F04']) {
+  for (const f of ['AL-B', 'AL-R1', 'AL-R4', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04']) {
     await page.goto(BASE + `#/c/${id}/sessao/${f}`);
     await jogarSessao(page, { gancho });
     console.log(`  fase ${f} jogada`);

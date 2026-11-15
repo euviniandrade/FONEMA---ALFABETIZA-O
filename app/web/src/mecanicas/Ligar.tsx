@@ -66,8 +66,11 @@ export function Ligar({ atividade, crianca, sessao, cenaId, revisao, onFim }: Pr
       return a && b ? [{ letra, x1: a.x, y1: a.y, x2: b.x, y2: b.y }] : [];
     }));
     medir();
+    // mede de novo sempre que o palco muda de tamanho (girar o aparelho, mudar a janela)
+    const obs = typeof ResizeObserver !== 'undefined' && palco.current ? new ResizeObserver(medir) : null;
+    if (obs && palco.current) obs.observe(palco.current);
     window.addEventListener('resize', medir);
-    return () => window.removeEventListener('resize', medir);
+    return () => { obs?.disconnect(); window.removeEventListener('resize', medir); };
   }, [feitas]);
 
   const corrigir = async (letra: string, cena: string) => {
