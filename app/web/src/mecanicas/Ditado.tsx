@@ -15,20 +15,24 @@ export function Ditado({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
   const [conferido, setConferido] = useState<null | boolean>(null);
   const tents = useRef<ReturnType<typeof tentativa>[]>([]);
   const palavra = atividade.palavras[i].toUpperCase();
+  const inicio = useRef(Date.now());
 
   useEffect(() => {
     (async () => {
       if (i === 0) await falar(atividade.enunciado, crianca);
       await voz.falar(palavra.toLowerCase(), { quem: 'sofia', rate: 0.8 });
     })();
-    setEscrito([]); setConferido(null);
+    setEscrito([]); setConferido(null); inicio.current = Date.now();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i]);
 
   const conferir = async () => {
     const certo = escrito.join('') === palavra;
     setConferido(certo);
-    tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, certo ? 0 : 1));
+    tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, certo ? 0 : 1, {
+      tipo: 'avaliada', mecanica: 'ditado', alvo: palavra, categoria: 'palavra', escolhido: escrito.join(''), respostas: [escrito.join('')],
+      distratores: atividade.letras.filter((l) => !palavra.includes(l)), tempoMs: Date.now() - inicio.current, tentativaNumero: 1
+    }));
     if (certo) { efeitos.acerto(); await voz.falar('Muito bem! Letra por letra.', { quem: 'sofia' }); await voz.falar(palavra.toLowerCase(), { quem: 'sofia' }); }
     else await voz.falar('Olha: assim você escreveu, e assim os adultos escrevem. Repara na diferença.', { quem: 'sofia' });
   };

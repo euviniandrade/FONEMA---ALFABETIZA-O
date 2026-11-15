@@ -21,18 +21,23 @@ export function Falar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
   const ajudou = useRef(false);
   const incertos = useRef(0);
   const tents = useRef<ReturnType<typeof tentativa>[]>([]);
+  const inicio = useRef(Date.now());
   const item = atividade.itens[i];
 
   useEffect(() => {
     if (i === 0) falar(atividade.enunciado, crianca);
-    setOk(false); setMsg(null); ajudou.current = false; incertos.current = 0;
+    setOk(false); setMsg(null); ajudou.current = false; incertos.current = 0; inicio.current = Date.now();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i]);
 
   const concluir = async () => {
     setOk(true);
     efeitos.acerto();
-    tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, ajudou.current ? 1 : 0, { pseudo: item.pseudo }));
+    // D030 §9: "Eu falei!" é AUTORRELATO (o app não conferiu a fala): fica registrado, mas não conta como resposta avaliada
+    tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, ajudou.current ? 1 : 0, {
+      pseudo: item.pseudo, tipo: 'autorrelato', mecanica: 'falar', alvo: item.texto, categoria: item.texto.length === 1 ? 'grafema' : item.pseudo ? 'pseudopalavra' : 'palavra',
+      tempoMs: Date.now() - inicio.current, tentativaNumero: 1 + incertos.current
+    }));
     await voz.falar(textoVoz(FALAS.euFalei, crianca), { quem: 'sofia' });
     await voz.falar(item.falar, { quem: 'sofia', rate: 0.8 });
     if (atividade.comemora && i === atividade.itens.length - 1) await falar(atividade.comemora, crianca);

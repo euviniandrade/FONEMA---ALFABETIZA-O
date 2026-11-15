@@ -56,7 +56,7 @@ export function Palmas({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
     if (palmas === sil.length) {
       setOk(true);
       efeitos.acerto();
-      tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, erros));
+      tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, erros, { tipo: 'avaliada', mecanica: 'palmas', tentativaNumero: erros + 1 }));
       if (erros) deNovo.current++;
       await voz.falar(textoVoz(atividade.comemora?.texto ?? 'Isso! Uma palma para cada pedacinho!', crianca), { quem: atividade.comemora?.quem ?? 'tales' });
       await espera(400);

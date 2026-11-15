@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { PersonagemVivo } from '../../componentes/PersonagemVivo.tsx';
 import { CONQUISTAS, FASE_POR_ID, REGIOES, SONS, SURPRESAS } from '@fonema/conteudo';
-import { aplicarSondagem, infoNome, podeEntrar } from '@fonema/motor';
+import { AREA_DO_DEGRAU, infoNome, podeEntrar, registrarSondagem, resultadoPorArea, situacaoSondagem, type AreaSondagem, type ItemSondagem } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { AvatarGrande, Balao, BotaoOuvir, Carregando, Topo } from '../../componentes/basicos.tsx';
@@ -178,8 +178,11 @@ const PLACAS: { degrau: number; pergunta: string; ouvir?: string; mostrar?: stri
 ];
 
 export function Sondagem({ criancaId }: { criancaId: string }) {
-  const { repo } = useApp();
+  const { repo, config } = useApp();
   const { crianca, progresso, salvarProgresso } = useCrianca(criancaId);
+  // D030: cada resposta fica guardada por área (sons das letras, leitura, segmentação) para comparar sondagens
+  const itens = useRef<(ItemSondagem & { area: AreaSondagem })[]>([]);
+  const inicio = useRef(Date.now());
   const [k, setK] = useState(0);
   const [errosSeguidos, setErrosSeguidos] = useState(0);
   const [maior, setMaior] = useState(0);
@@ -197,13 +200,18 @@ export function Sondagem({ criancaId }: { criancaId: string }) {
 
   const terminar = async (degrau: number) => {
     setFim(true);
-    const novo = aplicarSondagem(progresso, degrau, Date.now());
+    const agora = Date.now();
+    // a primeira sondagem alimenta a Trilha Expressa (regra antiga); as periódicas só registram o resultado
+    const motivo = situacaoSondagem(progresso, config, agora).motivo;
+    const novo = registrarSondagem(progresso, { id: novoId('sd'), areas: resultadoPorArea(itens.current), degrau, motivo }, agora);
     await salvarProgresso(novo);
     await repo.registrarEvento({ id: novoId('ev'), criancaId, em: Date.now(), tipo: 'sondagem', texto: `Missão das Placas: chegou ao degrau ${degrau}` });
     await falar({ quem: 'sofia', texto: 'Todas as placas no lugar! Obrigada pela ajuda, [NOME]!' }, crianca);
   };
   const responder = async (id: string) => {
     const certo = id === p.certa;
+    itens.current.push({ area: AREA_DO_DEGRAU[p.degrau], alvo: p.certa, escolhido: id, acertou: certo, tempoMs: Date.now() - inicio.current });
+    inicio.current = Date.now();
     efeitos[certo ? 'acerto' : 'suave']();
     const m = certo ? Math.max(maior, p.degrau) : maior;
     setMaior(m);

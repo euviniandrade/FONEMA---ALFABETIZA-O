@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, type PointerEvent as EventoPonteiro } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type PointerEvent as EventoPonteiro, type ReactNode } from 'react';
 import { FALAS, FALAS_FONICAS, contrasteDosSons, surdoESonoro, type AtividadeLigar } from '@fonema/conteudo';
 import { Balao, Brilho } from '../componentes/basicos.tsx';
 import { Figura, Icone } from '../componentes/ui.tsx';
@@ -162,7 +162,7 @@ export function Ligar({ atividade, crianca, sessao, cenaId, revisao, onFim }: Pr
     else if (p.letra === de.letra) tocar(p);
   };
 
-  const cartao = (p: Ponta, k: number, conteudo: JSX.Element, rotulo: string) => {
+  const cartao = (p: Ponta, k: number, conteudo: ReactNode, rotulo: string) => {
     const feita = feitas.includes(p.letra);
     const ordem = feitas.indexOf(p.letra);
     const brilha = p.lado === 'cena' && sel?.lado === 'letra' && sel.letra === p.letra && (erros[p.letra] ?? 0) >= 2 && !feita;

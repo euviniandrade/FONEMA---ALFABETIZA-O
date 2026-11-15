@@ -180,7 +180,7 @@ export function Tracar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
   const terminar = async () => {
     setOk(true);
     efeitos.acerto();
-    tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, 0));
+    tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, 0, { tipo: 'exposicao', mecanica: 'tracar', alvo: atividade.letras[tents.current.length] ?? atividade.letras[0], categoria: 'grafema', tentativaNumero: 1 }));
     // Trilha do Alfabeto: o SOM REAL da letra e depois "B, de bola." na voz de quem apresentou a letra (D029 §2)
     const al = atividade.habilidade.startsWith('letra-') ? LETRA_POR_ID[letra.toUpperCase()] : undefined;
     if (al) {

@@ -5,6 +5,7 @@ import { ProvedorApp, criarRepositorio } from './contexto.tsx';
 import './estilos.css';
 import './estilos-entrada.css';
 import './estilos-recompensas.css';
+import './estilos-mecanicas.css';
 
 const repo = criarRepositorio();
 

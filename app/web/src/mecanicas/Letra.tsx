@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { LETRA_POR_ID, PALAVRAS_SEM_VOZ, type AtividadeLetra } from '@fonema/conteudo';
+import { CENAS_DO_SOM, LETRA_POR_ID, PALAVRAS_SEM_VOZ, type AtividadeLetra } from '@fonema/conteudo';
 import { infoNome } from '@fonema/motor';
 import { Balao, Brilho } from '../componentes/basicos.tsx';
 import { Figura, Icone, caminhoFigura } from '../componentes/ui.tsx';
@@ -29,6 +29,7 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
   const [feito, setFeito] = useState(false);
   const [palavra, setPalavra] = useState(-1);
   const vivo = useRef(true);
+  const inicio = useRef(Date.now());
   const doNome = infoNome(crianca.nome, crianca.pronuncia.grafia).nome.normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().startsWith(l.letra);
 
   /** Uma fala da dupla; devolve false se a tela já saiu. */
@@ -87,7 +88,8 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
     setFeito(true);
     efeitos.acerto();
     await espera(500);
-    onFim({ tentativas: [tentativa(atividade.habilidade, sessao, cenaId, 0)], tentouDeNovo: 0 });
+    // apresentação: é EXPOSIÇÃO (D030 §9), não resposta avaliada
+    onFim({ tentativas: [tentativa(atividade.habilidade, sessao, cenaId, 0, { tipo: 'exposicao', mecanica: 'letra', alvo: l.letra, categoria: 'grafema', tempoMs: Date.now() - inicio.current, tentativaNumero: 1 })], tentouDeNovo: 0 });
   };
 
   // passos: 0 = "Letra B." · 1 = "Tem a grande e a pequena." · 2 = "B, de bola." · 3 = aviso da letra
@@ -116,6 +118,8 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
         </div>
         {passo >= 10 && passo <= 13 ? (
           <div className="letra-som" data-testid="letra-som" aria-live="polite">
+            {/* a CENA do som (Liga o som): a figura do faz de conta aparece junto, e é ela que a criança vai ligar à letra */}
+            {CENAS_DO_SOM[l.letra] && caminhoFigura(undefined, CENAS_DO_SOM[l.letra]) ? <Figura palavra={CENAS_DO_SOM[l.letra]} className="letra-cena" /> : null}
             <span className={`letra-som-onda ${passo === 11 ? 'tocando' : ''}`}><Icone nome="som" /></span>
             <p>{passo === 10 ? 'Faz de conta…' : passo === 13 ? 'Sua vez! Faça o som.' : passo === 12 ? 'Repita comigo!' : 'Escute o som da letra'}</p>
           </div>

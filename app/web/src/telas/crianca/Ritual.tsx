@@ -1,7 +1,7 @@
 import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { useEffect, useMemo, useState } from 'react';
 import { CONQUISTA_POR_ID, FASE_POR_ID, FALAS, type Fase } from '@fonema/conteudo';
-import { calcularNivel, fasesConcluidas, missaoInicialFeita, infoNome, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
+import { calcularNivel, fasesConcluidas, missaoInicialFeita, infoNome, situacaoSondagem, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Topo } from '../../componentes/basicos.tsx';
@@ -108,7 +108,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
             {fase.demonstracao ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/mostra/${fase.id}`)} data-testid="mostra-professor"><Icone nome="chapeu" />Mostra pro professor</button> : null}
             <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/album`)}><Icone nome="album" />Álbum</button>
             {config.lojinha.noFimDaSessao ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/lojinha`)} data-testid="ir-lojinha"><Icone nome="lojinha" />Lojinha</button> : null}
-            {progresso.sessoesFeitas === 1 && idade >= 6 && !progresso.expressa.sondagemEm ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/sondagem`)}><Icone nome="placa" />Missão das Placas</button> : null}
+            {situacaoSondagem(progresso, config, Date.now(), idade).devida ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/sondagem`)}><Icone nome="placa" />Missão das Placas</button> : null}
             <button className="btn grande ipe" onClick={() => navegar(`c/${crianca.id}/vila`)} data-testid="voltar-vila"><Icone nome="casa" />{textoTela('Tchau! Voltar para a vila', crianca)}</button>
           </div>
         </section>

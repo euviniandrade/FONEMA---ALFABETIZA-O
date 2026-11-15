@@ -61,7 +61,7 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
     efeitos.acerto();
     await voz.falar(textoVoz(atividade.comemora?.texto ?? 'Isso! Você fez o som!', crianca), { quem: atividade.comemora?.quem ?? 'sofia' });
     await espera(400);
-    onFim({ tentativas: [tentativa(atividade.habilidade, sessao, cenaId, dica ? 1 : 0)], tentouDeNovo: 0 });
+    onFim({ tentativas: [tentativa(atividade.habilidade, sessao, cenaId, dica ? 1 : 0, { tipo: 'exposicao', mecanica: 'espelho', alvo: atividade.fonema, categoria: 'fonema', tentativaNumero: 1 })], tentouDeNovo: 0 });
   };
 
   const letrasTela = atividade.letra;

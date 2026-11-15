@@ -1,6 +1,6 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
-import type { ConfigPlataforma } from '@fonema/conteudo';
-import { normalizarCrianca, type Crianca, type Demonstracao, type Evento, type Progresso, type StatusDemonstracao } from '@fonema/motor';
+import { CONFIG_PADRAO, type ConfigPlataforma } from '@fonema/conteudo';
+import { migrarProgresso, normalizarCrianca, type Crianca, type Demonstracao, type Evento, type Progresso, type StatusDemonstracao } from '@fonema/motor';
 import type { RegistroConta, Repositorio } from './repositorio.ts';
 
 interface Esquema extends DBSchema {
@@ -44,7 +44,8 @@ export class RepositorioIndexedDB implements Repositorio {
     await tx.done;
   }
 
-  async obterProgresso(criancaId: string) { return (await this.db).get('progressos', criancaId); }
+  // leitura sempre migrada (D030): progresso da versão 1 ganha tipo das tentativas e domínio honesto, sem perder nada
+  async obterProgresso(criancaId: string) { const p = await (await this.db).get('progressos', criancaId); return p ? migrarProgresso(p, CONFIG_PADRAO) : undefined; }
   async salvarProgresso(p: Progresso) { await (await this.db).put('progressos', p); }
 
   async registrarEvento(e: Evento) { await (await this.db).put('eventos', e); }

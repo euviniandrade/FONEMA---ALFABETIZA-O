@@ -10,6 +10,7 @@ import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
 import { AssisteEFaz } from '../../mecanicas/AssisteEFaz.tsx';
 import { Escolher } from '../../mecanicas/Escolher.tsx';
+import { Ligar } from '../../mecanicas/Ligar.tsx';
 import { Palmas } from '../../mecanicas/Palmas.tsx';
 import { Montar } from '../../mecanicas/Montar.tsx';
 import { Ditado } from '../../mecanicas/Ditado.tsx';
@@ -96,6 +97,7 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
       case 'espelho': return <Espelho key={etapa.cena!.id} {...props(a)} />;
       case 'tracar': return <Tracar key={etapa.cena!.id} {...props(a)} />;
       case 'letra': return <Letra key={etapa.cena!.id} {...props(a)} />;
+      case 'ligar': return <Ligar key={etapa.cena!.id} {...props(a)} />;
       case 'pausa': return <Pausa key={etapa.cena!.id} {...props(a)} />;
     }
   };
