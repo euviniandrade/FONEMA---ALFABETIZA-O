@@ -1,6 +1,6 @@
 # Relatório de decodificabilidade (gerado)
 
-Gerado por `scripts/relatorio-decodificabilidade.ts`. 315 leituras e escritas conferidas em 65 fases · **0 erros** · 22 com aviso.
+Gerado por `scripts/relatorio-decodificabilidade.ts`. 301 leituras e escritas conferidas em 65 fases · **0 erros** · 20 com aviso.
 Erro = valor sonoro ainda não ensinado na unidade da fase (o teste falha). Aviso = A5 (vogal nasalizada pela consoante seguinte), vogal átona que muda na fala ou pronúncia regional (TI/DI).
 
 ### AL-A · Letra A
@@ -402,10 +402,6 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-17-C4c | escrita | PATO | ok |
 | TF-17-C4c | escrita | TATU | ok |
 | TF-17-C4c | escrita | LATA | ok |
-| TF-17-C5t | palavra | PATO | ok |
-| TF-17-C5t | palavra | MATO | ok |
-| TF-17-C5t | palavra | LATA | ok |
-| TF-17-C5t | palavra | NATA | ok |
 | TF-17-C5f | frase | O pato pula. | ok |
 
 ### TF-18 · O som /b/ (até TF-18)
@@ -427,8 +423,6 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-18-C5p | palavra | bato | ok |
 | TF-18-C5p | palavra | bule | ok |
 | TF-18-C5p | palavra | pata | ok |
-| TF-18-C5t | palavra | OI | ok |
-| TF-18-C5t | palavra | BOI | ok |
 
 ### TF-19 · O som /k/ (ca, co, cu) (até TF-19)
 
@@ -446,8 +440,6 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-19-C4c | escrita | VACA | ok |
 | TF-19-C4c | escrita | SUCO | ok |
 | TF-19-C4c | escrita | BOCA | ok |
-| TF-19-C5p | palavra | faca | ok |
-| TF-19-C5p | palavra | vaca | ok |
 | TF-19-C5f | frase | O macaco come a jaca. | ok, com aviso: "come": vogal nasalizada pela consoante seguinte (A5) |
 
 ### TF-20 · O som /d/ (até TF-20)
@@ -483,10 +475,6 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-21-C4c | escrita | GATO | ok |
 | TF-21-C4c | escrita | GALO | ok |
 | TF-21-C4c | escrita | LAGO | ok |
-| TF-21-C5t | palavra | MATO | ok |
-| TF-21-C5t | palavra | GATO | ok |
-| TF-21-C5t | palavra | GATO | ok |
-| TF-21-C5t | palavra | GALO | ok |
 | TF-21-C5f | frase | O gato viu o galo. | ok |
 
 ### TF-22 · TI e DI (até TF-22)
@@ -505,8 +493,6 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-22-C4c | escrita | TIA | ok, com aviso: "tia": ti-di varia de região (todas as pronúncias valem) |
 | TF-22-C4c | escrita | DIA | ok, com aviso: "dia": ti-di varia de região (todas as pronúncias valem) |
 | TF-22-C4c | escrita | BATE | ok, com aviso: "bate": ti-di varia de região (todas as pronúncias valem) |
-| TF-22-C5p | palavra | tia | ok, com aviso: "tia": ti-di varia de região (todas as pronúncias valem) |
-| TF-22-C5p | palavra | dia | ok, com aviso: "dia": ti-di varia de região (todas as pronúncias valem) |
 | TF-22-C5f | frase | A tia viu o tomate. | ok, com aviso: "tia": ti-di varia de região (todas as pronúncias valem); "tomate": ti-di varia de região (todas as pronúncias valem) |
 
 ### TF-R3 · Revisão: sons que estouram (até TF-22)
