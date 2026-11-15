@@ -638,6 +638,7 @@ async function main() {
     // --sem-jornada: pula a jornada inteira (demorada) e vai direto ao nível inicial
     const AL = [...'ABCDE', 'R1', ...'FGHIJ', 'R2', ...'KLMNO', 'R3', ...'PQRST', 'R4', ...'UVWXYZ', 'FESTA'].map((x) => `AL-${x}`);
     const FASES = [...AL, 'R1-F02', 'R1-F03', 'R1-F06', 'R1-F07', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04', 'R2a-F05', 'R0-F01'];
+    let viuTrofeu = false;
     for (const f of JORNADA ? FASES : []) {
       let concluiu = false;
       for (let tentativa = 0; tentativa < 3 && !concluiu; tentativa++) {
@@ -645,10 +646,13 @@ async function main() {
         await jogarSessao(pj, {});
         await pj.getByTestId('ritual').locator('h1').waitFor();
         concluiu = /Fase concluída/.test(await pj.getByTestId('ritual').locator('h1').innerText());
+        // o troféu só é "novo" na vez em que a Festa conclui: confere em cada tentativa, não só na última
+        if (f === 'AL-FESTA' && concluiu) viuTrofeu = viuTrofeu || await pj.locator('[data-testid="selo-novo"] [data-conquista="T-ALFABETO"]').count() === 1;
+        if (f === 'AL-FESTA') console.log(`  · Festa, tentativa ${tentativa + 1}: ${await pj.getByTestId('ritual').locator('h1').innerText()} · selos novos: ${await pj.locator('[data-testid="selo-novo"] [data-conquista]').evaluateAll((e) => e.map((x) => x.dataset.conquista).join(','))}`);
       }
       ok(concluiu, `fase ${f} jogada e concluída`);
       if (f === 'AL-FESTA') {
-        ok(await pj.locator('[data-testid="selo-novo"] [data-conquista="T-ALFABETO"]').count() === 1, 'Festa do Alfabeto: troféu "Alfabeto Completo"');
+        ok(viuTrofeu, 'Festa do Alfabeto: troféu "Alfabeto Completo"');
         await pj.goto(BASE + `#/c/${idj}/alfabeto`);
         await pj.getByTestId('trilha-alfabeto').waitFor();
         ok(await pj.locator('.marco.feita').count() === 31 && /26 de 26/.test(await pj.getByTestId('letras-feitas').innerText()), 'trilha completa: 26 de 26 letras brilhando');
