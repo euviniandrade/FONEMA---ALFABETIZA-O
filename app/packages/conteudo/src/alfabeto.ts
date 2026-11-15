@@ -142,7 +142,7 @@ export const TRES_PALAVRAS: Record<string, [string, string, string]> = {
  * Palavras-exemplo que aparecem ESCRITAS mas não são ditas: o clipe saiu duvidoso duas vezes na auditoria
  * (docs/auditoria-audio.md). Voltam a ser ditas quando houver gravação conferida de ouvido.
  */
-export const PALAVRAS_SEM_VOZ: string[] = ['kart', 'olho', 'doce', 'unha'];
+export const PALAVRAS_SEM_VOZ: string[] = ['olho', 'unha']; // 'kart' e 'doce' foram regravadas e passaram na auditoria (15/11)
 /** Segundo som de cada letra que tem dois (pesquisa 45): tocado logo depois do aviso "esta letra tem outro som". */
 export const SEGUNDO_FONEMA: Record<string, ChaveFonema> = { E: 'E', O: 'O', G: 'j', S: 'z', W: 'v', R: 'r', C: 's' };
 

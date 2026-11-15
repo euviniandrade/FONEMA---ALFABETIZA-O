@@ -73,8 +73,8 @@
    "versao": 2
   },
   "sofia|U ou O,": {
-   "versao": 3,
-   "texto": "U, ou O…"
+   "versao": 4,
+   "texto": "U? Ou O?"
   },
   "sofia|Os dois são O. Sua vez,": {
    "versao": 2
@@ -173,6 +173,10 @@
   "sofia|S, de sapo.": {
    "versao": 2,
    "texto": "Esse! De sapo."
+  },
+  "sofia|Isso! Esse é o som do U.": {
+   "versao": 2,
+   "texto": "Isso! Esse é o som do Ú!"
   }
  },
  "nomes": {
