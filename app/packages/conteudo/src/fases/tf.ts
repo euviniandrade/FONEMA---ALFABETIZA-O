@@ -434,9 +434,11 @@ function cenaRevisao(id: string, li: Licao): Cena | null {
   const antes = li.revisaoLetras ?? letrasAte(efetiva(li)).filter((x) => x !== li.letra);
   if (!antes.length) return null;
   const itens = antes.map((x, k) => itemSomLetra(x, efetiva(li), k, antes));
+  // nas revisões de bloco entra também o outro sentido: ver a letra e achar o som
+  if (li.revisaoLetras || li.tipo === 'revisao-vogais') itens.push(...antes.map((x, k) => itemLetraSom(x, efetiva(li), k)));
   return {
     id, tipo: 'C1', titulo: 'Os sons que você já sabe', cenario: 'praca', contaDominio: true,
-    atividade: escolher(habilidadeTF(antes[antes.length - 1]), sofia(FALAS_TRILHA_SONS.revisao), itens, { sortear: Math.min(li.revisaoLetras ? 4 : 3, itens.length), estilo: 'revisao' })
+    atividade: escolher(habilidadeTF(antes[antes.length - 1]), sofia(FALAS_TRILHA_SONS.revisao), itens, { sortear: Math.min(li.revisaoLetras ? 6 : 3, itens.length), estilo: 'revisao' })
   };
 }
 
@@ -487,14 +489,11 @@ function cenasAcharLetra(id: string, li: Licao): Cena[] {
   const l = letraDe(x);
   const hab = habilidadeTF(x);
   const ate = efetiva(li);
+  // primeira vez: só o sentido som → letra (4 itens, distratoras diferentes); letra → som fica para as revisões
   const cenas: Cena[] = [
     {
       id: `${id}a`, tipo: 'C3', titulo: 'Ouça o som e ache a letra', cenario: 'quintal', contaDominio: true,
-      atividade: escolher(hab, duvidoso(x) ? sofia(FALAS_TRILHA_SONS.silabaLetra) : f(l.voz, 'Ouça e toque na letra.'), [itemSomLetra(x, ate, 0), itemSomLetra(x, ate, 1)])
-    },
-    {
-      id: `${id}b`, tipo: 'C3', titulo: 'Qual é o som desta letra?', cenario: 'quintal', contaDominio: true,
-      atividade: escolher(hab, duvidoso(x) ? sofia(FALAS_TRILHA_SONS.letraSilaba) : f(l.voz, FALAS_FONICAS.qualSom), [itemLetraSom(x, ate, 0), itemLetraSom(x, ate, 1)])
+      atividade: escolher(hab, duvidoso(x) ? sofia(FALAS_TRILHA_SONS.silabaLetra) : f(l.voz, 'Ouça e toque na letra.'), [0, 1, 2, 3].map((k) => itemSomLetra(x, ate, k)))
     }
   ];
   if (li.tipo === 'vogal') {
@@ -622,7 +621,7 @@ function faseDaLicao(li: Licao, numero: number): Fase {
   if (ehLicaoDeLetra || li.tipo === 'regra-final' || li.tipo === 'regra-tidi') add(cenaSomNovo(`${id}-C2`, li));
   if (ehLicaoDeLetra) {
     cenas.push(...cenasAcharLetra(`${id}-C3`, li));
-    add({ id: `${id}-C3t`, tipo: 'C3', titulo: 'Desenhe a letra', cenario: 'ilha', contaDominio: true, atividade: { tipo: 'tracar', habilidade: habilidadeTF(li.letra!), letras: [li.letra!, li.letra!.toLowerCase()], enunciado: f(letraDe(li.letra!).voz, 'Agora desenhe a letra com o dedo.') } });
+    // o traçado fica na Trilha A–Z ("conhecer as letras"); aqui a lição é curta: som, leitura e escrita
   }
   if (li.tipo === 'revisao-vogais') {
     add({
@@ -636,7 +635,10 @@ function faseDaLicao(li: Licao, numero: number): Fase {
   cenas.push(...cenasLeitura(`${id}-C4`, li, li.tipo === 'revisao-vogais' ? 'leitura-vogais' : 'leitura-cvcv'));
   add(cenaCaixas(`${id}-C4c`, li));
   add(cenaDitado(`${id}-C5d`, li));
-  cenas.push(...cenasDesafio(`${id}-C5`, li));
+  // lição: um desafio só (frase > pares mínimos > troca-letras), para a sessão caber em 7–8 cenas; revisão: todos
+  const desafios = cenasDesafio(`${id}-C5`, li);
+  const prioridade = (c: Cena) => ({ frase: 0, parMinimo: 1, troca: 2 } as Record<string, number>)[c.atividade?.tipo ?? ''] ?? 3;
+  cenas.push(...(revisaoDeBloco ? desafios : [...desafios].sort((a, b) => prioridade(a) - prioridade(b)).slice(0, 1)));
 
   const habPrincipal = li.tipo === 'vogal' || li.tipo === 'consoante' ? habilidadeTF(li.letra!) : li.tipo === 'regra-final' ? 'regra-vogal-final' : li.tipo === 'regra-tidi' ? 'regra-ti-di' : li.tipo === 'revisao-vogais' ? 'vogais' : 'leitura-cvcv';
   const leituraHab = li.tipo === 'revisao-vogais' ? 'leitura-vogais' : 'leitura-cvcv';

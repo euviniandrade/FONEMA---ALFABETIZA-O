@@ -3,9 +3,9 @@
 Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai ao ar sem esta auditoria**.
 
 - Clipes auditados: **1495** (1205 falas + 290 nomes; vozes Sofia e Tales)
-- Graves (defeito audível provável): **43** · a conferir de ouvido (palavra/som solto com transcrição diferente): **126** · leves (higiene do sinal): **0** · sem defeito: **1326**
+- Graves (defeito audível provável): **40** · a conferir de ouvido (palavra/som solto com transcrição diferente): **126** · leves (higiene do sinal): **0** · sem defeito: **1329**
 - Conteúdo conferido por transcrição: **1495** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
-- Volume (clipes ≥ 0,4 s): mediana -17.4 LUFS, de -25.1 a -14.6 (alvo -16)
+- Volume (clipes ≥ 0,4 s): mediana -17.4 LUFS, de -22.8 a -14.6 (alvo -16)
 
 ## Defeitos por tipo
 
@@ -16,19 +16,19 @@ Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai
 | volume fora da média | 135 | 0 |
 | sem respiro no começo | 113 | 0 |
 | sem respiro no fim | 69 | 0 |
-| clipping | 63 | 4 |
+| clipping | 63 | 2 |
 | fim seco | 35 | 0 |
-| conteúdo: nome errado | 16 | 5 |
 | fim cortado na gravação | 21 | 0 |
+| conteúdo: nome errado | 16 | 5 |
 | conteúdo: sílaba faltando no fim | 6 | 8 |
 | conteúdo: sílaba faltando no começo | 4 | 7 |
 | conteúdo: sobrando | 5 | 3 |
-| conteúdo: sílaba faltando no meio | 0 | 3 |
 | curto demais | 0 | 3 |
 | conteúdo: transcrição vazia | 2 | 1 |
-| conteúdo: palavra faltando | 0 | 2 |
+| conteúdo: sílaba faltando no meio | 0 | 3 |
 | conteúdo: fim faltando | 0 | 2 |
 | mudo | 1 | 0 |
+| conteúdo: palavra faltando | 0 | 1 |
 
 Antes: 275 graves, 52 a conferir e 188 leves em 915 clipes (915 com transcrição).
 
@@ -51,19 +51,16 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 | sofia | L, de lua | É de luar / Ele de lua | palavra trocada (“l” → “ele”) | `falas/sofia-1uqi87f-m1.mp3` |
 | sofia | L, de lua | Lei de Loire? | palavra trocada (“l” → “le”); palavra trocada (“lua” → “loire”) | `falas/sofia-1uraq2z-m1.mp3` |
 | sofia | L, de lua… lua! | É o de lua, lua | palavra trocada (“l” → “e o”) | `falas/sofia-1asmjqs-m1.mp3` |
-| sofia | Lupa. | Lupa | clipping | `falas/sofia-1uqifer-m1.mp3` |
 | sofia | M. Ligar a letra M ao som m e juntar ma, mo, mu. | tem se ligar a letra M ao som M e juntar ma mó mu / M se ligar a letra | palavra trocada (“n” → “ten se”) | `falas/sofia-n0mlr6-m1.mp3` |
 | sofia | Mais uma tábua encaixou na ponte! | Mais uma tábua encaixou na ponte. | clipping | `falas/sofia-104fnkb-m1.mp3` |
 | sofia | N, de navio | em, o navio / É, de navio | palavra trocada (“n” → “e”) | `falas/sofia-1uqjt6z-m1.mp3` |
 | sofia | O D tem voz: | O detém voz | palavra trocada (“d ten” → “deten”) | `falas/sofia-1sspl1-m1.mp3` |
 | sofia | O Q vem sempre com o U. | O que vem sempre com o U | palavra trocada (“k” → “ke”) | `falas/sofia-gsjide-m1.mp3` |
-| sofia | O som i da letra I | O som e da letra I | palavra trocada (“i” → “e”) | `falas/sofia-11gwra6-m1.mp3` |
-| sofia | O som u da letra U | O som da letra U | palavra faltando “u” | `falas/sofia-lyxfku-m1.mp3` |
+| sofia | O som do U, uuuu, da letra U. | O som do U, uru da letra U | palavra trocada (“u” → “uru”) | `falas/sofia-lyxfku-r2-m1.mp3` |
 | sofia | Olha a minha boca antes de responder, | Olhe pra minha boca antes de responder. / Olhe na minha boca antes de  | palavra trocada (“olia a” → “olie na”) | `falas/sofia-fkfjyi-m1.mp3` |
 | sofia | Olha minha boca. | Olha a minha boca / Olha a minha boca | sobrando “a” | `falas/sofia-18vvjz7-m1.mp3` |
 | sofia | Os sons é e ê da letra E | Os sons E e I da letra E | palavra trocada (“e” → “i”) | `falas/sofia-1suupoe-m1.mp3` |
 | sofia | Ouvir a diferença entre é e ê | Ouvir a diferença entre "e" | fim faltando “e e” | `falas/sofia-lmh00y-m1.mp3` |
-| sofia | Puli. | Puli | clipping | `falas/sofia-1uqx9xn-m1.mp3` |
 | sofia | Põe a mão no pescoço para sentir. | Ponha a mão no pescoço para sentir | palavra trocada (“poe” → “ponia”) | `falas/sofia-1h6mw43-m1.mp3` |
 | sofia | R, de rato | É de rato / É de rato | palavra trocada (“r” → “e”) | `falas/sofia-rdgy2-m1.mp3` |
 | sofia | S, de sapo… sapo! | Este sapo. Sapo | palavra trocada (“s de” → “este”) | `falas/sofia-1docthd-m1.mp3` |

@@ -418,6 +418,9 @@ async function trechoTrilhaSons(browser, erros) {
   const jogar = async (f) => {
     let concluiu = false;
     for (let t = 0; t < 3 && !concluiu; t++) {
+      // sai da tela do ritual antes (a mesma rota com o mesmo hash não recarrega a sessão)
+      await pg.goto(BASE + `#/c/${id}/sons`);
+      await pg.getByTestId('trilha-sons').waitFor();
       await pg.goto(BASE + `#/c/${id}/sessao/${f}`);
       await jogarSessao(pg, {});
       await pg.getByTestId('ritual').locator('h1').waitFor();
@@ -429,6 +432,15 @@ async function trechoTrilhaSons(browser, erros) {
   const ordem = ['TF-06', ...Array.from({ length: 9 }, (_, k) => `TF-${String(k + 7).padStart(2, '0')}`), 'TF-R2', ...Array.from({ length: 7 }, (_, k) => `TF-${k + 16}`)];
   for (const f of ordem) {
     const c = await jogar(f);
+    if (!c) {
+      // diagnóstico: as tentativas de cada habilidade da fase, direto do banco do aparelho
+      const info = await pg.evaluate(async ([cid, fase]) => {
+        const db = await new Promise((r) => { const q = indexedDB.open('fonema'); q.onsuccess = () => r(q.result); });
+        const p = await new Promise((r) => { const q = db.transaction('progressos').objectStore('progressos').get(cid); q.onsuccess = () => r(q.result); });
+        return { fase: p.fases[fase], habs: Object.fromEntries(Object.entries(p.habilidades).map(([h, e]) => [h, e.tentativas.map((t) => `${t.cena}:${t.tipo ?? '?'}:${t.acertou ? 'ok' : 'x'}${t.comAjuda ? '+aj' : ''}`).slice(-12)])) };
+      }, [id, f]);
+      console.log(JSON.stringify(info, null, 1).slice(0, 6000));
+    }
     if (['TF-07', 'TF-16', 'TF-22'].includes(f) || !c) ok(c, `${f} jogada e concluída (por domínio, com resposta conferida)`);
   }
   await pg.goto(BASE + `#/c/${id}/sons`);

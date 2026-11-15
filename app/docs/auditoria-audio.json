@@ -33527,37 +33527,35 @@
   "tipo": "fala",
   "voz": "sofia",
   "chave": "O som /i/ da letra I",
-  "arquivo": "falas/sofia-11gwra6-m1.mp3",
-  "esperado": "O som i da letra I",
+  "arquivo": "falas/sofia-11gwra6-r2-m1.mp3",
+  "esperado": "O som do I, iiii, da letra I.",
   "sinal": {
-   "dur": 1.333,
+   "dur": 1.851,
    "silencio_ini_ms": 105,
-   "silencio_fim_ms": 131,
+   "silencio_fim_ms": 130,
    "ponta_ini_db": -180.0,
    "ponta_fim_db": -180.0,
-   "pico_db": -2.1,
-   "rms_fala_db": -17.5,
-   "lufs": -17.2,
-   "ms_por_caractere": 84,
+   "pico_db": -5.5,
+   "rms_fala_db": -17.4,
+   "lufs": -16.8,
+   "ms_por_caractere": 85,
    "estourados": 0,
    "achatados": 0,
-   "queda_fim_ms": 35,
-   "subida_ini_ms": 104,
+   "queda_fim_ms": 15,
+   "subida_ini_ms": 129,
    "problemas": [],
-   "desvio_volume_db": -0.2
+   "desvio_volume_db": -0.1
   },
-  "fonte": "falas/sofia-11gwra6.mp3",
-  "sha": "ea802dfd9e719241",
+  "fonte": "falas/sofia-11gwra6-r2.mp3",
+  "sha": "b5b6310cab318db0",
   "fonte_problemas": [],
-  "ouvido": "O som e da letra I",
+  "ouvido": "O som do I, I da letra I",
   "transcritores": [
    "scribe"
   ],
-  "distancia": 0.056,
-  "conteudo": [
-   "palavra trocada (“i” → “e”)"
-  ],
-  "gravidade": "grave"
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
  },
  {
   "tipo": "fala",
@@ -36315,29 +36313,27 @@
   "tipo": "fala",
   "voz": "sofia",
   "chave": "lupa",
-  "arquivo": "falas/sofia-1uqifer-m1.mp3",
+  "arquivo": "falas/sofia-1uqifer-r2-m1.mp3",
   "esperado": "Lupa.",
   "sinal": {
-   "dur": 0.844,
-   "silencio_ini_ms": 105,
-   "silencio_fim_ms": 140,
+   "dur": 0.869,
+   "silencio_ini_ms": 90,
+   "silencio_fim_ms": 130,
    "ponta_ini_db": -180.0,
    "ponta_fim_db": -180.0,
-   "pico_db": -5.8,
-   "rms_fala_db": -17.5,
-   "lufs": -21.0,
-   "ms_por_caractere": 150,
+   "pico_db": -5.9,
+   "rms_fala_db": -17.7,
+   "lufs": -19.2,
+   "ms_por_caractere": 162,
    "estourados": 0,
-   "achatados": 9,
-   "queda_fim_ms": 145,
+   "achatados": 0,
+   "queda_fim_ms": 55,
    "subida_ini_ms": 109,
-   "problemas": [
-    "clipping"
-   ],
-   "desvio_volume_db": -0.2
+   "problemas": [],
+   "desvio_volume_db": -0.4
   },
-  "fonte": "falas/sofia-1uqifer.mp3",
-  "sha": "1dcd5baa726ba3eb",
+  "fonte": "falas/sofia-1uqifer-r2.mp3",
+  "sha": "e384e15950b49bac",
   "fonte_problemas": [],
   "ouvido": "Lupa",
   "transcritores": [
@@ -36345,7 +36341,7 @@
   ],
   "distancia": 0.0,
   "conteudo": [],
-  "gravidade": "grave"
+  "gravidade": "ok"
  },
  {
   "tipo": "fala",
@@ -38773,29 +38769,27 @@
   "tipo": "fala",
   "voz": "sofia",
   "chave": "puli",
-  "arquivo": "falas/sofia-1uqx9xn-m1.mp3",
+  "arquivo": "falas/sofia-1uqx9xn-r2-m1.mp3",
   "esperado": "Puli.",
   "sinal": {
-   "dur": 0.774,
+   "dur": 0.749,
    "silencio_ini_ms": 105,
-   "silencio_fim_ms": 130,
+   "silencio_fim_ms": 150,
    "ponta_ini_db": -180.0,
    "ponta_fim_db": -180.0,
-   "pico_db": -2.6,
-   "rms_fala_db": -17.6,
-   "lufs": -25.1,
-   "ms_por_caractere": 135,
+   "pico_db": -9.0,
+   "rms_fala_db": -17.1,
+   "lufs": -18.6,
+   "ms_por_caractere": 123,
    "estourados": 0,
-   "achatados": 67,
+   "achatados": 0,
    "queda_fim_ms": 160,
-   "subida_ini_ms": 109,
-   "problemas": [
-    "clipping"
-   ],
-   "desvio_volume_db": -0.3
+   "subida_ini_ms": 114,
+   "problemas": [],
+   "desvio_volume_db": 0.2
   },
-  "fonte": "falas/sofia-1uqx9xn.mp3",
-  "sha": "4d0589f7fde2426b",
+  "fonte": "falas/sofia-1uqx9xn-r2.mp3",
+  "sha": "ffd19924300fc5c0",
   "fonte_problemas": [],
   "ouvido": "Puli",
   "transcritores": [
@@ -38803,7 +38797,7 @@
   ],
   "distancia": 0.0,
   "conteudo": [],
-  "gravidade": "grave"
+  "gravidade": "ok"
  },
  {
   "tipo": "fala",
@@ -40845,35 +40839,35 @@
   "tipo": "fala",
   "voz": "sofia",
   "chave": "O som /u/ da letra U",
-  "arquivo": "falas/sofia-lyxfku-m1.mp3",
-  "esperado": "O som u da letra U",
+  "arquivo": "falas/sofia-lyxfku-r2-m1.mp3",
+  "esperado": "O som do U, uuuu, da letra U.",
   "sinal": {
-   "dur": 1.382,
+   "dur": 1.831,
    "silencio_ini_ms": 105,
-   "silencio_fim_ms": 130,
+   "silencio_fim_ms": 145,
    "ponta_ini_db": -180.0,
    "ponta_fim_db": -180.0,
-   "pico_db": -3.2,
-   "rms_fala_db": -17.5,
-   "lufs": -16.8,
-   "ms_por_caractere": 88,
+   "pico_db": -8.6,
+   "rms_fala_db": -17.2,
+   "lufs": -18.1,
+   "ms_por_caractere": 83,
    "estourados": 0,
    "achatados": 0,
-   "queda_fim_ms": 20,
-   "subida_ini_ms": 114,
+   "queda_fim_ms": 35,
+   "subida_ini_ms": 119,
    "problemas": [],
-   "desvio_volume_db": -0.2
+   "desvio_volume_db": 0.1
   },
-  "fonte": "falas/sofia-lyxfku.mp3",
-  "sha": "4f0017c508d033ed",
+  "fonte": "falas/sofia-lyxfku-r2.mp3",
+  "sha": "2f5ee2d7c4e0e832",
   "fonte_problemas": [],
-  "ouvido": "O som da letra U",
+  "ouvido": "O som do U, uru da letra U",
   "transcritores": [
    "scribe"
   ],
-  "distancia": 0.059,
+  "distancia": 0.042,
   "conteudo": [
-   "palavra faltando “u”"
+   "palavra trocada (“u” → “uru”)"
   ],
   "gravidade": "grave"
  },
