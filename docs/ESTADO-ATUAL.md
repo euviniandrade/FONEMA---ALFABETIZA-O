@@ -4,7 +4,7 @@ Atualizado em 2026-11-15 (seção 4b, D030). **Leia este arquivo primeiro ao ret
 Tudo o que foi feito está neste repositório, no ramo `claude/eager-brahmagupta-3d2lhr` (commit e push a cada mudança). Nada depende
 da memória da conversa anterior.
 
-## 0. Situação agora (15/11/2026, 22h UTC) — leia isto primeiro
+## 0. Situação agora (15/11/2026, 23h UTC) — leia isto primeiro
 
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
@@ -51,10 +51,29 @@ por ordem de tentativas do próprio teste).
   mecânicas gravarem os campos novos; ditado de frases, leitura cronometrada e compreensão na sondagem; calibrar os números (queda de
   25 pontos, chute < 1,2 s).
 
+**Trilha dos Sons — a trilha fônica que ensina a ler (D030 etapas 6–8; 15/11, noite; NÃO publicado ainda):**
+- **24 fases novas** (região `TF`, `app/packages/conteudo/src/fases/tf.ts`): TF-01…TF-22 (vogais; sons que esticam M F V L S, regra
+  "O/E no fim soam U/I", N Z J; sons que estouram P T B C D G, regra TI/DI) + revisões TF-R2 e TF-R3. Jornada: Alfabeto → **Trilha dos
+  Sons** → Ilha das Vogais (é/ê, ó/ô = TF-23/24) → Vale do M-L-F (vira revisão/chefe) → Meu nome. "Já conhece as letras e os sons" começa
+  em TF-06. Tela própria `#/c/:id/sons` (botão "Sons" na vila; ilha nova no arquipélago): verde = concluída, dourado = dominada.
+- **Lição (7–8 cenas):** revisão cumulativa → **som novo** (faz de conta → som real com a boca → só depois a letra) → som → letra →
+  **síntese** com sons emendados (eu faço, nós fazemos, você faz) → ler palavras (figura e leituras faladas) + **2 palavras inventadas
+  conferidas** → **caixas de sons** (segmentar e escrever) → um desafio (**frase** com pergunta, **pares mínimos** ou **troca-letras**).
+  Traçado fica na Trilha A–Z; letra → som e leitura em **eco** ficam nas revisões. Mecânicas em `app/web/src/mecanicas/` (`SomNovo`,
+  `Sintese` + `sons-emendados.ts`, `Caixas`, `ParMinimo`, `Troca`, `Frase`, `tf-comum.tsx`); gravam o contrato completo do motor.
+- **Verificador completo** (`conteudo/src/decodificabilidade.ts`, `fases/verificar-fases.ts`, banco com pronúncia anotada `fases/tf-banco.ts`):
+  valores sonoros por unidade (53), erro × aviso, frases/textos, palavras inventadas, todas as trilhas; falha o build. Relatório:
+  `app/docs/relatorio-decodificabilidade.md` (`npx tsx scripts/relatorio-decodificabilidade.ts`).
+- Sons "duvidosos" (L, V, J e os de estouro) nunca são o único estímulo de item que conta: ali a Sofia fala a sílaba ("pa", "la").
+- **Vozes:** 237 clipes novos da Sofia (molduras genéricas, palavras, palavras inventadas, 9 frases) + 4 regravações; masterizado,
+  auditado (sobram 2 graves da trilha: a dica "O som do U" e "Vamos conferir…" marcado como curto, que soa certo) e `bocas.json` refeito.
+  ElevenLabs: ≈ 11,2 mil caracteres restantes. Figura nova: `bala` (MiniMax).
+- **Pendente:** ouvir as palavras inventadas e "tia/dia" (voz sintética); selos para as consoantes novas (regra fica no motor);
+  sincronia real das palavras no eco; revisão das listas por alfabetizadora; blocos 4 a 8 (TF-23…TF-53).
+
 **Próximos passos, em ordem:**
-1. **Trilha fônica nova** (D030 etapas 6–8): as 53 unidades de `docs/pedagogia/01-escopo-e-sequencia.md` como fases, com síntese,
-   segmentação (caixas de sons), ditado, pares mínimos de palavras, frases e textos decodificáveis, fluência e compreensão; jogos dos
-   materiais (batalha de palavras, palavra dentro de palavra, rimas, troca-letras). Verificador completo de decodificabilidade.
+1. **Trilha fônica, blocos 4 a 8** (TF-23…TF-53: abertas e nasais, R e H, dígrafos, regras de posição, encontros), textos
+   decodificáveis e fluência; jogos dos materiais (batalha de palavras, palavra dentro de palavra, rimas). Blocos 1–3 prontos (bloco acima).
 2. **Etapa 9**: feito o essencial (bloco acima); falta as mecânicas gravarem os campos novos e a voz da instrução de segmentação.
 3. **Boca (Espelho do Som)**: o dono reprovou a versão em código ("horríveis"). Conceitos em
    `docs/propostas/06-fonema-unificada/espelho-do-som-conceitos/` (A professora / B mascote / C massinha) — **aguardando a escolha dele**
@@ -202,11 +221,12 @@ prolongam → oclusivas → abertas e nasais → R e H → dígrafos → regras 
    pseudopalavras conferidas (R2a-F04-C5b) ainda não é exigida para concluir a fase.
 5. Exposição fora do domínio — **entregue no motor** (15/11): só tentativa avaliada conta (`tentativas.ts`, `dominio.ts`); Letra, Espelho,
    Traçar e Falar ficam como participação; fases marcam concluída × dominada; domínio antigo sem resposta conferida vira "a confirmar".
-6. Trilha fônica — a fazer (sequência definida).
-7. Verificador de decodificabilidade em tudo — **parcial** (15/11): valores sonoros marcados em `palavras.ts` (`VALORES_DAS_PALAVRAS`) e
-   conferidos pelo teste em toda leitura autônoma, em todas as fases; o teste também falha se dica, letra, pista ou modelo entregarem
-   a resposta. Falta o formato completo de `05-regras-de-decodificabilidade.md` §6 (pronúncia anotada, unidades TF, frases e textos).
-8. Frases, textos, fluência e compreensão — a fazer.
+6. Trilha fônica — **blocos 1 a 3 entregues** (15/11): TF-01…TF-22 + revisões TF-R2/TF-R3 na jornada, depois da Trilha A–Z (ver seção 0).
+   Faltam os blocos 4 a 8 (TF-23…TF-53).
+7. Verificador de decodificabilidade em tudo — **entregue** (15/11): formato de 05 §6 completo — banco com pronúncia anotada som a som,
+   valores por unidade TF, erro × aviso, frases e textos, palavras inventadas, todas as trilhas, relatório por fase; falha o build.
+8. Frases, textos, fluência e compreensão — **parcial** (15/11): frases decodificáveis com pergunta literal (figura) a partir de TF-10 e
+   leitura em eco nas revisões (autorrelato, sem nota). Faltam textos, fluência medida e perguntas de dedução.
 9. Sondagem periódica e reforço dirigido — **essencial entregue** (15/11): o motor agenda a sondagem (a cada 8 fases ou 30 dias, em `config.ts`),
    guarda o resultado por área (`sondagem.ts`), calcula a próxima prática recomendada, a volta ao pré-requisito e o alerta ao adulto
    (`reforco.ts`), e o painel do adulto mostra tudo (capturas `app/docs/capturas/v5-painel-*.png`, script `web/e2e/capturas-painel.mjs`).
