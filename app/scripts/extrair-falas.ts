@@ -6,7 +6,7 @@
  * Uso: npx tsx scripts/extrair-falas.ts
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { ALFABETO, NOMES_COMUNS, FASES, FALAS, FALAS_ALFABETO, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
+import { ALFABETO, NOMES_COMUNS, FASES, FALAS, FALAS_ALFABETO, FALAS_FONICAS, VOZES_DAS_FALAS_FONICAS, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
 import { concordar, silabas } from '@fonema/motor';
 
 const VOZ: Record<string, 'sofia' | 'tales'> = { sofia: 'sofia', tales: 'tales', bolota: 'tales', davi: 'tales', 'dona-cida': 'sofia', pescadora: 'sofia', 'guarda-parque': 'tales', 'zum-zum': 'tales' };
@@ -32,7 +32,7 @@ for (const f of FASES) {
     const a = c.atividade;
     if (!a) continue;
     addF(a.enunciado, c.id); addF(a.comemora, c.id);
-    if (a.tipo === 'escolher') a.itens.forEach((i) => { add(i.quem ?? a.enunciado.quem, i.ouvir, c.id); add(i.quemDica ?? 'sofia', i.dica, c.id); i.opcoes.forEach((o) => add('sofia', o.falar, c.id)); });
+    if (a.tipo === 'escolher') a.itens.forEach((i) => { add(i.quem ?? a.enunciado.quem, i.ouvir, c.id); add(i.quemDica ?? 'sofia', i.dica, c.id); addF(i.apoio, c.id); i.opcoes.forEach((o) => add('sofia', o.falar, c.id)); });
     if (a.tipo === 'palmas') a.palavras.forEach((w) => { if (!w.startsWith('$')) { add('tales', w, c.id); silabas(w).forEach((s) => add('sofia', s, c.id)); } });
     if (a.tipo === 'montar') a.palavras.forEach((w) => !w.startsWith('$') && add('sofia', w.toLowerCase(), c.id));
     if (a.tipo === 'ditado') a.palavras.forEach((w) => add('sofia', w.toLowerCase(), c.id));
@@ -57,6 +57,8 @@ void ITENS_LOJA;
 Object.values(SONS).forEach((x) => { add('sofia', x.esticado, 'sons'); add('tales', x.esticado, 'sons'); });
 ['A', 'E', 'I', 'O', 'U', 'M', 'L', 'F', 'S', 'V', 'N'].forEach((l) => add('sofia', l.toLowerCase().repeat(3), 'sons'));
 add('sofia', FALAS_ALFABETO.trilha, 'trilha do alfabeto');
+// D030: falas fônicas genéricas (correção contrastiva, apoios e enunciados novos), cada uma na(s) voz(es) em que é usada
+for (const k of Object.keys(FALAS_FONICAS) as (keyof typeof FALAS_FONICAS)[]) for (const v of VOZES_DAS_FALAS_FONICAS[k] ?? ['sofia']) add(v, FALAS_FONICAS[k], 'falas fônicas (D030)');
 // três palavras-exemplo de cada letra (D029 §2): ditas pela Sofia na tela da letra
 ALFABETO.forEach((l) => l.palavras.forEach((w) => add('sofia', w, 'alfabeto: palavras')));
 add('sofia', FALAS.conquista, 'ritual'); add('tales', FALAS.surpresa, 'ritual');

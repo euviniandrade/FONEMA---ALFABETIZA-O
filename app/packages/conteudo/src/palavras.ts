@@ -93,7 +93,7 @@ export function valoresInferidos(palavra: string): ValorSonoro[] {
   if (!acento && /[AEO]S?$/.test(w)) {
     const idx = [...w].map((ch, i) => (ehVogal(ch) ? i : -1)).filter((i) => i >= 0);
     const tonica = idx[idx.length - 2];
-    if (tonica !== undefined && 'AEO'.includes(w[tonica]) && 'MN'.includes(w[tonica + 1] ?? '') && ehVogal(w[tonica + 2])) v.add('nasal');
+    if (tonica !== undefined && 'AEO'.includes(w[tonica]) && 'MN'.includes(w[tonica + 1] ?? '') && ehVogal(w[tonica + 2])) v.add('nasalizada');
   }
   if (/[AEOÁÉÊÓÔÂ][IU](?![MN]([^AEIOU]|$))|[ÃÕ][OE]|UI|IU/.test(w.replace(/[QG]U(?=[EI])/g, 'K'))) v.add('ditongo');
   for (let i = 1; i < w.length - 1; i++) {
@@ -120,13 +120,13 @@ export function valoresInferidos(palavra: string): ValorSonoro[] {
  */
 export const VALORES_DAS_PALAVRAS: Record<string, ValorSonoro[]> = {
   // primeiras palavrinhas da Trilha do Alfabeto
-  BABÁ: [], BEBÊ: [], CAFÉ: ['e-aberto'], FACA: [], BIFE: ['e-final-i'], JACA: [], BALA: [], FILA: [], MALA: [], CAMA: ['nasal'],
-  BANANA: ['nasal'], MENINA: ['e-reduzido'], BOLA: ['o-aberto'], DADO: ['o-final-u'], COPO: ['o-aberto', 'o-final-u'], MAPA: [],
+  BABÁ: [], BEBÊ: [], CAFÉ: ['e-aberto'], FACA: [], BIFE: ['e-final-i'], JACA: [], BALA: [], FILA: [], MALA: [], CAMA: ['nasalizada'],
+  BANANA: ['nasalizada'], MENINA: ['e-reduzido'], BOLA: ['o-aberto'], DADO: ['o-final-u'], COPO: ['o-aberto', 'o-final-u'], MAPA: [],
   RODA: ['o-aberto'], REI: ['ditongo'], SAPO: ['o-final-u'], SOPA: [], GATO: ['o-final-u'], PATO: ['o-final-u'], LUA: [], TATU: [],
   UVA: [], VACA: [], PEIXE: ['ditongo', 'e-final-i', 'x-outro-som'], DOZE: ['e-final-i'], CABE: ['e-final-i'], DEDO: ['o-final-u'],
   // Vale do M-L-F
-  MA: [], MO: [], MU: [], FALA: [], FOFO: ['o-final-u'], FOFA: [], MULA: [], LULA: [], MOLA: ['o-aberto'], LAMA: ['nasal'], MOFO: ['o-final-u'],
-  LUFO: ['o-final-u'], FOLU: [], MUFE: ['e-final-i'], LIFU: [], FEMO: ['nasal', 'o-final-u'], MIFA: [], FULI: []
+  MA: [], MO: [], MU: [], FALA: [], FOFO: ['o-final-u'], FOFA: [], MULA: [], LULA: [], MOLA: ['o-aberto'], LAMA: ['nasalizada'], MOFO: ['o-final-u'],
+  LUFO: ['o-final-u'], FOLU: [], MUFE: ['e-final-i'], LIFU: [], FEMO: ['nasalizada', 'o-final-u'], MIFA: [], FULI: []
 };
 
 /** Valores sonoros de uma palavra: os marcados no conteúdo + os que a escrita mostra. */
@@ -136,16 +136,22 @@ export function valoresDaPalavra(palavra: string): ValorSonoro[] {
 }
 
 /**
- * Valores sonoros JÁ ENSINADOS ao fim de cada etapa. Hoje só o É e o Ó abertos (apresentados na letra E e na letra O
- * e treinados na Ilha das Vogais). O resto (E/O átonos no fim, nasais, ditongos, S entre vogais…) entra com a
+ * Valores sonoros JÁ ENSINADOS ao fim de cada etapa (docs/pedagogia/05-regras-de-decodificabilidade.md §4).
+ * Trilha A–Z: nenhum além do som principal (ela é "conhecer as letras"). O É e o Ó abertos são treinados na Ilha das
+ * Vogais (R1) e valem dali em diante. O resto (E/O átonos no fim, nasais, ditongos, S entre vogais…) entra com a
  * trilha fônica; até lá, palavra com esses valores não entra em leitura autônoma.
  */
 export const VALORES_ENSINADOS: Record<RegiaoId, ValorSonoro[]> = {
-  AL: ['e-aberto', 'o-aberto'], R1: ['e-aberto', 'o-aberto'], R2a: ['e-aberto', 'o-aberto'], R0: ['e-aberto', 'o-aberto']
+  AL: [], R1: ['e-aberto', 'o-aberto'], R2a: ['e-aberto', 'o-aberto'], R0: ['e-aberto', 'o-aberto']
 };
+/**
+ * Valores que geram AVISO, não bloqueio (armadilha A5: vogal nasalizada pela consoante seguinte, "cama", "banana";
+ * e o E átono que alguns falam como I, "menina"): a pronúncia varia e a letra continua com o som ensinado.
+ */
+export const VALORES_SO_AVISO: ValorSonoro[] = ['nasalizada', 'e-reduzido'];
 
 /** A palavra pode entrar em LEITURA autônoma nesta etapa? (todos os valores sonoros já ensinados) */
 export function leituraPermitida(palavra: string, regiao: RegiaoId): boolean {
   const ensinados = VALORES_ENSINADOS[regiao];
-  return valoresDaPalavra(palavra).every((x) => ensinados.includes(x));
+  return valoresDaPalavra(palavra).every((x) => ensinados.includes(x) || VALORES_SO_AVISO.includes(x));
 }

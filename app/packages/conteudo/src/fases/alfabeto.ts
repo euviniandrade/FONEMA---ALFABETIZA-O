@@ -68,9 +68,15 @@ function distratoras(letra: string, n: number, grupos: string[][], pool: string[
   const vistas = pool.filter((x) => indice(x) < i).reverse();
   const proximas = pool.filter((x) => indice(x) > i);
   const ordem = [...vistas, ...proximas].filter((x) => x !== letra && !parecidas(grupos, letra, x));
+  // as distratoras também não formam par confundível ENTRE SI (m × n, p × b…): no primeiro contato nada se parece
+  const somDe = (x: string) => LETRA_POR_ID[x]?.fonema;
   const out: string[] = [];
-  for (let k = 0; k < ordem.length && out.length < n; k++) out.push(ordem[(k + salto) % ordem.length]);
-  return [...new Set(out)];
+  for (let k = 0; k < ordem.length && out.length < n; k++) {
+    const x = ordem[(k + salto) % ordem.length];
+    if (out.includes(x) || out.some((y) => somDe(x) && somDe(y) && (somDe(x) === somDe(y) || parConfuso(somDe(x)!, somDe(y)!)))) continue;
+    out.push(x);
+  }
+  return out;
 }
 
 const opLetraAl = (letra: string, minuscula = false): Opcao => {
@@ -103,19 +109,19 @@ function itemAcheALetra(l: LetraAlfabeto, minuscula = false, pool?: string[]): I
 }
 
 /** Sons distantes do som da letra (nunca um par confundível), de letras já vistas primeiro. */
-function sonsDistantes(l: LetraAlfabeto, n: number, pool?: string[]): string[] {
+function sonsDistantes(l: LetraAlfabeto, n: number, pool?: string[], salto = 0): string[] {
   const out: string[] = [];
-  for (const x of distratoras(l.letra, 12, SONS_PARECIDOS, comSom(pool))) {
+  for (const x of distratoras(l.letra, 22, SONS_PARECIDOS, comSom(pool), salto)) {
     const fx = LETRA_POR_ID[x].fonema!;
-    if (fx !== l.fonema && !out.includes(fx) && !parConfuso(fx, l.fonema!)) out.push(fx);
+    if (fx !== l.fonema && !out.includes(fx) && !parConfuso(fx, l.fonema!) && !out.some((y) => parConfuso(fx, y))) out.push(fx);
     if (out.length === n) break;
   }
   return out;
 }
 
-/** "Qual é o som desta letra?" (letra → som): vê a letra e escolhe entre 2–3 botões de som, que tocam ao toque. */
+/** "Qual é o som desta letra?" (letra → som): vê a letra e escolhe entre 3 botões de som, que tocam ao toque (R8: 3 opções). */
 function itemQualSom(l: LetraAlfabeto, minuscula = false, pool?: string[]): ItemEscolha {
-  const outros = sonsDistantes(l, minuscula ? 2 : 1, pool);
+  const outros = sonsDistantes(l, 2, pool, minuscula ? 2 : 0);
   return {
     quem: l.voz, mostrar: minuscula ? l.minuscula : l.letra, habilidade: habilidadeLetra(l.letra), correta: `som:${l.fonema}`,
     opcoes: posiciona(opSom(l.fonema!), outros.map(opSom)), apoio: apoioDe(l), formato: 'letra-som'
@@ -167,11 +173,11 @@ function itemComQualLetra(l: LetraAlfabeto, pool?: string[]): ItemEscolha {
 function itensParMinimo(a: LetraAlfabeto, b: LetraAlfabeto): ItemEscolha[] {
   const contraste = contrasteDosSons(a.fonema!, b.fonema!) ?? 'boca';
   const somLetra = (x: LetraAlfabeto, y: LetraAlfabeto): ItemEscolha => ({
-    quem: 'tales', ouvir: falaNomeLetra(x), somAlvo: x.fonema!, habilidade: habilidadeLetra(x.letra), correta: x.letra, contraste, formato: 'par-minimo',
+    quem: x.voz, ouvir: falaNomeLetra(x), somAlvo: x.fonema!, habilidade: habilidadeLetra(x.letra), correta: x.letra, contraste, formato: 'par-minimo',
     opcoes: posiciona(opLetraAl(x.letra), [opLetraAl(y.letra)]), apoio: apoioDe(x)
   });
   const letraSom = (x: LetraAlfabeto, y: LetraAlfabeto): ItemEscolha => ({
-    quem: 'tales', mostrar: x.letra, habilidade: habilidadeLetra(x.letra), correta: `som:${x.fonema}`, contraste, formato: 'par-minimo',
+    quem: x.voz, mostrar: x.letra, habilidade: habilidadeLetra(x.letra), correta: `som:${x.fonema}`, contraste, formato: 'par-minimo',
     opcoes: posiciona(opSom(x.fonema!), [opSom(y.fonema!)]), apoio: apoioDe(x)
   });
   return [somLetra(a, b), somLetra(b, a), letraSom(a, b)];
@@ -195,7 +201,7 @@ function itensEspelho(letras: string[]): ItemEscolha[] {
   return letras.map((x) => {
     const l = LETRA_POR_ID[x];
     return {
-      quem: 'tales' as const, ouvir: falaNomeLetra(l), somAlvo: l.fonema!, habilidade: habilidadeLetra(x), correta: l.minuscula, contraste: 'desenho' as const, formato: 'espelho-letras' as const,
+      quem: l.voz, ouvir: falaNomeLetra(l), somAlvo: l.fonema!, habilidade: habilidadeLetra(x), correta: l.minuscula, contraste: 'desenho' as const, formato: 'espelho-letras' as const,
       opcoes: posiciona(opLetraAl(x, true), letras.filter((y) => y !== x).map((y) => opLetraAl(y, true))), apoio: apoioDe(l)
     };
   });
@@ -216,7 +222,7 @@ const opCena = (cena: string, fonema: string): Opcao => ({ id: cena, rotulo: '',
 function itemSomCena(p: { letra: string; cena: string; fonema: string }, todos: { letra: string; cena: string; fonema: string }[]): ItemEscolha {
   const outras = todos.filter((x) => x.cena !== p.cena && !parConfuso(x.fonema, p.fonema)).slice(0, 2);
   return {
-    quem: 'tales', ouvir: falaNomeLetra(LETRA_POR_ID[p.letra]), somAlvo: p.fonema, somCorreta: p.fonema, habilidade: habilidadeLetra(p.letra), correta: p.cena, formato: 'som-cena',
+    quem: LETRA_POR_ID[p.letra].voz, ouvir: falaNomeLetra(LETRA_POR_ID[p.letra]), somAlvo: p.fonema, somCorreta: p.fonema, habilidade: habilidadeLetra(p.letra), correta: p.cena, formato: 'som-cena',
     opcoes: posiciona(opCena(p.cena, p.fonema), outras.map((x) => opCena(x.cena, x.fonema)))
   };
 }
@@ -224,7 +230,7 @@ function itemSomCena(p: { letra: string; cena: string; fonema: string }, todos: 
 function itemCenaLetra(p: { letra: string; cena: string; fonema: string }, todos: { letra: string; cena: string; fonema: string }[]): ItemEscolha {
   const outras = todos.filter((x) => x.letra !== p.letra && !parConfuso(x.fonema, p.fonema)).slice(0, 2);
   return {
-    quem: 'tales', ouvir: falaNomeLetra(LETRA_POR_ID[p.letra]), somAlvo: p.fonema, somCorreta: p.fonema, mostrarFigura: p.cena, habilidade: habilidadeLetra(p.letra), correta: p.letra, formato: 'cena-letra',
+    quem: LETRA_POR_ID[p.letra].voz, ouvir: falaNomeLetra(LETRA_POR_ID[p.letra]), somAlvo: p.fonema, somCorreta: p.fonema, mostrarFigura: p.cena, habilidade: habilidadeLetra(p.letra), correta: p.letra, formato: 'cena-letra',
     opcoes: posiciona(opLetraAl(p.letra), outras.map((x) => opLetraAl(x.letra))), apoio: apoioDe(LETRA_POR_ID[p.letra])
   };
 }

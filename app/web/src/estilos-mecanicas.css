@@ -43,3 +43,12 @@ html.contraste .liga-cartao.sel,html.contraste .opcao.opcao-som.sel{background:#
   .liga-cartao{height:clamp(72px,11.5vh,104px)}
   .liga-linhas line{stroke-width:7}
 }
+
+/* --- R10: botãozinho que fala o nome da figura, sem marcar resposta --- */
+.opcao-caixa{position:relative;display:grid}
+.opcao-caixa>.opcao{width:100%}
+.opcao-ouvir{position:absolute;right:-8px;top:-8px;width:52px;height:52px;border-radius:50%;background:#fff;box-shadow:0 4px 0 #BBCFE3,0 0 0 3px #E4EEF8;display:grid;place-items:center;z-index:2;transition:transform .2s var(--mola)}
+.opcao-ouvir .ic{width:38px;height:38px}
+.opcao-ouvir:active{transform:scale(.92)}
+.opcao-ouvir[disabled]{opacity:.55}
+@media (max-width:560px){.opcao-ouvir{width:44px;height:44px;right:-4px;top:-6px}.opcao-ouvir .ic{width:32px;height:32px}}

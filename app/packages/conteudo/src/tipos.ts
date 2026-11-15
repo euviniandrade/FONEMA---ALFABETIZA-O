@@ -92,7 +92,7 @@ export interface Opcao {
  * quando todos os valores dela já foram ensinados na etapa (ver `VALORES_ENSINADOS` em palavras.ts).
  */
 export type ValorSonoro =
-  | 'e-aberto' | 'o-aberto' | 'e-final-i' | 'o-final-u' | 'e-reduzido' | 'nasal' | 'ditongo' | 's-som-z' | 'r-fraco' | 'r-final'
+  | 'e-aberto' | 'o-aberto' | 'e-final-i' | 'o-final-u' | 'e-reduzido' | 'nasal' | 'nasalizada' | 'ditongo' | 's-som-z' | 'r-fraco' | 'r-final'
   | 'l-final' | 'c-som-s' | 'g-som-j' | 'digrafo' | 'h-mudo' | 'encontro' | 'x-outro-som' | 'letra-de-nomes' | 's-final';
 
 /** Tipo do registro da tentativa (contrato do motor, D030 etapa 2). */

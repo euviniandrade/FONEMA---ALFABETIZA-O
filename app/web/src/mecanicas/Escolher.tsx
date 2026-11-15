@@ -207,21 +207,25 @@ export function Escolher({ atividade, crianca, sessao, cenaId, revisao, onFim }:
           const modelo = erros >= 2 && o.id === item.correta;
           const ehCerta = acertou && o.id === item.correta;
           const rotuloAria = o.botaoDeSom ? `Som ${k + 1}: toque para ouvir` : o.letra ? `Letra ${o.letra}` : o.rotulo || `Figura ${k + 1}`;
+          // R10 (docs/pedagogia/04): a figura tem um botãozinho que fala o nome combinado dela, sem marcar resposta
+          const falaNome = !o.letra && !o.botaoDeSom && !!o.falar && o.id !== 'sim' && o.id !== 'nao';
           return (
-            <button
-              key={o.id}
-              className={`opcao ${o.letra ? 'opcao-letra' : ''} ${o.botaoDeSom ? 'opcao-som' : ''} ${selecionada === o.id ? 'sel' : ''} ${modelo ? 'modelo' : ''} ${ehCerta ? 'certa' : ''} ${marcadas.includes(o.id) && !ehCerta ? 'tentada' : ''}`}
-              onClick={() => (o.botaoDeSom ? ouvirOpcao(o) : escolher(o))}
-              aria-label={rotuloAria}
-              aria-pressed={o.botaoDeSom ? selecionada === o.id : undefined}
-              data-opcao={o.id}
-              data-correta={o.id === item.correta ? '1' : undefined}
-            >
-              {o.botaoDeSom ? <span className="som-botao"><Icone nome="som" /><b>{k + 1}</b></span>
-                : o.letra ? <span className="letra">{o.letra}</span> : <Figura emoji={o.figura || undefined} palavra={o.id} />}
-              {mostrarRotulo(o) && !o.letra && !o.botaoDeSom ? <span className="rot">{o.rotulo}</span> : null}
-              {ehCerta ? <Brilho ativo /> : null}
-            </button>
+            <div key={o.id} className="opcao-caixa">
+              <button
+                className={`opcao ${o.letra ? 'opcao-letra' : ''} ${o.botaoDeSom ? 'opcao-som' : ''} ${selecionada === o.id ? 'sel' : ''} ${modelo ? 'modelo' : ''} ${ehCerta ? 'certa' : ''} ${marcadas.includes(o.id) && !ehCerta ? 'tentada' : ''}`}
+                onClick={() => (o.botaoDeSom ? ouvirOpcao(o) : escolher(o))}
+                aria-label={rotuloAria}
+                aria-pressed={o.botaoDeSom ? selecionada === o.id : undefined}
+                data-opcao={o.id}
+                data-correta={o.id === item.correta ? '1' : undefined}
+              >
+                {o.botaoDeSom ? <span className="som-botao"><Icone nome="som" /><b>{k + 1}</b></span>
+                  : o.letra ? <span className="letra">{o.letra}</span> : <Figura emoji={o.figura || undefined} palavra={o.id} />}
+                {mostrarRotulo(o) && !o.letra && !o.botaoDeSom ? <span className="rot">{o.rotulo}</span> : null}
+                {ehCerta ? <Brilho ativo /> : null}
+              </button>
+              {falaNome ? <button className="opcao-ouvir" aria-label={`Ouvir o nome da figura ${k + 1}`} data-testid="ouvir-figura" disabled={ocupado || acertou} onClick={() => { efeitos.toque(); void voz.falar(o.falar!, { quem: 'sofia' }); }}><Icone nome="som" /></button> : null}
+            </div>
           );
         })}
       </div>

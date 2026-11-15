@@ -6,6 +6,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-109cr5o",
+  "voz": "sofia",
+  "texto": "A palavra começa com este som:",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "s-10ey3dz",
   "voz": "sofia",
   "texto": "Ouça e toque na letra.",
@@ -15,13 +21,19 @@
   "id": "s-10qey9r",
   "voz": "sofia",
   "texto": "U, de uva.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "AL-U-C2b"
  },
  {
   "id": "s-10qm0oq",
   "voz": "sofia",
   "texto": "Escada",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-10u7vim",
+  "voz": "sofia",
+  "texto": "Essa figura começa com este som:",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "s-10uxica",
@@ -63,13 +75,19 @@
   "id": "s-11n5xas",
   "voz": "sofia",
   "texto": "Q, de queijo.",
-  "origem": "AL-R4-C4c"
+  "origem": "AL-Q-C2b"
  },
  {
   "id": "s-11wcpy8",
   "voz": "sofia",
   "texto": "iiii… ilha!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-127bx4o",
+  "voz": "sofia",
+  "texto": "Qual é o som desta letra? Toque para ouvir e escolha.",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "s-12buvww",
@@ -234,6 +252,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-18idesg",
+  "voz": "sofia",
+  "texto": "Toque para ouvir cada leitura e escolha a que combina.",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "s-193fu3z",
   "voz": "sofia",
   "texto": "Isso! Uma cobrinha: sss!",
@@ -244,6 +268,12 @@
   "voz": "sofia",
   "texto": "Você está pronto para conhecer as letras?",
   "origem": "chegada"
+ },
+ {
+  "id": "s-19f0tu1",
+  "voz": "sofia",
+  "texto": "Escuta de novo.",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "s-19vk7gm",
@@ -270,9 +300,9 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "s-1bj7qh6",
+  "id": "s-1bj7qmc",
   "voz": "sofia",
-  "texto": "F. Ligar a letra F ao som /f/ e montar FALA, FILA, FOFO.",
+  "texto": "F. Ligar a letra F ao som /f/ e montar FALA, FILA, FOFA.",
   "origem": "R2a-F03"
  },
  {
@@ -351,25 +381,25 @@
   "id": "s-1cw53lw",
   "voz": "sofia",
   "texto": "Letra O.",
-  "origem": "AL-R3-C4b"
+  "origem": "AL-FESTA-C4d"
  },
  {
   "id": "s-1cw53nm",
   "voz": "sofia",
   "texto": "Letra I.",
-  "origem": "AL-R2-C4b"
+  "origem": "AL-FESTA-C4c"
  },
  {
   "id": "s-1cw53pc",
   "voz": "sofia",
   "texto": "Letra K.",
-  "origem": "AL-R3-C4b"
+  "origem": "AL-R3-C4f"
  },
  {
   "id": "s-1cw53ry",
   "voz": "sofia",
   "texto": "Letra U.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "AL-FESTA-C4f"
  },
  {
   "id": "s-1cw53to",
@@ -381,19 +411,19 @@
   "id": "s-1cw53ve",
   "voz": "sofia",
   "texto": "Letra Q.",
-  "origem": "AL-R4-C4b"
+  "origem": "AL-FESTA-C4e"
  },
  {
   "id": "s-1cw53x4",
   "voz": "sofia",
   "texto": "Letra S.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "AL-FESTA-C4d"
  },
  {
   "id": "s-1cw542a",
   "voz": "sofia",
   "texto": "Letra Y.",
-  "origem": "AL-FESTA-C4a"
+  "origem": "AL-FESTA-C4f"
  },
  {
   "id": "s-1dfc6n5",
@@ -480,10 +510,22 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1h6mw43",
+  "voz": "sofia",
+  "texto": "Põe a mão no pescoço para sentir.",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "s-1hey3cw",
   "voz": "sofia",
   "texto": "Você montou a palavra!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1hoz16c",
+  "voz": "sofia",
+  "texto": "Agora sem o modelo. Escute a palavra e monte.",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "s-1hupyxb",
@@ -514,6 +556,12 @@
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje tem letra nova!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1j5eclr",
+  "voz": "sofia",
+  "texto": "Eu pedi este som:",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "s-1jbedh7",
@@ -564,6 +612,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1ly3zjt",
+  "voz": "sofia",
+  "texto": "Você escolheu este som:",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "s-1mbnwmv",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje o sorriso é bem grande.",
@@ -573,7 +627,7 @@
   "id": "s-1mf5pte",
   "voz": "sofia",
   "texto": "G, de gato.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "AL-G-C2b"
  },
  {
   "id": "s-1mic20x",
@@ -609,7 +663,7 @@
   "id": "s-1nqpsef",
   "voz": "sofia",
   "texto": "M, de macaco.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "AL-M-C2b"
  },
  {
   "id": "s-1o64pg2",
@@ -681,7 +735,7 @@
   "id": "s-1q7todt",
   "voz": "sofia",
   "texto": "O, de ovo.",
-  "origem": "AL-FESTA-C4c"
+  "origem": "AL-O-C2b"
  },
  {
   "id": "s-1q81nh8",
@@ -891,7 +945,13 @@
   "id": "s-1qncf0t",
   "voz": "sofia",
   "texto": "I, de ilha.",
-  "origem": "AL-FESTA-C4c"
+  "origem": "AL-I-C2b"
+ },
+ {
+  "id": "s-1qsmvbo",
+  "voz": "sofia",
+  "texto": "Essas letras se parecem. Olha bem o desenho de cada uma.",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "s-1qyl7uj",
@@ -1104,6 +1164,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1uqj7fs",
+  "voz": "sofia",
+  "texto": "mifa",
+  "origem": "palavras"
+ },
+ {
   "id": "s-1uqjb00",
   "voz": "sofia",
   "texto": "mufe",
@@ -1230,6 +1296,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1uqpmkl",
+  "voz": "sofia",
+  "texto": "fofa",
+  "origem": "palavras"
+ },
+ {
   "id": "s-1uqpmkr",
   "voz": "sofia",
   "texto": "fofo",
@@ -1276,6 +1348,12 @@
   "voz": "sofia",
   "texto": "ffff",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1uqq1r1",
+  "voz": "sofia",
+  "texto": "fuli",
+  "origem": "palavras"
  },
  {
   "id": "s-1uqqmi6",
@@ -1482,9 +1560,9 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "s-1urbxaj",
+  "id": "s-1urbxad",
   "voz": "sofia",
-  "texto": "FOFO",
+  "texto": "FOFA",
   "origem": "R2a-F05-C4a"
  },
  {
@@ -1614,6 +1692,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1vmjzxn",
+  "voz": "sofia",
+  "texto": "Este não tem voz:",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "s-1w149q0",
   "voz": "sofia",
   "texto": "Oi, [NOME]! A Dona Cida sabe umas palavras que terminam igualzinho. Vamos ouvir?",
@@ -1734,6 +1818,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-43s264",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som desta letra.",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "s-559ma2",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje a gente vai descobrir um segredo do seu nome.",
@@ -1746,10 +1836,22 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-59co6g",
+  "voz": "sofia",
+  "texto": "Olha a boca: ela se mexe diferente em cada som.",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "s-5qllno",
   "voz": "sofia",
   "texto": "O Zum-Zum embaralhou a placa. Escuta bem: qual som começa a palavra, [NOME]?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-5t5je3",
+  "voz": "sofia",
+  "texto": "Escuta os dois e tenta de novo.",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "s-5xs6if",
@@ -1782,6 +1884,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-7gxex5",
+  "voz": "sofia",
+  "texto": "Este tem voz:",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "s-8dfnot",
   "voz": "sofia",
   "texto": "É a vovó ou o vovô, [NOME]?",
@@ -1798,6 +1906,12 @@
   "voz": "sofia",
   "texto": "[NOME]!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-8yijku",
+  "voz": "sofia",
+  "texto": "O som que falta é este:",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "s-9a09w5",
@@ -1912,6 +2026,12 @@
   "voz": "sofia",
   "texto": "Devagar: mmm-aaa, MA. lll-aaa, LA. MALA!",
   "origem": "R2a-F04-C2"
+ },
+ {
+  "id": "s-ck9c5i",
+  "voz": "sofia",
+  "texto": "Qual figura começa com este som?",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "s-csqcky",
@@ -2046,6 +2166,12 @@
   "origem": "figuras"
  },
  {
+  "id": "s-f7nnu8",
+  "voz": "sofia",
+  "texto": "Essa letra faz este som:",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "s-fc5dt7",
   "voz": "sofia",
   "texto": "Você escutou o final das palavras!",
@@ -2061,7 +2187,7 @@
   "id": "s-ff5ofq",
   "voz": "sofia",
   "texto": "S, de sapo.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "AL-S-C2b"
  },
  {
   "id": "s-fk1ezn",
@@ -2424,6 +2550,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-qvesjs",
+  "voz": "sofia",
+  "texto": "O som desta letra é este:",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "s-r32h1q",
   "voz": "sofia",
   "texto": "uuuu… uva!",
@@ -2574,6 +2706,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-smxwaf",
+  "voz": "sofia",
+  "texto": "Essa cena faz este som:",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "s-sztnpj",
   "voz": "sofia",
   "texto": "pa… to",
@@ -2620,6 +2758,12 @@
   "voz": "sofia",
   "texto": "O som do meu nome. Descobrir o primeiro som do próprio nome.",
   "origem": "R0-F01"
+ },
+ {
+  "id": "s-uksve",
+  "voz": "sofia",
+  "texto": "Olha, a peça certa está brilhando.",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "s-v7r7w",
@@ -2757,7 +2901,7 @@
   "id": "t-12nlh6p",
   "voz": "tales",
   "texto": "Z, de zebra.",
-  "origem": "AL-FESTA-C4a"
+  "origem": "AL-Z-C2b"
  },
  {
   "id": "t-12ypa9r",
@@ -2787,7 +2931,7 @@
   "id": "t-146npdw",
   "voz": "tales",
   "texto": "N, de navio.",
-  "origem": "AL-R3-C4c"
+  "origem": "AL-N-C2b"
  },
  {
   "id": "t-1474ajd",
@@ -2811,7 +2955,13 @@
   "id": "t-14n74q7",
   "voz": "tales",
   "texto": "P, de pato.",
-  "origem": "AL-FESTA-C4c"
+  "origem": "AL-P-C2b"
+ },
+ {
+  "id": "t-15hcfoh",
+  "voz": "tales",
+  "texto": "Você achou o som que faltava!",
+  "origem": "R2a-F03-C5b"
  },
  {
   "id": "t-15hhr35",
@@ -2868,6 +3018,12 @@
   "origem": "AL-FESTA"
  },
  {
+  "id": "t-17rs6ek",
+  "voz": "tales",
+  "texto": "Estes sons se parecem. Escute bem!",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "t-17z2dez",
   "voz": "tales",
   "texto": "Mostrar a letra de hoje e dizer a palavra dela.",
@@ -2883,13 +3039,19 @@
   "id": "t-196modx",
   "voz": "tales",
   "texto": "T, de tatu.",
-  "origem": "AL-R4-C4c"
+  "origem": "AL-T-C2b"
  },
  {
   "id": "t-19cv506",
   "voz": "tales",
   "texto": "Vamos mostrar pro professor, [NOME]?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-19fy7wb",
+  "voz": "tales",
+  "texto": "Qual figura começa com este som?",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "t-19q9ifr",
@@ -2901,37 +3063,37 @@
   "id": "t-1a3hln2",
   "voz": "tales",
   "texto": "Letra X.",
-  "origem": "AL-FESTA-C4a"
+  "origem": "AL-FESTA-C4f"
  },
  {
   "id": "t-1a3hlos",
   "voz": "tales",
   "texto": "Letra Z.",
-  "origem": "AL-FESTA-C4a"
+  "origem": "AL-FESTA-C4f"
  },
  {
   "id": "t-1a3hlty",
   "voz": "tales",
   "texto": "Letra P.",
-  "origem": "AL-R4-C4b"
+  "origem": "AL-FESTA-C4e"
  },
  {
   "id": "t-1a3hlvo",
   "voz": "tales",
   "texto": "Letra R.",
-  "origem": "AL-R4-C4b"
+  "origem": "AL-R4-C4f"
  },
  {
   "id": "t-1a3hlxe",
   "voz": "tales",
   "texto": "Letra T.",
-  "origem": "AL-R4-C4b"
+  "origem": "AL-FESTA-C4d"
  },
  {
   "id": "t-1a3hlz4",
   "voz": "tales",
   "texto": "Letra V.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "AL-FESTA-C4f"
  },
  {
   "id": "t-1a3hm1q",
@@ -2943,19 +3105,19 @@
   "id": "t-1a3hm3g",
   "voz": "tales",
   "texto": "Letra J.",
-  "origem": "AL-R2-C4b"
+  "origem": "AL-FESTA-C4d"
  },
  {
   "id": "t-1a3hm56",
   "voz": "tales",
   "texto": "Letra L.",
-  "origem": "AL-R3-C4b"
+  "origem": "AL-R4-C4d"
  },
  {
   "id": "t-1a3hm6w",
   "voz": "tales",
   "texto": "Letra N.",
-  "origem": "AL-R3-C4b"
+  "origem": "AL-R3-C4f"
  },
  {
   "id": "t-1a3hmac",
@@ -2973,7 +3135,7 @@
   "id": "t-1a3hmds",
   "voz": "tales",
   "texto": "Letra F.",
-  "origem": "AL-R2-C4b"
+  "origem": "AL-FESTA-C4d"
  },
  {
   "id": "t-1a7pp7p",
@@ -3111,7 +3273,7 @@
   "id": "t-1hwduyx",
   "voz": "tales",
   "texto": "X, de xícara.",
-  "origem": "AL-FESTA-C4c"
+  "origem": "AL-X-C2b"
  },
  {
   "id": "t-1i20chk",
@@ -3159,7 +3321,7 @@
   "id": "t-1kllt2w",
   "voz": "tales",
   "texto": "F, de foca.",
-  "origem": "AL-R2-C4c"
+  "origem": "AL-F-C2b"
  },
  {
   "id": "t-1kqffb3",
@@ -3184,6 +3346,12 @@
   "voz": "tales",
   "texto": "Fala o som desta letra, [NOME]!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1msekd7",
+  "voz": "tales",
+  "texto": "Qual som falta nesta palavra?",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "t-1msyvae",
@@ -3534,12 +3702,6 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "t-1sgwngq",
-  "voz": "tales",
-  "texto": "qual começa com ééé?",
-  "origem": "R1-F03-C4"
- },
- {
   "id": "t-1sjj8km",
   "voz": "tales",
   "texto": "O Paçoca quer o sa… pa… to",
@@ -3562,6 +3724,12 @@
   "voz": "tales",
   "texto": "Pescou um E!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1tbuyyx",
+  "voz": "tales",
+  "texto": "Olhe a cena e ouça o som. Qual é a letra?",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "t-1u768h",
@@ -3624,6 +3792,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-1xqty10",
+  "voz": "tales",
+  "texto": "Ligue cada letra à cena que faz o som dela.",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "t-20jjsj",
   "voz": "tales",
   "texto": "A ponta da língua subiu!",
@@ -3681,7 +3855,7 @@
   "id": "t-51hjf6",
   "voz": "tales",
   "texto": "J, de janela.",
-  "origem": "AL-R2-C4c"
+  "origem": "AL-J-C2b"
  },
  {
   "id": "t-5ei8eg",
@@ -3694,6 +3868,12 @@
   "voz": "tales",
   "texto": "Isso! Você fez o som!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-5v538r",
+  "voz": "tales",
+  "texto": "Estas letras se parecem. Olhe bem!",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "t-733h3j",
@@ -3810,6 +3990,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-d2xa3l",
+  "voz": "tales",
+  "texto": "Isso! Esse é o som desta letra.",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "t-d50mvi",
   "voz": "tales",
   "texto": "Esses são nomes de bichinhos da mata. Lê pra mim, [NOME]!",
@@ -3820,6 +4006,12 @@
   "voz": "tales",
   "texto": "Mala… macaco",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-de113d",
+  "voz": "tales",
+  "texto": "Ouça o som. Qual cena faz esse som?",
+  "origem": "falas fônicas (D030)"
  },
  {
   "id": "t-de3zkv",
@@ -4053,7 +4245,7 @@
   "id": "t-pkv5hd",
   "voz": "tales",
   "texto": "L, de lua.",
-  "origem": "AL-R3-C4c"
+  "origem": "AL-L-C2b"
  },
  {
   "id": "t-qi864h",
@@ -4089,7 +4281,7 @@
   "id": "t-skp9kf",
   "voz": "tales",
   "texto": "R, de rato.",
-  "origem": "AL-R4-C4c"
+  "origem": "AL-R-C2b"
  },
  {
   "id": "t-smg651",
@@ -4128,6 +4320,12 @@
   "origem": "AL-R4"
  },
  {
+  "id": "t-ua10px",
+  "voz": "tales",
+  "texto": "Qual é o som desta letra? Toque para ouvir e escolha.",
+  "origem": "falas fônicas (D030)"
+ },
+ {
   "id": "t-uc4cv1",
   "voz": "tales",
   "texto": "Qual letra faz /mmm/, [NOME]?",
@@ -4155,7 +4353,7 @@
   "id": "t-x44x86",
   "voz": "tales",
   "texto": "V, de vaca.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "AL-V-C2b"
  },
  {
   "id": "t-yddfon",

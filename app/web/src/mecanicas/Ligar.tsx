@@ -68,7 +68,6 @@ export function Ligar({ atividade, crianca, sessao, cenaId, revisao, onFim }: Pr
     medir();
     window.addEventListener('resize', medir);
     return () => window.removeEventListener('resize', medir);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [feitas]);
 
   const corrigir = async (letra: string, cena: string) => {
