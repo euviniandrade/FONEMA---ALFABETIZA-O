@@ -48,19 +48,16 @@ async function subirServidor() {
 }
 
 /**
- * Monta o boneco 3D (D029): em cada passo obrigatório toca a primeira opção liberada e avança; no fim, "Pronto!".
- * `escolhas` troca a opção de um passo (ex.: { cabelo: 'f-trancas' }).
+ * Personaliza o boneco 3D (D029 §7): o boneco já começa pronto, então basta "Pronto!". Com `escolhas`
+ * (ex.: { pele: 'pele-08', camisa: 'ipe' }) passa pelos passos e toca as cores pedidas antes de concluir.
  */
 async function montarAvatar(page, escolhas = {}) {
   await page.getByTestId('montar-avatar').waitFor();
-  for (const passo of ['pele', 'rosto', 'olhos', 'cabelo', 'camisa', 'calca', 'calcado']) {
-    await page.locator(`[data-testid="montar-avatar"][data-passo="${passo}"]`).waitFor();
-    const alvo = escolhas[passo] ? `.montar-corpo [data-peca="${escolhas[passo]}"]` : '.montar-corpo [data-estado="livre"]';
-    await page.locator(alvo).first().click();
-    await page.locator('.montar-corpo [aria-checked="true"]').first().waitFor();
-    await page.getByTestId('avatar-proximo').click();
+  for (const [passo, peca] of Object.entries(escolhas)) {
+    await page.locator(`[data-ir-passo="${passo}"]`).click();
+    await page.locator(`.montar-corpo [data-peca="${peca}"]`).click();
+    await page.locator(`.montar-corpo [data-peca="${peca}"][aria-checked="true"]`).waitFor();
   }
-  await page.locator('[data-testid="montar-avatar"][data-passo="lojinha"]').waitFor();
   await page.getByTestId('avatar-pronto').click();
 }
 
@@ -325,11 +322,13 @@ async function capturasMecanicas(browser) {
       if (prontas === 2) await uma('liga-meio', async () => { await foto('liga-o-som-ligando'); });
     }
   };
-  for (const f of ['AL-B', 'AL-R1', 'AL-R4', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04']) {
+  // MEC_FASES=R2a-F04,… troca a lista (útil para investigar uma fase só)
+  for (const f of process.env.MEC_FASES?.split(',') ?? ['AL-B', 'AL-R1', 'AL-R4', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04']) {
     await page.goto(BASE + `#/c/${id}/sessao/${f}`);
-    await jogarSessao(page, { gancho });
-    console.log(`  fase ${f} jogada`);
+    await jogarSessao(page, { gancho }).catch(async (e) => { if (process.env.MEC_FALHA) await page.screenshot({ path: process.env.MEC_FALHA }); throw e; });
+    console.log(`  fase ${f} jogada: ${(await page.getByTestId('ritual').locator('h1').innerText().catch(() => '')).trim()}`);
   }
+  if (process.env.MEC_FASES) { await ctx.close(); return; }
   // a cena do som na apresentação da letra: sem o modo rápido, para a tela parar no faz de conta
   await page.evaluate(() => localStorage.removeItem('fonema-teste-rapido'));
   await ctx.addInitScript(() => { try { localStorage.removeItem('fonema-teste-rapido'); } catch { /* nada */ } });
@@ -380,33 +379,36 @@ async function main() {
   await cadastrar(page, 'Mariana Souza', 'f', { previa: 'pronta, Mariana', capturas: true });
 
   console.log('2. Avatar e chegada');
-  // D029: boneco 3D montável — começa limpo, passos obrigatórios, só peças de menina, cadeados que ensinam a Lojinha
+  // D029 §7: criador de personagem — o boneco COMEÇA no padrão completo (modelo 3D de verdade) e a criança personaliza
   await page.getByTestId('montar-avatar').waitFor();
-  ok(await page.locator('[data-testid="montar-avatar"][data-passo="pele"]').count() === 1, 'a montagem começa pelo primeiro passo (cor da pele), com o boneco limpo');
-  ok(await page.locator('.montar-corpo [aria-checked="true"]').count() === 0, 'nada vem escolhido de entrada');
-  ok(await page.getByTestId('avatar-proximo').isDisabled(), 'não dá para avançar sem escolher (passo obrigatório)');
-  ok(await page.getByTestId('avatar-pronto').count() === 0, 'sem "Pronto!" antes de montar o boneco');
-  ok(await page.locator('.montar-corpo [data-peca^="pele-"]').count() >= 8, 'leque amplo de cores de pele');
-  await page.locator('[data-testid=boneco3d]:not([data-estado=carregando])').waitFor({ timeout: 20000 });
-  ok(true, `boneco no palco: ${await page.getByTestId('boneco3d').getAttribute('data-estado') === 'pronto' ? '3D (WebGL)' : 'reserva 2D (sem WebGL neste navegador)'}`);
-  ok(await page.evaluate(() => document.documentElement.scrollHeight <= window.innerHeight + 1), 'tela de montar sem rolagem');
-  for (const passo of ['pele', 'rosto', 'olhos']) { await page.locator('.montar-corpo [data-estado="livre"]').nth(1).click(); await page.getByTestId('avatar-proximo').click(); await page.locator(`[data-testid="montar-avatar"]:not([data-passo="${passo}"])`).waitFor(); }
-  ok(await page.locator('.montar-corpo [data-peca^="m-"]').count() === 0 && await page.locator('.montar-corpo [data-peca^="f-"]').count() >= 8, 'menina só vê cabelos de menina');
-  ok(/Abre na Letra D · 8 moedas/.test(await page.locator('.montar-corpo [data-estado="fase"]').first().innerText()), 'penteado extra aparece com cadeado: "Abre na Letra D · 8 moedas"');
-  await page.locator('.montar-corpo [data-estado="fase"]').first().click();
-  ok(/Lojinha/.test(await page.locator('.montar-aviso').innerText()) && await page.locator('.montar-corpo [role="radio"][aria-checked="true"][data-peca^="f-"]').count() === 0, 'tocar numa peça trancada explica a Lojinha e não veste a peça');
-  await page.locator('.montar-corpo [data-peca="f-trancas"]').click();
-  await page.locator('[data-cor-cabelo="preto"]').click();
-  await cap(page, 'avatar');
+  ok(await page.locator('[data-testid="montar-avatar"][data-passo="pele"]').count() === 1, 'a personalização começa pela cor da pele');
+  ok(await page.getByTestId('avatar-pronto').count() === 1 && await page.getByTestId('avatar-proximo').isEnabled(), 'nada é obrigatório: o boneco já começa pronto ("Pronto!" disponível desde o início)');
+  ok(await page.locator('.montar-corpo [data-peca^="pele-"]').count() >= 8 && await page.locator('.montar-corpo [aria-checked="true"]').count() === 0, 'pele: 8 tons ou mais, em ordem neutra, sem nenhum "padrão" marcado');
+  await page.locator('[data-testid=boneco3d]:not([data-estado=carregando])').waitFor({ timeout: 30000 });
+  const estadoBoneco = await page.getByTestId('boneco3d').getAttribute('data-estado');
+  const bonecoReal = await page.evaluate(() => !!document.querySelector('.boneco3d-canvas')?.palco?.real);
+  ok(estadoBoneco !== 'pronto' || bonecoReal, `boneco no palco: ${estadoBoneco === 'pronto' ? 'modelo 3D de verdade (GLB recolorido)' : 'reserva 2D (sem WebGL neste navegador)'}`);
+  ok(await page.evaluate(() => document.documentElement.scrollHeight <= window.innerHeight + 1), 'tela de personalizar sem rolagem');
+  ok(await page.locator('[data-ir-passo="cabelo"]').count() === 0, 'tipo de cabelo não aparece enquanto só existe o modelo padrão (nada de opção que não funciona)');
+  ok(await page.locator('[data-ir-passo="rosto"]').count() === 0, 'sem passos de rosto/boca (dependem de kit de peças)');
+  await page.locator('.montar-corpo [data-peca="pele-07"]').click();
+  await page.locator('.montar-corpo [data-peca="pele-07"][aria-checked="true"]').waitFor();
   await page.getByTestId('avatar-proximo').click();
-  for (const passo of ['camisa', 'calca', 'calcado']) {
-    await page.locator(`[data-testid="montar-avatar"][data-passo="${passo}"]`).waitFor();
-    if (passo === 'camisa') ok(await page.locator('.montar-corpo [data-peca="uniforme"][data-estado="livre"]').count() === 1 && await page.locator('.montar-corpo [data-peca="polo-terra"]').count() === 0, 'camiseta da turma liberada; roupa de menino não aparece para a menina');
-    await page.locator('.montar-corpo [data-estado="livre"]').first().click();
-    await page.getByTestId('avatar-proximo').click();
-  }
+  await page.locator('[data-testid="montar-avatar"][data-passo="olhos"]').waitFor();
+  ok(await page.locator('.montar-corpo [data-peca="castanho-escuro"][aria-checked="true"]').count() === 1, 'olhos: a cor do padrão vem marcada');
+  await page.locator('[data-ir-passo="corCabelo"]').click();
+  await page.locator('.montar-corpo [data-peca="preto"]').click();
+  await page.locator('[data-ir-passo="camisa"]').click();
+  ok(await page.locator('.montar-corpo [data-peca="branca"][aria-checked="true"]').count() === 1, 'camiseta: começa branca (padrão)');
+  ok(/Letra B · 4 moedas/.test(await page.locator('.montar-corpo [data-peca="mata"]').getAttribute('aria-label')), 'cor especial aparece com cadeado: "Abre na Letra B · 4 moedas"');
+  await page.locator('.montar-corpo [data-peca="mata"]').click();
+  ok(/Lojinha/.test(await page.locator('.montar-aviso').innerText()) && await page.locator('.montar-corpo [data-peca="branca"][aria-checked="true"]').count() === 1, 'tocar numa cor trancada explica a Lojinha e não muda o boneco');
+  await page.locator('.montar-corpo [data-peca="ipe"]').click();
+  await page.locator('.montar-corpo [data-peca="ipe"][aria-checked="true"]').waitFor();
+  await cap(page, 'avatar');
+  await page.locator('[data-ir-passo="lojinha"]').click();
   await page.getByTestId('vitrine-lojinha').waitFor();
-  ok(await page.locator('.vitrine-lista li').count() >= 4 && /Abre na Letra B/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'o fim da montagem ensina a Lojinha: o que abre depois, com fase e moedas');
+  ok(await page.locator('.vitrine-lista li').count() >= 4 && /Abre na Letra B/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'o fim da personalização ensina a Lojinha: o que abre depois, com fase e moedas');
   ok(/Acessibilidade/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'acessibilidade não vem de entrada: fica na Lojinha, grátis');
   await page.getByTestId('avatar-pronto').click();
   await page.getByTestId('primeira-missao').waitFor();
@@ -507,14 +509,15 @@ async function main() {
   await page.getByTestId('lojinha').waitFor();
   await cap(page, 'lojinha');
   // D029: Lojinha do boneco — cadeados por fase + moedas, e Acessibilidade sempre grátis
-  ok(/Abre na Letra C · 6 moedas/.test(await page.locator('[data-testid="loja-boneco"] [data-peca="camiseta-listrada"]').innerText()), 'Lojinha: camiseta listrada com cadeado "Abre na Letra C · 6 moedas"');
-  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="camiseta-ipe"][data-estado="pode"]').count() === 1, 'Lojinha: com a Letra B aberta e 6 moedinhas, a camiseta amarela (4) já pode ser trocada');
-  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="polo-terra"]').count() === 0, 'Lojinha: a menina não vê roupa de menino');
+  ok(/Abre na Letra C · 6 moedas/.test(await page.locator('[data-testid="loja-boneco"] [data-peca="terra"]').innerText()), 'Lojinha: camiseta terracota com cadeado "Abre na Letra C · 6 moedas"');
+  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="mata"][data-estado="pode"]').count() === 1, 'Lojinha: com a Letra B aberta e 5 moedinhas, a camiseta verde (4) já pode ser trocada');
+  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="ipe"]').innerText().then((t) => /Usando/.test(t)), 'Lojinha: a cor escolhida na personalização aparece como "Usando"');
+  ok(await page.locator('[data-cat="cabelo"]').count() === 0, 'Lojinha: sem aba de cabelos enquanto só existe o modelo padrão');
   await page.locator('[data-aba="acessibilidade"]').click();
-  ok(await page.locator('[data-testid="loja-acessibilidade"] [data-acess]').count() === 4 && await page.locator('[data-testid="loja-acessibilidade"] [aria-checked="true"]').count() === 0, 'Acessibilidade: óculos, aparelho auditivo, cadeira de rodas e pintura no rosto, grátis e desligados de entrada');
+  ok(await page.locator('[data-testid="loja-acessibilidade"] [data-acess]').count() === 2 && await page.locator('[data-testid="loja-acessibilidade"] [aria-checked="true"]').count() === 0, 'Acessibilidade: óculos e pintura no rosto, grátis e desligados de entrada (cadeira e aparelho aguardam modelo próprio)');
   await page.locator('[data-acess="oculos"] button').click();
   await page.locator('[data-acess="oculos"] [aria-checked="true"]').waitFor();
-  ok((await page.getByTestId('moedinhas').first().innerText()).match(/\d+/)[0] === '6', 'colocar os óculos não custa moedinhas');
+  ok((await page.getByTestId('moedinhas').first().innerText()).match(/\d+/)[0] === '5', 'colocar os óculos não custa moedinhas');
   await page.locator('[data-acess="oculos"] button').click();
   await page.locator('[data-acess="oculos"] [aria-checked="false"]').waitFor();
   await page.locator('[data-aba="utensilios"]').click();
@@ -605,10 +608,9 @@ async function main() {
   ok(page.url().includes('/avatar'), 'cadastro antigo sem sexo: o app pede "menino ou menina?" uma vez, antes de qualquer tela');
   await page.locator('[data-sexo="m"]').click();
   await page.locator('[data-testid="montar-avatar"][data-passo="pele"]').waitFor();
-  ok(await page.locator('.montar-corpo [data-peca="pele-09"][aria-checked="true"]').count() === 1, 'avatar antigo migrado: a cor de pele equivalente já vem escolhida');
-  await page.locator('[data-ir-passo="cabelo"]').click();
-  ok(await page.locator('.montar-corpo [data-peca="m-black-power"][aria-checked="true"]').count() === 1, 'avatar antigo migrado: black power de menino, depois da escolha do sexo');
-  await page.locator('[data-ir-passo="lojinha"]').click();
+  ok(await page.locator('.montar-corpo [data-peca="pele-09"][aria-checked="true"]').count() === 1, 'avatar antigo migrado: o tom de pele equivalente já vem escolhido');
+  await page.locator('[data-ir-passo="corCabelo"]').click();
+  ok(await page.locator('.montar-corpo [data-peca="preto"][aria-checked="true"]').count() === 1, 'avatar antigo migrado: a cor do cabelo equivalente já vem escolhida');
   await page.getByTestId('avatar-pronto').click();
   await page.locator('[data-testid="primeira-missao"], [data-testid="vila"]').first().waitFor();
   await page.goto(BASE + '#/c/cr-antiga/vila');

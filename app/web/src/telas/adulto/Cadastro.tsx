@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AVATAR_LIMPO, NIVEIS_INICIAIS, aplicarNivelInicial, opcoesPronuncia, progressoInicial, renderFala, type Crianca, type NivelInicial } from '@fonema/motor';
+import { AVATAR_PADRAO, NIVEIS_INICIAIS, aplicarNivelInicial, opcoesPronuncia, progressoInicial, renderFala, type Crianca, type NivelInicial } from '@fonema/motor';
 import type { Genero } from '@fonema/conteudo';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
@@ -72,8 +72,8 @@ export function Cadastro({ area = 'familia' }: { area?: 'familia' | 'professor' 
       genero: genero ?? 'f',
       anoNascimento: ANO - (idade ?? 5),
       pronuncia: { grafia: temClipe ? nomeBonito : op.grafia, fala: op.fala, rate: op.rate, pitchExtra: op.pitchExtra, voz: 'sofia' },
-      // D029: o boneco começa limpo; a criança monta na primeira entrada
-      avatar: { ...AVATAR_LIMPO },
+      // D029 §7: o boneco começa no padrão completo; a criança personaliza na primeira entrada
+      avatar: { ...AVATAR_PADRAO },
       // apoios e rotina: padrões; o adulto ajusta depois, na Área da Família
       apoios: { previsivel: false, focoCurto: false, leituraReforco: false, calmo: false },
       jaSabe: { letrasDoNome: nivel === 'zero' ? 'nao-sei' : 'sim', lePalavras: nivel === 'le-palavras' ? 'sim' : 'nao-sei', leFrases: 'nao-sei' },

@@ -5,7 +5,8 @@
  */
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import { COR_MASSINHA, MEDIDAS, type Aparencia } from './modelo.ts';
+import { COR_MASSINHA, MEDIDAS, paraProvisorio, type Aparencia, type AparenciaProvisoria } from './modelo.ts';
+import { acessorioNoModelo, criarBonecoGlb } from './avatarGlb.ts';
 import { criarAcessorioCabeca, criarCabeca, criarCabelo, criarCadeira, criarCalca, criarCalcado, criarCamisa, criarCorpo } from './procedural.ts';
 import { pecaPronta, piscarDoGLB } from './glb.ts';
 
@@ -38,12 +39,39 @@ export class Boneco {
   private pedido = 0;
   private proximaPiscada = 2;
   sentado = false;
+  /** Está mostrando o modelo 3D de verdade (e não a reserva provisória)? */
+  real = false;
 
-  /** Monta (ou remonta) o boneco. Só troca o que está na cena quando tudo ficou pronto: sem piscar de tela. */
+  /**
+   * Monta (ou remonta) o boneco: o modelo 3D de verdade, recolorido com as cores escolhidas; se ele não carregar, a
+   * reserva provisória feita em código. Só troca o que está na cena quando tudo ficou pronto: sem piscar de tela.
+   */
   async aplicar(a: Aparencia): Promise<void> {
     const pedido = ++this.pedido;
-    const sentado = a.acessibilidade.includes('cadeira-de-rodas');
     const novo = new THREE.Group();
+    let cabeca: THREE.Group | null = null;
+    let piscar: ((v: number) => void) | null = null;
+    let sentado = false;
+    const glb = await criarBonecoGlb(a);
+    if (glb) {
+      novo.add(glb.grupo);
+      for (const id of a.acessibilidade) { const p = acessorioNoModelo(id, glb); if (p) novo.add(p); }
+    } else {
+      ({ cabeca, piscar, sentado } = await this.provisorio(paraProvisorio(a), novo));
+    }
+    if (pedido !== this.pedido) { descartar(novo); return; }
+    if (this.conteudo) { this.raiz.remove(this.conteudo); descartar(this.conteudo); }
+    this.conteudo = novo;
+    this.cabeca = cabeca;
+    this.piscar = piscar;
+    this.sentado = sentado;
+    this.real = !!glb;
+    this.raiz.add(novo);
+  }
+
+  /** Reserva: boneco provisório por peças (peças GLB do manifesto antigo, se houver; senão, feitas em código). */
+  private async provisorio(a: AparenciaProvisoria, novo: THREE.Group) {
+    const sentado = a.acessibilidade.includes('cadeira-de-rodas');
     const cabeca = new THREE.Group(); // gira em torno do pescoço
     cabeca.position.set(0, M.pescocoY, 0);
     const noCentro = new THREE.Group(); // peças provisórias da cabeça: origem no centro da cabeça
@@ -77,14 +105,7 @@ export class Boneco {
       else if (obj) noMundo.add(obj);
       else { const p = criarAcessorioCabeca(id, a); if (p) noCentro.add(p); }
     }
-
-    if (pedido !== this.pedido) { descartar(novo); return; }
-    if (this.conteudo) { this.raiz.remove(this.conteudo); descartar(this.conteudo); }
-    this.conteudo = novo;
-    this.cabeca = cabeca;
-    this.piscar = piscar;
-    this.sentado = sentado;
-    this.raiz.add(novo);
+    return { cabeca, piscar, sentado };
   }
 
   /** Vida do boneco parado: respira, balança de leve, inclina a cabeça e pisca. `t` em segundos. */
@@ -93,6 +114,7 @@ export class Boneco {
     const resp = Math.sin(t * 1.7);
     this.conteudo.scale.set(1 - 0.004 * resp, 1 + 0.007 * resp, 1 - 0.004 * resp);
     this.conteudo.rotation.z = this.sentado ? 0 : 0.012 * Math.sin(t * 0.9);
+    this.conteudo.rotation.x = this.real ? 0.008 * Math.sin(t * 1.3 + 0.4) : 0;
     if (this.cabeca) {
       this.cabeca.rotation.z = 0.035 * Math.sin(t * 0.7 + 0.6);
       this.cabeca.rotation.x = 0.02 * Math.sin(t * 1.1);
@@ -109,6 +131,7 @@ export class Boneco {
     if (!this.conteudo) return;
     this.conteudo.scale.set(1, 1, 1);
     this.conteudo.rotation.z = 0;
+    this.conteudo.rotation.x = 0;
     this.cabeca?.rotation.set(0, 0, 0);
     this.piscar?.(0);
   }
@@ -264,6 +287,8 @@ export class Palco {
   /** Gira pelos botões (teclado e quem não arrasta): `passo` em voltas (0,125 = 45°). */
   girar(passo: number) { this.giro += passo * Math.PI * 2; this.mexeu = true; this.sujo = true; this.agendar(); }
   /** Define o ângulo (0 = de frente). Usado nos testes e nas capturas. */
+  /** Está mostrando o modelo 3D de verdade (e não a reserva provisória)? Usado nas capturas e nos testes. */
+  get real() { return this.boneco.real; }
   definirGiro(rad: number) { this.giro = rad; this.velocidade = 0; this.mexeu = true; this.sujo = true; this.agendar(); }
 
   private ajustar() {

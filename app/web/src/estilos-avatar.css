@@ -103,6 +103,14 @@ html.contraste .opcao-peca.sel,html.contraste .montar-passo.atual{background:#FF
 html.contraste .cadeado,html.contraste .montar-aviso{color:#000}
 html.contraste .opcao-cor.sel{box-shadow:0 0 0 4px #fff,0 0 0 8px #000}
 
+.montar-opcoes.cores{grid-template-columns:repeat(auto-fill,minmax(clamp(72px,9vh,96px),1fr));align-items:start}
+.opcao-cor-caixa{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;text-align:center}
+.opcao-cor-caixa small{font-family:var(--f-titulo);font-weight:600;font-size:clamp(11px,1.5vh,14px);line-height:1.1;color:var(--marinho);overflow-wrap:anywhere}
+.opcao-cor.clara{color:var(--marinho);box-shadow:0 4px 0 rgba(12,26,64,.28),inset 0 -6px 10px rgba(12,26,64,.12),0 0 0 3px #fff,0 0 0 5px #C5D7EA}
+.opcao-cor.clara .ic{filter:none}
+.opcao-cor.clara.sel{box-shadow:0 4px 0 #D79A1F,0 0 0 4px #FFD652,0 0 0 7px #F6A91B}
+.opcao-cor.trancada{filter:saturate(.55) brightness(.92)}
+.opcao-cor.trancada .ic{width:30px;height:30px}
 @media (max-width:1500px){
   .montar-passo:not(.atual) span{display:none}
 }
@@ -127,7 +135,8 @@ html.contraste .opcao-cor.sel{box-shadow:0 0 0 4px #fff,0 0 0 8px #000}
   .montar-opcoes{gap:6px}
   .montar-opcoes.com-retrato{grid-template-columns:repeat(5,minmax(0,1fr))}
   .montar-opcoes.com-retrato.corpo,.vitrine-lista{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
-  .montar-opcoes.cores{grid-template-columns:repeat(5,1fr)}
+  .montar-opcoes.cores{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px 4px}
+  .opcao-cor-caixa small{font-size:11px}
   .montar-opcoes.cor-cabelo{grid-template-columns:repeat(7,1fr);padding-top:6px}
   .cor-cabelo .opcao-cor{width:40px;height:40px}
   .cor-cabelo .opcao-cor .ic{width:22px;height:22px}
@@ -144,6 +153,9 @@ html.contraste .opcao-cor.sel{box-shadow:0 0 0 4px #fff,0 0 0 8px #000}
   .boneco3d-giro{justify-content:space-between;padding:0 8px}
   .boneco3d-giro .hud-btn{width:46px;height:46px}
   .montar-rodape .btn{min-height:56px;padding:0 14px;font-size:18px}
+  .montar-rodape .btn:first-child span{display:none}
+  .montar-rodape .btn:first-child{flex:none;width:60px;padding:0}
+  .montar-rodape .btn{flex:1 1 auto;white-space:nowrap}
   .grade-pecas{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-height:620px) and (min-width:821px){

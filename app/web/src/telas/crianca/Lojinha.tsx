@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ACESSIBILIDADE, ITENS_LOJA, pecasPara, type ItemLoja, type PecaAvatar } from '@fonema/conteudo';
-import { alternarAcessibilidade, comprar, comprarPeca, estadoPeca, podeComprar, rotuloCadeado, vestir, type AvatarCrianca } from '@fonema/motor';
+import { ITENS_LOJA, pecasPara, type ItemLoja, type PecaAvatar } from '@fonema/conteudo';
+import { alternarAcessibilidade, comprar, comprarPeca, estadoPeca, pecaEmUso, podeComprar, rotuloCadeado, vestir, type AvatarCrianca } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { Carregando, Topo } from '../../componentes/basicos.tsx';
 import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { Cofrinho } from '../../componentes/recompensas.tsx';
 import { Boneco3D, RetratoBoneco } from '../../componentes/Boneco3D.tsx';
 import { resolverAparencia } from '../../avatar3d/modelo.ts';
+import { cabeloExiste, useModelosExistentes } from './Avatar.tsx';
 import { asset } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
 import { novoId } from '../../dados/repositorio.ts';
@@ -14,13 +15,14 @@ import { falar } from '../../util.ts';
 
 type Aba = 'boneco' | 'acessibilidade' | 'utensilios';
 type CatLoja = 'cabelo' | 'camisa' | 'calca' | 'calcado';
-const CATS: [CatLoja, string][] = [['camisa', 'Camisas'], ['calca', 'Calças e saias'], ['calcado', 'Calçados'], ['cabelo', 'Cabelos']];
+const CATS: [CatLoja, string][] = [['camisa', 'Camiseta'], ['calca', 'Calça'], ['calcado', 'Calçado'], ['cabelo', 'Cabelo']];
 
 /**
  * Lojinha (de brincadeirinha, D002 · D021 · D029):
- * - "Meu boneco": roupas e penteados. O que está liberado se usa na hora; o resto mostra o cadeado
- *   ("Abre na Letra F · 12 moedas") — abre com o avanço das fases E com moedinhas.
- * - "Acessibilidade": óculos, aparelho auditivo, cadeira de rodas e pintura no rosto. Sempre grátis, sempre opcional.
+ * - "Meu boneco": cores da roupa e tipos de cabelo. O que está liberado se usa na hora; o resto mostra o cadeado
+ *   ("Abre na Letra C · 6 moedas") — abre com o avanço das fases E com moedinhas.
+ * - "Acessibilidade": óculos e pintura no rosto. Sempre grátis, sempre opcional. (Cadeira de rodas e aparelho
+ *   auditivo voltam quando houver modelo 3D próprio: ver o catálogo.)
  * - "Utensílios": os itens da mochila (como antes): pode × ainda não pode, "faltam X", meta do cofrinho.
  * Só moedinhas da jornada: nada com dinheiro de verdade, nada por sorte.
  */
@@ -32,6 +34,7 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
   const [confirmar, setConfirmar] = useState<ItemLoja | null>(null);
   const [confirmarPeca, setConfirmarPeca] = useState<PecaAvatar | null>(null);
   const [provando, setProvando] = useState<PecaAvatar | null>(null);
+  const existem = useModelosExistentes();
   const temCrianca = !!crianca;
   useEffect(() => {
     if (crianca) falar({ quem: 'tales', texto: 'Aqui você troca as moedinhas que ganhou aprendendo. Pode esperar e juntar para algo maior!' }, crianca);
@@ -84,7 +87,8 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
     await salvarCrianca({ ...crianca, avatar: alternarAcessibilidade(avatar, id) });
   };
 
-  const pecas = pecasPara(cat, sexo);
+  const pecas = pecasPara(cat, sexo).filter((p) => cabeloExiste(p, existem));
+  const temCabelos = pecasPara('cabelo', sexo).filter((p) => cabeloExiste(p, existem)).length > 1;
 
   return (
     <div className="tela-lojinha" data-testid="lojinha">
@@ -123,12 +127,12 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
           {aba === 'boneco' ? (
             <div role="tabpanel" aria-label="Meu boneco" data-testid="loja-boneco">
               <div className="loja-cats" role="group" aria-label="Tipo de peça">
-                {CATS.map(([c, r]) => <button key={c} type="button" className="pilula" aria-pressed={cat === c} onClick={() => { setCat(c); setProvando(null); }} data-cat={c}>{r}</button>)}
+                {CATS.filter(([c]) => c !== 'cabelo' || temCabelos).map(([c, r]) => <button key={c} type="button" className="pilula" aria-pressed={cat === c} onClick={() => { setCat(c); setProvando(null); }} data-cat={c}>{r}</button>)}
               </div>
               <div className="grade-loja grade-pecas">
                 {pecas.map((peca) => {
                   const e = estadoPeca(peca, progresso);
-                  const usando = avatar[cat] === peca.id;
+                  const usando = pecaEmUso(avatar, cat, sexo)?.id === peca.id;
                   const livre = e.estado === 'livre' || e.estado === 'tem';
                   const classe = usando ? 'tem' : livre || e.estado === 'pode' ? 'pode' : 'falta';
                   return (
@@ -164,12 +168,12 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
             <div role="tabpanel" aria-label="Acessibilidade" data-testid="loja-acessibilidade">
               <p className="loja-nota"><span className="etiqueta verde"><Icone nome="check" />Sempre grátis</span> Use se quiser. Dá para colocar e tirar quando quiser.</p>
               <div className="grade-loja grade-pecas">
-                {ACESSIBILIDADE.map((item) => {
+                {pecasPara('acessibilidade', sexo).map((item) => {
                   const ligado = avatar.acessibilidade.includes(item.id);
                   const comItem = resolverAparencia({ ...avatar, acessibilidade: [item.id] }, sexo);
                   return (
                     <div key={item.id} className={`item-loja item-peca ${ligado ? 'tem' : 'pode'}`} data-acess={item.id}>
-                      <span className="opcao-arte"><RetratoBoneco aparencia={comItem} tipo={item.id === 'cadeira-de-rodas' ? 'corpo' : 'busto'} largura={item.id === 'cadeira-de-rodas' ? 132 : 160} altura={item.id === 'cadeira-de-rodas' ? 190 : 160} /></span>
+                      <span className="opcao-arte"><RetratoBoneco aparencia={comItem} tipo="busto" largura={160} altura={160} /></span>
                       <b>{item.nome}</b>
                       <button className={`btn mini ${ligado ? '' : 'verde'}`} role="switch" aria-checked={ligado} onClick={() => alternar(item.id)}>{ligado ? <><Icone nome="x" />Tirar</> : <><Icone nome="check" />Colocar · grátis</>}</button>
                     </div>

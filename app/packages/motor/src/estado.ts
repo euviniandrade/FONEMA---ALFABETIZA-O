@@ -185,24 +185,24 @@ export interface ResultadoSondagem {
 }
 
 /**
- * Avatar montável (D029): só DADOS — ids de peças e de cores do catálogo (@fonema/conteudo › avatar.ts).
- * `null` = a criança ainda não escolheu (o boneco começa limpo).
+ * Avatar 3D (D029 §7): só DADOS — ids de cores e variações do catálogo (@fonema/conteudo › avatar.ts).
+ * O boneco começa no padrão completo; `null` = "como o modelo já vem" (a criança ainda não mudou).
  */
 export interface AvatarCrianca {
-  versao: 2;
+  versao: 3;
   /** Cor do cantinho (fundo das miniaturas). */
   cantinho: string;
   pele: string | null;
-  rosto: string | null;
   olhos: string | null;
+  corCabelo: string | null;
+  /** Tipo de cabelo (troca o modelo inteiro). */
   cabelo: string | null;
-  corCabelo: string;
   camisa: string | null;
   calca: string | null;
   calcado: string | null;
-  /** Itens de acessibilidade ligados (óculos, aparelho auditivo, cadeira de rodas, pintura no rosto). */
+  /** Itens de acessibilidade ligados (óculos, pintura no rosto; aparelho auditivo e cadeira de rodas ficam guardados). */
   acessibilidade: string[];
-  /** A montagem obrigatória foi concluída ao menos uma vez. */
+  /** A criança já passou pela personalização ao menos uma vez. */
   pronto: boolean;
   /** Recorte antigo guardado só até o sexo ser escolhido (migração). */
   baseAntiga?: string;

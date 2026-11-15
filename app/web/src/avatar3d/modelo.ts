@@ -1,15 +1,53 @@
 /**
- * Aparência do boneco: os DADOS do avatar (ids de peças) já resolvidos em cores e modelos.
+ * Aparência do boneco: os DADOS do avatar (ids do catálogo) já resolvidos em cores e no modelo 3D a usar.
  * Não importa three.js: pode ser usado em qualquer tela (chave de cache das miniaturas, reserva 2D).
  */
-import { pecaAvatar, type Genero, type PecaAvatar } from '@fonema/conteudo';
+import { pecaAvatar, pecaPadrao, type Genero } from '@fonema/conteudo';
 import type { AvatarCrianca, Crianca } from '@fonema/motor';
-
-export interface PecaVestida { id: string; modelo: string; cor: string; cor2: string; estampa?: PecaAvatar['estampa'] }
 
 export interface Aparencia {
   sexo: Genero;
-  /** Cor da pele (hex) ou null = boneco ainda "de massinha". */
+  /** Chave do modelo 3D pedido em avatares.json (ex.: "menina-padrao", "menino-topete"). Se o arquivo não existir, vale o padrão do sexo. */
+  modelo: string;
+  /** Cores escolhidas (hex). `null` = como o modelo já vem. */
+  pele: string | null;
+  olhos: string | null;
+  cabelo: string | null;
+  camisa: string | null;
+  calca: string | null;
+  calcado: string | null;
+  acessibilidade: string[];
+}
+
+/** Altura do boneco na cena (metros): todo modelo é normalizado para isto, com os pés no chão e de frente para +Z. */
+export const ALTURA_BONECO = 1.1;
+export const modeloPadrao = (sexo: Genero): string => (sexo === 'm' ? 'menino-padrao' : 'menina-padrao');
+
+export function resolverAparencia(avatar: AvatarCrianca, sexo: Genero): Aparencia {
+  const cor = (cat: 'pele' | 'olhos' | 'corCabelo' | 'camisa' | 'calca' | 'calcado'): string | null => {
+    const p = pecaAvatar(cat, avatar[cat]);
+    return p && !p.padrao ? p.cor ?? null : null;
+  };
+  const cabelo = pecaAvatar('cabelo', avatar.cabelo) ?? pecaPadrao('cabelo', sexo);
+  return {
+    sexo,
+    modelo: cabelo && (cabelo.sexo === sexo || cabelo.sexo === 'ambos') && cabelo.modelo ? cabelo.modelo : modeloPadrao(sexo),
+    pele: cor('pele'), olhos: cor('olhos'), cabelo: cor('corCabelo'),
+    camisa: cor('camisa'), calca: cor('calca'), calcado: cor('calcado'),
+    acessibilidade: [...avatar.acessibilidade].sort()
+  };
+}
+
+export const aparenciaDe = (c: Pick<Crianca, 'avatar' | 'genero'>): Aparencia => resolverAparencia(c.avatar, c.genero);
+
+/** Chave estável da aparência (cache de miniaturas). */
+export const chaveAparencia = (a: Aparencia): string => JSON.stringify(a);
+
+/* ---- medidas e tipos do boneco PROVISÓRIO feito em código (reserva quando o modelo 3D não carrega) ---- */
+
+export interface PecaVestida { id: string; modelo: string; cor: string; cor2: string; estampa?: 'letra' | 'listras' | 'numero' }
+export interface AparenciaProvisoria {
+  sexo: Genero;
   pele: string | null;
   rosto: string | null;
   olhos: string | null;
@@ -19,43 +57,26 @@ export interface Aparencia {
   calcado: PecaVestida | null;
   acessibilidade: string[];
 }
-
-/** Medidas comuns do boneco (metros). São as MESMAS do contrato dos modelos GLB (app/docs/avatar-3d-contrato.md). */
 export const MEDIDAS = {
-  altura: 1.10,
-  /** Centro e raio da cabeça. */
-  cabecaY: 0.87, cabecaRaio: 0.2,
-  /** Pivô do pescoço (a cabeça balança em torno dele). */
-  pescocoY: 0.69,
-  ombroY: 0.635, ombroX: 0.125,
-  quadrilY: 0.38, quadrilX: 0.062,
-  coxa: 0.15, canela: 0.15, tornozeloY: 0.08
+  altura: 1.10, cabecaY: 0.87, cabecaRaio: 0.2, pescocoY: 0.69,
+  ombroY: 0.635, ombroX: 0.125, quadrilY: 0.38, quadrilX: 0.062, coxa: 0.15, canela: 0.15, tornozeloY: 0.08
 } as const;
-
 export const COR_MASSINHA = '#D9D3CC';
 export const COR_ROUPA_BASE = '#EEF1F5';
+/** Cores do padrão, para a reserva (provisório em 3D e desenho 2D) ficar parecida com o modelo de verdade. */
+export const PADRAO = { pele: '#F0C3A0', olhos: '#3E2414', cabelo: '#3A2416', roupa: '#FAFBFD', letra: '#22407A' } as const;
 
-const vestida = (cat: 'camisa' | 'calca' | 'calcado', id: string | null): PecaVestida | null => {
-  const p = pecaAvatar(cat, id);
-  return p ? { id: p.id, modelo: p.modelo ?? 'camiseta', cor: p.cor ?? '#FFFFFF', cor2: p.cor2 ?? p.cor ?? '#FFFFFF', estampa: p.estampa } : null;
-};
-
-export function resolverAparencia(avatar: AvatarCrianca, sexo: Genero): Aparencia {
-  const cab = pecaAvatar('cabelo', avatar.cabelo);
+/** Aparência → boneco provisório equivalente (mesmas cores, cabelo parecido). */
+export function paraProvisorio(a: Aparencia): AparenciaProvisoria {
+  const v = a.modelo.split('-').slice(1).join('-');
+  const cabelos: Record<string, string> = a.sexo === 'f'
+    ? { padrao: 'liso-chanel', cacheado: 'cacheado', black: 'black-power', trancas: 'trancas', rabo: 'rabo-de-cavalo', coque: 'coque' }
+    : { padrao: 'liso-curto', cacheado: 'cacheado-curto', crespo: 'crespo-curto', franja: 'liso-curto', topete: 'topete' };
+  const roupa = (id: string, modelo: string, cor: string | null, estampa?: 'letra'): PecaVestida => ({ id, modelo, cor: cor ?? PADRAO.roupa, cor2: estampa ? PADRAO.letra : cor ?? PADRAO.roupa, estampa });
   return {
-    sexo,
-    pele: pecaAvatar('pele', avatar.pele)?.cor ?? null,
-    rosto: pecaAvatar('rosto', avatar.rosto)?.id ?? null,
-    olhos: pecaAvatar('olhos', avatar.olhos)?.cor ?? null,
-    cabelo: cab ? { id: cab.id, modelo: cab.modelo ?? 'liso-curto', cor: pecaAvatar('corCabelo', avatar.corCabelo)?.cor ?? '#3A2416' } : null,
-    camisa: vestida('camisa', avatar.camisa),
-    calca: vestida('calca', avatar.calca),
-    calcado: vestida('calcado', avatar.calcado),
-    acessibilidade: [...avatar.acessibilidade].sort()
+    sexo: a.sexo, pele: a.pele ?? PADRAO.pele, rosto: 'redondo', olhos: a.olhos ?? PADRAO.olhos,
+    cabelo: { id: a.modelo, modelo: cabelos[v] ?? cabelos.padrao, cor: a.cabelo ?? PADRAO.cabelo },
+    camisa: roupa('camiseta', 'camiseta', a.camisa, 'letra'), calca: roupa('calca', 'calca', a.calca), calcado: { ...roupa('tenis', 'tenis', a.calcado), cor2: '#DDE3EC' },
+    acessibilidade: a.acessibilidade.filter((x) => x !== 'cadeira-de-rodas' && x !== 'aparelho-auditivo')
   };
 }
-
-export const aparenciaDe = (c: Pick<Crianca, 'avatar' | 'genero'>): Aparencia => resolverAparencia(c.avatar, c.genero);
-
-/** Chave estável da aparência (cache de miniaturas). */
-export const chaveAparencia = (a: Aparencia): string => JSON.stringify(a);

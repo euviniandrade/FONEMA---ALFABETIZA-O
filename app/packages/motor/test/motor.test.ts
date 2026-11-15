@@ -6,7 +6,7 @@ import {
   registrarTentativa, renderFala, resultadoProvaRelampago, resultadoRevisao, agendarRevisao, revisoesVencidas,
   silabas, somInicial, subirTermometro, aplicarAtividade, avaliarConquistas, comprar, aplicarNivelInicial
 } from '../src/index.ts';
-import { AVATAR_LIMPO, DESAFIOS_NIVEL_1 } from '../src/index.ts';
+import { AVATAR_PADRAO, DESAFIOS_NIVEL_1 } from '../src/index.ts';
 import type { Crianca, Tentativa } from '../src/index.ts';
 
 const T0 = new Date('2026-11-13T15:00:00').getTime();
@@ -15,7 +15,7 @@ const cfg = CONFIG_PADRAO;
 const crianca = (nome = 'Mariana', genero: Crianca['genero'] = 'f'): Crianca => ({
   id: 'c1', nome, genero, anoNascimento: 2021,
   pronuncia: { grafia: 'Ma-ri-A-na', fala: 'Mariana', rate: 1, pitchExtra: 0, voz: 'sofia' },
-  avatar: { ...AVATAR_LIMPO, cantinho: 'mata' },
+  avatar: { ...AVATAR_PADRAO, cantinho: 'mata' },
   apoios: { previsivel: false, focoCurto: false, leituraReforco: false, calmo: false },
   jaSabe: { letrasDoNome: 'nao-sei', lePalavras: 'nao-sei', leFrases: 'nao-sei' },
   consentimentos: { responsavel: true, vozPrimeiroNome: true, gravarVozAdulto: false, em: T0 },

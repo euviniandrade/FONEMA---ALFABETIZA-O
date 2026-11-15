@@ -9,7 +9,7 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
-import { COR_MASSINHA, COR_ROUPA_BASE, MEDIDAS, type Aparencia, type PecaVestida } from './modelo.ts';
+import { COR_MASSINHA, COR_ROUPA_BASE, MEDIDAS, type AparenciaProvisoria as Aparencia, type PecaVestida } from './modelo.ts';
 
 const R = MEDIDAS.cabecaRaio;
 const M = MEDIDAS;
@@ -571,7 +571,7 @@ export function criarCamisa(a: Aparencia): THREE.Group {
     : [[0.335, 0.108], [0.4, 0.119], [0.46, 0.121], [0.54, 0.117], [0.6, 0.107], [0.645, regata ? 0.074 : 0.084], [0.672, 0.056], [0.69, 0.048]];
   g.add(malha(tronco(perfil), mat));
   // gola
-  const gola = malha(new THREE.TorusGeometry(0.05, p.modelo === 'polo' ? 0.016 : 0.0105, 10, 32), p.modelo === 'polo' || p.id === 'uniforme' || p.estampa === 'numero' ? mat2 : matTecido(p.cor));
+  const gola = malha(new THREE.TorusGeometry(0.05, p.modelo === 'polo' ? 0.016 : 0.0105, 10, 32), p.modelo === 'polo' || p.estampa === 'numero' ? mat2 : matTecido(p.cor));
   gola.rotation.x = Math.PI / 2;
   gola.scale.set(1.05, 0.9, 1);
   gola.position.y = 0.683;
@@ -590,7 +590,7 @@ export function criarCamisa(a: Aparencia): THREE.Group {
     g.add(barra);
   }
   // mangas
-  const matManga = p.id === 'uniforme' || p.estampa === 'numero' ? mat2 : matTecido(p.cor);
+  const matManga = p.estampa === 'numero' ? mat2 : matTecido(p.cor);
   for (const lado of [-1, 1]) {
     const b = braco(lado);
     if (p.modelo === 'bufante') {

@@ -41,8 +41,8 @@ for (const f of FASES) {
     if (a.tipo === 'espelho') { add(a.voz ?? 'sofia', a.falaSom, c.id); add(a.voz ?? 'sofia', a.falaAncora, c.id); if (a.voz) add(a.voz, 'Agora é a sua vez, [NOME]!', c.id); }
     if (a.tipo === 'pausa') a.sequencia.forEach((s) => add('tales', s.falar, c.id));
   }
-  // dicas do cadeado: geradas só se sobrar orçamento (DICAS=1)
-  if (process.env.DICAS === '1') for (const id of f.conquistas) if (CONQUISTA_POR_ID[id]) add('sofia', CONQUISTA_POR_ID[id].dica, id);
+  // dicas do cadeado (botão "Ouvir a dica" na entrada da fase): entram sempre; DICAS=0 deixa de fora
+  if (process.env.DICAS !== '0') for (const id of f.conquistas) if (CONQUISTA_POR_ID[id]) add('sofia', CONQUISTA_POR_ID[id].dica, id);
   if (f.demonstracao) add('tales', `${f.demonstracao.descricao}.`, f.id);
 }
 FALAS.chegada.forEach((f) => addF(f, 'chegada'));
@@ -50,6 +50,7 @@ FALAS.voltou.forEach((f) => addF(f, 'voltou'));
 addF(FALAS.avatar, 'avatar'); addF(FALAS.avatarPronto, 'avatar'); addF(FALAS.avatarSexo, 'avatar'); addF(FALAS.avatarLojinha, 'avatar');
 PASSOS_AVATAR.forEach((p) => add('tales', p.pergunta, 'avatar'));
 FALAS_DAS_TELAS.forEach((f) => addF(f, 'telas'));
+add('sofia', 'Continue a trilha para descobrir!', 'telas');
 Object.values(FALAS_DOS_PARES).forEach((p) => { add('sofia', p.tocou, 'pares (D030)'); add('sofia', p.como, 'pares (D030)'); });
 add('sofia', FALA_ESPELHO_BD, 'pares (D030)'); addF(FALAS.suaVez, 'geral');
 FALAS.acertos.forEach((t) => add('sofia', t, 'acertos'));

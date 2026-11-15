@@ -44,7 +44,7 @@ const p = (categoria: CategoriaAvatar, id: string, nome: string, sexo: SexoPeca,
  * (clara · morena clara · morena · parda · negra clara · negra retinta e os tons entre elas).
  */
 export const PELES: PecaAvatar[] = [
-  ['pele-01', 'Clara', '#F6D7C3'], ['pele-02', 'Clara rosada', '#EDC2A2'], ['pele-03', 'Morena clara', '#E0AC84'], ['pele-04', 'Morena', '#CF9468'],
+  ['pele-01', 'Clara', '#F2CBB0'], ['pele-02', 'Clara rosada', '#EABC9A'], ['pele-03', 'Morena clara', '#E0AC84'], ['pele-04', 'Morena', '#CF9468'],
   ['pele-05', 'Morena dourada', '#BC7E52'], ['pele-06', 'Parda', '#A56A40'], ['pele-07', 'Parda escura', '#8A5433'], ['pele-08', 'Negra clara', '#6F4128'],
   ['pele-09', 'Negra', '#543020'], ['pele-10', 'Negra retinta', '#3B2117']
 ].map(([id, nome, cor]) => p('pele', id, nome, 'ambos', { cor }));
@@ -105,6 +105,7 @@ export const CALCAS: PecaAvatar[] = [
 export const CALCADOS: PecaAvatar[] = [
   p('calcado', 'branco', 'Branco', 'ambos', { cor: '#FFFFFF', padrao: true }),
   p('calcado', 'marinho', 'Azul-marinho', 'ambos', { cor: MARINHO }),
+  p('calcado', 'ceu', 'Azul-claro', 'ambos', { cor: CEU }),
   p('calcado', 'ipe', 'Amarelo', 'ambos', { cor: IPE, fase: 'AL-B', preco: 4 }),
   p('calcado', 'terra', 'Terracota', 'ambos', { cor: TERRA, fase: 'AL-F', preco: 10 }),
   p('calcado', 'grafite', 'Grafite', 'ambos', { cor: GRAFITE, fase: 'AL-I', preco: 12 }),
@@ -145,8 +146,8 @@ export type PassoAvatar = Exclude<CategoriaAvatar, 'acessibilidade'>;
 export const PASSOS_AVATAR: { id: PassoAvatar; titulo: string; pergunta: string }[] = [
   { id: 'pele', titulo: 'Pele', pergunta: 'Qual é a cor da sua pele?' },
   { id: 'olhos', titulo: 'Olhos', pergunta: 'Qual é a cor dos seus olhos?' },
-  { id: 'corCabelo', titulo: 'Cor do cabelo', pergunta: 'Qual é a cor do seu cabelo?' },
-  { id: 'cabelo', titulo: 'Cabelo', pergunta: 'Como é o seu cabelo?' },
+  { id: 'corCabelo', titulo: 'Cabelo', pergunta: 'Qual é a cor do seu cabelo?' },
+  { id: 'cabelo', titulo: 'Penteado', pergunta: 'Como é o seu cabelo?' },
   { id: 'camisa', titulo: 'Camiseta', pergunta: 'Escolha a cor da camiseta.' },
   { id: 'calca', titulo: 'Calça', pergunta: 'Escolha a cor da calça.' },
   { id: 'calcado', titulo: 'Calçado', pergunta: 'E a cor do calçado?' }

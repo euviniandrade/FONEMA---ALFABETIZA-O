@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { ALFABETO, CONFIG_PADRAO, FASES, FASE_POR_ID, faseDaLetra, habilidadeLetra, seloDaLetra } from '@fonema/conteudo';
 import { aplicarAtividade, calcularNivel, concluirFase, descreverTermometro, fasesConcluidas, fecharSessao, missaoInicialFeita, montarSessao, podeEntrar, progressoInicial } from '../src/index.ts';
-import { AVATAR_LIMPO } from '../src/index.ts';
+import { AVATAR_PADRAO } from '../src/index.ts';
 import type { Crianca, Progresso, Tentativa } from '../src/index.ts';
 
 const T0 = new Date('2026-11-14T15:00:00').getTime();
@@ -9,7 +9,7 @@ const cfg = CONFIG_PADRAO;
 const crianca: Crianca = {
   id: 'c1', nome: 'Mariana', genero: 'f', anoNascimento: 2021,
   pronuncia: { grafia: 'Ma-ri-A-na', fala: 'Mariana', rate: 1, pitchExtra: 0, voz: 'sofia' },
-  avatar: { ...AVATAR_LIMPO, cantinho: 'mata' },
+  avatar: { ...AVATAR_PADRAO, cantinho: 'mata' },
   apoios: { previsivel: false, focoCurto: false, leituraReforco: false, calmo: false },
   jaSabe: { letrasDoNome: 'nao-sei', lePalavras: 'nao-sei', leFrases: 'nao-sei' },
   consentimentos: { responsavel: true, vozPrimeiroNome: true, gravarVozAdulto: false, em: T0 },

@@ -120,6 +120,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-13bc37v",
+  "voz": "sofia",
+  "texto": "Guardar moedinhas no porquinho",
+  "origem": "S-R0-10"
+ },
+ {
   "id": "s-13x8b5p",
   "voz": "sofia",
   "texto": "Ca… sa",
@@ -156,6 +162,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-14yvois",
+  "voz": "sofia",
+  "texto": "Ler palavras da mata em dias diferentes",
+  "origem": "S-R2a-05"
+ },
+ {
   "id": "s-14zllpx",
   "voz": "sofia",
   "texto": "Quem mora com você, [NOME]? Bate as palmas do nome.",
@@ -166,6 +178,12 @@
   "voz": "sofia",
   "texto": "[NOME]",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1589s66",
+  "voz": "sofia",
+  "texto": "Fazer o guia da mata para o Bolota",
+  "origem": "S-R2a-09"
  },
  {
   "id": "s-159nwhv",
@@ -192,6 +210,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-15x68xy",
+  "voz": "sofia",
+  "texto": "Ouvir a diferença entre vovó e vovô",
+  "origem": "S-R1-04"
+ },
+ {
   "id": "s-15yvsqq",
   "voz": "sofia",
   "texto": "Amanhã é a vez do sorriso mais largo de todos!",
@@ -208,6 +232,12 @@
   "voz": "sofia",
   "texto": "Elefante",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-16c3ruf",
+  "voz": "sofia",
+  "texto": "Continue a trilha para descobrir!",
+  "origem": "telas"
  },
  {
   "id": "s-16f73ud",
@@ -246,6 +276,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-17vcv8x",
+  "voz": "sofia",
+  "texto": "Ler a primeira palavra sem ajuda",
+  "origem": "M-R2a-01"
+ },
+ {
   "id": "s-17yebzm",
   "voz": "sofia",
   "texto": "Enche o peito de ar…",
@@ -268,6 +304,12 @@
   "voz": "sofia",
   "texto": "Toque para ouvir cada leitura e escolha a que combina.",
   "origem": "falas fônicas (D030)"
+ },
+ {
+  "id": "s-18uqtkr",
+  "voz": "sofia",
+  "texto": "Achar a vogal do começo das palavras",
+  "origem": "S-R1-06"
  },
  {
   "id": "s-193fu3z",
@@ -312,10 +354,22 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-1ajlhp",
+  "voz": "sofia",
+  "texto": "Juntar consoante e vogal: MA, LO, FU",
+  "origem": "S-R2a-03"
+ },
+ {
   "id": "s-1asmjqs",
   "voz": "sofia",
   "texto": "llll… lua!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1auvyix",
+  "voz": "sofia",
+  "texto": "Lembrar o que aprendeu em outros dias",
+  "origem": "S-R1-18"
  },
  {
   "id": "s-1bj7qmc",
@@ -552,6 +606,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1ecrp9a",
+  "voz": "sofia",
+  "texto": "O som /l/ da letra L",
+  "origem": "S-SOM-L"
+ },
+ {
   "id": "s-1egnpj4",
   "voz": "sofia",
   "texto": "Eu sou a Sofia. SO… FI… A! Três palmas!",
@@ -640,6 +700,12 @@
   "voz": "sofia",
   "texto": "Esta letra tem dois sons: o de ovo e o de vovó.",
   "origem": "AL-O-C2"
+ },
+ {
+  "id": "s-1i8kohr",
+  "voz": "sofia",
+  "texto": "Terminar a sessão no ritual de fim",
+  "origem": "S-R0-15"
  },
  {
   "id": "s-1ipkbwn",
@@ -768,6 +834,12 @@
   "origem": "pares (D030)"
  },
  {
+  "id": "s-1njrxcm",
+  "voz": "sofia",
+  "texto": "Ler 3 palavras para alguém da família",
+  "origem": "V-R2a-02"
+ },
+ {
   "id": "s-1nnazrj",
   "voz": "sofia",
   "texto": "Cada palma acendeu uma lâmpada!",
@@ -808,6 +880,12 @@
   "voz": "sofia",
   "texto": "O que rima com mel?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1or7t7l",
+  "voz": "sofia",
+  "texto": "Acender o farol da ilha",
+  "origem": "S-R1-07"
  },
  {
   "id": "s-1owymw4",
@@ -1062,6 +1140,12 @@
   "origem": "pares (D030)"
  },
  {
+  "id": "s-1qmhr53",
+  "voz": "sofia",
+  "texto": "Escrever palavras ditadas com letras móveis",
+  "origem": "S-R2a-07"
+ },
+ {
   "id": "s-1qn9jre",
   "voz": "sofia",
   "texto": "Que sorriso! Iii!",
@@ -1072,6 +1156,12 @@
   "voz": "sofia",
   "texto": "I, de ilha.",
   "origem": "AL-I-C2b"
+ },
+ {
+  "id": "s-1qrpdds",
+  "voz": "sofia",
+  "texto": "Separar figuras pelo primeiro som",
+  "origem": "S-R1-08"
  },
  {
   "id": "s-1qsmvbo",
@@ -1098,10 +1188,22 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1s7y0ow",
+  "voz": "sofia",
+  "texto": "Atravessar a Cachoeira das Sílabas",
+  "origem": "S-R2a-08"
+ },
+ {
   "id": "s-1sspl1",
   "voz": "sofia",
   "texto": "O D tem voz:",
   "origem": "pares (D030)"
+ },
+ {
+  "id": "s-1suupoe",
+  "voz": "sofia",
+  "texto": "Os sons /é/ e /ê/ da letra E",
+  "origem": "S-SOM-E-E-E"
  },
  {
   "id": "s-1svhpmb",
@@ -1138,6 +1240,12 @@
   "voz": "sofia",
   "texto": "Parabéns, [NOME]! O professor viu que você aprendeu!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1u3et1r",
+  "voz": "sofia",
+  "texto": "Montar sílabas na tábua",
+  "origem": "S-R2a-04"
  },
  {
   "id": "s-1u78zhe",
@@ -1860,6 +1968,12 @@
   "origem": "AL-R3-C4c"
  },
  {
+  "id": "s-1x9vait",
+  "voz": "sofia",
+  "texto": "Conhecer todas as letras, de A a Z",
+  "origem": "T-ALFABETO"
+ },
+ {
   "id": "s-1xkxy86",
   "voz": "sofia",
   "texto": "/iii/, um sorriso grande. Sua vez, [NOME]!",
@@ -1878,6 +1992,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1yg0uqb",
+  "voz": "sofia",
+  "texto": "O som do começo do seu nome",
+  "origem": "S-R0-01"
+ },
+ {
   "id": "s-1yowk78",
   "voz": "sofia",
   "texto": "Faz de conta que você é um macaquinho.",
@@ -1888,6 +2008,12 @@
   "voz": "sofia",
   "texto": "No M, os lábios ficam fechados:",
   "origem": "pares (D030)"
+ },
+ {
+  "id": "s-237fha",
+  "voz": "sofia",
+  "texto": "O som /m/ da letra M",
+  "origem": "S-SOM-M"
  },
  {
   "id": "s-2aajyj",
@@ -1906,6 +2032,168 @@
   "voz": "sofia",
   "texto": "Qual rima, [NOME]?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-2my0ud",
+  "voz": "sofia",
+  "texto": "Conhecer a letra Z",
+  "origem": "S-LETRA-Z"
+ },
+ {
+  "id": "s-2my0ue",
+  "voz": "sofia",
+  "texto": "Conhecer a letra Y",
+  "origem": "S-LETRA-Y"
+ },
+ {
+  "id": "s-2my0uf",
+  "voz": "sofia",
+  "texto": "Conhecer a letra X",
+  "origem": "S-LETRA-X"
+ },
+ {
+  "id": "s-2my0ug",
+  "voz": "sofia",
+  "texto": "Conhecer a letra W",
+  "origem": "S-LETRA-W"
+ },
+ {
+  "id": "s-2my0uh",
+  "voz": "sofia",
+  "texto": "Conhecer a letra V",
+  "origem": "S-LETRA-V"
+ },
+ {
+  "id": "s-2my0ui",
+  "voz": "sofia",
+  "texto": "Conhecer a letra U",
+  "origem": "S-LETRA-U"
+ },
+ {
+  "id": "s-2my0uj",
+  "voz": "sofia",
+  "texto": "Conhecer a letra T",
+  "origem": "S-LETRA-T"
+ },
+ {
+  "id": "s-2my0uk",
+  "voz": "sofia",
+  "texto": "Conhecer a letra S",
+  "origem": "S-LETRA-S"
+ },
+ {
+  "id": "s-2my0ul",
+  "voz": "sofia",
+  "texto": "Conhecer a letra R",
+  "origem": "S-LETRA-R"
+ },
+ {
+  "id": "s-2my0um",
+  "voz": "sofia",
+  "texto": "Conhecer a letra Q",
+  "origem": "S-LETRA-Q"
+ },
+ {
+  "id": "s-2my0un",
+  "voz": "sofia",
+  "texto": "Conhecer a letra P",
+  "origem": "S-LETRA-P"
+ },
+ {
+  "id": "s-2my0uo",
+  "voz": "sofia",
+  "texto": "Conhecer a letra O",
+  "origem": "S-LETRA-O"
+ },
+ {
+  "id": "s-2my0up",
+  "voz": "sofia",
+  "texto": "Conhecer a letra N",
+  "origem": "S-LETRA-N"
+ },
+ {
+  "id": "s-2my0uq",
+  "voz": "sofia",
+  "texto": "Conhecer a letra M",
+  "origem": "S-LETRA-M"
+ },
+ {
+  "id": "s-2my0ur",
+  "voz": "sofia",
+  "texto": "Conhecer a letra L",
+  "origem": "S-LETRA-L"
+ },
+ {
+  "id": "s-2my0us",
+  "voz": "sofia",
+  "texto": "Conhecer a letra K",
+  "origem": "S-LETRA-K"
+ },
+ {
+  "id": "s-2my0ut",
+  "voz": "sofia",
+  "texto": "Conhecer a letra J",
+  "origem": "S-LETRA-J"
+ },
+ {
+  "id": "s-2my0uu",
+  "voz": "sofia",
+  "texto": "Conhecer a letra I",
+  "origem": "S-LETRA-I"
+ },
+ {
+  "id": "s-2my0uv",
+  "voz": "sofia",
+  "texto": "Conhecer a letra H",
+  "origem": "S-LETRA-H"
+ },
+ {
+  "id": "s-2my0uw",
+  "voz": "sofia",
+  "texto": "Conhecer a letra G",
+  "origem": "S-LETRA-G"
+ },
+ {
+  "id": "s-2my0ux",
+  "voz": "sofia",
+  "texto": "Conhecer a letra F",
+  "origem": "S-LETRA-F"
+ },
+ {
+  "id": "s-2my0uy",
+  "voz": "sofia",
+  "texto": "Conhecer a letra E",
+  "origem": "S-LETRA-E"
+ },
+ {
+  "id": "s-2my0uz",
+  "voz": "sofia",
+  "texto": "Conhecer a letra D",
+  "origem": "S-LETRA-D"
+ },
+ {
+  "id": "s-2my0v0",
+  "voz": "sofia",
+  "texto": "Conhecer a letra C",
+  "origem": "S-LETRA-C"
+ },
+ {
+  "id": "s-2my0v1",
+  "voz": "sofia",
+  "texto": "Conhecer a letra B",
+  "origem": "S-LETRA-B"
+ },
+ {
+  "id": "s-2my0v2",
+  "voz": "sofia",
+  "texto": "Conhecer a letra A",
+  "origem": "S-LETRA-A"
+ },
+ {
+  "id": "s-2uepyo",
+  "voz": "sofia",
+  "texto": "Mostrar a primeira palavra para o professor",
+  "origem": "V-R2a-01"
  },
  {
   "id": "s-2v3dp4",
@@ -1930,6 +2218,12 @@
   "voz": "sofia",
   "texto": "Olha a minha boca antes de responder, [NOME].",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-3mpqpc",
+  "voz": "sofia",
+  "texto": "Os sons /ó/ e /ô/ da letra O",
+  "origem": "S-SOM-O-O-O"
  },
  {
   "id": "s-3zl2s8",
@@ -2196,6 +2490,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-cvq0v2",
+  "voz": "sofia",
+  "texto": "Esticar /mmm/, /lll/ e /fff/",
+  "origem": "S-R2a-01"
+ },
+ {
   "id": "s-cy7ik",
   "voz": "sofia",
   "texto": "mamãe",
@@ -2388,6 +2688,12 @@
   "origem": "professorExplicou"
  },
  {
+  "id": "s-gict26",
+  "voz": "sofia",
+  "texto": "O som /f/ da letra F",
+  "origem": "S-SOM-F"
+ },
+ {
   "id": "s-goa7hw",
   "voz": "sofia",
   "texto": "Toda letra tem um NOME e um SOM.",
@@ -2520,6 +2826,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-lmh00y",
+  "voz": "sofia",
+  "texto": "Ouvir a diferença entre é e ê",
+  "origem": "S-R1-03"
+ },
+ {
   "id": "s-lnk9rj",
   "voz": "sofia",
   "texto": "xícara",
@@ -2568,6 +2880,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-mr9kta",
+  "voz": "sofia",
+  "texto": "A primeira missão: o som do seu nome",
+  "origem": "TI-R0-01"
+ },
+ {
   "id": "s-mty594",
   "voz": "sofia",
   "texto": "Lê comigo, [NOME]. Devagar e até o fim.",
@@ -2608,6 +2926,12 @@
   "voz": "sofia",
   "texto": "peteca",
   "origem": "figuras"
+ },
+ {
+  "id": "s-oj0aq5",
+  "voz": "sofia",
+  "texto": "Achar /m/, /l/ e /f/ no começo das palavras",
+  "origem": "S-R2a-02"
  },
  {
   "id": "s-okjwy2",
@@ -2680,6 +3004,18 @@
   "voz": "sofia",
   "texto": "peixe",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-qg25ip",
+  "voz": "sofia",
+  "texto": "Ensinar o Bolota com gentileza",
+  "origem": "S-R0-12"
+ },
+ {
+  "id": "s-qgwfmk",
+  "voz": "sofia",
+  "texto": "Ler a palavra e ver a coisa acontecer",
+  "origem": "S-R2a-06"
  },
  {
   "id": "s-qhjskt",
@@ -2928,6 +3264,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-tz013z",
+  "voz": "sofia",
+  "texto": "Ouvir as 5 vogais e tocar a letra",
+  "origem": "S-R1-01"
+ },
+ {
   "id": "s-u20fs1",
   "voz": "sofia",
   "texto": "O som do meu nome. Descobrir o primeiro som do próprio nome.",
@@ -3012,6 +3354,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-y1od5b",
+  "voz": "sofia",
+  "texto": "Vencer a Cachoeira das Sílabas",
+  "origem": "TI-R2a-01"
+ },
+ {
   "id": "s-y5a2vg",
   "voz": "sofia",
   "texto": "Você tocou no Z.",
@@ -3072,6 +3420,12 @@
   "origem": "pares (D030)"
  },
  {
+  "id": "s-ygpicm",
+  "voz": "sofia",
+  "texto": "Mostrar as vogais para o professor",
+  "origem": "V-R1-01"
+ },
+ {
   "id": "s-ymomve",
   "voz": "sofia",
   "texto": "O de boca redonda: ó e ô. Ligar os sons /ó/ e /ô/ à letra O.",
@@ -3112,12 +3466,6 @@
   "voz": "tales",
   "texto": "Faz de conta que você sopra as velinhas do bolo.",
   "origem": "AL-F-C2"
- },
- {
-  "id": "t-10t2pqd",
-  "voz": "tales",
-  "texto": "Calça, bermuda ou saia?",
-  "origem": "avatar"
  },
  {
   "id": "t-1208k4u",
@@ -3462,6 +3810,12 @@
   "origem": "telas"
  },
  {
+  "id": "t-1esqny0",
+  "voz": "tales",
+  "texto": "Escolha a cor da camiseta.",
+  "origem": "avatar"
+ },
+ {
   "id": "t-1f8sg8x",
   "voz": "tales",
   "texto": "Faz de conta que você pede silêncio.",
@@ -3574,6 +3928,12 @@
   "voz": "tales",
   "texto": "Mais um anel do farol acendeu!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1l1w7v",
+  "voz": "tales",
+  "texto": "E a cor do calçado?",
+  "origem": "avatar"
  },
  {
   "id": "t-1lmase",
@@ -4074,12 +4434,6 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "t-2t206s",
-  "voz": "tales",
-  "texto": "E nos pés?",
-  "origem": "avatar"
- },
- {
   "id": "t-35m31w",
   "voz": "tales",
   "texto": "Pula quando ouvir o som do seu nome, [NOME]!",
@@ -4096,6 +4450,12 @@
   "voz": "tales",
   "texto": "Faz de conta que você quica uma bola no chão.",
   "origem": "AL-B-C2"
+ },
+ {
+  "id": "t-3delyw",
+  "voz": "tales",
+  "texto": "Qual é a cor do seu cabelo?",
+  "origem": "avatar"
  },
  {
   "id": "t-3mtpwb",
@@ -4228,12 +4588,6 @@
   "voz": "tales",
   "texto": "Biquinho perfeito!",
   "origem": "telas (E2E)"
- },
- {
-  "id": "t-bwqfde",
-  "voz": "tales",
-  "texto": "Escolha a camisa.",
-  "origem": "avatar"
  },
  {
   "id": "t-ca65q8",
@@ -4686,6 +5040,12 @@
   "origem": "R1-F06"
  },
  {
+  "id": "t-v6t1x1",
+  "voz": "tales",
+  "texto": "Escolha a cor da calça.",
+  "origem": "avatar"
+ },
+ {
   "id": "t-vpoc0d",
   "voz": "tales",
   "texto": "mão… pão",
@@ -4726,12 +5086,6 @@
   "voz": "tales",
   "texto": "E eu sou o Tales! Seja bem-vindo na Vila das Letras, [NOME]!",
   "origem": "chegada"
- },
- {
-  "id": "t-z03xmf",
-  "voz": "tales",
-  "texto": "Como é o seu rosto?",
-  "origem": "avatar"
  },
  {
   "id": "t-z4h5j8",

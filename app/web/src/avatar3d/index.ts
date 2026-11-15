@@ -7,6 +7,7 @@
 import { chaveAparencia, type Aparencia } from './modelo.ts';
 
 export * from './modelo.ts';
+export { modelosExistentes } from './avatares.ts';
 export type { Palco, Enquadramento } from './motor3d.ts';
 
 let motor: Promise<typeof import('./motor3d.ts')> | null = null;

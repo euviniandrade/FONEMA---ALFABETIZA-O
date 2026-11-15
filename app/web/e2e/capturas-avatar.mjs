@@ -1,8 +1,8 @@
-// FONEMA · capturas do avatar 3D montável (D029) em app/docs/capturas/v4-avatar-*.png.
-// Uso (depois de `npm run build`):  node web/e2e/capturas-avatar.mjs [filtro]
-// Sobe o próprio servidor de preview (porta 4188), grava crianças direto no banco do aparelho e fotografa:
-// boneco de frente / de lado / de costas, menino e menina montados, tela de montar (computador e celular),
-// Lojinha com cadeados e seção Acessibilidade.  `node web/e2e/capturas-avatar.mjs glb` prova o carregador de GLB.
+// FONEMA · capturas do avatar 3D (D029 §7) em app/docs/capturas/v6-avatar-*.png.
+// Uso (depois de `npm run build`):  node web/e2e/capturas-avatar.mjs [grupo]
+//   grupos: padrao · cores · pele · montar · lojinha · miniaturas   (sem grupo = todos)
+// Sobe o próprio servidor de preview (porta 4188) — ou use BASE_URL=http://localhost:PORTA/ com um build próprio —,
+// grava crianças direto no banco do aparelho e fotografa o boneco de verdade (modelo 3D recolorido).
 import { chromium } from '@playwright/test';
 import { spawn } from 'node:child_process';
 import { mkdirSync } from 'node:fs';
@@ -17,56 +17,35 @@ const PORTA = 4188;
 let BASE = process.env.BASE_URL;
 let servidor;
 
-const crianca = (id, nome, genero, avatar) => ({
+const crianca = (id, nome, genero, avatar = {}) => ({
   id, nome, genero, anoNascimento: 2020,
   pronuncia: { grafia: nome, fala: nome, rate: 1, pitchExtra: 0, voz: 'sofia' },
-  avatar: { versao: 2, cantinho: 'ceu', corCabelo: 'castanho-escuro', acessibilidade: [], pronto: true, ...avatar },
+  avatar: { versao: 3, cantinho: 'ceu', pele: null, olhos: null, corCabelo: null, cabelo: null, camisa: null, calca: null, calcado: null, acessibilidade: [], pronto: true, ...avatar },
   apoios: { previsivel: false, focoCurto: false, leituraReforco: false, calmo: false },
   jaSabe: { letrasDoNome: 'nao-sei', lePalavras: 'nao-sei', leFrases: 'nao-sei' },
   consentimentos: { responsavel: true, vozPrimeiroNome: true, gravarVozAdulto: false, em: 1 },
   rotina: { minutosDia: 15, horaDormir: '20:00' }, criadoEm: Date.now()
 });
 
-const CRIANCAS = [
-  crianca('cap-menina', 'Mariana', 'f', { pele: 'pele-06', rosto: 'redondo', olhos: 'castanho-escuro', cabelo: 'f-cacheado', corCabelo: 'preto', camisa: 'uniforme', calca: 'saia-marinho', calcado: 'tenis-branco' }),
-  crianca('cap-menino', 'Kauã', 'm', { pele: 'pele-08', rosto: 'oval', olhos: 'castanho', cabelo: 'm-black-power', corCabelo: 'preto', camisa: 'uniforme', calca: 'uniforme', calcado: 'tenis-branco' }),
-  crianca('cap-ruiva', 'Helena', 'f', { pele: 'pele-01', rosto: 'coracao', olhos: 'verde', cabelo: 'f-ondulado', corCabelo: 'ruivo', camisa: 'uniforme', calca: 'uniforme', calcado: 'tenis-branco', acessibilidade: ['oculos'] }),
-  crianca('cap-liso', 'Davi', 'm', { pele: 'pele-03', rosto: 'quadrado', olhos: 'preto', cabelo: 'm-liso', corCabelo: 'preto', camisa: 'camiseta-ceu', calca: 'bermuda-marinho', calcado: 'sandalia', acessibilidade: ['cadeira-de-rodas', 'aparelho-auditivo'] }),
-  crianca('cap-trancas', 'Luana', 'f', { pele: 'pele-09', rosto: 'redondo', olhos: 'castanho-escuro', cabelo: 'f-trancas', corCabelo: 'preto', camisa: 'uniforme', calca: 'uniforme', calcado: 'tenis-branco', acessibilidade: ['pintura-no-rosto'] }),
-  crianca('cap-limpo', 'Bia', 'f', { pele: null, rosto: null, olhos: null, cabelo: null, camisa: null, calca: null, calcado: null, pronto: false })
+/** Seis combinações bem diferentes (três meninos, três meninas). */
+const COMBINACOES = [
+  ['combinacao-1-menina-negra-retinta', 'f', { pele: 'pele-10', olhos: 'preto', corCabelo: 'preto', camisa: 'ipe', calca: 'jeans', calcado: 'marinho' }],
+  ['combinacao-2-menino-pardo', 'm', { pele: 'pele-06', olhos: 'mel', corCabelo: 'preto', camisa: 'ceu', calca: 'marinho' }],
+  ['combinacao-3-menina-ruiva', 'f', { pele: 'pele-01', olhos: 'verde', corCabelo: 'ruivo', camisa: 'mata', calca: 'cinza', calcado: 'terra' }],
+  ['combinacao-4-menino-loiro', 'm', { pele: 'pele-02', olhos: 'azul', corCabelo: 'loiro', camisa: 'terra', calca: 'jeans', calcado: 'grafite' }],
+  ['combinacao-5-menina-morena', 'f', { pele: 'pele-04', olhos: 'castanho', corCabelo: 'castanho-claro', camisa: 'ceu', calca: 'terra', calcado: 'ipe' }],
+  ['combinacao-6-menino-negro', 'm', { pele: 'pele-09', olhos: 'castanho', corCabelo: 'preto', camisa: 'madeira', calca: 'mata', calcado: 'mata', acessibilidade: ['oculos'] }]
 ];
+/** Tons de pele pedidos pelo dono: clara, morena, parda, negra retinta. */
+const PELES = [['clara', 'pele-01'], ['morena', 'pele-04'], ['parda', 'pele-06'], ['negra', 'pele-09'], ['negra-retinta', 'pele-10']];
 
-/** GLB mínimo (glTF 2.0 binário): um bloco de 0,30 × 0,16 × 0,30 m sobre a cabeça, com material chamado "cabelo". */
-function glbDeTeste() {
-  const [x0, x1, y0, y1, z0, z1] = [-0.15, 0.15, 1.0, 1.16, -0.15, 0.15];
-  const faces = [ // normal, 4 cantos
-    [[0, 0, 1], [[x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1]]], [[0, 0, -1], [[x1, y0, z0], [x0, y0, z0], [x0, y1, z0], [x1, y1, z0]]],
-    [[1, 0, 0], [[x1, y0, z1], [x1, y0, z0], [x1, y1, z0], [x1, y1, z1]]], [[-1, 0, 0], [[x0, y0, z0], [x0, y0, z1], [x0, y1, z1], [x0, y1, z0]]],
-    [[0, 1, 0], [[x0, y1, z1], [x1, y1, z1], [x1, y1, z0], [x0, y1, z0]]], [[0, -1, 0], [[x0, y0, z0], [x1, y0, z0], [x1, y0, z1], [x0, y0, z1]]]
-  ];
-  const pos = [], nor = [], idx = [];
-  faces.forEach(([n, cantos], f) => { for (const c of cantos) { pos.push(...c); nor.push(...n); } idx.push(f * 4, f * 4 + 1, f * 4 + 2, f * 4, f * 4 + 2, f * 4 + 3); });
-  const bin = Buffer.concat([Buffer.from(new Float32Array(pos).buffer), Buffer.from(new Float32Array(nor).buffer), Buffer.from(new Uint16Array(idx).buffer)]);
-  const json = {
-    asset: { version: '2.0' }, scene: 0, scenes: [{ nodes: [0] }], nodes: [{ mesh: 0, name: 'cabelo-teste' }],
-    meshes: [{ primitives: [{ attributes: { POSITION: 0, NORMAL: 1 }, indices: 2, material: 0 }] }],
-    materials: [{ name: 'cabelo', pbrMetallicRoughness: { baseColorFactor: [1, 1, 1, 1], roughnessFactor: 0.6, metallicFactor: 0 } }],
-    buffers: [{ byteLength: bin.length }],
-    bufferViews: [{ buffer: 0, byteOffset: 0, byteLength: 288, target: 34962 }, { buffer: 0, byteOffset: 288, byteLength: 288, target: 34962 }, { buffer: 0, byteOffset: 576, byteLength: 72, target: 34963 }],
-    accessors: [
-      { bufferView: 0, componentType: 5126, count: 24, type: 'VEC3', min: [x0, y0, z0], max: [x1, y1, z1] },
-      { bufferView: 1, componentType: 5126, count: 24, type: 'VEC3' },
-      { bufferView: 2, componentType: 5123, count: 36, type: 'SCALAR' }
-    ]
-  };
-  let j = Buffer.from(JSON.stringify(json));
-  j = Buffer.concat([j, Buffer.alloc((4 - (j.length % 4)) % 4, 0x20)]);
-  const cab = Buffer.alloc(12);
-  cab.writeUInt32LE(0x46546c67, 0); cab.writeUInt32LE(2, 4); cab.writeUInt32LE(12 + 8 + j.length + 8 + bin.length, 8);
-  const cj = Buffer.alloc(8); cj.writeUInt32LE(j.length, 0); cj.writeUInt32LE(0x4e4f534a, 4);
-  const cb = Buffer.alloc(8); cb.writeUInt32LE(bin.length, 0); cb.writeUInt32LE(0x004e4942, 4);
-  return Buffer.concat([cab, cj, j, cb, bin]);
-}
+const CRIANCAS = [
+  crianca('cap-menino', 'Kauã', 'm'),
+  crianca('cap-menina', 'Mariana', 'f'),
+  crianca('cap-novo', 'Bia', 'f', { pronto: false }),
+  ...COMBINACOES.map(([nome, sexo, av], i) => crianca(`cap-${nome}`, ['Luana', 'Davi', 'Helena', 'Tom', 'Ana', 'Caio'][i], sexo, av)),
+  ...['m', 'f'].flatMap((sexo) => PELES.map(([nome, pele]) => crianca(`cap-pele-${sexo}-${nome}`, 'Rafa', sexo, { pele, corCabelo: nome.startsWith('negra') || nome === 'parda' ? 'preto' : null })))
+];
 
 async function subir() {
   if (BASE) return;
@@ -79,17 +58,16 @@ async function subir() {
   throw new Error('servidor de preview não subiu (rode `npm run build` antes)');
 }
 
-async function semear(page, moedas = 0, fasesAbertas = []) {
+async function semear(page, lista = CRIANCAS) {
   await page.goto(BASE + '#/');
   await page.waitForTimeout(600);
-  await page.evaluate(async ({ lista, moedas, fasesAbertas }) => {
+  await page.evaluate(async (lista) => {
     const db = await new Promise((ok, erro) => { const r = indexedDB.open('fonema'); r.onsuccess = () => ok(r.result); r.onerror = () => erro(r.error); });
-    const tx = db.transaction(['criancas', 'progressos'], 'readwrite');
+    const tx = db.transaction(['criancas'], 'readwrite');
     for (const c of lista) tx.objectStore('criancas').put(c);
     await new Promise((ok) => { tx.oncomplete = ok; });
-    if (moedas || fasesAbertas.length) window.__semente = { moedas, fasesAbertas };
     db.close();
-  }, { lista: CRIANCAS, moedas, fasesAbertas });
+  }, lista);
 }
 /** Dá moedinhas e abre fases de uma criança (depois que o app criou o progresso dela). */
 async function enriquecer(page, id, moedas, fases) {
@@ -110,7 +88,7 @@ async function enriquecer(page, id, moedas, fases) {
 }
 
 async function esperarBoneco(page) {
-  await page.locator('[data-testid=boneco3d][data-estado=pronto]').first().waitFor({ timeout: 20000 });
+  await page.locator('[data-testid=boneco3d][data-estado=pronto]').first().waitFor({ timeout: 30000 });
   await page.waitForTimeout(900);
 }
 const girar = (page, rad) => page.evaluate((r) => document.querySelector('.boneco3d-canvas')?.palco?.definirGiro(r), rad);
@@ -119,105 +97,102 @@ async function main() {
   mkdirSync(DIR, { recursive: true });
   await subir();
   const browser = await chromium.launch({ executablePath: EXEC, args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
-  const quer = (grupo) => !FILTRO || FILTRO.startsWith(grupo) || grupo.includes(FILTRO);
-  const novo = async (largura, altura, escala = 1, celular = false) => {
+  const quer = (grupo) => !FILTRO || FILTRO === grupo;
+  const novo = async (largura, altura, escala = 1, celular = false, lista = CRIANCAS) => {
     const ctx = await browser.newContext({ viewport: { width: largura, height: altura }, deviceScaleFactor: escala, isMobile: celular, hasTouch: celular, locale: 'pt-BR', reducedMotion: 'reduce' });
     await ctx.addInitScript(() => { try { localStorage.setItem('fonema-prefs', JSON.stringify({ vozLigada: false, contraste: false, menosMovimento: true })); } catch { /* sem armazenamento */ } });
     const page = await ctx.newPage();
     page.on('pageerror', (e) => console.log('  ! erro na página:', String(e)));
-    page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') console.log('  · console:', m.text().slice(0, 200)); });
-    await semear(page);
+    page.on('console', (m) => { if (m.type() === 'error' || (m.type() === 'warning' && m.text().includes('avatar3d'))) console.log('  · console:', m.text().slice(0, 240)); });
+    await semear(page, lista);
     return { ctx, page };
   };
   const foto = async (page, nome, alvo) => {
-    const caminho = `${DIR}/v4-avatar-${nome}.png`;
+    const caminho = `${DIR}/v6-avatar-${nome}.png`;
     await (alvo ? page.locator(alvo).first() : page).screenshot({ path: caminho });
     console.log('  ✓', caminho);
   };
-
-  // 1. boneco de perto: frente, lado, costas (menina e menino), mais os outros montados
-  if (quer('boneco')) {
-    const { ctx, page } = await novo(1850, 980);
-    for (const [id, nome] of [['cap-menina', 'menina'], ['cap-menino', 'menino'], ['cap-ruiva', 'ruiva-oculos'], ['cap-liso', 'cadeira-de-rodas'], ['cap-trancas', 'trancas-pintura'], ['cap-limpo', 'limpo']]) {
-      if (FILTRO && !`boneco-${nome}`.includes(FILTRO)) continue;
-      await page.goto(BASE + `#/c/${id}/avatar`);
-      await esperarBoneco(page);
-      for (const [vista, rad] of [['frente', 0], ['lado', Math.PI / 2], ['costas', Math.PI], ['tres-quartos', 0.6]]) {
-        if (!['menina', 'menino'].includes(nome) && vista !== 'frente' && vista !== 'tres-quartos') continue;
-        await girar(page, rad);
-        await page.waitForTimeout(350);
-        await foto(page, `boneco-${nome}-${vista}`, '.boneco3d');
-      }
+  const vistas = async (page, id, nome, lista) => {
+    await page.goto(BASE + `#/c/${id}/avatar`);
+    await esperarBoneco(page);
+    console.log(`  ${nome}: ${await page.evaluate(() => (document.querySelector('.boneco3d-canvas')?.palco?.real ? 'modelo 3D de verdade' : 'RESERVA provisória'))}`);
+    for (const [vista, rad] of lista) {
+      await girar(page, rad);
+      await page.waitForTimeout(350);
+      await foto(page, `${nome}-${vista}`, '.boneco3d');
     }
+  };
+  const TODAS = [['frente', 0], ['tres-quartos', 0.65], ['lado', Math.PI / 2], ['costas', Math.PI]];
+
+  // 1. padrão: menino e menina, de frente, 3/4, lado e costas
+  if (quer('padrao')) {
+    const { ctx, page } = await novo(1850, 980);
+    await vistas(page, 'cap-menino', 'padrao-menino', TODAS);
+    await vistas(page, 'cap-menina', 'padrao-menina', TODAS);
     await ctx.close();
   }
-
-  // 2. tela de montar: computador (1850x980 e 1366x768) e celular (390x844), passo a passo
+  // 2. seis combinações de cores bem diferentes
+  if (quer('cores')) {
+    const { ctx, page } = await novo(1850, 980);
+    for (const [nome] of COMBINACOES) await vistas(page, `cap-${nome}`, nome, [['frente', 0], ['tres-quartos', 0.65], ['costas', Math.PI]]);
+    await ctx.close();
+  }
+  // 3. tons de pele (clara, morena, parda, negra, negra retinta), menino e menina, frente e 3/4
+  if (quer('pele')) {
+    const { ctx, page } = await novo(1850, 980);
+    for (const sexo of ['m', 'f']) for (const [nome] of PELES) await vistas(page, `cap-pele-${sexo}-${nome}`, `pele-${sexo === 'm' ? 'menino' : 'menina'}-${nome}`, [['frente', 0], ['tres-quartos', 0.65]]);
+    await ctx.close();
+  }
+  // 4. tela de personalizar: computador e celular
   if (quer('montar')) {
     for (const [l, a, rotulo, cel] of [[1850, 980, '1850x980', false], [1366, 768, '1366x768', false], [390, 844, '390x844', true]]) {
       const { ctx, page } = await novo(l, a, cel ? 2 : 1, cel);
-      await page.goto(BASE + '#/c/cap-limpo/avatar');
+      await page.goto(BASE + '#/c/cap-novo/avatar');
       await esperarBoneco(page);
-      await foto(page, `montar-${rotulo}-1-limpo`);
-      const passos = [['pele', 'pele-05'], ['rosto', 'oval'], ['olhos', 'mel'], ['cabelo', 'f-rabo-de-cavalo'], ['camisa', 'uniforme'], ['calca', 'uniforme'], ['calcado', 'tenis-branco']];
-      for (const [passo, peca] of passos) {
+      await foto(page, `montar-${rotulo}-1-padrao`);
+      for (const [passo, peca] of [['pele', 'pele-06'], ['olhos', 'mel'], ['corCabelo', 'preto'], ['camisa', 'ipe'], ['calca', 'jeans'], ['calcado', 'marinho']]) {
+        await page.locator(`[data-testid="montar-avatar"][data-passo="${passo}"]`).waitFor();
         await page.locator(`.montar-corpo [data-peca="${peca}"]`).click();
-        await page.waitForTimeout(passo === 'cabelo' || passo === 'camisa' ? 2600 : 700);
-        if (['cabelo', 'camisa'].includes(passo)) await foto(page, `montar-${rotulo}-${passo}`);
+        await page.waitForTimeout(900);
+        if (passo === 'pele' || passo === 'camisa') await foto(page, `montar-${rotulo}-${passo}`);
         if (passo === 'camisa') { await page.locator('.montar-corpo [data-estado="fase"]').first().click(); await page.waitForTimeout(300); await foto(page, `montar-${rotulo}-cadeado`); }
         await page.getByTestId('avatar-proximo').click();
-        await page.waitForTimeout(500);
+        await page.waitForTimeout(400);
       }
-      await page.waitForTimeout(2500);
-      await foto(page, `montar-${rotulo}-8-lojinha`);
+      await page.waitForTimeout(4000);
+      await foto(page, `montar-${rotulo}-lojinha`);
       const rola = await page.evaluate(() => document.documentElement.scrollHeight > window.innerHeight + 1);
       console.log(`  ${rola ? '✗ COM' : '✓ sem'} rolagem da página em ${rotulo}`);
       await ctx.close();
     }
   }
-
-  // 3. Lojinha: cadeados (fase + moedas) e Acessibilidade
+  // 5. Lojinha: cadeados (fase + moedas) e Acessibilidade
   if (quer('lojinha')) {
     for (const [l, a, rotulo, cel] of [[1850, 980, '1850x980', false], [390, 844, '390x844', true]]) {
       const { ctx, page } = await novo(l, a, cel ? 2 : 1, cel);
       await page.goto(BASE + '#/c/cap-menina/lojinha');
       await page.getByTestId('lojinha').waitFor();
-      await enriquecer(page, 'cap-menina', 9, ['AL-A', 'AL-B', 'AL-C']);
+      await enriquecer(page, 'cap-menina', 9, ['AL-A', 'AL-B']);
       await page.reload();
       await page.getByTestId('lojinha').waitFor();
       await esperarBoneco(page);
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(5000);
       await foto(page, `lojinha-${rotulo}-cadeados`);
       await page.locator('[data-aba=acessibilidade]').click();
-      await page.waitForTimeout(3000);
-      await foto(page, `lojinha-${rotulo}-acessibilidade`);
+      await page.waitForTimeout(2500);
       await page.locator('[data-acess=oculos] button').click();
-      await page.locator('[data-acess=cadeira-de-rodas] button').click();
-      await page.waitForTimeout(1500);
-      await foto(page, `lojinha-${rotulo}-acessibilidade-em-uso`);
+      await page.locator('[data-acess=pintura-no-rosto] button').click();
+      await page.waitForTimeout(2500);
+      await foto(page, `lojinha-${rotulo}-acessibilidade`);
+      if (!cel) { await girar(page, 0.5); await page.waitForTimeout(300); await foto(page, 'acessibilidade-oculos-e-pintura', '.boneco3d'); }
       await ctx.close();
     }
   }
-
-  // 5. prova do carregador de GLB: um manifesto e um .glb de teste (um bloco com material "cabelo") servidos só
-  //    neste teste entram no lugar do cabelo provisório, já pintados com a cor do cabelo da criança.
-  if (FILTRO === 'glb') {
-    const { ctx, page } = await novo(900, 900);
-    await ctx.route('**/assets/avatar3d/manifesto.json', (r) => r.fulfill({ contentType: 'application/json', body: JSON.stringify({ versao: 1, pecas: { 'cabelo-f-ondulado': { arquivo: 'teste.glb' } } }) }));
-    await ctx.route('**/assets/avatar3d/teste.glb', (r) => r.fulfill({ contentType: 'model/gltf-binary', body: glbDeTeste() }));
-    await page.goto(BASE + '#/c/cap-ruiva/avatar');
-    await esperarBoneco(page);
-    await girar(page, 0.6);
-    await page.waitForTimeout(400);
-    await foto(page, 'glb-teste-bloco-no-lugar-do-cabelo', '.boneco3d');
-    await ctx.close();
-  }
-
-  // 4. miniaturas: cartões dos alunos na entrada
+  // 6. miniaturas: cartões dos alunos na entrada
   if (quer('miniaturas')) {
-    const { ctx, page } = await novo(1366, 768);
+    const { ctx, page } = await novo(1366, 768, 1, false, CRIANCAS.filter((c) => c.id.includes('combinacao')));
     await page.goto(BASE + '#/aluno');
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(9000);
     await foto(page, 'miniaturas-cartoes-dos-alunos');
     await ctx.close();
   }
