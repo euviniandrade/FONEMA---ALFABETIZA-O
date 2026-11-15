@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { CONFIG_PADRAO, CONQUISTA_POR_ID, FASE_POR_ID, type ConfigPlataforma, sonsPurosPendentes } from '@fonema/conteudo';
-import { NIVEIS_INICIAIS, aplicarNivelInicial, avaliarConquistas, filaProfessor, mapaHabilidades, progressoInicial, resumoFamilia, type Crianca, type Demonstracao, type Evento, type NivelInicial, type Progresso, type StatusDemonstracao } from '@fonema/motor';
+import { AREAS_SONDAGEM, NIVEIS_INICIAIS, aplicarNivelInicial, avaliarConquistas, dificuldadesDaTurma, filaProfessor, mapaHabilidades, progressoInicial, resumoAprendizagem, resumoFamilia, type CategoriaAlvo, type Crianca, type Demonstracao, type Evento, type NivelInicial, type Progresso, type StatusDemonstracao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Ajustes, AvatarMini, Carregando } from '../../componentes/basicos.tsx';
@@ -11,6 +11,7 @@ import { useConta } from '../entrada/Entrada.tsx';
 import { asset } from '../../servicos/ambiente.ts';
 import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
+import '../../estilos-painel.css';
 
 const ROTULO_NIVEL: Record<NivelInicial, string> = { zero: 'Do zero', 'letras-e-sons': 'Já conhece as letras e os sons', 'le-palavras': 'Já lê palavras' };
 
@@ -104,6 +105,112 @@ export function AdultoHome() {
   return conta.sessao()?.tipo === 'professor' ? <Professor aba="turma" /> : <FamiliaHome />;
 }
 
+/* ------------------------------ D030: como a criança está aprendendo (pares, palavras, concluído × dominado, tempo, alerta) ------------------------------ */
+const segundos = (ms: number) => `${(ms / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} s`;
+const ROTULO_CATEGORIA: Record<CategoriaAlvo, string> = { fonema: 'som', grafema: 'letra', silaba: 'sílaba', palavra: 'palavra', pseudopalavra: 'palavra inventada', outro: 'item' };
+const PORQUE_PAR = { som: 'sons parecidos na boca', desenho: 'letras de desenho parecido' } as const;
+const ROTULO_PRATICA = { 'pre-requisito': 'Voltar um passo', 'par-confundido': 'Comparar os dois', reforco: 'Reforçar', revisao: 'Relembrar' } as const;
+
+export function BlocosAprendizagem({ c, p, config }: { c: Crianca; p: Progresso; config: ConfigPlataforma }) {
+  const r = useMemo(() => resumoAprendizagem(c, p, config, Date.now()), [c, p, config]);
+  const semDetalhe = r.tentativas.comDetalhe === 0;
+  const s = r.sondagem;
+  const proximaSondagem = s.devida
+    ? 'Está na hora de fazer.'
+    : [config.sondagem.aCadaFases > 0 ? `faltam ${Math.max(0, config.sondagem.aCadaFases - s.fasesDesde)} fases` : '', config.sondagem.aCadaDias > 0 && s.proximaEm ? `ou até ${new Date(s.proximaEm).toLocaleDateString('pt-BR')}` : ''].filter(Boolean).join(' ') || 'Sem data marcada.';
+  return (
+    <>
+      {r.alerta.nivel !== 'nenhum' ? (
+        <div className={`bloco bloco-largo alerta-adulto ${r.alerta.nivel}`} data-testid="alerta-adulto" data-nivel={r.alerta.nivel} role="status">
+          <h2><Icone nome="sino" />{r.alerta.nivel === 'risco' ? `${c.nome} precisa de apoio agora` : 'Para ficar de olho'}</h2>
+          <ul>{r.alerta.sinais.map((x) => <li key={x.texto}><Icone nome="olho" /><span>{x.texto}</span></li>)}</ul>
+          <details className="criterio-alerta"><summary>Como este aviso é calculado</summary><p>{r.alerta.criterio}</p></details>
+          <p className="nota-mic">Isto não é diagnóstico nem nota: é um aviso para ajudar mais cedo. Se a dificuldade continuar, vale conversar com a professora.</p>
+        </div>
+      ) : null}
+
+      <div className="bloco" data-testid="concluido-dominado">
+        <h2><Icone nome="alvo" />Concluído × dominado</h2>
+        <div className="numeros">
+          <div className="numero"><b>{r.fases.concluidas}</b><small>fases concluídas</small></div>
+          <div className="numero"><b data-testid="fases-dominadas">{r.fases.dominadas}</b><small>fases dominadas</small></div>
+          <div className="numero"><b>{r.habilidades.dominadas}</b><small>habilidades firmes</small></div>
+        </div>
+        <p className="nota-mic"><b>Concluída</b>: {c.nome} fez a fase até o fim. <b>Dominada</b>: acertou sem ajuda, em atividades que o app confere, em mais de um dia. Ouvir, ver a boca, traçar e ler em voz alta contam como participação, não como domínio.</p>
+        <p className="nota-mic" data-testid="tentativas-tipos">{r.tentativas.avaliadas} respostas conferidas · {r.tentativas.exposicao} vezes ouvindo, olhando ou traçando · {r.tentativas.autorrelato} leituras em voz alta (sem conferir)</p>
+        {r.habilidades.aConfirmar ? <p className="nota-mic">{r.habilidades.aConfirmar} {r.habilidades.aConfirmar === 1 ? 'habilidade está' : 'habilidades estão'} "a confirmar": já foi mostrada na brincadeira, mas ainda falta acertar em atividade conferida.</p> : null}
+        {r.fases.aReforcar.length ? (
+          <>
+            <h3>Concluídas que ainda pedem reforço</h3>
+            <ul className="lista-reforco">{r.fases.aReforcar.slice(-5).reverse().map((f) => <li key={f.id}><Icone nome="repetir" /><span><b>{f.titulo}</b><small>{f.reforco.map((h) => `${h.nome}${h.falta.length ? `: falta ${h.falta[0]}` : ''}`).slice(0, 2).join(' · ')}</small></span></li>)}</ul>
+          </>
+        ) : r.fases.concluidas ? <p>Tudo o que foi concluído está dominado.</p> : null}
+      </div>
+
+      <div className="bloco" data-testid="confusoes">
+        <h2><Icone nome="olho" />O que {c.nome} confunde</h2>
+        {r.pares.length ? (
+          <ul className="pares">{r.pares.slice(0, 6).map((x) => (
+            <li key={x.par.join('|')} data-par={x.par.join('-')}>
+              <span className="par"><b>{x.alvo}</b><i aria-hidden="true">↔</i><b>{x.escolhido}</b></span>
+              <span>Quando era <b>{x.alvo}</b>, respondeu <b>{x.escolhido}</b>. <small>{x.vezes} vezes{x.conhecido ? ` · ${PORQUE_PAR[x.conhecido]}` : ''}</small></span>
+            </li>
+          ))}</ul>
+        ) : <p>{semDetalhe ? `Ainda sem dados: aparece depois que ${c.nome} jogar as atividades de escolher e montar.` : 'Nenhuma troca repetida até agora.'}</p>}
+        {r.sonsELetras.length ? (
+          <>
+            <h3>Sons e letras com mais erro</h3>
+            <div className="fichas">{r.sonsELetras.slice(0, 8).map((x) => <span key={x.alvo} className="ficha" title={`${x.erros} de ${x.vezes} vezes`}><b>{x.alvo}</b><small>{ROTULO_CATEGORIA[x.categoria ?? 'outro']} · {x.erros}/{x.vezes}</small></span>)}</div>
+          </>
+        ) : null}
+      </div>
+
+      <div className="bloco" data-testid="palavras-dificeis">
+        <h2><Icone nome="caderno" />Palavras difíceis</h2>
+        {r.palavras.length ? (
+          <ul className="dificeis">{r.palavras.slice(0, 8).map((x) => <li key={x.alvo}><b>{x.alvo}</b><small>{x.pseudo ? 'palavra inventada · ' : ''}precisou de ajuda em {x.erros} de {x.vezes} {x.vezes === 1 ? 'vez' : 'vezes'}</small></li>)}</ul>
+        ) : <p>{semDetalhe ? 'Ainda sem dados: aparece depois das atividades de ler, montar e escrever palavras.' : 'Nenhuma palavra com erro até agora.'}</p>}
+        <p className="nota-mic">São as palavras de verdade em que {c.nome} errou ou pediu ajuda. Boas para ler juntos em casa, sem pressa.</p>
+      </div>
+
+      <div className="bloco" data-testid="tempo">
+        <h2><Icone nome="relogio" />Tempo de resposta</h2>
+        {r.tempoMedioMs ? (
+          <>
+            <p><b className="destaque-num">{segundos(r.tempoMedioMs)}</b> por resposta, em média.</p>
+            <ul className="tempos">{r.tempos.slice(0, 4).map((t) => <li key={t.habilidade}><Icone nome="relogio" /><span>{t.nome} <small>{segundos(t.mediaMs)} · {t.itens} {t.itens === 1 ? 'resposta' : 'respostas'}</small></span></li>)}</ul>
+          </>
+        ) : <p>Ainda sem medida de tempo.</p>}
+        <p className="nota-mic">A criança nunca vê relógio nem perde ponto por demorar. O tempo serve só para o adulto perceber onde ela ainda pensa muito antes de responder.</p>
+      </div>
+
+      <div className="bloco" data-testid="pratica-recomendada">
+        <h2><Icone nome="dica" />Próxima prática recomendada</h2>
+        {r.praticas.length ? (
+          <ul className="praticas">{r.praticas.slice(0, 3).map((x, i) => (
+            <li key={`${x.motivo}-${x.habilidade}-${i}`} data-motivo={x.motivo}>
+              <Icone nome={x.motivo === 'pre-requisito' ? 'seta-esq' : 'repetir'} />
+              <span><b>{ROTULO_PRATICA[x.motivo]}: {x.nomeHabilidade}</b><small>{x.paraAdulto}{x.faseId && FASE_POR_ID[x.faseId] ? ` Onde treinar: "${FASE_POR_ID[x.faseId].titulo}".` : ''}</small></span>
+            </li>
+          ))}</ul>
+        ) : <p>Nada a reforçar agora. É só seguir a jornada.</p>}
+      </div>
+
+      <div className="bloco" data-testid="sondagem-periodica">
+        <h2><Icone nome="placa" />Sondagem periódica</h2>
+        <p>{s.ultima ? `Última: ${new Date(s.ultima.em).toLocaleDateString('pt-BR')}.` : p.expressa.sondagemEm ? `Última: ${new Date(p.expressa.sondagemEm).toLocaleDateString('pt-BR')} (sem resultado por área).` : 'Ainda não foi feita.'} Próxima: {proximaSondagem}</p>
+        <ul className="areas-sondagem">{AREAS_SONDAGEM.map((a) => {
+          const m = s.evolucao.find((e) => e.area === a.id)?.medidas ?? [];
+          const ult = m[m.length - 1];
+          return <li key={a.id} data-area={a.id}><Icone nome={ult ? 'check' : 'relogio'} /><span><b>{a.nome}</b><small>{ult ? `${m.length > 1 ? `${m[0].acertos}/${m[0].total} → ` : ''}${ult.acertos}/${ult.total}` : 'ainda não medida'} · {a.oQueMede}</small></span></li>;
+        })}</ul>
+        <div className="linha-botoes"><button className="btn" onClick={() => navegar(`c/${c.id}/sondagem`)} data-testid="abrir-sondagem"><Icone nome="placa" />Fazer a sondagem agora</button></div>
+        <p className="nota-mic">É uma brincadeira curta (a Missão das Placas), repetida a cada {config.sondagem.aCadaFases} fases ou {config.sondagem.aCadaDias} dias, para comparar o antes e o agora. Hoje ela mede sons das letras, leitura de palavras e segmentação; pseudopalavras e ditado ainda não têm placas.</p>
+      </div>
+    </>
+  );
+}
+
 /* ------------------------------ painel da família ------------------------------ */
 export function PainelFamilia({ criancaId }: { criancaId: string }) {
   const { repo, config } = useApp();
@@ -119,7 +226,8 @@ export function PainelFamilia({ criancaId }: { criancaId: string }) {
     })();
   }, [repo, criancaId]);
   const resumo = useMemo(() => (dados ? resumoFamilia(dados.c, dados.p, dados.ev, config, Date.now()) : null), [dados, config]);
-  if (!dados || !resumo) return <Carregando />;
+  const aprend = useMemo(() => (dados ? resumoAprendizagem(dados.c, dados.p, config, Date.now()) : null), [dados, config]);
+  if (!dados || !resumo || !aprend) return <Carregando />;
   const { c, p, ev } = dados;
   const nivelAtual: NivelInicial = p.nivelInicial ?? 'zero';
   const mudarNivel = async (n: NivelInicial) => {
@@ -147,6 +255,7 @@ export function PainelFamilia({ criancaId }: { criancaId: string }) {
               <Termometro valor={resumo.termometro} />
               <p>{resumo.termometroTexto}</p>
               <p className="nota-mic">O termômetro mede o que {c.nome} sabe ler (sobe só por provinha de fase). O nível da jornada mede o esforço. Nenhum dos dois é nota.</p>
+              <p className="nota-mic" data-testid="teto-termometro">{aprend.termometro.explicacao}</p>
             </div>
             <div className="bloco">
               <h2><Icone nome="alvo" />Agora</h2>
@@ -161,6 +270,7 @@ export function PainelFamilia({ criancaId }: { criancaId: string }) {
               <h3>Está aprendendo</h3>
               {resumo.aprendendo.length ? <ul>{resumo.aprendendo.map((a) => <li key={a.nome}><Icone nome="relogio" /><span>{a.nome} <small>({a.falta.slice(0, 2).join('; ')})</small></span></li>)}</ul> : <p>—</p>}
             </div>
+            <BlocosAprendizagem c={c} p={p} config={config} />
             <div className="bloco">
               <h2><Icone nome="caderno" />Esta semana</h2>
               <div className="numeros">
@@ -238,9 +348,11 @@ export function Professor({ aba = 'turma' }: { aba?: AbaProfessor }) {
     await carregar();
   };
   const mapa = mapaHabilidades(turma, config);
+  const turmaDificil = dificuldadesDaTurma(turma);
+  const aprendizagem = Object.fromEntries(turma.map((t) => [t.crianca.id, resumoAprendizagem(t.crianca, t.progresso, config, Date.now())]));
   const pend = ds.filter((d) => d.status === 'pendente');
   const STATUS: Record<string, [string, string]> = { aprendeu: ['check', 'Aprendeu'], treinar: ['repetir', 'Treinar mais'], explicou: ['microfone', 'Explicou certinho'], criterio: ['relogio', 'Vale o critério'] };
-  // "palavras difíceis": atividades em que a turma errou mais de uma vez (sem ranking de crianças)
+  // atividades (cenas) em que a turma mais precisou de ajuda — complemento das palavras difíceis de verdade (D030)
   const dificeis = (() => {
     const m = new Map<string, { texto: string; erros: number; vezes: number; criancas: Set<string> }>();
     for (const e of eventos) {
@@ -276,8 +388,20 @@ export function Professor({ aba = 'turma' }: { aba?: AbaProfessor }) {
                   <b>{c.nome}</b>
                   <small>{FASE_POR_ID[p.faseAtual]?.titulo ?? 'ainda não começou'}</small>
                   <div className="mini-termo" role="img" aria-label={`Termômetro da leitura: ${p.termometro} de 10`}>{Array.from({ length: 10 }, (_, i) => <i key={i} className={i < p.termometro ? 'cheio' : ''} />)}<em>{p.termometro}/10</em></div>
+                  {(() => {
+                    const a = aprendizagem[c.id];
+                    const par = a.pares[0];
+                    return (
+                      <small className="linha-aprend" data-testid={`aprend-${c.nome}`}>
+                        {a.fases.concluidas} concluídas · {a.fases.dominadas} dominadas
+                        {par ? <> · confunde <b>{par.alvo}</b> com <b>{par.escolhido}</b></> : null}
+                        {a.alerta.nivel !== 'nenhum' ? <span className={`selo-alerta ${a.alerta.nivel}`} title={a.alerta.sinais.map((x) => x.texto).join(' ')}><Icone nome="sino" />{a.alerta.nivel === 'risco' ? 'precisa de apoio' : 'de olho'}</span> : null}
+                      </small>
+                    );
+                  })()}
                 </div>
                 <div className="linha-botoes">
+                  <button className="btn" onClick={() => navegar(`familia/crianca/${c.id}`)} data-testid={`painel-prof-${c.nome}`}><Icone nome="grafico" />Ver o painel</button>
                   <button className="btn ipe" onClick={() => navegar(`c/${c.id}/vila`)}><Icone nome="tocar" />Entregar o aparelho</button>
                 </div>
               </div>
@@ -334,8 +458,9 @@ export function Professor({ aba = 'turma' }: { aba?: AbaProfessor }) {
                 </table>
               </div>
               <div className="legenda">
-                <span className="hab dominada"><i />dominada</span><span className="hab aprendendo"><i />aprendendo</span><span className="hab"><i />ainda não começou</span>
+                <span className="hab dominada"><i />dominada</span><span className="hab a-confirmar"><i />a confirmar</span><span className="hab aprendendo"><i />aprendendo</span><span className="hab"><i />ainda não começou</span>
               </div>
+              <p className="nota-mic">Dominada: acertou sem ajuda em atividades que o app confere. A confirmar: já mostrou na brincadeira (ouvir, traçar, ler em voz alta) ou em prova, mas falta a resposta conferida.</p>
             </>
           )}
         </section>
@@ -344,12 +469,39 @@ export function Professor({ aba = 'turma' }: { aba?: AbaProfessor }) {
       {aba === 'palavras' ? (
         <section className="cartao" data-testid="professor-palavras">
           <h1 className="t">Palavras difíceis</h1>
-          <p className="nota-mic">As atividades e palavras em que a turma mais precisou de ajuda. Bom para retomar na roda.</p>
-          {dificeis.length === 0 ? <p className="area-nada">Nada por aqui ainda: aparece depois que os alunos jogarem.</p> : (
-            <ul className="dificeis">
-              {dificeis.map((d) => <li key={d.texto}><b>{d.texto}</b><small>{d.criancas.size} {d.criancas.size === 1 ? 'aluno' : 'alunos'} · {d.erros} {d.erros === 1 ? 'tentativa a mais' : 'tentativas a mais'}</small></li>)}
-            </ul>
-          )}
+          <p className="nota-mic">As palavras, os sons e as letras em que a turma mais errou ou pediu ajuda. Sem nomes: serve para retomar na roda.</p>
+          {turmaDificil.semDetalhe ? <p className="area-nada" data-testid="sem-detalhe">Ainda sem palavras para mostrar: a lista se forma conforme os alunos jogam as atividades de escolher, montar e escrever.</p> : null}
+          {turmaDificil.palavras.length ? (
+            <>
+              <h2 className="t sub">Palavras</h2>
+              <ul className="dificeis" data-testid="lista-palavras">
+                {turmaDificil.palavras.map((d) => <li key={d.alvo}><b>{d.alvo}</b><small>{d.pseudo ? 'palavra inventada · ' : ''}{d.criancas} {d.criancas === 1 ? 'aluno' : 'alunos'} · ajuda em {d.erros} de {d.vezes} vezes</small></li>)}
+              </ul>
+            </>
+          ) : null}
+          {turmaDificil.pares.length ? (
+            <>
+              <h2 className="t sub">Trocas mais comuns</h2>
+              <ul className="dificeis" data-testid="lista-pares">
+                {turmaDificil.pares.map((d) => <li key={d.par.join('|')}><b>{d.alvo} ↔ {d.escolhido}</b><small>{d.criancas} {d.criancas === 1 ? 'aluno' : 'alunos'} · {d.vezes} trocas{d.conhecido ? ` · ${PORQUE_PAR[d.conhecido]}` : ''}</small></li>)}
+              </ul>
+            </>
+          ) : null}
+          {turmaDificil.sonsELetras.length ? (
+            <>
+              <h2 className="t sub">Sons e letras</h2>
+              <div className="fichas">{turmaDificil.sonsELetras.map((x) => <span key={x.alvo} className="ficha"><b>{x.alvo}</b><small>{x.criancas} {x.criancas === 1 ? 'aluno' : 'alunos'} · {x.erros}/{x.vezes}</small></span>)}</div>
+            </>
+          ) : null}
+          {dificeis.length ? (
+            <>
+              <h2 className="t sub">Atividades em que a turma mais precisou de ajuda</h2>
+              <ul className="dificeis" data-testid="lista-atividades">
+                {dificeis.map((d) => <li key={d.texto}><b>{d.texto}</b><small>{d.criancas.size} {d.criancas.size === 1 ? 'aluno' : 'alunos'} · {d.erros} {d.erros === 1 ? 'tentativa a mais' : 'tentativas a mais'}</small></li>)}
+              </ul>
+            </>
+          ) : null}
+          {!dificeis.length && turmaDificil.semDetalhe ? null : null}
         </section>
       ) : null}
     </Area>
