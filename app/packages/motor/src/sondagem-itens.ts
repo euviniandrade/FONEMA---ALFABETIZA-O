@@ -99,10 +99,14 @@ export function letrasComSomVisto(p: Progresso): string[] {
   return [...out].sort();
 }
 
-/** Valores sonoros (além do som principal) já ensinados nas regiões com fase concluída. */
+/**
+ * Valores sonoros (além do som principal) já ensinados. `VALORES_ENSINADOS` é por REGIÃO (o que se sabe ao fim dela),
+ * então, para não liberar cedo demais, a região só conta quando TODAS as fases dela estão concluídas.
+ */
 export function valoresEnsinadosAte(p: Progresso): ValorSonoro[] {
   const feitas = fasesConcluidas(p);
-  const regioes = new Set<RegiaoId>(FASES.filter((f) => feitas.has(f.id)).map((f) => f.regiao));
+  const todas = [...new Set(FASES.map((f) => f.regiao))];
+  const regioes = new Set<RegiaoId>(todas.filter((r) => FASES.filter((f) => f.regiao === r).every((f) => feitas.has(f.id))));
   return [...new Set([...regioes].flatMap((r) => VALORES_ENSINADOS[r] ?? []))];
 }
 

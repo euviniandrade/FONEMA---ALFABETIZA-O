@@ -109,7 +109,7 @@ function SondagemEmBlocos({ criancaId, plano }: { criancaId: string; plano: Plan
           </ol>
           {fase === 'intro' ? (
             <div className="sondagem-intro">
-              <div className="sondagem-mascote" aria-hidden="true"><Modelo3D qual="sofia" tamanho={190} modo="balanco" /></div>
+              <div className="sondagem-mascote" aria-hidden="true"><Modelo3D qual="sofia" tamanho={230} modo="balanco" /></div>
               <div>
                 <h1 className="t">Missão das Placas</h1>
                 <Balao fala={INTRO} crianca={crianca} />

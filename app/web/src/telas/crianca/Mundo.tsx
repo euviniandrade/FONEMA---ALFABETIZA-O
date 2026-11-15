@@ -32,7 +32,7 @@ export function Chegada({ criancaId }: { criancaId: string }) {
       <Topo crianca={crianca} titulo="Vila das Letras" />
       <main className="palco chegada">
         {/* D029/D025: a dupla em 3D de verdade (arrastar gira); quem fala com a boca é o busto do balão */}
-        <Dupla3DGiravel altura={Math.round(Math.min(window.innerHeight * 0.62, 640))} className="dupla-corpo-3d" />
+        <Dupla3DGiravel altura={Math.round(Math.min(window.innerHeight * 0.74, 760, window.innerWidth * 1.1))} className="dupla-corpo-3d" />
         <div className="baloes">
           {FALAS.chegada.map((f, i) => <div key={i} className={i <= k ? 'aparece' : 'espera'}><Balao fala={f} crianca={crianca} /></div>)}
         </div>

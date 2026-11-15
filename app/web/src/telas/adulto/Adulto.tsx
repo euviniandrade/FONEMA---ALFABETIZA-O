@@ -203,7 +203,7 @@ export function BlocosAprendizagem({ c, p, config }: { c: Crianca; p: Progresso;
         <h2><Icone nome="placa" />Sondagem periódica</h2>
         <p>{s.ultima ? `Última: ${new Date(s.ultima.em).toLocaleDateString('pt-BR')}.` : p.expressa.sondagemEm ? `Última: ${new Date(p.expressa.sondagemEm).toLocaleDateString('pt-BR')} (sem resultado por área).` : 'Ainda não foi feita.'} Próxima: {proximaSondagem}</p>
         {sondagens.length ? (
-          <table className="sondagem-comparada" data-testid="sondagens-comparadas">
+          <div className="tabela-rolavel"><table className="sondagem-comparada" data-testid="sondagens-comparadas">
             <thead><tr><th>Área</th>{sondagens.map((x) => <th key={x.id}>{new Date(x.em).toLocaleDateString('pt-BR')}{x.tela === 'placas' || x.degrau !== undefined ? <small> (placas)</small> : null}</th>)}<th>Mudou?</th></tr></thead>
             <tbody>{AREAS_SONDAGEM.map((a) => {
               const caiu = s.quedas.find((q) => q.area === a.id);
@@ -220,7 +220,7 @@ export function BlocosAprendizagem({ c, p, config }: { c: Crianca; p: Progresso;
                 </tr>
               );
             })}</tbody>
-          </table>
+          </table></div>
         ) : null}
         {ditado.length ? (
           <>

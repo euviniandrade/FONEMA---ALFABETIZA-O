@@ -4,7 +4,7 @@
 
 /* ------------------------------ personagens 3D ------------------------------ */
 .dupla-giravel{display:flex;align-items:flex-end;justify-content:center;gap:0;margin:0 auto;max-width:100%}
-.dupla-giravel .premio-3d{touch-action:pan-y;cursor:grab;max-width:50%;height:auto}
+.dupla-giravel .premio-3d{touch-action:pan-y;cursor:grab;min-width:0;height:auto}
 .dupla-giravel .premio-3d:active{cursor:grabbing}
 .dupla-giravel .premio-sofia{margin-right:-4%}
 .dupla-giravel .premio-tales{margin-left:-4%}
@@ -64,10 +64,10 @@
 .treino-placar{font-size:19px;color:var(--marinho);margin:10px 0 0}
 .doca-treino{position:relative}
 .doca-treino .treino-rosto{width:46px;height:46px;border-radius:50%;overflow:hidden;background:linear-gradient(180deg,#FFF3C9,#FFD979);box-shadow:inset 0 0 0 2px #fff,0 0 0 3px #F2B92B;display:block}
-.doca-treino .treino-rosto img{width:150%;margin:-6% 0 0 -25%;display:block}
+.doca-treino .treino-rosto img{width:260%;margin:-12% 0 0 -80%;display:block}
 .doca-treino::after{content:"";position:absolute;top:6px;right:8px;width:12px;height:12px;border-radius:50%;background:#FF6B5A;box-shadow:0 0 0 2px #fff}
 .btn-treino .treino-rosto{width:34px;height:34px;border-radius:50%;overflow:hidden;background:#FFE7A3;display:inline-block}
-.btn-treino .treino-rosto img{width:150%;margin:-6% 0 0 -25%;display:block}
+.btn-treino .treino-rosto img{width:260%;margin:-12% 0 0 -80%;display:block}
 
 /* ------------------------------ painel do adulto: sondagens e ajuda ------------------------------ */
 .sondagem-comparada{width:100%;border-collapse:collapse;font-size:15px;margin:8px 0}
@@ -100,3 +100,6 @@ html.menos-movimento .opcao-leitura.tocando .ic{animation:none}
 .selo-participacao{margin:0;font-size:12px;color:var(--cinza);font-family:var(--f-adulto);letter-spacing:.02em}
 .sugestao-alerta{display:block;color:var(--marinho);margin-top:2px}
 .nota-mic.caiu{color:#9A3A1A}
+.tabela-rolavel{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:760px){.sondagem-comparada{font-size:13px}.sondagem-comparada td small{font-size:11px}}
+[data-testid=sondagem-periodica],[data-testid=ajuda-graduada],[data-testid=treinos-rapidos]{min-width:0;max-width:100%}
