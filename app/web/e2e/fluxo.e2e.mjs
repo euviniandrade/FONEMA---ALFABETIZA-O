@@ -510,14 +510,15 @@ async function main() {
   await cap(page, 'lojinha');
   // D029: Lojinha do boneco — cadeados por fase + moedas, e Acessibilidade sempre grátis
   ok(/Abre na Letra C · 6 moedas/.test(await page.locator('[data-testid="loja-boneco"] [data-peca="terra"]').innerText()), 'Lojinha: camiseta terracota com cadeado "Abre na Letra C · 6 moedas"');
-  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="mata"][data-estado="pode"]').count() === 1, 'Lojinha: com a Letra B aberta e 5 moedinhas, a camiseta verde (4) já pode ser trocada');
+  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="mata"][data-estado="pode"]').count() === 1, 'Lojinha: com a Letra B aberta e moedinhas suficientes, a camiseta verde (4) já pode ser trocada');
   ok(await page.locator('[data-testid="loja-boneco"] [data-peca="ipe"]').innerText().then((t) => /Usando/.test(t)), 'Lojinha: a cor escolhida na personalização aparece como "Usando"');
   ok(await page.locator('[data-cat="cabelo"]').count() === 0, 'Lojinha: sem aba de cabelos enquanto só existe o modelo padrão');
   await page.locator('[data-aba="acessibilidade"]').click();
   ok(await page.locator('[data-testid="loja-acessibilidade"] [data-acess]').count() === 2 && await page.locator('[data-testid="loja-acessibilidade"] [aria-checked="true"]').count() === 0, 'Acessibilidade: óculos e pintura no rosto, grátis e desligados de entrada (cadeira e aparelho aguardam modelo próprio)');
+  const saldoAntesDosOculos = (await page.getByTestId('moedinhas').first().innerText()).match(/\d+/)[0];
   await page.locator('[data-acess="oculos"] button').click();
   await page.locator('[data-acess="oculos"] [aria-checked="true"]').waitFor();
-  ok((await page.getByTestId('moedinhas').first().innerText()).match(/\d+/)[0] === '5', 'colocar os óculos não custa moedinhas');
+  ok((await page.getByTestId('moedinhas').first().innerText()).match(/\d+/)[0] === saldoAntesDosOculos, 'colocar os óculos não custa moedinhas');
   await page.locator('[data-acess="oculos"] button').click();
   await page.locator('[data-acess="oculos"] [aria-checked="false"]').waitFor();
   await page.locator('[data-aba="utensilios"]').click();

@@ -39,22 +39,24 @@ Comandos (em `app/`): `npm run typecheck`, `npm run lint`, `npm test`, `npm run 
 O dono testou o site em 14/11 e pediu as correções abaixo. Quatro frentes começaram e **pararam no meio por limite de uso do modelo**.
 O código de todas está salvo e o `typecheck` passa, mas **nada foi revisado, testado de ponta a ponta nem publicado**.
 
-### 4.1 Avatar montável em 3D + Lojinha (em andamento)
-Pedido: fim dos 17 personagens em recorte de foto. Boneco 3D de verdade, 360°, que começa limpo e a criança monta (pele, rosto, olhos,
-cabelo, camisa, calça/short, calçado). A montagem ensina a Lojinha (liberado × cadeado por fase + moedas). **Só masculino/feminino**
-(sai "Prefiro não informar"); cada sexo vê só os seus itens. Óculos, aparelho auditivo, cadeira de rodas e pintura no rosto vão para a
-seção **"Acessibilidade"** da Lojinha (grátis, opcional).
-Feito até agora: `app/packages/conteudo/src/avatar.ts`, `app/packages/motor/src/avatar.ts` (+ testes),
-`app/web/src/avatar3d/` (`glb.ts`, `modelo.ts`, `motor3d.ts`, `procedural.ts`), `componentes/Boneco3D.tsx`, `telas/crianca/Avatar.tsx`,
-`telas/crianca/Lojinha.tsx`, `estilos-avatar.css`, `public/assets/avatar3d/manifesto.json`, `e2e/capturas-avatar.mjs`.
-**Estrutura concluída e verificada (15/11):** montagem em 7 passos obrigatórios + vitrine da Lojinha, só menino/menina no cadastro,
-migração dos cadastros antigos (sexo "n" → pergunta uma vez; recorte → boneco equivalente), Lojinha com cadeados por fase + moedas e
-seção Acessibilidade, miniaturas em imagem (um WebGL fora da tela, com cache), carregador de GLB provado com arquivo de teste,
-contrato em `app/docs/avatar-3d-contrato.md`, E2E (`--sem-jornada`) e capturas `app/docs/capturas/v4-avatar-*.png`.
-Falta: os modelos GLB de verdade (70 arquivos, lista no contrato) e os áudios das 3 falas novas da montagem
-(`FALAS.avatar`, `avatarSexo`, `avatarLojinha` e as perguntas de `PASSOS_AVATAR`). Os recortes antigos em `public/assets/avatar/` não são mais usados.
-**Decisão do dono:** boneco desenhado em código "fica ruim" → os modelos devem vir de **plataforma de 3D** (Meshy/Tripo) ou artista;
-o código só monta, gira e ilumina. O boneco procedural é reserva provisória. Aguardando o dono criar a conta e informar.
+### 4.1 Avatar 3D de verdade + Lojinha (D029 §1 e §7 — estrutura pronta e verificada em 15/11)
+O boneco agora é um **modelo 3D pronto** (GLB de plataforma, estilo filme de animação): `avatar-menino-padrao` e `avatar-menina-padrao`
+em `app/web/public/assets/modelos3d/` (≈0,33 MB cada, comprimidos). **Começa no padrão completo** (roupa toda branca com o "A" azul) e a
+criança **personaliza por cor, na hora**: pele (10 tons, da clara à negra retinta, em ordem neutra), olhos, cabelo e sobrancelhas, camiseta,
+calça e calçado. Nada é obrigatório. Cores especiais têm cadeado por fase + moedas; a personalização termina na vitrine da Lojinha.
+- **Como funciona a cor:** `app/ferramentas/avatar-mascaras.py` gera, por modelo, uma máscara de regiões (pele, cabelo, íris, camiseta,
+  calça, calçado; a letra A, o branco dos olhos e a sola ficam fora) e o `avatares.json`; o app recompõe a textura
+  (`app/web/src/avatar3d/avatarGlb.ts`). Compressão: `app/ferramentas/comprimir-modelos3d.sh` (também Sofia e Tales: ≈9 MB → ≈0,5 MB).
+- **Só menino ou menina** no cadastro; cadastro antigo "prefiro não informar" pergunta uma vez; avatares antigos (recorte e boneco de peças)
+  migram para o novo formato (`app/packages/motor/src/avatar.ts`).
+- **Lojinha:** abas Meu boneco (cores com cadeado), Acessibilidade (óculos e pintura no rosto, grátis) e Utensílios.
+- **Reserva:** se o GLB não carregar, aparece o boneco provisório feito em código; sem WebGL, um desenho 2D.
+- Contrato e passo a passo para incluir modelos: `app/docs/avatar-3d-contrato.md`. Capturas: `app/docs/capturas/v6-avatar-*.png`
+  (`node web/e2e/capturas-avatar.mjs`).
+**Falta (depende de modelos novos, ver contrato §5):** tipos de cabelo (artes em `docs/.../avatar-3d/padrao/variacoes/`; o passo "Penteado"
+aparece sozinho quando o GLB entra no `avatares.json`); **cadeira de rodas** (precisa de modelo sentado) e **aparelho auditivo** (orelha à
+mostra) — estão fora da tela, com o dado preservado; rosto/boca/sorriso (kit de peças). Faltam também os áudios das falas da personalização
+(`FALAS.avatar`, `avatarSexo`, `avatarLojinha`, perguntas de `PASSOS_AVATAR`). Os recortes antigos em `public/assets/avatar/` não são mais usados.
 
 ### 4.2 Espelho do Som (boca) novo em 3D (em andamento)
 Pedido: refazer do zero em 3D animado, bonito; **frente e lado (raio-x) na mesma tela**.

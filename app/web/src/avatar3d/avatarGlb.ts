@@ -11,8 +11,7 @@
  * A letra "A", os cílios, o branco dos olhos e a sola do tênis ficam fora da máscara: nunca mudam.
  */
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+import { lerGLB } from '../componentes/glb-comum.ts';
 import { PASTA_MODELOS3D, carregarAvatares, type InfoAvatar } from './avatares.ts';
 import { ALTURA_BONECO, modeloPadrao, type Aparencia } from './modelo.ts';
 
@@ -25,7 +24,6 @@ interface Base {
   matriz: THREE.Matrix4;
 }
 
-let loader: GLTFLoader | null = null;
 const bases = new Map<string, Promise<Base | null>>();
 
 async function lerImagem(url: string): Promise<ImageData> {
@@ -46,10 +44,11 @@ function carregarBase(chave: string): Promise<Base | null> {
     p = (async () => {
       const info = (await carregarAvatares()).modelos[chave];
       if (!info) return null;
-      loader ??= new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+      // o mesmo carregador de GLB do resto do app (meshopt + WebP, com cache)
       const [gltf, cor, mascara] = await Promise.all([
-        loader.loadAsync(PASTA_MODELOS3D + info.arquivo), lerImagem(PASTA_MODELOS3D + info.cor), lerImagem(PASTA_MODELOS3D + info.mascara)
+        lerGLB(PASTA_MODELOS3D + info.arquivo, '[avatar3d]'), lerImagem(PASTA_MODELOS3D + info.cor), lerImagem(PASTA_MODELOS3D + info.mascara)
       ]);
+      if (!gltf) throw new Error(`${chave}: GLB não carregou`);
       if (cor.width !== mascara.width || cor.height !== mascara.height) throw new Error(`máscara e textura de ${chave} com tamanhos diferentes`);
       const malhas: THREE.Mesh[] = [];
       gltf.scene.updateMatrixWorld(true);

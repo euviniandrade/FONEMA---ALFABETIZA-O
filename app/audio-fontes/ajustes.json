@@ -193,6 +193,18 @@
   "tales|E eu sou o Tales! Seja bem-vinda na Vila das Letras,": {
    "versao": 2,
    "texto": "E eu sou o Tales! Seja bem-vinda na Vila das Letras…"
+  },
+  "sofia|Conhecer a letra Y": {
+   "versao": 2,
+   "texto": "Conhecer a letra ípsilon."
+  },
+  "sofia|Conhecer a letra R": {
+   "versao": 2,
+   "texto": "Conhecer a letra érre."
+  },
+  "sofia|Achar /m/, /l/ e /f/ no começo das palavras": {
+   "versao": 2,
+   "texto": "Achar os sons do M, do L e do F no começo das palavras."
   }
  },
  "nomes": {
