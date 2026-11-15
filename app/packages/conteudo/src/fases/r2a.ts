@@ -3,7 +3,8 @@
  * Toda palavra LIDA aqui usa só M, L, F e vogais (linter de decodificabilidade).
  */
 import type { Fase } from '../tipos.ts';
-import { itemLer, itemLetra, itemSilaba, sofia, tales } from '../construtores.ts';
+import { itemFonema, itemLer, itemLetra, itemOuvirLeituras, itemSilaba, sofia, tales } from '../construtores.ts';
+import { FALAS_FONICAS } from '../sons.ts';
 
 export const FASES_R2A: Fase[] = [
   {
@@ -58,11 +59,8 @@ export const FASES_R2A: Fase[] = [
         atividade: {
           tipo: 'escolher', estilo: 'ensinar', habilidade: 'gpc-l',
           enunciado: tales('O Bolota leu "LALA"… Ops! Ensina para ele, [NOME]? Como se lê?'),
-          itens: [
-            { mostrar: 'MALA', correta: 'mala', opcoes: [{ id: 'lala', rotulo: '"lala"', figura: '🔊', falar: 'lala' }, { id: 'mala', rotulo: '"mala"', figura: '🔊', falar: 'mala' }] },
-            { mostrar: 'LUA', correta: 'lua', opcoes: [{ id: 'lua', rotulo: '"lua"', figura: '🔊', falar: 'lua' }, { id: 'mua', rotulo: '"mua"', figura: '🔊', falar: 'mua' }] },
-            { mostrar: 'MOLA', correta: 'mola', opcoes: [{ id: 'lola', rotulo: '"lola"', figura: '🔊', falar: 'lola' }, { id: 'mola', rotulo: '"mola"', figura: '🔊', falar: 'mola' }] }
-          ],
+          // D030 §8: a criança OUVE as duas leituras (botões de som, nada escrito) e escolhe a que combina com a palavra
+          itens: [itemOuvirLeituras('MALA', 'lala'), itemOuvirLeituras('LUA', 'mua'), itemOuvirLeituras('MOLA', 'lola')],
           comemora: tales('Agora o Bolota sabe ler direitinho!')
         }
       }
@@ -75,7 +73,7 @@ export const FASES_R2A: Fase[] = [
   },
   {
     id: 'R2a-F03', regiao: 'R2a', numero: 3, titulo: 'F',
-    objetivo: 'Ligar a letra F ao som /f/ e montar FALA, FILA, FOFO', sessoesPrevistas: '2–3 sessões',
+    objetivo: 'Ligar a letra F ao som /f/ e montar FALA, FILA, FOFA', sessoesPrevistas: '2–3 sessões',
     habilidades: ['gpc-f', 'silaba-cv'], criterio: { tipo: 'dominio', habilidades: ['gpc-f'] },
     acolhida: sofia('Oi, [NOME]! Sente o ventinho? /fff/…'),
     cenas: [
@@ -89,15 +87,20 @@ export const FASES_R2A: Fase[] = [
       },
       {
         id: 'R2a-F03-C4', tipo: 'C4', titulo: 'Os carretéis da Dona Cida', cenario: 'mata', contaDominio: true,
-        atividade: { tipo: 'montar', habilidade: 'silaba-cv', palavras: ['FILA', 'FALA', 'FOFO'], mostrarModelo: true, porSilaba: true, distratoras: ['MU', 'LE'], enunciado: sofia('Ajuda a Dona Cida a bordar, [NOME]? Um carretel para cada pedacinho.'), comemora: sofia('Ficou um bordado lindo!') }
+        atividade: { tipo: 'montar', habilidade: 'silaba-cv', palavras: ['FILA', 'FALA', 'FOFA'], mostrarModelo: true, porSilaba: true, distratoras: ['MU', 'LE'], enunciado: sofia('Ajuda a Dona Cida a bordar, [NOME]? Um carretel para cada pedacinho.'), comemora: sofia('Ficou um bordado lindo!') }
       },
       {
         id: 'R2a-F03-C5', tipo: 'C5', titulo: 'A placa do vale', cenario: 'mata', contaDominio: true,
-        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'gpc-f', enunciado: tales('A placa apagou! Qual sílaba falta aqui, [NOME]?'), itens: [itemSilaba('__LA (FALA)', 'FA', 'MA', 'LU'), itemSilaba('__FO (FOFO)', 'FO', 'MO', 'LI'), itemSilaba('__LA (FILA)', 'FI', 'MI', 'LA')], comemora: tales('A placa do vale voltou a funcionar!') }
+        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'gpc-f', enunciado: tales('A placa apagou! Qual sílaba falta aqui, [NOME]?'), itens: [itemSilaba('__LA', 'FALA', 'FA', 'MA', 'LU'), itemSilaba('__FA', 'FOFA', 'FO', 'MO', 'LI'), itemSilaba('__LA', 'FILA', 'FI', 'MI', 'LA')], comemora: tales('A placa do vale voltou a funcionar!') }
+      },
+      {
+        // D030 §7: a versão por FONEMA — qual SOM falta (a pista não mostra a palavra inteira; a criança ouve)
+        id: 'R2a-F03-C5b', tipo: 'C5', titulo: 'Qual som falta?', cenario: 'mata', contaDominio: true,
+        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'gpc-f', enunciado: tales(FALAS_FONICAS.qualSomFalta), itens: [itemFonema('_ALA', 'FALA', 'F', 'M', 'L'), itemFonema('_ILA', 'FILA', 'F', 'L', 'M'), itemFonema('MA_A', 'MALA', 'L', 'F', 'M'), itemFonema('_ULA', 'MULA', 'M', 'F', 'L')], sortear: 3, comemora: tales('Você achou o som que faltava!') }
       }
     ],
     gancho: tales('Amanhã a ponte do rio precisa da sua leitura, [NOME]!'),
-    fechamento: 'O bordado da Dona Cida ficou com FILA, FALA e FOFO.',
+    fechamento: 'O bordado da Dona Cida ficou com FILA, FALA e FOFA.',
     emCasa: 'Fazer o som /fff/ soprando uma pena ou um papelzinho.',
     conquistas: ['S-SOM-F', 'S-R2a-04'],
     demonstracao: { descricao: 'Falar /fff/ e montar FALA', habilidade: 'gpc-f' }
@@ -111,11 +114,11 @@ export const FASES_R2A: Fase[] = [
       {
         id: 'R2a-F04-C2', tipo: 'C2', titulo: 'Letra por letra', cenario: 'licao', contaDominio: true,
         assiste: { imagem: 'dupla-praca', roteiro: [tales('MA… LA… Eu vou rápido demais e erro!'), sofia('Devagar: mmm-aaa, MA. lll-aaa, LA. MALA!'), tales('Letra por letra! Agora é a sua vez, [NOME]!')] },
-        atividade: { tipo: 'falar', habilidade: 'leitura-cvcv', enunciado: sofia('Lê comigo, [NOME]. Devagar e até o fim.'), itens: [{ texto: 'MALA', falar: 'mala', figura: '🧳' }], comemora: sofia('Você leu MALA!') }
+        atividade: { tipo: 'falar', leitura: true, habilidade: 'leitura-cvcv', enunciado: sofia('Lê comigo, [NOME]. Devagar e até o fim.'), itens: [{ texto: 'MALA', falar: 'mala', figura: '🧳' }], comemora: sofia('Você leu MALA!') }
       },
       {
         id: 'R2a-F04-C4', tipo: 'C4', titulo: 'Ponte das Sílabas', cenario: 'mata', contaDominio: true,
-        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'leitura-cvcv', enunciado: sofia('A ponte precisa da sua leitura, [NOME]. Lê e toca a figura!'), itens: [itemLer('LUA', 'lua', 'mala'), itemLer('MALA', 'mala', 'lua'), itemLer('FOFO', 'FOFO', 'MULA'), itemLer('MULA', 'MULA', 'LULA'), itemLer('LULA', 'LULA', 'FOFO')], comemora: sofia('Mais uma tábua encaixou na ponte!') }
+        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'leitura-cvcv', enunciado: sofia('A ponte precisa da sua leitura, [NOME]. Lê e toca a figura!'), itens: [itemLer('LUA', 'lua', 'mala'), itemLer('MALA', 'mala', 'lua'), itemLer('FOFA', 'FOFA', 'MULA'), itemLer('MULA', 'MULA', 'LULA'), itemLer('LULA', 'LULA', 'FOFA')], comemora: sofia('Mais uma tábua encaixou na ponte!') }
       },
       {
         id: 'R2a-F04-C4b', tipo: 'C4', titulo: 'Futebol de Sílabas', cenario: 'campinho', marcador: 'esporte-futebol', contaDominio: true,
@@ -123,7 +126,7 @@ export const FASES_R2A: Fase[] = [
       },
       {
         id: 'R2a-F04-C5', tipo: 'C5', titulo: 'Só você e as letras', cenario: 'licao', contaDominio: true,
-        atividade: { tipo: 'falar', habilidade: 'leitura-cvcv', enunciado: sofia('Sem ponte, sem bola. Só você e as letras, [NOME].'), itens: [{ texto: 'LUA', falar: 'lua' }, { texto: 'FALA', falar: 'fala' }, { texto: 'LUFO', falar: 'lufo', pseudo: true }], comemora: sofia('Até o nome do bichinho da mata você leu!') }
+        atividade: { tipo: 'falar', leitura: true, habilidade: 'leitura-cvcv', enunciado: sofia('Sem ponte, sem bola. Só você e as letras, [NOME].'), itens: [{ texto: 'LUA', falar: 'lua' }, { texto: 'FALA', falar: 'fala' }, { texto: 'LIFU', falar: 'lifu', pseudo: true }], comemora: sofia('Até o nome do bichinho da mata você leu!') }
       }
     ],
     gancho: tales('A cachoeira tem pedras com sílabas… Amanhã a gente atravessa!'),
@@ -142,11 +145,11 @@ export const FASES_R2A: Fase[] = [
     cenas: [
       {
         id: 'R2a-F05-C4a', tipo: 'C4', titulo: 'Pedras da cachoeira', cenario: 'mata', contaDominio: true,
-        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'leitura-cvcv', enunciado: sofia('Lê a pedra e toca a figura, [NOME].'), itens: [itemLer('MALA', 'mala', 'MULA'), itemLer('LULA', 'LULA', 'lua'), itemLer('FILA', 'FILA', 'FOFO'), itemLer('LUA', 'lua', 'LULA')] }
+        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'leitura-cvcv', enunciado: sofia('Lê a pedra e toca a figura, [NOME].'), itens: [itemLer('MALA', 'mala', 'MULA'), itemLer('LULA', 'LULA', 'lua'), itemLer('FILA', 'FILA', 'FOFA'), itemLer('LUA', 'lua', 'LULA')] }
       },
       {
         id: 'R2a-F05-C4b', tipo: 'C4', titulo: 'Nomes de bichinhos', cenario: 'mata', contaDominio: true,
-        atividade: { tipo: 'falar', habilidade: 'leitura-cvcv', enunciado: tales('Esses são nomes de bichinhos da mata. Lê pra mim, [NOME]!'), itens: [{ texto: 'FOLU', falar: 'folu', pseudo: true }, { texto: 'MUFE', falar: 'mufe', pseudo: true }, { texto: 'FALA', falar: 'fala' }] }
+        atividade: { tipo: 'falar', leitura: true, habilidade: 'leitura-cvcv', enunciado: tales('Esses são nomes de bichinhos da mata. Lê pra mim, [NOME]!'), itens: [{ texto: 'FOLU', falar: 'folu', pseudo: true }, { texto: 'MIFA', falar: 'mifa', pseudo: true }, { texto: 'FALA', falar: 'fala' }] }
       },
       {
         id: 'R2a-F05-C4c', tipo: 'C4', titulo: 'Ditado da cachoeira', cenario: 'licao', contaDominio: true,

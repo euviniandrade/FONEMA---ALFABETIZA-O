@@ -83,9 +83,9 @@ export interface RelatorioSessao {
   dominadasAgora: string[];
   faseConcluida: boolean;
   /** D030: a fase, além de concluída, está DOMINADA (todas as habilidades dela, com tentativas avaliadas). */
-  faseDominada: boolean;
+  faseDominada?: boolean;
   /** D030: habilidades desta fase que ainda pedem reforço (concluiu por participação, sem domínio). */
-  reforco: string[];
+  reforco?: string[];
   regiaoConcluida?: string;
   chefe?: { leitura: number; escrita?: number; passou: boolean };
   expressa?: { passou: boolean };
@@ -242,7 +242,7 @@ export function faseMede(fase: Fase, habilidade: string, pseudo = false): boolea
     const a = c.atividade;
     if (!a || !c.contaDominio) return false;
     if ((TIPO_POR_MECANICA[a.tipo] ?? 'avaliada') !== 'avaliada') return false;
-    if (a.tipo === 'montar' && a.vocabulario) return false;
+    if (a.tipo === 'montar' && (a as { vocabulario?: boolean }).vocabulario) return false;
     const itens = (a.tipo === 'escolher' ? a.itens : []) as { habilidade?: string; pseudo?: boolean }[];
     if (a.tipo === 'escolher') {
       return itens.some((i) => (i.habilidade ?? a.habilidade) === habilidade && (!pseudo || !!i.pseudo));

@@ -124,8 +124,7 @@ export interface ItemEscolha {
   somAlvo?: ChaveFonema;
   /** Dito DEPOIS do acerto, como apoio (o nome da letra: "Letra B."), precedido de "Isso! Esse é o som desta letra.". */
   apoio?: Fala;
-  /** A dica antiga entrega a resposta ("B, de bola."): só é usada como reserva quando não há som real para a correção. */
-  dicaReserva?: string;
+
   /** Explicação do contraste entre dois sons/letras parecidos (par mínimo), dita na correção. */
   contraste?: Contraste;
   /** Fonema do alvo quando a resposta certa não é uma opção com `som` (ex.: figura). */

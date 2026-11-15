@@ -75,22 +75,23 @@ export interface CelulaConfusao {
 
 /** Matriz de confusão: uma célula por (alvo, resposta errada), da mais frequente para a menos. */
 export function matrizDeConfusao(tentativas: Tentativa[]): CelulaConfusao[] {
-  const m = new Map<string, CelulaConfusao & { _s: Set<string>; _h: Set<string> }>();
+  const m = new Map<string, CelulaConfusao>();
+  const sessoes = new Map<string, Set<string>>();
   for (const t of tentativas) {
     if (!ehAvaliada(t) || t.alvo === undefined) continue;
     // cada resposta errada diferente do item conta uma vez (tocar duas vezes na mesma errada não dobra)
     for (const e of new Set(respostasErradas(t))) {
       const k = `${t.alvo}\u0000${e}`;
-      const c = m.get(k) ?? { alvo: t.alvo, escolhido: e, vezes: 0, sessoes: 0, ultimaEm: 0, habilidades: [], categoria: t.categoria, conhecido: parConhecido(t.alvo, e, t.categoria), _s: new Set<string>(), _h: new Set<string>() };
+      const c = m.get(k) ?? { alvo: t.alvo, escolhido: e, vezes: 0, sessoes: 0, ultimaEm: 0, habilidades: [], categoria: t.categoria, conhecido: parConhecido(t.alvo, e, t.categoria) };
       c.vezes++;
-      c._s.add(t.sessao);
-      c._h.add(t.habilidade);
+      sessoes.set(k, (sessoes.get(k) ?? new Set<string>()).add(t.sessao));
+      if (!c.habilidades.includes(t.habilidade)) c.habilidades.push(t.habilidade);
       c.ultimaEm = Math.max(c.ultimaEm, t.em);
       m.set(k, c);
     }
   }
-  return [...m.values()]
-    .map(({ _s, _h, ...c }) => ({ ...c, sessoes: _s.size, habilidades: [..._h] }))
+  return [...m.entries()]
+    .map(([k, c]) => ({ ...c, sessoes: sessoes.get(k)!.size }))
     .sort((a, b) => b.vezes - a.vezes || b.ultimaEm - a.ultimaEm || a.alvo.localeCompare(b.alvo));
 }
 
@@ -114,21 +115,21 @@ export interface ParConfundido {
  * Ordem: mais trocas primeiro; no empate, o par já conhecido (PARES_CONFUSOS) vem antes.
  */
 export function paresConfundidos(tentativas: Tentativa[], minimo = 2): ParConfundido[] {
-  const m = new Map<string, ParConfundido & { _melhor: number; _s: number }>();
+  const m = new Map<string, ParConfundido>();
+  const melhor = new Map<string, number>();
   for (const c of matrizDeConfusao(tentativas)) {
     const par = [c.alvo, c.escolhido].sort((a, b) => a.localeCompare(b)) as [string, string];
     const k = par.join('\u0000');
-    const x = m.get(k) ?? { par, vezes: 0, sessoes: 0, ultimaEm: 0, alvo: c.alvo, escolhido: c.escolhido, habilidades: [], categoria: c.categoria, conhecido: c.conhecido, _melhor: 0, _s: 0 };
+    const x = m.get(k) ?? { par, vezes: 0, sessoes: 0, ultimaEm: 0, alvo: c.alvo, escolhido: c.escolhido, habilidades: [], categoria: c.categoria, conhecido: c.conhecido };
     x.vezes += c.vezes;
     x.sessoes = Math.max(x.sessoes, c.sessoes);
     x.ultimaEm = Math.max(x.ultimaEm, c.ultimaEm);
     x.habilidades = [...new Set([...x.habilidades, ...c.habilidades])];
-    if (c.vezes > x._melhor) { x._melhor = c.vezes; x.alvo = c.alvo; x.escolhido = c.escolhido; }
+    if (c.vezes > (melhor.get(k) ?? 0)) { melhor.set(k, c.vezes); x.alvo = c.alvo; x.escolhido = c.escolhido; }
     m.set(k, x);
   }
   return [...m.values()]
     .filter((x) => x.vezes >= minimo)
-    .map(({ _melhor, _s, ...x }) => x)
     .sort((a, b) => b.vezes - a.vezes || (b.conhecido ? 1 : 0) - (a.conhecido ? 1 : 0) || b.ultimaEm - a.ultimaEm);
 }
 
@@ -160,20 +161,20 @@ export function categoriaDoAlvo(t: Pick<Tentativa, 'alvo' | 'categoria' | 'pseud
 
 /** Itens (alvos) mais errados, com pelo menos `minErros` erros. Ordem: mais erros, depois maior taxa. */
 export function itensMaisErrados(tentativas: Tentativa[], opts: { categorias?: CategoriaAlvo[]; minErros?: number } = {}): ItemErrado[] {
-  const m = new Map<string, ItemErrado & { _h: Set<string> }>();
+  const m = new Map<string, ItemErrado>();
   for (const t of tentativas) {
     if (!ehAvaliada(t) || t.alvo === undefined) continue;
     const categoria = categoriaDoAlvo(t);
     if (opts.categorias && !opts.categorias.includes(categoria)) continue;
-    const x = m.get(t.alvo) ?? { alvo: t.alvo, categoria, vezes: 0, erros: 0, taxaErro: 0, ultimaEm: 0, habilidades: [], pseudo: !!t.pseudo, _h: new Set<string>() };
+    const x = m.get(t.alvo) ?? { alvo: t.alvo, categoria, vezes: 0, erros: 0, taxaErro: 0, ultimaEm: 0, habilidades: [], pseudo: !!t.pseudo };
     x.vezes++;
     if (!t.acertou || t.comAjuda) x.erros++;
     x.ultimaEm = Math.max(x.ultimaEm, t.em);
-    x._h.add(t.habilidade);
+    if (!x.habilidades.includes(t.habilidade)) x.habilidades.push(t.habilidade);
     m.set(t.alvo, x);
   }
   return [...m.values()]
-    .map(({ _h, ...x }) => ({ ...x, taxaErro: x.erros / x.vezes, habilidades: [..._h] }))
+    .map((x) => ({ ...x, taxaErro: x.erros / x.vezes }))
     .filter((x) => x.erros >= (opts.minErros ?? 1))
     .sort((a, b) => b.erros - a.erros || b.taxaErro - a.taxaErro || a.alvo.localeCompare(b.alvo));
 }

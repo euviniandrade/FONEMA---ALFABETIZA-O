@@ -11,7 +11,7 @@ import type { DetalheTentativa, MecanicaTentativa, Tentativa, TipoTentativa } fr
  * Padrão por mecânica (decisão do projeto, D030 etapa 5). A mecânica pode informar outro `tipo` na própria tentativa
  * (ex.: um Traçar que passe a conferir o traço pode gravar `tipo: 'avaliada'`).
  */
-export const TIPO_POR_MECANICA: Partial<Record<MecanicaTentativa, TipoTentativa>> = {
+export const TIPO_POR_MECANICA: Partial<Record<string, TipoTentativa>> = {
   escolher: 'avaliada',
   ligar: 'avaliada',
   montar: 'avaliada',

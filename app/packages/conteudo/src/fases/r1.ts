@@ -85,7 +85,8 @@ export const FASES_R1: Fase[] = [
       },
       {
         id: 'R1-F03-C4', tipo: 'C4', titulo: 'A rede do Tales', cenario: 'mar', contaDominio: true,
-        atividade: { tipo: 'escolher', estilo: 'cacar', habilidade: 'vogal-e', enunciado: tales('E se tiver um /e/ escondido? Puxa a rede, [NOME]!'), itens: [itemFig('qual começa com eee?', 'elefante', 'uva', 'ovo'), itemFig('qual começa com eee?', 'estrela', 'abelha', 'sol'), itemFig('qual começa com ééé?', 'escada', 'ilha', 'urso')], comemora: tales('Pescou um E!') }
+        // D030 §6: ESCADA e ESTRELA saíram daqui — a vogal inicial átona soa "is…", não é o É nem o Ê
+        atividade: { tipo: 'escolher', estilo: 'cacar', habilidade: 'vogal-e', enunciado: tales('E se tiver um /e/ escondido? Puxa a rede, [NOME]!'), itens: [itemFig('qual começa com eee?', 'elefante', 'uva', 'ovo'), itemFig('qual começa com eee?', 'ema', 'abelha', 'sol'), itemFig('qual começa com eee?', 'elefante', 'ilha', 'urso')], comemora: tales('Pescou um E!') }
       },
       {
         id: 'R1-F03-C8', tipo: 'C8', titulo: 'Misturado: A, O, E', cenario: 'ilha', contaDominio: true,
@@ -165,7 +166,7 @@ export const FASES_R1: Fase[] = [
       },
       {
         id: 'R1-F06-C5', tipo: 'C5', titulo: 'Sem o farol agora', cenario: 'ilha', contaDominio: true,
-        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'vogais', enunciado: sofia('Sem o farol agora. Qual som começa a palavra, [NOME]?'), itens: [itemLetra('avião', 'A', 'O', 'U'), itemLetra('ovelha', 'O', 'A', 'E'), itemLetra('urso', 'U', 'O', 'I'), itemLetra('escada', 'E', 'I', 'A')], comemora: sofia('Você ouviu o comecinho de palavras novas!') }
+        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'vogais', enunciado: sofia('Sem o farol agora. Qual som começa a palavra, [NOME]?'), itens: [itemLetra('avião', 'A', 'O', 'U'), itemLetra('ovelha', 'O', 'A', 'E'), itemLetra('urso', 'U', 'O', 'I'), itemLetra('ema', 'E', 'I', 'A')], comemora: sofia('Você ouviu o comecinho de palavras novas!') }
       }
     ],
     gancho: tales('Amanhã é o grande dia: acender o farol inteiro!'),

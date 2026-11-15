@@ -32,7 +32,8 @@ export function opFig(texto: string): Opcao {
 const LETRA_SOM: Record<string, string> = { A: 'a', E: 'E', I: 'i', O: 'O', U: 'u', M: 'm', L: 'l', F: 'f', S: 's', V: 'v' };
 export function opLetra(letra: string): Opcao {
   const som = SONS[LETRA_SOM[letra] ?? letra.toLowerCase()];
-  return { id: letra, rotulo: letra, letra, falar: som ? som.esticado : letra };
+  // `som`: fonema da letra, para a correção contrastiva tocar o som escolhido e o som certo (D030 §2b)
+  return { id: letra, rotulo: letra, letra, falar: som ? som.esticado : letra, ...(som ? { som: som.chave } : {}) };
 }
 
 /** TOCAR a figura: ouve `ouvir` e toca a figura `certa`. */
@@ -54,11 +55,31 @@ export function itemSimNao(ouvir: string, resposta: boolean, rotulos: [string, s
 
 /** LER a palavra escrita e tocar a figura certa. */
 export function itemLer(palavra: string, certa: string, ...outras: string[]): ItemEscolha {
-  return { mostrar: palavra, correta: certa, opcoes: posiciona(opFig(certa), outras.map(opFig)) };
+  return { mostrar: palavra, correta: certa, opcoes: posiciona(opFig(certa), outras.map(opFig)), leitura: true, formato: 'ler-figura' };
 }
 
-/** Sílaba que falta na placa (ex.: "__LA" → FA). */
-export function itemSilaba(mostrar: string, certa: string, ...outras: string[]): ItemEscolha {
+/**
+ * Sílaba que falta na placa (ex.: "__LA" → FA). A pista NÃO mostra a palavra inteira (D030 §7): a criança OUVE a
+ * palavra (`palavra`) e escolhe a sílaba.
+ */
+export function itemSilaba(mostrar: string, palavra: string, certa: string, ...outras: string[]): ItemEscolha {
   const op = (s: string): Opcao => ({ id: s, rotulo: s, letra: s, falar: s.toLowerCase() });
-  return { mostrar, correta: certa, opcoes: posiciona(op(certa), outras.map(op)) };
+  return { mostrar, ouvir: palavra.toLowerCase(), quem: 'sofia', correta: certa, opcoes: posiciona(op(certa), outras.map(op)), formato: 'silaba-falta' };
+}
+
+/**
+ * FONEMA que falta (a versão fônica de "qual sílaba falta"): ouve a palavra, vê a escrita com um buraco ("_ALA") e
+ * escolhe a LETRA do som que falta. A correção toca o som escolhido e o som que falta.
+ */
+export function itemFonema(mostrar: string, palavra: string, certa: string, ...outras: string[]): ItemEscolha {
+  return { mostrar, ouvir: palavra.toLowerCase(), quem: 'sofia', correta: certa, opcoes: posiciona(opLetra(certa), outras.map(opLetra)), formato: 'fonema-falta' };
+}
+
+/**
+ * OUVIR AS LEITURAS ("o Bolota leu errado", D030 §8): a palavra aparece escrita e as opções são BOTÕES DE SOM, sem
+ * nada escrito; a criança ouve as leituras e escolhe a que combina com a palavra.
+ */
+export function itemOuvirLeituras(palavra: string, ...erradas: string[]): ItemEscolha {
+  const op = (t: string): Opcao => ({ id: t.toLowerCase(), rotulo: '', falar: t.toLowerCase(), botaoDeSom: true });
+  return { mostrar: palavra.toUpperCase(), correta: palavra.toLowerCase(), opcoes: posiciona(op(palavra), erradas.map(op)), leitura: true, formato: 'ouvir-leituras' };
 }

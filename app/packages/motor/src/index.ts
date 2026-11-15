@@ -15,4 +15,8 @@ export * from './resolver.ts';
 export * from './sessao.ts';
 export * from './conquistas.ts';
 export * from './jornada.ts';
+export * from './migracao.ts';
+export * from './confusao.ts';
+export * from './reforco.ts';
+export * from './sondagem.ts';
 export * from './painel.ts';

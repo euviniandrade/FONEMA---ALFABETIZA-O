@@ -353,7 +353,7 @@ function faseDeRevisao(g: number, numero: number): Fase {
     },
     {
       id: `${id}-C4b`, tipo: 'C4', titulo: 'Ligue a letra à figura', cenario: 'praca', contaDominio: true,
-      atividade: escolher(hab, 'cacar', FALAS_ALFABETO.acheAFigura, (festa ? [...comFigura.slice(0, 2), ...deTodos(0)] : comFigura).map((l) => itemAcheAFigura(l, l.palavra, festa ? todas : pool)))
+      atividade: escolher(hab, 'cacar', FALAS_FONICAS.qualFigura, (festa ? [...comFigura.slice(0, 2), ...deTodos(0)] : comFigura).map((l) => itemAcheAFigura(l, usaSomReal(l) ? figurasDoSom(l)[0] : l.palavra, festa ? todas : pool)))
     },
     {
       id: `${id}-C4c`, tipo: 'C4', titulo: 'Com qual letra começa?', cenario: 'praca', contaDominio: true,

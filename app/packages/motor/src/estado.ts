@@ -36,7 +36,9 @@ export interface DetalheTentativa {
   mecanica?: MecanicaTentativa;
   /**
    * O item CERTO, em texto estável e legível: a letra ("P"), a chave do fonema ("p", "rr"), a sílaba ("MA") ou a
-   * palavra ("MALA"). No Escolher: o `id` (ou a letra) da opção correta.
+   * palavra ("MALA"). No Escolher: a letra da opção correta quando ela é uma letra; o `som` da opção quando o item
+   * testa um som com figuras (figura "bola" → alvo "b", categoria 'fonema'); senão o `id` da opção (a palavra).
+   * `alvo`, `escolhido`, `respostas` e `distratores` usam SEMPRE o mesmo vocabulário dentro do item.
    */
   alvo?: string;
   categoria?: CategoriaAlvo;
