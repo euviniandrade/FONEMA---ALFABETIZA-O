@@ -21,7 +21,7 @@
   "id": "s-10qey9r",
   "voz": "sofia",
   "texto": "U, de uva.",
-  "origem": "AL-U-C2b"
+  "origem": "TF-05-C2"
  },
  {
   "id": "s-10qm0oq",
@@ -66,10 +66,22 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-11fokyg",
+  "voz": "sofia",
+  "texto": "Na Trilha dos Sons, cada som novo vira palavra para ler!",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-11g97a",
   "voz": "sofia",
   "texto": "Esta letra tem dois sons: o de elefante e o de pé.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-11gwra6",
+  "voz": "sofia",
+  "texto": "O som /i/ da letra I",
+  "origem": "S-SOM-I"
  },
  {
   "id": "s-11idavc",
@@ -82,6 +94,18 @@
   "voz": "sofia",
   "texto": "Q, de queijo.",
   "origem": "AL-Q-C2b"
+ },
+ {
+  "id": "s-11p8g68",
+  "voz": "sofia",
+  "texto": "Todo jeito de falar vale!",
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-11qo6kc",
+  "voz": "sofia",
+  "texto": "O que ele viu?",
+  "origem": "TF-12-C5f"
  },
  {
   "id": "s-11wcpy8",
@@ -150,6 +174,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-14q6at4",
+  "voz": "sofia",
+  "texto": "Que palavra os sons formaram?",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-14qflpd",
   "voz": "sofia",
   "texto": "hipopótamo",
@@ -180,6 +210,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-156jv69",
+  "voz": "sofia",
+  "texto": "Agora leia você, em voz alta.",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-1589s66",
   "voz": "sofia",
   "texto": "Fazer o guia da mata para o Bolota",
@@ -196,6 +232,12 @@
   "voz": "sofia",
   "texto": "Olha, eu te mostro. É esta aqui!",
   "origem": "erro2"
+ },
+ {
+  "id": "s-15ht34",
+  "voz": "sofia",
+  "texto": "Quem o gato viu?",
+  "origem": "TF-R3-C5f"
  },
  {
   "id": "s-15qosgb",
@@ -252,10 +294,16 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-16x3tb8",
+  "voz": "sofia",
+  "texto": "O que a mula viu?",
+  "origem": "TF-R2-C5f"
+ },
+ {
   "id": "s-17b3h6e",
   "voz": "sofia",
   "texto": "Faz de conta que você morde uma maçã bem crocante.",
-  "origem": "AL-Q-C2"
+  "origem": "TF-19-C2"
  },
  {
   "id": "s-17jgt4r",
@@ -288,6 +336,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-18afors",
+  "voz": "sofia",
+  "texto": "Ponha mais um som e leia a palavra nova.",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-18fdyii",
   "voz": "sofia",
   "texto": "Tchau, [NOME]! A tela vai descansar e você também.",
@@ -306,10 +360,22 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-18sv5nn",
+  "voz": "sofia",
+  "texto": "Quem sai?",
+  "origem": "TF-15-C5f"
+ },
+ {
   "id": "s-18uqtkr",
   "voz": "sofia",
   "texto": "Achar a vogal do começo das palavras",
   "origem": "S-R1-06"
+ },
+ {
+  "id": "s-1920jke",
+  "voz": "sofia",
+  "texto": "Essas palavras só mudam um som!",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-193fu3z",
@@ -366,10 +432,22 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1atn6xz",
+  "voz": "sofia",
+  "texto": "A mula suja sai.",
+  "origem": "TF-15-C5f"
+ },
+ {
   "id": "s-1auvyix",
   "voz": "sofia",
   "texto": "Lembrar o que aprendeu em outros dias",
   "origem": "S-R1-18"
+ },
+ {
+  "id": "s-1b9zzv3",
+  "voz": "sofia",
+  "texto": "Em muitos lugares, o T antes do I soa assim.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-1bj7qmc",
@@ -504,6 +582,12 @@
   "origem": "telas"
  },
  {
+  "id": "s-1cyqio8",
+  "voz": "sofia",
+  "texto": "O pato pula.",
+  "origem": "TF-17-C5f"
+ },
+ {
   "id": "s-1dfc6n5",
   "voz": "sofia",
   "texto": "Qual letra faz /lll/, [NOME]?",
@@ -537,13 +621,13 @@
   "id": "s-1duq165",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do S.",
-  "origem": "AL-FESTA-C4d"
+  "origem": "TF-22-C1"
  },
  {
   "id": "s-1duq17v",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do U.",
-  "origem": "AL-FESTA-C4d"
+  "origem": "TF-22-C1"
  },
  {
   "id": "s-1duq1bb",
@@ -555,43 +639,43 @@
   "id": "s-1duq1j3",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do A.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "TF-22-C1"
  },
  {
   "id": "s-1duq1kt",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do C.",
-  "origem": "AL-FESTA-C4c"
+  "origem": "TF-R3-C1"
  },
  {
   "id": "s-1duq1mj",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do E.",
-  "origem": "AL-R1-C4c"
+  "origem": "TF-22-C1"
  },
  {
   "id": "s-1duq1o9",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do G.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "TF-R3-C1"
  },
  {
   "id": "s-1duq1pz",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do I.",
-  "origem": "AL-FESTA-C4c"
+  "origem": "TF-22-C1"
  },
  {
   "id": "s-1duq1tf",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do M.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "TF-22-C1"
  },
  {
   "id": "s-1duq1v5",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do O.",
-  "origem": "AL-FESTA-C4d"
+  "origem": "TF-22-C1"
  },
  {
   "id": "s-1dxf71a",
@@ -630,10 +714,16 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1fh6g3s",
+  "voz": "sofia",
+  "texto": "Agora é com você!",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-1fhr3jx",
   "voz": "sofia",
   "texto": "Faz de conta que você é uma cobrinha.",
-  "origem": "AL-S-C2"
+  "origem": "TF-11-C2"
  },
  {
   "id": "s-1fnwlqa",
@@ -702,10 +792,34 @@
   "origem": "AL-O-C2"
  },
  {
+  "id": "s-1hy8ftq",
+  "voz": "sofia",
+  "texto": "O som /a/ da letra A",
+  "origem": "S-SOM-A"
+ },
+ {
   "id": "s-1i8kohr",
   "voz": "sofia",
   "texto": "Terminar a sessão no ritual de fim",
   "origem": "S-R0-15"
+ },
+ {
+  "id": "s-1iixhko",
+  "voz": "sofia",
+  "texto": "Qual letra faz este som?",
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-1imfcmm",
+  "voz": "sofia",
+  "texto": "No fim da palavra, esse som se escreve com O.",
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-1imfcv8",
+  "voz": "sofia",
+  "texto": "No fim da palavra, esse som se escreve com E.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-1ipkbwn",
@@ -732,10 +846,22 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-1j7bjer",
+  "voz": "sofia",
+  "texto": "A lula viu a lua.",
+  "origem": "TF-10-C5f"
+ },
+ {
   "id": "s-1jbedh7",
   "voz": "sofia",
   "texto": "Qual letra faz este som, [NOME]?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1jcs6di",
+  "voz": "sofia",
+  "texto": "Oi, [NOME]! Hoje é dia de juntar os sons que você já sabe!",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-1jqjx0n",
@@ -747,7 +873,13 @@
   "id": "s-1jtlc75",
   "voz": "sofia",
   "texto": "Faz de conta que você ganhou um troféu!",
-  "origem": "AL-E-C2"
+  "origem": "TF-02-C2"
+ },
+ {
+  "id": "s-1judxrb",
+  "voz": "sofia",
+  "texto": "Faltou ficha. Escute de novo, bem devagar.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-1jzaxhx",
@@ -762,16 +894,40 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1k3rew1",
+  "voz": "sofia",
+  "texto": "Toque nas letras, uma de cada vez, e escute os sons.",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-1k6uvwq",
   "voz": "sofia",
   "texto": "Solta devagar…",
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1khlkeh",
+  "voz": "sofia",
+  "texto": "O gato viu a vaca.",
+  "origem": "TF-R3-C5f"
+ },
+ {
+  "id": "s-1kj5b3j",
+  "voz": "sofia",
+  "texto": "Oi, [NOME]! Hoje tem som novo na Trilha dos Sons!",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-1kp8a7g",
   "voz": "sofia",
   "texto": "O Z tem voz, como uma abelhinha:",
   "origem": "pares (D030)"
+ },
+ {
+  "id": "s-1l49mhj",
+  "voz": "sofia",
+  "texto": "O gato viu o galo.",
+  "origem": "TF-21-C5f"
  },
  {
   "id": "s-1l8st3w",
@@ -784,6 +940,18 @@
   "voz": "sofia",
   "texto": "Isso! Você fez o som do seu nome!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1lqpxil",
+  "voz": "sofia",
+  "texto": "O que a tia viu?",
+  "origem": "TF-22-C5f"
+ },
+ {
+  "id": "s-1lx8sog",
+  "voz": "sofia",
+  "texto": "Quem pula?",
+  "origem": "TF-17-C5f"
  },
  {
   "id": "s-1ly3zjt",
@@ -801,13 +969,25 @@
   "id": "s-1mf5pte",
   "voz": "sofia",
   "texto": "G, de gato.",
-  "origem": "AL-G-C2b"
+  "origem": "TF-21-C2"
+ },
+ {
+  "id": "s-1mfxe4s",
+  "voz": "sofia",
+  "texto": "Primeiro, os sons que você já sabe.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-1mic20x",
   "voz": "sofia",
   "texto": "Faz de conta que você esqueceu o lanche em casa.",
-  "origem": "AL-Y-C2"
+  "origem": "TF-03-C2"
+ },
+ {
+  "id": "s-1ms3ujt",
+  "voz": "sofia",
+  "texto": "Tem ficha a mais. Escute de novo, bem devagar.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-1myt00d",
@@ -849,7 +1029,7 @@
   "id": "s-1nqpsef",
   "voz": "sofia",
   "texto": "M, de macaco.",
-  "origem": "AL-M-C2b"
+  "origem": "TF-07-C2"
  },
  {
   "id": "s-1o64pg2",
@@ -858,10 +1038,22 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1oja6tu",
+  "voz": "sofia",
+  "texto": "Escute o som novo.",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-1ojmdzj",
   "voz": "sofia",
   "texto": "Isso! Você abriu bem a boca: aaa!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1oo8c8o",
+  "voz": "sofia",
+  "texto": "Qual destes começa com o som desta letra? Toque para ouvir.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-1ooec8a",
@@ -933,7 +1125,7 @@
   "id": "s-1q7todt",
   "voz": "sofia",
   "texto": "O, de ovo.",
-  "origem": "AL-O-C2b"
+  "origem": "TF-04-C2"
  },
  {
   "id": "s-1q81nh8",
@@ -972,6 +1164,12 @@
   "origem": "sons"
  },
  {
+  "id": "s-1qah35b",
+  "voz": "sofia",
+  "texto": "lia",
+  "origem": "TF-22-C4b"
+ },
+ {
   "id": "s-1qah37y",
   "voz": "sofia",
   "texto": "lhá",
@@ -990,10 +1188,22 @@
   "origem": "figuras"
  },
  {
+  "id": "s-1qah3sm",
+  "voz": "sofia",
+  "texto": "meu",
+  "origem": "TF-07-C5t"
+ },
+ {
   "id": "s-1qah3za",
   "voz": "sofia",
   "texto": "mmm",
   "origem": "sons"
+ },
+ {
+  "id": "s-1qah432",
+  "voz": "sofia",
+  "texto": "mia",
+  "origem": "TF-08-C5t"
  },
  {
   "id": "s-1qah46q",
@@ -1014,6 +1224,12 @@
   "origem": "sons"
  },
  {
+  "id": "s-1qah4tt",
+  "voz": "sofia",
+  "texto": "nua",
+  "origem": "TF-R2-C5t"
+ },
+ {
   "id": "s-1qah5ic",
   "voz": "sofia",
   "texto": "ooo",
@@ -1026,10 +1242,64 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1qah752",
+  "voz": "sofia",
+  "texto": "ama",
+  "origem": "TF-07-C4b"
+ },
+ {
+  "id": "s-1qah75a",
+  "voz": "sofia",
+  "texto": "ami",
+  "origem": "TF-07-C4b"
+ },
+ {
+  "id": "s-1qah75e",
+  "voz": "sofia",
+  "texto": "amu",
+  "origem": "TF-07-C4b"
+ },
+ {
   "id": "s-1qah78q",
   "voz": "sofia",
   "texto": "aaa",
   "origem": "sons"
+ },
+ {
+  "id": "s-1qah7mh",
+  "voz": "sofia",
+  "texto": "ave",
+  "origem": "TF-13-C5t"
+ },
+ {
+  "id": "s-1qah7xr",
+  "voz": "sofia",
+  "texto": "boi",
+  "origem": "TF-18-C5t"
+ },
+ {
+  "id": "s-1qah9gn",
+  "voz": "sofia",
+  "texto": "dia",
+  "origem": "TF-22-C5p"
+ },
+ {
+  "id": "s-1qaha4j",
+  "voz": "sofia",
+  "texto": "ela",
+  "origem": "TF-12-C4b"
+ },
+ {
+  "id": "s-1qaha4n",
+  "voz": "sofia",
+  "texto": "ele",
+  "origem": "TF-12-C4c"
+ },
+ {
+  "id": "s-1qaha4r",
+  "voz": "sofia",
+  "texto": "eli",
+  "origem": "TF-12-C4b"
  },
  {
   "id": "s-1qahaaq",
@@ -1044,10 +1314,58 @@
   "origem": "sons"
  },
  {
+  "id": "s-1qahb1h",
+  "voz": "sofia",
+  "texto": "fia",
+  "origem": "TF-R2-C5p"
+ },
+ {
+  "id": "s-1qahb1n",
+  "voz": "sofia",
+  "texto": "fio",
+  "origem": "TF-12-C4c"
+ },
+ {
+  "id": "s-1qahb3f",
+  "voz": "sofia",
+  "texto": "foi",
+  "origem": "TF-18-C4b"
+ },
+ {
   "id": "s-1qahb9p",
   "voz": "sofia",
   "texto": "fff",
   "origem": "sons"
+ },
+ {
+  "id": "s-1qahbjl",
+  "voz": "sofia",
+  "texto": "fui",
+  "origem": "TF-08-C4b"
+ },
+ {
+  "id": "s-1qaheat",
+  "voz": "sofia",
+  "texto": "zua",
+  "origem": "TF-R2-C5t"
+ },
+ {
+  "id": "s-1qahf27",
+  "voz": "sofia",
+  "texto": "zoa",
+  "origem": "TF-14-C5p"
+ },
+ {
+  "id": "s-1qahjjn",
+  "voz": "sofia",
+  "texto": "pia",
+  "origem": "TF-16-C4c"
+ },
+ {
+  "id": "s-1qahjp9",
+  "voz": "sofia",
+  "texto": "poi",
+  "origem": "TF-18-C5t"
  },
  {
   "id": "s-1qahl0t",
@@ -1068,10 +1386,40 @@
   "origem": "sons"
  },
  {
+  "id": "s-1qahlyk",
+  "voz": "sofia",
+  "texto": "sua",
+  "origem": "TF-R2-C5t"
+ },
+ {
+  "id": "s-1qahm46",
+  "voz": "sofia",
+  "texto": "soa",
+  "origem": "TF-14-C5p"
+ },
+ {
   "id": "s-1qahm4b",
   "voz": "sofia",
   "texto": "sol",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1qahm9c",
+  "voz": "sofia",
+  "texto": "sai",
+  "origem": "TF-11-C4b"
+ },
+ {
+  "id": "s-1qahmd0",
+  "voz": "sofia",
+  "texto": "sei",
+  "origem": "TF-11-C4b"
+ },
+ {
+  "id": "s-1qahmwn",
+  "voz": "sofia",
+  "texto": "tia",
+  "origem": "TF-22-C5p"
  },
  {
   "id": "s-1qahn1z",
@@ -1092,10 +1440,40 @@
   "origem": "sons"
  },
  {
+  "id": "s-1qahnqe",
+  "voz": "sofia",
+  "texto": "umu",
+  "origem": "TF-07-C4b"
+ },
+ {
+  "id": "s-1qahnqy",
+  "voz": "sofia",
+  "texto": "umi",
+  "origem": "TF-07-C4b"
+ },
+ {
   "id": "s-1qahobh",
   "voz": "sofia",
   "texto": "vvv",
   "origem": "sons"
+ },
+ {
+  "id": "s-1qahogx",
+  "voz": "sofia",
+  "texto": "viu",
+  "origem": "TF-09-C4b"
+ },
+ {
+  "id": "s-1qahohh",
+  "voz": "sofia",
+  "texto": "via",
+  "origem": "TF-22-C4b"
+ },
+ {
+  "id": "s-1qahool",
+  "voz": "sofia",
+  "texto": "vai",
+  "origem": "TF-11-C3s"
  },
  {
   "id": "s-1qahqix",
@@ -1155,7 +1533,7 @@
   "id": "s-1qncf0t",
   "voz": "sofia",
   "texto": "I, de ilha.",
-  "origem": "AL-I-C2b"
+  "origem": "TF-03-C2"
  },
  {
   "id": "s-1qrpdds",
@@ -1180,6 +1558,18 @@
   "voz": "sofia",
   "texto": "ẽẽẽẽ",
   "origem": "sons"
+ },
+ {
+  "id": "s-1rijs4h",
+  "voz": "sofia",
+  "texto": "Amanhã tem mais um som!",
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-1rm1wux",
+  "voz": "sofia",
+  "texto": "Agora troque cada ficha pela letra do som.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-1rskjwt",
@@ -1227,13 +1617,19 @@
   "id": "s-1tqmk5t",
   "voz": "sofia",
   "texto": "Repita comigo!",
-  "origem": "AL-Y-C2"
+  "origem": "TF-21-C2"
  },
  {
   "id": "s-1tssiez",
   "voz": "sofia",
   "texto": "Esta letra aparece em nomes.",
   "origem": "AL-Y-C2"
+ },
+ {
+  "id": "s-1tva0wr",
+  "voz": "sofia",
+  "texto": "A tia viu o tomate.",
+  "origem": "TF-22-C5f"
  },
  {
   "id": "s-1tzsjgn",
@@ -1254,10 +1650,28 @@
   "origem": "erroJunto"
  },
  {
+  "id": "s-1ubx921",
+  "voz": "sofia",
+  "texto": "No fim da palavra, o E tem som de I.",
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-1ug1ozc",
+  "voz": "sofia",
+  "texto": "A mula viu a uva.",
+  "origem": "TF-R2-C5f"
+ },
+ {
   "id": "s-1ugteiz",
   "voz": "sofia",
   "texto": "Até o nome do bichinho da mata você leu!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1ujvxko",
+  "voz": "sofia",
+  "texto": "Escute. Qual letra faz o primeiro som?",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-1upee47",
@@ -1296,10 +1710,34 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1uqgjb9",
+  "voz": "sofia",
+  "texto": "jali",
+  "origem": "TF-15-C4b"
+ },
+ {
+  "id": "s-1uqgjbh",
+  "voz": "sofia",
+  "texto": "jala",
+  "origem": "TF-15-C4b"
+ },
+ {
   "id": "s-1uqgtjf",
   "voz": "sofia",
   "texto": "jjjj",
   "origem": "sons"
+ },
+ {
+  "id": "s-1uqgzo3",
+  "voz": "sofia",
+  "texto": "jufa",
+  "origem": "TF-15-C4b"
+ },
+ {
+  "id": "s-1uqgzod",
+  "voz": "sofia",
+  "texto": "jufo",
+  "origem": "TF-15-C4b"
  },
  {
   "id": "s-1uqheef",
@@ -1320,6 +1758,48 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1uqi5n1",
+  "voz": "sofia",
+  "texto": "lado",
+  "origem": "TF-20-C3s"
+ },
+ {
+  "id": "s-1uqi5ny",
+  "voz": "sofia",
+  "texto": "lago",
+  "origem": "TF-21-C4c"
+ },
+ {
+  "id": "s-1uqi5o4",
+  "voz": "sofia",
+  "texto": "lagu",
+  "origem": "TF-21-C4b"
+ },
+ {
+  "id": "s-1uqi5p1",
+  "voz": "sofia",
+  "texto": "lafu",
+  "origem": "TF-17-C4b"
+ },
+ {
+  "id": "s-1uqi5rk",
+  "voz": "sofia",
+  "texto": "lacu",
+  "origem": "TF-21-C4b"
+ },
+ {
+  "id": "s-1uqi5sd",
+  "voz": "sofia",
+  "texto": "labi",
+  "origem": "TF-18-C4b"
+ },
+ {
+  "id": "s-1uqi5sh",
+  "voz": "sofia",
+  "texto": "labu",
+  "origem": "TF-18-C4b"
+ },
+ {
   "id": "s-1uqi5u3",
   "voz": "sofia",
   "texto": "lala",
@@ -1330,6 +1810,24 @@
   "voz": "sofia",
   "texto": "lama",
   "origem": "palavras"
+ },
+ {
+  "id": "s-1uqi613",
+  "voz": "sofia",
+  "texto": "latu",
+  "origem": "TF-17-C4b"
+ },
+ {
+  "id": "s-1uqi61f",
+  "voz": "sofia",
+  "texto": "lata",
+  "origem": "TF-17-C5t"
+ },
+ {
+  "id": "s-1uqi64j",
+  "voz": "sofia",
+  "texto": "lapu",
+  "origem": "TF-18-C4b"
  },
  {
   "id": "s-1uqi87f",
@@ -1362,6 +1860,24 @@
   "origem": "palavras"
  },
  {
+  "id": "s-1uqifer",
+  "voz": "sofia",
+  "texto": "lupa",
+  "origem": "TF-18-C4a"
+ },
+ {
+  "id": "s-1uqifif",
+  "voz": "sofia",
+  "texto": "luta",
+  "origem": "TF-17-C3s"
+ },
+ {
+  "id": "s-1uqifyt",
+  "voz": "sofia",
+  "texto": "lufa",
+  "origem": "TF-16-C5t"
+ },
+ {
   "id": "s-1uqifyz",
   "voz": "sofia",
   "texto": "lufo",
@@ -1372,6 +1888,12 @@
   "voz": "sofia",
   "texto": "lula",
   "origem": "palavras"
+ },
+ {
+  "id": "s-1uqixmz",
+  "voz": "sofia",
+  "texto": "meia",
+  "origem": "TF-07-C5t"
  },
  {
   "id": "s-1uqixox",
@@ -1398,10 +1920,52 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1uqizu8",
+  "voz": "sofia",
+  "texto": "movo",
+  "origem": "TF-13-C5t"
+ },
+ {
+  "id": "s-1uqj0ps",
+  "voz": "sofia",
+  "texto": "mafa",
+  "origem": "TF-08-C4b"
+ },
+ {
+  "id": "s-1uqj0q0",
+  "voz": "sofia",
+  "texto": "mafi",
+  "origem": "TF-R2-C4b"
+ },
+ {
+  "id": "s-1uqj0qc",
+  "voz": "sofia",
+  "texto": "mafu",
+  "origem": "TF-13-C4b"
+ },
+ {
   "id": "s-1uqj0ve",
   "voz": "sofia",
   "texto": "mala",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1uqj12q",
+  "voz": "sofia",
+  "texto": "mata",
+  "origem": "TF-17-C5t"
+ },
+ {
+  "id": "s-1uqj130",
+  "voz": "sofia",
+  "texto": "mato",
+  "origem": "TF-R3-C5t"
+ },
+ {
+  "id": "s-1uqj14k",
+  "voz": "sofia",
+  "texto": "mave",
+  "origem": "TF-13-C5t"
  },
  {
   "id": "s-1uqj16e",
@@ -1416,10 +1980,40 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1uqj7dw",
+  "voz": "sofia",
+  "texto": "mido",
+  "origem": "TF-20-C4b"
+ },
+ {
+  "id": "s-1uqj7em",
+  "voz": "sofia",
+  "texto": "midu",
+  "origem": "TF-20-C4b"
+ },
+ {
   "id": "s-1uqj7fs",
   "voz": "sofia",
   "texto": "mifa",
   "origem": "palavras"
+ },
+ {
+  "id": "s-1uqj7iz",
+  "voz": "sofia",
+  "texto": "miau",
+  "origem": "TF-07-C4b"
+ },
+ {
+  "id": "s-1uqj7se",
+  "voz": "sofia",
+  "texto": "mitu",
+  "origem": "TF-20-C4b"
+ },
+ {
+  "id": "s-1uqjalg",
+  "voz": "sofia",
+  "texto": "muva",
+  "origem": "TF-09-C4b"
  },
  {
   "id": "s-1uqjb00",
@@ -1434,10 +2028,64 @@
   "origem": "palavras"
  },
  {
+  "id": "s-1uqjb0a",
+  "voz": "sofia",
+  "texto": "mufo",
+  "origem": "TF-12-C4b"
+ },
+ {
   "id": "s-1uqjb5q",
   "voz": "sofia",
   "texto": "mula",
   "origem": "palavras"
+ },
+ {
+  "id": "s-1uqjb6f",
+  "voz": "sofia",
+  "texto": "mumi",
+  "origem": "TF-13-C4b"
+ },
+ {
+  "id": "s-1uqjb78",
+  "voz": "sofia",
+  "texto": "muni",
+  "origem": "TF-13-C4b"
+ },
+ {
+  "id": "s-1uqjls3",
+  "voz": "sofia",
+  "texto": "nafa",
+  "origem": "TF-13-C4b"
+ },
+ {
+  "id": "s-1uqjlsn",
+  "voz": "sofia",
+  "texto": "nafu",
+  "origem": "TF-13-C4b"
+ },
+ {
+  "id": "s-1uqjltt",
+  "voz": "sofia",
+  "texto": "nada",
+  "origem": "TF-R3-C5p"
+ },
+ {
+  "id": "s-1uqjm6v",
+  "voz": "sofia",
+  "texto": "nave",
+  "origem": "TF-R2-C5d"
+ },
+ {
+  "id": "s-1uqjm8h",
+  "voz": "sofia",
+  "texto": "nata",
+  "origem": "TF-R3-C5p"
+ },
+ {
+  "id": "s-1uqjm8v",
+  "voz": "sofia",
+  "texto": "nato",
+  "origem": "TF-R3-C5t"
  },
  {
   "id": "s-1uqjt6z",
@@ -1446,10 +2094,34 @@
   "origem": "sons"
  },
  {
+  "id": "s-1uqjukz",
+  "voz": "sofia",
+  "texto": "novo",
+  "origem": "TF-R2-C3s"
+ },
+ {
+  "id": "s-1uqjul5",
+  "voz": "sofia",
+  "texto": "nove",
+  "origem": "TF-R2-C3s"
+ },
+ {
+  "id": "s-1uqjw9j",
+  "voz": "sofia",
+  "texto": "nuni",
+  "origem": "TF-13-C4b"
+ },
+ {
   "id": "s-1uqkeen",
   "voz": "sofia",
   "texto": "olho",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1uqm2o4",
+  "voz": "sofia",
+  "texto": "afia",
+  "origem": "TF-08-C4b"
  },
  {
   "id": "s-1uqm3pn",
@@ -1464,10 +2136,16 @@
   "origem": "AL-R2-C5p"
  },
  {
+  "id": "s-1uqmk6q",
+  "voz": "sofia",
+  "texto": "aula",
+  "origem": "TF-15-C4b"
+ },
+ {
   "id": "s-1uqmoqt",
   "voz": "sofia",
   "texto": "bala",
-  "origem": "AL-R3-C5p"
+  "origem": "TF-18-C5p"
  },
  {
   "id": "s-1uqmowb",
@@ -1476,16 +2154,76 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1uqmpcj",
+  "voz": "sofia",
+  "texto": "bato",
+  "origem": "TF-R3-C5p"
+ },
+ {
+  "id": "s-1uqmpcp",
+  "voz": "sofia",
+  "texto": "bate",
+  "origem": "TF-22-C4c"
+ },
+ {
+  "id": "s-1uqmpct",
+  "voz": "sofia",
+  "texto": "bata",
+  "origem": "TF-18-C5p"
+ },
+ {
+  "id": "s-1uqmqg4",
+  "voz": "sofia",
+  "texto": "boca",
+  "origem": "TF-19-C4c"
+ },
+ {
+  "id": "s-1uqmqit",
+  "voz": "sofia",
+  "texto": "bolo",
+  "origem": "TF-R3-C5d"
+ },
+ {
   "id": "s-1uqmqiz",
   "voz": "sofia",
   "texto": "bola",
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1uqmqqb",
+  "voz": "sofia",
+  "texto": "bota",
+  "origem": "TF-21-C3s"
+ },
+ {
   "id": "s-1uqms90",
   "voz": "sofia",
   "texto": "bebê",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1uqn58l",
+  "voz": "sofia",
+  "texto": "bupi",
+  "origem": "TF-18-C4b"
+ },
+ {
+  "id": "s-1uqn5cl",
+  "voz": "sofia",
+  "texto": "bule",
+  "origem": "TF-18-C5p"
+ },
+ {
+  "id": "s-1uqn5cp",
+  "voz": "sofia",
+  "texto": "buli",
+  "origem": "TF-16-C4b"
+ },
+ {
+  "id": "s-1uqn5hv",
+  "voz": "sofia",
+  "texto": "bufi",
+  "origem": "TF-18-C4b"
  },
  {
   "id": "s-1uqnf1m",
@@ -1506,6 +2244,12 @@
   "origem": "AL-M-C5p"
  },
  {
+  "id": "s-1uqnjsa",
+  "voz": "sofia",
+  "texto": "calo",
+  "origem": "TF-R3-C5p"
+ },
+ {
   "id": "s-1uqnjty",
   "voz": "sofia",
   "texto": "café",
@@ -1518,10 +2262,46 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1uqnjxi",
+  "voz": "sofia",
+  "texto": "cafi",
+  "origem": "TF-19-C4b"
+ },
+ {
+  "id": "s-1uqnjxq",
+  "voz": "sofia",
+  "texto": "cafa",
+  "origem": "TF-19-C4b"
+ },
+ {
+  "id": "s-1uqnjy2",
+  "voz": "sofia",
+  "texto": "cafu",
+  "origem": "TF-19-C4b"
+ },
+ {
   "id": "s-1uqnk9n",
   "voz": "sofia",
   "texto": "casa",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1uqnkbu",
+  "voz": "sofia",
+  "texto": "cavu",
+  "origem": "TF-19-C4b"
+ },
+ {
+  "id": "s-1uqnkdu",
+  "voz": "sofia",
+  "texto": "cato",
+  "origem": "TF-R3-C5t"
+ },
+ {
+  "id": "s-1uqnke4",
+  "voz": "sofia",
+  "texto": "cata",
+  "origem": "TF-R3-C5p"
  },
  {
   "id": "s-1uqo36u",
@@ -1536,6 +2316,18 @@
   "origem": "AL-Z-C5p"
  },
  {
+  "id": "s-1uqo4sh",
+  "voz": "sofia",
+  "texto": "difa",
+  "origem": "TF-22-C4b"
+ },
+ {
+  "id": "s-1uqo54u",
+  "voz": "sofia",
+  "texto": "dimu",
+  "origem": "TF-22-C4b"
+ },
+ {
   "id": "s-1uqo8ap",
   "voz": "sofia",
   "texto": "dedo",
@@ -1546,6 +2338,24 @@
   "voz": "sofia",
   "texto": "dado",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1uqolpe",
+  "voz": "sofia",
+  "texto": "dumu",
+  "origem": "TF-22-C4b"
+ },
+ {
+  "id": "s-1uqolsj",
+  "voz": "sofia",
+  "texto": "dufo",
+  "origem": "TF-20-C4b"
+ },
+ {
+  "id": "s-1uqolst",
+  "voz": "sofia",
+  "texto": "dufa",
+  "origem": "TF-20-C4b"
  },
  {
   "id": "s-1uqpl55",
@@ -1590,10 +2400,34 @@
   "origem": "palavras"
  },
  {
+  "id": "s-1uqprfk",
+  "voz": "sofia",
+  "texto": "fama",
+  "origem": "TF-R2-C4b"
+ },
+ {
+  "id": "s-1uqprfs",
+  "voz": "sofia",
+  "texto": "fami",
+  "origem": "TF-R2-C4b"
+ },
+ {
   "id": "s-1uqprgh",
   "voz": "sofia",
   "texto": "fala",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1uqprlv",
+  "voz": "sofia",
+  "texto": "fafi",
+  "origem": "TF-09-C4b"
+ },
+ {
+  "id": "s-1uqprmn",
+  "voz": "sofia",
+  "texto": "fafu",
+  "origem": "TF-08-C4b"
  },
  {
   "id": "s-1uqprvy",
@@ -1614,10 +2448,40 @@
   "origem": "palavras"
  },
  {
+  "id": "s-1uqqbna",
+  "voz": "sofia",
+  "texto": "gota",
+  "origem": "TF-21-C3s"
+ },
+ {
+  "id": "s-1uqqmbz",
+  "voz": "sofia",
+  "texto": "gamo",
+  "origem": "TF-21-C5t"
+ },
+ {
   "id": "s-1uqqmi6",
   "voz": "sofia",
   "texto": "galo",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1uqqmne",
+  "voz": "sofia",
+  "texto": "gafa",
+  "origem": "TF-R3-C4b"
+ },
+ {
+  "id": "s-1uqqmny",
+  "voz": "sofia",
+  "texto": "gafu",
+  "origem": "TF-19-C4b"
+ },
+ {
+  "id": "s-1uqqn1q",
+  "voz": "sofia",
+  "texto": "gavu",
+  "origem": "TF-19-C4b"
  },
  {
   "id": "s-1uqqn3q",
@@ -1626,10 +2490,34 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1uqqn3s",
+  "voz": "sofia",
+  "texto": "gata",
+  "origem": "TF-R3-C5p"
+ },
+ {
+  "id": "s-1uqqwxc",
+  "voz": "sofia",
+  "texto": "gufo",
+  "origem": "TF-R3-C4b"
+ },
+ {
+  "id": "s-1uqqwxq",
+  "voz": "sofia",
+  "texto": "gufa",
+  "origem": "TF-R3-C4b"
+ },
+ {
   "id": "s-1uqr763",
   "voz": "sofia",
   "texto": "xxxx",
   "origem": "sons"
+ },
+ {
+  "id": "s-1uqskg3",
+  "voz": "sofia",
+  "texto": "zufa",
+  "origem": "TF-R2-C4b"
  },
  {
   "id": "s-1uqss5n",
@@ -1638,16 +2526,112 @@
   "origem": "sons"
  },
  {
+  "id": "s-1uqsuqf",
+  "voz": "sofia",
+  "texto": "zafa",
+  "origem": "TF-R2-C4b"
+ },
+ {
+  "id": "s-1uqsuyc",
+  "voz": "sofia",
+  "texto": "zami",
+  "origem": "TF-14-C4b"
+ },
+ {
+  "id": "s-1uqsuyk",
+  "voz": "sofia",
+  "texto": "zama",
+  "origem": "TF-14-C4b"
+ },
+ {
+  "id": "s-1uqsuz9",
+  "voz": "sofia",
+  "texto": "zali",
+  "origem": "TF-15-C4b"
+ },
+ {
   "id": "s-1uqsxl5",
   "voz": "sofia",
   "texto": "zero",
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1uqsy53",
+  "voz": "sofia",
+  "texto": "zelo",
+  "origem": "TF-R2-C5p"
+ },
+ {
+  "id": "s-1uqx9xf",
+  "voz": "sofia",
+  "texto": "pula",
+  "origem": "TF-16-C3s"
+ },
+ {
+  "id": "s-1uqx9xj",
+  "voz": "sofia",
+  "texto": "pule",
+  "origem": "TF-18-C5p"
+ },
+ {
+  "id": "s-1uqx9xn",
+  "voz": "sofia",
+  "texto": "puli",
+  "origem": "TF-16-C4b"
+ },
+ {
+  "id": "s-1uqxa69",
+  "voz": "sofia",
+  "texto": "pufi",
+  "origem": "TF-18-C4b"
+ },
+ {
+  "id": "s-1uqxa6h",
+  "voz": "sofia",
+  "texto": "pufa",
+  "origem": "TF-R3-C4b"
+ },
+ {
   "id": "s-1uqxk01",
   "voz": "sofia",
   "texto": "pato",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1uqxk0f",
+  "voz": "sofia",
+  "texto": "pata",
+  "origem": "TF-18-C5p"
+ },
+ {
+  "id": "s-1uqxk0r",
+  "voz": "sofia",
+  "texto": "patu",
+  "origem": "TF-17-C4b"
+ },
+ {
+  "id": "s-1uqxk7r",
+  "voz": "sofia",
+  "texto": "pala",
+  "origem": "TF-18-C3s"
+ },
+ {
+  "id": "s-1uqxk7z",
+  "voz": "sofia",
+  "texto": "pali",
+  "origem": "TF-16-C4b"
+ },
+ {
+  "id": "s-1uqxkgp",
+  "voz": "sofia",
+  "texto": "pafe",
+  "origem": "TF-16-C4b"
+ },
+ {
+  "id": "s-1uqxkgt",
+  "voz": "sofia",
+  "texto": "pafa",
+  "origem": "TF-16-C4b"
  },
  {
   "id": "s-1uqyrdk",
@@ -1674,10 +2658,52 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1uqzkzz",
+  "voz": "sofia",
+  "texto": "sumo",
+  "origem": "TF-15-C4b"
+ },
+ {
+  "id": "s-1uqzl5s",
+  "voz": "sofia",
+  "texto": "sula",
+  "origem": "TF-11-C4b"
+ },
+ {
+  "id": "s-1uqzl7q",
+  "voz": "sofia",
+  "texto": "suja",
+  "origem": "TF-15-C4b"
+ },
+ {
+  "id": "s-1uqzl7s",
+  "voz": "sofia",
+  "texto": "sujo",
+  "origem": "TF-15-C4c"
+ },
+ {
+  "id": "s-1uqzlbe",
+  "voz": "sofia",
+  "texto": "sufa",
+  "origem": "TF-R2-C4b"
+ },
+ {
   "id": "s-1uqzlfl",
   "voz": "sofia",
   "texto": "suco",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1uqzoh4",
+  "voz": "sofia",
+  "texto": "sivo",
+  "origem": "TF-12-C4b"
+ },
+ {
+  "id": "s-1uqzp4s",
+  "voz": "sofia",
+  "texto": "sila",
+  "origem": "TF-11-C4b"
  },
  {
   "id": "s-1uqzq7a",
@@ -1692,16 +2718,94 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1uqzv69",
+  "voz": "sofia",
+  "texto": "saia",
+  "origem": "TF-11-C4b"
+ },
+ {
+  "id": "s-1uqzv6o",
+  "voz": "sofia",
+  "texto": "savo",
+  "origem": "TF-12-C4b"
+ },
+ {
+  "id": "s-1uqzv72",
+  "voz": "sofia",
+  "texto": "sava",
+  "origem": "TF-12-C4b"
+ },
+ {
+  "id": "s-1uqzva5",
+  "voz": "sofia",
+  "texto": "sami",
+  "origem": "TF-14-C4b"
+ },
+ {
+  "id": "s-1uqzvg4",
+  "voz": "sofia",
+  "texto": "sala",
+  "origem": "TF-R2-C3s"
+ },
+ {
+  "id": "s-1uqzvli",
+  "voz": "sofia",
+  "texto": "safi",
+  "origem": "TF-11-C4b"
+ },
+ {
+  "id": "s-1uqzvlq",
+  "voz": "sofia",
+  "texto": "safa",
+  "origem": "TF-11-C4b"
+ },
+ {
+  "id": "s-1uqzym6",
+  "voz": "sofia",
+  "texto": "selo",
+  "origem": "TF-R2-C5p"
+ },
+ {
+  "id": "s-1uqzynq",
+  "voz": "sofia",
+  "texto": "seja",
+  "origem": "TF-15-C4b"
+ },
+ {
+  "id": "s-1ur06kt",
+  "voz": "sofia",
+  "texto": "tufa",
+  "origem": "TF-R3-C4b"
+ },
+ {
   "id": "s-1ur0atf",
   "voz": "sofia",
   "texto": "Sem o farol agora. Qual som começa a palavra, [NOME]?",
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1ur0ggh",
+  "voz": "sofia",
+  "texto": "tifa",
+  "origem": "TF-22-C4b"
+ },
+ {
+  "id": "s-1ur0gry",
+  "voz": "sofia",
+  "texto": "timu",
+  "origem": "TF-22-C4b"
+ },
+ {
   "id": "s-1ur0mqn",
   "voz": "sofia",
   "texto": "tatu",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1ur0n6h",
+  "voz": "sofia",
+  "texto": "tafa",
+  "origem": "TF-R3-C4b"
  },
  {
   "id": "s-1ur1174",
@@ -1728,6 +2832,18 @@
   "origem": "sons"
  },
  {
+  "id": "s-1ur1wlt",
+  "voz": "sofia",
+  "texto": "vida",
+  "origem": "TF-20-C4c"
+ },
+ {
+  "id": "s-1ur1wt5",
+  "voz": "sofia",
+  "texto": "vila",
+  "origem": "TF-20-C4b"
+ },
+ {
   "id": "s-1ur1xqo",
   "voz": "sofia",
   "texto": "vovô",
@@ -1740,10 +2856,46 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1ur1ztf",
+  "voz": "sofia",
+  "texto": "veja",
+  "origem": "TF-15-C4c"
+ },
+ {
   "id": "s-1ur1zyt",
   "voz": "sofia",
   "texto": "vela",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1ur22v7",
+  "voz": "sofia",
+  "texto": "vavi",
+  "origem": "TF-09-C4b"
+ },
+ {
+  "id": "s-1ur234h",
+  "voz": "sofia",
+  "texto": "vala",
+  "origem": "TF-11-C5t"
+ },
+ {
+  "id": "s-1ur234l",
+  "voz": "sofia",
+  "texto": "vale",
+  "origem": "TF-12-C3r"
+ },
+ {
+  "id": "s-1ur239v",
+  "voz": "sofia",
+  "texto": "vafi",
+  "origem": "TF-09-C4b"
+ },
+ {
+  "id": "s-1ur23a7",
+  "voz": "sofia",
+  "texto": "vafe",
+  "origem": "TF-16-C4b"
  },
  {
   "id": "s-1ur23jy",
@@ -1842,6 +2994,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1uss6z6",
+  "voz": "sofia",
+  "texto": "Esta é a letra deste som.",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-1ut3mtn",
   "voz": "sofia",
   "texto": "éééé",
@@ -1932,6 +3090,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1ve7rrc",
+  "voz": "sofia",
+  "texto": "Comece pela primeira letra.",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-1vmjzxn",
   "voz": "sofia",
   "texto": "Este não tem voz:",
@@ -2001,13 +3165,25 @@
   "id": "s-1yowk78",
   "voz": "sofia",
   "texto": "Faz de conta que você é um macaquinho.",
-  "origem": "AL-W-C2"
+  "origem": "TF-05-C2"
  },
  {
   "id": "s-1yq5rgm",
   "voz": "sofia",
   "texto": "No M, os lábios ficam fechados:",
   "origem": "pares (D030)"
+ },
+ {
+  "id": "s-1yqzdrs",
+  "voz": "sofia",
+  "texto": "Este é o nome de um bichinho inventado. Toque para ouvir e escolha a leitura.",
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-1yxy8to",
+  "voz": "sofia",
+  "texto": "Juntar sons falados devagar",
+  "origem": "S-R0-05"
  },
  {
   "id": "s-237fha",
@@ -2256,6 +3432,12 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-4ez476",
+  "voz": "sofia",
+  "texto": "Agora junte os sons.",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-559ma2",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje a gente vai descobrir um segredo do seu nome.",
@@ -2290,6 +3472,12 @@
   "voz": "sofia",
   "texto": "Escuta os dois e tenta de novo.",
   "origem": "falas fônicas (D030)"
+ },
+ {
+  "id": "s-5wty1",
+  "voz": "sofia",
+  "texto": "Trilha dos Sons!",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-5xs6if",
@@ -2328,6 +3516,24 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-7mgl2a",
+  "voz": "sofia",
+  "texto": "Leia a palavra e toque na figura.",
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-826nz9",
+  "voz": "sofia",
+  "texto": "O que a lula viu?",
+  "origem": "TF-10-C5f"
+ },
+ {
+  "id": "s-83ppcf",
+  "voz": "sofia",
+  "texto": "No fim da palavra, o O tem som de U.",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-8dfnot",
   "voz": "sofia",
   "texto": "É a vovó ou o vovô, [NOME]?",
@@ -2338,6 +3544,12 @@
   "voz": "sofia",
   "texto": "Você juntou o /m/ com a vogal!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-8e0er",
+  "voz": "sofia",
+  "texto": "Escute a palavra e toque na figura certa.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-8rt1vp",
@@ -2356,6 +3568,12 @@
   "voz": "sofia",
   "texto": "Ficou a sua cara! Tudo pronto pra começar?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-9bip8z",
+  "voz": "sofia",
+  "texto": "O que o macaco come?",
+  "origem": "TF-19-C5f"
  },
  {
   "id": "s-9jci8e",
@@ -2388,10 +3606,16 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-9ujapt",
+  "voz": "sofia",
+  "texto": "Que palavra ficou? Toque para ouvir e escolha.",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-9uxkcu",
   "voz": "sofia",
   "texto": "Faz de conta que você chama um amigo lá longe.",
-  "origem": "AL-O-C2"
+  "origem": "TF-04-C2"
  },
  {
   "id": "s-a5a82h",
@@ -2406,10 +3630,28 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-acrr5q",
+  "voz": "sofia",
+  "texto": "Olha como eu faço.",
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-aihk3y",
+  "voz": "sofia",
+  "texto": "Troque um som e leia a palavra nova.",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-akj70g",
   "voz": "sofia",
   "texto": "Agora desenhe a letra com o dedo.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-ao69k",
+  "voz": "sofia",
+  "texto": "jaula",
+  "origem": "TF-15-C4b"
  },
  {
   "id": "s-aohc9t",
@@ -2490,6 +3732,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-cu8ial",
+  "voz": "sofia",
+  "texto": "Mais rápido!",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-cvq0v2",
   "voz": "sofia",
   "texto": "Esticar /mmm/, /lll/ e /fff/",
@@ -2500,6 +3748,12 @@
   "voz": "sofia",
   "texto": "mamãe",
   "origem": "figuras"
+ },
+ {
+  "id": "s-czo8ee",
+  "voz": "sofia",
+  "texto": "Que leitura bonita!",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-d6e7n",
@@ -2541,7 +3795,13 @@
   "id": "s-dqsoiq",
   "voz": "sofia",
   "texto": "Faz de conta que você toma um gole de água.",
-  "origem": "AL-G-C2"
+  "origem": "TF-21-C2"
+ },
+ {
+  "id": "s-dv9jn7",
+  "voz": "sofia",
+  "texto": "Leia a frase e responda.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-dvw91j",
@@ -2631,13 +3891,13 @@
   "id": "s-fc6qa",
   "voz": "sofia",
   "texto": "Faz de conta que a comida está uma delícia.",
-  "origem": "AL-M-C2"
+  "origem": "TF-07-C2"
  },
  {
   "id": "s-ff5ofq",
   "voz": "sofia",
   "texto": "S, de sapo.",
-  "origem": "AL-S-C2b"
+  "origem": "TF-11-C2"
  },
  {
   "id": "s-fk1ezn",
@@ -2757,7 +4017,7 @@
   "id": "s-ievpp9",
   "voz": "sofia",
   "texto": "Faz de conta que você está no médico: abre bem a boca!",
-  "origem": "AL-A-C2"
+  "origem": "TF-01-C2"
  },
  {
   "id": "s-iwrpiz",
@@ -2772,10 +4032,34 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-j4w7k",
+  "voz": "sofia",
+  "texto": "fazio",
+  "origem": "TF-14-C4b"
+ },
+ {
+  "id": "s-j4w7y",
+  "voz": "sofia",
+  "texto": "fazia",
+  "origem": "TF-14-C4b"
+ },
+ {
   "id": "s-j7stzy",
   "voz": "sofia",
   "texto": "Boca redonda, muito bem!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-jbeu12",
+  "voz": "sofia",
+  "texto": "Qual som falta nesta palavra?",
+  "origem": "TF-22-C3r"
+ },
+ {
+  "id": "s-jc2hfk",
+  "voz": "sofia",
+  "texto": "Agora vamos juntos.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-jr365",
@@ -2838,6 +4122,12 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-lyxfku",
+  "voz": "sofia",
+  "texto": "O som /u/ da letra U",
+  "origem": "S-SOM-U"
+ },
+ {
   "id": "s-lz4a3j",
   "voz": "sofia",
   "texto": "Ficou a sua cara! Você está pronto?",
@@ -2868,6 +4158,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-m2lpus",
+  "voz": "sofia",
+  "texto": "Oi, [NOME]! Hoje tem um segredo das letras!",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-mkjlaw",
   "voz": "sofia",
   "texto": "Último andar, [NOME]!",
@@ -2886,6 +4182,12 @@
   "origem": "TI-R0-01"
  },
  {
+  "id": "s-mrrd6i",
+  "voz": "sofia",
+  "texto": "Ele viu o ovo.",
+  "origem": "TF-12-C5f"
+ },
+ {
   "id": "s-mty594",
   "voz": "sofia",
   "texto": "Lê comigo, [NOME]. Devagar e até o fim.",
@@ -2902,6 +4204,12 @@
   "voz": "sofia",
   "texto": "M. Ligar a letra M ao som /m/ e juntar MA, MO, MU.",
   "origem": "R2a-F01"
+ },
+ {
+  "id": "s-nm796c",
+  "voz": "sofia",
+  "texto": "Leia a palavra e escolha a leitura certa.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-nozyqa",
@@ -2962,6 +4270,12 @@
   "voz": "sofia",
   "texto": "zíper",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-p3gx8k",
+  "voz": "sofia",
+  "texto": "O macaco come a jaca.",
+  "origem": "TF-19-C5f"
  },
  {
   "id": "s-p3ocmo",
@@ -3048,10 +4362,22 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-qzqqsy",
+  "voz": "sofia",
+  "texto": "Escute a palavra. Ponha uma ficha para cada som.",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-r32h1q",
   "voz": "sofia",
   "texto": "uuuu… uva!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-r4du6i",
+  "voz": "sofia",
+  "texto": "Vamos conferir, som por som.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-r7qb8v",
@@ -3060,10 +4386,16 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-rpt9hc",
+  "voz": "sofia",
+  "texto": "ja",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-rpt9ja",
   "voz": "sofia",
   "texto": "la",
-  "origem": "R2a-F03-C5"
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-rpt9ji",
@@ -3081,7 +4413,7 @@
   "id": "s-rpt9k7",
   "voz": "sofia",
   "texto": "ma",
-  "origem": "R2a-F03-C5"
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-rpt9k9",
@@ -3102,22 +4434,58 @@
   "origem": "R2a-F01-C4"
  },
  {
+  "id": "s-rpt9kw",
+  "voz": "sofia",
+  "texto": "ne",
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-rpt9m5",
+  "voz": "sofia",
+  "texto": "oi",
+  "origem": "TF-18-C5t"
+ },
+ {
   "id": "s-rpt9n2",
   "voz": "sofia",
   "texto": "dá",
-  "origem": "sons"
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-rpt9nn",
+  "voz": "sofia",
+  "texto": "ai",
+  "origem": "TF-09-C4b"
+ },
+ {
+  "id": "s-rpt9om",
+  "voz": "sofia",
+  "texto": "bo",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-rpt9pl",
   "voz": "sofia",
   "texto": "ca",
-  "origem": "AL-R1-C3a"
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-rpt9pp",
   "voz": "sofia",
   "texto": "gá",
   "origem": "sons"
+ },
+ {
+  "id": "s-rpt9rb",
+  "voz": "sofia",
+  "texto": "ei",
+  "origem": "TF-06-C4b"
+ },
+ {
+  "id": "s-rpt9rv",
+  "voz": "sofia",
+  "texto": "eu",
+  "origem": "TF-07-C5t"
  },
  {
   "id": "s-rpt9s2",
@@ -3141,13 +4509,19 @@
   "id": "s-rpt9sc",
   "voz": "sofia",
   "texto": "fa",
-  "origem": "R2a-F03-C5"
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-rpt9t5",
   "voz": "sofia",
   "texto": "cá",
   "origem": "sons"
+ },
+ {
+  "id": "s-rpt9t9",
+  "voz": "sofia",
+  "texto": "ga",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-rpta1e",
@@ -3162,6 +4536,12 @@
   "origem": "AL-R1-C3a"
  },
  {
+  "id": "s-rpta1m",
+  "voz": "sofia",
+  "texto": "pa",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-rpta1q",
   "voz": "sofia",
   "texto": "tá",
@@ -3172,6 +4552,12 @@
   "voz": "sofia",
   "texto": "so",
   "origem": "AL-FESTA-C3a"
+ },
+ {
+  "id": "s-rpta49",
+  "voz": "sofia",
+  "texto": "sa",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-rpta4y",
@@ -3189,7 +4575,19 @@
   "id": "s-rpta5a",
   "voz": "sofia",
   "texto": "ta",
-  "origem": "AL-FESTA-C3a"
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-rpta5z",
+  "voz": "sofia",
+  "texto": "ui",
+  "origem": "TF-08-C3s"
+ },
+ {
+  "id": "s-rpta6q",
+  "voz": "sofia",
+  "texto": "vo",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-s6fjxd",
@@ -3276,6 +4674,24 @@
   "origem": "R0-F01"
  },
  {
+  "id": "s-uaze1y",
+  "voz": "sofia",
+  "texto": "Cada som na sua caixa!",
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-ueubk",
+  "voz": "sofia",
+  "texto": "vazio",
+  "origem": "TF-14-C4b"
+ },
+ {
+  "id": "s-ueuby",
+  "voz": "sofia",
+  "texto": "vazia",
+  "origem": "TF-14-C4b"
+ },
+ {
   "id": "s-uksve",
   "voz": "sofia",
   "texto": "Olha, a peça certa está brilhando.",
@@ -3298,6 +4714,12 @@
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje a gente escuta o comecinho das palavras.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-wpksbs",
+  "voz": "sofia",
+  "texto": "Escute como eu leio. Depois, leia junto comigo.",
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-wsnmlu",
@@ -3456,6 +4878,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-zx7ibg",
+  "voz": "sofia",
+  "texto": "E o D antes do I soa assim.",
+  "origem": "trilha dos sons"
+ },
+ {
   "id": "s-zz715h",
   "voz": "sofia",
   "texto": "Qual rima com GATO, [NOME]?",
@@ -3465,7 +4893,7 @@
   "id": "t-10kyqw8",
   "voz": "tales",
   "texto": "Faz de conta que você sopra as velinhas do bolo.",
-  "origem": "AL-F-C2"
+  "origem": "TF-08-C2"
  },
  {
   "id": "t-1208k4u",
@@ -3489,7 +4917,7 @@
   "id": "t-12nlh6p",
   "voz": "tales",
   "texto": "Z, de zebra.",
-  "origem": "AL-Z-C2b"
+  "origem": "TF-14-C2"
  },
  {
   "id": "t-12ypa9r",
@@ -3519,7 +4947,7 @@
   "id": "t-146npdw",
   "voz": "tales",
   "texto": "N, de navio.",
-  "origem": "AL-N-C2b"
+  "origem": "TF-13-C2"
  },
  {
   "id": "t-1474ajd",
@@ -3543,7 +4971,7 @@
   "id": "t-14n74q7",
   "voz": "tales",
   "texto": "P, de pato.",
-  "origem": "AL-P-C2b"
+  "origem": "TF-16-C2"
  },
  {
   "id": "t-15hcfoh",
@@ -3627,7 +5055,7 @@
   "id": "t-196modx",
   "voz": "tales",
   "texto": "T, de tatu.",
-  "origem": "AL-T-C2b"
+  "origem": "TF-17-C2"
  },
  {
   "id": "t-19cv506",
@@ -3867,7 +5295,7 @@
   "id": "t-1hrhmpd",
   "voz": "tales",
   "texto": "Faz de conta que você lambe um sorvete.",
-  "origem": "AL-L-C2"
+  "origem": "TF-10-C2"
  },
  {
   "id": "t-1hwduyx",
@@ -3891,7 +5319,7 @@
   "id": "t-1ijj1hr",
   "voz": "tales",
   "texto": "Faz de conta que você estoura bolhas de sabão.",
-  "origem": "AL-P-C2"
+  "origem": "TF-16-C2"
  },
  {
   "id": "t-1jpg70v",
@@ -3921,7 +5349,7 @@
   "id": "t-1kllt2w",
   "voz": "tales",
   "texto": "F, de foca.",
-  "origem": "AL-F-C2b"
+  "origem": "TF-08-C2"
  },
  {
   "id": "t-1kqffb3",
@@ -4449,7 +5877,7 @@
   "id": "t-37r6a",
   "voz": "tales",
   "texto": "Faz de conta que você quica uma bola no chão.",
-  "origem": "AL-B-C2"
+  "origem": "TF-18-C2"
  },
  {
   "id": "t-3delyw",
@@ -4473,7 +5901,7 @@
   "id": "t-51hjf6",
   "voz": "tales",
   "texto": "J, de janela.",
-  "origem": "AL-J-C2b"
+  "origem": "TF-15-C2"
  },
  {
   "id": "t-5ei8eg",
@@ -4503,7 +5931,7 @@
   "id": "t-7egscg",
   "voz": "tales",
   "texto": "Faz de conta que você toca um tambor com os dedos.",
-  "origem": "AL-D-C2"
+  "origem": "TF-20-C2"
  },
  {
   "id": "t-7h98bw",
@@ -4527,7 +5955,7 @@
   "id": "t-81ipbg",
   "voz": "tales",
   "texto": "Repita comigo!",
-  "origem": "AL-Z-C2"
+  "origem": "TF-20-C2"
  },
  {
   "id": "t-8495tb",
@@ -4581,7 +6009,7 @@
   "id": "t-bshckn",
   "voz": "tales",
   "texto": "Faz de conta que você pilota um avião.",
-  "origem": "AL-V-C2"
+  "origem": "TF-09-C2"
  },
  {
   "id": "t-bueh2m",
@@ -4785,7 +6213,7 @@
   "id": "t-mddyqc",
   "voz": "tales",
   "texto": "Faz de conta que você bate na porta com um dedo.",
-  "origem": "AL-T-C2"
+  "origem": "TF-17-C2"
  },
  {
   "id": "t-mgoay",
@@ -4863,43 +6291,43 @@
   "id": "t-pkv5hd",
   "voz": "tales",
   "texto": "L, de lua.",
-  "origem": "AL-L-C2b"
+  "origem": "TF-10-C2"
  },
  {
   "id": "t-qfk4xb",
   "voz": "tales",
   "texto": "Isso! Esse é o som do L.",
-  "origem": "AL-R4-C4d"
+  "origem": "TF-22-C1"
  },
  {
   "id": "t-qfk4z1",
   "voz": "tales",
   "texto": "Isso! Esse é o som do N.",
-  "origem": "AL-R3-C4f"
+  "origem": "TF-22-C1"
  },
  {
   "id": "t-qfk52h",
   "voz": "tales",
   "texto": "Isso! Esse é o som do J.",
-  "origem": "AL-FESTA-C4d"
+  "origem": "TF-22-C1"
  },
  {
   "id": "t-qfk547",
   "voz": "tales",
   "texto": "Isso! Esse é o som do D.",
-  "origem": "AL-FESTA-C4e"
+  "origem": "TF-R3-C1"
  },
  {
   "id": "t-qfk55x",
   "voz": "tales",
   "texto": "Isso! Esse é o som do F.",
-  "origem": "AL-FESTA-C4d"
+  "origem": "TF-22-C1"
  },
  {
   "id": "t-qfk59d",
   "voz": "tales",
   "texto": "Isso! Esse é o som do B.",
-  "origem": "AL-FESTA-C4e"
+  "origem": "TF-R3-C1"
  },
  {
   "id": "t-qfk5ff",
@@ -4911,25 +6339,25 @@
   "id": "t-qfk5h5",
   "voz": "tales",
   "texto": "Isso! Esse é o som do Z.",
-  "origem": "AL-FESTA-C4d"
+  "origem": "TF-22-C1"
  },
  {
   "id": "t-qfk5iv",
   "voz": "tales",
   "texto": "Isso! Esse é o som do T.",
-  "origem": "AL-FESTA-C4d"
+  "origem": "TF-R3-C1"
  },
  {
   "id": "t-qfk5kl",
   "voz": "tales",
   "texto": "Isso! Esse é o som do V.",
-  "origem": "AL-FESTA-C4f"
+  "origem": "TF-22-C1"
  },
  {
   "id": "t-qfk5mb",
   "voz": "tales",
   "texto": "Isso! Esse é o som do P.",
-  "origem": "AL-FESTA-C4e"
+  "origem": "TF-R3-C1"
  },
  {
   "id": "t-qfk5o1",
@@ -4971,7 +6399,7 @@
   "id": "t-shhxlu",
   "voz": "tales",
   "texto": "Faz de conta que você pilota um barco a motor.",
-  "origem": "AL-J-C2"
+  "origem": "TF-15-C2"
  },
  {
   "id": "t-skp9kf",
@@ -5055,13 +6483,13 @@
   "id": "t-wz2sfy",
   "voz": "tales",
   "texto": "Faz de conta que você é uma abelhinha.",
-  "origem": "AL-Z-C2"
+  "origem": "TF-14-C2"
  },
  {
   "id": "t-x44x86",
   "voz": "tales",
   "texto": "V, de vaca.",
-  "origem": "AL-V-C2b"
+  "origem": "TF-09-C2"
  },
  {
   "id": "t-yddfon",
@@ -5103,6 +6531,6 @@
   "id": "t-zzm89g",
   "voz": "tales",
   "texto": "Faz de conta que você diz não com a boca fechada.",
-  "origem": "AL-N-C2"
+  "origem": "TF-13-C2"
  }
 ]

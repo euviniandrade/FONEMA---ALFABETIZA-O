@@ -6,7 +6,7 @@
  * Uso: npx tsx scripts/extrair-falas.ts
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { ALFABETO, NOMES_COMUNS, FASES, FALAS, FALAS_ALFABETO, FALAS_FONICAS, VOZES_DAS_FALAS_FONICAS, FALAS_DOS_PARES, FALA_ESPELHO_BD, FALAS_DAS_TELAS, PASSOS_AVATAR, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
+import { ALFABETO, NOMES_COMUNS, FASES, FALAS, FALAS_TRILHA_SONS, SILABA_DO_SOM, FALAS_ALFABETO, FALAS_FONICAS, VOZES_DAS_FALAS_FONICAS, FALAS_DOS_PARES, FALA_ESPELHO_BD, FALAS_DAS_TELAS, PASSOS_AVATAR, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
 import { concordar, silabas } from '@fonema/motor';
 
 const VOZ: Record<string, 'sofia' | 'tales'> = { sofia: 'sofia', tales: 'tales', bolota: 'tales', davi: 'tales', 'dona-cida': 'sofia', pescadora: 'sofia', 'guarda-parque': 'tales', 'zum-zum': 'tales' };
@@ -40,6 +40,13 @@ for (const f of FASES) {
     if (a.tipo === 'letra') { a.falas.forEach((x) => addF(x, c.id)); addF(a.brincadeira, c.id); addF(a.repita, c.id); }
     if (a.tipo === 'espelho') { add(a.voz ?? 'sofia', a.falaSom, c.id); add(a.voz ?? 'sofia', a.falaAncora, c.id); if (a.voz) add(a.voz, 'Agora é a sua vez, [NOME]!', c.id); }
     if (a.tipo === 'pausa') a.sequencia.forEach((s) => add('tales', s.falar, c.id));
+    // Trilha dos Sons (D030): só palavras soltas e frases curtas; as molduras vêm de FALAS_TRILHA_SONS
+    if (a.tipo === 'somNovo') { addF(a.brincadeira, c.id); addF(a.repita, c.id); addF(a.revela, c.id); addF(a.apoio, c.id); a.regra?.partes.forEach((p) => { addF(p.explica, c.id); p.palavras.forEach((w) => add('sofia', w.palavra.toLowerCase(), c.id)); }); addF(a.regra?.fecha, c.id); }
+    if (a.tipo === 'sintese') a.itens.forEach((i) => { add('sofia', i.correta, c.id); i.opcoes.forEach((o) => add('sofia', o.falar, c.id)); });
+    if (a.tipo === 'caixas') a.itens.forEach((i) => add('sofia', i.palavra.toLowerCase(), c.id));
+    if (a.tipo === 'parMinimo') a.itens.forEach((i) => { add('sofia', i.alvo, c.id); add('sofia', i.outra, c.id); });
+    if (a.tipo === 'troca') a.itens.forEach((i) => i.leituras.forEach((w) => add('sofia', w, c.id)));
+    if (a.tipo === 'frase') a.itens.forEach((i) => { add('sofia', i.frase, c.id); addF(i.pergunta, c.id); i.opcoes.forEach((o) => add('sofia', o, c.id)); });
   }
   // dicas do cadeado (botão "Ouvir a dica" na entrada da fase): entram sempre; DICAS=0 deixa de fora
   if (process.env.DICAS !== '0') for (const id of f.conquistas) if (CONQUISTA_POR_ID[id]) add('sofia', CONQUISTA_POR_ID[id].dica, id);
@@ -62,6 +69,9 @@ void ITENS_LOJA;
 Object.values(SONS).forEach((x) => { add('sofia', x.esticado, 'sons'); add('tales', x.esticado, 'sons'); });
 ['A', 'E', 'I', 'O', 'U', 'M', 'L', 'F', 'S', 'V', 'N'].forEach((l) => add('sofia', l.toLowerCase().repeat(3), 'sons'));
 add('sofia', FALAS_ALFABETO.trilha, 'trilha do alfabeto');
+// D030: frases-moldura da Trilha dos Sons (sempre a Sofia) e as sílabas usadas como estímulo dos sons ainda duvidosos
+Object.values(FALAS_TRILHA_SONS).forEach((t) => add('sofia', t, 'trilha dos sons'));
+Object.values(SILABA_DO_SOM).forEach((t) => add('sofia', t, 'trilha dos sons'));
 // D030: falas fônicas genéricas (correção contrastiva, apoios e enunciados novos), cada uma na(s) voz(es) em que é usada
 for (const k of Object.keys(FALAS_FONICAS) as (keyof typeof FALAS_FONICAS)[]) for (const v of VOZES_DAS_FALAS_FONICAS[k] ?? ['sofia']) add(v, FALAS_FONICAS[k], 'falas fônicas (D030)');
 // três palavras-exemplo de cada letra (D029 §2): ditas pela Sofia na tela da letra

@@ -167,6 +167,7 @@ export function Vila({ criancaId }: { criancaId: string }) {
           <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/album`)}><Icone nome="album" />Álbum</button>
           {config.lojinha.naVila ? <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/lojinha`)}><Icone nome="lojinha" />Lojinha</button> : null}
           <button className="doca-btn doca-alfabeto" onClick={() => navegar(`c/${criancaId}/alfabeto`)} data-ponto="alfabeto"><span className="doca-abc" aria-hidden="true">Aa</span>Alfabeto</button>
+          <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/sons`)} data-ponto="sons"><Icone nome="som" />Sons</button>
           <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mapa`)}><Icone nome="mapa" />Ilhas</button>
           {mundo3d ? <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mundo`)} data-ponto="mundo3d"><Icone nome="cubo" />Passear 3D</button> : null}
           <BotaoTreino criancaId={criancaId} progresso={progresso} />
@@ -178,8 +179,8 @@ export function Vila({ criancaId }: { criancaId: string }) {
 }
 
 /** Onde cada região fica na arte do arquipélago (em % da imagem) e as ilhas futuras (com névoa e cadeado). */
-const ILHA: Record<string, { x: number; y: number }> = { AL: { x: 17, y: 36 }, R1: { x: 39, y: 30 }, R2a: { x: 59, y: 33 }, R0: { x: 76, y: 47 } };
-const ILHAS_FUTURAS = [{ x: 46.5, y: 54 }, { x: 16, y: 70 }, { x: 37, y: 88 }, { x: 62.5, y: 80 }, { x: 87.5, y: 74 }, { x: 88.5, y: 27 }];
+const ILHA: Record<string, { x: number; y: number }> = { AL: { x: 17, y: 36 }, TF: { x: 46.5, y: 54 }, R1: { x: 39, y: 30 }, R2a: { x: 59, y: 33 }, R0: { x: 76, y: 47 } };
+const ILHAS_FUTURAS = [{ x: 16, y: 70 }, { x: 37, y: 88 }, { x: 62.5, y: 80 }, { x: 87.5, y: 74 }, { x: 88.5, y: 27 }];
 
 /** Mapa do arquipélago: regiões abertas por domínio; as ilhas futuras aparecem com névoa e cadeado. */
 export function Arquipelago({ criancaId }: { criancaId: string }) {
@@ -305,7 +306,7 @@ export function EntradaFase({ criancaId, faseId }: { criancaId: string; faseId: 
   return (
     <div className="tela-fase">
       <Fundo cena={cena} desfoque={12} tom="claro" />
-      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={fase.alfabeto ? `c/${criancaId}/alfabeto` : `c/${criancaId}/vila`} titulo={`${REGIAO_POR_ID[fase.regiao].nome}`} />
+      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={fase.alfabeto ? `c/${criancaId}/alfabeto` : fase.trilhaSons ? `c/${criancaId}/sons` : `c/${criancaId}/vila`} titulo={`${REGIAO_POR_ID[fase.regiao].nome}`} />
       <main className="palco">
         <section className="cartao entrada-fase">
           <div className="entrada-capa" style={{ backgroundImage: `url(${asset(`cenas/${cena}.webp`)})` }}>

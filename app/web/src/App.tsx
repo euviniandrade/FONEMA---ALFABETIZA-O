@@ -8,6 +8,7 @@ import { Alunos, Entrada, PrimeiraVez, Protegido, useConta } from './telas/entra
 import { Avatar } from './telas/crianca/Avatar.tsx';
 import { Arquipelago, Chegada, EntradaFase, Regiao, Vila } from './telas/crianca/Mundo.tsx';
 import { TrilhaAlfabeto } from './telas/crianca/Alfabeto.tsx';
+import { TrilhaSons } from './telas/crianca/TrilhaSons.tsx';
 import { Sessao } from './telas/crianca/Sessao.tsx';
 import { Album, ConhecaSeuCorpo, MostraProfessor, Mundo3D } from './telas/crianca/Extras.tsx';
 import { SondagemDaVila } from './telas/crianca/Sondagem.tsx';
@@ -69,7 +70,8 @@ function telaCrianca(cid: string, t: string | undefined, arg: string) {
     case 'chegada': return <Chegada criancaId={cid} />;
     case 'mapa': return <Arquipelago criancaId={cid} />;
     case 'alfabeto': return <TrilhaAlfabeto criancaId={cid} />;
-    case 'regiao': return arg === 'AL' ? <TrilhaAlfabeto criancaId={cid} /> : <Regiao criancaId={cid} regiaoId={arg} />;
+    case 'sons': return <TrilhaSons criancaId={cid} />;
+    case 'regiao': return arg === 'AL' ? <TrilhaAlfabeto criancaId={cid} /> : arg === 'TF' ? <TrilhaSons criancaId={cid} /> : <Regiao criancaId={cid} regiaoId={arg} />;
     case 'fase': return <EntradaFase key={arg} criancaId={cid} faseId={arg} />;
     case 'sessao': return <Sessao key={arg + location.hash} criancaId={cid} faseId={arg} />;
     case 'lojinha': return <Lojinha criancaId={cid} />;

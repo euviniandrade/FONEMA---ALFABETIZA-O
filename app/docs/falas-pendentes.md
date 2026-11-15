@@ -43,3 +43,18 @@ A lista completa, com medidas de cada clipe, está em `docs/auditoria-audio.md` 
 
 Rodada de 15/11: 2.330 caracteres gastos (de 116.029 para 118.359 usados, de 131.000). **Saldo: 12.641 caracteres.** Sobrou porque
 todas as falas fixas do conteúdo já têm clipe; o que falta acima não se resolve gerando de novo com a mesma voz.
+
+## 4. Trilha dos Sons (D030, 15/11)
+
+Gerado nesta rodada: 231 clipes da Sofia (frases-moldura da trilha, palavras soltas, palavras inventadas e as leituras
+erradas que aparecem como opção, 9 frases e 7 perguntas). Nenhuma fala nova do Tales (as molduras são todas da Sofia; a
+voz do Tales entra nos clipes que já existiam: faz de conta, "Repita comigo!", "Ouça e toque na letra.").
+
+O que continua sem voz própria ou pede escuta humana:
+- **Palavras inventadas e leituras erradas** (amu, umi, fami, lagu, tifa, dimu… e "fazio", "movo", "mave", "poi"): a
+  voz sintética pode pôr a força na sílaba errada ou ler "ti" como "te". Precisam ser ouvidas por pessoa antes de valerem
+  como leitura certa; o ideal é gravar no Estúdio de sons.
+- **"tia", "dia", "tomate", "bate", "leite"**: a voz da Sofia usa um jeito só de falar (TI = "tchi"). As duas pronúncias
+  valem (docs/pedagogia/03 §4), mas só uma está gravada.
+- **Sons emendados ("mmmaaalll…")**: não são voz da dupla; o app emenda os clipes de som de `public/audio/sons` (ou as
+  gravações do Estúdio). Os sons de estouro, L, V e J continuam "duvidosos" (ninguém ouviu).

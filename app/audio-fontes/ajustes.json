@@ -205,6 +205,22 @@
   "sofia|Achar /m/, /l/ e /f/ no começo das palavras": {
    "versao": 2,
    "texto": "Achar os sons do M, do L e do F no começo das palavras."
+  },
+  "sofia|lupa": {
+   "versao": 2,
+   "texto": "Lupa."
+  },
+  "sofia|puli": {
+   "versao": 2,
+   "texto": "Puli."
+  },
+  "sofia|O som /i/ da letra I": {
+   "versao": 2,
+   "texto": "O som do I, iiii, da letra I."
+  },
+  "sofia|O som /u/ da letra U": {
+   "versao": 2,
+   "texto": "O som do U, uuuu, da letra U."
   }
  },
  "nomes": {

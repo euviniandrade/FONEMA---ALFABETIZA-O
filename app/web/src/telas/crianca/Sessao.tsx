@@ -19,6 +19,12 @@ import { Espelho } from '../../mecanicas/Espelho.tsx';
 import { Tracar } from '../../mecanicas/Tracar.tsx';
 import { Letra } from '../../mecanicas/Letra.tsx';
 import { Pausa } from '../../mecanicas/Pausa.tsx';
+import { SomNovo } from '../../mecanicas/SomNovo.tsx';
+import { Sintese } from '../../mecanicas/Sintese.tsx';
+import { Caixas } from '../../mecanicas/Caixas.tsx';
+import { ParMinimo } from '../../mecanicas/ParMinimo.tsx';
+import { Troca } from '../../mecanicas/Troca.tsx';
+import { Frase } from '../../mecanicas/Frase.tsx';
 import type { ResultadoMecanica } from '../../mecanicas/comum.tsx';
 import { Ritual } from './Ritual.tsx';
 
@@ -99,13 +105,20 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
       case 'letra': return <Letra key={etapa.cena!.id} {...props(a)} />;
       case 'ligar': return <Ligar key={etapa.cena!.id} {...props(a)} />;
       case 'pausa': return <Pausa key={etapa.cena!.id} {...props(a)} />;
+      // Trilha dos Sons (D030)
+      case 'somNovo': return <SomNovo key={etapa.cena!.id} {...props(a)} />;
+      case 'sintese': return <Sintese key={etapa.cena!.id} {...props(a)} />;
+      case 'caixas': return <Caixas key={etapa.cena!.id} {...props(a)} />;
+      case 'parMinimo': return <ParMinimo key={etapa.cena!.id} {...props(a)} />;
+      case 'troca': return <Troca key={etapa.cena!.id} {...props(a)} />;
+      case 'frase': return <Frase key={etapa.cena!.id} {...props(a)} />;
     }
   };
 
   const cenas = sessao.etapas.filter((e) => e.tipo === 'cena');
   const posCena = sessao.etapas.slice(0, idx).filter((e) => e.tipo === 'cena').length;
   const cenario = etapa.cena?.cenario ?? 'quintal';
-  const limpo = cenario === 'licao' || etapa.cena?.atividade?.tipo === 'espelho' || etapa.cena?.atividade?.tipo === 'letra';
+  const limpo = cenario === 'licao' || etapa.cena?.atividade?.tipo === 'espelho' || etapa.cena?.atividade?.tipo === 'letra' || etapa.cena?.atividade?.tipo === 'somNovo';
 
   if (etapa.tipo === 'ritual') {
     return relatorio && progFinal ? <Ritual crianca={crianca} progresso={progFinal} relatorio={relatorio} fase={fase} expressa={sessao.expressa} /> : <Carregando />;

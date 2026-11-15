@@ -269,7 +269,7 @@ export const LICOES_TF: Licao[] = [
     unidade: 'TF-18', tipo: 'consoante', bloco: 3, letra: 'B', rotulo: 'b', titulo: 'O som /b/', objetivo: 'Ligar o som /b/ à letra B e ouvir a diferença entre P e B',
     sintese: [['lobo', 'lobo', 'bolo', 'ovo'], ['boi', 'boi', 'foi', 'oi'], ['bala', 'bala', 'mala', 'pala']],
     leitura: [{ palavra: 'bolo', outras: ['lobo', 'ovo'] }, { palavra: 'lobo', outras: ['bolo', 'lupa'] }, { palavra: 'boi', outras: ['foi', 'oi'] }],
-    pseudo: [['bufi', 'pufi', 'bufa'], ['labu', 'lapu', 'labi']],
+    pseudo: [['bufi', 'pufi', 'bupi'], ['labu', 'lapu', 'labi']],
     caixas: ['boi', 'bolo', 'bala'],
     desafio: {
       pares: [par('ouvir', 'mala', 'bala', ['m', 'b']), par('ler', 'pato', 'bato', ['p', 'b'], 'par-minimo-p-b'), par('ler', 'bato', 'pato', ['b', 'p'], 'par-minimo-p-b'), par('ler', 'bule', 'pule', ['b', 'p'], 'par-minimo-p-b'), par('ler', 'pata', 'bata', ['p', 'b'], 'par-minimo-p-b')],
@@ -299,7 +299,7 @@ export const LICOES_TF: Licao[] = [
     unidade: 'TF-21', tipo: 'consoante', bloco: 3, letra: 'G', rotulo: 'g', titulo: 'O som /g/ (ga, go, gu)', objetivo: 'Ligar o som /g/ à letra G antes de A, O e U',
     sintese: [['gato', 'gato', 'pato', 'galo'], ['fogo', 'fogo', 'fofo', 'ovo'], ['gota', 'gota', 'gata', 'bota']],
     leitura: [{ palavra: 'gato', outras: ['pato', 'galo'] }, { palavra: 'galo', outras: ['gato', 'lobo'] }, { palavra: 'fogo', outras: ['fofo', 'ovo'] }],
-    pseudo: [['gufa', 'cufa', 'gufo'], ['lagu', 'lacu', 'lago']],
+    pseudo: [['gufa', 'gafa', 'gufo'], ['lagu', 'lacu', 'lago']],
     caixas: ['gato', 'galo', 'lago'],
     desafio: {
       trocas: [troca('trocar', 'mato', 'gato', 0, 'G', ['G', 'C', 'P'], ['gato', 'mato', 'cato']), troca('trocar', 'gato', 'galo', 2, 'L', ['L', 'T', 'M'], ['galo', 'gato', 'gamo'])],
@@ -325,7 +325,7 @@ export const LICOES_TF: Licao[] = [
     unidade: 'TF-R3', tipo: 'revisao', bloco: 3, ate: 'TF-22', rotulo: '★', titulo: 'Revisão: sons que estouram', objetivo: 'Ler, escrever e comparar P, T, B, C, D e G',
     revisaoLetras: ['P', 'T', 'B', 'C', 'D', 'G'],
     sintese: [['gato', 'gato', 'pato', 'galo'], ['dedo', 'dedo', 'dado', 'ovo'], ['vaca', 'vaca', 'faca', 'jaca']],
-    pseudo: [['tufa', 'tafa', 'pufa'], ['gufa', 'cufa', 'gufo']],
+    pseudo: [['tufa', 'tafa', 'pufa'], ['gufa', 'gafa', 'gufo']],
     ditado: ['PATO', 'BOLO', 'FACA', 'GATO', 'DEDO'],
     desafio: {
       pares: [par('ler', 'pato', 'bato', ['p', 'b'], 'par-minimo-p-b'), par('ouvir', 'faca', 'vaca', ['f', 'v'], 'par-minimo-f-v'), par('ler', 'nata', 'nada', ['t', 'd'], 'par-minimo-t-d'), par('ler', 'galo', 'calo', ['g', 'k'], 'par-minimo-k-g'), par('ler', 'gata', 'cata', ['g', 'k'], 'par-minimo-k-g')],

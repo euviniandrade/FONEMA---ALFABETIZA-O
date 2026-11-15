@@ -137,6 +137,53 @@ async function jogarSessao(page, capturar = {}) {
     };
 
     if (await page.getByTestId('comecar-sessao').isVisible().catch(() => false)) { await tirar('acolhida'); await page.getByTestId('comecar-sessao').click({ timeout: 3000 }).catch(() => {}); continue; }
+    // ---- Trilha dos Sons (D030) ----
+    const somNovo = page.getByTestId('som-novo-continuar');
+    if (await somNovo.isVisible().catch(() => false)) {
+      if (await somNovo.isEnabled({ timeout: 300 }).catch(() => false)) { await tirar('som-novo'); await somNovo.click({ timeout: 3000 }).catch(() => {}); }
+      else await page.waitForTimeout(80);
+      continue;
+    }
+    const sintese = page.getByTestId('sintese');
+    if (await sintese.isVisible().catch(() => false)) {
+      const proxima = page.locator('[data-sintese-proxima]:not([disabled])');
+      if (await proxima.count()) { await tirar('sintese-tocar'); await proxima.first().click({ timeout: 3000 }).catch(() => {}); await page.waitForTimeout(60); continue; }
+      const juntar = page.getByTestId('sintese-juntar');
+      if (await juntar.isVisible().catch(() => false)) { await juntar.click({ timeout: 3000 }).catch(() => {}); continue; }
+      // depois de juntar: a escolha cai nos tratadores genéricos (figura certa ou botão de som + "É este!")
+      if (!(await page.locator('.mec-sintese button.opcao').count())) { await page.waitForTimeout(80); continue; }
+      await tirar('sintese-escolher');
+    }
+    const caixas = page.getByTestId('caixas');
+    if (await caixas.isVisible().catch(() => false)) {
+      const et = await caixas.getAttribute('data-etapa', { timeout: 500 }).catch(() => null);
+      if (et === 'fichas') {
+        const n = Number(await caixas.getAttribute('data-n-sons').catch(() => 0));
+        const ficha = page.getByTestId('caixas-ficha');
+        if (!(await ficha.isEnabled({ timeout: 300 }).catch(() => false))) { await page.waitForTimeout(80); continue; }
+        const ja = await page.locator('.caixa.com-ficha').count();
+        for (let k = ja; k < n; k++) await ficha.click({ timeout: 3000 }).catch(() => {});
+        await tirar('caixas-fichas');
+        await page.getByTestId('caixas-pronto').click({ timeout: 3000 }).catch(() => {});
+        await page.waitForTimeout(120);
+        continue;
+      }
+      if (et === 'letras') {
+        const l = await caixas.getAttribute('data-proxima-letra').catch(() => '');
+        if (l) { await tirar('caixas-letras'); await page.locator(`.caixas-letra[data-letra="${l}"]`).first().click({ timeout: 3000 }).catch(() => {}); }
+        await page.waitForTimeout(80);
+        continue;
+      }
+      await page.waitForTimeout(80);
+      continue;
+    }
+    const fraseLi = page.getByTestId('frase-li');
+    if (await fraseLi.isVisible().catch(() => false)) { if (await fraseLi.isEnabled({ timeout: 300 }).catch(() => false)) { await tirar('frase'); await fraseLi.click({ timeout: 3000 }).catch(() => {}); } else await page.waitForTimeout(80); continue; }
+    const ecoLi = page.getByTestId('eco-li');
+    if (await ecoLi.isVisible().catch(() => false)) { if (await ecoLi.isEnabled({ timeout: 300 }).catch(() => false)) { await tirar('eco'); await ecoLi.click({ timeout: 3000 }).catch(() => {}); } else await page.waitForTimeout(80); continue; }
+    if (await page.getByTestId('troca').isVisible().catch(() => false)) await tirar(`troca-${await page.getByTestId('troca').getAttribute('data-etapa').catch(() => '')}`);
+    if (await page.getByTestId('par-minimo').isVisible().catch(() => false)) await tirar(`par-${await page.getByTestId('par-minimo').getAttribute('data-modo').catch(() => '')}`);
+    if (await page.getByTestId('frase').isVisible().catch(() => false)) await tirar('frase-responder');
     const minhaVez = page.getByTestId('minha-vez');
     if (await minhaVez.isVisible().catch(() => false)) {
       await tirar('assiste');
@@ -341,11 +388,114 @@ async function capturasMecanicas(browser) {
   await ctx.close();
 }
 
+/**
+ * TRILHA DOS SONS (D030 etapas 6–8): a criança que "já conhece as letras e os sons" começa na trilha fônica (TF-06),
+ * revisita TF-01 e anda, sem pular, até TF-22 — passando por som novo, síntese, leitura com palavras inventadas
+ * conferidas, caixas de sons, pares mínimos, troca-letras, frase com pergunta e leitura em eco (modo demonstração).
+ * `node e2e/fluxo.e2e.mjs --trilha-sons` roda só este trecho.
+ */
+async function trechoTrilhaSons(browser, erros) {
+  console.log('11. Trilha dos Sons: TF-01, TF-06 → TF-22 (domínio em 1 sessão no modo demonstração)');
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: 'pt-BR' });
+  await ctx.addInitScript((c) => { try { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); } catch { /* sem armazenamento */ } }, COLETAR);
+  const pg = await ctx.newPage();
+  pg.on('pageerror', (e) => erros.push(String(e)));
+  await pg.goto(BASE + '#/adulto/config');
+  await passarPorteira(pg);
+  await pg.getByTestId('avancado').locator('summary').click();
+  await pg.getByTestId('modo-demo').click();
+  await pg.waitForFunction(() => document.querySelector('[data-testid=modo-demo]')?.checked);
+  await pg.goto(BASE + '#/adulto/cadastro');
+  await cadastrar(pg, 'Bruno', 'm', { nivel: 'letras-e-sons' });
+  await montarAvatar(pg);
+  await pg.getByTestId('primeira-missao').click();
+  await pg.waitForFunction(() => location.hash.includes('/sessao/'));
+  ok(pg.url().includes('/sessao/TF-06'), 'Trilha dos Sons: "já conhece as letras e os sons" começa em TF-06');
+  const id = pg.url().split('/c/')[1].split('/')[0];
+  await pg.goto(BASE + `#/c/${id}/sons`);
+  await pg.getByTestId('trilha-sons').waitFor();
+  ok(await pg.locator('.sons-marco.liberada').count() === 5 && await pg.locator('[data-fase="TF-06"][data-estado="atual"]').count() === 1 && await pg.locator('[data-fase="TF-07"]').isDisabled(), 'a trilha mostra TF-01…05 abertas para revisar, TF-06 agora e TF-07 trancada');
+  const jogar = async (f) => {
+    let concluiu = false;
+    for (let t = 0; t < 3 && !concluiu; t++) {
+      await pg.goto(BASE + `#/c/${id}/sessao/${f}`);
+      await jogarSessao(pg, {});
+      await pg.getByTestId('ritual').locator('h1').waitFor();
+      concluiu = /Fase concluída/.test(await pg.getByTestId('ritual').locator('h1').innerText());
+    }
+    return concluiu;
+  };
+  ok(await jogar('TF-01'), 'TF-01 (o som /a/): som novo, som → letra, letra → som, som inicial e traçado');
+  const ordem = ['TF-06', ...Array.from({ length: 9 }, (_, k) => `TF-${String(k + 7).padStart(2, '0')}`), 'TF-R2', ...Array.from({ length: 7 }, (_, k) => `TF-${k + 16}`)];
+  for (const f of ordem) {
+    const c = await jogar(f);
+    if (['TF-07', 'TF-16', 'TF-22'].includes(f) || !c) ok(c, `${f} jogada e concluída (por domínio, com resposta conferida)`);
+  }
+  await pg.goto(BASE + `#/c/${id}/sons`);
+  await pg.getByTestId('trilha-sons').waitFor();
+  const dominadas = await pg.locator('.sons-marco.dominada').count();
+  ok(dominadas >= 10, `concluída × dominada na trilha: ${dominadas} lições douradas (dominadas pelo motor)`);
+  ok(await pg.locator('[data-fase="TF-R3"][data-estado="atual"]').count() === 1, 'depois de TF-22 vem a revisão dos sons que estouram (TF-R3)');
+  await guardarFalas(pg);
+  await ctx.close();
+}
+
+/**
+ * Capturas da Trilha dos Sons (v7-trilha-*): cada mecânica nova e a trilha no mapa, em 1850×980 e 390×844.
+ * Usa uma criança "já lê palavras" (a trilha toda fica aberta para revisar) para ir direto a cada lição.
+ * `node e2e/fluxo.e2e.mjs --capturas-trilha`
+ */
+async function capturasTrilhaSons(browser) {
+  mkdirSync(DIR_CAP, { recursive: true });
+  for (const [w, h, suf, movel] of [[1850, 980, '', false], [390, 844, '-celular', true]]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, locale: 'pt-BR', ...(movel ? { isMobile: true, hasTouch: true } : {}) });
+    await ctx.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { /* sem armazenamento */ } });
+    const pg = await ctx.newPage();
+    const capT = async (_p, nome) => { await pg.waitForTimeout(450); await pg.screenshot({ path: resolve(DIR_CAP, `v7-trilha-${nome}${suf}.png`) }); console.log(`  📸 v7-trilha-${nome}${suf}.png`); };
+    await pg.goto(BASE + '#/adulto/cadastro');
+    await passarPorteira(pg);
+    await cadastrar(pg, 'Beatriz', 'f', { nivel: 'le-palavras' });
+    await montarAvatar(pg);
+    await pg.getByTestId('primeira-missao').waitFor();
+    const id = pg.url().split('/c/')[1].split('/')[0];
+    await pg.goto(BASE + `#/c/${id}/sons`);
+    await pg.getByTestId('trilha-sons').waitFor();
+    await capT(0, '01-trilha');
+    await pg.goto(BASE + `#/c/${id}/mapa`);
+    await pg.locator('[data-regiao="TF"]').waitFor();
+    await capT(0, '02-mapa-ilhas');
+    await pg.goto(BASE + `#/c/${id}/vila`);
+    await pg.getByTestId('vila').waitFor();
+    await capT(0, '03-vila-botao-sons');
+    const roteiro = [
+      ['TF-07', { 'som-novo': '10-som-novo', 'sintese-tocar': '11-sintese-tocar', 'sintese-escolher': '12-sintese-escolher', 'cena:TF-07-C4b': '13-leitura-inventadas', 'caixas-fichas': '14-caixas-fichas', 'caixas-letras': '15-caixas-letras', 'troca-letra': '16-mais-uma-letra', 'troca-ler': '17-mais-uma-letra-ler' }],
+      ['TF-09', { 'par-ouvir': '20-par-minimo-ouvir', 'par-ler': '21-par-minimo-ler' }],
+      ['TF-12', { 'som-novo': '22-regra-o-e-final', 'cena:TF-12-C3r': '23-regra-letra-que-falta' }],
+      ['TF-17', { 'troca-letra': '24-troca-letras', 'frase': '25-frase-ler', 'frase-responder': '26-frase-pergunta' }],
+      ['TF-R2', { eco: '27-leitura-em-eco' }],
+      ['TF-22', { 'som-novo': '28-regra-ti-di' }]
+    ];
+    for (const [f, mapa] of roteiro) {
+      await pg.goto(BASE + `#/c/${id}/sessao/${f}`);
+      await jogarSessao(pg, { ...mapa, tirarCom: capT });
+    }
+    await ctx.close();
+  }
+}
+
 async function main() {
   if (CAPTURAS) mkdirSync(DIR_CAP, { recursive: true });
   await subirServidor();
   const browser = await chromium.launch({ executablePath: EXEC, args: ['--autoplay-policy=no-user-gesture-required'] });
   if (process.argv.includes('--mecanicas')) { await capturasMecanicas(browser); await browser.close(); servidor?.kill(); return; }
+  if (process.argv.includes('--capturas-trilha')) { await capturasTrilhaSons(browser); await browser.close(); servidor?.kill(); return; }
+  if (process.argv.includes('--trilha-sons')) {
+    const errosTS = [];
+    await trechoTrilhaSons(browser, errosTS);
+    await browser.close(); servidor?.kill();
+    if (errosTS.length) throw new Error(`erros na página:\n${errosTS.join('\n')}`);
+    return;
+  }
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: CAPTURAS ? 2 : 1, locale: 'pt-BR' });
   await ctx.addInitScript((c) => { try { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); } catch { /* sem armazenamento */ } }, COLETAR);
   const page = await ctx.newPage();
@@ -637,7 +787,8 @@ async function main() {
     const idj = pj.url().split('/c/')[1].split('/')[0];
     // --sem-jornada: pula a jornada inteira (demorada) e vai direto ao nível inicial
     const AL = [...'ABCDE', 'R1', ...'FGHIJ', 'R2', ...'KLMNO', 'R3', ...'PQRST', 'R4', ...'UVWXYZ', 'FESTA'].map((x) => `AL-${x}`);
-    const FASES = [...AL, 'R1-F02', 'R1-F03', 'R1-F06', 'R1-F07', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04', 'R2a-F05', 'R0-F01'];
+    const TF = [...Array.from({ length: 15 }, (_, k) => `TF-${String(k + 1).padStart(2, '0')}`), 'TF-R2', ...Array.from({ length: 7 }, (_, k) => `TF-${k + 16}`), 'TF-R3'];
+    const FASES = [...AL, ...TF, 'R1-F02', 'R1-F03', 'R1-F06', 'R1-F07', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04', 'R2a-F05', 'R0-F01'];
     let viuTrofeu = false;
     for (const f of JORNADA ? FASES : []) {
       let concluiu = false;
@@ -656,7 +807,7 @@ async function main() {
         await pj.goto(BASE + `#/c/${idj}/alfabeto`);
         await pj.getByTestId('trilha-alfabeto').waitFor();
         ok(await pj.locator('.marco.feita').count() === 31 && /26 de 26/.test(await pj.getByTestId('letras-feitas').innerText()), 'trilha completa: 26 de 26 letras brilhando');
-        ok(/Continuar a jornada/.test(await pj.getByTestId('trilha-continuar').innerText()), 'depois do alfabeto, a trilha leva às sílabas');
+        ok(/Continuar a jornada/.test(await pj.getByTestId('trilha-continuar').innerText()), 'depois do alfabeto, a trilha leva à Trilha dos Sons');
         await capA(pj, '15-trilha-completa', 1200);
       }
     }
@@ -675,7 +826,7 @@ async function main() {
     await montarAvatar(pj);
     await pj.getByTestId('primeira-missao').click();
     await pj.waitForFunction(() => location.hash.includes('/sessao/'));
-    ok(pj.url().includes('/sessao/R2a-F01'), '"já conhece as letras e os sons" pula o Alfabeto e começa nas sílabas (R2a-F01)');
+    ok(pj.url().includes('/sessao/TF-06'), '"já conhece as letras e os sons" pula o Alfabeto e começa na Trilha dos Sons, na primeira leitura (TF-06)');
     const idd = pj.url().split('/c/')[1].split('/')[0];
     await pj.goto(BASE + `#/c/${idd}/alfabeto`);
     await pj.locator('.marco.liberada').first().waitFor();
@@ -699,6 +850,7 @@ async function main() {
     ok(/Do zero/.test(await pj.getByTestId('nivel-inicial').innerText()), 'o adulto muda o nível inicial na área da família');
     await ctx2.close();
   }
+  await trechoTrilhaSons(browser, erros);
 
   if (CAPTURAS_AL) {
     const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR' });
