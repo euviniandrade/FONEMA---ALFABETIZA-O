@@ -177,6 +177,22 @@
   "sofia|Isso! Esse é o som do U.": {
    "versao": 2,
    "texto": "Isso! Esse é o som do Ú!"
+  },
+  "sofia|VOVÓ: a boca abre mais. ÓÓÓÓ.": {
+   "versao": 2,
+   "texto": "Vovó: a boca abre mais. Óóó!"
+  },
+  "tales|VOVÔ: a boca fecha mais, redondinha. ÔÔÔÔ.": {
+   "versao": 2,
+   "texto": "Vovô: a boca fecha mais, redondinha. Ôôô!"
+  },
+  "tales|MO… LA! Monta e o gol vale!": {
+   "versao": 2,
+   "texto": "Mo… la! Monta, e o gol vale!"
+  },
+  "tales|E eu sou o Tales! Seja bem-vinda na Vila das Letras,": {
+   "versao": 2,
+   "texto": "E eu sou o Tales! Seja bem-vinda na Vila das Letras…"
   }
  },
  "nomes": {
