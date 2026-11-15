@@ -22,15 +22,40 @@ por ordem de tentativas do próprio teste).
 - Avatar: **modelos 3D reais** (GLB) menino/menina padrão (roupa branca com o A azul, D029 §7), recoloração por máscaras (pele em 10 tons,
   olhos, cabelo, camiseta, calça, calçado), Lojinha, miniaturas. Prêmios 3D reais (porquinho, troféu, baú) girando 360°. Selos 3D.
 - Modelos 3D gerados no Higgsfield (Tripo, imagem → GLB): `app/web/public/assets/modelos3d/` (comprimidos) e originais em
-  `docs/propostas/06-fonema-unificada/{recompensas-3d,personagens-3d,avatar-3d/padrao}/modelos/`. Sofia, Tales e Bolota existem em GLB,
-  mas **ainda não estão em nenhuma tela**. Ferramenta de prévia: `recompensas-3d/ferramentas/capturar-glb.mjs`.
+  `docs/propostas/06-fonema-unificada/{recompensas-3d,personagens-3d,avatar-3d/padrao}/modelos/`. Ferramenta de prévia:
+  `recompensas-3d/ferramentas/capturar-glb.mjs`. (Sofia, Tales e Bolota em 3D nas telas: ver o bloco abaixo.)
 - 24 figuras novas das letras + 17 cenas de som pela MiniMax (`app/ferramentas/gerar-figura-minimax.py`, recorte por rembg).
+
+**Avaliação, reforço e personagens 3D (15/11, noite; NÃO publicado ainda; capturas `app/docs/capturas/v7-*.png`):**
+- **Sondagem periódica em 5 placas** (`web/src/telas/crianca/Sondagem.tsx`, itens em `motor/src/sondagem-itens.ts`): sons das letras
+  (som puro → letra), leitura de palavras (palavra → figura), pseudopalavras conferidas (vê o "nome de bichinho", ouve 3 leituras, escolhe),
+  quantos sons (com exemplo feito pela Sofia) e ditado com letras móveis. Só entram letras de fases concluídas e valores sonoros de regiões
+  concluídas (teste em `motor/test/etapa9.test.ts`). Sem dica, nota ou "errado" para a criança. A 1ª sondagem continua a Missão das Placas.
+- **Treino rápido com a Sofia** (`Treino.tsx`, `motor/src/reforco-treino.ts`): botão na vila e no fim da missão quando há algo a reforçar
+  (1 vez por dia); rodada de 3 a 5 perguntas do par confundido, com volta ao pré-requisito; respostas avaliadas no contexto "reforço"; sem moedinhas.
+- **Painel**: sondagens lado a lado (até 3), "subiu/caiu", o que a criança escreveu no ditado, queda vira alerta com "voltar uma fase",
+  quanta ajuda precisou, sinal de chute, treinos feitos.
+- **Selos**: os de habilidade só contam resposta conferida, certa e sem ajuda ("Ler a primeira palavra" deixou de valer pelo "Li!";
+  ditado conta palavras certas); selos de participação marcados como "participação" no Álbum; nada já ganho é tirado.
+- **Contrato do motor** (campos opcionais novos em `DetalheTentativa`, para as mecânicas passarem a gravar): `nivelAjuda`
+  ('nenhuma' | 'repetiu' | 'contraste' | 'caminho' | 'resposta-mostrada'), `ouviuDeNovo`, `posicaoCerta`, `posicaoEscolhida`, `nOpcoes`,
+  `contexto` ('trilha' | 'revisao' | 'sondagem' | 'reforco'). Sem eles o motor deduz o nível de ajuda pelo nº da tentativa.
+- **Sofia, Tales e Bolota em 3D girável** (arrastar gira, balanço/giro lento, luz de estúdio, sombra de contato, respiração por escala;
+  three.js só sob demanda; imagem parada sem WebGL; "menos movimento" respeitado): Álbum ("Conheça a Sofia e o Tales"), Chegada,
+  sondagem e treino (`componentes/Personagem3D.tsx`, `premio3d.ts`). O busto que fala no balão continua onde a boca importa. As poses do
+  cadastro (acenando, apontando, pensando) continuam em imagem: os modelos não têm esqueleto. De perto, os dedos dos modelos são "grudados"
+  (tipo luva): por isso o enquadramento é sempre de corpo inteiro.
+- Figuras `cena-o` (chamando de longe, mãos em concha, boca em O) e `cena-n` (boca fechada, "não" com a cabeça; os arcos de movimento
+  foram desenhados por cima) refeitas; estrela da Fase concluída sem o halo claro.
+- **Pendente**: voz para "Quantos sons tem a palavra? Escuta comigo." (hoje só escrita; o exemplo com sons puros mostra a ideia);
+  mecânicas gravarem os campos novos; ditado de frases, leitura cronometrada e compreensão na sondagem; calibrar os números (queda de
+  25 pontos, chute < 1,2 s).
 
 **Próximos passos, em ordem:**
 1. **Trilha fônica nova** (D030 etapas 6–8): as 53 unidades de `docs/pedagogia/01-escopo-e-sequencia.md` como fases, com síntese,
    segmentação (caixas de sons), ditado, pares mínimos de palavras, frases e textos decodificáveis, fluência e compreensão; jogos dos
    materiais (batalha de palavras, palavra dentro de palavra, rimas, troca-letras). Verificador completo de decodificabilidade.
-2. **Etapa 9**: tela própria de sondagem (pseudopalavras e ditado), prática recomendada virar rodada jogável, selos sem contar exposição.
+2. **Etapa 9**: feito o essencial (bloco acima); falta as mecânicas gravarem os campos novos e a voz da instrução de segmentação.
 3. **Boca (Espelho do Som)**: o dono reprovou a versão em código ("horríveis"). Conceitos em
    `docs/propostas/06-fonema-unificada/espelho-do-som-conceitos/` (A professora / B mascote / C massinha) — **aguardando a escolha dele**
    e quem opera o pacote Adobe (Character Animator). Gerador de imagem não obedece à posição da boca.
@@ -38,8 +63,8 @@ por ordem de tentativas do próprio teste).
    (`generate_image`, modelo `nano_banana_2`, com a imagem de referência; 1,5 crédito) e converter em 3D (`generate_3d`,
    `tripo_h3_1_image_to_3d`, 9 créditos; 18 no detalhado). Depois registrar em `avatares.json` (ver `app/docs/avatar-3d-contrato.md`).
    Refazer a menina com o "A" maior; modelo sentado para a cadeira de rodas; troféu sem o texto "Mestre Leitor".
-5. Colocar Sofia, Tales e Bolota 3D nas telas; esqueleto/animação (Meshy no Higgsfield, ~38 créditos por personagem) se o dono quiser.
-6. Refazer as figuras `cena-o` e `cena-n`; estrela do topo da Fase concluída (halo); falas pendentes (`app/docs/falas-pendentes.md`).
+5. Sofia, Tales e Bolota 3D já estão no Álbum, na Chegada, na sondagem e no treino; esqueleto/animação (Meshy no Higgsfield, ~38 créditos por personagem) se o dono quiser.
+6. Falas pendentes (`app/docs/falas-pendentes.md`).
 
 **Decisões que o dono ainda não respondeu:** direção de arte da boca; quem valida/regrava os sons puros (nenhum foi ouvido por pessoa:
 13 "aprovados" por medição, 11 duvidosos, R fraco/LH/NH sem clipe); LH/NH/CH depois do R ou antes; "cama/banana" (nasal antes de M/N)
@@ -182,11 +207,12 @@ prolongam → oclusivas → abertas e nasais → R e H → dígrafos → regras 
    conferidos pelo teste em toda leitura autônoma, em todas as fases; o teste também falha se dica, letra, pista ou modelo entregarem
    a resposta. Falta o formato completo de `05-regras-de-decodificabilidade.md` §6 (pronúncia anotada, unidades TF, frases e textos).
 8. Frases, textos, fluência e compreensão — a fazer.
-9. Sondagem periódica e reforço dirigido — **parcial** (15/11): o motor agenda a sondagem (a cada 8 fases ou 30 dias, em `config.ts`),
+9. Sondagem periódica e reforço dirigido — **essencial entregue** (15/11): o motor agenda a sondagem (a cada 8 fases ou 30 dias, em `config.ts`),
    guarda o resultado por área (`sondagem.ts`), calcula a próxima prática recomendada, a volta ao pré-requisito e o alerta ao adulto
    (`reforco.ts`), e o painel do adulto mostra tudo (capturas `app/docs/capturas/v5-painel-*.png`, script `web/e2e/capturas-painel.mjs`).
-   **Falta:** a tela da sondagem ainda é a Missão das Placas (mede sons das letras, leitura e segmentação; pseudopalavras e ditado sem
-   placas); a prática recomendada ainda não vira rodada jogável para a criança; os números do alerta são decisão do projeto, sem calibragem.
+   **Feito em 15/11 (noite):** tela própria da sondagem em 5 placas (inclui pseudopalavras conferidas e ditado), treino rápido jogável,
+   selos só com resposta conferida, ajuda graduada/posição/chute/queda no contrato e no painel (ver seção 0). **Falta:** mecânicas
+   gravarem os campos novos; números do alerta, da queda e do chute são decisão do projeto, sem calibragem.
 Quem concluir uma etapa atualiza esta lista e a tabela de `00-principios.md` §7.
 
 **Limites ditos com honestidade:** a sequência e as palavras de exemplo foram montadas pelo projeto a partir dos materiais e ainda não

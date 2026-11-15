@@ -6,8 +6,10 @@
 .dupla-giravel{display:flex;align-items:flex-end;justify-content:center;gap:0;margin:0 auto;max-width:100%}
 .dupla-giravel .premio-3d{touch-action:pan-y;cursor:grab;min-width:0;height:auto}
 .dupla-giravel .premio-3d:active{cursor:grabbing}
-.dupla-giravel .premio-sofia{margin-right:-4%}
-.dupla-giravel .premio-tales{margin-left:-4%}
+.dupla-giravel .premio-3d{flex:none}
+.dupla-giravel .premio-sofia{margin-right:-15%}
+.dupla-giravel .premio-tales{margin-left:-15%}
+.dupla-corpo-3d{justify-self:center}
 .dupla-corpo-3d{align-self:end;filter:drop-shadow(0 22px 18px rgba(12,26,64,.18))}
 .conheca-dupla figure[data-modelo] .premio-3d{cursor:grab;touch-action:pan-y}
 .conheca-dupla figure[data-modelo] .premio-3d:active{cursor:grabbing}

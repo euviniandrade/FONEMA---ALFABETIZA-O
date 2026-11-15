@@ -139,6 +139,7 @@ async function main() {
     await page.locator('.dupla-giravel').waitFor({ timeout: 20000 });
     await esperar3d(2);
     exigir((await page.locator('.dupla-giravel canvas[data-giro="3d"]').count()) === 2, 'chegada: Sofia e Tales não estão em 3D');
+    if (process.env.MEDIR) console.log('  medidas chegada:', await page.evaluate(() => [...document.querySelectorAll('.dupla-giravel, .dupla-giravel canvas, main.chegada')].map((e) => { const r = e.getBoundingClientRect(); return `${e.tagName}.${e.className} ${Math.round(r.width)}x${Math.round(r.height)} @${Math.round(r.y)} attr ${e.width ?? ''}x${e.height ?? ''}`; }).join(' | ')));
     await foto('personagens3d-chegada');
     await estouro('personagens3d-chegada');
     await page.goto(`${BASE}#/c/${ID}/album`);
