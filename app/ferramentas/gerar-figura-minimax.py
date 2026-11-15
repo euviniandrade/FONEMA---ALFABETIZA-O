@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Gera figuras 3D pela API da MiniMax (modelo image-01, o mais econômico) e recorta o fundo.
 A chave é injetada pelo proxy do ambiente (nunca fica em código). Uso:
-  gerar-figura-minimax.py <saida.webp> "<descrição em inglês do objeto>" [--tamanho 220] [--bruto pasta] [--so-recortar] [--furos] [--macico]
+  gerar-figura-minimax.py <saida.webp> "<descrição em inglês do objeto>" [--tamanho 220] [--bruto pasta] [--so-recortar] [--furos] [--macico] [--cena]
 O estilo e o fundo branco são acrescentados aqui, para todas as figuras saírem no mesmo padrão."""
 import base64, json, os, sys, urllib.request
 from PIL import Image, ImageFilter
@@ -12,10 +12,13 @@ ESTILO = (", single object, stylized 3D animated family film render, soft rounde
           "cheerful saturated colors, soft studio lighting, centered, whole object visible with margin, "
           "isolated on a plain flat pure white background, no text, no letters, no people")
 
+ESTILO_CENA = (", stylized 3D animated family film render, soft rounded shapes, cheerful saturated colors, soft studio lighting, centered, "
+               "isolated on a plain flat pure white background, no text, no letters")
+
 def gerar(prompt):
     req = urllib.request.Request('https://api.minimax.io/v1/image_generation', method='POST',
         headers={'Authorization': 'Bearer proxy-injected', 'Content-Type': 'application/json'},
-        data=json.dumps({'model': 'image-01', 'prompt': prompt + ESTILO, 'aspect_ratio': '1:1', 'response_format': 'base64', 'n': 1}).encode())
+        data=json.dumps({'model': 'image-01', 'prompt': prompt + (ESTILO_CENA if '--cena' in sys.argv else ESTILO), 'aspect_ratio': '1:1', 'response_format': 'base64', 'n': 1}).encode())
     d = json.load(urllib.request.urlopen(req, timeout=240))
     if d.get('base_resp', {}).get('status_code') != 0: sys.exit(f"MiniMax: {d.get('base_resp')}")
     return base64.b64decode(d['data']['image_base64'][0])
