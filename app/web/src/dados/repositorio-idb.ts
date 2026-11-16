@@ -2,6 +2,7 @@ import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
 import { CONFIG_PADRAO, type ConfigPlataforma } from '@fonema/conteudo';
 import { migrarProgresso, normalizarCrianca, type Crianca, type Demonstracao, type Evento, type Progresso, type StatusDemonstracao } from '@fonema/motor';
 import type { RegistroConta, Repositorio } from './repositorio.ts';
+import type { CopiaDados } from './copia.ts';
 
 interface Esquema extends DBSchema {
   criancas: { key: string; value: Crianca };
@@ -95,6 +96,19 @@ export class RepositorioIndexedDB implements Repositorio {
       demonstracoes: (await db.getAll('demonstracoes')).map((d) => ({ ...d, audioId: d.audioId ? '(áudio fica só no aparelho)' : undefined })),
       config: await this.obterConfig()
     };
+  }
+
+  async restaurarCopia(d: CopiaDados) {
+    const db = await this.db;
+    const tx = db.transaction(['criancas', 'progressos', 'eventos', 'demonstracoes', 'config'], 'readwrite');
+    for (const s of ['criancas', 'progressos', 'eventos', 'demonstracoes'] as const) await tx.objectStore(s).clear();
+    for (const c of d.criancas) await tx.objectStore('criancas').put(c);
+    for (const p of d.progressos) await tx.objectStore('progressos').put(p);
+    for (const e of d.eventos) await tx.objectStore('eventos').put(e);
+    for (const x of d.demonstracoes) await tx.objectStore('demonstracoes').put(x);
+    // as contas dos adultos (mesma gaveta, chave 'contas') e as gravações (audios) deste aparelho ficam como estão
+    await tx.objectStore('config').put({ id: 'config', valor: d.config });
+    await tx.done;
   }
 
   async apagarTudo() {

@@ -13,6 +13,7 @@ import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
 import { PainelCantinho } from '../../componentes/PainelCantinho.tsx';
 import '../../estilos-painel.css';
+import { validarCopia, type ResultadoCopia } from '../../dados/copia.ts';
 
 const ROTULO_NIVEL: Record<NivelInicial, string> = { zero: 'Do zero', 'letras-e-sons': 'Já conhece as letras e os sons', 'le-palavras': 'Já lê palavras' };
 
@@ -576,6 +577,11 @@ export function Configuracoes({ area = 'familia' }: { area?: AreaId }) {
   const [msg, setMsg] = useState('');
   const [apagar, setApagar] = useState(false);
   const set = async (c: Partial<ConfigPlataforma>) => { await salvarConfig(c); setMsg('Salvo.'); };
+  const [restaurar, setRestaurar] = useState<ResultadoCopia | null>(null);
+  const lerCopia = async (arq: File | undefined) => {
+    if (!arq) return;
+    setRestaurar(validarCopia(await arq.text().catch(() => '')));
+  };
   const exportar = async () => {
     const blob = new Blob([JSON.stringify(await repo.exportarTudo(), null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
@@ -622,6 +628,21 @@ export function Configuracoes({ area = 'familia' }: { area?: AreaId }) {
               ) : <button className="btn terra" onClick={() => setApagar(true)}><Icone nome="lixeira" />Apagar todos os dados</button>}
             </div>
             {apagar ? <p className="nota-mic" role="alert">Isso apaga as crianças, o progresso e as gravações deste aparelho. Não dá para desfazer.</p> : null}
+            <div className="linha-botoes">
+              <label className="btn" data-testid="restaurar-copia"><Icone nome="repetir" />Restaurar uma cópia dos dados
+                <input type="file" accept="application/json,.json" className="sr" data-testid="arquivo-copia" onChange={(e) => { void lerCopia(e.target.files?.[0]); e.target.value = ''; }} />
+              </label>
+            </div>
+            {restaurar && !restaurar.ok ? <p className="nota-mic" role="alert" data-testid="copia-erro">{restaurar.erro} Nada foi mudado.</p> : null}
+            {restaurar?.ok ? (
+              <div className="aviso-restaurar" role="alert" data-testid="copia-confirmar">
+                <p className="nota-mic">Cópia {restaurar.resumo.exportadoEm ? `de ${restaurar.resumo.exportadoEm.toLocaleDateString('pt-BR')} ` : ''}com {restaurar.resumo.criancas.length === 1 ? 'a criança' : 'as crianças'} <b>{restaurar.resumo.criancas.join(', ')}</b>. Ela vai <b>substituir</b> as crianças, o progresso e as configurações deste aparelho. As contas dos adultos e os sons gravados ficam. Não dá para desfazer: se quiser, guarde antes uma cópia do que está aqui.</p>
+                <div className="linha-botoes">
+                  <button className="btn terra" data-testid="confirmar-restaurar" onClick={async () => { if (restaurar.ok) { await repo.restaurarCopia(restaurar.dados); navegar(''); location.reload(); } }}><Icone nome="check" />Sim, substituir pelos dados da cópia</button>
+                  <button className="btn" onClick={() => setRestaurar(null)}>Cancelar</button>
+                </div>
+              </div>
+            ) : null}
           </fieldset>
 
           <details className="mais-opcoes" data-testid="avancado">

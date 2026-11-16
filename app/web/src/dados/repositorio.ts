@@ -5,6 +5,7 @@
  */
 import type { ConfigPlataforma } from '@fonema/conteudo';
 import type { Crianca, Demonstracao, Evento, Progresso, StatusDemonstracao } from '@fonema/motor';
+import type { CopiaDados } from './copia.ts';
 
 /** Conta de adulto guardada no aparelho (D028). O PIN nunca é guardado: só o hash com salt. */
 export interface RegistroConta {
@@ -47,6 +48,8 @@ export interface Repositorio {
   salvarConfig(c: Partial<ConfigPlataforma>): Promise<void>;
 
   exportarTudo(): Promise<unknown>;
+  /** Troca as crianças, o progresso, os registros e as configurações pelos da cópia (já validada). Contas e gravações ficam. */
+  restaurarCopia(d: CopiaDados): Promise<void>;
   apagarTudo(): Promise<void>;
 }
 

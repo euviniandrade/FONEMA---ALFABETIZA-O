@@ -9,6 +9,8 @@ import './estilos-mecanicas.css';
 import './estilos-avaliacao.css';
 
 const repo = criarRepositorio();
+// pede ao navegador para não apagar os dados deste aparelho quando faltar espaço (o progresso só existe aqui)
+try { void navigator.storage?.persist?.().catch(() => false); } catch { /* navegador sem suporte */ }
 
 createRoot(document.getElementById('raiz')!).render(
   <StrictMode>
