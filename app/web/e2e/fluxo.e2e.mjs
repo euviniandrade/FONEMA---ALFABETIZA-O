@@ -499,12 +499,162 @@ async function capturasTrilhaSons(browser) {
   }
 }
 
+/**
+ * Cantinho da Leitura e Brincar com sons (D030 etapa 8). Para chegar logo aos textos e à fluência, o progresso da Trilha dos
+ * Sons é SEMEADO no banco do aparelho (fases TF concluídas + 20 leituras certas): o teste é das telas novas, não da trilha.
+ * `node e2e/fluxo.e2e.mjs --cantinho` (também roda no fim do E2E). Com `capT`, tira as capturas v8-*.
+ */
+async function semearTrilhaFeita(pg, id) {
+  await pg.evaluate(async (cid) => {
+    const db = await new Promise((r) => { const q = indexedDB.open('fonema'); q.onsuccess = () => r(q.result); });
+    const p = await new Promise((r) => { const q = db.transaction('progressos').objectStore('progressos').get(cid); q.onsuccess = () => r(q.result); });
+    const fases = ['TF-01', 'TF-02', 'TF-03', 'TF-04', 'TF-05', 'TF-06', ...Array.from({ length: 16 }, (_, k) => `TF-${String(k + 7).padStart(2, '0')}`), 'TF-R2', 'TF-R3'];
+    const agora = Date.now() - 3600e3;
+    for (const f of fases) p.fases[f] = { ...(p.fases[f] ?? {}), estado: 'concluida', sessoes: 1, concluidaEm: agora };
+    const ws = ['lua', 'mala', 'fila', 'mula', 'lula', 'uva', 'pato', 'sapo', 'bolo', 'gato', 'galo', 'dado', 'faca', 'vaca', 'tatu', 'lupa', 'jaca', 'suco', 'fogo', 'dedo'];
+    p.habilidades['leitura-cvcv'] = { p: 0.9, tentativas: ws.map((w, k) => ({ em: agora + k, sessao: 'semente', habilidade: 'leitura-cvcv', acertou: true, tipo: 'avaliada', mecanica: 'escolher', alvo: w, categoria: 'palavra', contexto: 'trilha' })) };
+    await new Promise((r) => { const tx = db.transaction('progressos', 'readwrite'); tx.objectStore('progressos').put(p); tx.oncomplete = r; });
+  }, id);
+}
+
+/** Joga a tela atual do Cantinho/Brincar até aparecer o cartão de fim, respondendo certo (e errando uma vez na escrita). */
+async function jogarLivre(pg, fim, capT, nomes = {}) {
+  const tirou = new Set();
+  const tirar = async (k) => { if (capT && nomes[k] && !tirou.has(k)) { tirou.add(k); await capT(pg, nomes[k]); } };
+  for (let passo = 0; passo < 600; passo++) {
+    if (await pg.getByTestId(fim).isVisible().catch(() => false)) { await tirar('fim'); return true; }
+    const clicar = async (sel) => { const b = pg.locator(sel).first(); if (await b.isVisible().catch(() => false) && await b.isEnabled().catch(() => false)) { await b.click({ timeout: 2000 }).catch(() => {}); return true; } return false; };
+    const hist = pg.getByTestId('historia');
+    if (await hist.isVisible().catch(() => false)) {
+      const ps = await hist.getAttribute('data-passo').catch(() => '');
+      const pag = await hist.getAttribute('data-pagina').catch(() => '');
+      if (ps === 'capa') await tirar('capa');
+      if (ps === 'pagina' && pag === '2') await tirar('pagina');
+      if (ps === 'pergunta' && await pg.locator('.historia-pergunta .opcao:not([disabled])').count()) await tirar('pergunta');
+      if (ps === 'vocab' && await pg.locator('.vocab-cartao').count()) await tirar('vocab');
+      if (ps === 'fim') { await tirar('hfim'); if (await clicar('[data-testid=historia-fim]')) continue; }
+      if (await clicar('[data-testid=historia-virar]')) continue;
+      if (await clicar('.historia-pergunta .opcao[data-correta="1"]')) continue;
+      if (ps === 'pergunta' && !(await pg.locator('.historia-pergunta .opcao[data-correta="1"]').count()) && await clicar('.historia-pergunta .opcao')) continue;
+      await pg.waitForTimeout(60); continue;
+    }
+    const txt = pg.getByTestId('texto-leitura');
+    if (await txt.isVisible().catch(() => false)) {
+      const et = await txt.getAttribute('data-etapa').catch(() => '');
+      if (et === 'ler') { if (await pg.locator('[data-testid=texto-li]:not([disabled])').count()) { await tirar('texto'); await clicar('[data-testid=texto-li]'); } else await pg.waitForTimeout(60); continue; }
+      if (et === 'perguntas') { if (await pg.locator('.texto-perguntas [data-correta="1"]:not([disabled])').count()) { await tirar('texto-pergunta'); await clicar('.texto-perguntas [data-correta="1"]'); } else await pg.waitForTimeout(60); continue; }
+      if (et === 'coro') { await tirar('coro'); if (!(await clicar('[data-testid=texto-coro-li]'))) await pg.waitForTimeout(60); continue; }
+      await pg.waitForTimeout(60); continue;
+    }
+    const flu = pg.getByTestId('fluencia');
+    if (await flu.isVisible().catch(() => false)) {
+      if (await clicar('[data-testid=flu-comecar]')) { await tirar('flu-intro'); continue; }
+      if (await pg.locator('.mec-fluencia .opcao[data-correta="1"]:not([disabled])').count()) { await tirar('flu'); await clicar('.mec-fluencia .opcao[data-correta="1"]'); continue; }
+      await pg.waitForTimeout(60); continue;
+    }
+    const eco = pg.getByTestId('eco-coro');
+    if (await eco.isVisible().catch(() => false)) { if (await pg.locator('[data-testid=eco-li]:not([disabled])').count()) { await tirar('eco'); await clicar('[data-testid=eco-li]'); } else await pg.waitForTimeout(60); continue; }
+    const esc = pg.getByTestId('escrita-propria');
+    if (await esc.isVisible().catch(() => false)) {
+      const et = await esc.getAttribute('data-etapa').catch(() => '');
+      const w = (await esc.getAttribute('data-palavra').catch(() => '')).toUpperCase();
+      if (et === 'escrever') {
+        if (!(await pg.locator('.escrita-teclado .peca:not([disabled])').count())) { await pg.waitForTimeout(60); continue; }
+        const segunda = await pg.locator('[data-testid=escrita-de-novo]').count() === 0 && tirou.has('confronto');
+        const letras = segunda ? [...w] : [...w].filter((_, k) => k !== 1); // 1ª vez: falta a 2ª letra
+        for (const l of letras) await pg.locator(`.escrita-teclado .peca[data-letra="${l}"]`).click();
+        await tirar('escrever');
+        await clicar('[data-testid=escrita-pronto]'); continue;
+      }
+      if (await pg.locator('[data-testid=escrita-de-novo]:not([disabled])').count()) { await tirar('confronto'); await clicar('[data-testid=escrita-de-novo]'); continue; }
+      if (await clicar('[data-testid=escrita-fim]')) continue;
+      await pg.waitForTimeout(60); continue;
+    }
+    const jogo = pg.getByTestId('jogo-escuta');
+    if (await jogo.isVisible().catch(() => false)) {
+      if (await pg.locator('.mec-escuta .opcao[data-correta="1"]:not([disabled])').count() && !(await jogo.getAttribute('data-demo'))) { await tirar('jogo'); await clicar('.mec-escuta .opcao[data-correta="1"]'); }
+      else await pg.waitForTimeout(60);
+      continue;
+    }
+    if (await pg.locator('.mec-palmas, [data-testid=palmas]').count()) { await pg.waitForTimeout(60); }
+    await pg.waitForTimeout(60);
+  }
+  return false;
+}
+
+async function trechoCantinho(browser, erros, { w = 1280, h = 800, suf = '', movel = false, capturar = false } = {}) {
+  console.log(`12. Cantinho da Leitura e Brincar com sons${capturar ? ` (capturas v8 ${w}×${h})` : ''}`);
+  const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: capturar ? 2 : 1, locale: 'pt-BR', ...(movel ? { isMobile: true, hasTouch: true } : {}) });
+  await ctx.addInitScript((c) => { try { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); } catch { /* sem armazenamento */ } }, COLETAR);
+  const pg = await ctx.newPage();
+  pg.on('pageerror', (e) => erros.push(String(e)));
+  const capT = capturar ? async (_p, nome) => { await pg.waitForTimeout(500); await pg.screenshot({ path: resolve(DIR_CAP, `v8-${nome}${suf}.png`) }); console.log(`  📸 v8-${nome}${suf}.png`); } : null;
+  await pg.goto(BASE + '#/adulto/cadastro');
+  await passarPorteira(pg);
+  await cadastrar(pg, 'Lia', 'f', { nivel: 'letras-e-sons' });
+  await montarAvatar(pg);
+  await pg.getByTestId('primeira-missao').waitFor();
+  const id = pg.url().split('/c/')[1].split('/')[0];
+  // antes de qualquer lição: história aberta, textos e fluência trancados
+  await pg.goto(BASE + `#/c/${id}/vila`);
+  await pg.getByTestId('ir-leitura').click();
+  await pg.getByTestId('biblioteca').waitFor();
+  ok(await pg.getByTestId('historia-bolota-chuva').isEnabled() && await pg.getByTestId('texto-oi').isDisabled() && await pg.getByTestId('ir-fluencia').isDisabled(), 'Cantinho: história aberta antes de saber ler; texto e fluência trancados');
+  if (capT) await capT(pg, '01-cantinho-trancado');
+  await pg.getByTestId('historia-bolota-chuva').click();
+  ok(await jogarLivre(pg, 'biblio-feito', capT, { capa: '02-historia-capa', pagina: '03-historia-pagina', pergunta: '04-historia-pergunta', vocab: '05-historia-vocabulario', hfim: '06-historia-fim' }), 'Hora da história jogada: previsão, pergunta durante, depois (direta e dedução) e 3 palavras');
+  // Brincar com sons (sempre aberto)
+  await pg.goto(BASE + `#/c/${id}/brincar`);
+  await pg.getByTestId('brincar').waitFor();
+  if (capT) await capT(pg, '07-brincar-menu');
+  for (const [j, nome] of [['escondida', '08-jogo-escondida'], ['rimas', '09-jogo-rima'], ['comprida', '10-jogo-comprida']].slice(0, capturar ? 3 : 1)) {
+    await pg.goto(BASE + `#/c/${id}/brincar/${j}`);
+    ok(await jogarLivre(pg, 'brincar-fim', capT, { jogo: nome }), `jogo de escuta "${j}" jogado até o fim`);
+  }
+  // semeia a trilha feita e confere o que abre
+  await semearTrilhaFeita(pg, id);
+  await pg.goto(BASE + `#/c/${id}/sons`); await pg.reload();
+  await pg.getByTestId('trilha-sons').waitFor();
+  ok(await pg.locator('.sons-livrinho:not([disabled])').count() === 3, 'Trilha dos Sons: um texto para ler sozinho no fim de cada bloco');
+  await pg.goto(BASE + `#/c/${id}/leitura`);
+  await pg.getByTestId('biblioteca').waitFor();
+  if (capT) await capT(pg, '11-cantinho-aberto');
+  await pg.getByTestId('texto-ema-suja').click();
+  ok(await jogarLivre(pg, 'biblio-feito', capT, { texto: '12-texto-ler', 'texto-pergunta': '13-texto-pergunta', coro: '14-texto-coro' }), 'texto decodificável lido, perguntas respondidas e leitura em coro');
+  await pg.goto(BASE + `#/c/${id}/leitura/fluencia`);
+  ok(await jogarLivre(pg, 'biblio-feito', capT, { 'flu-intro': '15-fluencia-lista', flu: '16-fluencia-palavra', fim: '17-fluencia-caminho' }), 'fluência: lista de palavras já lidas, conferida pela figura, com caminho de estrelas');
+  await pg.goto(BASE + `#/c/${id}/leitura`); await pg.goto(BASE + `#/c/${id}/leitura/eco`);
+  ok(await jogarLivre(pg, 'biblio-feito', capT, { eco: '18-eco' }), 'leitura em eco de frases já estudadas');
+  await pg.goto(BASE + `#/c/${id}/leitura`); await pg.goto(BASE + `#/c/${id}/leitura/escrita`);
+  ok(await jogarLivre(pg, 'biblio-feito', capT, { escrever: '19-escrita-escrevendo', confronto: '20-escrita-confronto' }), 'escrita própria com confronto letra a letra e reescrita sem modelo');
+  // o adulto vê fluência e escrita própria
+  await pg.goto(BASE + `#/adulto/familia/${id}`);
+  await pg.getByTestId('painel-fluencia').waitFor();
+  const painel = await pg.getByTestId('painel-fluencia').innerText();
+  const escrita = await pg.getByTestId('painel-escrita-propria').innerText();
+  ok(/Palavras certas por minuto/.test(painel) && !/55|90 palavras/.test(painel) && escrita.length > 40, 'painel: palavras certas por minuto sem meta importada, e a escrita própria ao lado da forma certa');
+  if (capT) { await pg.getByTestId('painel-fluencia').scrollIntoViewIfNeeded(); await capT(pg, '21-painel-fluencia'); }
+  await guardarFalas(pg);
+  await ctx.close();
+}
+
 async function main() {
   if (CAPTURAS) mkdirSync(DIR_CAP, { recursive: true });
   await subirServidor();
   const browser = await chromium.launch({ executablePath: EXEC, args: ['--autoplay-policy=no-user-gesture-required'] });
   if (process.argv.includes('--mecanicas')) { await capturasMecanicas(browser); await browser.close(); servidor?.kill(); return; }
   if (process.argv.includes('--capturas-trilha')) { await capturasTrilhaSons(browser); await browser.close(); servidor?.kill(); return; }
+  if (process.argv.includes('--cantinho') || process.argv.includes('--capturas-cantinho')) {
+    const errosC = [];
+    if (process.argv.includes('--capturas-cantinho')) {
+      mkdirSync(DIR_CAP, { recursive: true });
+      await trechoCantinho(browser, errosC, { w: 1850, h: 980, capturar: true });
+      await trechoCantinho(browser, errosC, { w: 390, h: 844, suf: '-celular', movel: true, capturar: true });
+    } else await trechoCantinho(browser, errosC);
+    await browser.close(); servidor?.kill();
+    if (errosC.length) throw new Error(`erros na página:\n${errosC.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--trilha-sons')) {
     const errosTS = [];
     await trechoTrilhaSons(browser, errosTS);
@@ -867,6 +1017,7 @@ async function main() {
     await ctx2.close();
   }
   await trechoTrilhaSons(browser, erros);
+  await trechoCantinho(browser, erros);
 
   if (CAPTURAS_AL) {
     const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR' });

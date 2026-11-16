@@ -8,6 +8,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { ALFABETO, NOMES_COMUNS, FASES, FALAS, FALAS_TRILHA_SONS, SILABA_DO_SOM, FALAS_ALFABETO, FALAS_FONICAS, VOZES_DAS_FALAS_FONICAS, FALAS_DOS_PARES, FALA_ESPELHO_BD, FALAS_DAS_TELAS, PASSOS_AVATAR, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
 import { concordar, silabas } from '@fonema/motor';
+import { FALAS_BIBLIOTECA, FALAS_ESCUTA, FALAS_HISTORIA, FALAS_TEXTO, HISTORIAS, JOGOS_ESCUTA, TEXTOS_DECODIFICAVEIS, nomeDaFigura, textoCorrido } from '@fonema/conteudo';
 
 const VOZ: Record<string, 'sofia' | 'tales'> = { sofia: 'sofia', tales: 'tales', bolota: 'tales', davi: 'tales', 'dona-cida': 'sofia', pescadora: 'sofia', 'guarda-parque': 'tales', 'zum-zum': 'tales' };
 const saida = new Map<string, { voz: string; texto: string; origem: string }>();
@@ -77,6 +78,24 @@ for (const k of Object.keys(FALAS_FONICAS) as (keyof typeof FALAS_FONICAS)[]) fo
 // três palavras-exemplo de cada letra (D029 §2): ditas pela Sofia na tela da letra
 ALFABETO.forEach((l) => l.palavras.forEach((w) => add('sofia', w, 'alfabeto: palavras')));
 add('sofia', FALAS.conquista, 'ritual'); add('tales', FALAS.surpresa, 'ritual');
+
+// D030 etapa 8: Cantinho da Leitura e Brincar com sons (histórias, textos para ler sozinho, perguntas, vocabulário, jogos)
+for (const h of HISTORIAS) {
+  addF(h.abre, h.id); addF(h.fecha, h.id); h.paginas.forEach((pg) => addF(pg.texto, h.id));
+  h.perguntas.forEach((q) => { addF(q.pergunta, h.id); q.opcoes.forEach((o) => add('sofia', nomeDaFigura(o), h.id)); });
+  h.vocabulario.forEach((v) => { add('tales', v.palavra, h.id); addF(v.explica, h.id); addF(v.frase, h.id); addF(v.pergunta, h.id); v.opcoes.forEach((o) => add('sofia', nomeDaFigura(o), h.id)); });
+}
+for (const t of TEXTOS_DECODIFICAVEIS) {
+  add('sofia', textoCorrido(t), t.id);
+  t.linhas.forEach((l) => add('sofia', l.texto, t.id));
+  t.perguntas.forEach((q) => { addF(q.pergunta, t.id); q.opcoes.forEach((o) => add('sofia', nomeDaFigura(o), t.id)); });
+}
+for (const j of JOGOS_ESCUTA) {
+  addF(j.enunciado, j.id); add('sofia', j.pergunta, j.id);
+  j.itens.forEach((it) => [...it.opcoes, ...(it.estimulo ? [it.estimulo] : [])].forEach((o) => add('sofia', nomeDaFigura(o), j.id)));
+  j.palavras?.forEach((w) => { add('tales', w, j.id); silabas(w).forEach((x) => add('sofia', x, j.id)); });
+}
+[FALAS_HISTORIA, FALAS_TEXTO, FALAS_ESCUTA, FALAS_BIBLIOTECA].forEach((g) => Object.values(g).forEach((f) => addF(f, 'cantinho da leitura')));
 
 const coletadas = 'web/e2e/falas-coletadas.json';
 if (existsSync(coletadas)) {

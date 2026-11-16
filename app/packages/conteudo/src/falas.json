@@ -18,6 +18,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-10f0i7a",
+  "voz": "sofia",
+  "texto": "dividir",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-10qey9r",
   "voz": "sofia",
   "texto": "U, de uva.",
@@ -28,6 +34,12 @@
   "voz": "sofia",
   "texto": "Escada",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-10ti2mc",
+  "voz": "sofia",
+  "texto": "Quem pulou no bolo?",
+  "origem": "bolo-tia"
  },
  {
   "id": "s-10u7vim",
@@ -114,6 +126,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1200zll",
+  "voz": "sofia",
+  "texto": "Dividir é dar uma parte do que é seu para outra pessoa.",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-127bx4o",
   "voz": "sofia",
   "texto": "Qual é o som desta letra? Toque para ouvir e escolha.",
@@ -138,6 +156,12 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-130ta04",
+  "voz": "sofia",
+  "texto": "Qual destes é uma poça?",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-138awz1",
   "voz": "sofia",
   "texto": "Bo… la",
@@ -154,6 +178,12 @@
   "voz": "sofia",
   "texto": "Ca… sa",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-143pjsv",
+  "voz": "sofia",
+  "texto": "O gato pula no bolo!",
+  "origem": "bolo-tia"
  },
  {
   "id": "s-144yigd",
@@ -183,7 +213,13 @@
   "id": "s-14qflpd",
   "voz": "sofia",
   "texto": "hipopótamo",
-  "origem": "alfabeto: palavras"
+  "origem": "comprida"
+ },
+ {
+  "id": "s-14sg8q3",
+  "voz": "sofia",
+  "texto": "Onde o bolo caiu?",
+  "origem": "bolo-tia"
  },
  {
   "id": "s-14skhwc",
@@ -213,7 +249,7 @@
   "id": "s-156jv69",
   "voz": "sofia",
   "texto": "Agora leia você, em voz alta.",
-  "origem": "trilha dos sons"
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-1589s66",
@@ -300,6 +336,18 @@
   "origem": "TF-R2-C5f"
  },
  {
+  "id": "s-173l68x",
+  "voz": "sofia",
+  "texto": "Aqui tem mais um som. Escute:",
+  "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-17aytqb",
+  "voz": "sofia",
+  "texto": "Agora, umas perguntas sobre a história.",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-17b3h6e",
   "voz": "sofia",
   "texto": "Faz de conta que você morde uma maçã bem crocante.",
@@ -334,6 +382,12 @@
   "voz": "sofia",
   "texto": "Enche o peito de ar…",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-181eno1",
+  "voz": "sofia",
+  "texto": "Escute como eu leio. Depois, leia você, do mesmo jeito.",
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-18afors",
@@ -390,16 +444,34 @@
   "origem": "chegada"
  },
  {
+  "id": "s-19eh1ua",
+  "voz": "sofia",
+  "texto": "Jogo feito! Quer jogar de novo?",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-19f0tu1",
   "voz": "sofia",
   "texto": "Escuta de novo.",
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-19ky6vm",
+  "voz": "sofia",
+  "texto": "Ela pôs tudo numa folha e subiu o morro. Ufa! A folha estava pesada.",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-19vk7gm",
   "voz": "sofia",
   "texto": "caranguejo",
   "origem": "figuras"
+ },
+ {
+  "id": "s-19x9n6n",
+  "voz": "sofia",
+  "texto": "Ai! Ui!",
+  "origem": "oi"
  },
  {
   "id": "s-1a5bawm",
@@ -414,6 +486,12 @@
   "origem": "R1-F07"
  },
  {
+  "id": "s-1abmx6f",
+  "voz": "sofia",
+  "texto": "Compare com:",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-1adv423",
   "voz": "sofia",
   "texto": "Ponha a mão no pescoço para sentir.",
@@ -424,6 +502,12 @@
   "voz": "sofia",
   "texto": "Juntar consoante e vogal: MA, LO, FU",
   "origem": "S-R2a-03"
+ },
+ {
+  "id": "s-1aq9ouw",
+  "voz": "sofia",
+  "texto": "Os dois comeram juntos, embaixo de uma flor. E o piquenique ficou ainda mais gostoso.",
+  "origem": "piquenique-fia"
  },
  {
   "id": "s-1asmjqs",
@@ -444,6 +528,12 @@
   "origem": "S-R1-18"
  },
  {
+  "id": "s-1b449af",
+  "voz": "sofia",
+  "texto": "Era uma manhã de sol. O Bolota, o tatu, saiu de casa com a sua bola vermelha.",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-1b9zzv3",
   "voz": "sofia",
   "texto": "Em muitos lugares, o T antes do I soa assim.",
@@ -459,13 +549,31 @@
   "id": "s-1blvewq",
   "voz": "sofia",
   "texto": "abacaxi",
-  "origem": "alfabeto: palavras"
+  "origem": "piquenique-fia"
+ },
+ {
+  "id": "s-1bnxag",
+  "voz": "sofia",
+  "texto": "Qual não rima?",
+  "origem": "intruso"
  },
  {
   "id": "s-1bo2j0f",
   "voz": "sofia",
   "texto": "elefante",
-  "origem": "alfabeto: palavras"
+  "origem": "comprida"
+ },
+ {
+  "id": "s-1bpnv6p",
+  "voz": "sofia",
+  "texto": "Pesado é difícil de levantar e de carregar.",
+  "origem": "piquenique-fia"
+ },
+ {
+  "id": "s-1bspb9b",
+  "voz": "sofia",
+  "texto": "Leia de novo, devagar, da esquerda para a direita.",
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-1bvb9y2",
@@ -483,7 +591,7 @@
   "id": "s-1c6z85m",
   "voz": "sofia",
   "texto": "a",
-  "origem": "AL-FESTA-C3a"
+  "origem": "palmas"
  },
  {
   "id": "s-1cezx59",
@@ -588,10 +696,22 @@
   "origem": "TF-17-C5f"
  },
  {
+  "id": "s-1d66yit",
+  "voz": "sofia",
+  "texto": "Enorme é muito, muito grande.",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-1dfc6n5",
   "voz": "sofia",
   "texto": "Qual letra faz /lll/, [NOME]?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1dgh4d8",
+  "voz": "sofia",
+  "texto": "Onde a ema foi?",
+  "origem": "ema-suja"
  },
  {
   "id": "s-1djl32l",
@@ -684,6 +804,18 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1dykdx1",
+  "voz": "sofia",
+  "texto": "girassol",
+  "origem": "escondida"
+ },
+ {
+  "id": "s-1e2jkol",
+  "voz": "sofia",
+  "texto": "Oi! Oi, oi! Ai! Ui!",
+  "origem": "oi"
+ },
+ {
   "id": "s-1e5e9fr",
   "voz": "sofia",
   "texto": "Qual figura começa com o som desta letra?",
@@ -714,16 +846,46 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1eyqwmv",
+  "voz": "sofia",
+  "texto": "Quem viu a ema suja?",
+  "origem": "ema-suja"
+ },
+ {
+  "id": "s-1f2fd3f",
+  "voz": "sofia",
+  "texto": "copo de água",
+  "origem": "bolota-chuva"
+ },
+ {
+  "id": "s-1f4y8b5",
+  "voz": "sofia",
+  "texto": "Qual destes é o mais pesado?",
+  "origem": "piquenique-fia"
+ },
+ {
+  "id": "s-1f51859",
+  "voz": "sofia",
+  "texto": "Escute o começo: é igual!",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-1fh6g3s",
   "voz": "sofia",
   "texto": "Agora é com você!",
-  "origem": "trilha dos sons"
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-1fhr3jx",
   "voz": "sofia",
   "texto": "Faz de conta que você é uma cobrinha.",
   "origem": "TF-11-C2"
+ },
+ {
+  "id": "s-1fi1h22",
+  "voz": "sofia",
+  "texto": "Depois da chuva, eu pulei na poça e me molhei todo!",
+  "origem": "bolota-chuva"
  },
  {
   "id": "s-1fnwlqa",
@@ -748,6 +910,18 @@
   "voz": "sofia",
   "texto": "Enche o peito de ar… e solta devagar. Estica os braços bem alto, [NOME]!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1fzn8d4",
+  "voz": "sofia",
+  "texto": "Escute a história. Depois eu faço umas perguntas.",
+  "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-1gia5jq",
+  "voz": "sofia",
+  "texto": "Onde o Bolota se escondeu?",
+  "origem": "bolota-chuva"
  },
  {
   "id": "s-1gniec9",
@@ -780,6 +954,12 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-1htxbg4",
+  "voz": "sofia",
+  "texto": "Piquenique é quando a gente leva comida para comer ao ar livre, sentado numa toalha no chão.",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-1hupyxb",
   "voz": "sofia",
   "texto": "Mmm… eee… lll",
@@ -798,10 +978,22 @@
   "origem": "S-SOM-A"
  },
  {
+  "id": "s-1i7efgj",
+  "voz": "sofia",
+  "texto": "Poça é a água que fica parada no chão depois da chuva.",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-1i8kohr",
   "voz": "sofia",
   "texto": "Terminar a sessão no ritual de fim",
   "origem": "S-R0-15"
+ },
+ {
+  "id": "s-1ia7dwf",
+  "voz": "sofia",
+  "texto": "Esta letra não aparece nesta palavra.",
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-1iixhko",
@@ -852,6 +1044,12 @@
   "origem": "TF-10-C5f"
  },
  {
+  "id": "s-1j7ezui",
+  "voz": "sofia",
+  "texto": "Eu dividi o meu pão com o meu amigo.",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-1jbedh7",
   "voz": "sofia",
   "texto": "Qual letra faz este som, [NOME]?",
@@ -888,10 +1086,22 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1k0y385",
+  "voz": "sofia",
+  "texto": "Primeiro vamos ler mais palavras na Trilha dos Sons. Depois a gente volta aqui.",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-1k1vikz",
   "voz": "sofia",
   "texto": "Lll… uuu… aaa",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1k3k2s6",
+  "voz": "sofia",
+  "texto": "A escrita do seu jeito abre depois do som do M, na Trilha dos Sons.",
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-1k3rew1",
@@ -918,6 +1128,12 @@
   "origem": "trilha dos sons"
  },
  {
+  "id": "s-1kmw6nn",
+  "voz": "sofia",
+  "texto": "Do que a ema precisa agora?",
+  "origem": "ema-suja"
+ },
+ {
   "id": "s-1kp8a7g",
   "voz": "sofia",
   "texto": "O Z tem voz, como uma abelhinha:",
@@ -928,6 +1144,12 @@
   "voz": "sofia",
   "texto": "O gato viu o galo.",
   "origem": "TF-21-C5f"
+ },
+ {
+  "id": "s-1l7icbg",
+  "voz": "sofia",
+  "texto": "O gato viu o bolo.",
+  "origem": "bolo-tia"
  },
  {
   "id": "s-1l8st3w",
@@ -988,6 +1210,12 @@
   "voz": "sofia",
   "texto": "Tem ficha a mais. Escute de novo, bem devagar.",
   "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-1mww749",
+  "voz": "sofia",
+  "texto": "Dia de bolo!",
+  "origem": "bolo-tia"
  },
  {
   "id": "s-1myt00d",
@@ -1086,6 +1314,12 @@
   "origem": "R2a-F02"
  },
  {
+  "id": "s-1ozjygq",
+  "voz": "sofia",
+  "texto": "Qual destes é enorme?",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-1p8k0l1",
   "voz": "sofia",
   "texto": "Ficou um bordado lindo!",
@@ -1143,7 +1377,7 @@
   "id": "s-1qah0h6",
   "voz": "sofia",
   "texto": "mão",
-  "origem": "figuras"
+  "origem": "intruso"
  },
  {
   "id": "s-1qah0pu",
@@ -1179,13 +1413,13 @@
   "id": "s-1qah38z",
   "voz": "sofia",
   "texto": "lua",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1qah3sf",
   "voz": "sofia",
   "texto": "mel",
-  "origem": "figuras"
+  "origem": "rimas"
  },
  {
   "id": "s-1qah3sm",
@@ -1239,7 +1473,7 @@
   "id": "s-1qah5r1",
   "voz": "sofia",
   "texto": "ovo",
-  "origem": "alfabeto: palavras"
+  "origem": "escondida"
  },
  {
   "id": "s-1qah752",
@@ -1365,7 +1599,7 @@
   "id": "s-1qahl0t",
   "voz": "sofia",
   "texto": "rua",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1qahlf9",
@@ -1395,7 +1629,7 @@
   "id": "s-1qahm4b",
   "voz": "sofia",
   "texto": "sol",
-  "origem": "alfabeto: palavras"
+  "origem": "palmas"
  },
  {
   "id": "s-1qahm9c",
@@ -1419,13 +1653,13 @@
   "id": "s-1qahn1z",
   "voz": "sofia",
   "texto": "pão",
-  "origem": "figuras"
+  "origem": "intruso"
  },
  {
   "id": "s-1qahnex",
   "voz": "sofia",
   "texto": "uva",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1qahnjy",
@@ -1474,6 +1708,12 @@
   "voz": "sofia",
   "texto": "Não",
   "origem": "AL-R2-C3a"
+ },
+ {
+  "id": "s-1qahuto",
+  "voz": "sofia",
+  "texto": "Oi!",
+  "origem": "oi"
  },
  {
   "id": "s-1qaib6k",
@@ -1548,6 +1788,18 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1r1rhqu",
+  "voz": "sofia",
+  "texto": "Escute o fim: rimam!",
+  "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-1ra7kni",
+  "voz": "sofia",
+  "texto": "Leia cada palavra em voz alta e toque na figura dela. Quanto mais você lê, mais ligeiro fica!",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-1rdj39n",
   "voz": "sofia",
   "texto": "ẽẽẽẽ",
@@ -1572,10 +1824,22 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1rwnwa0",
+  "voz": "sofia",
+  "texto": "Quer escrever de novo, agora sem olhar?",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-1s7y0ow",
   "voz": "sofia",
   "texto": "Atravessar a Cachoeira das Sílabas",
   "origem": "S-R2a-08"
+ },
+ {
+  "id": "s-1sdgiv",
+  "voz": "sofia",
+  "texto": "A ema viu a lama.",
+  "origem": "ema-suja"
  },
  {
   "id": "s-1sspl1",
@@ -1590,10 +1854,28 @@
   "origem": "S-SOM-E-E-E"
  },
  {
+  "id": "s-1sv9g9p",
+  "voz": "sofia",
+  "texto": "O que o macaco viu?",
+  "origem": "TF-19-C5f"
+ },
+ {
   "id": "s-1svhpmb",
   "voz": "sofia",
   "texto": "E: é e ê. Ligar os sons /é/ e /ê/ à letra E.",
   "origem": "R1-F03"
+ },
+ {
+  "id": "s-1svtbw",
+  "voz": "sofia",
+  "texto": "Leia de novo, letra por letra.",
+  "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-1swjv60",
+  "voz": "sofia",
+  "texto": "Olhe a capa. Que tempo você acha que vai fazer nesta história?",
+  "origem": "bolota-chuva"
  },
  {
   "id": "s-1szjibq",
@@ -1608,6 +1890,12 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1tkcdan",
+  "voz": "sofia",
+  "texto": "A mala cheia de roupa ficou pesada.",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-1tqmk5t",
   "voz": "sofia",
   "texto": "Repita comigo!",
@@ -1618,6 +1906,12 @@
   "voz": "sofia",
   "texto": "Esta letra aparece em nomes.",
   "origem": "AL-Y-C2"
+ },
+ {
+  "id": "s-1ttf8j0",
+  "voz": "sofia",
+  "texto": "Quem a Fia encontrou no caminho?",
+  "origem": "piquenique-fia"
  },
  {
   "id": "s-1tva0wr",
@@ -1650,6 +1944,18 @@
   "origem": "trilha dos sons"
  },
  {
+  "id": "s-1ucbzd0",
+  "voz": "sofia",
+  "texto": "Agora vamos ler juntos, em voz alta.",
+  "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-1udl2sz",
+  "voz": "sofia",
+  "texto": "Escreva o nome desta figura do seu jeito. Não tem certo nem errado!",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-1ug1ozc",
   "voz": "sofia",
   "texto": "A mula viu a uva.",
@@ -1666,6 +1972,12 @@
   "voz": "sofia",
   "texto": "Escute. Qual letra faz o primeiro som?",
   "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-1umbs0w",
+  "voz": "sofia",
+  "texto": "A mula viu a ema e fala: Ai, ai, ema!",
+  "origem": "ema-suja"
  },
  {
   "id": "s-1upee47",
@@ -1701,7 +2013,7 @@
   "id": "s-1uqgj4y",
   "voz": "sofia",
   "texto": "jaca",
-  "origem": "alfabeto: palavras"
+  "origem": "escondida"
  },
  {
   "id": "s-1uqgjb9",
@@ -1749,7 +2061,7 @@
   "id": "s-1uqhz5a",
   "voz": "sofia",
   "texto": "leão",
-  "origem": "alfabeto: palavras"
+  "origem": "intruso"
  },
  {
   "id": "s-1uqi5n1",
@@ -1803,7 +2115,7 @@
   "id": "s-1uqi60a",
   "voz": "sofia",
   "texto": "lama",
-  "origem": "palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1uqi613",
@@ -1866,6 +2178,12 @@
   "origem": "TF-17-C3s"
  },
  {
+  "id": "s-1uqifk5",
+  "voz": "sofia",
+  "texto": "luva",
+  "origem": "comeco"
+ },
+ {
   "id": "s-1uqifyt",
   "voz": "sofia",
   "texto": "lufa",
@@ -1881,7 +2199,7 @@
   "id": "s-1uqig4f",
   "voz": "sofia",
   "texto": "lula",
-  "origem": "palavras"
+  "origem": "intruso"
  },
  {
   "id": "s-1uqixmz",
@@ -1893,7 +2211,7 @@
   "id": "s-1uqixox",
   "voz": "sofia",
   "texto": "mesa",
-  "origem": "figuras"
+  "origem": "rimas"
  },
  {
   "id": "s-1uqiz38",
@@ -2025,7 +2343,7 @@
   "id": "s-1uqjb5q",
   "voz": "sofia",
   "texto": "mula",
-  "origem": "palavras"
+  "origem": "intruso"
  },
  {
   "id": "s-1uqjb6f",
@@ -2133,7 +2451,7 @@
   "id": "s-1uqmoqt",
   "voz": "sofia",
   "texto": "bala",
-  "origem": "TF-18-C5p"
+  "origem": "comeco"
  },
  {
   "id": "s-1uqmowb",
@@ -2169,13 +2487,13 @@
   "id": "s-1uqmqit",
   "voz": "sofia",
   "texto": "bolo",
-  "origem": "TF-R3-C5d"
+  "origem": "ema-suja"
  },
  {
   "id": "s-1uqmqiz",
   "voz": "sofia",
   "texto": "bola",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1uqmqqb",
@@ -2217,7 +2535,7 @@
   "id": "s-1uqnf1m",
   "voz": "sofia",
   "texto": "cola",
-  "origem": "alfabeto: palavras"
+  "origem": "rimas"
  },
  {
   "id": "s-1uqnfco",
@@ -2271,7 +2589,7 @@
   "id": "s-1uqnk9n",
   "voz": "sofia",
   "texto": "casa",
-  "origem": "alfabeto: palavras"
+  "origem": "bolota-chuva"
  },
  {
   "id": "s-1uqnkbu",
@@ -2325,7 +2643,7 @@
   "id": "s-1uqobgl",
   "voz": "sofia",
   "texto": "dado",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1uqolpe",
@@ -2367,13 +2685,13 @@
   "id": "s-1uqpmn4",
   "voz": "sofia",
   "texto": "foca",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1uqpmqy",
   "voz": "sofia",
   "texto": "fogo",
-  "origem": "figuras"
+  "origem": "comeco"
  },
  {
   "id": "s-1uqpmxn",
@@ -2421,7 +2739,7 @@
   "id": "s-1uqprvy",
   "voz": "sofia",
   "texto": "faca",
-  "origem": "alfabeto: palavras"
+  "origem": "intruso"
  },
  {
   "id": "s-1uqpsi3",
@@ -2445,7 +2763,7 @@
   "id": "s-1uqqmi6",
   "voz": "sofia",
   "texto": "galo",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1uqqmne",
@@ -2469,7 +2787,7 @@
   "id": "s-1uqqn3q",
   "voz": "sofia",
   "texto": "gato",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1uqqn3s",
@@ -2574,10 +2892,16 @@
   "origem": "TF-R3-C4b"
  },
  {
+  "id": "s-1uqxfaq",
+  "voz": "sofia",
+  "texto": "poça",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-1uqxk01",
   "voz": "sofia",
   "texto": "pato",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1uqxk0f",
@@ -2625,7 +2949,7 @@
   "id": "s-1uqz077",
   "voz": "sofia",
   "texto": "rato",
-  "origem": "alfabeto: palavras"
+  "origem": "rimas"
  },
  {
   "id": "s-1uqz1zn",
@@ -2697,7 +3021,7 @@
   "id": "s-1uqzv52",
   "voz": "sofia",
   "texto": "sapo",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1uqzv69",
@@ -2751,7 +3075,7 @@
   "id": "s-1uqzynq",
   "voz": "sofia",
   "texto": "seja",
-  "origem": "TF-15-C4b"
+  "origem": "TF-15-C4c"
  },
  {
   "id": "s-1ur06kt",
@@ -2781,7 +3105,7 @@
   "id": "s-1ur0mqn",
   "voz": "sofia",
   "texto": "tatu",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1ur0n6h",
@@ -2793,7 +3117,7 @@
   "id": "s-1ur1174",
   "voz": "sofia",
   "texto": "urso",
-  "origem": "alfabeto: palavras"
+  "origem": "comprida"
  },
  {
   "id": "s-1ur11zf",
@@ -2838,16 +3162,10 @@
   "origem": "alfabeto: palavras"
  },
  {
-  "id": "s-1ur1ztf",
-  "voz": "sofia",
-  "texto": "veja",
-  "origem": "TF-15-C4c"
- },
- {
   "id": "s-1ur1zyt",
   "voz": "sofia",
   "texto": "vela",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-1ur22v7",
@@ -2883,7 +3201,7 @@
   "id": "s-1ur23jy",
   "voz": "sofia",
   "texto": "vaca",
-  "origem": "alfabeto: palavras"
+  "origem": "intruso"
  },
  {
   "id": "s-1ur33j0",
@@ -3084,6 +3402,18 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-1vpwvsp",
+  "voz": "sofia",
+  "texto": "Vamos descobrir!",
+  "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-1vwvp2q",
+  "voz": "sofia",
+  "texto": "A Fia pensou um pouquinho e disse: Vem, Beto! Vamos dividir!",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-1w149q0",
   "voz": "sofia",
   "texto": "Oi, [NOME]! A Dona Cida sabe umas palavras que terminam igualzinho. Vamos ouvir?",
@@ -3108,6 +3438,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1wq1zx9",
+  "voz": "sofia",
+  "texto": "Essa não termina igual.",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-1wuhvy7",
   "voz": "sofia",
   "texto": "K, de kiwi.",
@@ -3120,6 +3456,12 @@
   "origem": "T-ALFABETO"
  },
  {
+  "id": "s-1xj0bed",
+  "voz": "sofia",
+  "texto": "A ema sai suja, suja!",
+  "origem": "ema-suja"
+ },
+ {
   "id": "s-1xkxy86",
   "voz": "sofia",
   "texto": "/iii/, um sorriso grande. Sua vez, [NOME]!",
@@ -3130,6 +3472,18 @@
   "voz": "sofia",
   "texto": "Amanhã a Dona Cida vai bordar com você, [NOME]. Ela tem um fio que faz /fff/!",
   "origem": "R2a-F02"
+ },
+ {
+  "id": "s-1xrnhjd",
+  "voz": "sofia",
+  "texto": "Escute o começo das palavras. Qual começa igual?",
+  "origem": "comeco"
+ },
+ {
+  "id": "s-1y3wzfc",
+  "voz": "sofia",
+  "texto": "besouro",
+  "origem": "piquenique-fia"
  },
  {
   "id": "s-1yf579q",
@@ -3174,10 +3528,22 @@
   "origem": "S-SOM-M"
  },
  {
+  "id": "s-298jxn",
+  "voz": "sofia",
+  "texto": "Olha o que você escreveu. E agora, olha como se escreve.",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-2aajyj",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Eu sou a Sofia.",
   "origem": "chegada"
+ },
+ {
+  "id": "s-2cqqxz",
+  "voz": "sofia",
+  "texto": "sorvete",
+  "origem": "bolota-chuva"
  },
  {
   "id": "s-2dswlv",
@@ -3190,6 +3556,12 @@
   "voz": "sofia",
   "texto": "Qual rima, [NOME]?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-2lu8hw",
+  "voz": "sofia",
+  "texto": "Olha a palavra escondida!",
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-2my0ud",
@@ -3372,6 +3744,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-3hau1x",
+  "voz": "sofia",
+  "texto": "Tem uma palavra escondida dentro de outra. Escute bem!",
+  "origem": "escondida"
+ },
+ {
   "id": "s-3kt1cb",
   "voz": "sofia",
   "texto": "Olha a minha boca antes de responder, [NOME].",
@@ -3382,6 +3760,12 @@
   "voz": "sofia",
   "texto": "Os sons /ó/ e /ô/ da letra O",
   "origem": "S-SOM-O-O-O"
+ },
+ {
+  "id": "s-3z70un",
+  "voz": "sofia",
+  "texto": "Como o Tales ficou no fim?",
+  "origem": "oi"
  },
  {
   "id": "s-3zl2s8",
@@ -3414,10 +3798,34 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-43xpp6",
+  "voz": "sofia",
+  "texto": "Agora responda. Pode olhar o texto.",
+  "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-4enivq",
+  "voz": "sofia",
+  "texto": "Vamos ler juntos, ao mesmo tempo!",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-4ez476",
   "voz": "sofia",
   "texto": "Agora junte os sons.",
   "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-4hze05",
+  "voz": "sofia",
+  "texto": "Bem-vindo ao Cantinho da Leitura! Escolha o que vamos fazer.",
+  "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-50jnuk",
+  "voz": "sofia",
+  "texto": "Vamos lembrar dessa parte da história.",
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-559ma2",
@@ -3442,6 +3850,12 @@
   "voz": "sofia",
   "texto": "Vamos treinar mais um pouquinho e tentar de novo outro dia. Nada se perde!",
   "origem": "telas"
+ },
+ {
+  "id": "s-5jdb15",
+  "voz": "sofia",
+  "texto": "De repente, o céu ficou escuro e começou uma chuva forte. Plic, plic, ploc!",
+  "origem": "bolota-chuva"
  },
  {
   "id": "s-5qllno",
@@ -3474,6 +3888,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-6j8kw1",
+  "voz": "sofia",
+  "texto": "Conte os pedaços comigo.",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-6kkt7f",
   "voz": "sofia",
   "texto": "Sss… ooo… lll",
@@ -3483,7 +3903,7 @@
   "id": "s-6qj94i",
   "voz": "sofia",
   "texto": "formiga",
-  "origem": "figuras"
+  "origem": "comprida"
  },
  {
   "id": "s-75h53n",
@@ -3492,16 +3912,40 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-78v1m9",
+  "voz": "sofia",
+  "texto": "Qual começa igual a…",
+  "origem": "comeco"
+ },
+ {
   "id": "s-7gxex5",
   "voz": "sofia",
   "texto": "Este tem voz:",
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-7hirb3",
+  "voz": "sofia",
+  "texto": "Esse som se escreve com esta letra.",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-7mgl2a",
   "voz": "sofia",
   "texto": "Leia a palavra e toque na figura.",
   "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-7s91vr",
+  "voz": "sofia",
+  "texto": "Palavras que rimam terminam com o mesmo som. Escute!",
+  "origem": "rimas"
+ },
+ {
+  "id": "s-7wcok",
+  "voz": "sofia",
+  "texto": "Qual palavra é mais comprida?",
+  "origem": "comprida"
  },
  {
   "id": "s-826nz9",
@@ -3534,6 +3978,18 @@
   "origem": "trilha dos sons"
  },
  {
+  "id": "s-8gp4fn",
+  "voz": "sofia",
+  "texto": "Você leu mais ligeiro que da outra vez!",
+  "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-8o5jwm",
+  "voz": "sofia",
+  "texto": "O elefante é enorme!",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-8rt1vp",
   "voz": "sofia",
   "texto": "[NOME]!",
@@ -3546,16 +4002,16 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-94scgl",
+  "voz": "sofia",
+  "texto": "piquenique",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-9a09w5",
   "voz": "sofia",
   "texto": "Ficou a sua cara! Tudo pronto pra começar?",
   "origem": "telas (E2E)"
- },
- {
-  "id": "s-9bip8z",
-  "voz": "sofia",
-  "texto": "O que o macaco come?",
-  "origem": "TF-19-C5f"
  },
  {
   "id": "s-9jci8e",
@@ -3579,13 +4035,19 @@
   "id": "s-9rut2x",
   "voz": "sofia",
   "texto": "jacaré",
-  "origem": "alfabeto: palavras"
+  "origem": "escondida"
  },
  {
   "id": "s-9ryn7q",
   "voz": "sofia",
   "texto": "janela",
-  "origem": "alfabeto: palavras"
+  "origem": "rimas"
+ },
+ {
+  "id": "s-9s5b2x",
+  "voz": "sofia",
+  "texto": "Fim! Dividir deixou o piquenique ainda mais gostoso.",
+  "origem": "piquenique-fia"
  },
  {
   "id": "s-9ujapt",
@@ -3612,16 +4074,28 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-abwyv0",
+  "voz": "sofia",
+  "texto": "Ele se escondeu embaixo da folha. A folha virou um abrigo, igual a um guarda-chuva.",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-acrr5q",
   "voz": "sofia",
   "texto": "Olha como eu faço.",
-  "origem": "trilha dos sons"
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-aihk3y",
   "voz": "sofia",
   "texto": "Troque um som e leia a palavra nova.",
   "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-aj8a2y",
+  "voz": "sofia",
+  "texto": "Hora da história! Esta se chama: O Bolota e a chuva.",
+  "origem": "bolota-chuva"
  },
  {
   "id": "s-akj70g",
@@ -3642,6 +4116,18 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-apw49y",
+  "voz": "sofia",
+  "texto": "Oi, oi!",
+  "origem": "oi"
+ },
+ {
+  "id": "s-aycy1h",
+  "voz": "sofia",
+  "texto": "Isso mesmo!",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-b1gma7",
   "voz": "sofia",
   "texto": "Lembra das conchas, [NOME]?",
@@ -3654,6 +4140,18 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-bgfs1z",
+  "voz": "sofia",
+  "texto": "Este texto é para você ler sozinho! Toque numa palavra para ouvir os sons dela.",
+  "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-bnh06q",
+  "voz": "sofia",
+  "texto": "Qual rima com…",
+  "origem": "rimas"
+ },
+ {
   "id": "s-bsmxez",
   "voz": "sofia",
   "texto": "menina",
@@ -3663,7 +4161,7 @@
   "id": "s-bv2fhl",
   "voz": "sofia",
   "texto": "macaco",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-bx5bup",
@@ -3735,13 +4233,13 @@
   "id": "s-czo8ee",
   "voz": "sofia",
   "texto": "Que leitura bonita!",
-  "origem": "trilha dos sons"
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-d6e7n",
   "voz": "sofia",
   "texto": "estrela",
-  "origem": "figuras"
+  "origem": "bolota-chuva"
  },
  {
   "id": "s-dawq4y",
@@ -3753,7 +4251,7 @@
   "id": "s-dhn2s",
   "voz": "sofia",
   "texto": "navio",
-  "origem": "alfabeto: palavras"
+  "origem": "comprida"
  },
  {
   "id": "s-dn0nh0",
@@ -3771,7 +4269,7 @@
   "id": "s-dqbda",
   "voz": "sofia",
   "texto": "nuvem",
-  "origem": "alfabeto: palavras"
+  "origem": "bolota-chuva"
  },
  {
   "id": "s-dqsoiq",
@@ -3798,6 +4296,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-dwpwe1",
+  "voz": "sofia",
+  "texto": "Qual destes pode ser um abrigo na chuva?",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-dxb033",
   "voz": "sofia",
   "texto": "Começa igual a você!",
@@ -3813,7 +4317,13 @@
   "id": "s-ecxytk",
   "voz": "sofia",
   "texto": "abelha",
-  "origem": "alfabeto: palavras"
+  "origem": "comprida"
+ },
+ {
+  "id": "s-edq2az",
+  "voz": "sofia",
+  "texto": "Você tocou em:",
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-ej9sf4",
@@ -3834,6 +4344,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-es1m7o",
+  "voz": "sofia",
+  "texto": "O que o Bolota levou quando saiu de casa?",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-eveijx",
   "voz": "sofia",
   "texto": "Junta comigo, [NOME]!",
@@ -3843,13 +4359,13 @@
   "id": "s-ey0vns",
   "voz": "sofia",
   "texto": "banana",
-  "origem": "alfabeto: palavras"
+  "origem": "rimas"
  },
  {
   "id": "s-ezfwfj",
   "voz": "sofia",
   "texto": "boneca",
-  "origem": "alfabeto: palavras"
+  "origem": "intruso"
  },
  {
   "id": "s-ezk40g",
@@ -3891,7 +4407,7 @@
   "id": "s-fo3mps",
   "voz": "sofia",
   "texto": "caneca",
-  "origem": "alfabeto: palavras"
+  "origem": "intruso"
  },
  {
   "id": "s-fuzudm",
@@ -3906,16 +4422,34 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-g1wlnx",
+  "voz": "sofia",
+  "texto": "Que palavra está escondida dentro de…",
+  "origem": "escondida"
+ },
+ {
   "id": "s-g35tl",
   "voz": "sofia",
   "texto": "avião",
-  "origem": "alfabeto: palavras"
+  "origem": "intruso"
+ },
+ {
+  "id": "s-ga74wd",
+  "voz": "sofia",
+  "texto": "bolhas de sabão",
+  "origem": "piquenique-fia"
  },
  {
   "id": "s-ganutj",
   "voz": "sofia",
   "texto": "ffff… foca!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-gaxwh",
+  "voz": "sofia",
+  "texto": "banho",
+  "origem": "ema-suja"
  },
  {
   "id": "s-gfdmv",
@@ -3942,6 +4476,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-gr7nn",
+  "voz": "sofia",
+  "texto": "bravo",
+  "origem": "bolo-tia"
+ },
+ {
   "id": "s-gs3te",
   "voz": "sofia",
   "texto": "chave",
@@ -3952,6 +4492,18 @@
   "voz": "sofia",
   "texto": "O Q vem sempre com o U.",
   "origem": "AL-Q-C2"
+ },
+ {
+  "id": "s-gsjlu",
+  "voz": "sofia",
+  "texto": "chuva",
+  "origem": "bolota-chuva"
+ },
+ {
+  "id": "s-h4o5ju",
+  "voz": "sofia",
+  "texto": "A ema viu a lama. A ema foi na lama. A ema sai suja, suja! A mula viu a ema e fala: Ai, ai, ema!",
+  "origem": "ema-suja"
  },
  {
   "id": "s-h71jsf",
@@ -3984,6 +4536,18 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-ht4lcz",
+  "voz": "sofia",
+  "texto": "A ema foi na lama.",
+  "origem": "ema-suja"
+ },
+ {
+  "id": "s-i6q1wg",
+  "voz": "sofia",
+  "texto": "Monte a palavra som por som, [NOME]. Cada peça faz um som.",
+  "origem": "R2a-F02-C4"
+ },
+ {
   "id": "s-iaa9ia",
   "voz": "sofia",
   "texto": "Que ventinho bom!",
@@ -4002,16 +4566,40 @@
   "origem": "TF-01-C2"
  },
  {
+  "id": "s-ihviqb",
+  "voz": "sofia",
+  "texto": "Pode ler perto do microfone. Ele só ajuda a Sofia a ouvir.",
+  "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-ilqwhf",
+  "voz": "sofia",
+  "texto": "O bolo da tia caiu no tapete.",
+  "origem": "bolo-tia"
+ },
+ {
   "id": "s-iwrpiz",
   "voz": "sofia",
   "texto": "xadrez",
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-iz5rnd",
+  "voz": "sofia",
+  "texto": "Em qual figura alguém está dividindo?",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-j0b53",
   "voz": "sofia",
   "texto": "folha",
-  "origem": "alfabeto: palavras"
+  "origem": "piquenique-fia"
+ },
+ {
+  "id": "s-j1kt3",
+  "voz": "sofia",
+  "texto": "feliz",
+  "origem": "bolo-tia"
  },
  {
   "id": "s-j4w7k",
@@ -4044,6 +4632,12 @@
   "origem": "trilha dos sons"
  },
  {
+  "id": "s-jksmi9",
+  "voz": "sofia",
+  "texto": "Como a tia ficou?",
+  "origem": "bolo-tia"
+ },
+ {
   "id": "s-jr365",
   "voz": "sofia",
   "texto": "ginga",
@@ -4060,6 +4654,12 @@
   "voz": "sofia",
   "texto": "Toque na letra que está brilhando.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-k722nb",
+  "voz": "sofia",
+  "texto": "Quando chove, a minha casa é o meu abrigo.",
+  "origem": "bolota-chuva"
  },
  {
   "id": "s-ki86cd",
@@ -4080,6 +4680,12 @@
   "origem": "telas"
  },
  {
+  "id": "s-l87ixk",
+  "voz": "sofia",
+  "texto": "Abrigo é um lugar que protege a gente da chuva, do frio ou do sol forte.",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-lbara2",
   "voz": "sofia",
   "texto": "Isso! Você fez o som!",
@@ -4092,6 +4698,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-lkikce",
+  "voz": "sofia",
+  "texto": "Olhe a capa. O que você acha que a formiga vai fazer?",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-lmh00y",
   "voz": "sofia",
   "texto": "Ouvir a diferença entre é e ê",
@@ -4101,7 +4713,7 @@
   "id": "s-lnk9rj",
   "voz": "sofia",
   "texto": "xícara",
-  "origem": "alfabeto: palavras"
+  "origem": "comprida"
  },
  {
   "id": "s-lyxfku",
@@ -4125,7 +4737,7 @@
   "id": "s-m1g4l",
   "voz": "sofia",
   "texto": "zebra",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-m2l587",
@@ -4146,10 +4758,22 @@
   "origem": "trilha dos sons"
  },
  {
+  "id": "s-mcqsp",
+  "voz": "sofia",
+  "texto": "Hora da história! Esta se chama: O piquenique da Fia.",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-mkjlaw",
   "voz": "sofia",
   "texto": "Último andar, [NOME]!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-mnzw8z",
+  "voz": "sofia",
+  "texto": "Dia de bolo! O bolo da tia caiu no tapete. O gato viu o bolo. O gato pula no bolo! A tia fala: Ai, ai, gato!",
+  "origem": "bolo-tia"
  },
  {
   "id": "s-molxto",
@@ -4188,6 +4812,12 @@
   "origem": "R2a-F01"
  },
  {
+  "id": "s-nck2ki",
+  "voz": "sofia",
+  "texto": "O Bolota correu, correu… e viu uma folha enorme, maior do que ele!",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-nm796c",
   "voz": "sofia",
   "texto": "Leia a palavra e escolha a leitura certa.",
@@ -4200,22 +4830,28 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-nsnnpf",
+  "voz": "sofia",
+  "texto": "Qual figura mostra um piquenique?",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-nx41rj",
   "voz": "sofia",
   "texto": "pipoca",
-  "origem": "alfabeto: palavras"
+  "origem": "comprida"
  },
  {
   "id": "s-o31obg",
   "voz": "sofia",
   "texto": "panela",
-  "origem": "figuras"
+  "origem": "comeco"
  },
  {
   "id": "s-o5hr71",
   "voz": "sofia",
   "texto": "peteca",
-  "origem": "figuras"
+  "origem": "rimas"
  },
  {
   "id": "s-oj0aq5",
@@ -4242,6 +4878,12 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-opcfcq",
+  "voz": "sofia",
+  "texto": "A formiga Fia preparou um piquenique: uma uva, um pedacinho de pão e uma gota de suco.",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-otn16y",
   "voz": "sofia",
   "texto": "Quando termina igual, a gente diz que RIMA.",
@@ -4254,28 +4896,28 @@
   "origem": "alfabeto: palavras"
  },
  {
-  "id": "s-p3gx8k",
-  "voz": "sofia",
-  "texto": "O macaco come a jaca.",
-  "origem": "TF-19-C5f"
- },
- {
   "id": "s-p3ocmo",
   "voz": "sofia",
   "texto": "Tudo pronto para conhecer as letras?",
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-px8qv5",
+  "voz": "sofia",
+  "texto": "Duas palavras rimam e uma não. Ache a que não combina!",
+  "origem": "intruso"
+ },
+ {
   "id": "s-q0ov03",
   "voz": "sofia",
   "texto": "sapato",
-  "origem": "figuras"
+  "origem": "comeco"
  },
  {
   "id": "s-q10ct4",
   "voz": "sofia",
   "texto": "sacola",
-  "origem": "figuras"
+  "origem": "escondida"
  },
  {
   "id": "s-q9jpe",
@@ -4287,7 +4929,7 @@
   "id": "s-q9jsz",
   "voz": "sofia",
   "texto": "papel",
-  "origem": "figuras"
+  "origem": "rimas"
  },
  {
   "id": "s-qb8apk",
@@ -4300,6 +4942,12 @@
   "voz": "sofia",
   "texto": "peixe",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-qdiwpy",
+  "voz": "sofia",
+  "texto": "triste",
+  "origem": "bolo-tia"
  },
  {
   "id": "s-qg25ip",
@@ -4320,10 +4968,16 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-qktqyt",
+  "voz": "sofia",
+  "texto": "No domingo, fizemos um piquenique no parque.",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-qny7tm",
   "voz": "sofia",
   "texto": "tapete",
-  "origem": "alfabeto: palavras"
+  "origem": "comeco"
  },
  {
   "id": "s-qscwis",
@@ -4371,13 +5025,13 @@
   "id": "s-rpt9hc",
   "voz": "sofia",
   "texto": "ja",
-  "origem": "trilha dos sons"
+  "origem": "palmas"
  },
  {
   "id": "s-rpt9ja",
   "voz": "sofia",
   "texto": "la",
-  "origem": "trilha dos sons"
+  "origem": "palmas"
  },
  {
   "id": "s-rpt9ji",
@@ -4425,7 +5079,7 @@
   "id": "s-rpt9m5",
   "voz": "sofia",
   "texto": "oi",
-  "origem": "TF-18-C4b"
+  "origem": "oi"
  },
  {
   "id": "s-rpt9n2",
@@ -4437,19 +5091,25 @@
   "id": "s-rpt9nn",
   "voz": "sofia",
   "texto": "ai",
-  "origem": "TF-09-C4b"
+  "origem": "oi"
  },
  {
   "id": "s-rpt9om",
   "voz": "sofia",
   "texto": "bo",
-  "origem": "trilha dos sons"
+  "origem": "palmas"
+ },
+ {
+  "id": "s-rpt9oo",
+  "voz": "sofia",
+  "texto": "ba",
+  "origem": "palmas"
  },
  {
   "id": "s-rpt9pl",
   "voz": "sofia",
   "texto": "ca",
-  "origem": "trilha dos sons"
+  "origem": "palmas"
  },
  {
   "id": "s-rpt9pp",
@@ -4506,22 +5166,28 @@
   "origem": "trilha dos sons"
  },
  {
+  "id": "s-rpt9ui",
+  "voz": "sofia",
+  "texto": "xi",
+  "origem": "palmas"
+ },
+ {
   "id": "s-rpta1e",
   "voz": "sofia",
   "texto": "pi",
-  "origem": "AL-R1-C3a"
+  "origem": "palmas"
  },
  {
   "id": "s-rpta1g",
   "voz": "sofia",
   "texto": "po",
-  "origem": "AL-R1-C3a"
+  "origem": "palmas"
  },
  {
   "id": "s-rpta1m",
   "voz": "sofia",
   "texto": "pa",
-  "origem": "trilha dos sons"
+  "origem": "palmas"
  },
  {
   "id": "s-rpta1q",
@@ -4539,13 +5205,19 @@
   "id": "s-rpta49",
   "voz": "sofia",
   "texto": "sa",
-  "origem": "trilha dos sons"
+  "origem": "palmas"
+ },
+ {
+  "id": "s-rpta4w",
+  "voz": "sofia",
+  "texto": "to",
+  "origem": "palmas"
  },
  {
   "id": "s-rpta4y",
   "voz": "sofia",
   "texto": "pé",
-  "origem": "figuras"
+  "origem": "escondida"
  },
  {
   "id": "s-rpta56",
@@ -4563,7 +5235,13 @@
   "id": "s-rpta5z",
   "voz": "sofia",
   "texto": "ui",
-  "origem": "TF-08-C3s"
+  "origem": "oi"
+ },
+ {
+  "id": "s-rpta6o",
+  "voz": "sofia",
+  "texto": "ré",
+  "origem": "palmas"
  },
  {
   "id": "s-rpta6q",
@@ -4611,7 +5289,7 @@
   "id": "s-tdn7n3",
   "voz": "sofia",
   "texto": "helicóptero",
-  "origem": "alfabeto: palavras"
+  "origem": "comprida"
  },
  {
   "id": "s-tdsrue",
@@ -4638,6 +5316,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-tqxu6w",
+  "voz": "sofia",
+  "texto": "Como o Beto ficou quando a Fia dividiu o lanche?",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-twesto",
   "voz": "sofia",
   "texto": "Agora você escreve, [NOME]. Escuta a palavra e monta com as letras.",
@@ -4654,6 +5338,12 @@
   "voz": "sofia",
   "texto": "O som do meu nome. Descobrir o primeiro som do próprio nome.",
   "origem": "R0-F01"
+ },
+ {
+  "id": "s-u24ku2",
+  "voz": "sofia",
+  "texto": "A tia fala: Ai, ai, gato!",
+  "origem": "bolo-tia"
  },
  {
   "id": "s-uaze1y",
@@ -4674,16 +5364,34 @@
   "origem": "TF-14-C4b"
  },
  {
+  "id": "s-uh97si",
+  "voz": "sofia",
+  "texto": "Você escreveu igualzinho!",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "s-uksve",
   "voz": "sofia",
   "texto": "Olha, a peça certa está brilhando.",
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-uqqlhq",
+  "voz": "sofia",
+  "texto": "Leia de novo. O que a Sofia falou?",
+  "origem": "oi"
+ },
+ {
   "id": "s-v7r7w",
   "voz": "sofia",
   "texto": "wafer",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-vbpkkj",
+  "voz": "sofia",
+  "texto": "Escute de novo, devagar.",
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-vkiuif",
@@ -4698,6 +5406,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-wkopdm",
+  "voz": "sofia",
+  "texto": "Por que o Bolota se escondeu?",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "s-wpksbs",
   "voz": "sofia",
   "texto": "Escute como eu leio. Depois, leia junto comigo.",
@@ -4708,6 +5422,12 @@
   "voz": "sofia",
   "texto": "Ovelha",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-x0nzoq",
+  "voz": "sofia",
+  "texto": "Muito bem!",
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-x276k7",
@@ -4744,6 +5464,12 @@
   "voz": "sofia",
   "texto": "elástico",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-xp35ns",
+  "voz": "sofia",
+  "texto": "Você leu a lista inteira!",
+  "origem": "cantinho da leitura"
  },
  {
   "id": "s-xtncm1",
@@ -4824,6 +5550,12 @@
   "origem": "pares (D030)"
  },
  {
+  "id": "s-y88jii",
+  "voz": "sofia",
+  "texto": "O macaco viu a jaca.",
+  "origem": "TF-19-C5f"
+ },
+ {
   "id": "s-ygpicm",
   "voz": "sofia",
   "texto": "Mostrar as vogais para o professor",
@@ -4842,6 +5574,12 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-yun04",
+  "voz": "sofia",
+  "texto": "Que fruta a Fia levou no piquenique?",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "s-yuxfl0",
   "voz": "sofia",
   "texto": "Amanhã é a Festa das Rimas na praça! Vai ter lanterna e tudo.",
@@ -4852,6 +5590,24 @@
   "voz": "sofia",
   "texto": "Bolinha aberta: óóó. Sua vez, [NOME]!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-z2ryym",
+  "voz": "sofia",
+  "texto": "No caminho, ela encontrou o besouro Beto. Ele estava sentado, com a barriga roncando de fome.",
+  "origem": "piquenique-fia"
+ },
+ {
+  "id": "s-z64np2",
+  "voz": "sofia",
+  "texto": "Quando a chuva passou, o sol voltou. O Bolota agradeceu à folha e foi pular nas poças.",
+  "origem": "bolota-chuva"
+ },
+ {
+  "id": "s-zmmwji",
+  "voz": "sofia",
+  "texto": "Fim! Que folha amiga, não é?",
+  "origem": "bolota-chuva"
  },
  {
   "id": "s-zs3o1",
@@ -5190,6 +5946,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-1cwxii0",
+  "voz": "tales",
+  "texto": "piquenique",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "t-1d0dnp7",
   "voz": "tales",
   "texto": "O eco falou! Qual letra, [NOME]?",
@@ -5304,6 +6066,12 @@
   "origem": "TF-16-C2"
  },
  {
+  "id": "t-1j47xcz",
+  "voz": "tales",
+  "texto": "Use essas palavras hoje, conversando com alguém!",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "t-1jpg70v",
   "voz": "tales",
   "texto": "Desenha a letra na areia com o dedo e fala o som, [NOME]!",
@@ -5326,6 +6094,12 @@
   "voz": "tales",
   "texto": "PI-PO-CA! Três palmas!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1kj902v",
+  "voz": "tales",
+  "texto": "abacaxi",
+  "origem": "palmas"
  },
  {
   "id": "t-1kllt2w",
@@ -5482,6 +6256,12 @@
   "voz": "tales",
   "texto": "uuuu",
   "origem": "sons"
+ },
+ {
+  "id": "t-1ooabpr",
+  "voz": "tales",
+  "texto": "poça",
+  "origem": "bolota-chuva"
  },
  {
   "id": "t-1oobvxy",
@@ -5748,6 +6528,12 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "t-1u6p0m",
+  "voz": "tales",
+  "texto": "sol",
+  "origem": "palmas"
+ },
+ {
   "id": "t-1u768h",
   "voz": "tales",
   "texto": "nhá",
@@ -5818,6 +6604,12 @@
   "voz": "tales",
   "texto": "Ligue cada letra à cena que faz o som dela.",
   "origem": "falas fônicas (D030)"
+ },
+ {
+  "id": "t-1y8edvf",
+  "voz": "tales",
+  "texto": "dividir",
+  "origem": "piquenique-fia"
  },
  {
   "id": "t-20jjsj",
@@ -5952,6 +6744,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-8xwf2z",
+  "voz": "tales",
+  "texto": "Agora, três palavras novas da história!",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "t-a34kgc",
   "voz": "tales",
   "texto": "Amanhã a tartaruga precisa da nossa ajuda!",
@@ -5962,6 +6760,12 @@
   "voz": "tales",
   "texto": "A placa apagou! Qual sílaba falta aqui, [NOME]?",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-bdbfym",
+  "voz": "tales",
+  "texto": "sapato",
+  "origem": "palmas"
  },
  {
   "id": "t-bhx7ou",
@@ -6102,6 +6906,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-fo1rdm",
+  "voz": "tales",
+  "texto": "pesado",
+  "origem": "piquenique-fia"
+ },
+ {
   "id": "t-fo8l8w",
   "voz": "tales",
   "texto": "peteca",
@@ -6138,10 +6948,22 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-h6nqeb",
+  "voz": "tales",
+  "texto": "Palavra nova:",
+  "origem": "cantinho da leitura"
+ },
+ {
   "id": "t-i1nw9b",
   "voz": "tales",
   "texto": "Festa do Alfabeto!",
   "origem": "AL-FESTA"
+ },
+ {
+  "id": "t-iblgxi",
+  "voz": "tales",
+  "texto": "Vamos brincar com os sons das palavras!",
+  "origem": "cantinho da leitura"
  },
  {
   "id": "t-idht80",
@@ -6216,6 +7038,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-n10ah4",
+  "voz": "tales",
+  "texto": "enorme",
+  "origem": "bolota-chuva"
+ },
+ {
   "id": "t-ne3gpo",
   "voz": "tales",
   "texto": "Esta letra tem outro som, que vem depois.",
@@ -6256,6 +7084,12 @@
   "voz": "tales",
   "texto": "Foca… lua",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-pdn7za",
+  "voz": "tales",
+  "texto": "abrigo",
+  "origem": "bolota-chuva"
  },
  {
   "id": "t-pdyph1",
@@ -6360,6 +7194,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-rgre84",
+  "voz": "tales",
+  "texto": "jacaré",
+  "origem": "palmas"
+ },
+ {
   "id": "t-s420wk",
   "voz": "tales",
   "texto": "macaco",
@@ -6462,6 +7302,12 @@
   "origem": "AL-R2-C3a"
  },
  {
+  "id": "t-w43s4o",
+  "voz": "tales",
+  "texto": "Bata uma palma para cada pedaço da palavra!",
+  "origem": "palmas"
+ },
+ {
   "id": "t-wz2sfy",
   "voz": "tales",
   "texto": "Faz de conta que você é uma abelhinha.",
@@ -6502,6 +7348,12 @@
   "voz": "tales",
   "texto": "Como é o seu cabelo?",
   "origem": "avatar"
+ },
+ {
+  "id": "t-zga8wo",
+  "voz": "tales",
+  "texto": "Escute os nomes. Qual palavra é mais comprida? Não vale olhar o tamanho da coisa!",
+  "origem": "comprida"
  },
  {
   "id": "t-zpc5yz",

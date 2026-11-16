@@ -7,6 +7,12 @@ Vozes: Sofia (`eleven_multilingual_v2`) e Tales (`eleven_v3`). Gerador: `scripts
 **Situação:** todas as falas fixas listadas em `packages/conteudo/src/falas.json` (851 falas, 974 clipes no ar) têm clipe. O que segue
 abaixo é o que **continua sem voz ou com voz ruim**, para a próxima recarga ou para gravação por pessoa.
 
+**16/11 (Cantinho da Leitura e Brincar com sons):** 144 clipes novos, 4.904 caracteres enviados — as 2 histórias (narração, perguntas,
+vocabulário), os 3 textos decodificáveis (frases e texto corrido para o coro), as perguntas, as molduras de fluência, eco/coro, escrita
+própria e jogos de escuta, os nomes de figuras novas (luva, girassol, poça, besouro, piquenique…). Entraram junto as falas pendentes da
+revisão de 16/11 ("Monte a palavra som por som…", "Cada peça faz um som.", "O macaco viu a jaca.", "O que o macaco viu?"). Nada do
+Cantinho ficou sem voz. Masterizado e auditado (ver `docs/auditoria-audio.md`).
+
 ## 1. Sem clipe (a tela fica em silêncio e o texto aparece no balão)
 
 | O quê | Onde aparece | Por que não foi gerado |
@@ -18,8 +24,6 @@ abaixo é o que **continua sem voz ou com voz ruim**, para a próxima recarga ou
 | Sílabas do nome da criança nas palmas | Missão do nome (R0) | Uma gravação por nome; só os 145 nomes comuns têm o nome inteiro gravado |
 | Nome da criança fora da lista de 145 nomes comuns | Todas as falas com [NOME] | A fala toca sem o nome (o nome fica escrito) |
 | "Quantos sons tem a palavra? Escuta comigo." (Sofia) | Placa dos pedacinhos de som da sondagem periódica (`Sondagem.tsx`) | Fala nova de 15/11; até ter voz, o exemplo com os sons puros (l-u-a acendendo bolinhas) mostra a ideia |
-| "Monte a palavra som por som, [NOME]. Cada peça faz um som." (Sofia) | Vale do M-L-F, "O lago da lua" (R2a-F02-C4) | Fala nova de 16/11 (revisão da metodologia): substitui "Letra por letra, [NOME]: L-U-A.", que soletrava pelo NOME da letra (regra 1). Até ter voz fica escrita; as peças tocam o som de cada letra |
-| "O macaco viu a jaca." e "O que o macaco viu?" (Sofia) | Frase de TF-19 (Trilha dos Sons) | Fala nova de 16/11: a frase antiga ("O macaco come a jaca.") usava "come" /ɔ/, valor ainda não ensinado em TF-19. A frase é para a criança LER; a voz só entra na correção e no eco |
 | Resumo do termômetro lido em voz alta | Área do adulto | Texto montado na hora (é tela de adulto) |
 
 ## 2. Com clipe, mas a auditoria pede regravação ou conferência de ouvido
