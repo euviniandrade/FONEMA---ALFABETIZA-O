@@ -53,6 +53,11 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   em `app/docs/falas-pendentes.md` §1b. **Sugestões ao dono (D022, não mudadas):** "Caça às Sílabas" (`motor/src/nivel.ts`,
   `bancada-selos.tsx`, Lupa da Lojinha), "Cachoeira das Sílabas" (chefe R2a-F05, título do nível 16, selos), selos "Bate-Sílaba",
   "Tábua de Sílabas" e "Montar sílabas na tábua" — nomes que podem vender a sílaba como peça de leitura.
+- **Verificado (16/11):** typecheck, lint, 259 testes, verificador de decodificabilidade (0 erros), `capturas-etapa9.mjs` inteiro
+  ("Tudo certo": Treino rápido pelo "Mais", rostinho da Sofia corrigido — antes saía um círculo vazio por causa do `max-width` global
+  das imagens, também na Lojinha/Ritual) e E2E `--sem-jornada` em build separado: trechos 1 a 12 e Voz em tempo real passaram
+  (115 checagens, inclui o Cantinho entrando pelo botão Leitura); **o trecho C (cópia dos dados) falhou** esperando o botão
+  "Restaurar uma cópia" nas Configurações (30 s). Não tem relação com a barra; não foi investigado (pode vir das telas sob demanda).
 
 **Primeiro acesso leve (16/11, noite; NÃO publicado ainda):**
 - **Antes:** o service worker baixava no primeiro acesso 2.099 arquivos (58 MB: todas as vozes, sons, figuras, vídeos dos
