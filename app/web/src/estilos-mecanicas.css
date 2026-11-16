@@ -81,3 +81,7 @@ html.contraste .liga-cartao.sel,html.contraste .opcao.opcao-som.sel{background:#
   }
   .tela-sessao .cartao.atividade .palmas-acoes .botao-palma{min-height:72px}
 }
+/* Celular: o "Vamos!" do começo da lição também fica preso no rodapé (a lista de atividades do dia rola por trás) */
+@media (max-width:700px){
+  .tela-sessao .cartao.acolhida>[data-testid=comecar-sessao]{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));z-index:20;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+}

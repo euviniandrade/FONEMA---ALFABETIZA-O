@@ -20,7 +20,8 @@ export function PainelCantinho({ p, nome }: { p: Progresso; nome: string }) {
         {prec.respostas > 0
           ? <p>Precisão de leitura nas últimas {prec.respostas} respostas conferidas: <b>{Math.round(prec.precisao * 100)}%</b>. A leitura cronometrada abre quando a precisão chega a 95%.</p>
           : <p>Precisão de leitura: <b>ainda sem dados</b>. Aparece depois das primeiras palavras lidas. A leitura cronometrada abre quando a precisão chega a 95%.</p>}
-        <details className="saiba-mais"><summary>Saiba mais</summary><p>Ler com precisão vem antes de ler depressa: o limite de 95% segue o Manual ABC, p. 375–376.</p></details>
+        {/* o limite de 95% segue o Manual ABC, p. 375–376 (docs/pedagogia/07-fontes.md); a fonte fica aqui, não na tela dos pais */}
+        <details className="saiba-mais"><summary>Saiba mais</summary><p>Ler com precisão vem antes de ler depressa: por isso a leitura cronometrada só abre quando quase todas as palavras lidas saem certas.</p></details>
         <GraficoFluenciaAdulto leituras={d.fluencia} />
       </div>
       <div className="bloco" data-testid="painel-escrita-propria">

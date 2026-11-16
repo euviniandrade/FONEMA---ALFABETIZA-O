@@ -157,7 +157,7 @@ export const FASES_R1: Fase[] = [
     cenas: [
       {
         id: 'R1-F06-C2', tipo: 'C2', titulo: 'Botão do som e botão do nome', cenario: 'licao',
-        assiste: { imagem: 'serie-eco', roteiro: [sofia('Toda letra tem um NOME e um SOM.'), tales('Nas vogais eles são parecidos: o nome é "a", o som é /aaa/.'), sofia('Este botão diz o nome. Este diz o som. Agora é a sua vez, [NOME]!')] },
+        assiste: { imagem: 'serie-eco', roteiro: [sofia('Toda letra tem um NOME e um SOM.'), tales('Nas vogais eles são parecidos: o nome é "a", o som é /aaa/.'), sofia('Agora é a sua vez, [NOME]!')] },
         atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'vogais', enunciado: sofia('Qual letra faz este som, [NOME]?'), itens: [itemLetra('iiii', 'I', 'E')] }
       },
       {
