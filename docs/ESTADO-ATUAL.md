@@ -16,7 +16,7 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   `midia.test.ts`), a troca de tela cancela a fala (`rotas.ts`), uma sequência cancelada para, e os botões de avanço de Letra, Espelho,
   Som novo e "Minha vez" têm rede de segurança (`servicos/destravar.ts`: 6 s sem fala soltam o botão). E2E com a voz real, sem o modo
   rápido: `node web/e2e/fluxo.e2e.mjs --voz-real` (simula o defeito; também rodado sem a simulação: "Já conheci!" libera em ~26 s,
-  o tempo natural da apresentação da letra).
+  o tempo natural da apresentação da letra). Verificado: typecheck, lint, 244 testes e E2E `--sem-jornada` inteiro verde (com voz real e cópia).
 - **Celular (390×844):** botão de avanço da lição preso no rodapé em todas as mecânicas com `.linha-botoes`, nas Palmas e no "Vamos!"
   do começo da lição (`estilos-mecanicas.css`); conferido no E2E da Trilha dos Sons em 390×844 (todos os botões de avanço dentro da tela).
   "Continuar" inteiro na criação da conta, título do mapa sem o cofrinho por cima, cadeado pequeno sem cobrir a letra na Trilha dos Sons,
