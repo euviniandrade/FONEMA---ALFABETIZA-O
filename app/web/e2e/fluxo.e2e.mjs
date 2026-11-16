@@ -2,8 +2,8 @@
 // D027: a jornada começa pela TRILHA DO ALFABETO.
 // Percorre (D028): primeira vez → conta do responsável com PIN → cadastro da criança em 3 passos → avatar → chegada → letra A completa (apresentação, Espelho do Som, ache a letra,
 // ache a figura, traçar) → selo da letra A no ritual → Mostra pro professor → professor (1 toque) → painel da família
-// → lojinha → álbum → letra B liberada (C ainda trancada) → letras B–E → revisão A–E → letra F liberada
-// → jornada inteira (modo demonstração) → nível inicial: "já conhece as letras e os sons" pula para as sílabas.
+// → lojinha → álbum → D031: depois da letra A vem a lição do som /a/ (TF-01; letra B trancada) → letra E → TF-02
+// → jornada inteira, letras e sons alternados (modo demonstração) → nível inicial: "já conhece as letras e os sons" começa em TF-06.
 // Uso:  npm run e2e            (servidor de preview próprio, porta 4179)
 //       npm run capturas       (idem + salva as capturas da Trilha do Alfabeto em app/docs/capturas/alfabeto-*.png)
 //       node e2e/fluxo.e2e.mjs --capturas-v2   (capturas antigas v2-*.png; a numeração é anterior à D027)
@@ -132,7 +132,7 @@ async function jogarSessao(page, capturar = {}) {
     const cena = (await page.locator('[data-cena]').getAttribute('data-cena', { timeout: 1000 }).catch(() => null)) ?? '';
     if (capturar.gancho) await capturar.gancho(page, cena);
     const tirar = async (chave) => {
-      // também aceita a chave pela cena exata (ex.: 'cena:AL-R1-C4c')
+      // também aceita a chave pela cena exata (ex.: 'cena:AL-RV1-C4c')
       for (const k of [chave, `cena:${cena}`]) if (capturar[k] && !vistos.has(k)) { vistos.add(k); await (capturar.tirarCom ?? cap)(page, capturar[k]); }
     };
 
@@ -370,7 +370,7 @@ async function capturasMecanicas(browser) {
     }
   };
   // MEC_FASES=R2a-F04,… troca a lista (útil para investigar uma fase só)
-  for (const f of process.env.MEC_FASES?.split(',') ?? ['AL-B', 'AL-R1', 'AL-R4', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04']) {
+  for (const f of process.env.MEC_FASES?.split(',') ?? ['AL-B', 'AL-RV1', 'AL-RV3', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04']) {
     await page.goto(BASE + `#/c/${id}/sessao/${f}`);
     await jogarSessao(page, { gancho }).catch(async (e) => { if (process.env.MEC_FALHA) await page.screenshot({ path: process.env.MEC_FALHA }); throw e; });
     console.log(`  fase ${f} jogada: ${(await page.getByTestId('ritual').locator('h1').innerText().catch(() => '')).trim()}`);
@@ -724,7 +724,7 @@ async function main() {
   await cap(page, 'avatar');
   await page.locator('[data-ir-passo="lojinha"]').click();
   await page.getByTestId('vitrine-lojinha').waitFor();
-  ok(await page.locator('.vitrine-lista li').count() >= 4 && /Abre na Letra B/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'o fim da personalização ensina a Lojinha: o que abre depois, com fase e moedas');
+  ok(await page.locator('.vitrine-lista li').count() >= 4 && /Abre na Letra I/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'o fim da personalização ensina a Lojinha: o que abre depois, com fase e moedas');
   ok(/Acessibilidade/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'acessibilidade não vem de entrada: fica na Lojinha, grátis');
   await page.getByTestId('avatar-pronto').click();
   await page.getByTestId('primeira-missao').waitFor();
@@ -826,7 +826,8 @@ async function main() {
   await cap(page, 'lojinha');
   // D029: Lojinha do boneco — cadeados por fase + moedas, e Acessibilidade sempre grátis
   ok(/Abre na Letra C · 6 moedas/.test(await page.locator('[data-testid="loja-boneco"] [data-peca="terra"]').innerText()), 'Lojinha: camiseta terracota com cadeado "Abre na Letra C · 6 moedas"');
-  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="mata"][data-estado="pode"]').count() === 1, 'Lojinha: com a Letra B aberta e moedinhas suficientes, a camiseta verde (4) já pode ser trocada');
+  // D031: depois da letra A vem a lição do som /a/; a letra B só abre bem depois (depois de TF-17)
+  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="mata"][data-estado="fase"]').count() === 1, 'Lojinha: a camiseta verde espera a Letra B (cadeado de fase, mesmo com moedinhas)');
   ok(await page.locator('[data-testid="loja-boneco"] [data-peca="ipe"]').innerText().then((t) => /Usando/.test(t)), 'Lojinha: a cor escolhida na personalização aparece como "Usando"');
   ok(await page.locator('[data-cat="cabelo"]').count() === 0, 'Lojinha: sem aba de cabelos enquanto só existe o modelo padrão');
   await page.locator('[data-aba="acessibilidade"]').click();
@@ -851,44 +852,55 @@ async function main() {
   await page.locator('.album-regiao[data-regiao="AL"]').evaluate((el) => el.scrollIntoView({ block: 'start' }));
   await capA(page, '12-album-selos-das-letras', 700);
 
-  console.log('7. Letra B liberada (C trancada), letras B–E e a revisão');
+  console.log('7. D031: depois da letra A vem a lição do som /a/ (TF-01); a letra B espera; depois vem a letra E');
   await page.goto(BASE + `#/c/${id}/alfabeto`);
   await page.getByTestId('trilha-alfabeto').waitFor();
-  ok(await page.locator('[data-fase="AL-A"][data-estado="feita"]').count() === 1 && await page.locator('[data-fase="AL-B"][data-estado="atual"]').count() === 1, 'trilha: a letra A brilha e a letra B está liberada');
-  ok(await page.locator('[data-fase="AL-C"]').isDisabled(), 'trilha: a letra C continua trancada');
+  ok(await page.locator('[data-fase="AL-A"][data-estado="feita"]').count() === 1 && await page.locator('[data-fase="AL-B"]').isDisabled() && await page.locator('[data-fase="AL-E"]').isDisabled(), 'trilha A–Z: a letra A brilha; B e E esperam (a próxima é a lição do som)');
   ok(/1 de 26/.test(await page.getByTestId('letras-feitas').innerText()), 'contador: 1 de 26 letras');
-  await capA(page, '09-trilha-letra-b-liberada', 900);
+  ok(/Continuar a jornada/.test(await page.getByTestId('trilha-continuar').innerText()), 'trilha A–Z: o botão leva à jornada, que agora está na Trilha dos Sons');
+  await capA(page, '09-trilha-depois-da-letra-a', 900);
+  await page.getByTestId('trilha-continuar').click();
+  await page.waitForFunction(() => location.hash.includes('/fase/'));
+  ok(page.url().includes('/fase/TF-01'), 'o botão da Trilha A–Z abre a lição do som /a/ (TF-01), na outra trilha');
   await page.goto(BASE + `#/c/${id}/fase/AL-B`);
+  await page.waitForTimeout(300);
+  ok(page.url().includes('/vila'), 'sem pular fases: a letra B bloqueada volta para a vila');
+  await page.goto(BASE + `#/c/${id}/sessao/AL-RV1`);
+  await page.waitForTimeout(300);
+  ok(page.url().includes('/vila'), 'sem pular fases: a revisão das vogais só abre depois das vogais');
+  let tf01 = false;
+  for (let t = 0; t < 4 && !tf01; t++) {
+    // sai da tela do ritual antes: a mesma rota com o mesmo hash não recarrega a sessão
+    await page.goto(BASE + `#/c/${id}/sons`);
+    await page.getByTestId('trilha-sons').waitFor();
+    await page.goto(BASE + `#/c/${id}/sessao/TF-01`);
+    await jogarSessao(page, {});
+    await page.getByTestId('ritual').locator('h1').waitFor();
+    tf01 = /Fase concluída/.test(await page.getByTestId('ritual').locator('h1').innerText());
+  }
+  ok(tf01, 'lição TF-01 (o som /a/) concluída por domínio');
+  await page.goto(BASE + `#/c/${id}/sons`);
+  await page.getByTestId('trilha-sons').waitFor();
+  ok(await page.locator('[data-fase="TF-01"][data-estado="feita"], [data-fase="TF-01"][data-estado="dominada"]').count() === 1 && await page.locator('[data-fase="TF-02"]').isDisabled(), 'Trilha dos Sons: TF-01 feita; TF-02 espera a letra E');
+  ok(/Continuar a jornada/.test(await page.getByTestId('sons-continuar').innerText()), 'Trilha dos Sons: o botão leva à jornada, que voltou para a Trilha A–Z');
+  await page.getByTestId('sons-continuar').click();
+  await page.waitForFunction(() => location.hash.includes('/fase/'));
+  ok(page.url().includes('/fase/AL-E'), 'o botão da Trilha dos Sons abre a letra E, na outra trilha');
   await page.getByTestId('conquistas-fase').waitFor();
   ok(await page.locator('[data-estado="bloqueada"]').count() >= 1, 'conquistas ainda não ganhas aparecem apagadas com cadeado e a habilidade');
   ok(!(await page.getByTestId('ir-lojinha').count()), 'sem Lojinha na entrada da fase (P7-b)');
   await cap(page, 'fase-minhas-conquistas');
-  await page.goto(BASE + `#/c/${id}/fase/AL-C`);
-  await page.waitForTimeout(300);
-  ok(page.url().includes('/vila'), 'sem pular fases: a letra C bloqueada volta para a vila');
-  await page.goto(BASE + `#/c/${id}/sessao/AL-R1`);
-  await page.waitForTimeout(300);
-  ok(page.url().includes('/vila'), 'sem pular fases: a revisão só abre depois das 5 letras');
-  for (const l of ['B', 'C', 'D', 'E']) {
-    await page.goto(BASE + `#/c/${id}/sessao/AL-${l}`);
-    await jogarSessao(page, {});
-    await page.getByTestId('ritual').locator('h1').waitFor();
-    ok(/Fase concluída: Letra/.test(await page.getByTestId('ritual').locator('h1').innerText()), `letra ${l} concluída`);
-  }
-  await page.goto(BASE + `#/c/${id}/alfabeto`);
-  await page.getByTestId('trilha-alfabeto').waitFor();
-  ok(await page.locator('[data-fase="AL-R1"][data-estado="atual"]').count() === 1 && await page.locator('[data-fase="AL-F"]').isDisabled(), 'depois de A–E vem a revisão; a letra F espera');
-  await page.goto(BASE + `#/c/${id}/sessao/AL-R1`);
-  await page.getByTestId('comecar-sessao').waitFor();
-  ok(/Aquecimento/.test(await page.locator('.trilha-dia').innerText()), 'a revisão começa com um aquecimento de escuta (palmas)');
-  await jogarSessao(page, { 'cena:AL-R1-C4a': '10a-revisao-ache-a-letra', 'cena:AL-R1-C4b': '10b-revisao-letra-figura', 'cena:AL-R1-C4c': '10c-revisao-com-qual-letra', tirarCom: capAl });
+  await page.goto(BASE + `#/c/${id}/sessao/AL-E`);
+  await jogarSessao(page, {});
   await page.getByTestId('ritual').locator('h1').waitFor();
-  ok(/Fase concluída: Revisão/.test(await page.getByTestId('ritual').locator('h1').innerText()), 'revisão das letras A–E concluída');
+  ok(/Fase concluída: Letra/.test(await page.getByTestId('ritual').locator('h1').innerText()), 'letra E concluída');
   await page.goto(BASE + `#/c/${id}/alfabeto`);
   await page.getByTestId('trilha-alfabeto').waitFor();
-  ok(await page.locator('.marco.feita').count() === 6 && await page.locator('[data-fase="AL-F"][data-estado="atual"]').count() === 1, 'trilha: A–E e a revisão brilham; a letra F está liberada');
-  ok(/5 de 26/.test(await page.getByTestId('letras-feitas').innerText()), 'contador: 5 de 26 letras');
-  await capA(page, '11-trilha-depois-da-revisao', 900);
+  ok(await page.locator('.marco.feita').count() === 2 && /2 de 26/.test(await page.getByTestId('letras-feitas').innerText()), 'trilha A–Z: A e E brilham (2 de 26)');
+  await page.goto(BASE + `#/c/${id}/sons`);
+  await page.getByTestId('trilha-sons').waitFor();
+  ok(await page.locator('[data-fase="TF-02"][data-estado="atual"]').count() === 1, 'depois da letra E, a lição do som /ê/ (TF-02) é a de agora');
+  await capA(page, '11-trilha-sons-depois-da-letra-e', 900);
 
   console.log('8. Conheça seu corpo, mapa e celular');
   await page.goto(BASE + `#/c/${id}/corpo`);
@@ -936,7 +948,7 @@ async function main() {
 
   const JORNADA = !process.argv.includes('--sem-jornada');
   {
-  console.log('9. Jornada inteira: Alfabeto → Sílabas → Palavras → Meu nome (modo demonstração: domínio em 1 sessão)');
+  console.log('9. Jornada inteira: letras e sons alternados (D031) → vogais abertas → Palavras → Meu nome (modo demonstração)');
     const ctx2 = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: 'pt-BR' });
     await ctx2.addInitScript((c) => { try { localStorage.setItem('fonema-teste-rapido', '1'); if (c) localStorage.setItem('fonema-coletar', '1'); } catch { /* sem armazenamento */ } }, COLETAR);
     const pj = await ctx2.newPage();
@@ -952,13 +964,22 @@ async function main() {
     await pj.getByTestId('primeira-missao').waitFor();
     const idj = pj.url().split('/c/')[1].split('/')[0];
     // --sem-jornada: pula a jornada inteira (demorada) e vai direto ao nível inicial
-    const AL = [...'ABCDE', 'R1', ...'FGHIJ', 'R2', ...'KLMNO', 'R3', ...'PQRST', 'R4', ...'UVWXYZ', 'FESTA'].map((x) => `AL-${x}`);
-    const TF = [...Array.from({ length: 15 }, (_, k) => `TF-${String(k + 1).padStart(2, '0')}`), 'TF-R2', ...Array.from({ length: 7 }, (_, k) => `TF-${k + 16}`), 'TF-R3'];
-    const FASES = [...AL, ...TF, 'R1-F02', 'R1-F03', 'R1-F06', 'R1-F07', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04', 'R2a-F05', 'R0-F01'];
+    // D031: cada letra logo antes da lição do som dela; revisões do alfabeto no fim de cada bloco; R H X Q K Y W antes da Festa
+    const LETRAS_E_SONS = [
+      'AL-A TF-01 AL-E TF-02 AL-I TF-03 AL-O TF-04 AL-U TF-05 TF-06 AL-RV1',
+      'AL-M TF-07 AL-F TF-08 AL-V TF-09 AL-L TF-10 AL-S TF-11 TF-12 AL-N TF-13 AL-Z TF-14 AL-J TF-15 TF-R2 AL-RV2',
+      'AL-P TF-16 AL-T TF-17 AL-B TF-18 AL-C TF-19 AL-D TF-20 AL-G TF-21 TF-22 TF-R3 AL-RV3',
+      'AL-R AL-H AL-X AL-Q AL-K AL-Y AL-W AL-FESTA'
+    ].join(' ').split(' ');
+    const FASES = [...LETRAS_E_SONS, 'R1-F02', 'R1-F03', 'R1-F06', 'R1-F07', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04', 'R2a-F05', 'R0-F01'];
     let viuTrofeu = false;
     for (const f of JORNADA ? FASES : []) {
       let concluiu = false;
       for (let tentativa = 0; tentativa < 3 && !concluiu; tentativa++) {
+        // sai da tela do ritual antes: a mesma rota com o mesmo hash NÃO recarrega a sessão (era por isso que a 2ª e a 3ª
+        // tentativa de uma lição que não concluiu na 1ª só reliam o mesmo ritual e o E2E falhava em TF-01/TF-06)
+        await pj.goto(BASE + `#/c/${idj}/alfabeto`);
+        await pj.getByTestId('trilha-alfabeto').waitFor();
         await pj.goto(BASE + `#/c/${idj}/sessao/${f}`);
         await jogarSessao(pj, {});
         await pj.getByTestId('ritual').locator('h1').waitFor();
@@ -967,13 +988,22 @@ async function main() {
         if (f === 'AL-FESTA' && concluiu) viuTrofeu = viuTrofeu || await pj.locator('[data-testid="selo-novo"] [data-conquista="T-ALFABETO"]').count() === 1;
         if (f === 'AL-FESTA') console.log(`  · Festa, tentativa ${tentativa + 1}: ${await pj.getByTestId('ritual').locator('h1').innerText()} · selos novos: ${await pj.locator('[data-testid="selo-novo"] [data-conquista]').evaluateAll((e) => e.map((x) => x.dataset.conquista).join(','))}`);
       }
+      if (!concluiu) {
+        // diagnóstico: o estado da fase e as últimas tentativas de cada habilidade dela
+        const info = await pj.evaluate(async ([cid, fase]) => {
+          const db = await new Promise((r) => { const q = indexedDB.open('fonema'); q.onsuccess = () => r(q.result); });
+          const p = await new Promise((r) => { const q = db.transaction('progressos').objectStore('progressos').get(cid); q.onsuccess = () => r(q.result); });
+          return { faseAtual: p.faseAtual, fase: p.fases[fase], habs: Object.fromEntries(Object.entries(p.habilidades).map(([h, e]) => [h, e.tentativas.map((t) => `${t.cena}:${t.tipo ?? '?'}:${t.acertou ? 'ok' : 'x'}`).slice(-10)])) };
+        }, [idj, f]);
+        console.log(JSON.stringify(info).slice(0, 4000));
+      }
       ok(concluiu, `fase ${f} jogada e concluída`);
       if (f === 'AL-FESTA') {
         ok(viuTrofeu, 'Festa do Alfabeto: troféu "Alfabeto Completo"');
         await pj.goto(BASE + `#/c/${idj}/alfabeto`);
         await pj.getByTestId('trilha-alfabeto').waitFor();
-        ok(await pj.locator('.marco.feita').count() === 31 && /26 de 26/.test(await pj.getByTestId('letras-feitas').innerText()), 'trilha completa: 26 de 26 letras brilhando');
-        ok(/Continuar a jornada/.test(await pj.getByTestId('trilha-continuar').innerText()), 'depois do alfabeto, a trilha leva à Trilha dos Sons');
+        ok(await pj.locator('.marco.feita').count() === 30 && /26 de 26/.test(await pj.getByTestId('letras-feitas').innerText()), 'trilha completa: 26 de 26 letras e as 4 estrelas brilhando');
+        ok(/Continuar a jornada/.test(await pj.getByTestId('trilha-continuar').innerText()), 'depois da Festa, a trilha leva adiante na jornada (os outros sons das vogais)');
         await capA(pj, '15-trilha-completa', 1200);
       }
     }
@@ -996,7 +1026,7 @@ async function main() {
     const idd = pj.url().split('/c/')[1].split('/')[0];
     await pj.goto(BASE + `#/c/${idd}/alfabeto`);
     await pj.locator('.marco.liberada').first().waitFor();
-    ok(await pj.locator('.marco.liberada').count() === 31 && !(await pj.locator('.marco.feita').count()), 'o Alfabeto inteiro fica aberto para revisar, sem contar como concluído');
+    ok(await pj.locator('.marco.liberada').count() === 30 && !(await pj.locator('.marco.feita').count()), 'o Alfabeto inteiro fica aberto para revisar, sem contar como concluído');
     await capA(pj, '14-trilha-liberada-para-revisar', 900);
     await pj.goto(BASE + `#/c/${idd}/sessao/AL-H`);
     await pj.getByTestId('comecar-sessao').click();
@@ -1039,15 +1069,9 @@ async function main() {
     await capC(0, '08-ritual-selo-da-letra');
     await p3.goto(BASE + `#/c/${idk}/alfabeto`);
     await p3.getByTestId('trilha-alfabeto').waitFor();
-    await capC(0, '09-trilha-letra-b-liberada');
+    await capC(0, '09-trilha-depois-da-letra-a');
     await p3.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await capC(0, '09b-trilha-fim-e-etapas');
-    for (const l of ['B', 'C', 'D', 'E']) { await p3.goto(BASE + `#/c/${idk}/sessao/AL-${l}`); await jogarSessao(p3, {}); }
-    await p3.goto(BASE + `#/c/${idk}/sessao/AL-R1`);
-    await jogarSessao(p3, { 'cena:AL-R1-C4c': '10c-revisao-com-qual-letra', tirarCom: capC });
-    await p3.goto(BASE + `#/c/${idk}/alfabeto`);
-    await p3.getByTestId('trilha-alfabeto').waitFor();
-    await capC(0, '11-trilha-depois-da-revisao');
     await p3.goto(BASE + `#/c/${idk}/album`);
     await p3.getByTestId('album').waitFor();
     await p3.locator('.album-regiao[data-regiao="AL"]').evaluate((el) => el.scrollIntoView({ block: 'start' }));
@@ -1081,7 +1105,7 @@ async function main() {
     await p2.getByTestId('voltar-vila').click();
     await p2.getByTestId('vila').waitFor();
     await capCel('13-vila', 1200);
-    for (const [rota, nome] of [['album', '14-album'], ['lojinha', '15-lojinha'], ['mapa', '16-arquipelago'], ['regiao/R2a', '17-regiao'], ['fase/AL-B', '18-entrada-da-fase']]) {
+    for (const [rota, nome] of [['album', '14-album'], ['lojinha', '15-lojinha'], ['mapa', '16-arquipelago'], ['regiao/R2a', '17-regiao'], ['fase/TF-01', '18-entrada-da-fase']]) {
       await p2.goto(BASE + `#/c/${idc}/${rota}`);
       await capCel(nome, 900);
     }
@@ -1130,7 +1154,7 @@ async function main() {
     await p2.getByTestId('voltar-vila').click();
     await p2.getByTestId('vila').waitFor();
     await capCel('13-vila', 1200);
-    for (const [rota, nome] of [['album', '14-album'], ['lojinha', '15-lojinha'], ['mapa', '16-arquipelago'], ['regiao/R2a', '17-regiao'], ['fase/AL-B', '18-entrada-da-fase']]) {
+    for (const [rota, nome] of [['album', '14-album'], ['lojinha', '15-lojinha'], ['mapa', '16-arquipelago'], ['regiao/R2a', '17-regiao'], ['fase/TF-01', '18-entrada-da-fase']]) {
       await p2.goto(BASE + `#/c/${idc}/${rota}`);
       await capCel(nome, 900);
     }

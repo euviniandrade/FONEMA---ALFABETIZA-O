@@ -33,7 +33,8 @@ function useColunas(): number {
 
 /**
  * TRILHA DO ALFABETO (D027): o caminho das 26 letras, de A a Z, com as revisões (estrelas) e a Festa do Alfabeto
- * (troféu) no fim. Letras concluídas brilham em ouro; a de agora pulsa; as próximas esperam com cadeado.
+ * (troféu) no fim. D031: na jornada as letras vêm alternadas com as lições da Trilha dos Sons (A, som /a/, E, som /ê/…);
+ * aqui o mapa continua em ordem alfabética, e o botão leva à fase de agora, mesmo quando ela está na Trilha dos Sons. Letras concluídas brilham em ouro; a de agora pulsa; as próximas esperam com cadeado.
  * Sem pular: só abre o que o motor liberou (D021/D026).
  */
 export function TrilhaAlfabeto({ criancaId }: { criancaId: string }) {
@@ -110,7 +111,7 @@ export function TrilhaAlfabeto({ criancaId }: { criancaId: string }) {
               <li className="breve"><b>Frases</b><small>Em breve</small></li>
             </ol>
             <button className="btn enorme ipe brilha" onClick={() => navegar(`c/${criancaId}/fase/${progresso.faseAtual}`)} data-testid="trilha-continuar">
-              <Icone nome="play" />{completo && !noAlfabeto ? 'Continuar a jornada' : letrasFeitas ? 'Continuar' : 'Começar pela letra A'}
+              <Icone nome="play" />{!noAlfabeto && (completo || letrasFeitas) ? 'Continuar a jornada' : letrasFeitas ? 'Continuar' : 'Começar pela letra A'}
             </button>
           </div>
         </section>

@@ -44,7 +44,6 @@ export function TrilhaSons({ criancaId }: { criancaId: string }) {
   const feitas = FASES_TF.filter((f) => progresso.fases[f.id]?.estado === 'concluida').length;
   const dominadas = FASES_TF.filter((f) => progresso.fases[f.id]?.dominadaEm).length;
   const naTrilha = FASES_TF.some((f) => f.id === progresso.faseAtual);
-  const proxima = FASES_TF.find((f) => f.id === progresso.faseAtual) ?? FASES_TF.find((f) => podeEntrar(progresso, f.id) && progresso.fases[f.id]?.estado !== 'concluida');
   const etapaAtual = REGIOES.find((r) => r.fases.includes(progresso.faseAtual))?.id;
   let k = 0;
 
@@ -113,8 +112,9 @@ export function TrilhaSons({ criancaId }: { criancaId: string }) {
                 </li>
               ))}
             </ol>
-            <button className="btn enorme ipe brilha" onClick={() => navegar(`c/${criancaId}/fase/${naTrilha || !proxima ? progresso.faseAtual : proxima.id}`)} data-testid="sons-continuar">
-              <Icone nome="play" />{feitas ? 'Continuar' : 'Começar'}
+            {/* D031: a jornada alterna letra (Trilha A–Z) e lição (aqui): o botão sempre leva à fase de agora, em qualquer trilha */}
+            <button className="btn enorme ipe brilha" onClick={() => navegar(`c/${criancaId}/fase/${progresso.faseAtual}`)} data-testid="sons-continuar">
+              <Icone nome="play" />{!naTrilha ? 'Continuar a jornada' : feitas ? 'Continuar' : 'Começar'}
             </button>
           </div>
         </section>
