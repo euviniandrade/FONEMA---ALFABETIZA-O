@@ -9,6 +9,28 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Trava da voz, celular, cópia dos dados e textos (16/11, tarde; NÃO publicado ainda):**
+- **Trava da voz (grave):** Trilha dos Sons → Lojinha (fala de boas-vindas tocando) → Letra A deixava a voz muda e o "Já conheci!"
+  preso para sempre (o clipe acabava sem o navegador avisar o fim e toda fala seguinte esperava por ele). Agora: a espera de cada clipe
+  sempre termina (`web/src/servicos/midia.ts`: fim, erro, pausa, vigia a cada 250 ms e tempo-limite = duração + 1,5 s; teste
+  `midia.test.ts`), a troca de tela cancela a fala (`rotas.ts`), uma sequência cancelada para, e os botões de avanço de Letra, Espelho,
+  Som novo e "Minha vez" têm rede de segurança (`servicos/destravar.ts`: 6 s sem fala soltam o botão). E2E com a voz real, sem o modo
+  rápido: `node web/e2e/fluxo.e2e.mjs --voz-real` (simula o defeito; também rodado sem a simulação: "Já conheci!" libera em ~26 s,
+  o tempo natural da apresentação da letra).
+- **Celular (390×844):** botão de avanço da lição preso no rodapé em todas as mecânicas com `.linha-botoes`, nas Palmas e no "Vamos!"
+  do começo da lição (`estilos-mecanicas.css`); conferido no E2E da Trilha dos Sons em 390×844 (todos os botões de avanço dentro da tela).
+  "Continuar" inteiro na criação da conta, título do mapa sem o cofrinho por cima, cadeado pequeno sem cobrir a letra na Trilha dos Sons,
+  abas do adulto em duas linhas.
+- **Cópia dos dados:** `navigator.storage.persist()` na abertura (`main.tsx`); "Restaurar uma cópia dos dados" em Configurações
+  (`dados/copia.ts` valida; mostra de quem é a cópia e pede confirmação; contas dos adultos e sons gravados ficam). Testes: `copia.test.ts`
+  e E2E `--copia` (também dentro do `--sem-jornada`).
+- **Textos:** a criança não vê mais "Eu faço / Nós fazemos / Você faz / Desafio" (o nome do método fica em `data-metodo`); cadastro sem
+  "juntando letras em sílabas"; vila com estrela no marcador (combina com "Toque na estrela"); fala do R1-F06 que citava botões que
+  não existem virou "Agora é a sua vez, [NOME]!" (clipe já existente); painel da família sem "0%" sem dados e sem citação bibliográfica
+  na tela dos pais (a fonte fica no código). Espelho do Som busca o three.js só no caminho que existe (sem 404).
+- **Pendente:** a fala das Palmas "olha as lâmpadas" no estilo amarelinha (lá são casas; pede voz nova); a fase antiga
+  "Juntar sílabas: primeiras palavras" (R2a) tem nome de método silábico no título (rever com a regra 6).
+
 **No ar:** https://fonema.vercel.app = commit `841c099` (publicado em 15/11, 21h50 UTC). Verificado antes de publicar: typecheck, lint,
 144 testes, build e E2E completo (na 2ª rodada passou inclusive o troféu da Festa do Alfabeto; a 1ª rodada falhou só nesse ponto,
 por ordem de tentativas do próprio teste).
