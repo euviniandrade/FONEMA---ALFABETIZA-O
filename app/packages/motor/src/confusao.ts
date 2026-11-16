@@ -57,18 +57,60 @@ export function parceiroProvavel(alvo: string, categoria?: CategoriaAlvo): strin
   return ehLetra ? SONS[outro]?.letra ?? outro : outro;
 }
 
-/** Tipos de erro de docs/pedagogia/06 §1 que dá para reconhecer só pelo par (alvo, resposta). */
-export type TipoDeErro = 'E-VOZ' | 'E-NAS' | 'E-VOG' | 'E-VIS';
+/**
+ * Tipos de erro de docs/pedagogia/06 §1 que dá para reconhecer pelos dados gravados: pelo par (alvo, resposta) — letra,
+ * som ou palavra escrita/lida — e, no caso do chute (E-CHU), pelo tempo. E-ACR, E-ORD e E-IRR também entram.
+ * Regras de reconhecimento: decisão do projeto [DP], a partir dos exemplos de 06 §1 (ABC p. 418–420; SOA p. 118, 147–186).
+ */
+export type TipoDeErro = 'E-VOZ' | 'E-NAS' | 'E-VOG' | 'E-FIM' | 'E-OMI' | 'E-ACR' | 'E-ORD' | 'E-CTX' | 'E-IRR' | 'E-VIS' | 'E-NOM' | 'E-CHU';
 
 export const NOME_DO_ERRO: Record<TipoDeErro, string> = {
   'E-VOZ': 'troca de som com voz e sem voz',
   'E-NAS': 'troca entre sons do nariz',
   'E-VOG': 'troca de vogal',
-  'E-VIS': 'letras de desenho parecido'
+  'E-FIM': 'escreve como fala no fim da palavra',
+  'E-OMI': 'esquece uma letra ou um som',
+  'E-ACR': 'põe uma letra a mais',
+  'E-ORD': 'troca a ordem das letras',
+  'E-CTX': 'regra de posição (r/rr, c/qu, g/gu, s/ss)',
+  'E-IRR': 'escolha sem regra (j/g, ch/x, s/ç)',
+  'E-VIS': 'letras de desenho parecido',
+  'E-NOM': 'usa o nome da letra no lugar do som',
+  'E-CHU': 'resposta rápida demais (chute)'
 };
 
-/** Classifica a troca: voz (p/b, t/d, f/v, s/z, x/j, c/g), nasal (m/n/nh), vogal, ou desenho (b/d, p/q). */
-export function tipoDeErro(alvo: string, escolhido: string, categoria?: CategoriaAlvo): TipoDeErro | undefined {
+const semAcento = (w: string) => w.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+const ehPalavra = (w: string) => /^[\p{L}]{2,}$/u.test(w);
+const ehSubsequencia = (curta: string, longa: string) => { let i = 0; for (const ch of longa) if (ch === curta[i]) i++; return i === curta.length; };
+/** Regras de posição (E-CTX): RR/R, SS/S, QU/C, GU/G. */
+const canonCtx = (w: string) => w.replace(/RR/g, 'R').replace(/SS/g, 'S').replace(/QU(?=[EI])/g, 'K').replace(/C(?=[AOU])/g, 'K').replace(/GU(?=[EI])/g, 'G');
+/** Escolhas sem regra (E-IRR): J/G antes de E e I, CH/X, Ç/S/C antes de E e I. */
+const canonIrr = (w: string) => canonCtx(w).replace(/CH/g, 'X').replace(/G(?=[EI])/g, 'J').replace(/Ç/g, 'S').replace(/C(?=[EI])/g, 'S');
+/** Nome das letras, do jeito que a criança escreve quando usa o nome no lugar do som (E-NOM: "K" por "CA"). */
+const NOMES_DAS_LETRAS: Record<string, string[]> = {
+  B: ['BE'], C: ['CE', 'SE'], D: ['DE'], F: ['EFE'], G: ['GE', 'JE'], H: ['AGA'], J: ['JOTA'], K: ['CA', 'KA'], L: ['ELE'], M: ['EME'], N: ['ENE'],
+  P: ['PE'], Q: ['QUE', 'KE'], R: ['ERRE', 'ERE'], S: ['ESSE', 'ESE'], T: ['TE'], V: ['VE'], X: ['XIS', 'CHIS'], Z: ['ZE']
+};
+/** `escrito` vira `alvo` trocando ao menos uma letra pelo NOME dela? ("KZA" → "CASA" não; "PTK" → "PETECA" sim.) */
+function usouNome(alvo: string, escrito: string): boolean {
+  const memo = new Map<string, boolean>();
+  const ir = (i: number, j: number, usou: boolean): boolean => {
+    const k = `${i},${j},${usou}`;
+    if (memo.has(k)) return memo.get(k)!;
+    let r = false;
+    if (j === escrito.length) r = i === alvo.length && usou;
+    else {
+      if (alvo[i] === escrito[j]) r = ir(i + 1, j + 1, usou);
+      if (!r) for (const n of NOMES_DAS_LETRAS[escrito[j]] ?? []) if (alvo.startsWith(n, i) && ir(i + n.length, j + 1, true)) { r = true; break; }
+    }
+    memo.set(k, r);
+    return r;
+  };
+  return escrito.length < alvo.length && ir(0, 0, false);
+}
+
+/** Troca de UMA letra ou som: voz (p/b…), nasal (m/n/nh), vogal (inclusive é/ê), desenho (b/d, p/q). */
+function tipoDaTroca(alvo: string, escolhido: string, categoria?: CategoriaAlvo): TipoDeErro | undefined {
   const a = chaveDoSom(alvo, categoria);
   const b = chaveDoSom(escolhido, categoria);
   if (a && b && a !== b) {
@@ -80,6 +122,64 @@ export function tipoDeErro(alvo: string, escolhido: string, categoria?: Categori
   }
   if (alvo.length === 1 && escolhido.length === 1 && mesmoPar(PARES_DE_DESENHO, alvo.toLowerCase(), escolhido.toLowerCase())) return 'E-VIS';
   return undefined;
+}
+
+/** Classifica a troca entre o alvo e a resposta (letra, som ou palavra). `undefined` = não dá para dizer. */
+export function tipoDeErro(alvo: string, escolhido: string, categoria?: CategoriaAlvo): TipoDeErro | undefined {
+  if (!alvo || !escolhido || alvo === escolhido) return undefined;
+  if (!(ehPalavra(alvo) && ehPalavra(escolhido)) || categoria === 'fonema' || categoria === 'grafema') return tipoDaTroca(alvo, escolhido, categoria);
+  const a = semAcento(alvo);
+  const b = semAcento(escolhido);
+  if (a === b) {
+    // só o acento mudou: é/ê, ó/ô (vogal aberta × fechada)
+    return 'E-VOG';
+  }
+  if (canonCtx(a) === canonCtx(b)) return 'E-CTX';
+  if (canonIrr(a) === canonIrr(b)) return 'E-IRR';
+  if (a.length === b.length) {
+    const dif = [...a].map((ch, k) => (ch === b[k] ? -1 : k)).filter((k) => k >= 0);
+    // E-FIM: escreve como fala no fim (lobu, sorveti, papeu)
+    if (dif.length === 1 && dif[0] === a.length - 1 && [['O', 'U'], ['E', 'I'], ['L', 'U']].some(([x, y]) => a.endsWith(x) && b.endsWith(y))) return 'E-FIM';
+    if (dif.length === 1) return tipoDaTroca(a[dif[0]], b[dif[0]], 'grafema');
+    if ([...a].sort().join() === [...b].sort().join()) return 'E-ORD';
+    return undefined;
+  }
+  if (usouNome(a, b)) return 'E-NOM';
+  if (b.length < a.length && ehSubsequencia(b, a)) return 'E-OMI';
+  if (b.length > a.length && ehSubsequencia(a, b)) return 'E-ACR';
+  return undefined;
+}
+
+/** Resposta rápida demais para ter sido pensada (mesmo limite de ajuda.ts › CHUTE.rapidaMs). */
+export const CHUTE_RAPIDO_MS = 1200;
+
+/**
+ * Tipo de erro de UMA tentativa avaliada que não saiu certa de primeira: E-CHU quando foi rápida demais; senão, o tipo
+ * da primeira resposta errada. Sem `alvo` (dado antigo) não se inventa tipo.
+ */
+export function tipoDeErroDaTentativa(t: Tentativa): TipoDeErro | undefined {
+  if (!ehAvaliada(t) || t.alvo === undefined) return undefined;
+  const errada = respostasErradas(t)[0];
+  if (errada === undefined) return undefined;
+  if (t.tempoMs !== undefined && t.tempoMs >= 0 && t.tempoMs < CHUTE_RAPIDO_MS) return 'E-CHU';
+  return tipoDeErro(t.alvo, errada, t.categoria);
+}
+
+export interface ErroFrequente { erro: TipoDeErro; nome: string; vezes: number; sessoes: number; exemplos: { alvo: string; escolhido: string }[] }
+
+/** Tipos de erro mais frequentes da criança (painel do adulto, 06 §8 item 4), do mais comum para o menos. */
+export function tiposDeErroFrequentes(tentativas: Tentativa[], minimo = 2): ErroFrequente[] {
+  const m = new Map<TipoDeErro, ErroFrequente & { s: Set<string> }>();
+  for (const t of tentativas) {
+    const erro = tipoDeErroDaTentativa(t);
+    if (!erro) continue;
+    const x = m.get(erro) ?? { erro, nome: NOME_DO_ERRO[erro], vezes: 0, sessoes: 0, exemplos: [], s: new Set<string>() };
+    x.vezes++;
+    x.s.add(t.sessao);
+    if (x.exemplos.length < 3) x.exemplos.push({ alvo: t.alvo!, escolhido: respostasErradas(t)[0] });
+    m.set(erro, x);
+  }
+  return [...m.values()].filter((x) => x.vezes >= minimo).map(({ s, ...x }) => ({ ...x, sessoes: s.size })).sort((a, b) => b.vezes - a.vezes);
 }
 
 /* ------------------------------ matriz de confusão ------------------------------ */

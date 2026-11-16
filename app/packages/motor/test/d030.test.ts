@@ -12,7 +12,7 @@ import {
   migrarProgresso, montarSessao, normalizarTentativa, novaHabilidade, palavrasDificeis, parConhecido, parceiroProvavel, paresConfundidos,
   praticasRecomendadas, preRequisitoDe, progressoInicial, proporcao, proximaPratica, recalcularP, registrarSondagem, registrarTentativa,
   resultadoPorArea, resumoAprendizagem, resumoFamilia, sessoesSeguidasComErro, situacaoDasFases, situacaoSondagem, tempoMedioPorHabilidade,
-  termometroMaximoDoConteudo, tipoDaTentativa, tipoDeErro
+  termometroMaximoDoConteudo, tipoDaTentativa, tipoDeErro, tipoDeErroDaTentativa, tiposDeErroFrequentes, resultadoProvaRelampago
 } from '../src/index.ts';
 import type { Crianca, EstadoHabilidade, Progresso, Tentativa } from '../src/index.ts';
 
@@ -666,5 +666,69 @@ describe('painel do adulto: resumo de aprendizagem', () => {
     expect(d.pares[0]).toMatchObject({ par: ['B', 'P'], criancas: 1 });
     expect(d.semDetalhe).toBe(false);
     expect(dificuldadesDaTurma([{ progresso: comTentativas([t('rima', false, 's')]) }]).semDetalhe).toBe(true);
+  });
+});
+
+describe('tipos de erro de docs/pedagogia/06 §1 inferidos dos dados', () => {
+  it('reconhece troca, fim, omissão, acréscimo, ordem, regra de posição, sem regra e nome da letra', () => {
+    expect(tipoDeErro('LOBO', 'LOBU', 'palavra')).toBe('E-FIM');
+    expect(tipoDeErro('SORVETE', 'SORVETI', 'palavra')).toBe('E-FIM');
+    expect(tipoDeErro('PAPEL', 'PAPEU', 'palavra')).toBe('E-FIM');
+    expect(tipoDeErro('FLORESTA', 'FORESTA', 'palavra')).toBe('E-OMI');
+    expect(tipoDeErro('PATO', 'PATTO', 'palavra')).toBe('E-ACR');
+    expect(tipoDeErro('TARTARUGA', 'TATRARUGA', 'palavra')).toBe('E-ORD');
+    expect(tipoDeErro('CARRO', 'CARO', 'palavra')).toBe('E-CTX');
+    expect(tipoDeErro('QUEIJO', 'KEIJO', 'palavra')).toBe('E-CTX');
+    expect(tipoDeErro('CHAVE', 'XAVE', 'palavra')).toBe('E-IRR');
+    expect(tipoDeErro('GELO', 'JELO', 'palavra')).toBe('E-IRR');
+    expect(tipoDeErro('PETECA', 'PTK', 'palavra')).toBe('E-NOM');
+    expect(tipoDeErro('CASA', 'KSA', 'palavra')).toBe('E-NOM');
+    expect(tipoDeErro('PATO', 'BATO', 'palavra')).toBe('E-VOZ');
+    expect(tipoDeErro('MALA', 'NALA', 'palavra')).toBe('E-NAS');
+    expect(tipoDeErro('BEBÊ', 'BEBÉ', 'palavra')).toBe('E-VOG');
+    expect(tipoDeErro('DADO', 'BADO', 'palavra')).toBe('E-VIS');
+    expect(tipoDeErro('MALA', 'MALA', 'palavra')).toBeUndefined();
+  });
+
+  it('chute rápido vira E-CHU; os tipos mais frequentes vão para o painel', () => {
+    const rapido = certo('gpc-p', 'P', 's1', { escolhido: 'B', respostas: ['B', 'P'], tempoMs: 400 });
+    expect(tipoDeErroDaTentativa(rapido)).toBe('E-CHU');
+    const ts = [
+      t('escrita-cvcv', false, 's1', { mecanica: 'ditado', alvo: 'LOBO', escolhido: 'LOBU', respostas: ['LOBU'], tempoMs: 9000 }),
+      t('escrita-cvcv', false, 's2', { mecanica: 'ditado', alvo: 'OVO', escolhido: 'OVU', respostas: ['OVU'], tempoMs: 9000 }),
+      t('escrita-cvcv', false, 's2', { mecanica: 'ditado', alvo: 'PATO', escolhido: 'BATO', respostas: ['BATO'], tempoMs: 9000 })
+    ];
+    expect(tiposDeErroFrequentes(ts)).toEqual([expect.objectContaining({ erro: 'E-FIM', vezes: 2, sessoes: 2 })]);
+    expect(resumoAprendizagem(crianca, { ...comTentativas(ts), sessoesFeitas: 2, ultimaSessao: T0 }, cfg, T0).tiposDeErro[0].erro).toBe('E-FIM');
+  });
+});
+
+describe('critério 5 de 06 §2: palavras e tipos de atividade diferentes', () => {
+  const dez = (extra: (i: number) => Partial<Tentativa>) => Array.from({ length: 10 }, (_, i) => t('leitura-cvcv', true, i < 5 ? 's1' : 's2', { pseudo: i < 2, ...extra(i) }));
+  it('ler sempre a MESMA palavra não domina; palavras diferentes em dois tipos de atividade, sim', () => {
+    let h = novaHabilidade();
+    for (const x of dez(() => ({ alvo: 'MALA', categoria: 'palavra', formato: 'ler-figura' }))) h = registrarTentativa(h, x);
+    const so = avaliarDominio(h, cfg.dominio, true, 'leitura-cvcv');
+    expect(so.dominado).toBe(false);
+    expect(so.faltaItens).toBe(true);
+    expect(so.faltaTipos).toBe(true);
+    let h2 = novaHabilidade();
+    for (const x of dez((i) => ({ alvo: ['MALA', 'LUA', 'FILA', 'MULA'][i % 4], categoria: 'palavra', formato: i % 2 ? 'ler-figura' : 'ouvir-leituras' }))) h2 = registrarTentativa(h2, x);
+    expect(avaliarDominio(h2, cfg.dominio, true, 'leitura-cvcv').dominado).toBe(true);
+  });
+
+  it('dado antigo sem mecânica nem alvo não é cobrado de variedade', () => {
+    let h = novaHabilidade();
+    for (const x of dez(() => ({ mecanica: undefined }))) h = registrarTentativa(h, x);
+    expect(avaliarDominio(h, cfg.dominio, true, 'leitura-cvcv').dominado).toBe(true);
+  });
+
+  it('prova-relâmpago aprovada libera a fase, mas deixa "a confirmar" e não sobe a firmeza', () => {
+    let p0 = progressoInicial('c1', T0);
+    for (const f of FASES) { if (f.id === 'R2a-F01') break; p0 = concluirFase(p0, f.id, T0); }
+    const r = resultadoProvaRelampago(p0, 'R2a-F01', 5, 5, T0, cfg);
+    expect(r.passou).toBe(true);
+    expect(r.progresso.habilidades['gpc-m']).toMatchObject({ aConfirmar: true, marcoPendente: true, p: novaHabilidade().p });
+    expect(dominadaDeVerdade(r.progresso.habilidades['gpc-m'])).toBe(false);
   });
 });

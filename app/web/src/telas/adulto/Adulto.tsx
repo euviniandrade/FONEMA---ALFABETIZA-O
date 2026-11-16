@@ -176,6 +176,14 @@ export function BlocosAprendizagem({ c, p, config }: { c: Crianca; p: Progresso;
         <p className="nota-mic">São as palavras de verdade em que {c.nome} errou ou pediu ajuda. Boas para ler juntos em casa, sem pressa.</p>
       </div>
 
+      {r.tiposDeErro.length ? (
+        <div className="bloco" data-testid="tipos-de-erro">
+          <h2><Icone nome="caderno" />Que tipo de erro aparece mais</h2>
+          <ul className="dificeis">{r.tiposDeErro.slice(0, 5).map((x) => <li key={x.erro}><b>{x.nome}</b><small>{x.vezes} {x.vezes === 1 ? 'vez' : 'vezes'}{x.exemplos[0] ? ` · ex.: ${x.exemplos[0].escolhido} no lugar de ${x.exemplos[0].alvo}` : ''}</small></li>)}</ul>
+          <p className="nota-mic">Mostra o jeito do erro, não uma nota. Serve para escolher o que treinar junto.</p>
+        </div>
+      ) : null}
+
       <div className="bloco" data-testid="tempo">
         <h2><Icone nome="relogio" />Tempo de resposta</h2>
         {r.tempoMedioMs ? (

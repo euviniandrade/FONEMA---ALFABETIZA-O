@@ -8,7 +8,7 @@ import type { Crianca, Demonstracao, Evento, Progresso, Tentativa } from './esta
 import { DIA_MS } from './estado.ts';
 import { generoDaFala } from './avatar.ts';
 import { avaliarDominio, dominadaDeVerdade } from './dominio.ts';
-import { coberturaDoDetalhe, fonemasEGrafemasMaisErrados, palavrasDificeis, paresConfundidos, tempoMedioPorHabilidade, todasAsTentativas, type ItemErrado, type ParConfundido } from './confusao.ts';
+import { coberturaDoDetalhe, fonemasEGrafemasMaisErrados, palavrasDificeis, paresConfundidos, tempoMedioPorHabilidade, tiposDeErroFrequentes, todasAsTentativas, type ErroFrequente, type ItemErrado, type ParConfundido } from './confusao.ts';
 import { alertaDeRisco, praticasRecomendadas, type AlertaDeRisco, type PraticaRecomendada } from './reforco.ts';
 import { evolucaoSondagens, quedasEntreSondagens, situacaoSondagem, type EvolucaoArea, type QuedaArea, type SituacaoSondagem } from './sondagem.ts';
 import { resumoDaAjuda, posicoesDaRespostaCerta, sinaisDeChute, type ResumoAjuda, type SinalDeChute } from './ajuda.ts';
@@ -130,6 +130,7 @@ export interface ResumoAprendizagem {
   pares: ParConfundido[];
   sonsELetras: ItemErrado[];
   palavras: ItemErrado[];
+  tiposDeErro: ErroFrequente[];
   /** Tempo médio por habilidade (só onde há tempo medido), com o nome da habilidade. */
   tempos: { habilidade: string; nome: string; itens: number; mediaMs: number; medianaMs: number; mediaAcertoMs?: number }[];
   /** Tempo médio geral por item (ms), ou undefined sem medida. */
@@ -172,6 +173,8 @@ export function resumoAprendizagem(c: Pick<Crianca, 'anoNascimento'>, p: Progres
     pares: paresConfundidos(ts, cfg.reforco.errosMinPar),
     sonsELetras: fonemasEGrafemasMaisErrados(ts),
     palavras: palavrasDificeis(ts),
+    /** Tipos de erro mais frequentes (06 §1 e §8 item 4), em linguagem simples. */
+    tiposDeErro: tiposDeErroFrequentes(ts),
     tempos,
     tempoMedioMs: itensComTempo ? Math.round(tempos.reduce((s, t) => s + t.mediaMs * t.itens, 0) / itensComTempo) : undefined,
     alerta: alertaDeRisco(p, cfg, agora),
