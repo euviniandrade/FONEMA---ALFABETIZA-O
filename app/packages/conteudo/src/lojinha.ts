@@ -36,7 +36,7 @@ export const SURPRESAS: Surpresa[] = [
   { nivel: 4, tipo: 'item', id: 'chapeu-de-palha', nome: 'Chapéu de palha', imagem: 'itens/chapeu-de-palha.webp' },
   { nivel: 5, tipo: 'area', id: 'casinha-do-bolota', nome: 'Casinha do Bolota no quintal' },
   { nivel: 6, tipo: 'item', id: 'mochila', nome: 'Mochila escolar', imagem: 'itens/mochila.webp' },
-  { nivel: 7, tipo: 'item', id: 'lupa', nome: 'Lupa da Caça às Sílabas', imagem: 'itens/lupa.webp' },
+  { nivel: 7, tipo: 'item', id: 'lupa', nome: 'Lupa da Caça aos Sons', imagem: 'itens/lupa.webp' },
   { nivel: 10, tipo: 'area', id: 'farol-por-dentro', nome: 'O farol por dentro' },
   { nivel: 13, tipo: 'area', id: 'trilha-da-mata', nome: 'A trilha da mata' },
   { nivel: 16, tipo: 'area', id: 'arvore-das-palavras', nome: 'Árvore das Palavras' }

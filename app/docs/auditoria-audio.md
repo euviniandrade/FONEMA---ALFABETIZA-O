@@ -2,9 +2,9 @@
 
 Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai ao ar sem esta auditoria**.
 
-- Clipes auditados: **1647** (1357 falas + 290 nomes; vozes Sofia e Tales)
-- Graves (defeito audível provável): **49** · a conferir de ouvido (palavra/som solto com transcrição diferente): **132** · leves (higiene do sinal): **0** · sem defeito: **1466**
-- Conteúdo conferido por transcrição: **1647** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
+- Clipes auditados: **1651** (1361 falas + 290 nomes; vozes Sofia e Tales)
+- Graves (defeito audível provável): **49** · a conferir de ouvido (palavra/som solto com transcrição diferente): **132** · leves (higiene do sinal): **0** · sem defeito: **1470**
+- Conteúdo conferido por transcrição: **1651** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
 - Volume (clipes ≥ 0,4 s): mediana -17.4 LUFS, de -22.8 a -14.6 (alvo -16)
 
 ## Defeitos por tipo
@@ -18,18 +18,18 @@ Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai
 | sem respiro no fim | 69 | 0 |
 | clipping | 63 | 3 |
 | fim seco | 35 | 0 |
-| conteúdo: nome errado | 16 | 5 |
 | fim cortado na gravação | 21 | 0 |
+| conteúdo: nome errado | 16 | 5 |
 | conteúdo: sílaba faltando no fim | 6 | 8 |
 | conteúdo: sílaba faltando no começo | 4 | 7 |
 | conteúdo: sobrando | 5 | 4 |
 | curto demais | 0 | 4 |
-| conteúdo: sílaba faltando no meio | 0 | 3 |
 | conteúdo: transcrição vazia | 2 | 1 |
+| conteúdo: sílaba faltando no meio | 0 | 3 |
 | conteúdo: fim faltando | 0 | 2 |
 | mudo | 1 | 0 |
-| conteúdo: palavra faltando | 0 | 1 |
 | conteúdo: começo faltando | 0 | 1 |
+| conteúdo: palavra faltando | 0 | 1 |
 
 Antes: 275 graves, 52 a conferir e 188 leves em 915 clipes (915 com transcrição).
 

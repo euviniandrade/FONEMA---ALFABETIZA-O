@@ -146,7 +146,7 @@ describe('nível, títulos neutros e portões (D019, D022)', () => {
     expect(semFesta.portao?.nome).toBe('Revisão dos sons que esticam');
     const comFesta = calcularNivel(DESAFIOS_NIVEL_1 + 2 + 3 + 4 + 5 + 6 + 6, true, new Set(['AL-A', 'TF-R2']));
     expect(comFesta.nivel).toBe(7);
-    expect(comFesta.titulo).toBe('Caça às Sílabas');
+    expect(comFesta.titulo).toBe('Caça aos Sons');
   });
 });
 

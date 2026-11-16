@@ -21,7 +21,7 @@ const NIVEIS = ['bronze', 'prata', 'ouro', 'diamante'] as const;
 const FORMAS: Array<[string, Conquista]> = [
   ['estrela', c('f1', 'Meu Nome', 'selo', 'K')],
   ['escudo', c('f2', 'Guarda do Meio Ambiente', 'titulo', '🌱')],
-  ['medalha', c('f3', 'Caça às Sílabas', 'selo', '👏')],
+  ['medalha', c('f3', 'Caça aos Sons', 'selo', '👏')],
   ['hexagono', c('f4', 'Mostrei pro Professor', 'selo_validacao', '📖')]
 ];
 

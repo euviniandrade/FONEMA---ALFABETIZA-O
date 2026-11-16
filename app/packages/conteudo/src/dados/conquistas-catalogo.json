@@ -48,7 +48,7 @@
   },
   {
     "id": "S-R0-03",
-    "nome": "Bate-Sílaba",
+    "nome": "Bate-Som",
     "tipo": "selo",
     "categoria": "silaba",
     "regiao": "R0",
@@ -109,7 +109,7 @@
   },
   {
     "id": "TI-R0-02",
-    "nome": "Caça às Sílabas",
+    "nome": "Caça aos Sons",
     "tipo": "titulo",
     "categoria": "leitura",
     "regiao": "R0",
@@ -702,7 +702,7 @@
   },
   {
     "id": "S-R2a-04",
-    "nome": "Tábua de Sílabas",
+    "nome": "Tábua de Sons",
     "tipo": "selo",
     "categoria": "silaba",
     "regiao": "R2a",
@@ -776,11 +776,11 @@
   },
   {
     "id": "M-R2a-02",
-    "nome": "Medalha da Cachoeira das Sílabas",
+    "nome": "Medalha da Cachoeira dos Sons",
     "tipo": "medalha",
     "categoria": "leitura",
     "regiao": "R2a",
-    "criterio": "Vencer o chefe de R2a (Cachoeira das Sílabas).",
+    "criterio": "Vencer o chefe de R2a (Cachoeira dos Sons).",
     "niveis": [
       "unico"
     ],
@@ -793,7 +793,7 @@
     "tipo": "titulo",
     "categoria": "leitura",
     "regiao": "R2a",
-    "criterio": "Portão: vencer a Cachoeira das Sílabas (R2a-F05). I-II-III pelos níveis 16–24.",
+    "criterio": "Portão: vencer a Cachoeira dos Sons (R2a-F05). I-II-III pelos níveis 16–24.",
     "niveis": [
       "I",
       "II",

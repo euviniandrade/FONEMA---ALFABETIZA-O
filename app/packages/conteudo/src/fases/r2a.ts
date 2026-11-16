@@ -160,7 +160,7 @@ export const FASES_R2A: Fase[] = [
     uau: 'A primeira palavra que você leu, MALA, apareceu e se abriu!'
   },
   {
-    id: 'R2a-F05', regiao: 'R2a', numero: 5, titulo: 'Chefe: Cachoeira das Sílabas',
+    id: 'R2a-F05', regiao: 'R2a', numero: 5, titulo: 'Chefe: Cachoeira dos Sons',
     objetivo: 'Ler palavras e nomes de bichinhos da mata e escrever 4 palavras',
     sessoesPrevistas: '2–3 sessões', chefe: true, termometro: 2,
     habilidades: ['leitura-cvcv', 'escrita-cvcv'], criterio: { tipo: 'chefe', leituraMin: 0.85, escritaMin: 0.75 },

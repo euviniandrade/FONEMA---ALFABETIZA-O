@@ -27,3 +27,10 @@ Com a ordem alternada, a Festa do Alfabeto passou da fase 31 para a fase 54, e a
 Pergunta ao dono: manter a Festa como portão (A) ou trocar por uma fase mais cedo (B)? Resposta do dono: **"opção B"**.
 O portão do nível 7 passa a ser a **TF-R2 "Revisão: sons que esticam"** (fase 30, a primeira grande revisão de leitura, quase no
 mesmo ponto em que a Festa ficava). A Festa continua dando o troféu "Alfabeto Completo" e o termômetro (`motor/src/nivel.ts`).
+
+## Complemento (16/11/2026): nomes com "Sílabas" viram "Sons"
+Pergunta ao dono: trocar os nomes que vendem sílaba como peça de leitura (regra 6)? Resposta: **"Pode focar nos sons."**
+"Caça às Sílabas" → **Caça aos Sons** (título do nível 7, selo, Lupa); "Cachoeira das Sílabas" → **Cachoeira dos Sons** (chefe R2a-F05,
+portão do nível 16, medalha); "Bate-Sílaba" → **Bate-Som**; "Tábua de Sílabas" → **Tábua de Sons**; "Montar sílabas na tábua" →
+**Montar sons na tábua**. Quatro falas da Sofia regravadas (169 caracteres) e auditadas. Substitui os nomes de D022 só nesses pontos.
+"Amarelinha das Sílabas" fica: é jogo de escuta (palmas), onde a sílaba vale (regra 6).

@@ -20,7 +20,7 @@ import { FASES_TF } from './fases/tf.ts';
  *    O nível inicial "já conhece as letras e os sons" começa em TF-06 e deixa a Trilha A–Z inteira aberta para revisar.
  * 2. R1  · Os OUTROS sons das vogais (é/ê, ó/ô) e as 5 vogais misturadas: na trilha fônica eles vêm DEPOIS das
  *          consoantes de estouro (TF-23 e TF-24, docs/pedagogia/01 §6), e é exatamente aqui que ficam.
- * 3. R2a · Vale do M-L-F: as primeiras palavras e o chefe "Cachoeira das Sílabas". Depois da Trilha dos Sons vira
+ * 3. R2a · Vale do M-L-F: as primeiras palavras e o chefe "Cachoeira dos Sons". Depois da Trilha dos Sons vira
  *          REVISÃO de leitura e escrita (M, L e F já foram ensinados em TF-07, TF-08 e TF-10; as habilidades são as mesmas).
  * 4. R0  · Meu nome: "O som do meu nome" chega como presente depois das primeiras palavras, quando a criança já
  *          conhece todas as letras (inclusive K, W, Y e o H mudo) e consegue montar o próprio nome entendendo cada som.
@@ -76,7 +76,7 @@ export const REGIOES: Regiao[] = [
   },
   {
     id: 'R2a', etapa: 'Palavras', nome: 'Mata Atlântica · Vale do M-L-F', perguntaGuia: 'Como as letras viram palavras?', cenario: 'mata',
-    mapa: { x: 59, y: 33 }, fases: FASES_R2A.map((f) => f.id), selo: 'Leitura da Mata', chefe: 'Cachoeira das Sílabas',
+    mapa: { x: 59, y: 33 }, fases: FASES_R2A.map((f) => f.id), selo: 'Leitura da Mata', chefe: 'Cachoeira dos Sons',
     zumZumViraAmigo: 'O Zum-Zum aprendeu que devagar e até o fim a palavra aparece, e ajudou a carregar as letras do guia.',
     ganchoProxima: 'Tem um presente esperando no quintal: o seu nome!'
   },

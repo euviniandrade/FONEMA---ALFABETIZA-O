@@ -1027,7 +1027,7 @@ async function main() {
     await pj.goto(BASE + `#/adulto/familia/${idj}`);
     await pj.getByTestId('painel-familia').waitFor();
     await pj.getByText('Nível 2 de 10').first().waitFor({ timeout: 5000 }).catch(() => {});
-    ok(/Nível 2 de 10/.test(await pj.getByTestId('painel-familia').innerText()), 'termômetro subiu para 2 depois da Cachoeira das Sílabas');
+    ok(/Nível 2 de 10/.test(await pj.getByTestId('painel-familia').innerText()), 'termômetro subiu para 2 depois da Cachoeira dos Sons');
     ok(/Exploração das Palavras/.test(await pj.getByTestId('painel-familia').innerText()), 'título "Exploração das Palavras" depois do portão');
     }
     await guardarFalas(pj);

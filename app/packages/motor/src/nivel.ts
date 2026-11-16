@@ -11,7 +11,7 @@ export const DESAFIOS_NIVEL_1 = FASES[0].cenas.filter((c) => c.atividade).length
 
 export const TITULOS = [
   { nome: 'Primeiros Sons', inicio: 1, sub: [1, 4, 6] },
-  { nome: 'Caça às Sílabas', inicio: 7, sub: [7, 10, 13] },
+  { nome: 'Caça aos Sons', inicio: 7, sub: [7, 10, 13] },
   { nome: 'Exploração das Palavras', inicio: 16, sub: [16, 19, 22] },
   { nome: 'Leitura da Vila', inicio: 25, sub: [25, 28, 31] },
   { nome: 'Contação de Histórias', inicio: 34, sub: [34, 37, 40] },
@@ -24,7 +24,7 @@ export const PORTOES: Record<number, { fase: string; nome: string }> = {
   // D031 + escolha do dono (opção B): com a ordem alternada a Festa ficou na fase 54; o portão do nível 7 passa à
   // primeira grande revisão de leitura (fim do bloco dos sons que esticam), perto de onde a Festa ficava antes.
   7: { fase: 'TF-R2', nome: 'Revisão dos sons que esticam' },
-  16: { fase: 'R2a-F05', nome: 'Cachoeira das Sílabas' },
+  16: { fase: 'R2a-F05', nome: 'Cachoeira dos Sons' },
   25: { fase: 'R3-F10', nome: 'Ventania que Embaralha' },
   34: { fase: 'R6-F08', nome: 'Feira do Cordel' },
   43: { fase: 'R8-F07', nome: 'Trem dos Encontros' },
