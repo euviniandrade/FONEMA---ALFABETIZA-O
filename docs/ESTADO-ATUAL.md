@@ -1,6 +1,6 @@
 # FONEMA — Estado atual e passagem de bastão
 
-Atualizado em 2026-11-15 (seção 4b, D030). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
+Atualizado em 2026-11-16 (seção 0: revisão da metodologia). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
 Tudo o que foi feito está neste repositório, no ramo `claude/eager-brahmagupta-3d2lhr` (commit e push a cada mudança). Nada depende
 da memória da conversa anterior.
 
@@ -74,6 +74,30 @@ por ordem de tentativas do próprio teste).
   (`node web/e2e/fluxo.e2e.mjs --capturas-trilha`). O E2E completo (com a jornada inteira, ≈25 min) não foi rodado.
 - **Pendente:** ouvir as palavras inventadas e "tia/dia" (voz sintética); selos para as consoantes novas (regra fica no motor);
   sincronia real das palavras no eco; revisão das listas por alfabetizadora; blocos 4 a 8 (TF-23…TF-53).
+
+**Revisão independente da metodologia, dos PDFs e do código (16/11; NÃO publicado ainda):** corrigido no ramo (detalhe em
+`docs/pedagogia/00-principios.md` §7):
+- **Pronúncia anotada** (`fases/tf-banco.ts`): "veja" /ˈvɛʒɐ/ e "come" /ˈkɔmi/ (E/O abertos, só depois de TF-24) e "fofa" /ˈfofɐ/.
+  TF-15 usa "seja" no lugar de "veja"; a frase de TF-19 virou "O macaco viu a jaca." (voz pendente em `app/docs/falas-pendentes.md`).
+  **E/O tônicos que pedem ouvido de alfabetizadora:** `selo` e `zelo` (anotados como substantivo, /e/; como verbo seriam /ɛ/), `jogo`
+  (substantivo /o/; "eu jogo" é /ɔ/), `zoa` e `soa` (/o/; há quem fale aberto), a palavra inventada `femo` (o E tônico pode ser lido
+  aberto), `copo` /ɔ/, `mola` /ɔ/, `sopa` /o/, `boca` /o/, `gota` /o/, `doze` /o/. As outras anotações de E/O conferem com a fala comum.
+- **Sílaba não é domínio de letra nem de leitura** (regra 6): no Vale do M-L-F, "qual sílaba falta" e montar por sílaba gravam a
+  habilidade `silaba` como exposição; entrou "Gol letra por letra" (R2a-F04-C4c) e o verificador passou a conferir essas palavras.
+- **Domínio numa sessão só acabou**: chefe vencido e prova-relâmpago liberam o avanço, mas deixam as habilidades "a confirmar" (sem subir a
+  firmeza nem dar moedinha de marco) até o critério de 06 §2; prova só de autorrelato vale 0; critério 5 de 06 §2 (palavras diferentes e
+  mais de um tipo de atividade, quando o conteúdo oferece); selos de som só com domínio de verdade. Consequência: menos lições ficam
+  douradas na primeira passada (E2E: 1 de 19).
+- **Pares mínimos** gravam a habilidade do contraste (mala/bala = M × B, dado/dedo = vogal), com teste.
+- **Verificador da Trilha A–Z** acumula só as letras já vistas na jornada (pronto para a D031, que muda a ordem).
+- **Tipos de erro**: os 12 de 06 §1, quando os dados permitem, no painel ("Que tipo de erro aparece mais").
+- **Sondagem** também para 4–5 anos (só escuta, som inicial e letras); toda placa com 3 opções.
+- **Documentos**: ABC p. 334 (Quadro 3); todos os ajustes de ordem em relação ao Vamos Todos; Soares p. 146; convenção do R do MP p. 88
+  (o app não usa gato para o R: nada trocado); "eu faço, nós fazemos, você faz" como extensão do projeto. As páginas novas citadas pela
+  revisão **não foram conferidas** (os PDFs não estão no repositório).
+- Verificado: typecheck, lint, 231 testes, relatório de decodificabilidade (325 itens, 0 erros), E2E `--trilha-sons` (passou) e
+  `--sem-jornada` (trechos 1 a 11 passaram, 100 checagens; o trecho 12, Cantinho da Leitura, da outra frente, não terminou dentro do
+  limite de 10 min do teste e não foi conferido).
 
 **Próximos passos, em ordem:**
 1. **Trilha fônica, blocos 4 a 8** (TF-23…TF-53: abertas e nasais, R e H, dígrafos, regras de posição, encontros), textos
