@@ -126,7 +126,9 @@ em `motor/src/biblioteca.ts`, telas `Biblioteca.tsx` e `BrincarSons.tsx`, botõe
   ouviu**; e "Dividir", "Poça", "A ema sai suja, suja!" a conferir de ouvido (lista em `app/docs/falas-pendentes.md`).
 - **Verificado:** typecheck, lint, testes (novos em `conteudo/test/biblioteca.test.ts` e `motor/test/biblioteca.test.ts`), E2E
   `--cantinho` (13 checagens; o progresso da trilha é SEMEADO no banco do aparelho para chegar aos textos e à fluência) e capturas
-  v8 olhadas e corrigidas. **Não ficou bom**: o tatu muda um pouco de cara de página para página (o gerador não mantém o personagem);
+  v8 olhadas e corrigidas. O E2E `--sem-jornada` inteiro NÃO chegou ao trecho do Cantinho: parou antes, na checagem da D031 ("o botão
+  leva à jornada…"), que é da outra frente em andamento. ElevenLabs depois desta rodada: 122.141 de 131.000 (≈ 8,9 mil restantes;
+  enviados 4.904 caracteres, o contador subiu 2.314). **Não ficou bom**: o tatu muda um pouco de cara de página para página (o gerador não mantém o personagem);
   o texto do bloco 1 é só um diálogo de interjeições (com só vogais não dá mais). **Não feito**: jogo da memória letra × cena e roleta de
   sons (referência Wordwall, pesquisa 46), mais histórias, textos dos blocos 4–8, leitura cronometrada de TEXTO.
 
