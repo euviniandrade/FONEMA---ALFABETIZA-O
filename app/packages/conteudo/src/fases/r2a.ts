@@ -108,9 +108,12 @@ export const FASES_R2A: Fase[] = [
     demonstracao: { descricao: 'Falar /fff/ e montar FALA', habilidade: 'gpc-f' }
   },
   {
-    id: 'R2a-F04', regiao: 'R2a', numero: 4, titulo: 'Juntar sílabas: primeiras palavras',
+    id: 'R2a-F04', regiao: 'R2a', numero: 4, titulo: 'Juntar sons: primeiras palavras',
     objetivo: 'Ler sozinho as primeiras palavras (MALA, LUA, FALA)', sessoesPrevistas: '3–4 sessões',
     habilidades: ['leitura-cvcv', 'escrita-cvcv', 'silaba'], criterio: { tipo: 'dominio', habilidades: ['leitura-cvcv'] },
+    // regra 6: o título não vende a sílaba como método ("Juntar sílabas" → "Juntar sons"). A entrada falada era "título. objetivo."
+    // (clipe gravado com "Juntar sílabas"); agora usa a acolhida, que já tem voz. Fala nova pendente em app/docs/falas-pendentes.md.
+    falaEntrada: sofia('Oi, [NOME]! Hoje você vai ler uma palavra inteirinha.'),
     acolhida: sofia('Oi, [NOME]! Hoje você vai ler uma palavra inteirinha.'),
     cenas: [
       {
@@ -119,7 +122,7 @@ export const FASES_R2A: Fase[] = [
         atividade: { tipo: 'falar', leitura: true, habilidade: 'leitura-cvcv', enunciado: sofia('Lê comigo, [NOME]. Devagar e até o fim.'), itens: [{ texto: 'MALA', falar: 'mala', figura: '🧳' }], comemora: sofia('Você leu MALA!') }
       },
       {
-        id: 'R2a-F04-C4', tipo: 'C4', titulo: 'Ponte das Sílabas', cenario: 'mata', contaDominio: true,
+        id: 'R2a-F04-C4', tipo: 'C4', titulo: 'Ponte das Palavras', cenario: 'mata', contaDominio: true,
         atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'leitura-cvcv', enunciado: sofia('A ponte precisa da sua leitura, [NOME]. Lê e toca a figura!'), itens: [itemLer('LUA', 'lua', 'mala'), itemLer('MALA', 'mala', 'lua'), itemLer('FOFA', 'FOFA', 'MULA'), itemLer('MULA', 'MULA', 'LULA'), itemLer('LULA', 'LULA', 'FOFA')], comemora: sofia('Mais uma tábua encaixou na ponte!') }
       },
       {

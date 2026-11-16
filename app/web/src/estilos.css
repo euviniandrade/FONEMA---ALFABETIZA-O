@@ -560,15 +560,18 @@ details.mais-opcoes[open]{padding-bottom:14px}
 /* palmas */
 .palmas-palavra{display:flex;justify-content:center}
 .ouvir-texto{font-size:38px;min-height:88px;letter-spacing:.04em;padding:0 30px 0 14px}.ouvir-texto .ic{width:56px!important;height:56px!important}
-.lampadas{display:flex;gap:18px;justify-content:center;margin:22px 0;flex-wrap:wrap}
-.lampada{position:relative;width:88px;height:108px;border-radius:44px 44px 26px 26px;background:radial-gradient(circle at 40% 30%,#F4F8FC,#D5E0EC);box-shadow:inset 0 -8px 0 rgba(12,26,64,.1),inset 0 3px 0 #fff,0 6px 0 #AEBFD1;display:grid;place-items:center;transition:all .28s var(--mola)}
-.lampada::after{content:"";position:absolute;bottom:-16px;left:28%;right:28%;height:14px;border-radius:0 0 8px 8px;background:#8E9DB0}
+.lampadas{display:flex;gap:18px;justify-content:center;margin:44px 0 22px;flex-wrap:wrap;row-gap:44px}
+/* varal de lâmpadas: cada lâmpada pendurada no fio (bocal em cima, bulbo de vidro embaixo); a palma acende */
+.lampada{position:relative;isolation:isolate;width:84px;height:104px;border-radius:42% 42% 50% 50%/34% 34% 66% 66%;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M14 0 V14 M26 0 V14 M14 14 c0 8 3 10 6 10 s6-2 6-10' fill='none' stroke='%2398A8BC' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") 50% 0/34px 34px no-repeat,radial-gradient(circle at 36% 62%,#FDFEFF,#E1E9F2 55%,#C4D2E0);box-shadow:inset -6px -8px 0 rgba(12,26,64,.07),inset 5px 4px 0 rgba(255,255,255,.9),0 8px 14px -8px rgba(12,26,64,.35);display:grid;place-items:center;transform-origin:50% -18px;transition:all .28s var(--mola)}
+.lampada::after{content:"";position:absolute;top:-18px;left:31%;right:31%;height:20px;border-radius:6px 6px 3px 3px;background:repeating-linear-gradient(180deg,#A9B6C6 0 3px,#7E8DA2 3px 6px);box-shadow:inset 0 2px 0 rgba(255,255,255,.5)}
+.lampada:not(:last-child)::before{content:"";position:absolute;z-index:-1;top:-21px;left:50%;width:calc(100% + 18px);height:26px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 26' preserveAspectRatio='none'%3E%3Cpath d='M0 3 Q50 30 100 3' fill='none' stroke='%235E6E86' stroke-width='4' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center/100% 100% no-repeat}
 .lampada.extra{opacity:.3}
-.lampada.acesa{background:radial-gradient(circle at 42% 34%,#FFFBE2,#FFD652 55%,#F6A91B);box-shadow:inset 0 -8px 0 rgba(120,70,0,.18),inset 0 3px 0 #fff,0 6px 0 var(--ipe-esc),0 0 44px 10px rgba(255,214,82,.85);transform:translateY(-6px) scale(1.06)}
+.lampada.acesa{background:radial-gradient(circle at 40% 58%,#FFFBE2,#FFD652 52%,#F6A91B);box-shadow:inset -6px -8px 0 rgba(120,70,0,.15),inset 5px 4px 0 rgba(255,255,255,.7),0 0 44px 12px rgba(255,214,82,.85);transform:scale(1.07)}
 .lampada small{font-family:var(--f-titulo);font-weight:700;font-size:22px;color:#3B2500}
-.lampadas.amarelinha{margin-top:56px;gap:14px}
+.lampadas.amarelinha{margin-top:56px;gap:14px;row-gap:56px}
+.lampadas.amarelinha .lampada{transform-origin:50% 50%}
 .lampadas.amarelinha .lampada{border-radius:16px;width:100px;height:100px;background:linear-gradient(180deg,#FFFDF6,#EDE6D6);box-shadow:inset 0 0 0 4px #fff,inset 0 -8px 0 rgba(12,26,64,.08),0 6px 0 #C9BFA8}
-.lampadas.amarelinha .lampada::after{display:none}
+.lampadas.amarelinha .lampada::after,.lampadas.amarelinha .lampada::before{display:none}
 .lampadas.amarelinha .lampada.acesa{background:linear-gradient(180deg,#FFF8DA,#FFE7A0);box-shadow:inset 0 0 0 4px #fff,inset 0 -8px 0 rgba(120,70,0,.12),0 6px 0 var(--ipe-esc);transform:translateY(-4px)}
 .lampada-bulbo{position:absolute;left:50%;top:-50px;width:40px;height:48px;transform:translateX(-50%);border-radius:20px 20px 14px 14px;background:radial-gradient(circle at 40% 32%,#F7FAFD,#CBD7E4);box-shadow:inset 0 -5px 0 rgba(12,26,64,.1),inset 0 2px 0 #fff;transition:all .28s var(--mola)}
 .lampada-bulbo::after{content:"";position:absolute;left:28%;right:28%;bottom:-11px;height:11px;border-radius:0 0 6px 6px;background:repeating-linear-gradient(180deg,#9AA8BA 0 3px,#7F8EA3 3px 5px)}
@@ -798,7 +801,9 @@ html.menos-movimento .splash-nuvens,html.menos-movimento .splash-petalas,html.me
   .pergunta .ouvir{width:72px;height:72px}.pergunta .ouvir .ic{width:52px;height:52px}
   .espaco{width:60px;height:76px;font-size:44px}.espaco.silaba{width:110px}
   .peca{min-width:64px;height:76px;font-size:40px}.peca.silaba{min-width:104px}
-  .lampada{width:62px;height:80px}.lampadas{gap:12px}
+  .lampada{width:62px;height:78px}.lampadas{gap:12px;row-gap:40px}
+  .lampada:not(:last-child)::before{width:calc(100% + 12px)}
+  .lampada small{font-size:18px}
   .lampadas.amarelinha .lampada{width:70px;height:70px}.lampadas.amarelinha{margin-top:46px;gap:10px}
   .lampada-bulbo{width:32px;height:38px;top:-42px}
   .palmas-acoes .btn{flex:1;padding:0 12px}

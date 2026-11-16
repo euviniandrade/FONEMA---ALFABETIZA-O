@@ -28,6 +28,21 @@ Cantinho ficou sem voz. Masterizado e auditado (ver `docs/auditoria-audio.md`).
 | "Agora as vogais vão mostrar os outros sons delas!" (Sofia) | Gancho da Festa do Alfabeto (`FALAS_ALFABETO.festaGancho`) | D031 (16/11): depois da Festa vêm é/ê e ó/ô, não mais as sílabas; a fala antiga ("Agora a gente vai juntar as letras e fazer sílabas!") continua gravada e saiu de uso. Texto novo; **voz gerada em 16/11** (auditada, ninguém ouviu) |
 | "Faltam só algumas letras para a Festa do Alfabeto!" e "Agora as vogais vão mostrar os outros sons delas!" | `ganchoProxima` das regiões TF e AL (`regioes.ts`) | D031: texto ajustado à ordem alternada. Hoje nenhuma tela fala esses ganchos; se passarem a ser falados, precisam de voz |
 
+## 1b. Falas gravadas que dizem "sílaba" como peça de leitura (regra 6; registradas em 16/11, NADA regravado)
+
+Na revisão da regra 6 os **títulos** da fase antiga R2a-F04 mudaram ("Juntar sílabas: primeiras palavras" → "Juntar sons: primeiras
+palavras"; cena "Ponte das Sílabas" → "Ponte das Palavras"). As falas abaixo já têm clipe e continuam como estão; ficam aqui para a
+próxima rodada de voz ou para decisão do dono.
+
+| Voz | Fala gravada | Onde | Sugestão |
+|---|---|---|---|
+| Sofia | "Juntar sílabas: primeiras palavras. Ler sozinho as primeiras palavras (MALA, LUA, FALA)." | Entrada da fase R2a-F04 (era "título. objetivo.") | Saiu de uso: a entrada agora fala a acolhida já gravada ("Oi, [NOME]! Hoje você vai ler uma palavra inteirinha."), que se repete ao começar a missão. Gravar "Juntar sons: primeiras palavras. Ler sozinho as primeiras palavras (MALA, LUA, FALA)." e tirar o `falaEntrada` de `fases/r2a.ts` |
+| Tales | "A cachoeira tem pedras com sílabas… Amanhã a gente atravessa!" | Gancho de R2a-F04 | "A cachoeira tem pedras com palavras…" |
+| Sofia | "A cachoeira tem pedras com sílabas, [NOME]. Uma pedra de cada vez." | Acolhida do chefe R2a-F05 | "…pedras com palavras…" (as pedras são palavras lidas letra por letra) |
+| Tales | "Gooool! Você leu!" | R2a-F04-C4b "Futebol de Sílabas" (montar por sílaba = exposição) | Nessa cena a criança monta por sílaba, não lê: "Gooool! Você montou!" |
+| Sofia | "Montar sílabas na tábua" | Dica do selo S-R2a-04 | Decisão do dono (selos, D022) |
+| Sofia | "Chefe: Cachoeira das Sílabas…", "Atravessar/Vencer a Cachoeira das Sílabas" | Chefe R2a-F05, selos e título do nível 16 | Nome de título/selo (D022): **não mudado**; sugestão ao dono |
+
 ## 2. Com clipe, mas a auditoria pede regravação ou conferência de ouvido
 
 | Voz | Fala | O que a transcrição ouviu | Situação |

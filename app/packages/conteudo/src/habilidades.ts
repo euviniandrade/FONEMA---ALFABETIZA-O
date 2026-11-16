@@ -31,7 +31,7 @@ export const HABILIDADES: Habilidade[] = [
   { id: 'gpc-m', regiao: 'R2a', nome: 'Letra M ↔ som /m/', paraFamilia: 'liga a letra M ao som /m/', exigePseudo: false, seloMaestria: 'S-SOM-M' },
   { id: 'gpc-l', regiao: 'R2a', nome: 'Letra L ↔ som /l/', paraFamilia: 'liga a letra L ao som /l/', exigePseudo: false, seloMaestria: 'S-SOM-L' },
   { id: 'gpc-f', regiao: 'R2a', nome: 'Letra F ↔ som /f/', paraFamilia: 'liga a letra F ao som /f/', exigePseudo: false, seloMaestria: 'S-SOM-F' },
-  { id: 'silaba-cv', regiao: 'R2a', nome: 'Juntar consoante e vogal (MA, LU, FI)', paraFamilia: 'junta consoante e vogal em sílabas', exigePseudo: false },
+  { id: 'silaba-cv', regiao: 'R2a', nome: 'Juntar consoante e vogal (MA, LU, FI)', paraFamilia: 'junta o som da consoante com o som da vogal (MA, LU, FI)', exigePseudo: false },
   { id: 'leitura-cvcv', regiao: 'R2a', nome: 'Ler palavras como MALA e LUA', paraFamilia: 'lê palavras como MALA e LUA', exigePseudo: true },
   { id: 'escrita-cvcv', regiao: 'R2a', nome: 'Escrever palavras com letras móveis', paraFamilia: 'escreve palavras simples com letras móveis', exigePseudo: false },
   // TF · Trilha dos Sons (D030; docs/pedagogia/02): som ↔ letra das consoantes novas, regras, segmentação, troca de
