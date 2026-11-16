@@ -66,10 +66,10 @@
 .treino-placar{font-size:19px;color:var(--marinho);margin:10px 0 0}
 .doca-treino{position:relative}
 .doca-treino .treino-rosto{width:46px;height:46px;border-radius:50%;overflow:hidden;background:linear-gradient(180deg,#FFF3C9,#FFD979);box-shadow:inset 0 0 0 2px #fff,0 0 0 3px #F2B92B;display:block}
-.doca-treino .treino-rosto img{width:260%;margin:-12% 0 0 -80%;display:block}
+.doca-treino .treino-rosto img{width:260%;max-width:none;margin:-46.7% 0 0 -92.4%;display:block}
 .doca-treino::after{content:"";position:absolute;top:6px;right:8px;width:12px;height:12px;border-radius:50%;background:#FF6B5A;box-shadow:0 0 0 2px #fff}
 .btn-treino .treino-rosto{width:34px;height:34px;border-radius:50%;overflow:hidden;background:#FFE7A3;display:inline-block}
-.btn-treino .treino-rosto img{width:260%;margin:-12% 0 0 -80%;display:block}
+.btn-treino .treino-rosto img{width:260%;max-width:none;margin:-46.7% 0 0 -92.4%;display:block}
 
 /* ------------------------------ painel do adulto: sondagens e ajuda ------------------------------ */
 .sondagem-comparada{width:100%;border-collapse:collapse;font-size:15px;margin:8px 0}

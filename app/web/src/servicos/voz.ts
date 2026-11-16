@@ -306,6 +306,13 @@ class Voz {
   }
   /** Existe som real (gravado ou publicado) para este fonema? */
   temSomReal(fonema: string): Promise<boolean> { return sonsLetras.tem(fonema); }
+  /** Arquivos (clipes) destas falas com o nome dado, sem tocar nada. Usado para deixar falas comuns no aparelho. */
+  async arquivosDasFalas(falas: { texto: string; quem?: Personagem }[], nome: string): Promise<string[]> {
+    await this.pre.pronto;
+    const antes = this.pre.nome;
+    this.pre.nome = nome;
+    try { return falas.flatMap((f) => this.pre.arquivos(f.texto, f.quem ?? 'sofia') ?? []); } finally { this.pre.nome = antes; }
+  }
   /** O nome tem clipe gravado nas vozes oficiais? (lista de nomes comuns) */
   async temNome(nome: string): Promise<boolean> {
     await this.pre.pronto;

@@ -7,6 +7,7 @@ import { voz } from './servicos/voz.ts';
 import { sonsLetras } from './servicos/sons-letras.ts';
 import { efeitosLigados } from './servicos/efeitos.ts';
 import { modoTeste } from './servicos/ambiente.ts';
+import { guardarFalasComuns } from './servicos/sem-internet.ts';
 
 export interface Preferencias { vozLigada: boolean; contraste: boolean; menosMovimento: boolean }
 
@@ -87,7 +88,7 @@ export function useCrianca(id: string | undefined) {
       p = progressoInicial(id, Date.now());
       await repo.salvarProgresso(p);
     }
-    if (c) voz.definirNome(c.pronuncia.fala);
+    if (c) { voz.definirNome(c.pronuncia.fala); guardarFalasComuns(c); }
     setCrianca(c);
     setProgresso(p);
     setCarregado(true);
