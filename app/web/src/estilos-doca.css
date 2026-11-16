@@ -1,0 +1,73 @@
+/* ---- Barra da vila (DocaVila.tsx): poucas portas grandes + "Mais" com painel grande (padrão 3D, D025) ---- */
+.doca2{gap:12px;padding:12px;align-items:stretch}
+.doca2 .doca2-missao{order:5;min-height:112px;padding:0 34px 0 16px;font-size:28px;border-radius:32px}
+.doca2 .doca2-missao .ic{width:66px!important;height:66px!important}
+.doca2-btn{position:relative;width:112px;min-height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 6px 10px;border-radius:30px;font-family:var(--f-titulo);font-weight:700;font-size:17px;line-height:1.05;color:var(--marinho);background:linear-gradient(180deg,#fff,#E4EEF8);box-shadow:0 6px 0 #AFC4DA,0 14px 18px -10px rgba(12,26,64,.45),inset 0 2px 0 #fff,inset 0 -4px 0 rgba(12,26,64,.05);transition:transform .22s var(--mola),box-shadow .16s}
+.doca2-btn:hover{transform:translateY(-4px)}
+.doca2-btn:active{transform:translateY(5px);box-shadow:0 1px 0 #AFC4DA,inset 0 2px 0 #fff}
+.doca2-fig{display:grid;place-items:center;width:66px;height:66px;flex:none}
+.doca2-fig>.ic,.doca2-fig>img.ic{width:66px;height:66px;filter:drop-shadow(0 4px 3px rgba(12,26,64,.22))}
+.doca2-rotulo{white-space:nowrap}
+
+/* Leitura: livrinho com a capa de uma história */
+.doca-livro{position:relative;display:block;width:52px;height:62px;transform:perspective(200px) rotateY(-16deg) rotate(-5deg);filter:drop-shadow(0 5px 4px rgba(12,26,64,.3))}
+.doca-livro::before{content:"";position:absolute;inset:3px -5px -3px 6px;border-radius:3px 9px 9px 3px;background:repeating-linear-gradient(180deg,#FFFDF6 0 2px,#E8DEC6 2px 3px);box-shadow:0 0 0 1px #D6C8A6}
+.doca-livro-capa{position:absolute;inset:0;border-radius:4px 10px 10px 4px;background-size:cover;background-position:38% 60%;box-shadow:inset 7px 0 0 rgba(0,0,0,.22),inset 8px 0 0 rgba(255,255,255,.35),inset 0 0 0 2px rgba(255,255,255,.55),0 0 0 2px #2F6FB0}
+
+/* Mais: quatro lugares em miniatura */
+.doca-mosaico{display:grid;grid-template-columns:repeat(2,1fr);gap:3px;width:62px;height:62px;padding:4px;border-radius:18px;background:linear-gradient(180deg,#EAF3FC,#D3E3F3);box-shadow:inset 0 2px 0 #fff,inset 0 -3px 0 rgba(12,26,64,.08)}
+.doca-mosaico>.ic,.doca-mosaico>img.ic{width:100%!important;height:100%!important;margin:0!important;filter:drop-shadow(0 2px 1px rgba(12,26,64,.2))}
+.doca-mosaico-abc{display:grid;place-items:center;border-radius:7px;font-family:var(--f-leitura);font-weight:700;font-size:13px;color:#3B2500;background:radial-gradient(circle at 32% 22%,#FFF7CF,#FFD652 58%,#F6A91B);box-shadow:0 2px 0 var(--ipe-esc)}
+.doca2-aviso{position:absolute;top:-10px;right:-8px;width:38px;height:38px;border-radius:50%;overflow:hidden;background:linear-gradient(180deg,#FFF3C9,#FFD979);box-shadow:0 0 0 3px #fff,0 0 0 6px #F2B92B,0 6px 10px rgba(12,26,64,.3);animation:aviso-pulsa 1.6s ease-in-out infinite}
+.doca2-aviso img{width:260%;margin:-12% 0 0 -80%;display:block}
+@keyframes aviso-pulsa{50%{transform:scale(1.1)}}
+
+/* Painel do "Mais" */
+.mais-fundo{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(12,26,64,.42);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);animation:mais-aparece .25s ease-out both}
+@keyframes mais-aparece{from{opacity:0}}
+.mais-painel{width:min(780px,100%);max-height:calc(100dvh - 32px);overflow:auto;padding:18px 22px 26px;border-radius:44px;background:linear-gradient(180deg,#FFFDF7,#FFF3DC);border:2px solid #fff;box-shadow:0 30px 60px -20px rgba(12,26,64,.6),inset 0 -6px 0 rgba(185,119,7,.12);animation:sobe .45s var(--mola) both}
+.mais-cab{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.mais-titulo{display:flex;align-items:center;gap:12px;font-family:var(--f-titulo);font-weight:700;font-size:28px;color:var(--marinho)}
+.mais-titulo .doca-mosaico{width:52px;height:52px;border-radius:15px}
+.mais-fechar .ic{width:34px;height:34px}
+.mais-grade{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.mais-item{position:relative;min-height:168px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:14px 10px;border-radius:34px;font-family:var(--f-titulo);font-weight:700;font-size:22px;line-height:1.1;color:var(--marinho);background:linear-gradient(180deg,#fff,#E6F0FA);box-shadow:0 7px 0 #AFC4DA,0 18px 22px -12px rgba(12,26,64,.4),inset 0 2px 0 #fff;transition:transform .22s var(--mola),box-shadow .16s}
+.mais-item:hover{transform:translateY(-4px)}
+.mais-item:active{transform:translateY(6px);box-shadow:0 1px 0 #AFC4DA,inset 0 2px 0 #fff}
+.mais-fig{display:grid;place-items:center;width:92px;height:92px}
+.mais-fig>.ic,.mais-fig>img.ic{width:92px;height:92px;filter:drop-shadow(0 6px 4px rgba(12,26,64,.22))}
+.mais-fig>svg.ic{width:64px;height:64px;color:var(--marinho2)}
+.mais-fig .mais-abc{width:84px;height:84px;font-size:42px;border-radius:24px;box-shadow:0 5px 0 var(--ipe-esc),inset 0 3px 0 rgba(255,255,255,.8)}
+.mais-treino{background:linear-gradient(180deg,#FFF6D6,#FFD978);box-shadow:0 7px 0 var(--ipe-esc),0 18px 22px -12px rgba(120,70,0,.45),inset 0 2px 0 #fff;color:#4A2D00}
+.mais-treino:active{box-shadow:0 1px 0 var(--ipe-esc),inset 0 2px 0 #fff}
+.mais-treino .treino-rosto{width:92px;height:92px;border-radius:50%;overflow:hidden;display:block;background:linear-gradient(180deg,#FFF3C9,#FFD979);box-shadow:inset 0 0 0 3px #fff,0 0 0 4px #F2B92B}
+.mais-treino .treino-rosto img{width:260%;margin:-12% 0 0 -80%;display:block}
+.mais-treino::after{content:"";position:absolute;top:14px;right:16px;width:16px;height:16px;border-radius:50%;background:#FF6B5A;box-shadow:0 0 0 3px #fff}
+
+@media (max-width:820px){
+  .doca2{justify-content:space-between}
+  .doca2-btn{flex:1;width:auto;min-width:0}
+}
+@media (max-width:560px){
+  .doca2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:8px;border-radius:30px}
+  .doca2 .doca2-missao{order:-1;grid-column:1/-1;min-height:76px;font-size:26px;border-radius:24px}
+  .doca2 .doca2-missao .ic{width:54px!important;height:54px!important}
+  .doca2-btn{width:auto;min-height:92px;padding:6px 2px 8px;border-radius:22px;font-size:15px;gap:3px}
+  .doca2-fig{width:52px;height:52px}
+  .doca2-fig>.ic,.doca2-fig>img.ic{width:52px;height:52px}
+  .doca-livro{width:42px;height:50px}
+  .doca-mosaico{width:50px;height:50px;gap:2px;padding:3px;border-radius:14px}
+  .doca-mosaico-abc{font-size:11px;border-radius:5px}
+  .doca2-aviso{width:32px;height:32px;top:-8px;right:-4px}
+  .mais-fundo{place-items:end stretch;padding:0}
+  .mais-painel{width:100%;max-height:88dvh;border-radius:36px 36px 0 0;padding:14px 14px calc(20px + env(safe-area-inset-bottom))}
+  .mais-titulo{font-size:22px}
+  .mais-grade{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .mais-item{min-height:132px;font-size:19px;border-radius:28px}
+  .mais-fig,.mais-fig>.ic,.mais-fig>img.ic{width:72px;height:72px}
+  .mais-fig .mais-abc{width:66px;height:66px;font-size:34px;border-radius:20px}
+  .mais-treino .treino-rosto{width:72px;height:72px}
+}
+html.contraste .doca2-btn,html.contraste .mais-item{box-shadow:0 0 0 3px #000}
+html.menos-movimento .doca2-aviso{animation:none}
+@media (prefers-reduced-motion:reduce){.doca2-aviso{animation:none}}

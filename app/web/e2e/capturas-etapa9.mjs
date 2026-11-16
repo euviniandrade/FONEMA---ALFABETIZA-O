@@ -203,9 +203,15 @@ async function main() {
 
     // ---------- treino rápido ----------
     await page.goto(`${BASE}#/c/${ID}/vila`);
-    await page.getByTestId('ir-treino').waitFor({ timeout: 20000 }).catch(() => exigir(false, 'vila sem o botão Treino rápido'));
+    // o Treino rápido mora no painel "Mais" da barra da vila (o "Mais" ganha o rosto da Sofia quando há treino)
+    await page.getByTestId('ir-mais').waitFor({ timeout: 20000 });
+    exigir(await page.locator('[data-testid=ir-mais].com-treino').count() === 1, 'o "Mais" da vila não avisa que há treino');
     await page.waitForTimeout(600);
     await foto('treino-vila');
+    await page.getByTestId('ir-mais').click();
+    await page.getByTestId('ir-treino').waitFor({ timeout: 20000 }).catch(() => exigir(false, 'vila sem o botão Treino rápido'));
+    await page.waitForTimeout(600);
+    await foto('treino-vila-mais');
     await page.getByTestId('ir-treino').click();
     await page.getByTestId('comecar-treino').waitFor({ timeout: 20000 });
     await esperar3d(1);
@@ -236,7 +242,9 @@ async function main() {
     exigir(doTreino.length >= 3 && doTreino.every((x) => x.tipo === 'avaliada'), `treino gravou ${doTreino.length} respostas no contexto reforço`);
     exigir(p2.treinos?.length === 1, 'treino não ficou no histórico');
     await page.goto(`${BASE}#/c/${ID}/vila`);
-    await page.waitForTimeout(1200);
+    await page.getByTestId('ir-mais').click();
+    await page.getByTestId('painel-mais').waitFor();
+    await page.waitForTimeout(600);
     exigir(!(await page.getByTestId('ir-treino').count()), 'o treino apareceu de novo no mesmo dia');
 
     // ---------- painel do adulto ----------

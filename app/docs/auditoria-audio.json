@@ -46345,6 +46345,248 @@
   "gravidade": "ok"
  },
  {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "Agora as vogais vão mostrar os outros sons delas!",
+  "arquivo": "falas/sofia-19ibw0r-m1.mp3",
+  "esperado": "Agora as vogais vão mostrar os outros sons delas!",
+  "sinal": {
+   "dur": 3.044,
+   "silencio_ini_ms": 110,
+   "silencio_fim_ms": 135,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -6.7,
+   "rms_fala_db": -17.2,
+   "lufs": -16.6,
+   "ms_por_caractere": 70,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 30,
+   "subida_ini_ms": 129,
+   "problemas": [],
+   "desvio_volume_db": 0.1
+  },
+  "fonte": "falas/sofia-19ibw0r.mp3",
+  "sha": "d390ac4238fa5e8d",
+  "fonte_problemas": [],
+  "ouvido": "Agora as vogais vão mostrar os outros sons delas",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
+ },
+ {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "Ui! Ai!",
+  "arquivo": "falas/sofia-1awpnrz-m1.mp3",
+  "esperado": "Ui! Ai!",
+  "sinal": {
+   "dur": 1.248,
+   "silencio_ini_ms": 110,
+   "silencio_fim_ms": 140,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -7.7,
+   "rms_fala_db": -17.3,
+   "lufs": -17.4,
+   "ms_por_caractere": 249,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 60,
+   "subida_ini_ms": 114,
+   "problemas": [],
+   "desvio_volume_db": 0.0
+  },
+  "fonte": "falas/sofia-1awpnrz.mp3",
+  "sha": "dca88f8bfc9f002b",
+  "fonte_problemas": [],
+  "ouvido": "Oi, ai!",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.2,
+  "conteudo": [
+   "palavra trocada (“ui” → “oi”)"
+  ],
+  "gravidade": "conferir"
+ },
+ {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "voa",
+  "arquivo": "falas/sofia-1qahoj7-m1.mp3",
+  "esperado": "Voa.",
+  "sinal": {
+   "dur": 0.734,
+   "silencio_ini_ms": 115,
+   "silencio_fim_ms": 170,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -9.4,
+   "rms_fala_db": -16.7,
+   "lufs": -17.3,
+   "ms_por_caractere": 150,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 95,
+   "subida_ini_ms": 154,
+   "problemas": [],
+   "desvio_volume_db": 0.6
+  },
+  "fonte": "falas/sofia-1qahoj7.mp3",
+  "sha": "4d0edb6a5875f480",
+  "fonte_problemas": [],
+  "ouvido": "Vou, ah?",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
+ },
+ {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "Ei!",
+  "arquivo": "falas/sofia-1qahzk6-m1.mp3",
+  "esperado": "Ei!",
+  "sinal": {
+   "dur": 0.719,
+   "silencio_ini_ms": 90,
+   "silencio_fim_ms": 150,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -8.6,
+   "rms_fala_db": -16.7,
+   "lufs": -17.1,
+   "ms_por_caractere": 239,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 130,
+   "subida_ini_ms": 99,
+   "problemas": [],
+   "desvio_volume_db": 0.6
+  },
+  "fonte": "falas/sofia-1qahzk6.mp3",
+  "sha": "5aa9f73fc5a71868",
+  "fonte_problemas": [],
+  "ouvido": "Ei!",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
+ },
+ {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "cada",
+  "arquivo": "falas/sofia-1uqnjzg-m1.mp3",
+  "esperado": "Cada.",
+  "sinal": {
+   "dur": 0.699,
+   "silencio_ini_ms": 105,
+   "silencio_fim_ms": 140,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -5.6,
+   "rms_fala_db": -17.0,
+   "lufs": -16.0,
+   "ms_por_caractere": 113,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 70,
+   "subida_ini_ms": 109,
+   "problemas": [],
+   "desvio_volume_db": 0.3
+  },
+  "fonte": "falas/sofia-1uqnjzg.mp3",
+  "sha": "10d76704bdf1e2ab",
+  "fonte_problemas": [],
+  "ouvido": "Cada",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
+ },
+ {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "Eu! Oi!",
+  "arquivo": "falas/sofia-28njml-m1.mp3",
+  "esperado": "Eu! Oi!",
+  "sinal": {
+   "dur": 0.933,
+   "silencio_ini_ms": 105,
+   "silencio_fim_ms": 140,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -8.1,
+   "rms_fala_db": -17.2,
+   "lufs": -18.5,
+   "ms_por_caractere": 172,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 85,
+   "subida_ini_ms": 109,
+   "problemas": [],
+   "desvio_volume_db": 0.1
+  },
+  "fonte": "falas/sofia-28njml.mp3",
+  "sha": "9712c11d0354016e",
+  "fonte_problemas": [],
+  "ouvido": "Eu, oi",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
+ },
+ {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "Ei! Ui! Ai! Eu! Oi! Oi, oi!",
+  "arquivo": "falas/sofia-j1ecvd-m1.mp3",
+  "esperado": "Ei! Ui! Ai! Eu! Oi! Oi, oi!",
+  "sinal": {
+   "dur": 2.186,
+   "silencio_ini_ms": 90,
+   "silencio_fim_ms": 135,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -6.5,
+   "rms_fala_db": -17.1,
+   "lufs": -19.2,
+   "ms_por_caractere": 140,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 55,
+   "subida_ini_ms": 99,
+   "problemas": [],
+   "desvio_volume_db": 0.2
+  },
+  "fonte": "falas/sofia-j1ecvd.mp3",
+  "sha": "64603decc50bb033",
+  "fonte_problemas": [],
+  "ouvido": "Ei, oi, ai, eu, oi, oi, oi",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.053,
+  "conteudo": [
+   "palavra trocada (“ui” → “oi”)"
+  ],
+  "gravidade": "grave"
+ },
+ {
   "tipo": "nome",
   "voz": "sofia",
   "chave": "helena",

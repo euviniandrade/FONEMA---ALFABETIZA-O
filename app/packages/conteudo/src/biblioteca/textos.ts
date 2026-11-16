@@ -6,7 +6,7 @@
  * Fundamento: "primeiro apenas decodificáveis e, pouco depois" variados (ABC p. 334–335); textos iniciais com palavras
  * regulares (ABC p. 376); controle progressivo para leitura independente (SOA p. 230); perguntas com o texto à vista quando
  * a tarefa mede leitura (04 N12 [DP]); leitura em coro depois, como prática de fluência (ABC p. 375–376; SOA p. 246–248).
- * Textos do projeto (07 §3). Limite honesto: com só as vogais (bloco 1), o texto é um diálogo de três falas.
+ * Textos do projeto (07 §3). Limite honesto: com só as vogais (bloco 1), o texto é um diálogo curto de interjeições (4 falas).
  * As palavras que não estavam no banco foram acrescentadas, com pronúncia anotada, no fim de `fases/tf-banco.ts`.
  */
 import type { Fala } from '../tipos.ts';
@@ -17,10 +17,13 @@ const s = (texto: string): Fala => ({ quem: 'sofia', texto });
 export const TEXTOS_DECODIFICAVEIS: TextoDecodificavel[] = [
   {
     id: 'oi', titulo: 'Oi!', bloco: 1, ate: 'TF-06', liberaCom: ['TF-06'],
-    linhas: [{ texto: 'Oi!', quem: 'sofia' }, { texto: 'Oi, oi!', quem: 'tales' }, { texto: 'Ai! Ui!', quem: 'tales' }],
+    // mini enredo só com as vogais e os encontros de TF-06 (16/11): a Sofia chega de surpresa ("Ei!"), o Tales leva um susto
+    // ("Ai! Ui!"), ela se mostra ("Eu! Oi!") e ele responde contente ("Oi, oi!"). Cinco palavras diferentes, todas do banco.
+    linhas: [{ texto: 'Ei!', quem: 'sofia' }, { texto: 'Ai! Ui!', quem: 'tales' }, { texto: 'Eu! Oi!', quem: 'sofia' }, { texto: 'Oi, oi!', quem: 'tales' }],
     perguntas: [
-      { tipo: 'literal', pergunta: s('Leia de novo. O que a Sofia falou?'), opcoes: ['oi', 'ai', 'ui'], correta: 'oi', escritas: true },
-      { tipo: 'inferencia', pergunta: s('Como o Tales ficou no fim?'), opcoes: ['rosto-triste', 'rosto-feliz', 'rosto-bravo'], correta: 'rosto-triste' }
+      // só "ei" foi dito pela Sofia entre as opções ("ai" e "ui" são do Tales): a resposta está no texto, sem ambiguidade
+      { tipo: 'literal', pergunta: s('Leia de novo. O que a Sofia falou?'), opcoes: ['ei', 'ui', 'ai'], correta: 'ei', escritas: true },
+      { tipo: 'inferencia', pergunta: s('Como o Tales ficou no fim?'), opcoes: ['rosto-feliz', 'rosto-triste', 'rosto-bravo'], correta: 'rosto-feliz' }
     ]
   },
   {

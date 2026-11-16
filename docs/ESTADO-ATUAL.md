@@ -9,6 +9,26 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Pares mínimos com 3 opções, Bolota igual nas páginas e 1º texto (16/11, tarde; NÃO publicado ainda):**
+- **Pares mínimos:** todo item avaliado tem 3 opções: o par + um distrator do banco que muda OUTRO som (pato × bato × pata,
+  pule × bule × pula, galo × calo × gato…; no modo ouvir, com figura: faca × vaca × foca). No modo ler o distrator passa pelo
+  verificador (`verificar-fases.ts`); palavras novas no banco: `voa`, `cada`, `foca` (só ouvida). `bule/pule` virou `pule/bule`.
+  Teste `conteudo/test/pares-minimos.test.ts`. Errar no distrator: a Sofia toca a escolhida e a certa (sem a explicação do par).
+- **"8 de 10" no motor** (06 §2 item 4; `motor/src/dominio.ts` › `criterioPares`, config `dominio.paresMinimos`): habilidade
+  `par-minimo-*` só fica dominada com 8 certas e sem ajuda nas últimas 10 tentativas avaliadas do contraste. **Regra para não
+  travar** [DP]: com menos de 10 tentativas vale a mesma proporção arredondada para cima (8 → 7, 9 → 8), somada ao mínimo geral de 8
+  tentativas; e a fase só segura o "8 de 10" se ela mesma oferecer ≥ 10 itens do contraste (nenhuma oferece: 2 a 5), senão conclui e
+  a habilidade segue para revisão, treino e painel sem ficar dominada (`jornada.ts` › `itensDeParDaFase`). Teste `motor/test/pares-minimos.test.ts`.
+- **O Bolota e a chuva:** as 6 páginas (capa + 5) refeitas no Higgsfield (`nano_banana_2`) com a imagem oficial do Bolota como
+  referência (`app/ferramentas/referencia-bolota.jpg`, tirada de `personagens-vivos/fontes/base-bolota.png`): mesma cara, escamas,
+  orelhas e rabo em todas; a página 3 antiga tinha um arco-íris (D009) e saiu. A capa é a página 2 recortada (chuva começando, para
+  a pergunta de previsão). O `subject_reference` da MiniMax foi testado e não segurou o personagem. Créditos Higgsfield: 7,5 (saldo 1).
+- **1º texto ("Oi!", bloco 1):** virou um mini enredo de 4 falas, só com palavras de TF-06: Sofia "Ei!" · Tales "Ai! Ui!" (clipe já existente) ·
+  Sofia "Eu! Oi!" · Tales "Oi, oi!" (susto e alegria). Pergunta 1 agora tem resposta única (o que a Sofia falou: "ei"); a 2 (como o
+  Tales ficou) passou a "feliz". Vozes: 8 clipes, 129 caracteres enviados (inclui o gancho pendente da Festa "Agora as vogais vão mostrar os
+  outros sons delas!" e as leituras "voa" e "cada"); o texto corrido foi refeito uma vez porque o transcritor ouviu "oi" no
+  lugar de "ui" na 1ª ordem ("Ui! Ai!"); a fala do Tales voltou a usar o clipe "Ai! Ui!", já auditado. Ninguém ouviu os clipes novos.
+
 **Trava da voz, celular, cópia dos dados e textos (16/11, tarde; NÃO publicado ainda):**
 - **Trava da voz (grave):** Trilha dos Sons → Lojinha (fala de boas-vindas tocando) → Letra A deixava a voz muda e o "Já conheci!"
   preso para sempre (o clipe acabava sem o navegador avisar o fim e toda fala seguinte esperava por ele). Agora: a espera de cada clipe
@@ -150,8 +170,8 @@ em `motor/src/biblioteca.ts`, telas `Biblioteca.tsx` e `BrincarSons.tsx`, botõe
   `--cantinho` (13 checagens; o progresso da trilha é SEMEADO no banco do aparelho para chegar aos textos e à fluência) e capturas
   v8 olhadas e corrigidas. O E2E `--sem-jornada` inteiro NÃO chegou ao trecho do Cantinho: parou antes, na checagem da D031 ("o botão
   leva à jornada…"), que é da outra frente em andamento. ElevenLabs depois desta rodada: 122.141 de 131.000 (≈ 8,9 mil restantes;
-  enviados 4.904 caracteres, o contador subiu 2.314). **Não ficou bom**: o tatu muda um pouco de cara de página para página (o gerador não mantém o personagem);
-  o texto do bloco 1 é só um diálogo de interjeições (com só vogais não dá mais). **Não feito**: jogo da memória letra × cena e roleta de
+  enviados 4.904 caracteres, o contador subiu 2.314). **Não ficou bom** (corrigido em 16/11, ver bloco dos pares mínimos): o tatu mudava de cara de página para página;
+  o texto do bloco 1 era só um diálogo de interjeições. **Não feito**: jogo da memória letra × cena e roleta de
   sons (referência Wordwall, pesquisa 46), mais histórias, textos dos blocos 4–8, leitura cronometrada de TEXTO.
 
 **D031 — letras e sons alternados na jornada (16/11; NÃO publicado ainda; decisão do dono "B"):**

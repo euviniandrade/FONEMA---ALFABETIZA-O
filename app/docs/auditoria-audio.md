@@ -2,16 +2,16 @@
 
 Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai ao ar sem esta auditoria**.
 
-- Clipes auditados: **1639** (1349 falas + 290 nomes; vozes Sofia e Tales)
-- Graves (defeito audível provável): **48** · a conferir de ouvido (palavra/som solto com transcrição diferente): **131** · leves (higiene do sinal): **0** · sem defeito: **1460**
-- Conteúdo conferido por transcrição: **1639** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
+- Clipes auditados: **1646** (1356 falas + 290 nomes; vozes Sofia e Tales)
+- Graves (defeito audível provável): **49** · a conferir de ouvido (palavra/som solto com transcrição diferente): **132** · leves (higiene do sinal): **0** · sem defeito: **1465**
+- Conteúdo conferido por transcrição: **1646** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
 - Volume (clipes ≥ 0,4 s): mediana -17.4 LUFS, de -22.8 a -14.6 (alvo -16)
 
 ## Defeitos por tipo
 
 | Tipo | Antes | Agora |
 |---|---|---|
-| conteúdo: palavra trocada | 69 | 143 |
+| conteúdo: palavra trocada | 69 | 145 |
 | começo seco | 184 | 0 |
 | volume fora da média | 135 | 0 |
 | sem respiro no começo | 113 | 0 |
@@ -27,9 +27,9 @@ Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai
 | conteúdo: transcrição vazia | 2 | 1 |
 | conteúdo: sílaba faltando no meio | 0 | 3 |
 | conteúdo: fim faltando | 0 | 2 |
-| conteúdo: começo faltando | 0 | 1 |
 | conteúdo: palavra faltando | 0 | 1 |
 | mudo | 1 | 0 |
+| conteúdo: começo faltando | 0 | 1 |
 
 Antes: 275 graves, 52 a conferir e 188 leves em 915 clipes (915 com transcrição).
 
@@ -47,6 +47,7 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 | sofia | Cá! De kiwi. | K de kiwi | sílaba faltando no fim (“ka” → “k”) | `falas/sofia-1wuhvy7-r2-m1.mp3` |
 | sofia | Devagar: M, de macaco-Aaaaa, ma. L, de lua-Aaaaa, la. mala! | Devagar, hem, de macaco ama. Ele de lua ala, mala | palavra trocada (“n” → “en”); palavra trocada (“a ma l” → “ama ele”) | `falas/sofia-guzzxu-m1.mp3` |
 | sofia | E: é e ê. Ligar os sons é e ê à letra E. | É, iê! Liga os sons é e iê à letra E. / I, E e E. Ligar os sons E e E  | palavra trocada (“e” → “i”) | `falas/sofia-1svhpmb-m1.mp3` |
+| sofia | Ei! Ui! Ai! Eu! Oi! Oi, oi! | Ei, oi, ai, eu, oi, oi, oi | palavra trocada (“ui” → “oi”) | `falas/sofia-j1ecvd-m1.mp3` |
 | sofia | Escute como eu leio. Depois, leia você, do mesmo jeito. | E escute como eu leio. Depois leia você do mesmo jeito | sobrando “e” | `falas/sofia-181eno1-m1.mp3` |
 | sofia | Esticar M, de macaco, L, de lua e F, de foca | Esticar M de macaco, L de lua e Fim de foca | palavra trocada (“f” → “fin”) | `falas/sofia-1ngizd-m1.mp3` |
 | sofia | Guardar moedinhas no porquinho | Guardar moedinhas no porquinho | curto demais | `falas/sofia-13bc37v-m1.mp3` |
@@ -184,6 +185,7 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 | sofia | To. | Tchau! | `falas/sofia-rpta4w-m1.mp3` |
 | sofia | Tufa. | Too far | `falas/sofia-1ur06kt-m1.mp3` |
 | sofia | Tá. | Ei / Ei! | `falas/sofia-rpta1q-m1.mp3` |
+| sofia | Ui! Ai! | Oi, ai! | `falas/sofia-1awpnrz-m1.mp3` |
 | sofia | Ui. | Oi! | `falas/sofia-rpta5z-m1.mp3` |
 | sofia | Umu. | Amo | `falas/sofia-1qahnqe-m1.mp3` |
 | sofia | Unha. | Punga | `falas/sofia-1ur148p-r3-m1.mp3` |

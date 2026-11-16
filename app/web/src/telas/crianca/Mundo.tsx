@@ -8,7 +8,7 @@ import { Selo } from '../../componentes/recompensas.tsx';
 import { PersonagemVivo } from '../../componentes/PersonagemVivo.tsx';
 import { Fundo, Icone, MapaNavegavel, type Marcador } from '../../componentes/ui.tsx';
 import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
-import { BotaoTreino } from './Treino.tsx';
+import { DocaVila } from './DocaVila.tsx';
 import { Dupla3DGiravel } from '../../componentes/Personagem3D.tsx';
 import { falar, falarVarias, textoTela } from '../../util.ts';
 
@@ -164,18 +164,8 @@ export function Vila({ criancaId }: { criancaId: string }) {
           <p><b>{fala.quem === 'tales' ? 'Tales' : 'Sofia'}</b>{textoTela(fala.texto, crianca)}</p>
           <BotaoOuvir onClick={() => falar(fala, crianca)} />
         </div>
-        <nav className="hud-doca vidro" aria-label="Lugares da vila">
-          <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/album`)}><Icone nome="album" />Álbum</button>
-          {config.lojinha.naVila ? <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/lojinha`)}><Icone nome="lojinha" />Lojinha</button> : null}
-          <button className="doca-btn doca-alfabeto" onClick={() => navegar(`c/${criancaId}/alfabeto`)} data-ponto="alfabeto"><span className="doca-abc" aria-hidden="true">Aa</span>Alfabeto</button>
-          <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/sons`)} data-ponto="sons"><Icone nome="som" />Sons</button>
-          <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/leitura`)} data-ponto="leitura" data-testid="ir-leitura"><Icone nome="caderno" />Leitura</button>
-          <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/brincar`)} data-ponto="brincar" data-testid="ir-brincar"><Icone nome="nota" />Brincar</button>
-          <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mapa`)}><Icone nome="mapa" />Ilhas</button>
-          {mundo3d ? <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mundo`)} data-ponto="mundo3d"><Icone nome="cubo" />Passear 3D</button> : null}
-          <BotaoTreino criancaId={criancaId} progresso={progresso} />
-          <button className="btn ipe doca-missao brilha" onClick={() => navegar(`c/${criancaId}/fase/${fase.id}`)} data-testid="ir-missao"><Icone nome="play" />Missão</button>
-        </nav>
+        {/* barra com poucas portas grandes; o resto mora no "Mais" (DocaVila.tsx) */}
+        <DocaVila criancaId={criancaId} progresso={progresso} faseId={fase.id} mundo3d={mundo3d} />
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ import { voz } from '../servicos/voz.ts';
 import { falar, textoVoz } from '../util.ts';
 import { Progressinho, tentativa, type PropsMecanica } from './comum.tsx';
 
-/** Palmas das sílabas: cada palma acende uma lâmpada (ou uma casa da amarelinha). */
+/** Palmas das sílabas: cada palma acende uma lâmpada (na amarelinha, a lâmpada fica em cima de cada casa e acende junto). */
 export function Palmas({ atividade, crianca, sessao, cenaId, onFim }: PropsMecanica<AtividadePalmas>) {
   const nome = infoNome(crianca.nome, crianca.pronuncia.grafia);
   const [i, setI] = useState(0);
@@ -82,6 +82,8 @@ export function Palmas({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
       <div className={`lampadas ${estilo === 'amarelinha' ? 'amarelinha' : ''}`} data-silabas={sil.length} aria-live="polite" aria-label={`${palmas} palmas`}>
         {Array.from({ length: nLuz }, (_, k) => (
           <span key={k} className={`lampada ${k < palmas || k === mostrando || ok ? 'acesa' : ''} ${k >= sil.length ? 'extra' : ''}`}>
+            {/* a Sofia diz "olha as lâmpadas" em todos os estilos: na amarelinha cada casa tem a sua lâmpada */}
+            {estilo === 'amarelinha' ? <i className="lampada-bulbo" aria-hidden="true" /> : null}
             {(k < palmas || k === mostrando || ok) && k < sil.length ? <small>{sil[k]}</small> : null}
           </span>
         ))}

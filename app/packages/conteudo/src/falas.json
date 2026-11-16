@@ -810,12 +810,6 @@
   "origem": "escondida"
  },
  {
-  "id": "s-1e2jkol",
-  "voz": "sofia",
-  "texto": "Oi! Oi, oi! Ai! Ui!",
-  "origem": "oi"
- },
- {
   "id": "s-1e5e9fr",
   "voz": "sofia",
   "texto": "Qual figura começa com o som desta letra?",
@@ -1716,9 +1710,9 @@
   "origem": "AL-RV2-C3a"
  },
  {
-  "id": "s-1qahuto",
+  "id": "s-1qahzk6",
   "voz": "sofia",
-  "texto": "Oi!",
+  "texto": "Ei!",
   "origem": "oi"
  },
  {
@@ -3516,6 +3510,12 @@
   "origem": "S-SOM-M"
  },
  {
+  "id": "s-28njml",
+  "voz": "sofia",
+  "texto": "Eu! Oi!",
+  "origem": "oi"
+ },
+ {
   "id": "s-298jxn",
   "voz": "sofia",
   "texto": "Olha o que você escreveu. E agora, olha como se escreve.",
@@ -4168,6 +4168,12 @@
   "voz": "sofia",
   "texto": "Amanhã a gente descobre o E, que também tem dois jeitos!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-cawv55",
+  "voz": "sofia",
+  "texto": "Ei! Ai! Ui! Eu! Oi! Oi, oi!",
+  "origem": "oi"
  },
  {
   "id": "s-cbs8us",
@@ -5055,7 +5061,7 @@
   "id": "s-rpt9m5",
   "voz": "sofia",
   "texto": "oi",
-  "origem": "oi"
+  "origem": "TF-18-C4b"
  },
  {
   "id": "s-rpt9n2",
@@ -5097,7 +5103,7 @@
   "id": "s-rpt9rb",
   "voz": "sofia",
   "texto": "ei",
-  "origem": "TF-06-C4b"
+  "origem": "oi"
  },
  {
   "id": "s-rpt9rv",
