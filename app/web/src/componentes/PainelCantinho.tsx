@@ -23,9 +23,12 @@ export function PainelCantinho({ p, nome }: { p: Progresso; nome: string }) {
       <div className="bloco" data-testid="painel-escrita-propria">
         <h2><Icone nome="caderno" />Escrita do jeito de {nome}</h2>
         {d.escritas.length ? (
-          <ul className="painel-livre-escritas">{ultimas(d.escritas, 8).map((e) => (
-            <li key={`${e.em}-${e.vez}`}><small>{new Date(e.em).toLocaleDateString('pt-BR')}{e.vez === 2 ? ' · reescrita' : ''}</small><b>{e.escrito}</b><span>→ {e.palavra.toUpperCase()}</span></li>
-          ))}</ul>
+          <table className="tabela-escritas">
+            <thead><tr><th>Dia</th><th>Escreveu</th><th>Forma certa</th></tr></thead>
+            <tbody>{ultimas(d.escritas, 8).map((e) => (
+              <tr key={`${e.em}-${e.vez}`}><td>{new Date(e.em).toLocaleDateString('pt-BR')}{e.vez === 2 ? ' (reescrita)' : ''}</td><td><b>{e.escrito}</b></td><td><b>{e.palavra.toUpperCase()}</b></td></tr>
+            ))}</tbody>
+          </table>
         ) : <p>Ainda não escreveu do seu jeito. Abre no Cantinho da Leitura depois do som do M.</p>}
         <p className="nota-mic">Mostra como {nome} pensa a escrita; não é nota e não conta para o "já sabe".</p>
       </div>

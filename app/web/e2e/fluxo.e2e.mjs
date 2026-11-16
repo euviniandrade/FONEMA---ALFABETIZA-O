@@ -632,7 +632,7 @@ async function trechoCantinho(browser, erros, { w = 1280, h = 800, suf = '', mov
   await pg.getByTestId('painel-fluencia').waitFor();
   const painel = await pg.getByTestId('painel-fluencia').innerText();
   const escrita = await pg.getByTestId('painel-escrita-propria').innerText();
-  ok(/Palavras certas por minuto/.test(painel) && !/55|90 palavras/.test(painel) && escrita.length > 40, 'painel: palavras certas por minuto sem meta importada, e a escrita própria ao lado da forma certa');
+  ok(/Palavras certas por minuto/.test(painel) && !/\b(55|90) palavras por minuto/.test(painel) && escrita.length > 40, 'painel: palavras certas por minuto sem meta importada, e a escrita própria ao lado da forma certa');
   if (capT) { await pg.getByTestId('painel-fluencia').scrollIntoViewIfNeeded(); await capT(pg, '21-painel-fluencia'); }
   await guardarFalas(pg);
   await ctx.close();

@@ -99,6 +99,37 @@ por ordem de tentativas do próprio teste).
   `--sem-jornada` (trechos 1 a 11 passaram, 100 checagens; o trecho 12, Cantinho da Leitura, da outra frente, não terminou dentro do
   limite de 10 min do teste e não foi conferido).
 
+**Cantinho da Leitura e Brincar com sons (16/11; NÃO publicado ainda; capturas `app/docs/capturas/v8-*.png`):** a revisão apontou
+que fluência, compreensão, vocabulário e jogos de escuta estavam só no papel. Agora existem (dados em `conteudo/src/biblioteca/`, regras
+em `motor/src/biblioteca.ts`, telas `Biblioteca.tsx` e `BrincarSons.tsx`, botões "Leitura" e "Brincar" na vila):
+- **Hora da história** (aberta desde o começo, para quem ainda não lê): "O Bolota e a chuva" e "O piquenique da Fia" (histórias do
+  projeto), 5 páginas ilustradas (MiniMax, `ferramentas/gerar-ilustracao-minimax.py`), narração da Sofia; perguntas antes (previsão,
+  sem nota), durante (direta) e depois (direta e de dedução) respondidas por figura; no 1º erro a Sofia relê o trecho; 3 palavras de
+  vocabulário por história (Tales apresenta, Sofia explica e usa numa frase, conferência por figura).
+- **Ler sozinho**: um texto decodificável no fim de cada bloco ("Oi!" até TF-06; "A ema suja" até TF-15; "O bolo da tia" até TF-22),
+  passando no verificador (teste `conteudo/test/biblioteca.test.ts`; palavras novas de, da, no, caiu no fim de `tf-banco.ts`).
+  Tocar numa palavra toca os sons; perguntas com o texto à vista; leitura em coro no fim. Livrinho no fim de cada bloco da Trilha dos Sons.
+- **Ler mais ligeiro** (fluência): só abre com precisão de leitura ≥ 95% nas últimas 20 respostas conferidas (ABC p. 375–376); lista
+  de 8 palavras que a criança JÁ leu certo, relida até 3 vezes firme; cada palavra conferida pela escolha da figura (o microfone é
+  opcional e só apoio). Criança vê um caminho de pedrinhas com estrelas; adulto vê palavras certas por minuto e precisão por leitura,
+  **sem meta** (as do ABC p. 379 são de Portugal; meta brasileira = decisão do projeto a calibrar).
+- **Ler em eco e em coro** frases já estudadas (autorrelato: fica fora do domínio). **Escrever do meu jeito** (N13): letras móveis
+  livres, depois confronto letra a letra com a forma certa, a Sofia aponta o som que faltou com o som real da letra, reescrita sem modelo;
+  guardado para o adulto, sem nota.
+- **Brincar com sons** (sempre aberto, não trava nada): palavra comprida, palavra escondida (sapato/pato, luva/uva…), achar a rima,
+  quem não rima, mesmo começo, palmas. Exemplo da Sofia na 1ª vez, posições sorteadas, correção contrastiva, a parte escrita só depois.
+- **Registro**: respostas conferidas vão ao motor com `contexto: 'livre'` (habilidades novas: palavra-maior, silaba-inicial,
+  palavra-dentro, compreensao-ouvida, vocabulario, leitura-texto, fluencia-palavras); previsão, eco, coro e escrita própria só no
+  resumo `Progresso.biblioteca`. Painel do adulto: gráfico de fluência, tabela da escrita própria, histórias, textos e jogos.
+- **Vozes**: 144 clipes novos (4.904 caracteres), masterizados, auditados e `bocas.json` refeito. A auditoria (só Scribe) marcou alguns
+  clipes novos como graves com transcrição absurda ("[som de transição]") e sinal normal: provável erro do transcritor, mas **ninguém
+  ouviu**; e "Dividir", "Poça", "A ema sai suja, suja!" a conferir de ouvido (lista em `app/docs/falas-pendentes.md`).
+- **Verificado:** typecheck, lint, testes (novos em `conteudo/test/biblioteca.test.ts` e `motor/test/biblioteca.test.ts`), E2E
+  `--cantinho` (13 checagens; o progresso da trilha é SEMEADO no banco do aparelho para chegar aos textos e à fluência) e capturas
+  v8 olhadas e corrigidas. **Não ficou bom**: o tatu muda um pouco de cara de página para página (o gerador não mantém o personagem);
+  o texto do bloco 1 é só um diálogo de interjeições (com só vogais não dá mais). **Não feito**: jogo da memória letra × cena e roleta de
+  sons (referência Wordwall, pesquisa 46), mais histórias, textos dos blocos 4–8, leitura cronometrada de TEXTO.
+
 **Próximos passos, em ordem:**
 1. **Trilha fônica, blocos 4 a 8** (TF-23…TF-53: abertas e nasais, R e H, dígrafos, regras de posição, encontros), textos
    decodificáveis e fluência; jogos dos materiais (batalha de palavras, palavra dentro de palavra, rimas). Blocos 1–3 prontos (bloco acima).

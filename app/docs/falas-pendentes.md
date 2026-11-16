@@ -32,6 +32,9 @@ Cantinho ficou sem voz. Masterizado e auditado (ver `docs/auditoria-audio.md`).
 
 | Voz | Fala | O que a transcrição ouviu | Situação |
 |---|---|---|---|
+| Sofia | "Como o Tales ficou no fim?", "A ema foi na lama.", "Monte a palavra som por som," | "[som de carro]" / "[som de transição]" | 16/11: só o Scribe transcreveu; duração e volume normais. Provável erro do transcritor; conferir de ouvido |
+| Sofia | "A ema sai suja, suja!" | "Aê, mas sai suja, suja?" | 16/11: "ema" é palavra rara para o transcritor; conferir de ouvido |
+| Sofia/Tales | "Dividir.", "Poça." | "Divigil", "Pode, sá?" / "Possa" | 16/11: palavra solta; conferir de ouvido |
 | Sofia | "U ou O," (antes do nome, em "U ou O, [NOME]? Olha minha boca.") | "U? Ô" | 4 versões; continua sem o "ou" claro |
 | Sofia | "O D tem voz:" | "O detém voz" | Provável engano da transcrição; conferir de ouvido |
 | Sofia | "Os sons /é/ e /ê/ da letra E" e "Ouvir a diferença entre é e ê" (dicas de cadeado) | "os sons E e I", "a diferença entre e" | A voz sintética não separa bem é × ê em frase |

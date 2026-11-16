@@ -225,3 +225,21 @@
   background:linear-gradient(180deg,#FFFDF6,#FBEFD9);box-shadow:0 5px 0 var(--madeira),0 12px 16px -8px rgba(60,35,10,.45);transition:transform .25s var(--mola)}
 .sons-livrinho:not([disabled]):hover{transform:translateY(-3px)}
 .sons-livrinho .ic{width:22px;height:22px}
+
+/* ---------- ajustes vistos nas capturas v8 ---------- */
+.historia-pergunta>.opcoes,.texto-perguntas>.opcoes{width:100%}
+.pecas.escrita-teclado{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:10px;max-width:1040px}
+.pecas.escrita-teclado .peca{width:100%;min-width:0;padding:0;height:66px;font-size:36px;border-radius:16px}
+.confronto-fila{gap:12px}
+.confronto-fila+.confronto-fila{margin-top:6px}
+.tabela-escritas{border-collapse:collapse;font-family:var(--f-adulto);margin:6px 0}
+.tabela-escritas th{font-size:13px;color:var(--cinza);text-align:left;font-weight:600;padding:4px 14px 4px 0}
+.tabela-escritas td{padding:5px 14px 5px 0;border-top:1px solid var(--linha);font-size:15px;color:var(--tinta)}
+.tabela-escritas td b{font-family:var(--f-leitura);font-size:20px;letter-spacing:.08em;color:var(--marinho)}
+@media (max-width:700px){
+  .pecas.escrita-teclado{grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+  .pecas.escrita-teclado .peca{height:52px;font-size:28px}
+}
+.mec-texto[data-etapa="perguntas"] .texto-linha{font-size:clamp(22px,2.3vw,30px);margin:2px 0}
+.mec-texto[data-etapa="perguntas"] .texto-titulo{font-size:clamp(24px,2.6vw,32px);margin-bottom:4px}
+.mec-texto[data-etapa="perguntas"] .texto-livro{padding-block:14px}
