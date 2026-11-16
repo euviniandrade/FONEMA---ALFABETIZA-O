@@ -5,7 +5,7 @@
 import { FASE_POR_ID, HABILIDADE_POR_ID, REGIAO_POR_ID, SURPRESAS } from '@fonema/conteudo';
 import type { Atividade, Cena, ConfigPlataforma, Fase, Surpresa } from '@fonema/conteudo';
 import type { ConquistaGanha, Demonstracao, Progresso, Tentativa } from './estado.ts';
-import { avaliarDominio, dominadaDeVerdade, novaHabilidade, paraProva, proporcao, registrarTentativa } from './dominio.ts';
+import { avaliarDominio, dominadaDeVerdade, novaHabilidade, palavrasDaFase, paraProva, proporcao, registrarTentativa, tiposDeAtividadeDaFase, tiposDeAtividadeDoConteudo } from './dominio.ts';
 import { TIPO_POR_MECANICA, acertoSozinho, ehAvaliada, normalizarTentativa } from './tentativas.ts';
 import { agendarRevisao, resultadoRevisao } from './revisao.ts';
 import { creditarEmBloco } from './moedinhas.ts';
@@ -132,10 +132,12 @@ export function fecharSessao(
   for (const [id, h] of Object.entries(habilidades)) {
     if (h.dominadaEm && !h.aConfirmar) continue;
     const exige = HABILIDADE_POR_ID[id]?.exigePseudo ?? false;
-    if (!avaliarDominio(h, cfg.dominio, exige).dominado) continue;
+    if (!avaliarDominio(h, cfg.dominio, exige, id).dominado) continue;
     if (h.dominadaEm) {
-      // já estava marcada (dado antigo ou chefe): agora o critério honesto confirmou
-      habilidades[id] = { ...h, aConfirmar: undefined };
+      // já estava marcada (dado antigo, chefe ou prova-relâmpago): agora o critério honesto confirmou.
+      // O marco (moedinhas) que a prova de uma sessão só não deu sai agora; dado antigo já tinha recebido.
+      habilidades[id] = { ...h, aConfirmar: undefined, marcoPendente: undefined };
+      if (h.marcoPendente) dominadasAgora.push(id);
     } else {
       habilidades[id] = agendarRevisao({ ...h, dominadaEm: agora }, agora, cfg.revisao.intervalosDias);
       dominadasAgora.push(id);
@@ -170,22 +172,9 @@ export function fecharSessao(
       chefe = { leitura: pl, escrita: pe, passou };
       p = { ...p, fases: { ...p.fases, [fase.id]: { ...p.fases[fase.id], chefe: { ...chefe, em: agora } } } };
       faseConcluida = passou;
-      // chefe vencido = domínio confirmado das habilidades da fase
-      if (passou) {
-        const hs = { ...p.habilidades };
-        for (const id of fase.habilidades) {
-          const h = hs[id] ?? novaHabilidade();
-          if (!h.dominadaEm) {
-            // D030: o chefe confirma o domínio, menos a parte que ele não mediu com resposta conferida
-            // (pseudopalavra lida só por autorrelato): aí a habilidade fica "a confirmar".
-            const exige = HABILIDADE_POR_ID[id]?.exigePseudo ?? false;
-            const semPseudo = exige && avaliarDominio(h, cfg.dominio, true).pseudoCertas < cfg.dominio.pseudoMin;
-            hs[id] = agendarRevisao({ ...h, dominadaEm: agora, ...(semPseudo ? { aConfirmar: true } : {}) }, agora, cfg.revisao.intervalosDias);
-            dominadasAgora.push(id);
-          }
-        }
-        p = { ...p, habilidades: hs };
-      }
+      // chefe vencido LIBERA o avanço, mas é uma sessão só: as habilidades da fase ficam "a confirmar" (não dominadas)
+      // até cumprirem o critério de docs/pedagogia/06 §2 (≥ 2 sessões, palavras e tipos de atividade diferentes)
+      if (passou) p = { ...p, habilidades: marcarAConfirmar(p.habilidades, fase.habilidades, agora, cfg) };
     }
     if (faseConcluida && !args.expressa) p = concluirFase(p, fase.id, agora);
   }
@@ -269,12 +258,34 @@ export function faseMede(fase: Fase, habilidade: string, pseudo = false): boolea
  */
 export function criterioDaFaseCumprido(p: Progresso, fase: Fase, habilidade: string, cfg: ConfigPlataforma): boolean {
   const h = p.habilidades[habilidade];
-  if (h?.dominadaEm) return true;
+  // "a confirmar" (chefe ou prova-relâmpago de uma sessão só) não conta: a fase pede a prova de verdade
+  if (dominadaDeVerdade(h)) return true;
   if (!faseMede(fase, habilidade)) return true;
   const exige = HABILIDADE_POR_ID[habilidade]?.exigePseudo ?? false;
-  const av = avaliarDominio(h, cfg.dominio, exige);
+  const av = avaliarDominio(h, cfg.dominio, exige, habilidade);
   if (av.dominado) return true;
-  return av.soFaltaPseudo && !faseMede(fase, habilidade, true);
+  if (!av.basicoCumprido) return false;
+  // só falta o que ESTA fase não tem como pedir (pseudopalavra conferida, outro tipo de atividade, palavras diferentes):
+  // a fase conclui, mas a habilidade NÃO fica dominada (vai para reforço e para o painel)
+  if (av.faltaPseudo && faseMede(fase, habilidade, true)) return false;
+  if (av.faltaTipos && (tiposDeAtividadeDaFase(fase).get(habilidade)?.size ?? 0) >= Math.min(cfg.dominio.tiposDeAtividadeMin ?? 2, tiposDeAtividadeDoConteudo(habilidade).size)) return false;
+  if (av.faltaItens && palavrasDaFase(fase, habilidade) >= (cfg.dominio.itensDiferentesMin ?? 3)) return false;
+  return true;
+}
+
+/**
+ * Prova de UMA sessão (chefe vencido, prova-relâmpago): marca as habilidades ainda não dominadas como "a confirmar"
+ * (`dominadaEm` + `aConfirmar`, para a jornada não pedir de novo o que a criança já mostrou), com revisão agendada e o
+ * marco pendente. Nunca mexe na firmeza (p) nem em habilidade já dominada de verdade.
+ */
+export function marcarAConfirmar(hs0: Progresso['habilidades'], ids: string[], agora: number, cfg: ConfigPlataforma): Progresso['habilidades'] {
+  const hs = { ...hs0 };
+  for (const id of ids) {
+    const h = hs[id] ?? novaHabilidade();
+    if (h.dominadaEm) continue;
+    hs[id] = agendarRevisao({ ...h, dominadaEm: agora, aConfirmar: true, marcoPendente: true }, agora, cfg.revisao.intervalosDias);
+  }
+  return hs;
 }
 
 /** Marca `dominadaEm` nas fases concluídas em que todas as habilidades estão dominadas de verdade. Nunca desmarca. */

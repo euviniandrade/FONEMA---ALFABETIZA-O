@@ -46,7 +46,7 @@ export const PALAVRAS_TF: EntradaBanco[] = [
   e('zoa', 'z o a'), e('soa', 's o a'), e('vazio', 'v a z i u'), e('fazia', 'f a z i a'), e('selo', 's e l u'), e('zelo', 'z e l u'),
   pseudo('zufa', 'z u f a'), pseudo('zami', 'z a m i', true),
   // TF-15 · J
-  e('sujo', 's u ʒ u'), e('suja', 's u ʒ a'), e('seja', 's e ʒ a'), e('veja', 'v e ʒ a'), e('jaula', 'ʒ a u l a'),
+  e('sujo', 's u ʒ u'), e('suja', 's u ʒ a'), e('seja', 's e ʒ a'), e('veja', 'v ɛ ʒ a'), e('jaula', 'ʒ a u l a'),
   pseudo('jufa', 'ʒ u f a'), pseudo('jali', 'ʒ a l i', true),
   // TF-16 · P
   e('papai', 'p a p a i', { ...ox, figura: 'papai' }), e('lupa', 'l u p a', { figura: 'lupa' }), e('sapo', 's a p u', { figura: 'sapo' }), e('pia', 'p i a'),
@@ -62,7 +62,7 @@ export const PALAVRAS_TF: EntradaBanco[] = [
   pseudo('bufi', 'b u f i', true), pseudo('labu', 'l a b u', true),
   // TF-19 · C (ca, co, cu)
   e('faca', 'f a k a', { figura: 'faca' }), e('vaca', 'v a k a', { figura: 'vaca' }), e('macaco', 'm a k a k u', { figura: 'macaco' }), e('suco', 's u k u', { figura: 'suco' }),
-  e('jaca', 'ʒ a k a', { figura: 'jaca' }), e('boca', 'b o k a'), e('caju', 'k a ʒ u', ox), e('come', 'k o m i'),
+  e('jaca', 'ʒ a k a', { figura: 'jaca' }), e('boca', 'b o k a'), e('caju', 'k a ʒ u', ox), e('come', 'k ɔ m i'),
   pseudo('cafu', 'k a f u', true), pseudo('cavu', 'k a v u', true),
   // TF-20 · D
   e('dado', 'd a d u', { figura: 'dado' }), e('dedo', 'd e d u', { figura: 'dedo' }), e('vida', 'v i d a'), e('nada', 'n a d a'), e('lado', 'l a d u'),
@@ -84,7 +84,7 @@ export const PALAVRAS_TF: EntradaBanco[] = [
  */
 export const PALAVRAS_OUTRAS_TRILHAS: EntradaBanco[] = [
   // Vale do M-L-F (R2a) e Meu nome
-  e('ma', 'm a'), e('mo', 'm o'), e('mu', 'm u'), e('mola', 'm ɔ l a'), e('fofa', 'f ɔ f a'),
+  e('ma', 'm a'), e('mo', 'm o'), e('mu', 'm u'), e('mola', 'm ɔ l a'), e('fofa', 'f o f a'),
   pseudo('lufo', 'l u f u'), pseudo('folu', 'f o l u', true), pseudo('femo', 'f e m u'), pseudo('fuli', 'f u l i', true),
   // primeiras palavrinhas da Trilha A–Z (vocabulário para montar)
   e('babá', 'b a b a'), e('bebê', 'b e b e'), e('café', 'k a f ɛ'), e('bife', 'b i f i'), e('cama', 'k a m a'), e('banana', 'b a n a n a'),

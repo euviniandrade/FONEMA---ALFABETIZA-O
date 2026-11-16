@@ -96,9 +96,10 @@ export function Montar({ atividade, crianca, sessao, cenaId, onFim }: PropsMecan
       if (fim) {
         setPronto(true);
         efeitos.acerto();
-        // demonstração, modelo na tela ou palavra de vocabulário (valores sonoros ainda não ensinados): é exposição
-        const exposicao = rodada.modelo || !!atividade.vocabulario;
-        tents.current.push(tentativa(atividade.habilidade, sessao, cenaId, errosTotal, {
+        // demonstração, modelo na tela, palavra de vocabulário (valores sonoros ainda não ensinados) ou montagem POR SÍLABA
+        // (regra 6: a sílaba vale na escuta; para escrever, a peça é a letra): é exposição, nunca domínio
+        const exposicao = rodada.modelo || !!atividade.vocabulario || !!atividade.porSilaba;
+        tents.current.push(tentativa(atividade.porSilaba ? 'silaba' : atividade.habilidade, sessao, cenaId, errosTotal, {
           mecanica: 'montar', tipo: exposicao ? 'exposicao' : 'avaliada', alvo: palavra, categoria: alvo.length === 1 && atividade.porSilaba ? 'silaba' : 'palavra',
           escolhido: erradas.current.length ? erradas.current[0] : palavra, respostas: [...erradas.current, palavra], distratores: atividade.distratoras ?? [],
           tempoMs: Date.now() - inicio.current, tentativaNumero: errosTotal + 1, ...(brilhou.current ? { comAjuda: true } : {})

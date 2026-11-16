@@ -57,10 +57,12 @@ export function resultadoProvaRelampago(
   if (!passou) return { progresso: { ...p, expressa: { ...p.expressa, ativa: false } }, passou };
   const fase = FASE_POR_ID[faseId];
   let q = concluirFase(p, faseId, agora, { expressa: true });
+  // a prova-relâmpago é UMA sessão: libera o avanço, mas as habilidades ficam "a confirmar" (não dominadas) e a firmeza
+  // não sobe (D030; docs/pedagogia/06 §2). O critério honesto confirma depois, nas fases e revisões seguintes.
   const habilidades = { ...q.habilidades };
   for (const h of fase.habilidades) {
     const atual = habilidades[h] ?? novaHabilidade();
-    if (!atual.dominadaEm) habilidades[h] = agendarRevisao({ ...atual, p: Math.max(atual.p, cfg.dominio.pMin), dominadaEm: agora }, agora, cfg.revisao.intervalosDias);
+    if (!atual.dominadaEm) habilidades[h] = agendarRevisao({ ...atual, dominadaEm: agora, aConfirmar: true, marcoPendente: true }, agora, cfg.revisao.intervalosDias);
   }
   // cada prova-relâmpago aprovada vale os desafios daquela fase (ninguém fica "atrás" em títulos por já saber)
   const desafiosDaFase = fase.cenas.filter((c) => c.atividade).length;

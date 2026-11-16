@@ -236,7 +236,7 @@ export function praticasRecomendadas(p: Progresso, cfg: ConfigPlataforma, agora:
   pendentes.sort((a, b) => (p.habilidades[a]?.p ?? 0) - (p.habilidades[b]?.p ?? 0));
   for (const h of pendentes) {
     const exige = HABILIDADE_POR_ID[h]?.exigePseudo ?? false;
-    const falta = avaliarDominio(p.habilidades[h], cfg.dominio, exige).falta;
+    const falta = avaliarDominio(p.habilidades[h], cfg.dominio, exige, h).falta;
     out.push({
       motivo: 'reforco', habilidade: h, nomeHabilidade: nome(h), faseId: faseQueEnsina(h), itens: itensDaHabilidade(h, r.maxItens),
       paraAdulto: `A fase foi concluída, mas "${nome(h)}" ainda não está firme. Falta: ${falta.slice(0, 2).join('; ') || 'confirmar em atividade conferida'}.`

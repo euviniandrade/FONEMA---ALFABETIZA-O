@@ -138,8 +138,8 @@ describe('domínio honesto: exposição e autorrelato não contam', () => {
   it('provas (chefe, relâmpago) contam só as respostas conferidas', () => {
     const ts = [t('leitura-cvcv', false, 's'), t('leitura-cvcv', true, 's'), ...[1, 2, 3, 4].map(() => t('leitura-cvcv', true, 's', { mecanica: 'falar' }))];
     expect(proporcao(ts)).toBe(0.5);
-    // prova só de autorrelato: vale a conta antiga, para não travar a jornada
-    expect(proporcao(ts.slice(2))).toBe(1);
+    // prova só de autorrelato vale 0: autorrelato nunca conta (regra 4)
+    expect(proporcao(ts.slice(2))).toBe(0);
   });
 
   it('jogar a missão de uma letra duas vezes NÃO domina a letra só com Letra+Espelho+Traçar', () => {
@@ -173,7 +173,14 @@ describe('concluída × dominada', () => {
       const a = e.cena?.atividade;
       if (!a) continue;
       const n = a.tipo === 'escolher' ? Math.max(1, a.itens.length) : 1;
-      const ts: Tentativa[] = Array.from({ length: n }, (_, k) => ({ em: agora, sessao: id, habilidade: (a.tipo === 'escolher' ? a.itens[k]?.habilidade : undefined) ?? a.habilidade, acertou: true, cena: e.cena!.id, ...(a.tipo === 'escolher' && a.itens[k]?.pseudo ? { pseudo: true } : {}) }));
+      // como a mecânica grava: a habilidade do item, a palavra-alvo e o formato do item (Escolher)
+      const ts: Tentativa[] = Array.from({ length: n }, (_, k) => {
+        const item = a.tipo === 'escolher' ? a.itens[k] : undefined;
+        return {
+          em: agora, sessao: id, habilidade: item?.habilidade ?? a.habilidade, acertou: true, cena: e.cena!.id,
+          ...(item?.pseudo ? { pseudo: true } : {}), ...(item?.formato ? { formato: item.formato } : {})
+        };
+      });
       p = aplicarAtividade(p, { sessao: id, cena: e.cena!, tentativas: ts, tentouDeNovo: 0 }, cfg, agora);
       if (e.cena!.contaDominio) { atividades++; todas.push(...ts); }
     }
@@ -196,7 +203,8 @@ describe('concluída × dominada', () => {
 
   it('quando a habilidade firma com respostas conferidas, a fase já concluída passa a dominada', () => {
     let p = jogar(progressoInicial('c1', T0), 'AL-A', T0).progresso;
-    const mais = Array.from({ length: 10 }, (_, i) => t('letra-a', true, i < 5 ? 'x1' : 'x2'));
+    // critério 5 (06 §2): acertos em dois tipos de atividade (ouvir → letra e letra → som)
+    const mais = Array.from({ length: 10 }, (_, i) => t('letra-a', true, i < 5 ? 'x1' : 'x2', { formato: i % 2 ? 'som-letra' : 'letra-som' }));
     p = comTentativas(mais, p);
     const r = fecharSessao(p, { faseId: 'AL-B', sessao: 'x2', atividades: 0, tentativasDaSessao: [], expressa: false, demonstracoes: [] }, cfg, T0 + DIA_MS);
     expect(r.relatorio.dominadasAgora).toContain('letra-a');
@@ -244,10 +252,13 @@ describe('concluída × dominada', () => {
     p = comTentativas(ts, p);
     const r = fecharSessao(p, { faseId: 'R2a-F05', sessao: 'chefe', atividades: 3, tentativasDaSessao: ts, expressa: false, demonstracoes: [] }, cfg, T0);
     expect(r.relatorio.chefe?.passou).toBe(true);
-    expect(r.progresso.habilidades['leitura-cvcv']).toMatchObject({ dominadaEm: T0, aConfirmar: true });
-    expect(r.progresso.habilidades['escrita-cvcv'].aConfirmar).toBeUndefined();
+    // chefe vencido libera o avanço, mas UMA sessão não prova domínio: tudo fica "a confirmar", sem marco nem firmeza nova
+    expect(r.progresso.habilidades['leitura-cvcv']).toMatchObject({ dominadaEm: T0, aConfirmar: true, marcoPendente: true });
+    expect(r.progresso.habilidades['escrita-cvcv']).toMatchObject({ dominadaEm: T0, aConfirmar: true });
+    expect(r.progresso.habilidades['leitura-cvcv'].p).toBe(p.habilidades['leitura-cvcv'].p);
+    expect(r.relatorio.dominadasAgora).toEqual([]);
     expect(r.relatorio.faseDominada).toBe(false);
-    expect(r.relatorio.reforco).toEqual(['leitura-cvcv']);
+    expect(r.relatorio.reforco).toEqual(['leitura-cvcv', 'escrita-cvcv']);
   });
 });
 
@@ -323,7 +334,7 @@ describe('migração dos dados salvos (versão 1 → 2) sem perder progresso', (
 
   it('a etiqueta "a confirmar" some sozinha quando o critério honesto é cumprido', () => {
     let p = migrarProgresso(antigo(), cfg);
-    p = comTentativas(Array.from({ length: 10 }, (_, i) => t('letra-a', true, i < 5 ? 'n1' : 'n2')), p);
+    p = comTentativas(Array.from({ length: 10 }, (_, i) => t('letra-a', true, i < 5 ? 'n1' : 'n2', { formato: i % 2 ? 'som-letra' : 'letra-som' })), p);
     const r = fecharSessao(p, { faseId: 'AL-B', sessao: 'n2', atividades: 0, tentativasDaSessao: [], expressa: false, demonstracoes: [] }, cfg, T0 + DIA_MS);
     expect(r.progresso.habilidades['letra-a'].aConfirmar).toBeUndefined();
     expect(r.progresso.habilidades['letra-a'].dominadaEm).toBe(T0); // a data original fica

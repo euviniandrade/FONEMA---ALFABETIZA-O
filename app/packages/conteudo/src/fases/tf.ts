@@ -228,10 +228,10 @@ export const LICOES_TF: Licao[] = [
   },
   {
     unidade: 'TF-15', tipo: 'consoante', bloco: 2, letra: 'J', rotulo: 'j', titulo: 'O som /j/', objetivo: 'Ligar o som /j/ à letra J',
-    sintese: [['sujo', 'sujo', 'suja', 'sumo'], ['veja', 'veja', 'seja', 'vela'], ['jaula', 'jaula', 'aula', 'jaca']],
-    leitura: [{ palavra: 'sujo', outras: ['suja', 'sumo'] }, { palavra: 'veja', outras: ['seja', 'vela'] }, { palavra: 'jaula', outras: ['aula', 'jaca'] }],
+    sintese: [['sujo', 'sujo', 'suja', 'sumo'], ['seja', 'seja', 'suja', 'vela'], ['jaula', 'jaula', 'aula', 'jaca']],
+    leitura: [{ palavra: 'sujo', outras: ['suja', 'sumo'] }, { palavra: 'seja', outras: ['suja', 'vela'] }, { palavra: 'jaula', outras: ['aula', 'jaca'] }],
     pseudo: [['jufa', 'zufa', 'jufo'], ['jali', 'zali', 'jala']],
-    caixas: ['sujo', 'veja'],
+    caixas: ['sujo', 'seja'],
     desafio: { frase: frase('A mula suja sai.', 'Quem sai?', 'mula', ['mula', 'lula', 'mala']) }
   },
   {
@@ -283,7 +283,7 @@ export const LICOES_TF: Licao[] = [
     pseudo: [['cafu', 'gafu', 'cafa'], ['cavu', 'cafi', 'gavu']],
     caixas: ['vaca', 'suco', 'boca'],
     desafio: {
-      frase: frase('O macaco come a jaca.', 'O que o macaco come?', 'jaca', ['jaca', 'uva', 'faca']),
+      frase: frase('O macaco viu a jaca.', 'O que o macaco viu?', 'jaca', ['jaca', 'uva', 'faca']),
       pares: [par('ler', 'faca', 'vaca', ['f', 'v'], 'par-minimo-f-v'), par('ler', 'vaca', 'faca', ['v', 'f'], 'par-minimo-f-v')]
     }
   },

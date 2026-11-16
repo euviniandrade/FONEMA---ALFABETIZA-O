@@ -134,8 +134,11 @@ export function Escolher({ atividade, crianca, sessao, cenaId, revisao, onFim }:
     if (o.id === item.correta) {
       setAcertou(true);
       efeitos.acerto();
-      tentativas.current.push(tentativa(item.habilidade ?? atividade.habilidade, sessao, cenaId, erros, {
-        pseudo: item.pseudo, revisao, mecanica: 'escolher', tipo: 'avaliada',
+      // "qual sílaba falta" fica na habilidade SÍLABA e como exposição: nunca vale como domínio da letra nem da leitura
+      // (regra 6: a sílaba vale na escuta; para ler e escrever a peça é a letra; docs/pedagogia/04 §2)
+      const porSilaba = item.formato === 'silaba-falta';
+      tentativas.current.push(tentativa(porSilaba ? 'silaba' : item.habilidade ?? atividade.habilidade, sessao, cenaId, erros, {
+        pseudo: item.pseudo, revisao, mecanica: 'escolher', tipo: porSilaba ? 'exposicao' : 'avaliada', ...(item.formato ? { formato: item.formato } : {}),
         alvo: idRegistro(certa), categoria: categoriaDoItem(item, certa), escolhido: respostas.current[0], respostas: [...respostas.current],
         distratores: item.opcoes.filter((x) => x.id !== item.correta).map(idRegistro), tempoMs: Date.now() - inicio.current, tentativaNumero: erros + 1
       }));

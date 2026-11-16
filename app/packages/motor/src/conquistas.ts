@@ -6,6 +6,7 @@ import { ALFABETO, CONQUISTA_POR_ID, SELO_ALFABETO_COMPLETO, faseDaLetra, seloDa
 import type { ConquistaGanha, Demonstracao, Progresso } from './estado.ts';
 import { fasesConcluidas } from './sequencia.ts';
 import { acertoSozinho } from './tentativas.ts';
+import { dominadaDeVerdade } from './dominio.ts';
 
 type Nivel = ConquistaGanha['nivel'];
 
@@ -26,7 +27,8 @@ export function fatosDe(p: Progresso, demonstracoes: Demonstracao[] = []): Fatos
     // D030: só resposta CONFERIDA, certa e sem ajuda (exposição e autorrelato não contam para selo de habilidade)
     acertos: (h) => (p.habilidades[h]?.tentativas ?? []).filter(acertoSozinho).length,
     sessoesCom: (h) => new Set((p.habilidades[h]?.tentativas ?? []).filter(acertoSozinho).map((t) => t.sessao)).size,
-    dominada: (h) => !!p.habilidades[h]?.dominadaEm,
+    // D030: selo de som só com domínio DE VERDADE (chefe ou prova-relâmpago deixam "a confirmar")
+    dominada: (h) => dominadaDeVerdade(p.habilidades[h]),
     contador: (n) => p.contadores[n] ?? 0,
     moedinhasTotal: p.moedinhas.total,
     validadas: (prefixo) => demonstracoes.filter((d) => d.faseId.startsWith(prefixo) && (d.status === 'aprendeu' || d.status === 'explicou')).length

@@ -16,7 +16,13 @@ export interface ConfigPlataforma {
   /** Economia fixa (jogo-completo README §3; D002). */
   moedinhas: { atividade: number; marcoDominio: number; regiao: number; tetoDia: number };
   /** Critério de domínio (doc. mestre §4.5). */
-  dominio: { pMin: number; tentativasMin: number; sessoesMin: number; ultimas: number; acertosNasUltimas: number; pseudoMin: number };
+  dominio: {
+    pMin: number; tentativasMin: number; sessoesMin: number; ultimas: number; acertosNasUltimas: number; pseudoMin: number;
+    /** docs/pedagogia/06 §2 item 5 [DP]: palavras DIFERENTES certas e sem ajuda (leitura e escrita de palavras). Ausente = 3. */
+    itensDiferentesMin?: number;
+    /** docs/pedagogia/06 §2 item 5 [DP]: tipos de atividade diferentes com acerto (ex.: som → letra e letra → som). Ausente = 2. */
+    tiposDeAtividadeMin?: number;
+  };
   /** Revisão espaçada: Jardim da Revisão (dias). */
   revisao: { intervalosDias: number[]; maxItensPorSessao: number };
   /** Validação do professor: sem resposta em X horas, vale o critério de domínio. */
@@ -57,7 +63,7 @@ export const CONFIG_PADRAO: ConfigPlataforma = {
   conquistas: { naEntradaDaFase: true },
   espelho: { licao: ['frente', 'lado'], conhecaSeuCorpo: ['frente', 'lado', 'dentro', 'corpo'] },
   moedinhas: { atividade: 1, marcoDominio: 5, regiao: 10, tetoDia: 12 },
-  dominio: { pMin: 0.95, tentativasMin: 8, sessoesMin: 2, ultimas: 5, acertosNasUltimas: 4, pseudoMin: 2 },
+  dominio: { pMin: 0.95, tentativasMin: 8, sessoesMin: 2, ultimas: 5, acertosNasUltimas: 4, pseudoMin: 2, itensDiferentesMin: 3, tiposDeAtividadeMin: 2 },
   revisao: { intervalosDias: [1, 2, 4, 8, 16, 32, 60], maxItensPorSessao: 4 },
   demonstracao: { horasParaValerCriterio: 72 },
   voz: { provedor: 'pre-gerada', velocidade: 0.95 },

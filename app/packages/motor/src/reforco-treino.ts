@@ -107,8 +107,8 @@ export function registrarTreino(
   for (const id of new Set(marcadas.map((t) => t.habilidade))) {
     const h = habilidades[id];
     if (!h || (h.dominadaEm && !h.aConfirmar)) continue;
-    if (!avaliarDominio(h, cfg.dominio, HABILIDADE_POR_ID[id]?.exigePseudo ?? false).dominado) continue;
-    if (h.dominadaEm) habilidades[id] = { ...h, aConfirmar: undefined };
+    if (!avaliarDominio(h, cfg.dominio, HABILIDADE_POR_ID[id]?.exigePseudo ?? false, id).dominado) continue;
+    if (h.dominadaEm) { habilidades[id] = { ...h, aConfirmar: undefined, marcoPendente: undefined }; if (h.marcoPendente) dominadasAgora.push(id); }
     else { habilidades[id] = agendarRevisao({ ...h, dominadaEm: agora }, agora, cfg.revisao.intervalosDias); dominadasAgora.push(id); }
   }
   const acertos = marcadas.filter((t) => t.acertou && !t.comAjuda).length;

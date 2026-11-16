@@ -41,7 +41,7 @@ export function resumoFamilia(c: Crianca, p: Progresso, eventos: Evento[], cfg: 
   const jaSabe = HABILIDADES.filter((h) => dominadaDeVerdade(p.habilidades[h.id])).map((h) => renderFala(`[NOME] ${h.paraFamilia}`, ctx));
   const aprendendo = HABILIDADES.filter((h) => p.habilidades[h.id] && !dominadaDeVerdade(p.habilidades[h.id])).map((h) => ({
     nome: h.nome,
-    falta: avaliarDominio(p.habilidades[h.id], cfg.dominio, h.exigePseudo).falta
+    falta: avaliarDominio(p.habilidades[h.id], cfg.dominio, h.exigePseudo, h.id).falta
   }));
   const semana = eventos.filter((e) => e.em >= agora - 7 * DIA_MS);
   const selosRecentes = Object.values(p.conquistas)
@@ -90,7 +90,7 @@ export function mapaHabilidades(itens: { crianca: Crianca; progresso: Progresso 
     habilidades: HABILIDADES.map((h) => {
       const e = progresso.habilidades[h.id];
       const estado: 'dominada' | 'a-confirmar' | 'aprendendo' | 'nao-iniciada' = dominadaDeVerdade(e) ? 'dominada' : e?.dominadaEm ? 'a-confirmar' : e ? 'aprendendo' : 'nao-iniciada';
-      return { id: h.id, nome: h.nome, estado, p: e?.p ?? 0, falta: e && !dominadaDeVerdade(e) ? avaliarDominio(e, cfg.dominio, h.exigePseudo).falta : [] };
+      return { id: h.id, nome: h.nome, estado, p: e?.p ?? 0, falta: e && !dominadaDeVerdade(e) ? avaliarDominio(e, cfg.dominio, h.exigePseudo, h.id).falta : [] };
     })
   }));
 }
@@ -114,7 +114,7 @@ export function situacaoDasFases(p: Progresso, cfg: ConfigPlataforma): SituacaoF
       id: h,
       nome: HABILIDADES.find((x) => x.id === h)?.nome ?? h,
       estado: (p.habilidades[h]?.dominadaEm ? 'a-confirmar' : 'aprendendo') as 'a-confirmar' | 'aprendendo',
-      falta: avaliarDominio(p.habilidades[h], cfg.dominio, HABILIDADES.find((x) => x.id === h)?.exigePseudo ?? false).falta
+      falta: avaliarDominio(p.habilidades[h], cfg.dominio, HABILIDADES.find((x) => x.id === h)?.exigePseudo ?? false, h).falta
     }));
     return { id: f.id, titulo: f.titulo, concluidaEm: p.fases[f.id].concluidaEm, dominada: reforco.length === 0, reforco };
   });

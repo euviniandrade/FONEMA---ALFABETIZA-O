@@ -52,7 +52,7 @@ export const FASES_R2A: Fase[] = [
       },
       {
         id: 'R2a-F02-C4', tipo: 'C4', titulo: 'O lago da lua', cenario: 'mata', contaDominio: true,
-        atividade: { tipo: 'montar', habilidade: 'gpc-l', palavras: ['LUA', 'MALA'], mostrarModelo: true, distratoras: ['O', 'F'], enunciado: sofia('Letra por letra, [NOME]: L-U-A.'), comemora: sofia('A lua apareceu no lago!') }
+        atividade: { tipo: 'montar', habilidade: 'gpc-l', palavras: ['LUA', 'MALA'], mostrarModelo: true, distratoras: ['O', 'F'], enunciado: sofia('Monte a palavra som por som, [NOME]. Cada peça faz um som.'), comemora: sofia('A lua apareceu no lago!') }
       },
       {
         id: 'R2a-F02-C8', tipo: 'C8', titulo: 'O Bolota leu errado', cenario: 'mata', contaDominio: true,
@@ -74,7 +74,7 @@ export const FASES_R2A: Fase[] = [
   {
     id: 'R2a-F03', regiao: 'R2a', numero: 3, titulo: 'F',
     objetivo: 'Ligar a letra F ao som /f/ e montar FALA, FILA, FOFA', sessoesPrevistas: '2–3 sessões',
-    habilidades: ['gpc-f', 'silaba-cv'], criterio: { tipo: 'dominio', habilidades: ['gpc-f'] },
+    habilidades: ['gpc-f', 'silaba-cv', 'silaba'], criterio: { tipo: 'dominio', habilidades: ['gpc-f'] },
     acolhida: sofia('Oi, [NOME]! Sente o ventinho? /fff/…'),
     cenas: [
       {
@@ -87,11 +87,13 @@ export const FASES_R2A: Fase[] = [
       },
       {
         id: 'R2a-F03-C4', tipo: 'C4', titulo: 'Os carretéis da Dona Cida', cenario: 'mata', contaDominio: true,
-        atividade: { tipo: 'montar', habilidade: 'silaba-cv', palavras: ['FILA', 'FALA', 'FOFA'], mostrarModelo: true, porSilaba: true, distratoras: ['MU', 'LE'], enunciado: sofia('Ajuda a Dona Cida a bordar, [NOME]? Um carretel para cada pedacinho.'), comemora: sofia('Ficou um bordado lindo!') }
+        // por SÍLABA (regra 6): vale como escuta/exposição da sílaba (habilidade `silaba`), nunca como domínio da letra ou da leitura
+        atividade: { tipo: 'montar', habilidade: 'silaba', palavras: ['FILA', 'FALA', 'FOFA'], mostrarModelo: true, porSilaba: true, distratoras: ['MU', 'LE'], enunciado: sofia('Ajuda a Dona Cida a bordar, [NOME]? Um carretel para cada pedacinho.'), comemora: sofia('Ficou um bordado lindo!') }
       },
       {
         id: 'R2a-F03-C5', tipo: 'C5', titulo: 'A placa do vale', cenario: 'mata', contaDominio: true,
-        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'gpc-f', enunciado: tales('A placa apagou! Qual sílaba falta aqui, [NOME]?'), itens: [itemSilaba('__LA', 'FALA', 'FA', 'MA', 'LU'), itemSilaba('__FA', 'FOFA', 'FO', 'MO', 'LI'), itemSilaba('__LA', 'FILA', 'FI', 'MI', 'LA')], comemora: tales('A placa do vale voltou a funcionar!') }
+        // "qual sílaba falta" grava a habilidade `silaba` (consciência silábica); a prova da letra F é a versão por fonema (C5b)
+        atividade: { tipo: 'escolher', estilo: 'tocar', habilidade: 'silaba', enunciado: tales('A placa apagou! Qual sílaba falta aqui, [NOME]?'), itens: [itemSilaba('__LA', 'FALA', 'FA', 'MA', 'LU'), itemSilaba('__FA', 'FOFA', 'FO', 'MO', 'LI'), itemSilaba('__LA', 'FILA', 'FI', 'MI', 'LA')], comemora: tales('A placa do vale voltou a funcionar!') }
       },
       {
         // D030 §7: a versão por FONEMA — qual SOM falta (a pista não mostra a palavra inteira; a criança ouve)
@@ -108,7 +110,7 @@ export const FASES_R2A: Fase[] = [
   {
     id: 'R2a-F04', regiao: 'R2a', numero: 4, titulo: 'Juntar sílabas: primeiras palavras',
     objetivo: 'Ler sozinho as primeiras palavras (MALA, LUA, FALA)', sessoesPrevistas: '3–4 sessões',
-    habilidades: ['leitura-cvcv'], criterio: { tipo: 'dominio', habilidades: ['leitura-cvcv'] },
+    habilidades: ['leitura-cvcv', 'escrita-cvcv', 'silaba'], criterio: { tipo: 'dominio', habilidades: ['leitura-cvcv'] },
     acolhida: sofia('Oi, [NOME]! Hoje você vai ler uma palavra inteirinha.'),
     cenas: [
       {
@@ -122,7 +124,13 @@ export const FASES_R2A: Fase[] = [
       },
       {
         id: 'R2a-F04-C4b', tipo: 'C4', titulo: 'Futebol de Sílabas', cenario: 'campinho', marcador: 'esporte-futebol', contaDominio: true,
-        atividade: { tipo: 'montar', habilidade: 'leitura-cvcv', palavras: ['MOLA', 'FILA'], mostrarModelo: true, porSilaba: true, distratoras: ['FU', 'ME'], enunciado: tales('Passa a bola, [NOME]! MO… LA! Monta e o gol vale!'), comemora: tales('Gooool! Você leu!') }
+        // por SÍLABA (regra 6): exposição da sílaba (habilidade `silaba`); a versão por LETRA vem logo depois (C4c)
+        atividade: { tipo: 'montar', habilidade: 'silaba', palavras: ['MOLA', 'FILA'], mostrarModelo: true, porSilaba: true, distratoras: ['FU', 'ME'], enunciado: tales('Passa a bola, [NOME]! MO… LA! Monta e o gol vale!'), comemora: tales('Gooool! Você leu!') }
+      },
+      {
+        // a mesma brincadeira LETRA POR LETRA (a peça é a letra e cada uma toca o seu SOM): resposta conferida de escrita
+        id: 'R2a-F04-C4c', tipo: 'C4', titulo: 'Gol letra por letra', cenario: 'campinho', contaDominio: true,
+        atividade: { tipo: 'montar', habilidade: 'escrita-cvcv', palavras: ['MOLA', 'FILA', 'LUA'], mostrarModelo: true, distratoras: ['U', 'E'], enunciado: tales('As letras juntas viram palavra! Monte comigo.'), comemora: tales('Gooool! Você leu!') }
       },
       {
         id: 'R2a-F04-C5', tipo: 'C5', titulo: 'Só você e as letras', cenario: 'licao', contaDominio: true,

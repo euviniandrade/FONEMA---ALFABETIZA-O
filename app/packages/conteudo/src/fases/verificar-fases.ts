@@ -4,6 +4,7 @@
  * troca-letras, frases) e confere palavra por palavra na unidade da fase. Também gera o relatório por fase.
  */
 import type { Fase } from '../tipos.ts';
+import { FASES } from '../regioes.ts';
 import { UNIDADES_TF, numeroDaUnidade, valoresAte, verificarFrase, verificarPalavra, verificarPseudo, type Resultado, type ValorTF } from '../decodificabilidade.ts';
 import { VALORES_ENSINADOS } from '../palavras.ts';
 import { BANCO } from './tf-banco.ts';
@@ -22,9 +23,16 @@ export function leiturasDaFase(f: Fase): LeituraDaFase[] {
     if (!a) continue;
     const add = (texto: string, tipo: LeituraDaFase['tipo']) => out.push({ cena: c.id, texto, tipo });
     switch (a.tipo) {
-      case 'escolher': for (const i of a.itens) if (i.leitura && i.mostrar) add(i.mostrar, i.pseudo ? 'pseudo' : 'palavra'); break;
+      case 'escolher':
+        for (const i of a.itens) {
+          if (i.leitura && i.mostrar) add(i.mostrar, i.pseudo ? 'pseudo' : 'palavra');
+          // "qual sílaba falta" e "qual som falta": a criança completa a palavra escrita (a palavra inteira passa pelo verificador)
+          else if ((i.formato === 'silaba-falta' || i.formato === 'fonema-falta') && i.ouvir) add(i.ouvir.toUpperCase(), 'escrita');
+        }
+        break;
       case 'falar': if (a.leitura) for (const i of a.itens) add(i.texto, i.pseudo ? 'pseudo' : 'palavra'); break;
-      case 'montar': if (!a.vocabulario && !a.porSilaba) for (const w of a.palavras) if (!w.startsWith('$')) add(w, 'escrita'); break;
+      // montar por sílaba também entra: a palavra montada é escrita pela criança (a peça é a sílaba, mas as letras são lidas)
+      case 'montar': if (!a.vocabulario) for (const w of a.palavras) if (!w.startsWith('$')) add(w, 'escrita'); break;
       case 'ditado': for (const w of a.palavras) add(w, 'escrita'); break;
       case 'sintese': for (const i of a.itens) add(i.palavra, i.pseudo ? 'pseudo' : 'palavra'); break;
       case 'caixas': for (const i of a.itens) add(i.palavra, 'escrita'); break;
@@ -45,16 +53,38 @@ export function unidadeDaFase(f: Fase): number | null {
 }
 
 /**
- * Trilhas antigas (A–Z, Ilha das Vogais, Vale do M-L-F, Meu nome): não andam por unidade. Valem o som principal de
- * cada letra (o que a Trilha A–Z apresenta) + os valores marcados para a região em `VALORES_ENSINADOS`.
+ * Trilhas antigas (A–Z, Ilha das Vogais, Vale do M-L-F, Meu nome): não andam por unidade. Vale O QUE JÁ FOI VISTO
+ * (05 §6.5): o som principal de cada letra das fases da Trilha A–Z que vêm ANTES (ou são) a fase na jornada, os valores das
+ * lições da Trilha dos Sons que vêm antes dela, e os valores marcados para a região em `VALORES_ENSINADOS`.
+ * Palavra de exposição ou vocabulário (montar com `vocabulario`) fica de fora da conta.
  */
-const PRINCIPAIS: ValorTF[] = ['a', 'e', 'i', 'o', 'u', 'm', 'f', 'v', 'l', 's', 'n', 'z', 'j', 'p', 't', 'b', 'c-k', 'd', 'g'];
+const VALOR_DA_LETRA: Record<string, ValorTF> = {
+  A: 'a', E: 'e', I: 'i', O: 'o', U: 'u', M: 'm', F: 'f', V: 'v', L: 'l', S: 's', N: 'n', Z: 'z', J: 'j', P: 'p', T: 't', B: 'b', C: 'c-k', D: 'd', G: 'g'
+};
 const EQUIVALENTE: Record<string, ValorTF[]> = { 'e-aberto': ['e-aberto', 'e-aberto-sem-acento'], 'o-aberto': ['o-aberto', 'o-aberto-sem-acento'], 'o-final-u': ['o-final-u'], 'e-final-i': ['e-final-i'], ditongo: ['ditongo'] };
+/** Letras que a fase da Trilha A–Z apresenta (habilidades `letra-x`). */
+const letrasDaFaseAl = (f: Fase) => f.habilidades.map((h) => /^letra-([a-z])$/.exec(h)?.[1]?.toUpperCase()).filter((x): x is string => !!x);
+
+/** Valores sonoros já vistos AO CHEGAR à fase (inclusive ela), na ordem da jornada (`ordem`, padrão: FASES). */
+export function valoresVistosAte(f: Fase, ordem: Fase[] = FASES): Set<ValorTF> {
+  const ate = ordem.findIndex((x) => x.id === f.id);
+  const antes = ate >= 0 ? ordem.slice(0, ate + 1) : [...ordem, f];
+  const out = new Set<ValorTF>(['acento', 'circunflexo']);
+  let tf = 0;
+  for (const x of antes) {
+    if (x.regiao === 'AL') for (const l of letrasDaFaseAl(x)) { const v = VALOR_DA_LETRA[l]; if (v) out.add(v); }
+    const u = unidadeDaFase(x);
+    if (u !== null && x.id !== f.id) tf = Math.max(tf, u);
+  }
+  if (tf) for (const v of valoresAte(tf)) out.add(v);
+  // acento agudo em Á, Í, Ú e o circunflexo só marcam a sílaba forte (BABÁ, BEBÊ): nas trilhas antigas não mudam o som da letra
+  for (const v of (VALORES_ENSINADOS[f.regiao] ?? []).flatMap((v) => EQUIVALENTE[v] ?? [])) out.add(v);
+  return out;
+}
 function permitidosDaRegiao(f: Fase): Set<ValorTF> {
   const n = unidadeDaFase(f);
   if (n !== null) return valoresAte(n);
-  // acento agudo em Á, Í, Ú e o circunflexo só marcam a sílaba forte (BABÁ, BEBÊ): nas trilhas antigas não mudam o som da letra
-  return new Set<ValorTF>([...PRINCIPAIS, 'acento', 'circunflexo', ...(VALORES_ENSINADOS[f.regiao] ?? []).flatMap((v) => EQUIVALENTE[v] ?? [])]);
+  return valoresVistosAte(f);
 }
 
 const REAIS = new Set(Object.values(BANCO).filter((e) => !e.pseudo).map((e) => e.texto.toLowerCase()));

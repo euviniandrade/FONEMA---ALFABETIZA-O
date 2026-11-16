@@ -75,6 +75,11 @@ export interface DetalheTentativa {
   nOpcoes?: number;
   /** Onde a tentativa aconteceu: trilha (fase), revisão, sondagem ou reforço (treino rápido). Não misturar treino com medida. */
   contexto?: ContextoTentativa;
+  /**
+   * Formato do item dentro da mecânica (no Escolher: 'som-letra', 'letra-som', 'ler-figura', 'ouvir-leituras'…). Junto com
+   * `mecanica`, define o TIPO DE ATIVIDADE para o critério "mais de um tipo de atividade" (docs/pedagogia/06 §2, item 5).
+   */
+  formato?: string;
 }
 
 /** Escada de ajuda (docs/pedagogia/06 §4). A ordem importa: é da menor para a maior. */
@@ -111,6 +116,12 @@ export interface EstadoHabilidade {
    * Some sozinho quando o critério honesto é cumprido (jornada.ts › fecharSessao).
    */
   aConfirmar?: boolean;
+  /**
+   * D030 (revisão de 16/11): a etiqueta "a confirmar" veio de uma prova de UMA sessão (chefe vencido ou prova-relâmpago),
+   * que libera o avanço mas não prova domínio. O marco (moedinhas, "dominou agora") fica para quando o critério honesto
+   * for cumprido.
+   */
+  marcoPendente?: boolean;
 }
 
 /** D026: nível inicial escolhido pelo adulto no cadastro (dá para mudar na área da família). */
