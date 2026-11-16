@@ -91,7 +91,9 @@ const IC = {
 };
 
 async function carregaThree(caminho) {
-  const cands = caminho ? [caminho] : ['./vendor/three.module.js', '../mundo3d/vendor/three.module.js', '../mundo-3d-v2/vendor/three.module.js'];
+  // no app o three.js fica em public/mundo3d/vendor; na demo em docs/, em ../mundo-3d-v2/vendor (sem tentar caminho que não existe: evita 404)
+  const noApp = /\/espelho\/[^/]*$/.test(new URL(import.meta.url).pathname);
+  const cands = caminho ? [caminho] : noApp ? ['../mundo3d/vendor/three.module.js'] : ['../mundo-3d-v2/vendor/three.module.js', '../mundo3d/vendor/three.module.js'];
   for (const c of cands) { try { const m = await import(new URL(c, import.meta.url).href); if (m && m.WebGLRenderer) return m; } catch (e) { /* tenta o próximo */ } }
   return null;
 }
