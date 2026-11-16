@@ -1,6 +1,7 @@
 /**
  * AL · TRILHA DO ALFABETO (D027): a jornada começa aqui. Uma missão curta por letra, de A a Z, montada a partir
- * dos dados de `alfabeto.ts`, + uma revisão divertida a cada 5 letras + a Festa do Alfabeto no fim.
+ * dos dados de `alfabeto.ts`, + uma revisão no fim de cada bloco da trilha fônica + a Festa do Alfabeto (D031: na jornada,
+ * cada letra vem logo antes da lição da Trilha dos Sons que ensina o som dela; ver regioes.ts).
  *
  * Missão da letra (D027 §1):
  *   1. a dupla apresenta a letra (maiúscula e minúscula grandes) com a palavra-exemplo ("A, de abelha.");
@@ -15,7 +16,7 @@
  * As brincadeiras de escuta de R0 (palmas, rimas, primeiro som, fala de tatu) entram como AQUECIMENTO das revisões.
  */
 import type { Atividade, AtividadeEscolher, Cena, Fala, Fase, ItemEscolha, Opcao } from '../tipos.ts';
-import { ALFABETO, CENAS_DO_SOM, GRUPOS_ALFABETO, LETRAS_EM_ESPELHO, PALAVRAS_FORA_DO_SOM_INICIAL, PALAVRAS_SEM_VOZ, PALAVRINHAS, PALAVRINHAS_REVISAO, LETRAS_PARECIDAS, LETRA_POR_ID, SONS_PARECIDOS, falaChave, falaNomeLetra, faseDaLetra, habilidadeLetra, seloDaLetra, usaSomReal, type LetraAlfabeto } from '../alfabeto.ts';
+import { ALFABETO, BLOCOS_ALFABETO, CENAS_DO_SOM, GRUPOS_ALFABETO, LETRAS_EM_ESPELHO, LICAO_DA_LETRA, ORDEM_LETRAS_JORNADA, PALAVRAS_FORA_DO_SOM_INICIAL, PALAVRAS_SEM_VOZ, PALAVRINHAS_REVISAO, PALAVRINHAS_REVISAO_JORNADA, letrasVistasAte, palavrinhasDaLetra, LETRAS_PARECIDAS, LETRA_POR_ID, SONS_PARECIDOS, falaChave, falaNomeLetra, faseDaLetra, habilidadeLetra, seloDaLetra, usaSomReal, type LetraAlfabeto } from '../alfabeto.ts';
 import { FIGURAS, leituraPermitida } from '../palavras.ts';
 import { FALAS_FONICAS, PARES_CONFUSOS, contrasteDosSons, parConfuso } from '../sons.ts';
 import { opFig, posiciona } from '../construtores.ts';
@@ -44,6 +45,8 @@ export const FALAS_ALFABETO = {
   acheAFiguraLetra: 'Qual figura começa com esta letra?',
   trace: 'Agora desenhe a letra com o dedo.',
   gancho: 'Amanhã tem outra letra!',
+  // D031: depois da letra vem a lição da Trilha dos Sons com o som dela (mesmo texto e voz do gancho da trilha: já gravado)
+  ganchoSom: 'Amanhã tem mais um som!',
   trilha: 'Toque na letra que está brilhando.',
   mostra: 'Mostrar a letra de hoje e dizer a palavra dela',
   // revisões e festa
@@ -53,10 +56,12 @@ export const FALAS_ALFABETO = {
   festaEntrada: 'Festa do Alfabeto!',
   festaAcolhida: 'Hoje é a Festa do Alfabeto! Você conhece todas as letras, de A a Z.',
   festaUau: 'Você conhece o alfabeto inteiro!',
-  festaGancho: 'Agora a gente vai juntar as letras e fazer sílabas!'
+  // D031: depois da Festa vêm os outros sons das vogais (é, ê, ó, ô); fala nova, sem voz ainda (docs/falas-pendentes.md)
+  festaGancho: 'Agora as vogais vão mostrar os outros sons delas!'
 } as const;
 
-const indice = (letra: string) => ALFABETO.findIndex((l) => l.letra === letra);
+/** Posição da letra na ordem em que a JORNADA apresenta as letras (D031): "já vistas" = as que vêm antes nesta ordem. */
+const indice = (letra: string) => ORDEM_LETRAS_JORNADA.indexOf(letra);
 const parecidas = (grupos: string[][], a: string, b: string) => grupos.some((g) => g.includes(a) && g.includes(b));
 
 /**
@@ -184,10 +189,13 @@ function itensParMinimo(a: LetraAlfabeto, b: LetraAlfabeto): ItemEscolha[] {
   });
   return [somLetra(a, b), somLetra(b, a), letraSom(a, b)];
 }
-/** Pares confundíveis cujas duas letras já foram vistas até o fim do grupo `g` e que se completam NESTE grupo. */
+/** Pares confundíveis cujas duas letras já foram vistas até o fim do grupo `g` (grupos antigos, alfabéticos) e que se completam NESTE grupo. */
 export function paresDoGrupo(g: number): [string, string][] {
-  const vistas = GRUPOS_ALFABETO.slice(0, g + 1).flat().filter((x) => usaSomReal(LETRA_POR_ID[x]) && x !== 'Q');
-  const doGrupo = GRUPOS_ALFABETO[g];
+  return paresEntre(GRUPOS_ALFABETO.slice(0, g + 1).flat(), GRUPOS_ALFABETO[g]);
+}
+/** Pares confundíveis entre letras já vistas (`vistasTodas`) com pelo menos uma letra do grupo `doGrupo`. */
+export function paresEntre(vistasTodas: string[], doGrupo: string[]): [string, string][] {
+  const vistas = vistasTodas.filter((x) => usaSomReal(LETRA_POR_ID[x]) && x !== 'Q');
   const letraDe = (fonema: string) => vistas.find((x) => LETRA_POR_ID[x].fonema === fonema);
   const out: [string, string][] = [];
   for (const [fa, fb] of PARES_CONFUSOS) {
@@ -239,10 +247,10 @@ function itemCenaLetra(p: { letra: string; cena: string; fonema: string }, todos
 
 /** Cena das PRIMEIRAS PALAVRINHAS: juntar as letras já vistas e ler (o motor tira esta cena se a chave estiver desligada). */
 export const MARCADOR_PALAVRINHAS = 'palavrinhas';
-function cenaPalavrinhas(id: string, habilidade: string, quem: Voz, palavras: string[], ate: string): Cena {
+function cenaPalavrinhas(id: string, habilidade: string, quem: Voz, palavras: string[], vistasAte: string[]): Cena {
   // sem modelo, a bandeja precisa ter letras a mais (senão só resta acertar a ordem): duas letras já vistas, fora das palavras
   const usadas = new Set(palavras.flatMap((w) => [...w.normalize('NFD').replace(/[\u0300-\u036f]/g, '')]));
-  const vistas = ALFABETO.slice(0, indice(ate) + 1).filter((l) => l.tipo === 'vogal' || l.tipo === 'consoante').map((l) => l.letra);
+  const vistas = vistasAte.map((x) => LETRA_POR_ID[x]).filter((l) => l.tipo === 'vogal' || l.tipo === 'consoante').map((l) => l.letra);
   const distratoras = vistas.filter((x) => !usadas.has(x) && x !== 'Q').reverse().slice(0, 2);
   return {
     id, tipo: 'C5', titulo: 'Primeiras palavrinhas', cenario: 'quintal', marcador: MARCADOR_PALAVRINHAS,
@@ -313,12 +321,13 @@ function faseDaLetraAl(l: LetraAlfabeto, numero: number): Fase {
       atividade: { tipo: 'tracar', habilidade: hab, letras: [l.letra, l.minuscula], enunciado: f(q, FALAS_ALFABETO.trace) }
     }
   );
-  if (PALAVRINHAS[l.letra]) cenas.push(cenaPalavrinhas(`${id}-C5p`, hab, q, PALAVRINHAS[l.letra], l.letra));
+  const palavrinhas = palavrinhasDaLetra(l.letra);
+  if (palavrinhas.length) cenas.push(cenaPalavrinhas(`${id}-C5p`, hab, q, palavrinhas, letrasVistasAte(l.letra)));
   const somTexto = l.tipo === 'muda' ? 'que ela não faz som sozinha' : l.tipo === 'nomes' ? 'onde ela aparece' : 'o som dela';
   return {
     id, regiao: 'AL', numero, titulo: `Letra ${l.letra}`, objetivo: `Conhecer a letra ${l.letra} e ${somTexto}, como em ${l.palavra.toUpperCase()}`,
     sessoesPrevistas: '1 missão curta', habilidades: [hab], criterio: { tipo: 'missao' }, curta: true, alfabeto: { letra: l.letra, tipo: 'letra' },
-    falaEntrada: f(q, falaNomeLetra(l)), acolhida: f(q, FALAS_ALFABETO.acolhida), gancho: f('sofia', FALAS_ALFABETO.gancho), cenas,
+    falaEntrada: f(q, falaNomeLetra(l)), acolhida: f(q, FALAS_ALFABETO.acolhida), gancho: f('sofia', LICAO_DA_LETRA[l.letra] ? FALAS_ALFABETO.ganchoSom : FALAS_ALFABETO.gancho), cenas,
     fechamento: `A letra ${l.letra} acendeu na Trilha do Alfabeto.`,
     emCasa: l.tipo === 'muda'
       ? `Procurem a letra ${l.letra} em embalagens e placas. Ela não faz som sozinha: em "${l.palavra}" a gente já começa pelo som seguinte.`
@@ -349,18 +358,30 @@ const escolher = (habilidade: string, estilo: AtividadeEscolher['estilo'], enunc
   tipo: 'escolher', estilo, habilidade, enunciado: f('tales', enunciado), itens
 });
 
-function faseDeRevisao(g: number, numero: number): Fase {
-  const letras = GRUPOS_ALFABETO[g].map((x) => LETRA_POR_ID[x]);
-  const festa = g === GRUPOS_ALFABETO.length - 1;
-  const id = festa ? 'AL-FESTA' : `AL-R${g + 1}`;
+/** Como montar uma revisão do alfabeto: as letras do grupo, as já vistas ATÉ o fim dele e os grupos anteriores (para a Festa). */
+interface PlanoRevisao {
+  id: string;
+  grupo: string[];
+  /** Todas as letras vistas até o fim do grupo (inclusive), na ordem em que foram vistas. */
+  vistas: string[];
+  /** Grupos anteriores (a Festa volta a uma letra de cada um). */
+  anteriores: string[][];
+  festa: boolean;
+  aquecimento: [string, string];
+  palavrinhas: string[];
+}
+
+function faseDeRevisao(plano: PlanoRevisao, numero: number): Fase {
+  const { id, festa, vistas } = plano;
+  const letras = plano.grupo.map((x) => LETRA_POR_ID[x]);
   const pool = letras.map((l) => l.letra);
-  const todas = ALFABETO.map((l) => l.letra);
+  const todas = festa ? ALFABETO.map((l) => l.letra) : vistas;
   const hab = habilidadeLetra(letras[0].letra);
-  // festa: além do grupo U–Z, volta a letras de todo o alfabeto (uma de cada grupo anterior por brincadeira)
-  const deTodos = (k: number) => GRUPOS_ALFABETO.slice(0, -1).map((grupo, i) => LETRA_POR_ID[grupo[(k + i) % grupo.length]]);
+  // festa: além do último grupo, volta a letras de todo o alfabeto (uma de cada grupo anterior por brincadeira)
+  const deTodos = (k: number) => plano.anteriores.map((grupo, i) => LETRA_POR_ID[grupo[(k + i) % grupo.length]]);
   const comFigura = letras.filter((l) => l.tipo !== 'muda');
   const cenas: Cena[] = [
-    aquecimento(`${id}-C3a`, AQUECIMENTOS[g][0], AQUECIMENTOS[g][1]),
+    aquecimento(`${id}-C3a`, plano.aquecimento[0], plano.aquecimento[1]),
     {
       id: `${id}-C4a`, tipo: 'C4', titulo: 'Ache a letra', cenario: 'praca', contaDominio: true,
       atividade: escolher(hab, 'tocar', FALAS_ALFABETO.acheALetra, letras.map((l, i) => itemAcheALetra(l, i % 2 === 1, pool)))
@@ -375,14 +396,13 @@ function faseDeRevisao(g: number, numero: number): Fase {
     }
   ];
   // D030 §3: contraste fino só DEPOIS do primeiro contato — pares confundíveis e letras em espelho
-  const pares = [...paresDoGrupo(g), ...(festa ? ([['P', 'B'], ['T', 'D']] as [string, string][]) : [])];
+  const pares = [...paresEntre(vistas, pool), ...(festa ? ([['P', 'B'], ['T', 'D']] as [string, string][]) : [])];
   if (pares.length) {
     cenas.push({
       id: `${id}-C4d`, tipo: 'C4', titulo: 'Sons parecidos', cenario: 'praca', contaDominio: true,
       atividade: { ...escolher(hab, 'tocar', FALAS_FONICAS.sonsParecidos, pares.flatMap(([a, b]) => itensParMinimo(LETRA_POR_ID[a], LETRA_POR_ID[b]))), ...(pares.length > 2 ? { sortear: 6 } : {}) }
     });
   }
-  const vistas = GRUPOS_ALFABETO.slice(0, g + 1).flat();
   const espelho = LETRAS_EM_ESPELHO.filter((x) => vistas.includes(x));
   if (espelho.length >= 2 && (espelho.some((x) => pool.includes(x)) || festa)) {
     cenas.push({
@@ -404,32 +424,58 @@ function faseDeRevisao(g: number, numero: number): Fase {
       }
     );
   }
-  cenas.push(cenaPalavrinhas(`${id}-C5p`, hab, 'tales', PALAVRINHAS_REVISAO[g], GRUPOS_ALFABETO[g].at(-1)!));
+  if (plano.palavrinhas.length) cenas.push(cenaPalavrinhas(`${id}-C5p`, hab, 'tales', plano.palavrinhas, vistas));
+  const alfabetica = !/^AL-RV/.test(id);
   const de = letras[0].letra;
   const ate = letras[letras.length - 1].letra;
+  const lista = `${pool.slice(0, -1).join(', ')} e ${pool.at(-1)}`;
+  const nomeGrupo = alfabetica ? `de ${de} a ${ate}` : lista;
   return {
-    id, regiao: 'AL', numero, titulo: festa ? 'Festa do Alfabeto' : `Revisão: de ${de} a ${ate}`,
-    objetivo: festa ? 'Mostrar que conhece as 26 letras e o som de cada uma' : `Brincar com as letras de ${de} a ${ate} misturadas`,
+    id, regiao: 'AL', numero, titulo: festa ? 'Festa do Alfabeto' : alfabetica ? `Revisão: de ${de} a ${ate}` : `Revisão: ${lista}`,
+    objetivo: festa ? 'Mostrar que conhece as 26 letras e o som de cada uma' : `Brincar com as letras ${nomeGrupo} misturadas`,
     sessoesPrevistas: '1 missão', habilidades: letras.map((l) => habilidadeLetra(l.letra)), criterio: { tipo: 'missao' }, curta: true,
     alfabeto: { tipo: festa ? 'festa' : 'revisao' },
     falaEntrada: f('tales', festa ? FALAS_ALFABETO.festaEntrada : FALAS_ALFABETO.revisaoEntrada),
     acolhida: f('tales', festa ? FALAS_ALFABETO.festaAcolhida : FALAS_ALFABETO.revisaoAcolhida),
     gancho: f('sofia', festa ? FALAS_ALFABETO.festaGancho : FALAS_ALFABETO.gancho), cenas,
-    fechamento: festa ? 'Alfabeto Completo! As 26 letras brilham na trilha, e a ponte para as sílabas abriu.' : `As letras de ${de} a ${ate} brilham juntas na trilha.`,
+    fechamento: festa ? 'Alfabeto Completo! As 26 letras brilham na trilha.' : `As letras ${nomeGrupo} brilham juntas na trilha.`,
     emCasa: festa
       ? 'Cantem o alfabeto apontando cada letra e lembrem a palavra de cada uma ("A, de abelha").'
-      : `Brinquem de "letra, de quê?" com as letras de ${de} a ${ate}: o adulto mostra a letra e a criança diz a palavra.`,
+      : `Brinquem de "letra, de quê?" com as letras ${nomeGrupo}: o adulto mostra a letra e a criança diz a palavra.`,
     conquistas: festa ? ['T-ALFABETO'] : letras.map((l) => seloDaLetra(l.letra)),
     ...(festa ? { termometro: 1, uau: FALAS_ALFABETO.festaUau } : {})
   };
 }
 
-/** A–E, revisão, F–J, revisão, K–O, revisão, P–T, revisão, U–Z, Festa do Alfabeto. */
+/**
+ * Revisões ANTIGAS (A–E, F–J, K–O, P–T, em ordem alfabética): ficam no banco (regra 7), FORA da jornada desde a D031.
+ * Quem já as concluiu não perde nada; elas só não aparecem mais no caminho.
+ */
+export const FASES_ALFABETO_REVISOES_ANTIGAS: Fase[] = GRUPOS_ALFABETO.slice(0, -1).map((grupo, g) =>
+  faseDeRevisao({
+    id: `AL-R${g + 1}`, grupo, vistas: GRUPOS_ALFABETO.slice(0, g + 1).flat(), anteriores: [], festa: false,
+    aquecimento: AQUECIMENTOS[g], palavrinhas: PALAVRINHAS_REVISAO[g]
+  }, 0)
+);
+
+/** D031: aquecimento de cada revisão da jornada. */
+const AQUECIMENTO_DA_REVISAO: Record<string, [string, string]> = {
+  'AL-RV1': AQUECIMENTOS[0], 'AL-RV2': AQUECIMENTOS[1], 'AL-RV3': AQUECIMENTOS[2], 'AL-FESTA': AQUECIMENTOS[4]
+};
+
+/**
+ * Trilha A–Z no MAPA (regra 7): as 26 letras em ordem alfabética, depois as revisões da jornada (vogais; sons que esticam;
+ * sons que estouram) e a Festa do Alfabeto. A ORDEM DA JORNADA (D031) é outra: cada letra entra logo antes da lição da
+ * Trilha dos Sons que ensina o som dela (regioes.ts monta essa ordem).
+ */
 export const FASES_ALFABETO: Fase[] = (() => {
-  const out: Fase[] = [];
-  GRUPOS_ALFABETO.forEach((grupo, g) => {
-    for (const letra of grupo) out.push(faseDaLetraAl(LETRA_POR_ID[letra], out.length + 1));
-    out.push(faseDeRevisao(g, out.length + 1));
+  const out: Fase[] = ALFABETO.map((l, i) => faseDaLetraAl(l, i + 1));
+  BLOCOS_ALFABETO.forEach((b, k) => {
+    out.push(faseDeRevisao({
+      id: b.id, grupo: b.letras, vistas: BLOCOS_ALFABETO.slice(0, k + 1).flatMap((x) => x.letras),
+      anteriores: BLOCOS_ALFABETO.slice(0, k).map((x) => x.letras), festa: b.id === 'AL-FESTA',
+      aquecimento: AQUECIMENTO_DA_REVISAO[b.id], palavrinhas: PALAVRINHAS_REVISAO_JORNADA[b.id] ?? []
+    }, out.length + 1));
   });
   return out;
 })();

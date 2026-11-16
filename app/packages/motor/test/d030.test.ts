@@ -194,7 +194,7 @@ describe('concluída × dominada', () => {
     expect(r.relatorio.reforco).toEqual(['letra-a']);
     expect(r.progresso.fases['AL-A'].estado).toBe('concluida');
     expect(r.progresso.fases['AL-A'].dominadaEm).toBeUndefined();
-    expect(r.progresso.fases['AL-B'].estado).toBe('aberta');
+    expect(r.progresso.fases['TF-01'].estado).toBe('aberta'); // D031: depois da letra A, a lição do som /a/
     const sit = situacaoDasFases(r.progresso, cfg);
     expect(sit).toHaveLength(1);
     expect(sit[0]).toMatchObject({ id: 'AL-A', dominada: false });
@@ -283,7 +283,7 @@ describe('migração dos dados salvos (versão 1 → 2) sem perder progresso', (
   it('mantém fases, moedinhas, selos, desafios, revisão e TODAS as tentativas', () => {
     const v1 = antigo();
     const v2 = migrarProgresso(v1, cfg);
-    expect(v2.versao).toBe(2);
+    expect(v2.versao).toBe(3); // 1 → 2 (D030) e 2 → 3 (D031: ordem alternada)
     expect(v2.fases).toEqual(v1.fases);
     expect(v2.moedinhas).toEqual(v1.moedinhas);
     expect(v2.conquistas).toEqual(v1.conquistas);

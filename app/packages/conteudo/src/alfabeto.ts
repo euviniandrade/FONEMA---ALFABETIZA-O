@@ -174,8 +174,37 @@ export const SONS_PARECIDOS: string[][] = [
   ['C', 'K', 'Q', 'G'], ['B', 'P'], ['D', 'T'], ['F', 'V', 'W'], ['S', 'Z', 'X', 'J'], ['M', 'N'], ['I', 'Y', 'E'], ['O', 'U', 'W'], ['R', 'H'], ['A', 'H']
 ];
 
-/** Grupos de revisão: a cada 5 letras (o último fecha o alfabeto, com U–Z). */
+/**
+ * Grupos de revisão ANTIGOS: a cada 5 letras, em ordem alfabética (o último fecha o alfabeto, com U–Z). Desde a D031 a jornada
+ * não usa mais estes grupos (as revisões AL-R1…AL-R4 continuam no banco, fora da jornada): valem os BLOCOS_ALFABETO abaixo.
+ */
 export const GRUPOS_ALFABETO: string[][] = ['ABCDE', 'FGHIJ', 'KLMNO', 'PQRST', 'UVWXYZ'].map((g) => [...g]);
+
+/**
+ * D031 (alternar "conhecer as letras" e "ler"): a lição da Trilha dos Sons que ensina o som de cada letra
+ * (docs/pedagogia/01-escopo-e-sequencia.md). A fase da Trilha A–Z da letra entra LOGO ANTES desta lição na jornada.
+ */
+export const LICAO_DA_LETRA: Record<string, string> = {
+  A: 'TF-01', E: 'TF-02', I: 'TF-03', O: 'TF-04', U: 'TF-05',
+  M: 'TF-07', F: 'TF-08', V: 'TF-09', L: 'TF-10', S: 'TF-11', N: 'TF-13', Z: 'TF-14', J: 'TF-15',
+  P: 'TF-16', T: 'TF-17', B: 'TF-18', C: 'TF-19', D: 'TF-20', G: 'TF-21'
+};
+
+/**
+ * D031: blocos de letras da jornada, reagrupados pelas letras realmente vistas. Cada bloco fecha com uma revisão do alfabeto
+ * logo depois da lição `depoisDe` (fim de bloco da trilha fônica). O último bloco são as letras que a Trilha dos Sons ainda não
+ * usa até TF-22, na ordem da trilha fônica (R: TF-31, H: TF-35, X: TF-39, Q: TF-40, K, Y e W: TF-48); ele fecha com a Festa.
+ */
+export const BLOCOS_ALFABETO: { id: string; letras: string[]; depoisDe?: string }[] = [
+  { id: 'AL-RV1', letras: [...'AEIOU'], depoisDe: 'TF-06' },
+  { id: 'AL-RV2', letras: [...'MFVLSNZJ'], depoisDe: 'TF-R2' },
+  { id: 'AL-RV3', letras: [...'PTBCDG'], depoisDe: 'TF-R3' },
+  { id: 'AL-FESTA', letras: [...'RHXQKYW'] }
+];
+/** D031: a ordem em que a jornada apresenta as 26 letras. */
+export const ORDEM_LETRAS_JORNADA: string[] = BLOCOS_ALFABETO.flatMap((b) => b.letras);
+/** Letras vistas na jornada até `ate` (inclusive). */
+export const letrasVistasAte = (ate: string): string[] => ORDEM_LETRAS_JORNADA.slice(0, ORDEM_LETRAS_JORNADA.indexOf(ate) + 1);
 
 /** Sons puros que ainda faltam gravar com fonoaudióloga (aviso na área do adulto). */
 export function sonsPurosPendentes(): LetraAlfabeto[] {
@@ -183,8 +212,9 @@ export function sonsPurosPendentes(): LetraAlfabeto[] {
 }
 
 /**
- * PRIMEIRAS PALAVRINHAS (pesquisa 44 §4.3): palavras que a criança já consegue ler com as letras vistas ATÉ aquela
- * letra, para juntar as letras e ler desde cedo (liga/desliga em config.ts › alfabeto.primeirasPalavrinhas).
+ * PRIMEIRAS PALAVRINHAS (pesquisa 44 §4.3): palavras para juntar as letras e ler desde cedo (liga/desliga em
+ * config.ts › alfabeto.primeirasPalavrinhas). Só entram as que usam letras JÁ VISTAS na ordem da jornada (D031:
+ * `ORDEM_LETRAS_JORNADA`); as outras ficam no banco e esperam (ver `palavrinhasDaLetra`).
  * Regras da 1ª volta (conferidas no teste): só letras já vistas; nada de CE, CI, GE, GI, QUE, QUI, GUE, GUI;
  * S e R só no COMEÇO da palavra (no meio o som é outro).
  */
@@ -192,16 +222,32 @@ export const PALAVRINHAS: Record<string, string[]> = {
   B: ['BABÁ'], E: ['BEBÊ'], F: ['CAFÉ', 'FACA'], I: ['BIFE'], J: ['JACA'], L: ['BALA', 'FILA'], M: ['MALA', 'CAMA'], N: ['BANANA', 'MENINA'],
   O: ['BOLA', 'DADO'], P: ['COPO', 'MAPA'], R: ['RODA', 'REI'], S: ['SAPO', 'SOPA'], T: ['GATO', 'PATO'], U: ['LUA', 'TATU'], V: ['UVA', 'VACA'], X: ['PEIXE'], Z: ['DOZE']
 };
-/** Palavrinhas das revisões (uma por grupo de letras) e da Festa do Alfabeto. */
+/** Palavrinhas das revisões ANTIGAS (AL-R1…AL-R4, ordem alfabética; fora da jornada desde a D031). */
 export const PALAVRINHAS_REVISAO: string[][] = [['BABÁ', 'BEBÊ', 'CABE'], ['CAFÉ', 'BIFE', 'JACA'], ['BALA', 'BOLA', 'DEDO'], ['PATO', 'RODA', 'SAPO'], ['LUA', 'UVA', 'VACA']];
+/** D031: palavrinhas das revisões da jornada e da Festa (a revisão das vogais não tem: a lição TF-06 já lê AI, EI, OI…). */
+export const PALAVRINHAS_REVISAO_JORNADA: Record<string, string[]> = {
+  'AL-RV2': ['MALA', 'LUA', 'UVA'], 'AL-RV3': ['BALA', 'JACA', 'VACA'], 'AL-FESTA': ['LUA', 'UVA', 'VACA']
+};
 
-/** A palavra respeita as regras da 1ª volta com as letras vistas até `ate` (inclusive)? */
-export function palavrinhaPermitida(palavra: string, ate: string): boolean {
+/** A palavra respeita as regras da 1ª volta com as letras vistas até `ate` (inclusive)? `ordem`: padrão, a da jornada (D031). */
+export function palavrinhaPermitida(palavra: string, ate: string, ordem: string[] = ORDEM_LETRAS_JORNADA): boolean {
   const w = palavra.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
-  const vistas = ALFABETO.slice(0, ALFABETO.findIndex((l) => l.letra === ate) + 1).map((l) => l.letra);
+  const vistas = ordem.slice(0, ordem.indexOf(ate) + 1);
   if (![...w].every((ch) => vistas.includes(ch))) return false;
   if (/C[EI]|G[EI]|[QG]U[EI]|H|K|W|Y/.test(w)) return false;
   return !/[SR]/.test(w.slice(1));
+}
+
+/**
+ * D031: palavrinhas da fase da letra na jornada: as da própria letra que já dá para montar; se nenhuma serve, até 2 do banco
+ * todo de palavrinhas que tenham a letra e só letras já vistas. Pode ficar vazio (a fase fica sem a cena de palavrinhas).
+ */
+export function palavrinhasDaLetra(letra: string): string[] {
+  const proprias = (PALAVRINHAS[letra] ?? []).filter((w) => palavrinhaPermitida(w, letra));
+  if (proprias.length) return proprias;
+  const semAcento = (w: string) => w.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+  const banco = [...new Set([...Object.values(PALAVRINHAS).flat(), ...PALAVRINHAS_REVISAO.flat()])];
+  return banco.filter((w) => semAcento(w).includes(letra) && palavrinhaPermitida(w, letra)).slice(0, 2);
 }
 
 /* ------------------------------------------------------------------------------------------------------------

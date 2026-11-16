@@ -51,12 +51,18 @@ describe('revisão da metodologia (16/11)', () => {
   });
 
   it('Trilha A–Z: vale só o som das letras já vistas na jornada (05 §6.5)', () => {
+    // D031: na letra M só valem as vogais (TF-01…06) e o próprio M; o L ainda não foi visto
+    const m = valoresVistosAte(FASE_POR_ID['AL-M']);
+    expect([...m]).toEqual(expect.arrayContaining(['a', 'e', 'i', 'o', 'u', 'm']));
+    expect(m.has('l')).toBe(false);
+    expect(m.has('b')).toBe(false);
+    expect(verificarPalavra('MALA', 99, BANCO, m).ok).toBe(false);
+    // na letra B (depois de TF-17), o B e tudo o que veio antes
     const b = valoresVistosAte(FASE_POR_ID['AL-B']);
-    expect([...b]).toEqual(expect.arrayContaining(['a', 'b']));
-    expect(b.has('l')).toBe(false);
-    expect(b.has('o')).toBe(false);
-    expect(verificarPalavra('BOLA', 99, BANCO, b).ok).toBe(false);
+    expect([...b]).toEqual(expect.arrayContaining(['a', 'b', 'l', 'o', 't']));
+    expect(b.has('d')).toBe(false);
     expect(verificarPalavra('BABÁ', 99, BANCO, b).ok).toBe(true);
+    expect(verificarPalavra('DEDO', 99, BANCO, b).ok).toBe(false);
   });
 
   it('nenhuma instrução de montar soletra pelo nome da letra (regra 1)', () => {

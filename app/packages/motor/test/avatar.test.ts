@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CABELOS, CAMISAS, idCompraAvatar, pecaAvatar, pecasPara } from '@fonema/conteudo';
+import { CABELOS, CAMISAS, FASES, idCompraAvatar, pecaAvatar, pecasPara } from '@fonema/conteudo';
 import {
   AVATAR_PADRAO, alternarAcessibilidade, comprarPeca, concluirFase, definirSexo, estadoPeca, generoDaFala, migrarAvatar,
   normalizarCrianca, pecaEmUso, progressoInicial, proximasPecas, renderFala, rotuloCadeado, vestir
@@ -54,7 +54,8 @@ describe('cadeados: fase E moedinhas', () => {
   const comMoedas = (p: ReturnType<typeof progressoInicial>, n: number) => ({ ...p, moedinhas: { saldo: n, total: n, porDia: {} } });
   const ateLetra = (letra: string) => {
     let p = progressoInicial('c1', 0);
-    for (const l of 'ABCDE') { if (l === letra) break; p = concluirFase(p, `AL-${l}`, 1); }
+    // D031: a jornada alterna letras e lições; conclui tudo o que vem antes da letra
+    for (const f of FASES) { if (f.id === `AL-${letra}`) break; p = concluirFase(p, f.id, 1); }
     return p;
   };
 
@@ -89,7 +90,7 @@ describe('cadeados: fase E moedinhas', () => {
       const v = proximasPecas(p, sexo, 6, (peca) => peca.categoria !== 'cabelo');
       expect(v.length).toBe(6);
       expect(v.every((x) => x.estado.estado === 'fase' && x.peca.categoria !== 'cabelo')).toBe(true);
-      expect(v[0].peca.fase).toBe('AL-B');
+      expect(v[0].peca.fase).toBe('AL-I'); // D031: a primeira letra com peça, na ordem da jornada (A, E, I…)
     }
     expect(proximasPecas(p, 'f', 20).some((x) => x.peca.id === 'f-coque')).toBe(true);
     expect(CAMISAS.some((c) => c.fase)).toBe(true);

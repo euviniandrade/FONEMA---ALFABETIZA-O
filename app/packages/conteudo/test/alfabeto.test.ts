@@ -3,7 +3,8 @@ import {
   ALFABETO, MARCADOR_PALAVRINHAS, PALAVRINHAS, PALAVRINHAS_REVISAO, palavrinhaPermitida, CONQUISTA_POR_ID, FALAS_ALFABETO, FASES, FASES_ALFABETO, FIGURAS, GRUPOS_ALFABETO, HABILIDADE_POR_ID, LETRAS_PARECIDAS, SONS, SONS_PARECIDOS,
   falaChave, falaNomeLetra, faseDaLetra, habilidadeLetra, seloDaLetra, sonsPurosPendentes,
   CENAS_DO_SOM, FALAS_FONICAS, LETRAS_EM_ESPELHO, LETRAS_NO_COMPORTAMENTO_ANTIGO, LETRA_POR_ID, PALAVRAS_SEM_VOZ, PARES_CONFUSOS, PARES_DE_VOZ, SONS_SEM_CLIPE, VOZES_DAS_FALAS_FONICAS,
-  leituraPermitida, parConfuso, usaSomReal
+  leituraPermitida, parConfuso, usaSomReal,
+  BLOCOS_ALFABETO, FASES_ALFABETO_REVISOES_ANTIGAS, LICAO_DA_LETRA, ORDEM_LETRAS_JORNADA, PALAVRINHAS_REVISAO_JORNADA, REGIAO_POR_ID, palavrinhasDaLetra
 } from '../src/index.ts';
 import type { AtividadeEscolher, AtividadeLigar, Fase } from '../src/index.ts';
 
@@ -13,28 +14,43 @@ const revisoes = FASES_ALFABETO.filter((f) => f.alfabeto?.tipo !== 'letra');
 const escolher = (f: Fase) => f.cenas.map((c) => c.atividade).filter((a): a is AtividadeEscolher => a?.tipo === 'escolher');
 
 describe('Trilha do Alfabeto (D027)', () => {
-  it('a jornada começa pelo alfabeto: A é a primeira fase e as letras vêm em ordem A–Z', () => {
+  it('D031: a jornada alterna a letra e a lição do som dela; no mapa a Trilha A–Z segue em ordem A–Z', () => {
     expect(FASES[0].id).toBe('AL-A');
     expect(ALFABETO.map((l) => l.letra).join('')).toBe('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+    // mapa (regra 7): as 26 letras em ordem alfabética, depois as revisões e a Festa
     expect(letras.map((f) => f.alfabeto!.letra).join('')).toBe('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
     expect(letras.map((f) => f.id)).toEqual(ALFABETO.map((l) => faseDaLetra(l.letra)));
-    // todo o alfabeto vem antes de qualquer outra etapa
-    const ultimaAl = FASES.map((f) => f.regiao).lastIndexOf('AL');
-    expect(FASES.slice(0, ultimaAl + 1).every((f) => f.regiao === 'AL')).toBe(true);
+    expect(REGIAO_POR_ID.AL.fases).toEqual(FASES_ALFABETO.map((f) => f.id));
+    // jornada: cada letra com lição entra LOGO ANTES da lição TF que ensina o som dela
+    const ids = FASES.map((f) => f.id);
+    for (const [letra, tf] of Object.entries(LICAO_DA_LETRA)) expect(ids[ids.indexOf(tf) - 1], `${letra} antes de ${tf}`).toBe(faseDaLetra(letra));
+    expect(ids.slice(0, ids.indexOf('AL-FESTA') + 1).join(' ')).toBe([
+      'AL-A TF-01 AL-E TF-02 AL-I TF-03 AL-O TF-04 AL-U TF-05 TF-06 AL-RV1',
+      'AL-M TF-07 AL-F TF-08 AL-V TF-09 AL-L TF-10 AL-S TF-11 TF-12 AL-N TF-13 AL-Z TF-14 AL-J TF-15 TF-R2 AL-RV2',
+      'AL-P TF-16 AL-T TF-17 AL-B TF-18 AL-C TF-19 AL-D TF-20 AL-G TF-21 TF-22 TF-R3 AL-RV3',
+      'AL-R AL-H AL-X AL-Q AL-K AL-Y AL-W AL-FESTA'
+    ].join(' '));
+    expect(ORDEM_LETRAS_JORNADA.join('')).toBe('AEIOUMFVLSNZJPTBCDGRHXQKYW');
+    // as revisões antigas (ordem alfabética) continuam no banco, fora da jornada
+    expect(FASES_ALFABETO_REVISOES_ANTIGAS.map((f) => f.id)).toEqual(['AL-R1', 'AL-R2', 'AL-R3', 'AL-R4']);
+    for (const f of FASES_ALFABETO_REVISOES_ANTIGAS) expect(ids).not.toContain(f.id);
+    // a letra com lição chama a lição seguinte ("Amanhã tem mais um som!"); as outras, a próxima letra
+    for (const f of letras) expect(f.gancho.texto, f.id).toBe(LICAO_DA_LETRA[f.alfabeto!.letra!] ? FALAS_ALFABETO.ganchoSom : FALAS_ALFABETO.gancho);
   });
 
-  it('revisão a cada 5 letras e a Festa do Alfabeto no fim', () => {
-    expect(FASES_ALFABETO.map((f) => f.id).join(' ')).toBe(
-      'AL-A AL-B AL-C AL-D AL-E AL-R1 AL-F AL-G AL-H AL-I AL-J AL-R2 AL-K AL-L AL-M AL-N AL-O AL-R3 AL-P AL-Q AL-R S AL-T AL-R4 AL-U AL-V AL-W AL-X AL-Y AL-Z AL-FESTA'.replace('AL-R S', 'AL-R AL-S')
-    );
-    expect(revisoes).toHaveLength(5);
-    expect(GRUPOS_ALFABETO.every((g) => g.length >= 4 && g.length <= 6)).toBe(true);
+  it('D031: revisões no fim de cada bloco da trilha fônica, com as letras vistas, e a Festa do Alfabeto no fim', () => {
+    expect(revisoes.map((f) => f.id)).toEqual(BLOCOS_ALFABETO.map((b) => b.id));
+    expect(revisoes).toHaveLength(4);
     revisoes.forEach((r, g) => {
+      const grupo = BLOCOS_ALFABETO[g].letras;
       // a revisão mistura as letras do grupo: achar a letra, ligar letra-figura e "com qual letra começa?"
-      expect(r.habilidades).toEqual(GRUPOS_ALFABETO[g].map(habilidadeLetra));
+      expect(r.habilidades).toEqual(grupo.map(habilidadeLetra));
+      // nenhuma letra ainda não vista aparece nas opções
+      const vistas = BLOCOS_ALFABETO.slice(0, g + 1).flatMap((b) => b.letras);
+      if (r.id !== 'AL-FESTA') for (const a of escolher(r)) for (const i of a.itens) for (const o of i.opcoes) if (o.letra) expect(vistas, `${r.id}: ${o.letra}`).toContain(o.letra.toUpperCase());
       const titulos = r.cenas.map((c) => c.titulo).slice(1);
       expect(titulos.slice(0, 3)).toEqual(['Ache a letra', 'Ligue a letra à figura', 'Com qual letra começa?']);
-      expect(titulos.at(-1)).toBe('Primeiras palavrinhas');
+      expect(titulos.at(-1)).toBe(PALAVRINHAS_REVISAO_JORNADA[r.id] ? 'Primeiras palavrinhas' : 'Liga o som');
       // D030: contraste fino e "Liga o som" entram nas revisões, entre as brincadeiras antigas e as palavrinhas
       for (const t of titulos.slice(3, -1)) expect(['Sons parecidos', 'Letras parecidas', 'Liga o som: qual é a cena?', 'Liga o som']).toContain(t);
       expect(titulos).toContain('Liga o som');
@@ -42,7 +58,7 @@ describe('Trilha do Alfabeto (D027)', () => {
       expect(r.cenas[0].titulo).toMatch(/^Aquecimento/);
       expect(r.cenas[0].contaDominio).toBeFalsy();
       const perguntadas = new Set(escolher(r).flatMap((a) => a.itens.map((i) => i.habilidade)));
-      for (const l of GRUPOS_ALFABETO[g]) expect(perguntadas.has(habilidadeLetra(l)), `${r.id}: ${l}`).toBe(true);
+      for (const l of grupo) expect(perguntadas.has(habilidadeLetra(l)), `${r.id}: ${l}`).toBe(true);
     });
     const festa = FASES_ALFABETO.at(-1)!;
     expect(festa.alfabeto?.tipo).toBe('festa');
@@ -57,7 +73,7 @@ describe('Trilha do Alfabeto (D027)', () => {
       const real = usaSomReal(l);
       const tipos = f.cenas.map((c) => c.atividade!.tipo);
       const base = real ? ['letra', 'espelho', 'escolher', 'escolher', 'escolher', 'tracar'] : l.fonema ? ['letra', 'espelho', 'escolher', 'escolher', 'tracar'] : ['letra', 'escolher', 'escolher', 'tracar'];
-      expect(tipos, f.id).toEqual(PALAVRINHAS[l.letra] ? [...base, 'montar'] : base);
+      expect(tipos, f.id).toEqual(palavrinhasDaLetra(l.letra).length ? [...base, 'montar'] : base);
       // as palavrinhas são um extra (não contam para concluir a missão: a chave de config pode desligá-las)
       expect(f.cenas.filter((c) => c.marcador !== MARCADOR_PALAVRINHAS).every((c) => c.contaDominio), f.id).toBe(true);
       expect(f.cenas.filter((c) => c.marcador === MARCADOR_PALAVRINHAS).every((c) => !c.contaDominio), f.id).toBe(true);
@@ -150,8 +166,8 @@ describe('Trilha do Alfabeto (D027)', () => {
             expect(i.contraste).toBe(PARES_DE_VOZ.some(([p, q]) => (p === x && q === y) || (p === y && q === x)) ? 'voz' : 'boca');
             treinados.add([x, y].sort().join('/'));
             // só letras já vistas até aquela revisão
-            const ate = ALFABETO.findIndex((l) => l.letra === GRUPOS_ALFABETO[revisoes.indexOf(r)].at(-1));
-            for (const o of i.opcoes) if (o.letra) expect(ALFABETO.findIndex((l) => l.letra === o.letra!.toUpperCase())).toBeLessThanOrEqual(ate);
+            const vistas = BLOCOS_ALFABETO.slice(0, revisoes.indexOf(r) + 1).flatMap((b) => b.letras);
+            for (const o of i.opcoes) if (o.letra) expect(vistas).toContain(o.letra.toUpperCase());
           }
           if (i.formato === 'espelho-letras') {
             expect(i.contraste).toBe('desenho');
@@ -245,17 +261,29 @@ describe('Trilha do Alfabeto (D027)', () => {
     expect(PALAVRINHAS.E).toEqual(['BEBÊ']);
     expect(PALAVRINHAS.F).toContain('CAFÉ');
     expect(PALAVRINHAS.L).toEqual(['BALA', 'FILA']);
+    const alfabetica = ALFABETO.map((l) => l.letra);
     for (const [letra, palavras] of Object.entries(PALAVRINHAS)) {
       for (const w of palavras) {
-        expect(palavrinhaPermitida(w, letra), `${w} depois de ${letra}`).toBe(true);
+        // o banco foi feito para a ordem alfabética; na jornada (D031) só entram as que já dá para montar
+        expect(palavrinhaPermitida(w, letra, alfabetica), `${w} depois de ${letra}`).toBe(true);
         expect(w.normalize('NFD').toUpperCase(), `${w} usa a letra ${letra}`).toContain(letra);
       }
     }
-    PALAVRINHAS_REVISAO.forEach((palavras, g) => palavras.forEach((w) => expect(palavrinhaPermitida(w, GRUPOS_ALFABETO[g].at(-1)!), `${w} na revisão ${g + 1}`).toBe(true)));
+    for (const l of ALFABETO) for (const w of palavrinhasDaLetra(l.letra)) {
+      expect(palavrinhaPermitida(w, l.letra), `${w} na letra ${l.letra} (ordem da jornada)`).toBe(true);
+      expect(semAcento(w)).toContain(l.letra);
+    }
+    // D031: BEBÊ não entra no E (o B só vem depois); FILA entra no L; na letra T, PATO e TATU
+    expect(palavrinhasDaLetra('E')).toEqual([]);
+    expect(palavrinhasDaLetra('L')).toEqual(['FILA']);
+    expect(palavrinhasDaLetra('T')).toEqual(['PATO']);
+    PALAVRINHAS_REVISAO.forEach((palavras, g) => palavras.forEach((w) => expect(palavrinhaPermitida(w, GRUPOS_ALFABETO[g].at(-1)!, alfabetica), `${w} na revisão antiga ${g + 1}`).toBe(true)));
+    BLOCOS_ALFABETO.forEach((b) => (PALAVRINHAS_REVISAO_JORNADA[b.id] ?? []).forEach((w) => expect(palavrinhaPermitida(w, b.letras.at(-1)!), `${w} na ${b.id}`).toBe(true)));
     // o filtro recusa o que engana na 1ª volta
     for (const w of ['CEBOLA', 'GELO', 'QUEIJO', 'CASA', 'ARARA', 'CIDADE', 'GUIA']) expect(palavrinhaPermitida(w, 'Z'), w).toBe(false);
-    expect(palavrinhaPermitida('BOLA', 'L')).toBe(false); // o O ainda não foi visto
-    expect(palavrinhaPermitida('SAPO', 'S')).toBe(true);
+    expect(palavrinhaPermitida('BOLA', 'L', alfabetica)).toBe(false); // o O ainda não foi visto
+    expect(palavrinhaPermitida('SAPO', 'S', alfabetica)).toBe(true);
+    expect(palavrinhaPermitida('SAPO', 'S')).toBe(false); // na jornada, o P vem depois do S
     // D030 §5: a 1ª palavra é demonstração e depois o modelo some; as peças tocam o SOM (nunca o nome da letra)
     for (const f of FASES_ALFABETO) for (const c of f.cenas) if (c.marcador === MARCADOR_PALAVRINHAS) {
       const a = c.atividade!;

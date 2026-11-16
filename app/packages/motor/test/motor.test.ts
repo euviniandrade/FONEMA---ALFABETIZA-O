@@ -105,9 +105,10 @@ describe('sequência sem pular fases (D021)', () => {
     let p = progressoInicial('c1', T0);
     expect(() => concluirFase(p, 'AL-C', T0)).toThrow(/pular|bloqueada/i);
     p = concluirFase(p, 'AL-A', T0);
-    expect(p.fases['AL-B'].estado).toBe('aberta');
-    expect(p.fases['AL-C'].estado).toBe('bloqueada');
-    expect(p.faseAtual).toBe('AL-B');
+    // D031: depois da letra A vem a lição do som /a/; a letra E espera
+    expect(p.fases['TF-01'].estado).toBe('aberta');
+    expect(p.fases['AL-E'].estado).toBe('bloqueada');
+    expect(p.faseAtual).toBe('TF-01');
   });
 });
 

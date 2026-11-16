@@ -42,7 +42,7 @@ describe('Trilha do Alfabeto no motor (D027)', () => {
     expect(missaoInicialFeita(p)).toBe(false);
   });
 
-  it('missão da letra A: curta (sem pausa automática), fecha com o selo da letra, nível 1 e a letra B liberada', () => {
+  it('missão da letra A: curta (sem pausa automática), fecha com o selo da letra, nível 1 e a lição do som /a/ liberada (D031)', () => {
     const r = jogar(progressoInicial('c1', T0), 'AL-A');
     const tipos = r.sessao.etapas.map((e) => e.cena?.atividade?.tipo ?? e.tipo);
     // D030: a missão ganhou a cena letra → som (AL-A-C3b)
@@ -51,15 +51,16 @@ describe('Trilha do Alfabeto no motor (D027)', () => {
     expect(r.relatorio.conquistasNovas.map((c) => c.id)).toContain(seloDaLetra('A'));
     expect(r.relatorio.nivelDepois).toBe(1);
     expect(missaoInicialFeita(r.progresso)).toBe(true);
-    expect(r.progresso.faseAtual).toBe('AL-B');
-    expect(podeEntrar(r.progresso, 'AL-B')).toBe(true);
-    expect(podeEntrar(r.progresso, 'AL-C')).toBe(false);
+    expect(r.progresso.faseAtual).toBe('TF-01');
+    expect(podeEntrar(r.progresso, 'TF-01')).toBe(true);
+    expect(podeEntrar(r.progresso, 'AL-E')).toBe(false);
+    expect(podeEntrar(r.progresso, 'AL-B')).toBe(false);
     expect(r.progresso.contadores.tracados).toBe(2); // maiúscula e minúscula
   });
 
   it('primeiras palavrinhas: entram quando as letras permitem e saem com a chave de config desligada', () => {
     let p = progressoInicial('c1', T0);
-    p = concluirFase(p, 'AL-A', T0);
+    for (const f of FASES) { if (f.id === 'AL-B') break; p = concluirFase(p, f.id, T0); }
     const comB = montarSessao(p, crianca, 'AL-B', cfg, T0);
     const montar = comB.etapas.map((e) => e.cena?.atividade).find((a) => a?.tipo === 'montar');
     expect(montar?.tipo === 'montar' && montar.palavras).toEqual(['BABÁ']);
@@ -70,24 +71,29 @@ describe('Trilha do Alfabeto no motor (D027)', () => {
     expect(cfg.alfabeto.primeirasPalavrinhas).toBe(true);
   });
 
-  it('a ordem é A–Z sem pular: depois de E vem a revisão, e F só abre depois dela', () => {
+  it('D031: sem pular, letra e lição se alternam (A → som /a/ → E → som /ê/…); depois de TF-06 vem a revisão das vogais, e M só abre depois dela', () => {
     let p = progressoInicial('c1', T0);
     expect(() => concluirFase(p, 'AL-B', T0)).toThrow();
-    for (const l of 'ABCDE') { expect(p.faseAtual).toBe(faseDaLetra(l)); p = concluirFase(p, faseDaLetra(l), T0); }
-    expect(p.faseAtual).toBe('AL-R1');
-    expect(podeEntrar(p, 'AL-F')).toBe(false);
-    const r = jogar(p, 'AL-R1');
+    expect(() => concluirFase(p, 'TF-01', T0)).toThrow();
+    for (const [l, tf] of [['A', 'TF-01'], ['E', 'TF-02'], ['I', 'TF-03'], ['O', 'TF-04'], ['U', 'TF-05']]) {
+      expect(p.faseAtual).toBe(faseDaLetra(l)); p = concluirFase(p, faseDaLetra(l), T0);
+      expect(p.faseAtual).toBe(tf); expect(podeEntrar(p, tf)).toBe(true); p = concluirFase(p, tf, T0);
+    }
+    p = concluirFase(p, 'TF-06', T0);
+    expect(p.faseAtual).toBe('AL-RV1');
+    expect(podeEntrar(p, 'AL-M')).toBe(false);
+    const r = jogar(p, 'AL-RV1');
     expect(r.relatorio.faseConcluida).toBe(true);
-    expect(r.progresso.faseAtual).toBe('AL-F');
-    // a revisão trabalha as 5 letras do grupo (uma tentativa por habilidade no mínimo, no jogo real)
+    expect(r.progresso.faseAtual).toBe('AL-M');
+    // a revisão trabalha as 5 vogais (uma tentativa por habilidade no mínimo, no jogo real)
     const habs = new Set(r.sessao.etapas.flatMap((e) => (e.cena?.atividade?.tipo === 'escolher' ? e.cena.atividade.itens.map((i) => i.habilidade) : [])));
-    for (const l of 'ABCDE') expect(habs.has(habilidadeLetra(l))).toBe(true);
+    for (const l of 'AEIOU') expect(habs.has(habilidadeLetra(l))).toBe(true);
   });
 
   it('volta completa: 26 selos, Festa do Alfabeto → troféu, termômetro 1, título novo e a passagem para as sílabas', () => {
     let p = progressoInicial('c1', T0);
-    const al = FASES.filter((f) => f.regiao === 'AL');
-    for (const f of al.slice(0, -1)) p = concluirFase(p, f.id, T0);
+    const ate = FASES.findIndex((f) => f.id === 'AL-FESTA');
+    for (const f of FASES.slice(0, ate)) p = concluirFase(p, f.id, T0);
     expect(p.faseAtual).toBe('AL-FESTA');
     expect(calcularNivel(200, true, fasesConcluidas(p)).portao?.nome).toBe('Festa do Alfabeto');
     const r = jogar(p, 'AL-FESTA');
@@ -98,10 +104,9 @@ describe('Trilha do Alfabeto no motor (D027)', () => {
     expect(ganhas).toContain('T-ALFABETO');
     expect(r.relatorio.termometroDepois).toBe(1);
     expect(descreverTermometro(1)).toMatch(/alfabeto/i);
-    // depois do alfabeto: sílabas (vogais abertas e fechadas → M, L, F), palavras e só então o nome
-    // D030: depois do Alfabeto vem a Trilha dos Sons (a trilha fônica que ensina a ler)
-    expect(r.progresso.faseAtual).toBe('TF-01');
-    const depois = FASES.slice(al.length).map((f) => f.id);
+    // D031: a Festa fecha letras e sons alternados; depois vêm os outros sons das vogais, palavras e só então o nome
+    expect(r.progresso.faseAtual).toBe('R1-F02');
+    const depois = FASES.slice(ate + 1).map((f) => f.id);
     expect(depois.indexOf('R2a-F01')).toBeLessThan(depois.indexOf('R2a-F04'));
     expect(depois.at(-1)).toBe('R0-F01');
     expect(FASE_POR_ID['R2a-F01'].habilidades).toContain('silaba-cv');

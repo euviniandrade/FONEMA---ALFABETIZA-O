@@ -19,18 +19,20 @@ function palavrasLidas(f: Fase): string[] {
 }
 
 describe('conteúdo da jornada', () => {
-  it('D027 + D030: Alfabeto → Trilha dos Sons → vogais abertas → Palavras → Meu nome, sem ids repetidos', () => {
+  it('D027 + D030 + D031: letras e sons alternados → vogais abertas → Palavras → Meu nome, sem ids repetidos', () => {
     expect(REGIOES.map((r) => r.id)).toEqual(['AL', 'TF', 'R1', 'R2a', 'R0']);
     expect(REGIOES.map((r) => r.etapa)).toEqual(['Alfabeto', 'Ler e escrever', 'Vogais abertas', 'Palavras', 'Meu nome']);
-    expect(FASES.filter((f) => f.regiao === 'AL')).toHaveLength(31);
+    expect(FASES.filter((f) => f.regiao === 'AL')).toHaveLength(30); // 26 letras + 3 revisões por bloco + Festa
     expect(FASES.filter((f) => f.regiao === 'TF')).toHaveLength(24);
     expect(FASES.filter((f) => f.regiao === 'R1').map((f) => f.id)).toEqual(['R1-F02', 'R1-F03', 'R1-F06', 'R1-F07']);
     expect(FASES.filter((f) => f.regiao === 'R2a')).toHaveLength(5);
     expect(FASES.filter((f) => f.regiao === 'R0').map((f) => f.id)).toEqual(['R0-F01']);
     expect(FASES.at(-1)!.id).toBe('R0-F01');
     expect(new Set(FASES.map((f) => f.id)).size).toBe(FASES.length);
-    // as regiões cobrem a jornada inteira, na mesma ordem
-    expect(REGIOES.flatMap((r) => r.fases)).toEqual(FASES.map((f) => f.id));
+    // as regiões cobrem a jornada inteira (D031: AL e TF se alternam na jornada; o resto vem em blocos, na ordem das regiões)
+    expect(REGIOES.flatMap((r) => r.fases).sort()).toEqual(FASES.map((f) => f.id).sort());
+    const ultimaAlOuTf = FASES.findLastIndex((f) => f.regiao === 'AL' || f.regiao === 'TF');
+    expect(FASES.slice(ultimaAlOuTf + 1).map((f) => f.id)).toEqual(REGIOES.slice(2).flatMap((r) => r.fases));
   });
 
   it('toda palavra lida é decodificável com os grafemas da região', () => {

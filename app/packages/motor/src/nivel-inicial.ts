@@ -10,7 +10,7 @@ import type { NivelInicial, Progresso, ProgressoFase } from './estado.ts';
 
 export const NIVEIS_INICIAIS: { id: NivelInicial; titulo: string; resumo: string; perguntas: string[] }[] = [
   {
-    id: 'zero', titulo: 'Do zero', resumo: 'Começa pelo alfabeto: cada letra e o som de cada letra, de A a Z.',
+    id: 'zero', titulo: 'Do zero', resumo: 'Começa pela letra A: conhece cada letra e logo aprende o som dela e lê com ela, uma letra de cada vez.',
     perguntas: ['Ainda não conhece todas as letras?', 'Ainda confunde o som das letras?', 'Está na dúvida? Comece por aqui.']
   },
   {
@@ -46,13 +46,16 @@ export function faseInicial(nivel: NivelInicial): string {
  */
 export function aplicarNivelInicial(p: Progresso, nivel: NivelInicial, agora: number): Progresso {
   const inicio = FASES.findIndex((f) => f.id === faseInicial(nivel));
-  let atual = FASES.findIndex((f, i) => i >= inicio && p.fases[f.id]?.estado !== 'concluida');
+  const pulaAlfabeto = nivel !== 'zero';
+  let atual = FASES.findIndex((f, i) => i >= inicio && p.fases[f.id]?.estado !== 'concluida' && !(pulaAlfabeto && f.regiao === 'AL'));
   if (atual < 0) atual = FASES.length - 1;
   const fases: Record<string, ProgressoFase> = {};
   FASES.forEach((f, i) => {
     const a = p.fases[f.id] ?? { estado: 'bloqueada' as const, sessoes: 0 };
     if (a.estado === 'concluida') fases[f.id] = { ...a, liberada: false };
-    else if (i < inicio) fases[f.id] = { ...a, estado: 'aberta', liberada: true, abertaEm: a.abertaEm ?? agora };
+    // D031: a Trilha A–Z vem alternada com a Trilha dos Sons; quem já conhece as letras não refaz as letras que vêm DEPOIS do
+    // ponto de partida: a trilha A–Z inteira fica aberta para revisar
+    else if (i < inicio || (pulaAlfabeto && f.regiao === 'AL')) fases[f.id] = { ...a, estado: 'aberta', liberada: true, abertaEm: a.abertaEm ?? agora };
     else if (i === atual) fases[f.id] = { ...a, estado: 'aberta', liberada: false, abertaEm: a.abertaEm ?? agora };
     else fases[f.id] = { ...a, estado: 'bloqueada', liberada: false };
   });

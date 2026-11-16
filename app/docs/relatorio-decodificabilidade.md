@@ -1,158 +1,17 @@
 # Relatório de decodificabilidade (gerado)
 
-Gerado por `scripts/relatorio-decodificabilidade.ts`. 325 leituras e escritas conferidas em 65 fases · **0 erros** · 23 com aviso.
+Gerado por `scripts/relatorio-decodificabilidade.ts`. 323 leituras e escritas conferidas em 64 fases · **0 erros** · 21 com aviso.
 Erro = valor sonoro ainda não ensinado na unidade da fase (o teste falha). Aviso = A5 (vogal nasalizada pela consoante seguinte), vogal átona que muda na fala ou pronúncia regional (TI/DI).
 
 ### AL-A · Letra A
 
 Sem leitura nem escrita sozinha nesta fase.
 
-### AL-B · Letra B
-
-| Cena | O quê | Texto | Resultado |
-|---|---|---|---|
-| AL-B-C5p | escrita | BABÁ | ok |
-
-### AL-C · Letra C
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-D · Letra D
+### TF-01 · O som /a/ (até TF-01)
 
 Sem leitura nem escrita sozinha nesta fase.
 
 ### AL-E · Letra E
-
-| Cena | O quê | Texto | Resultado |
-|---|---|---|---|
-| AL-E-C5p | escrita | BEBÊ | ok |
-
-### AL-R1 · Revisão: de A a E
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-F · Letra F
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-G · Letra G
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-H · Letra H
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-I · Letra I
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-J · Letra J
-
-| Cena | O quê | Texto | Resultado |
-|---|---|---|---|
-| AL-J-C5p | escrita | JACA | ok |
-
-### AL-R2 · Revisão: de F a J
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-K · Letra K
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-L · Letra L
-
-| Cena | O quê | Texto | Resultado |
-|---|---|---|---|
-| AL-L-C5p | escrita | BALA | ok |
-| AL-L-C5p | escrita | FILA | ok |
-
-### AL-M · Letra M
-
-| Cena | O quê | Texto | Resultado |
-|---|---|---|---|
-| AL-M-C5p | escrita | MALA | ok |
-| AL-M-C5p | escrita | CAMA | ok, com aviso: "cama": vogal nasalizada pela consoante seguinte (A5) |
-
-### AL-N · Letra N
-
-| Cena | O quê | Texto | Resultado |
-|---|---|---|---|
-| AL-N-C5p | escrita | BANANA | ok, com aviso: "banana": vogal nasalizada pela consoante seguinte (A5) |
-| AL-N-C5p | escrita | MENINA | ok, com aviso: "menina": vogal nasalizada pela consoante seguinte (A5) |
-
-### AL-O · Letra O
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-R3 · Revisão: de K a O
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-P · Letra P
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-Q · Letra Q
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-R · Letra R
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-S · Letra S
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-T · Letra T
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-R4 · Revisão: de P a T
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-U · Letra U
-
-| Cena | O quê | Texto | Resultado |
-|---|---|---|---|
-| AL-U-C5p | escrita | LUA | ok |
-| AL-U-C5p | escrita | TATU | ok |
-
-### AL-V · Letra V
-
-| Cena | O quê | Texto | Resultado |
-|---|---|---|---|
-| AL-V-C5p | escrita | UVA | ok |
-| AL-V-C5p | escrita | VACA | ok |
-
-### AL-W · Letra W
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-X · Letra X
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-Y · Letra Y
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-Z · Letra Z
-
-Sem leitura nem escrita sozinha nesta fase.
-
-### AL-FESTA · Festa do Alfabeto
-
-| Cena | O quê | Texto | Resultado |
-|---|---|---|---|
-| AL-FESTA-C5p | escrita | LUA | ok |
-| AL-FESTA-C5p | escrita | UVA | ok |
-| AL-FESTA-C5p | escrita | VACA | ok |
-
-### TF-01 · O som /a/ (até TF-01)
 
 Sem leitura nem escrita sozinha nesta fase.
 
@@ -160,11 +19,23 @@ Sem leitura nem escrita sozinha nesta fase.
 
 Sem leitura nem escrita sozinha nesta fase.
 
+### AL-I · Letra I
+
+Sem leitura nem escrita sozinha nesta fase.
+
 ### TF-03 · O som /i/ (até TF-03)
 
 Sem leitura nem escrita sozinha nesta fase.
 
+### AL-O · Letra O
+
+Sem leitura nem escrita sozinha nesta fase.
+
 ### TF-04 · O som /ô/ (até TF-04)
+
+Sem leitura nem escrita sozinha nesta fase.
+
+### AL-U · Letra U
 
 Sem leitura nem escrita sozinha nesta fase.
 
@@ -184,6 +55,14 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-06-C4b | palavra | UI | ok |
 | TF-06-C4c | escrita | OI | ok |
 | TF-06-C4c | escrita | EU | ok |
+
+### AL-RV1 · Revisão: A, E, I, O e U
+
+Sem leitura nem escrita sozinha nesta fase.
+
+### AL-M · Letra M
+
+Sem leitura nem escrita sozinha nesta fase.
 
 ### TF-07 · O som /m/ (até TF-07)
 
@@ -205,6 +84,10 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-07-C5t | palavra | MIA | ok |
 | TF-07-C5t | palavra | MEIA | ok |
 
+### AL-F · Letra F
+
+Sem leitura nem escrita sozinha nesta fase.
+
 ### TF-08 · O som /f/ (até TF-08)
 
 | Cena | O quê | Texto | Resultado |
@@ -221,6 +104,12 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-08-C4c | escrita | FOI | ok |
 | TF-08-C5t | palavra | MIA | ok |
 | TF-08-C5t | palavra | FIA | ok |
+
+### AL-V · Letra V
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| AL-V-C5p | escrita | UVA | ok |
 
 ### TF-09 · O som /v/ (até TF-09)
 
@@ -239,6 +128,12 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-09-C5p | palavra | via | ok |
 | TF-09-C5p | palavra | fia | ok |
 
+### AL-L · Letra L
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| AL-L-C5p | escrita | FILA | ok |
+
 ### TF-10 · O som /l/ (até TF-10)
 
 | Cena | O quê | Texto | Resultado |
@@ -256,6 +151,10 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-10-C4c | escrita | MALA | ok |
 | TF-10-C4c | escrita | FILA | ok |
 | TF-10-C5f | frase | A lula viu a lua. | ok |
+
+### AL-S · Letra S
+
+Sem leitura nem escrita sozinha nesta fase.
 
 ### TF-11 · O som /s/ (até TF-11)
 
@@ -299,6 +198,12 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-12-C4c | escrita | ELE | ok |
 | TF-12-C5f | frase | Ele viu o ovo. | ok |
 
+### AL-N · Letra N
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| AL-N-C5p | escrita | MENINA | ok, com aviso: "menina": vogal nasalizada pela consoante seguinte (A5) |
+
 ### TF-13 · O som /n/ (até TF-13)
 
 | Cena | O quê | Texto | Resultado |
@@ -318,6 +223,10 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-13-C5t | palavra | AVE | ok |
 | TF-13-C5t | palavra | NAVE | ok |
 
+### AL-Z · Letra Z
+
+Sem leitura nem escrita sozinha nesta fase.
+
 ### TF-14 · O som /z/ (até TF-14)
 
 | Cena | O quê | Texto | Resultado |
@@ -336,6 +245,10 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-14-C5p | palavra | zelo | ok |
 | TF-14-C5p | palavra | zoa | ok |
 | TF-14-C5p | palavra | soa | ok |
+
+### AL-J · Letra J
+
+Sem leitura nem escrita sozinha nesta fase.
 
 ### TF-15 · O som /j/ (até TF-15)
 
@@ -374,6 +287,20 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-R2-C5t | palavra | NUA | ok |
 | TF-R2-C5f | frase | A mula viu a uva. | ok |
 
+### AL-RV2 · Revisão: M, F, V, L, S, N, Z e J
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| AL-RV2-C5p | escrita | MALA | ok |
+| AL-RV2-C5p | escrita | LUA | ok |
+| AL-RV2-C5p | escrita | UVA | ok |
+
+### AL-P · Letra P
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| AL-P-C5p | escrita | MAPA | ok |
+
 ### TF-16 · O som /p/ (até TF-16)
 
 | Cena | O quê | Texto | Resultado |
@@ -392,6 +319,10 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-16-C5t | palavra | LUA | ok |
 | TF-16-C5t | palavra | LUPA | ok |
 
+### AL-T · Letra T
+
+Sem leitura nem escrita sozinha nesta fase.
+
 ### TF-17 · O som /t/ (até TF-17)
 
 | Cena | O quê | Texto | Resultado |
@@ -408,6 +339,12 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-17-C4c | escrita | TATU | ok |
 | TF-17-C4c | escrita | LATA | ok |
 | TF-17-C5f | frase | O pato pula. | ok |
+
+### AL-B · Letra B
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| AL-B-C5p | escrita | BABÁ | ok |
 
 ### TF-18 · O som /b/ (até TF-18)
 
@@ -429,6 +366,10 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-18-C5p | palavra | bule | ok |
 | TF-18-C5p | palavra | pata | ok |
 
+### AL-C · Letra C
+
+Sem leitura nem escrita sozinha nesta fase.
+
 ### TF-19 · O som /k/ (ca, co, cu) (até TF-19)
 
 | Cena | O quê | Texto | Resultado |
@@ -447,6 +388,10 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-19-C4c | escrita | BOCA | ok |
 | TF-19-C5f | frase | O macaco viu a jaca. | ok |
 
+### AL-D · Letra D
+
+Sem leitura nem escrita sozinha nesta fase.
+
 ### TF-20 · O som /d/ (até TF-20)
 
 | Cena | O quê | Texto | Resultado |
@@ -464,6 +409,10 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-20-C4c | escrita | VIDA | ok |
 | TF-20-C5p | palavra | nada | ok |
 | TF-20-C5p | palavra | nata | ok |
+
+### AL-G · Letra G
+
+Sem leitura nem escrita sozinha nesta fase.
 
 ### TF-21 · O som /g/ (ga, go, gu) (até TF-21)
 
@@ -527,6 +476,50 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-R3-C5t | palavra | MATO | ok |
 | TF-R3-C5t | palavra | GATO | ok |
 | TF-R3-C5f | frase | O gato viu a vaca. | ok |
+
+### AL-RV3 · Revisão: P, T, B, C, D e G
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| AL-RV3-C5p | escrita | BALA | ok |
+| AL-RV3-C5p | escrita | JACA | ok |
+| AL-RV3-C5p | escrita | VACA | ok |
+
+### AL-R · Letra R
+
+Sem leitura nem escrita sozinha nesta fase.
+
+### AL-H · Letra H
+
+Sem leitura nem escrita sozinha nesta fase.
+
+### AL-X · Letra X
+
+Sem leitura nem escrita sozinha nesta fase.
+
+### AL-Q · Letra Q
+
+Sem leitura nem escrita sozinha nesta fase.
+
+### AL-K · Letra K
+
+Sem leitura nem escrita sozinha nesta fase.
+
+### AL-Y · Letra Y
+
+Sem leitura nem escrita sozinha nesta fase.
+
+### AL-W · Letra W
+
+Sem leitura nem escrita sozinha nesta fase.
+
+### AL-FESTA · Festa do Alfabeto
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| AL-FESTA-C5p | escrita | LUA | ok |
+| AL-FESTA-C5p | escrita | UVA | ok |
+| AL-FESTA-C5p | escrita | VACA | ok |
 
 ### R1-F02 · O de boca redonda: ó e ô
 
