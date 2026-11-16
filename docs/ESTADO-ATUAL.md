@@ -53,8 +53,8 @@ por ordem de tentativas do próprio teste).
 
 **Trilha dos Sons — a trilha fônica que ensina a ler (D030 etapas 6–8; 15/11, noite; NÃO publicado ainda):**
 - **24 fases novas** (região `TF`, `app/packages/conteudo/src/fases/tf.ts`): TF-01…TF-22 (vogais; sons que esticam M F V L S, regra
-  "O/E no fim soam U/I", N Z J; sons que estouram P T B C D G, regra TI/DI) + revisões TF-R2 e TF-R3. Jornada: Alfabeto → **Trilha dos
-  Sons** → Ilha das Vogais (é/ê, ó/ô = TF-23/24) → Vale do M-L-F (vira revisão/chefe) → Meu nome. "Já conhece as letras e os sons" começa
+  "O/E no fim soam U/I", N Z J; sons que estouram P T B C D G, regra TI/DI) + revisões TF-R2 e TF-R3. Jornada (até 16/11; desde a D031 é
+  alternada, ver bloco D031 abaixo): Alfabeto → **Trilha dos Sons** → Ilha das Vogais (é/ê, ó/ô = TF-23/24) → Vale do M-L-F (vira revisão/chefe) → Meu nome. "Já conhece as letras e os sons" começa
   em TF-06. Tela própria `#/c/:id/sons` (botão "Sons" na vila; ilha nova no arquipélago): verde = concluída, dourado = dominada.
 - **Lição (7–8 cenas):** revisão cumulativa → **som novo** (faz de conta → som real com a boca → só depois a letra) → som → letra →
   **síntese** com sons emendados (eu faço, nós fazemos, você faz) → ler palavras (figura e leituras faladas) + **2 palavras inventadas
@@ -89,7 +89,7 @@ por ordem de tentativas do próprio teste).
   mais de um tipo de atividade, quando o conteúdo oferece); selos de som só com domínio de verdade. Consequência: menos lições ficam
   douradas na primeira passada (E2E: 1 de 19).
 - **Pares mínimos** gravam a habilidade do contraste (mala/bala = M × B, dado/dedo = vogal), com teste.
-- **Verificador da Trilha A–Z** acumula só as letras já vistas na jornada (pronto para a D031, que muda a ordem).
+- **Verificador da Trilha A–Z** acumula só as letras já vistas na jornada (usado pela D031, que mudou a ordem: ver bloco abaixo).
 - **Tipos de erro**: os 12 de 06 §1, quando os dados permitem, no painel ("Que tipo de erro aparece mais").
 - **Sondagem** também para 4–5 anos (só escuta, som inicial e letras); toda placa com 3 opções.
 - **Documentos**: ABC p. 334 (Quadro 3); todos os ajustes de ordem em relação ao Vamos Todos; Soares p. 146; convenção do R do MP p. 88
@@ -131,6 +131,31 @@ em `motor/src/biblioteca.ts`, telas `Biblioteca.tsx` e `BrincarSons.tsx`, botõe
   enviados 4.904 caracteres, o contador subiu 2.314). **Não ficou bom**: o tatu muda um pouco de cara de página para página (o gerador não mantém o personagem);
   o texto do bloco 1 é só um diálogo de interjeições (com só vogais não dá mais). **Não feito**: jogo da memória letra × cena e roleta de
   sons (referência Wordwall, pesquisa 46), mais histórias, textos dos blocos 4–8, leitura cronometrada de TEXTO.
+
+**D031 — letras e sons alternados na jornada (16/11; NÃO publicado ainda; decisão do dono "B"):**
+- **Nova ordem** (`conteudo/src/regioes.ts` › `FASES_LETRAS_E_SONS`; dados em `conteudo/src/alfabeto.ts` › `LICAO_DA_LETRA`,
+  `BLOCOS_ALFABETO`): A TF-01 · E TF-02 · I TF-03 · O TF-04 · U TF-05 · TF-06 · **revisão das vogais (AL-RV1)** · M TF-07 · F TF-08 ·
+  V TF-09 · L TF-10 · S TF-11 · TF-12 · N TF-13 · Z TF-14 · J TF-15 · TF-R2 · **revisão M…J (AL-RV2)** · P TF-16 · T TF-17 · B TF-18 ·
+  C TF-19 · D TF-20 · G TF-21 · TF-22 · TF-R3 · **revisão P…G (AL-RV3)** · R · H · X · Q · K · Y · W · Festa do Alfabeto · R1 · R2a · R0.
+- **Mapa (regra 7):** a Trilha A–Z continua inteira, em ordem alfabética, com as 3 revisões novas e a Festa no fim. As revisões antigas
+  AL-R1…AL-R4 (grupos alfabéticos) ficam no banco (`FASES_ALFABETO_REVISOES_ANTIGAS`), fora da jornada. Os botões "Continuar" da
+  Trilha A–Z e da Trilha dos Sons levam sempre à fase de agora, mesmo quando ela está na outra trilha.
+- **Palavrinhas** da fase da letra: só as que usam letras já vistas NA NOVA ORDEM (`palavrinhasDaLetra`); várias letras ficaram sem
+  (E, F, I, J, M, O, S, U, Z…), porque a lição TF logo depois já lê com a letra.
+- **Ganchos:** a fase da letra que tem lição termina com "Amanhã tem mais um som!" (já gravada); o gancho da Festa virou "Agora as
+  vogais vão mostrar os outros sons delas!" (**sem voz**, em `app/docs/falas-pendentes.md`).
+- **Nível "já conhece as letras e os sons":** começa em TF-06 e agora deixa a Trilha A–Z INTEIRA liberada para revisar (as letras que
+  vêm depois de TF-06 não entram no caminho dessa criança). Revisar uma fase liberada não abre a seguinte.
+- **Progresso salvo:** versão 3 (`motor/src/migracao.ts` › `reordenarJornada`): nada concluído se desfaz; a fase atual é a primeira
+  que falta na nova ordem e é a única aberta; fases novas entram trancadas. `concluirFase` abre a próxima pendente mesmo quando a
+  seguinte já estava concluída (dado antigo). Teste: `motor/test/d031.test.ts`.
+- **E2E completo:** a falha antiga em "fase TF-01/TF-06 jogada e concluída" era do próprio teste: entre uma tentativa e outra ele
+  voltava para a MESMA rota da sessão, que não recarrega; a 2ª e a 3ª tentativa só reliam o ritual. Agora passa por outra tela antes.
+- **Verificado (16/11):** typecheck, lint, 242 testes, relatório de decodificabilidade (323 itens, 0 erros, 21 avisos) e **E2E completo
+  sem flags** (build próprio, 177 checagens, "E2E OK"; a jornada inteira na ordem alternada, Festa com troféu, nível inicial, Trilha dos
+  Sons e Cantinho). **Não verificado:** capturas `--capturas` (as do trecho de revisão A–E foram retiradas) e uso real por criança.
+- **Pergunta ao dono:** o portão do nível 7 é a Festa do Alfabeto (`motor/src/nivel.ts`); com a ordem nova ela fica bem mais longe
+  (fase 55, antes 31), e a criança passa mais tempo no nível 6 com estrelas. Manter, ou mudar o portão para o fim de um bloco?
 
 **Próximos passos, em ordem:**
 1. **Trilha fônica, blocos 4 a 8** (TF-23…TF-53: abertas e nasais, R e H, dígrafos, regras de posição, encontros), textos
