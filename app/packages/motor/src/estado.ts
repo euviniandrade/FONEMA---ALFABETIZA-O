@@ -2,6 +2,7 @@
  * Estado da criança na jornada (o que o repositório guarda). Lógica pura: nada aqui acessa tela ou banco.
  */
 import type { Atividade, Genero } from '@fonema/conteudo';
+import type { DadosBiblioteca } from './biblioteca.ts';
 
 /* ------------------------------------------------------------------------------------------------------------------
  * CONTRATO DO REGISTRO DETALHADO DE TENTATIVAS (D030, etapa 2) — quem escreve as mecânicas lê aqui.
@@ -25,7 +26,9 @@ import type { Atividade, Genero } from '@fonema/conteudo';
 export type TipoTentativa = 'avaliada' | 'exposicao' | 'autorrelato';
 
 /** Mecânica que gerou a tentativa: o `tipo` da atividade ('escolher', 'ligar', 'montar'…), mais a sondagem. */
-export type MecanicaTentativa = Atividade['tipo'] | 'sondagem';
+export type MecanicaTentativa = Atividade['tipo'] | 'sondagem' | MecanicaLivre;
+/** Mecânicas do Cantinho da Leitura e do Brincar com sons (biblioteca.ts). */
+export type MecanicaLivre = 'historia' | 'texto' | 'fluencia' | 'escuta';
 
 /** De que natureza é o `alvo` (para o painel separar sons, letras e palavras). */
 export type CategoriaAlvo = 'fonema' | 'grafema' | 'silaba' | 'palavra' | 'pseudopalavra' | 'outro';
@@ -86,7 +89,7 @@ export interface DetalheTentativa {
 export type NivelAjuda = 'nenhuma' | 'repetiu' | 'contraste' | 'caminho' | 'resposta-mostrada';
 export const NIVEIS_AJUDA: NivelAjuda[] = ['nenhuma', 'repetiu', 'contraste', 'caminho', 'resposta-mostrada'];
 
-export type ContextoTentativa = 'trilha' | 'revisao' | 'sondagem' | 'reforco';
+export type ContextoTentativa = 'trilha' | 'revisao' | 'sondagem' | 'reforco' | 'livre';
 
 export interface Tentativa extends DetalheTentativa {
   /** Momento (ms desde 1970). */
@@ -185,6 +188,8 @@ export interface Progresso {
   sondagens?: ResultadoSondagem[];
   /** D030: treinos rápidos com a Sofia feitos (reforco-treino.ts), só o resumo (as respostas vão para `habilidades`). */
   treinos?: { em: number; habilidade: string; motivo: string; acertos: number; total: number }[];
+  /** Cantinho da Leitura e Brincar com sons (biblioteca.ts): resumos de fluência, escrita própria, histórias, textos, eco e jogos. */
+  biblioteca?: DadosBiblioteca;
   sessoesFeitas: number;
   ultimaSessao?: number;
   criadoEm: number;

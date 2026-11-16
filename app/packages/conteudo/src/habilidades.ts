@@ -53,7 +53,17 @@ export const HABILIDADES: Habilidade[] = [
   { id: 'par-minimo-m-b', regiao: 'TF', nome: 'Pares mínimos M × B (escuta)', paraFamilia: 'ouve a diferença entre M e B (mala, bala)', exigePseudo: false },
   { id: 'par-minimo-vogal', regiao: 'TF', nome: 'Pares mínimos de vogal (escuta)', paraFamilia: 'ouve a diferença entre vogais (dado, dedo)', exigePseudo: false },
   { id: 'leitura-frase', regiao: 'TF', nome: 'Ler uma frase curta', paraFamilia: 'lê uma frase curta sem ajuda', exigePseudo: false },
-  { id: 'compreensao-lida', regiao: 'TF', nome: 'Entender o que leu', paraFamilia: 'responde a uma pergunta sobre a frase que leu', exigePseudo: false }
+  { id: 'compreensao-lida', regiao: 'TF', nome: 'Entender o que leu', paraFamilia: 'responde a uma pergunta sobre a frase que leu', exigePseudo: false },
+  // Cantinho da Leitura e Brincar com sons (docs/pedagogia/02: CF-SIL-03, CF-SIL-04, CF-PDP-01, COMP-OUV-01, VOC-01, DEC-TXT-01,
+  // FLU-PAL-01). Jogos e histórias são livres: não travam fase. Escrita própria (ESC-PRO-01), eco e coro (FLU-TXT-01) não entram
+  // como tentativa: são exposição/autorrelato e ficam só no resumo do Cantinho para o adulto.
+  { id: 'palavra-maior', regiao: 'R0', nome: 'Qual palavra é mais comprida', paraFamilia: 'percebe qual palavra tem mais pedaços (sílabas), sem olhar o tamanho da coisa', exigePseudo: false },
+  { id: 'silaba-inicial', regiao: 'R0', nome: 'Mesmo começo', paraFamilia: 'acha palavras que começam com o mesmo som', exigePseudo: false },
+  { id: 'palavra-dentro', regiao: 'R0', nome: 'Palavra escondida', paraFamilia: 'acha uma palavra escondida dentro de outra (sapato, pato)', exigePseudo: false },
+  { id: 'compreensao-ouvida', regiao: 'R0', nome: 'Entender uma história ouvida', paraFamilia: 'responde perguntas sobre uma história que ouviu', exigePseudo: false },
+  { id: 'vocabulario', regiao: 'R0', nome: 'Palavras novas das histórias', paraFamilia: 'aprende palavras novas das histórias', exigePseudo: false },
+  { id: 'leitura-texto', regiao: 'TF', nome: 'Ler um texto curto sozinho', paraFamilia: 'lê sozinho um texto curto e mostra que entendeu', exigePseudo: false },
+  { id: 'fluencia-palavras', regiao: 'TF', nome: 'Ler palavras conhecidas mais ligeiro', paraFamilia: 'relê palavras conhecidas cada vez mais ligeiro, sem errar', exigePseudo: false }
 ];
 
 export const HABILIDADE_POR_ID: Record<string, Habilidade> = Object.fromEntries(HABILIDADES.map((h) => [h.id, h]));

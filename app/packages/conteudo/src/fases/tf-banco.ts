@@ -93,3 +93,12 @@ export const PALAVRAS_OUTRAS_TRILHAS: EntradaBanco[] = [
 ];
 
 export const BANCO = montarBanco([...PALAVRAS_TF, ...PALAVRAS_OUTRAS_TRILHAS]);
+
+/**
+ * Palavras dos TEXTOS DECODIFICÁVEIS do Cantinho da Leitura (biblioteca/textos.ts), acrescentadas em bloco separado.
+ * "de" e "da" deixam de depender da lista de frequentes a partir do TI/DI (TF-22) e do D (TF-20). [DP] revisar com alfabetizadora.
+ */
+export const PALAVRAS_TEXTOS: EntradaBanco[] = [
+  e('de', 'dʒ i'), e('da', 'd a'), e('no', 'n u'), e('caiu', 'k a i u', ox)
+];
+Object.assign(BANCO, montarBanco(PALAVRAS_TEXTOS.filter((x) => !BANCO[x.texto])));

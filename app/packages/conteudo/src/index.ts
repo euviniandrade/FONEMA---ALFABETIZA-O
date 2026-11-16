@@ -18,3 +18,4 @@ export { FASES_TF, FALAS_TRILHA_SONS, LICOES_TF, LETRAS_DA_TRILHA_SONS, SILABA_D
 export { BANCO, PALAVRAS_TF, PALAVRAS_OUTRAS_TRILHAS } from './fases/tf-banco.ts';
 export * from './decodificabilidade.ts';
 export * from './nomes-comuns.ts';
+export * from './biblioteca/index.ts';
