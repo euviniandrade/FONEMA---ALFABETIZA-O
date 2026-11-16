@@ -4,7 +4,11 @@ Irmã de gerar-figura-minimax.py (que recorta objetos soltos). A chave é injeta
 Uso:
   gerar-ilustracao-minimax.py <saida.webp> "<descrição da cena em inglês>" [--largura 1200] [--bruto pasta] [--so-converter]
 O estilo (filme de animação 3D, D025) é acrescentado aqui, para todas as páginas saírem no mesmo padrão.
-Sem texto, sem letras, sem arco-íris (D009)."""
+Sem texto, sem letras, sem arco-íris (D009).
+ATENÇÃO (16/11): este gerador NÃO mantém o personagem de uma página para outra, e o subject_reference da MiniMax (tipo
+"character") não segurou a cara do Bolota (testado: saiu outro bicho, e com arco-íris). Páginas com o Bolota: Higgsfield,
+generate_image com o modelo nano_banana_2 e a imagem de referência ferramentas/referencia-bolota.jpg (1,5 crédito por imagem);
+as 6 páginas de "O Bolota e a chuva" foram refeitas assim."""
 import base64, io, json, os, sys, urllib.request
 from PIL import Image
 
