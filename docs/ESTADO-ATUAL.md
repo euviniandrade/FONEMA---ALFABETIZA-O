@@ -75,8 +75,14 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   `@fonema/motor` marcados `sideEffects: false`. Entrada: só a arte da orientação atual; vídeo só em tela deitada e depois de a página carregar.
 - **Limite conhecido:** sem internet só abre o que foi usado com internet (falas sorteadas que nunca tocaram ficam mudas, figuras
   de telas nunca abertas não aparecem). Não há pré-carga da próxima fase (ficou de fora).
-- Verificado: typecheck (inclui `tsc -p web/sw`), lint, testes (+5 em `web/sw/regras.test.ts`), build, E2E completo verde numa
-  cópia (porta 4490, com service worker) e teste Playwright: joga a Letra A com voz real, fica sem internet, reabre e joga a Letra A de novo.
+- **Correções depois (17/11):** (1) tela sob demanda cujo pedaço sumiu (versão nova publicada com a página aberta, ou `dist`
+  refeito durante um E2E) deixava a tela em branco; agora recarrega a página uma vez (`App.tsx`, reproduzido trocando o `dist`
+  com a página aberta). (2) A falha do trecho da cópia dos dados no E2E era o avatar puxando de volta para a Chegada depois da fala
+  "Ficou a sua cara!" quando já se tinha trocado de tela; agora só navega se ninguém trocou (`Avatar.tsx`).
+- Verificado em `d4de656` numa cópia (worktree, porta 4490, com service worker): typecheck (inclui `tsc -p web/sw`), lint,
+  259 testes (+5 em `web/sw/regras.test.ts`), build, **E2E completo, `--sem-jornada` e `--capturas-trilha` (PC e 390×844) verdes**.
+  Teste Playwright sem internet: joga a Letra A com voz real online, desliga a rede, reabre o app e joga a Letra A de novo até o
+  fim com voz e sem nenhum arquivo faltando (a fala do fim da missão e a de "voltou" vêm das falas comuns guardadas).
 
 **Trava da voz, celular, cópia dos dados e textos (16/11, tarde; NÃO publicado ainda):**
 - **Trava da voz (grave):** Trilha dos Sons → Lojinha (fala de boas-vindas tocando) → Letra A deixava a voz muda e o "Já conheci!"
