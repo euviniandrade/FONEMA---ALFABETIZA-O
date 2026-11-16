@@ -50,6 +50,25 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   `bancada-selos.tsx`, Lupa da Lojinha), "Cachoeira das Sílabas" (chefe R2a-F05, título do nível 16, selos), selos "Bate-Sílaba",
   "Tábua de Sílabas" e "Montar sílabas na tábua" — nomes que podem vender a sílaba como peça de leitura.
 
+**Primeiro acesso leve (16/11, noite; NÃO publicado ainda):**
+- **Antes:** o service worker baixava no primeiro acesso 2.099 arquivos (58 MB: todas as vozes, sons, figuras, vídeos dos
+  personagens, Mundo 3D, Espelho); JS inicial 886 KB (275 KB gzip) + CSS 43 KB gzip; a entrada baixava as duas artes e o vídeo de 1,1 MB.
+- **Agora:** precache = 56 arquivos (~2,0 MB: HTML, JS/CSS, ícones, fontes, manifestos da voz); JS inicial ~560 KB (~180 KB gzip)
+  + CSS 35 KB gzip. Service worker próprio (`app/web/sw/sw.ts`, regras em `sw/regras.ts`, estratégia injectManifest):
+  vozes, sons, figuras, vídeos, modelos 3D, Mundo 3D e Espelho entram no aparelho **quando usados** (primeiro o aparelho,
+  com teto de arquivos e versão por grupo calculada no build; pedido com Range é respondido do cache, também sem internet).
+  Quem já tinha a versão antiga não perde nada: na instalação a mídia do precache antigo que não mudou passa para os caches
+  novos (confere o md5 em `midia-revisoes.json`, só lido nessa hora). No primeiro acesso, o que carregou antes do service worker
+  assumir é pedido de novo através dele (`servicos/cache-inicial.ts`); ao abrir uma criança, as falas comuns (acerto, quase,
+  vamos juntos, fim da missão, voltou) ficam no aparelho com o nome dela (`servicos/sem-internet.ts`), para a dupla não ficar
+  muda sem internet num erro que ainda não tinha acontecido.
+- Telas sob demanda (React.lazy no `App.tsx`; só a entrada no JS inicial); three.js já vinha separado. `@fonema/conteudo` e
+  `@fonema/motor` marcados `sideEffects: false`. Entrada: só a arte da orientação atual; vídeo só em tela deitada e depois de a página carregar.
+- **Limite conhecido:** sem internet só abre o que foi usado com internet (falas sorteadas que nunca tocaram ficam mudas, figuras
+  de telas nunca abertas não aparecem). Não há pré-carga da próxima fase (ficou de fora).
+- Verificado: typecheck (inclui `tsc -p web/sw`), lint, testes (+5 em `web/sw/regras.test.ts`), build, E2E completo verde numa
+  cópia (porta 4490, com service worker) e teste Playwright: joga a Letra A com voz real, fica sem internet, reabre e joga a Letra A de novo.
+
 **Trava da voz, celular, cópia dos dados e textos (16/11, tarde; NÃO publicado ainda):**
 - **Trava da voz (grave):** Trilha dos Sons → Lojinha (fala de boas-vindas tocando) → Letra A deixava a voz muda e o "Já conheci!"
   preso para sempre (o clipe acabava sem o navegador avisar o fim e toda fala seguinte esperava por ele). Agora: a espera de cada clipe
