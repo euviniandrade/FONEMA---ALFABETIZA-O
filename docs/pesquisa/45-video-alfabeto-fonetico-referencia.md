@@ -102,3 +102,7 @@ Consequências para o nosso Espelho do Som: (a) a vista de frente precisa de lá
 vídeo mostra em close; (b) um **marcador "o som nasce aqui"** (lábios, dentes, ponta da língua, fundo, garganta, nariz) cumpre o papel
 do dedo da apresentadora; (c) sons curtos em série de três, sons contínuos por 1,5–2 s; (d) a vista de lado mostra o que o close real
 não mostra: língua por dentro, ar pelo nariz, voz ligada.
+
+> **Nota de 16/11 (revisão da metodologia):** o "gato arranhando" para o RR forte contradiz a convenção do Manual Prático da
+> Consciência Fonológica (MP p. 88: gato ronronando = R fraco; cachorro rosnando = R forte). O app não usa gato para o R (a cena é o
+> motor de carrinho). Ver `docs/pedagogia/07-fontes.md` §4.

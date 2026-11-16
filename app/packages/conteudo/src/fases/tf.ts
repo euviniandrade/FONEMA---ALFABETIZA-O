@@ -3,7 +3,7 @@
  * docs/pedagogia/01-escopo-e-sequencia.md: vogais (TF-01…06), consoantes que se prolongam (TF-07…15) e consoantes de
  * estouro (TF-16…22), com uma revisão no fim dos blocos 2 e 3. A Trilha A–Z continua como "conhecer as letras".
  *
- * Roteiro de cada lição (docs/pedagogia/04 §4 [DP]; "eu faço, nós fazemos, você faz": ABC p. 306, 320; VT-PE p. 32):
+ * Roteiro de cada lição (docs/pedagogia/04 §4 [DP]; o "eu faço, nós fazemos, você faz" na lição de som é extensão do projeto):
  *   1. revisão cumulativa dos sons já ensinados (ABC p. 510, 513);
  *   2. SOM NOVO: faz de conta + som real + boca do Espelho do Som; a letra só aparece depois do som (regra 1);
  *   3. ouvir o som e achar a letra; ver a letra e achar o som (os dois sentidos, FG);

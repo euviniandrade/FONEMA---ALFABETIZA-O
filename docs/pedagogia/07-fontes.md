@@ -65,7 +65,7 @@ Nenhum PDF dos materiais é guardado no repositório; só as fichas de leitura. 
 | Pares de sons parecidos (p/b, f/v) | — | ± PE p. 53–54 | — | ✔ p. 214 | ✔ p. 147 | Sim |
 | Chamar o método de "fônico" | ✔ p. 314–342 | ✔ "explícita, estruturada e sequencial", PE p. 8, 10 | — | ✘ p. 24, 26, 225 | ✘ p. 113, 285–287 | Fônico, somando as práticas dos outros |
 | Pronunciar o som isolado da letra | ✔ p. 324, 330 | ✔ PE p. 46–48 | ✔ p. 47 | ✘ p. 122 | ✘ p. 121, 125 | **As duas**: som puro + jogos de sílaba e rima |
-| Boca e articulação | ✔ p. 326 | ✔ PE p. 46–48 | — (os cartazes AO trazem foto da boca) | ✘ p. 137 | — | Espelho do Som como apoio (D020) |
+| Boca e articulação | ✔ p. 326 | ✔ PE p. 46–48 | — (os cartazes AO trazem foto da boca) | ✘ p. 137 | ± usa o ponto de articulação para explicar os pares surdo/sonoro, p. 146 | Espelho do Som como apoio (D020) |
 | Juntar e separar fonemas | ✔ p. 331 | ✔ PE p. 29, 40 | ✔ p. 36–40 | ✘ nota 40, p. 259 | ✘ p. 121, 125 | Sim, com letras |
 | Tirar, pôr e trocar fonemas | ✔ p. 354–356 | ± só na teoria | — | ✘ (mas troca **letras**, p. 212) | ± troca **letras**, p. 126–130 | Com letras (troca-letras, mais-uma-letra) |
 | Unidade de entrada | fonema, p. 315 | fonema, PE p. 30 | da palavra ao fonema, p. 4 | sílaba e rima, p. 73, 132 | sílaba, p. 121 | Sílaba e rima na escuta; fonema na trilha fônica |
@@ -88,6 +88,17 @@ Nenhum PDF dos materiais é guardado no repositório; só as fichas de leitura. 
 
 Divergências **dentro** de um mesmo material: ABC cap. 6 × caps. 11, 15, 22 (treino fonológico); ABC cap. 14 × cap. 22 (dígrafos);
 ABC cap. 6 × cap. 22 (tecnologia). Erro apontado na ficha: SOA p. 146 chama P, T, F de "sonoras" e B, D, V de "surdas" (está invertido).
+
+**Correção de 16/11 (revisão independente):** Soares **trata** a boca nos pares surdo/sonoro: em SOA p. 146 explica a diferença pelo
+ponto de articulação e pela vibração (a tabela acima dizia "não trata"; a troca de rótulos "sonoras/surdas" apontada na ficha continua
+registrada). **A conferir no PDF** (o PDF não está no repositório).
+
+**O som do R no faz de conta — duas convenções que se contradizem.** O Manual Prático (MP p. 88) associa o **gato ronronando ao R fraco**
+e o **cachorro rosnando ao R forte**; a pesquisa 45 (vídeo de referência, `docs/pesquisa/45-video-alfabeto-fonetico-referencia.md`) usa "o gato arranhando" para o **RR
+forte**. No app, a cena do R (`app/packages/conteudo/src/alfabeto.ts`: `BRINCADEIRAS.R` = motor de carrinho; `CENAS_DO_SOM.R` =
+carrinho) **não usa gato nem cachorro**, então nada está trocado. **Regra para o conteúdo futuro [DP]:** se o R fraco ganhar cena
+(Bloco 5, TF-32), não usar o gato para o R forte; seguir MP p. 88 (gato ronronando = R fraco; cachorro rosnando = R forte) ou ficar
+com o motor para o R forte. Página de MP citada pela revisão de 16/11; **a conferir no PDF**.
 
 ## 5. Pontos que pedem decisão do dono
 

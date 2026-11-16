@@ -75,8 +75,9 @@ Os nomes abaixo são descritivos; o nome final na tela é **[DP]**.
 
 ## 4. Roteiro de uma lição da trilha fônica [DP]
 
-Montado a partir da lição-modelo do /f/ (ABC p. 330–331), dos passos do Vamos Todos (VT-PE p. 46–48) e do "eu faço, nós fazemos, você
-faz" (ABC p. 306, 320; VT-PE p. 32):
+Montado a partir da lição-modelo do /f/ (ABC p. 330–331) e dos passos do Vamos Todos (VT-PE p. 46–48). O "eu faço, nós fazemos, você
+faz" aplicado a cada passo da lição de som é **extensão do projeto [DP]**: ABC p. 306 e VT-PE p. 32, citados antes aqui, falam desse
+modelo de ensino em **compreensão** (correção da revisão de 16/11); ABC p. 320 sustenta o ensino explícito em geral.
 
 1. **Revisão** rápida de sons e letras anteriores (ABC p. 510, 513).
 2. **Escuta**: uma história ou cena curta com o som novo (texto real, ouvido) + uma pergunta (N12).

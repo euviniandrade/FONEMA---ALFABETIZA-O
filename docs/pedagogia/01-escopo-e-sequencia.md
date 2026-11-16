@@ -20,12 +20,23 @@ das letras ajuda a chegar ao som (ABC p. 123, 126, 251; SOA p. 98–100).
    depois as regras de posição (ABC p. 122, 409; SOA p. 151); por último o que não tem regra (ABC p. 417; SOA p. 160, 164).
 3. **Da letra simples ao dígrafo e ao acento** (ABC p. 320–321).
 4. **Da sílaba simples à complexa:** consoante-vogal → mais sílabas → encontros por último (ABC p. 320–321, 334; SOA p. 177, 179–185).
-5. **Letras de forma espelhada longe uma da outra** (ABC p. 320–321).
+5. **Formas distintas antes de formas em espelho** (ABC p. 334, Quadro 3). Daí, no FONEMA, letras espelhadas (b/d, p/q) não vêm
+   vizinhas na trilha: essa leitura é **extensão do projeto [DP]**.
 6. **Cumulativo:** cada unidade revê as anteriores (ABC p. 510, 513).
 
-A ordem das unidades segue o Vamos Todos (VT-PE p. 45, 89; VT-1A p. 45, 117, 171, 225, 268), com **um ajuste pedido pela D030 §4**: as
-consoantes de estouro P e T, que o Vamos Todos ensina cedo (VT-1A p. 45), descem para depois das contínuas, como manda o critério 1.
-Esse reordenamento é **[DP]** apoiado em ABC p. 320–321, 356.
+A ordem das unidades parte do Vamos Todos (VT-PE p. 45, 89; VT-1A p. 45, 117, 171, 225, 268), **com vários ajustes**, todos
+**decisão do projeto [DP]** (o primeiro foi pedido pela D030 §4; os outros seguem os critérios 1 e 2, com ABC p. 320–321, 356 como apoio):
+
+| Vamos Todos | FONEMA | Por quê [DP] |
+|---|---|---|
+| m, v, s, p, f, l, t no 1º bimestre (VT-PE p. 89; VT-1A p. 45) | **P e T descem** para depois de todas as contínuas (TF-16, TF-17) | critério 1 (som que se prolonga antes do de estouro); D030 §4 |
+| ordem das contínuas m, v, s, f, l | **m, f, v, l, s** (TF-07…TF-11) | F antes de V (o surdo antes do par sonoro, para o contraste f/v entrar em TF-09); S por último e só no começo da palavra, porque o S tem vários valores (ABC p. 356) |
+| n, z, j só no 2º bimestre, misturados com b, c, d, g (VT-1A p. 117) | **N, Z e J sobem** para o bloco das contínuas (TF-13…TF-15), **antes** de P, T, B, C, D, G | critério 1: são sons que se prolongam |
+| é e ó logo no começo do 2º bimestre (VT-1A p. 117) | **é/ó depois das oclusivas** (TF-23, TF-24) | critério 2: primeiro um som por letra; o E e o O ficam fechados até lá (VT-PE p. 11 também adia) |
+| — | lições próprias de "O/E no fim soam U/I" (TF-12) e "ti/di" (TF-22) | ver §5 |
+
+A D031 (16/11) muda só o **caminho da jornada** (alternar uma fase da Trilha A–Z com a lição da Trilha dos Sons da mesma letra); a ordem
+das unidades acima continua valendo.
 
 ## 3. Antes das letras: escuta (sem ordem fixa, jogos livres)
 
@@ -80,7 +91,7 @@ Não se prolongam e só se pronunciam com apoio de vogal (ABC p. 127; MOR p. 53,
 | TF-17 | /t/ | t (antes de a, o, u; e de "e" não final) | TF-16 | pato, pata, tatu, mato, tapa, luta | **Sem "ti" e sem "te" no fim** (tia, leite): em boa parte do Brasil soam "tchi" (ABC p. 114; MOR p. 61). Ficam para TF-22 |
 | TF-18 | /b/ | b | TF-17 | boi, bala, baba, bolo, lobo, sabia, bife | Par de P: contraste p/b (MOR p. 214) |
 | TF-19 | /k/ | c antes de a, o, u | TF-18 | cuia, saco, suco, boca, bico, cabo | Só "ca, co, cu" (VT-1A p. 117, 246; AO p. 4). CE/CI ficam para TF-45; QU, para TF-40; K, para TF-48 |
-| TF-20 | /d/ | d (antes de a, o, u; e de "e" não final) | TF-19 | dado, dedo, vida, cada, dava | **Sem "di" e sem "de" no fim** (dia, tarde): ficam para TF-22. Par de T; B e D têm forma espelhada, por isso não são vizinhos (ABC p. 320–321) |
+| TF-20 | /d/ | d (antes de a, o, u; e de "e" não final) | TF-19 | dado, dedo, vida, cada, dava | **Sem "di" e sem "de" no fim** (dia, tarde): ficam para TF-22. Par de T; B e D têm forma espelhada, por isso não são vizinhos (ABC p. 334, Quadro 3; a distância na trilha é [DP]) |
 | TF-21 | /g/ | g antes de a, o, u | TF-20 | gato, gota, fogo, figo, galo | Só "ga, go, gu" (VT-1A p. 117; AO p. 10). GE/GI → TF-44; GUE/GUI → TF-42. Par de C |
 | TF-22 | "ti" e "di" (e "te", "de" no fim) | t, d antes do som /i/ | TF-21, TF-12 | tia, dia, tatu × tia, dedo × dia, leite, bate, tarde (depois de TF-33) | O Vamos Todos só traz os símbolos [ʧ] "tia" e [ʤ] "dia" numa tabela, sem lição (VT-PE p. 18); o ABC diz que [tʃ] é variante de /t/ (ABC p. 114); Morais registra a variação regional (MOR p. 61). **Lição e posição são [DP].** O app aceita as duas pronúncias (ver 03 §4) |
 
@@ -170,7 +181,9 @@ alfabetização (SOA p. 166, 336) e estão fora deste escopo.
 
 ## 6. Ligação com o que já existe no app
 
-- Hoje a leitura usa só M, L, F e vogais (região R2a; DIAG §4). Essas fases correspondem a TF-07, TF-08 e TF-10 e são mantidas.
+- A leitura começa na **Trilha dos Sons** (TF-06…TF-22, com as revisões TF-R2 e TF-R3: vogais e M, F, V, L, S, N, Z, J, P, T, B, C, D, G,
+  com O/E finais e ti/di). O Vale do M-L-F (região R2a, só M, L, F e vogais) ficou como revisão e chefe; suas fases correspondem a TF-07,
+  TF-08 e TF-10 e são mantidas. (Antes de 15/11 a leitura usava só M, L, F; DIAG §4.)
 - As fases de é/ê e ó/ô (R1-F02, R1-F03) correspondem a TF-23 e TF-24 e são mantidas; na trilha fônica passam a vir depois das oclusivas.
 - "Meu nome" (R0-F01) usa qualquer letra: é exceção permitida porque é o nome da criança ([05 §6](05-regras-de-decodificabilidade.md)).
 - O ritmo: ensino lento de letras prediz piores resultados (ABC p. 324–325); uma sequência do Vamos Todos dura cerca de uma semana

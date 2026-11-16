@@ -18,6 +18,8 @@ abaixo é o que **continua sem voz ou com voz ruim**, para a próxima recarga ou
 | Sílabas do nome da criança nas palmas | Missão do nome (R0) | Uma gravação por nome; só os 145 nomes comuns têm o nome inteiro gravado |
 | Nome da criança fora da lista de 145 nomes comuns | Todas as falas com [NOME] | A fala toca sem o nome (o nome fica escrito) |
 | "Quantos sons tem a palavra? Escuta comigo." (Sofia) | Placa dos pedacinhos de som da sondagem periódica (`Sondagem.tsx`) | Fala nova de 15/11; até ter voz, o exemplo com os sons puros (l-u-a acendendo bolinhas) mostra a ideia |
+| "Monte a palavra som por som, [NOME]. Cada peça faz um som." (Sofia) | Vale do M-L-F, "O lago da lua" (R2a-F02-C4) | Fala nova de 16/11 (revisão da metodologia): substitui "Letra por letra, [NOME]: L-U-A.", que soletrava pelo NOME da letra (regra 1). Até ter voz fica escrita; as peças tocam o som de cada letra |
+| "O macaco viu a jaca." e "O que o macaco viu?" (Sofia) | Frase de TF-19 (Trilha dos Sons) | Fala nova de 16/11: a frase antiga ("O macaco come a jaca.") usava "come" /ɔ/, valor ainda não ensinado em TF-19. A frase é para a criança LER; a voz só entra na correção e no eco |
 | Resumo do termômetro lido em voz alta | Área do adulto | Texto montado na hora (é tela de adulto) |
 
 ## 2. Com clipe, mas a auditoria pede regravação ou conferência de ouvido

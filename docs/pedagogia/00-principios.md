@@ -12,7 +12,7 @@ para ler e escrever palavras.
 |---|---|---|
 | **Fônica** | A unidade ensinada é a relação entre som (fonema) e letra (grafema). A criança lê juntando os sons da esquerda para a direita. | ABC p. 315, 317 |
 | **Explícita** | O app diz e mostra a regra ("esta letra faz o som ffff"); não espera a criança adivinhar. | ABC p. 320; VT-PE p. 30; SOA p. 119 |
-| **Estruturada** | Cada lição segue: mostrar (modelo) → fazer junto (com apoio) → fazer sozinho. | ABC p. 320; VT-PE p. 32 |
+| **Estruturada** | Cada lição segue: mostrar (modelo) → fazer junto (com apoio) → fazer sozinho. | ABC p. 320; o roteiro aplicado à lição de som é **extensão do projeto [DP]** (VT-PE p. 32 e ABC p. 306 tratam de compreensão) |
 | **Sistemática** | Há uma ordem planejada de sons e letras, e cada passo usa só o que já foi ensinado. Não é "um pedacinho de tudo". | ABC p. 319–321; VT-PE p. 10–11 |
 | **Cumulativa** | A cada som novo, os anteriores voltam. | ABC p. 510, 513 |
 
@@ -122,7 +122,7 @@ A D030 decidiu: onde discordam, **entram as duas práticas**. O quadro completo 
 
 ## 7. O plano em nove etapas da D030
 
-Estado em 2026-11-15. O estado vivo fica em [`../ESTADO-ATUAL.md`](../ESTADO-ATUAL.md).
+Estado em 2026-11-16. O estado vivo fica em [`../ESTADO-ATUAL.md`](../ESTADO-ATUAL.md).
 
 | # | Etapa | O que resolve (achado do diagnóstico) | Estado |
 |---|---|---|---|
@@ -130,10 +130,25 @@ Estado em 2026-11-15. O estado vivo fica em [`../ESTADO-ATUAL.md`](../ESTADO-ATU
 | 2 | Registro detalhado de erros | Não se guarda a opção escolhida, o tipo de erro nem o tempo (DIAG §6) | **Motor e painel entregues**: contrato `DetalheTentativa`, migração, matriz de confusão e tempo. **Mecânicas entregues** (15/11): Escolher, Ligar, Montar, Ditado, Falar, Letra, Espelho, Traçar e Palmas gravam tipo, mecânica, alvo e número da tentativa; Escolher, Ligar, Montar e Ditado gravam também respostas, distratores e tempo. O contrato ganhou (15/11) `nivelAjuda`, `ouviuDeNovo`, `posicaoCerta`, `posicaoEscolhida`, `nOpcoes` e `contexto`; falta as mecânicas gravarem |
 | 3 | Som no lugar do nome da letra | "Letra B." é o estímulo de 196 itens (DIAG §2, §8.1) | **Entregue na Trilha A–Z** (15/11): em 22 letras o estímulo é o som real, 2 vezes, nos dois sentidos (som → letra e letra → som com botões de som); o nome da letra só entra depois do acerto. H, K, W e Y ficam no comportamento antigo; R fraco, LH e NH não têm clipe. **Nenhum som foi ouvido por pessoa** |
 | 4 | Distratores, sorteio e fim do modelo permanente | Posições fixas, distratores fáceis, modelo na tela, brilho entrega a resposta (DIAG §2) | **Entregue** (15/11): posições e itens sorteados; pares confundíveis (p/b, t/d, f/v, s/z, x/j, c/g, m/n, l/r, o/u) e letras em espelho (b, d, p, q) nas revisões; correção contrastiva no 1º erro, resposta só brilha na 3ª tentativa; figura sem a letra e fora da palavra-chave; Montar com demonstração e depois sem modelo; "Bolota leu errado" e pseudopalavras por áudio; "qual som falta"; jogo "Liga o som". Limites: itens de R0 e R1 com figura ainda usam a escada antiga; pares mínimos de PALAVRAS (faca × vaca) não foram feitos |
-| 5 | Exposição fora do domínio | Letra, Espelho, Traçar e Falar contam sempre como acerto (DIAG §4) | **Entregue no motor**: só tentativa avaliada conta; concluída × dominada; "a confirmar" para dado antigo |
+| 5 | Exposição fora do domínio | Letra, Espelho, Traçar e Falar contam sempre como acerto (DIAG §4) | **Entregue no motor**: só tentativa avaliada conta; concluída × dominada; "a confirmar" para dado antigo, chefe vencido e prova-relâmpago (16/11); sílaba (montar por sílaba, "qual sílaba falta") é exposição; critério 5 de 06 §2 (palavras e tipos de atividade diferentes) desde 16/11 |
 | 6 | Trilha fônica | Ordem alfabética; 23 letras sem prática de leitura (DIAG §4, §8.9) | **Blocos 1–3 entregues** (15/11): TF-01…TF-22 + revisões TF-R2 e TF-R3 (`conteudo/src/fases/tf.ts`), depois da Trilha A–Z; lição de 7–8 cenas (revisão, som novo, som → letra, síntese, leitura com palavras inventadas conferidas, caixas de sons, desafio); domínio pelo motor. Faltam TF-23…TF-53 |
 | 7 | Verificador de decodificabilidade em tudo | O verificador não vale para o Alfabeto e só olha letras (DIAG §4) | **Entregue** (15/11): `decodificabilidade.ts` + banco com pronúncia anotada (`fases/tf-banco.ts`): valores por unidade, erro × aviso, frases, textos, palavras inventadas, todas as trilhas, relatório por fase (`app/docs/relatorio-decodificabilidade.md`); falha o build. A lista de palavras frequentes é [DP] e pede aprovação |
 | 8 | Frases, textos, fluência e compreensão | Não existem (DIAG §7) | **Parcial** (15/11): frases decodificáveis com pergunta literal por figura (TF-10 em diante) e leitura em eco nas revisões (autorrelato). Faltam textos, fluência e perguntas de dedução |
 | 9 | Sondagem periódica e reforço dirigido | Sondagem única; sem volta ao pré-requisito (DIAG §6) | **Entregue o essencial** (15/11): tela própria de sondagem em 5 placas (sons das letras, leitura de palavras, pseudopalavras conferidas por escolha entre 3 leituras ouvidas, quantos sons, ditado), montada só com letras e valores sonoros de fases concluídas (`motor/src/sondagem-itens.ts`, testado); sem dica, sem nota e sem "errado" para a criança; a primeira sondagem continua a Missão das Placas (Trilha Expressa). Painel com sondagens lado a lado, queda entre sondagens (alerta + "voltar uma fase") e o que a criança escreveu no ditado. **Treino rápido com a Sofia**: a prática recomendada vira rodada jogável (par confundido + volta ao pré-requisito), registrada como avaliada no contexto "reforço", 1 vez por dia (`reforco-treino.ts`). Selos de habilidade só com resposta conferida e sem ajuda; selos de participação marcados à parte; nada já ganho é tirado. Ajuda graduada, "ouviu de novo", posição da resposta e chute no contrato e no painel. **Falta**: as mecânicas gravarem `nivelAjuda`, `ouviuDeNovo`, `posicaoCerta`, `posicaoEscolhida`, `nOpcoes` e `contexto` (o motor deduz o que dá); ditado de frases, leitura cronometrada e compreensão na sondagem; voz para a instrução de "quantos sons"; números (queda 25 pontos, chute 1,2 s) sem calibragem |
+
+**Revisão independente de 16/11 (metodologia, PDFs e código) — o que foi corrigido:**
+- Pronúncia anotada: "veja" /ˈvɛʒɐ/, "come" /ˈkɔmi/ (E/O abertos, só depois de TF-24) e "fofa" /ˈfofɐ/; TF-15 passou a usar "seja";
+  a frase de TF-19 virou "O macaco viu a jaca.". Todas as anotações de E/O tônicos foram revistas (duvidosas listadas no `ESTADO-ATUAL.md` §0).
+- Sílaba nunca conta como domínio de letra ou de leitura (regra 6): "qual sílaba falta" e montar por sílaba gravam a habilidade `silaba`
+  como exposição; o Vale do M-L-F ganhou a versão letra por letra; o verificador passou a cobrir essas atividades.
+- Domínio: chefe vencido e prova-relâmpago liberam o avanço, mas deixam as habilidades "a confirmar" (sem subir a firmeza nem dar o
+  marco) até o critério de 06 §2; autorrelato nunca conta numa prova; critério 5 de 06 §2 implementado (palavras diferentes e mais de um
+  tipo de atividade, quando o conteúdo oferece).
+- Pares mínimos: cada par grava a habilidade do seu contraste (mala/bala = M × B; dado/dedo = vogal).
+- Verificador da Trilha A–Z: vale só o som das letras já vistas na jornada (05 §6.5), não os 19 sons desde a letra A.
+- Tipos de erro: 12 de 12 reconhecidos quando os dados permitem (E-FIM, E-OMI, E-ACR, E-ORD, E-CTX, E-IRR, E-NOM e E-CHU somados aos
+  4 que havia), no painel do adulto.
+- Sondagem de entrada também para 4–5 anos (só escuta, som inicial e letras); toda placa com 3 opções.
+- Documentos: citações corrigidas (ABC p. 334 Quadro 3; Soares p. 146; MP p. 88 sobre o R; roteiro "eu faço…" como extensão do projeto).
 
 Pendências que dependem do dono (D030): validação de ouvido dos sons puros, de preferência por fonoaudióloga; créditos de voz para as falas novas.

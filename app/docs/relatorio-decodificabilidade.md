@@ -1,6 +1,6 @@
 # Relatório de decodificabilidade (gerado)
 
-Gerado por `scripts/relatorio-decodificabilidade.ts`. 301 leituras e escritas conferidas em 65 fases · **0 erros** · 20 com aviso.
+Gerado por `scripts/relatorio-decodificabilidade.ts`. 325 leituras e escritas conferidas em 65 fases · **0 erros** · 23 com aviso.
 Erro = valor sonoro ainda não ensinado na unidade da fase (o teste falha). Aviso = A5 (vogal nasalizada pela consoante seguinte), vogal átona que muda na fala ou pronúncia regional (TI/DI).
 
 ### AL-A · Letra A
@@ -280,6 +280,11 @@ Sem leitura nem escrita sozinha nesta fase.
 
 | Cena | O quê | Texto | Resultado |
 |---|---|---|---|
+| TF-12-C3r | escrita | OVO | ok |
+| TF-12-C3r | escrita | FOFO | ok |
+| TF-12-C3r | escrita | ELE | ok |
+| TF-12-C3r | escrita | VALE | ok |
+| TF-12-C3r | escrita | MOFO | ok |
 | TF-12-C3s | palavra | OVO | ok |
 | TF-12-C3s | palavra | MOFO | ok |
 | TF-12-C3s | palavra | FIO | ok |
@@ -337,15 +342,15 @@ Sem leitura nem escrita sozinha nesta fase.
 | Cena | O quê | Texto | Resultado |
 |---|---|---|---|
 | TF-15-C3s | palavra | SUJO | ok |
-| TF-15-C3s | palavra | VEJA | ok |
+| TF-15-C3s | palavra | SEJA | ok |
 | TF-15-C3s | palavra | JAULA | ok |
 | TF-15-C4b | palavra | SUJO | ok |
-| TF-15-C4b | palavra | VEJA | ok |
+| TF-15-C4b | palavra | SEJA | ok |
 | TF-15-C4b | palavra | JAULA | ok |
 | TF-15-C4b | pseudo | JUFA | ok |
 | TF-15-C4b | pseudo | JALI | ok |
 | TF-15-C4c | escrita | SUJO | ok |
-| TF-15-C4c | escrita | VEJA | ok |
+| TF-15-C4c | escrita | SEJA | ok |
 | TF-15-C5f | frase | A mula suja sai. | ok |
 
 ### TF-R2 · Revisão: sons que esticam (até TF-15)
@@ -440,7 +445,7 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-19-C4c | escrita | VACA | ok |
 | TF-19-C4c | escrita | SUCO | ok |
 | TF-19-C4c | escrita | BOCA | ok |
-| TF-19-C5f | frase | O macaco come a jaca. | ok, com aviso: "come": vogal nasalizada pela consoante seguinte (A5) |
+| TF-19-C5f | frase | O macaco viu a jaca. | ok |
 
 ### TF-20 · O som /d/ (até TF-20)
 
@@ -481,6 +486,10 @@ Sem leitura nem escrita sozinha nesta fase.
 
 | Cena | O quê | Texto | Resultado |
 |---|---|---|---|
+| TF-22-C3r | escrita | TIA | ok, com aviso: "tia": ti-di varia de região (todas as pronúncias valem) |
+| TF-22-C3r | escrita | DIA | ok, com aviso: "dia": ti-di varia de região (todas as pronúncias valem) |
+| TF-22-C3r | escrita | TOMATE | ok, com aviso: "tomate": ti-di varia de região (todas as pronúncias valem) |
+| TF-22-C3r | escrita | BATE | ok, com aviso: "bate": ti-di varia de região (todas as pronúncias valem) |
 | TF-22-C3s | palavra | TIA | ok, com aviso: "tia": ti-di varia de região (todas as pronúncias valem) |
 | TF-22-C3s | palavra | DIA | ok, com aviso: "dia": ti-di varia de região (todas as pronúncias valem) |
 | TF-22-C3s | palavra | TOMATE | ok, com aviso: "tomate": ti-di varia de região (todas as pronúncias valem) |
@@ -555,7 +564,18 @@ Sem leitura nem escrita sozinha nesta fase.
 
 ### R2a-F03 · F
 
-Sem leitura nem escrita sozinha nesta fase.
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| R2a-F03-C4 | escrita | FILA | ok |
+| R2a-F03-C4 | escrita | FALA | ok |
+| R2a-F03-C4 | escrita | FOFA | ok |
+| R2a-F03-C5 | escrita | FALA | ok |
+| R2a-F03-C5 | escrita | FOFA | ok |
+| R2a-F03-C5 | escrita | FILA | ok |
+| R2a-F03-C5b | escrita | FALA | ok |
+| R2a-F03-C5b | escrita | FILA | ok |
+| R2a-F03-C5b | escrita | MALA | ok |
+| R2a-F03-C5b | escrita | MULA | ok |
 
 ### R2a-F04 · Juntar sílabas: primeiras palavras
 
@@ -567,6 +587,11 @@ Sem leitura nem escrita sozinha nesta fase.
 | R2a-F04-C4 | palavra | FOFA | ok |
 | R2a-F04-C4 | palavra | MULA | ok |
 | R2a-F04-C4 | palavra | LULA | ok |
+| R2a-F04-C4b | escrita | MOLA | ok |
+| R2a-F04-C4b | escrita | FILA | ok |
+| R2a-F04-C4c | escrita | MOLA | ok |
+| R2a-F04-C4c | escrita | FILA | ok |
+| R2a-F04-C4c | escrita | LUA | ok |
 | R2a-F04-C5 | palavra | LUA | ok |
 | R2a-F04-C5 | palavra | FALA | ok |
 | R2a-F04-C5 | pseudo | LIFU | ok |
