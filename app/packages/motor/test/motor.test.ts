@@ -138,13 +138,13 @@ describe('nível, títulos neutros e portões (D019, D022)', () => {
     expect(custoNivel(8)).toBe(8);
     expect(custoNivel(200)).toBe(24);
   });
-  it('nível 1 após a primeira missão; portão da Festa do Alfabeto segura o título', () => {
+  it('nível 1 após a primeira missão; portão da revisão dos sons que esticam (TF-R2) segura o título', () => {
     expect(calcularNivel(50, false, new Set()).nivel).toBe(0);
     const semFesta = calcularNivel(DESAFIOS_NIVEL_1 + 2 + 3 + 4 + 5 + 6 + 12, true, new Set(['AL-A']));
     expect(semFesta.nivel).toBe(6);
     expect(semFesta.rotulo).toMatch(/^Primeiros Sons III ★2$/);
-    expect(semFesta.portao?.nome).toBe('Festa do Alfabeto');
-    const comFesta = calcularNivel(DESAFIOS_NIVEL_1 + 2 + 3 + 4 + 5 + 6 + 6, true, new Set(['AL-A', 'AL-FESTA']));
+    expect(semFesta.portao?.nome).toBe('Revisão dos sons que esticam');
+    const comFesta = calcularNivel(DESAFIOS_NIVEL_1 + 2 + 3 + 4 + 5 + 6 + 6, true, new Set(['AL-A', 'TF-R2']));
     expect(comFesta.nivel).toBe(7);
     expect(comFesta.titulo).toBe('Caça às Sílabas');
   });

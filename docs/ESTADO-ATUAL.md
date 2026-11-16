@@ -154,8 +154,8 @@ em `motor/src/biblioteca.ts`, telas `Biblioteca.tsx` e `BrincarSons.tsx`, botõe
 - **Verificado (16/11):** typecheck, lint, 242 testes, relatório de decodificabilidade (323 itens, 0 erros, 21 avisos) e **E2E completo
   sem flags** (build próprio, 177 checagens, "E2E OK"; a jornada inteira na ordem alternada, Festa com troféu, nível inicial, Trilha dos
   Sons e Cantinho). **Não verificado:** capturas `--capturas` (as do trecho de revisão A–E foram retiradas) e uso real por criança.
-- **Pergunta ao dono:** o portão do nível 7 é a Festa do Alfabeto (`motor/src/nivel.ts`); com a ordem nova ela fica bem mais longe
-  (fase 55, antes 31), e a criança passa mais tempo no nível 6 com estrelas. Manter, ou mudar o portão para o fim de um bloco?
+- **Decidido (dono: opção B):** o portão do nível 7 passou da Festa do Alfabeto para a TF-R2 "Revisão: sons que esticam"
+  (fase 30), perto de onde a Festa ficava antes da D031 (`motor/src/nivel.ts`; complemento na D031).
 
 **Próximos passos, em ordem:**
 1. **Trilha fônica, blocos 4 a 8** (TF-23…TF-53: abertas e nasais, R e H, dígrafos, regras de posição, encontros), textos

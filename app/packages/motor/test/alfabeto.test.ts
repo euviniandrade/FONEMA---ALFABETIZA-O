@@ -95,7 +95,8 @@ describe('Trilha do Alfabeto no motor (D027)', () => {
     const ate = FASES.findIndex((f) => f.id === 'AL-FESTA');
     for (const f of FASES.slice(0, ate)) p = concluirFase(p, f.id, T0);
     expect(p.faseAtual).toBe('AL-FESTA');
-    expect(calcularNivel(200, true, fasesConcluidas(p)).portao?.nome).toBe('Festa do Alfabeto');
+    // portão do nível 7 = TF-R2 (escolha do dono após a D031): já vencido antes da Festa
+    expect(calcularNivel(200, true, fasesConcluidas(p)).portao?.nome).not.toBe('Revisão dos sons que esticam');
     const r = jogar(p, 'AL-FESTA');
     expect(r.relatorio.faseConcluida).toBe(true);
     expect(r.relatorio.regiaoConcluida).toBe('Trilha do Alfabeto');

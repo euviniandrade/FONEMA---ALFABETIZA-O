@@ -21,7 +21,9 @@ export const TITULOS = [
 
 /** Portões: para CHEGAR ao nível N é preciso ter vencido este chefe. */
 export const PORTOES: Record<number, { fase: string; nome: string }> = {
-  7: { fase: 'AL-FESTA', nome: 'Festa do Alfabeto' },
+  // D031 + escolha do dono (opção B): com a ordem alternada a Festa ficou na fase 54; o portão do nível 7 passa à
+  // primeira grande revisão de leitura (fim do bloco dos sons que esticam), perto de onde a Festa ficava antes.
+  7: { fase: 'TF-R2', nome: 'Revisão dos sons que esticam' },
   16: { fase: 'R2a-F05', nome: 'Cachoeira das Sílabas' },
   25: { fase: 'R3-F10', nome: 'Ventania que Embaralha' },
   34: { fase: 'R6-F08', nome: 'Feira do Cordel' },

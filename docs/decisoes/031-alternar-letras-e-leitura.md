@@ -21,3 +21,9 @@ depois leitura, depois mais letras (B)?" Resposta do dono: **"B"**.
 
 ## Substitui
 - D027/D030 §4 quanto à ordem "Alfabeto inteiro → Trilha dos Sons" na jornada. O resto de D030 continua valendo.
+
+## Complemento (16/11/2026): portão do nível 7
+Com a ordem alternada, a Festa do Alfabeto passou da fase 31 para a fase 54, e a criança ficaria muito tempo presa no nível 6.
+Pergunta ao dono: manter a Festa como portão (A) ou trocar por uma fase mais cedo (B)? Resposta do dono: **"opção B"**.
+O portão do nível 7 passa a ser a **TF-R2 "Revisão: sons que esticam"** (fase 30, a primeira grande revisão de leitura, quase no
+mesmo ponto em que a Festa ficava). A Festa continua dando o troféu "Alfabeto Completo" e o termômetro (`motor/src/nivel.ts`).
