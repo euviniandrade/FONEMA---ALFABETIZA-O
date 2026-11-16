@@ -22,6 +22,8 @@ export const TIPO_POR_MECANICA: Partial<Record<string, TipoTentativa>> = {
   espelho: 'exposicao',
   tracar: 'exposicao',
   pausa: 'exposicao',
+  // som novo da Trilha dos Sons: faz de conta + som + letra, sem resposta conferida
+  somNovo: 'exposicao',
   falar: 'autorrelato'
 };
 

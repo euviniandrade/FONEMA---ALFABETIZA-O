@@ -103,6 +103,11 @@ export function tiposDeAtividadeDoConteudo(habilidade: string): Set<string> {
 }
 
 const PALAVRA = new Set(['palavra', 'pseudopalavra']);
+/** Formatos do Escolher em que a criança LÊ a palavra (os de figura por som inicial não são leitura de palavra). */
+const FORMATOS_DE_LEITURA = new Set(['ler-figura', 'ouvir-leituras', 'fonema-falta']);
+/** A tentativa é leitura ou escrita de PALAVRA (onde o critério de palavras diferentes vale)? */
+const ehPalavraLidaOuEscrita = (t: Tentativa) =>
+  t.alvo !== undefined && PALAVRA.has(categoriaDoAlvo(t)) && (t.mecanica !== 'escolher' || FORMATOS_DE_LEITURA.has(t.formato ?? '') || !!t.pseudo);
 
 export interface AvaliacaoDominio {
   dominado: boolean;
@@ -150,8 +155,8 @@ export function avaliarDominio(h: EstadoHabilidade | undefined, cfg: ConfigPlata
   const pseudoCertas = ts.filter((t) => t.pseudo && t.acertou && !t.comAjuda).length;
   const certas = ts.filter(acertoSozinho);
   // 5a. palavras diferentes (só quando a habilidade é medida em palavras com alvo gravado)
-  const dePalavra = ts.filter((t) => t.alvo !== undefined && PALAVRA.has(categoriaDoAlvo(t)));
-  const itensDiferentes = new Set(certas.filter((t) => t.alvo !== undefined && PALAVRA.has(categoriaDoAlvo(t))).map((t) => t.alvo!.toUpperCase())).size;
+  const dePalavra = ts.filter(ehPalavraLidaOuEscrita);
+  const itensDiferentes = new Set(certas.filter(ehPalavraLidaOuEscrita).map((t) => t.alvo!.toUpperCase())).size;
   const itensMin = cfg.itensDiferentesMin ?? 3;
   const faltaItens = dePalavra.length > 0 && itensDiferentes < itensMin;
   // 5b. tipos de atividade (só quando a mecânica foi gravada e o conteúdo oferece mais de um tipo)
