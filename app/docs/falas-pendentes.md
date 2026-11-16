@@ -85,3 +85,6 @@ O que continua sem voz própria ou pede escuta humana:
   valem (docs/pedagogia/03 §4), mas só uma está gravada.
 - **Sons emendados ("mmmaaalll…")**: não são voz da dupla; o app emenda os clipes de som de `public/audio/sons` (ou as
   gravações do Estúdio). Os sons de estouro, L, V e J continuam "duvidosos" (ninguém ouviu).
+
+**Conferir de ouvido (16/11):** a leitura "Voa." (par mínimo zoa × soa × voa, TF-14) foi transcrita como "Vou, ah?" e a auditoria
+aceitou; se soar como "vou", regravar (ajustes.json).

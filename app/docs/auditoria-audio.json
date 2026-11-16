@@ -46587,6 +46587,40 @@
   "gravidade": "grave"
  },
  {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "Ei! Ai! Ui! Eu! Oi! Oi, oi!",
+  "arquivo": "falas/sofia-cawv55-m1.mp3",
+  "esperado": "Ei! Ai! Ui! Eu! Oi! Oi, oi!",
+  "sinal": {
+   "dur": 1.951,
+   "silencio_ini_ms": 95,
+   "silencio_fim_ms": 130,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -4.7,
+   "rms_fala_db": -17.1,
+   "lufs": -19.2,
+   "ms_por_caractere": 123,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 25,
+   "subida_ini_ms": 134,
+   "problemas": [],
+   "desvio_volume_db": 0.2
+  },
+  "fonte": "falas/sofia-cawv55.mp3",
+  "sha": "3c3f0c8998337e56",
+  "fonte_problemas": [],
+  "ouvido": "Ei, ai, ui, eu, oi, oi, oi",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
+ },
+ {
   "tipo": "nome",
   "voz": "sofia",
   "chave": "helena",

@@ -29,6 +29,27 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   outros sons delas!" e as leituras "voa" e "cada"); o texto corrido foi refeito uma vez porque o transcritor ouviu "oi" no
   lugar de "ui" na 1ª ordem ("Ui! Ai!"); a fala do Tales voltou a usar o clipe "Ai! Ui!", já auditado. Ninguém ouviu os clipes novos.
 
+**Barra da vila, lâmpadas das Palmas e regra 6 (16/11, tarde; NÃO publicado ainda):**
+- **Barra da vila** (`web/src/telas/crianca/DocaVila.tsx`, `estilos-doca.css`): eram 8–9 botões (no celular de 25 a 48 px de largura).
+  Agora são 5 portas grandes: **Missão** (larga, em cima no celular), **Leitura** (livrinho com a capa de uma história), **Brincar**
+  (pandeiro 3D), **Lojinha** (ou "Meu boneco" quando a Lojinha está fora da vila) e **Mais**. Celular 390×844: 82×92 px cada; PC: 112×112.
+  O **Mais** abre um painel grande (folha que sobe no celular, 2 colunas; cartão no PC, 3 colunas) com Alfabeto, Sons, Álbum, Ilhas,
+  Meu boneco, Passear 3D e o **Treino rápido** quando houver (o "Mais" ganha o rostinho da Sofia piscando). Nada saiu (regra 7). Toque
+  com "toc" (`efeitos.toque`); não há fala gravada para os rótulos. Fecha no X, tocando fora ou com Esc. `data-testid` mantidos
+  (`ir-missao`, `ir-leitura`, `ir-brincar`, `ir-treino`); novos `ir-mais`, `painel-mais`, `fechar-mais`, `ir-lojinha`. E2E
+  `capturas-etapa9.mjs` abre o "Mais" antes do Treino. Capturas antes/depois: `app/docs/capturas/v9-barra-*` e `v9-palmas-lampadas*`.
+- **Palmas:** a Sofia diz "olha as lâmpadas" e a tela mostrava formas que pareciam casinhas. Agora é um **varal de lâmpadas** de verdade
+  (bocal em cima, bulbo de vidro com filamento, fio caído entre elas; a palma acende o bulbo e mostra o pedacinho). Na amarelinha
+  (fase antiga R0-F03, hoje fora da jornada) cada casa ganhou a sua lâmpada em cima. Nenhuma voz gerada. As outras falas da mecânica
+  ("Cada palma acendeu uma lâmpada!", "Olha eu batendo devagar.") combinam com a tela; na amarelinha a comemoração padrão diz "palma"
+  enquanto o botão diz "Pular" (pequeno; fica como está).
+- **Regra 6:** R2a-F04 virou "**Juntar sons**: primeiras palavras" e a cena "Ponte das Sílabas" virou "Ponte das **Palavras**" (IDs
+  iguais); na família, "junta consoante e vogal em sílabas" virou "junta o som da consoante com o som da vogal (MA, LU, FI)". A entrada
+  falada da fase (o clipe dizia "Juntar sílabas…") passou a usar a acolhida já gravada. Falas gravadas que ainda dizem "sílaba" estão
+  em `app/docs/falas-pendentes.md` §1b. **Sugestões ao dono (D022, não mudadas):** "Caça às Sílabas" (`motor/src/nivel.ts`,
+  `bancada-selos.tsx`, Lupa da Lojinha), "Cachoeira das Sílabas" (chefe R2a-F05, título do nível 16, selos), selos "Bate-Sílaba",
+  "Tábua de Sílabas" e "Montar sílabas na tábua" — nomes que podem vender a sílaba como peça de leitura.
+
 **Trava da voz, celular, cópia dos dados e textos (16/11, tarde; NÃO publicado ainda):**
 - **Trava da voz (grave):** Trilha dos Sons → Lojinha (fala de boas-vindas tocando) → Letra A deixava a voz muda e o "Já conheci!"
   preso para sempre (o clipe acabava sem o navegador avisar o fim e toda fala seguinte esperava por ele). Agora: a espera de cada clipe
@@ -48,8 +69,7 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   "juntando letras em sílabas"; vila com estrela no marcador (combina com "Toque na estrela"); fala do R1-F06 que citava botões que
   não existem virou "Agora é a sua vez, [NOME]!" (clipe já existente); painel da família sem "0%" sem dados e sem citação bibliográfica
   na tela dos pais (a fonte fica no código). Espelho do Som busca o three.js só no caminho que existe (sem 404).
-- **Pendente:** a fala das Palmas "olha as lâmpadas" no estilo amarelinha (lá são casas; pede voz nova); a fase antiga
-  "Juntar sílabas: primeiras palavras" (R2a) tem nome de método silábico no título (rever com a regra 6).
+- ~~Pendente: fala das Palmas e título silábico do R2a~~ → resolvido no bloco "Barra da vila, lâmpadas e regra 6" acima.
 
 **No ar:** https://fonema.vercel.app = commit `841c099` (publicado em 15/11, 21h50 UTC). Verificado antes de publicar: typecheck, lint,
 144 testes, build e E2E completo (na 2ª rodada passou inclusive o troféu da Festa do Alfabeto; a 1ª rodada falhou só nesse ponto,
