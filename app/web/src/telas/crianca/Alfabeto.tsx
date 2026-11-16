@@ -60,7 +60,7 @@ export function TrilhaAlfabeto({ criancaId }: { criancaId: string }) {
             <img className="alfabeto-dupla" src={asset('dupla/dupla-corpo.webp')} alt="Sofia e Tales" />
             <div className="alfabeto-cab-texto">
               <h1 className="t">Trilha do Alfabeto</h1>
-              <p className="pergunta-guia">Cada letra tem o seu som. Uma letra por vez, de A a Z!</p>
+              <p className="pergunta-guia">Cada letra tem o seu som. Uma letra por vez!</p>
               <div className="alfabeto-progresso" role="progressbar" aria-valuemin={0} aria-valuemax={26} aria-valuenow={letrasFeitas} aria-label={`${letrasFeitas} de 26 letras conhecidas`}>
                 <div className="alfabeto-barra"><i style={{ width: `${(letrasFeitas / 26) * 100}%` }} /></div>
                 <b data-testid="letras-feitas">{letrasFeitas} de 26 letras</b>

@@ -598,7 +598,7 @@ export function Configuracoes({ area = 'familia' }: { area?: AreaId }) {
           </fieldset>
 
           <fieldset className="campo config-grupo" data-testid="config-alfabeto"><legend><Icone nome="caderno" />Trilha do Alfabeto</legend>
-            <p className="nota-mic">A jornada começa pelo alfabeto: cada letra e o som de cada letra, de A a Z. Depois vêm as sílabas, as palavras, o nome e as frases.</p>
+            <p className="nota-mic">A jornada começa pela letra A: a criança conhece uma letra e logo aprende o som dela e lê palavras com ela; depois vem a próxima letra. Depois vêm os outros sons das vogais, mais palavras, o nome e as frases.</p>
             <label className="opcao-linha"><input type="checkbox" data-testid="primeiras-palavrinhas" checked={configBruta.alfabeto?.primeirasPalavrinhas ?? true} onChange={(e) => set({ alfabeto: { primeirasPalavrinhas: e.target.checked } })} /> Primeiras palavrinhas: juntar as letras já conhecidas e ler (BABÁ depois do B, BEBÊ depois do E…)</label>
             <p className="nota-mic" data-testid="aviso-sons-puros"><b>Sobre os sons das letras:</b> a criança ouve primeiro o som da letra ("mmm") e depois a dupla diz "M, de macaco". Os sons foram gerados por computador e conferidos por medidas; alguns ({sonsPurosPendentes().length} consoantes: {sonsPurosPendentes().map((l) => l.letra).join(', ')}) ficam melhores gravados por quem ensina. Em casa, fale o som (e não o nome da letra): "mmm", e não "eme".</p>
             <div className="linha-botoes"><button className="btn" onClick={() => navegar(`${area}/sons`)} data-testid="abrir-estudio"><Icone nome="microfone" />Gravar os sons das letras</button></div>
