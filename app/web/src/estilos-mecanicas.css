@@ -72,3 +72,12 @@ html.contraste .liga-cartao.sel,html.contraste .opcao.opcao-som.sel{background:#
   .mec-letra .letra-dupla .letra-bloco b{font-size:min(22vw,96px)}
   .mec-espelho .espelho-palco{gap:10px}
 }
+/* Palmas: o "Pronto!" também fica preso no rodapé (o botão grande de bater palma fica junto, para não precisar rolar) */
+@media (max-width:700px){
+  .tela-sessao .cartao.atividade .palmas-acoes{
+    position:sticky;bottom:0;z-index:20;margin:12px -12px 0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));row-gap:8px;
+    background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,.97) 30%);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    border-radius:20px 20px 0 0
+  }
+  .tela-sessao .cartao.atividade .palmas-acoes .botao-palma{min-height:72px}
+}
