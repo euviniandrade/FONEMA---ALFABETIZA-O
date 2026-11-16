@@ -50,6 +50,8 @@ export const HABILIDADES: Habilidade[] = [
   { id: 'par-minimo-p-b', regiao: 'TF', nome: 'Pares mínimos P × B', paraFamilia: 'ouve e lê a diferença entre P e B (pato, bato)', exigePseudo: false },
   { id: 'par-minimo-t-d', regiao: 'TF', nome: 'Pares mínimos T × D', paraFamilia: 'ouve e lê a diferença entre T e D (nata, nada)', exigePseudo: false },
   { id: 'par-minimo-k-g', regiao: 'TF', nome: 'Pares mínimos C × G', paraFamilia: 'ouve e lê a diferença entre C e G (calo, galo)', exigePseudo: false },
+  { id: 'par-minimo-m-b', regiao: 'TF', nome: 'Pares mínimos M × B (escuta)', paraFamilia: 'ouve a diferença entre M e B (mala, bala)', exigePseudo: false },
+  { id: 'par-minimo-vogal', regiao: 'TF', nome: 'Pares mínimos de vogal (escuta)', paraFamilia: 'ouve a diferença entre vogais (dado, dedo)', exigePseudo: false },
   { id: 'leitura-frase', regiao: 'TF', nome: 'Ler uma frase curta', paraFamilia: 'lê uma frase curta sem ajuda', exigePseudo: false },
   { id: 'compreensao-lida', regiao: 'TF', nome: 'Entender o que leu', paraFamilia: 'responde a uma pergunta sobre a frase que leu', exigePseudo: false }
 ];

@@ -22,7 +22,7 @@
  */
 import type { AtividadeEscolher, Cena, Fala, Fase, ItemEscolha, ItemFrase, ItemParMinimo, ItemTroca, Opcao, PalavraComSons } from '../tipos.ts';
 import { LETRA_POR_ID, falaChave, type LetraAlfabeto } from '../alfabeto.ts';
-import { FALAS_FONICAS, parConfuso } from '../sons.ts';
+import { FALAS_FONICAS, habilidadeDoPar, parConfuso } from '../sons.ts';
 import { analisar, numeroDaUnidade } from '../decodificabilidade.ts';
 import { BANCO } from './tf-banco.ts';
 import { falaApoio, figurasDoSom } from './alfabeto.ts';
@@ -137,8 +137,9 @@ interface Licao {
   regra?: { mostrar: string; palavra: string; certa: string; outras: string[]; som: string }[];
 }
 
-const par = (modo: 'ouvir' | 'ler', alvo: string, outra: string, sons: [string, string], habilidade?: string): ItemParMinimo => ({
-  modo, alvo, outra, sons, ...(modo === 'ouvir' ? { figuraAlvo: alvo, figuraOutra: outra } : {}), ...(habilidade ? { habilidade } : {})
+/** Item de par mínimo: a habilidade vem SEMPRE do contraste (`habilidadeDoPar`), nunca da leitura em geral. */
+const par = (modo: 'ouvir' | 'ler', alvo: string, outra: string, sons: [string, string]): ItemParMinimo => ({
+  modo, alvo, outra, sons, ...(modo === 'ouvir' ? { figuraAlvo: alvo, figuraOutra: outra } : {}), habilidade: habilidadeDoPar(sons)
 });
 const troca = (acao: 'trocar' | 'acrescentar', de: string, para: string, posicao: number, letra: string, letras: string[], leituras: string[]): ItemTroca => ({
   acao, de: de.toUpperCase(), para: para.toUpperCase(), posicao, letra, som: LETRA_POR_ID[letra].fonema!, letras, leituras
@@ -179,7 +180,7 @@ export const LICOES_TF: Licao[] = [
     leitura: [{ palavra: 'uva', outras: ['ovo', 'ema'] }, { palavra: 'viu', outras: ['vai', 'via'] }, { palavra: 'vai', outras: ['viu', 'ai'] }],
     pseudo: [['vafi', 'fafi', 'vavi'], ['muva', 'mufa', 'uva']],
     caixas: ['uva', 'vai'],
-    desafio: { pares: [par('ouvir', 'faca', 'vaca', ['f', 'v'], 'par-minimo-f-v'), par('ouvir', 'vaca', 'faca', ['v', 'f'], 'par-minimo-f-v'), par('ler', 'via', 'fia', ['v', 'f'], 'par-minimo-f-v'), par('ler', 'fia', 'via', ['f', 'v'], 'par-minimo-f-v')] }
+    desafio: { pares: [par('ouvir', 'faca', 'vaca', ['f', 'v']), par('ouvir', 'vaca', 'faca', ['v', 'f']), par('ler', 'via', 'fia', ['v', 'f']), par('ler', 'fia', 'via', ['f', 'v'])] }
   },
   {
     unidade: 'TF-10', tipo: 'consoante', bloco: 2, letra: 'L', rotulo: 'l', titulo: 'O som /l/', objetivo: 'Ligar o som /l/ à letra L, ler palavras e a primeira frase',
@@ -224,7 +225,7 @@ export const LICOES_TF: Licao[] = [
     leitura: [{ palavra: 'zoa', outras: ['soa', 'zua'] }, { palavra: 'vazio', outras: ['vazia', 'fazia'] }, { palavra: 'fazia', outras: ['vazia', 'fazio'] }],
     pseudo: [['zufa', 'sufa', 'zafa'], ['zami', 'sami', 'zama']],
     caixas: ['zoa', 'zelo'],
-    desafio: { pares: [par('ler', 'selo', 'zelo', ['s', 'z'], 'par-minimo-s-z'), par('ler', 'zelo', 'selo', ['z', 's'], 'par-minimo-s-z'), par('ler', 'zoa', 'soa', ['z', 's'], 'par-minimo-s-z'), par('ler', 'soa', 'zoa', ['s', 'z'], 'par-minimo-s-z')] }
+    desafio: { pares: [par('ler', 'selo', 'zelo', ['s', 'z']), par('ler', 'zelo', 'selo', ['z', 's']), par('ler', 'zoa', 'soa', ['z', 's']), par('ler', 'soa', 'zoa', ['s', 'z'])] }
   },
   {
     unidade: 'TF-15', tipo: 'consoante', bloco: 2, letra: 'J', rotulo: 'j', titulo: 'O som /j/', objetivo: 'Ligar o som /j/ à letra J',
@@ -241,7 +242,7 @@ export const LICOES_TF: Licao[] = [
     pseudo: [['fami', 'mafi', 'fama'], ['zufa', 'sufa', 'zafa']],
     ditado: ['LUA', 'MALA', 'OVO', 'NAVE'],
     desafio: {
-      pares: [par('ouvir', 'faca', 'vaca', ['f', 'v'], 'par-minimo-f-v'), par('ler', 'selo', 'zelo', ['s', 'z'], 'par-minimo-s-z'), par('ler', 'via', 'fia', ['v', 'f'], 'par-minimo-f-v')],
+      pares: [par('ouvir', 'faca', 'vaca', ['f', 'v']), par('ler', 'selo', 'zelo', ['s', 'z']), par('ler', 'via', 'fia', ['v', 'f'])],
       trocas: [troca('trocar', 'lua', 'sua', 0, 'S', ['S', 'Z', 'M'], ['sua', 'lua', 'zua']), troca('trocar', 'sua', 'nua', 0, 'N', ['N', 'M', 'L'], ['nua', 'sua', 'mua'])],
       frase: frase('A mula viu a uva.', 'O que a mula viu?', 'uva', ['uva', 'lua', 'ovo']), eco: true
     }
@@ -272,7 +273,7 @@ export const LICOES_TF: Licao[] = [
     pseudo: [['bufi', 'pufi', 'bupi'], ['labu', 'lapu', 'labi']],
     caixas: ['boi', 'bolo', 'bala'],
     desafio: {
-      pares: [par('ouvir', 'mala', 'bala', ['m', 'b']), par('ler', 'pato', 'bato', ['p', 'b'], 'par-minimo-p-b'), par('ler', 'bato', 'pato', ['b', 'p'], 'par-minimo-p-b'), par('ler', 'bule', 'pule', ['b', 'p'], 'par-minimo-p-b'), par('ler', 'pata', 'bata', ['p', 'b'], 'par-minimo-p-b')],
+      pares: [par('ouvir', 'mala', 'bala', ['m', 'b']), par('ler', 'pato', 'bato', ['p', 'b']), par('ler', 'bato', 'pato', ['b', 'p']), par('ler', 'bule', 'pule', ['b', 'p']), par('ler', 'pata', 'bata', ['p', 'b'])],
       trocas: [troca('acrescentar', 'oi', 'boi', 0, 'B', ['B', 'P', 'D'], ['boi', 'oi', 'poi'])]
     }
   },
@@ -284,7 +285,7 @@ export const LICOES_TF: Licao[] = [
     caixas: ['vaca', 'suco', 'boca'],
     desafio: {
       frase: frase('O macaco viu a jaca.', 'O que o macaco viu?', 'jaca', ['jaca', 'uva', 'faca']),
-      pares: [par('ler', 'faca', 'vaca', ['f', 'v'], 'par-minimo-f-v'), par('ler', 'vaca', 'faca', ['v', 'f'], 'par-minimo-f-v')]
+      pares: [par('ler', 'faca', 'vaca', ['f', 'v']), par('ler', 'vaca', 'faca', ['v', 'f'])]
     }
   },
   {
@@ -293,7 +294,7 @@ export const LICOES_TF: Licao[] = [
     leitura: [{ palavra: 'dado', outras: ['dedo', 'pato'] }, { palavra: 'dedo', outras: ['dado', 'ovo'] }, { palavra: 'vida', outras: ['vila', 'via'] }],
     pseudo: [['dufa', 'tufa', 'dufo'], ['midu', 'mitu', 'mido']],
     caixas: ['dado', 'dedo', 'vida'],
-    desafio: { pares: [par('ler', 'nada', 'nata', ['d', 't'], 'par-minimo-t-d'), par('ler', 'nata', 'nada', ['t', 'd'], 'par-minimo-t-d'), par('ouvir', 'dado', 'dedo', ['a', 'e'])] }
+    desafio: { pares: [par('ler', 'nada', 'nata', ['d', 't']), par('ler', 'nata', 'nada', ['t', 'd']), par('ouvir', 'dado', 'dedo', ['a', 'e'])] }
   },
   {
     unidade: 'TF-21', tipo: 'consoante', bloco: 3, letra: 'G', rotulo: 'g', titulo: 'O som /g/ (ga, go, gu)', objetivo: 'Ligar o som /g/ à letra G antes de A, O e U',
@@ -317,7 +318,7 @@ export const LICOES_TF: Licao[] = [
       { mostrar: 'TOMA_E', palavra: 'tomate', certa: 'T', outras: ['D', 'X'], som: 't' }, { mostrar: 'BA_E', palavra: 'bate', certa: 'T', outras: ['D', 'X'], som: 't' }
     ],
     desafio: {
-      pares: [par('ler', 'tia', 'dia', ['t', 'd'], 'par-minimo-t-d'), par('ler', 'dia', 'tia', ['d', 't'], 'par-minimo-t-d')],
+      pares: [par('ler', 'tia', 'dia', ['t', 'd']), par('ler', 'dia', 'tia', ['d', 't'])],
       frase: frase('A tia viu o tomate.', 'O que a tia viu?', 'tomate', ['tomate', 'tapete', 'pato'])
     }
   },
@@ -328,7 +329,7 @@ export const LICOES_TF: Licao[] = [
     pseudo: [['tufa', 'tafa', 'pufa'], ['gufa', 'gafa', 'gufo']],
     ditado: ['PATO', 'BOLO', 'FACA', 'GATO', 'DEDO'],
     desafio: {
-      pares: [par('ler', 'pato', 'bato', ['p', 'b'], 'par-minimo-p-b'), par('ouvir', 'faca', 'vaca', ['f', 'v'], 'par-minimo-f-v'), par('ler', 'nata', 'nada', ['t', 'd'], 'par-minimo-t-d'), par('ler', 'galo', 'calo', ['g', 'k'], 'par-minimo-k-g'), par('ler', 'gata', 'cata', ['g', 'k'], 'par-minimo-k-g')],
+      pares: [par('ler', 'pato', 'bato', ['p', 'b']), par('ouvir', 'faca', 'vaca', ['f', 'v']), par('ler', 'nata', 'nada', ['t', 'd']), par('ler', 'galo', 'calo', ['g', 'k']), par('ler', 'gata', 'cata', ['g', 'k'])],
       trocas: [troca('trocar', 'pato', 'mato', 0, 'M', ['M', 'N', 'B'], ['mato', 'pato', 'nato']), troca('trocar', 'mato', 'gato', 0, 'G', ['G', 'C', 'D'], ['gato', 'mato', 'cato'])],
       frase: frase('O gato viu a vaca.', 'Quem o gato viu?', 'vaca', ['vaca', 'faca', 'pato']), eco: true
     }
@@ -580,6 +581,12 @@ function cenaDitado(id: string, li: Licao): Cena | null {
   };
 }
 
+function contrastePrincipal(pares: ItemParMinimo[]): string {
+  const n = new Map<string, number>();
+  for (const p of pares) n.set(p.habilidade!, (n.get(p.habilidade!) ?? 0) + 1);
+  return [...n.entries()].sort((a, b) => b[1] - a[1])[0][0];
+}
+
 function cenasDesafio(id: string, li: Licao): Cena[] {
   const d = li.desafio;
   if (!d) return [];
@@ -587,7 +594,8 @@ function cenasDesafio(id: string, li: Licao): Cena[] {
   if (d.pares?.length) {
     out.push({
       id: `${id}p`, tipo: 'C5', titulo: 'Palavras quase iguais', cenario: 'praca', contaDominio: true,
-      atividade: { tipo: 'parMinimo', habilidade: d.pares[0].habilidade ?? 'leitura-cvcv', enunciado: sofia(FALAS_TRILHA_SONS.parMuda), itens: d.pares, ...(d.pares.length > 4 ? { sortear: 4 } : {}) }
+      // habilidade da atividade = o contraste mais frequente entre os itens (cada item grava o seu)
+      atividade: { tipo: 'parMinimo', habilidade: contrastePrincipal(d.pares), enunciado: sofia(FALAS_TRILHA_SONS.parMuda), itens: d.pares, ...(d.pares.length > 4 ? { sortear: 4 } : {}) }
     });
   }
   if (d.trocas?.length) {

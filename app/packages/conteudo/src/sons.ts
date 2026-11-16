@@ -65,6 +65,19 @@ export const SONS_SEM_CLIPE: string[] = ['r', 'lh', 'nh'];
 /** Pares que só mudam na VOZ (surdo, sonoro): a correção diz "este não tem voz / este tem voz". */
 export const PARES_DE_VOZ: [string, string][] = [['p', 'b'], ['t', 'd'], ['f', 'v'], ['s', 'z'], ['x', 'j'], ['k', 'g']];
 
+/**
+ * Habilidade de um item de PAR MÍNIMO a partir dos dois sons que mudam (docs/pedagogia/02; revisão de 16/11): cada par
+ * grava a habilidade do SEU contraste — nunca a leitura em geral. Vogal × vogal = 'par-minimo-vogal'; consoantes = o par
+ * em ordem fixa ('par-minimo-p-b', 'par-minimo-m-b'…).
+ */
+const ORDEM_DO_PAR = ['f', 'v', 's', 'z', 'x', 'j', 'p', 'm', 'b', 't', 'd', 'k', 'g', 'n', 'l', 'rr'];
+export function habilidadeDoPar(sons: [string, string]): string {
+  const vogal = (x: string) => /^[aeiouEO]~?$/.test(x);
+  if (vogal(sons[0]) && vogal(sons[1])) return 'par-minimo-vogal';
+  const [a, b] = [...sons].sort((x, y) => (ORDEM_DO_PAR.indexOf(x) + 99) % 99 - (ORDEM_DO_PAR.indexOf(y) + 99) % 99 || x.localeCompare(y));
+  return `par-minimo-${a}-${b}`;
+}
+
 /** Os dois sons são um par fácil de confundir? */
 export function parConfuso(a: string, b: string): boolean {
   return PARES_CONFUSOS.some(([x, y]) => (x === a && y === b) || (x === b && y === a));

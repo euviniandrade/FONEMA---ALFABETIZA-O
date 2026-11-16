@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { FALAS, FALAS_TRILHA_SONS as T, contrasteDosSons, type AtividadeParMinimo, type Opcao } from '@fonema/conteudo';
+import { FALAS, FALAS_TRILHA_SONS as T, contrasteDosSons, habilidadeDoPar, type AtividadeParMinimo, type Opcao } from '@fonema/conteudo';
 import { Balao } from '../componentes/basicos.tsx';
 import { Icone } from '../componentes/ui.tsx';
 import { efeitos } from '../servicos/efeitos.ts';
@@ -68,7 +68,8 @@ export function ParMinimo({ atividade, crianca, sessao, cenaId, revisao, onFim }
       setAcertou(true);
       efeitos.acerto();
       tents.current.push(registro({
-        habilidade: item.habilidade ?? atividade.habilidade, sessao, cena: cenaId, mecanica: 'parMinimo', alvo: item.alvo.toUpperCase(), respostas: respostas.current.map((x) => x.toUpperCase()),
+        // cada par grava a habilidade do SEU contraste (nunca a da atividade nem a leitura em geral)
+        habilidade: item.habilidade ?? habilidadeDoPar(item.sons), sessao, cena: cenaId, mecanica: 'parMinimo', alvo: item.alvo.toUpperCase(), respostas: respostas.current.map((x) => x.toUpperCase()),
         distratores: [item.outra.toUpperCase()], inicio: inicio.current, revisao, posicaoCerta: opcoes.findIndex((x) => x.id === item.alvo), posicaoEscolhida: pos.current, nOpcoes: 2, ouviuDeNovo: ouviu.current
       }));
       await voz.falar(item.alvo, { quem: 'sofia' });
