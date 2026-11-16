@@ -68,7 +68,7 @@ export const CONFIG_PADRAO: ConfigPlataforma = {
   demonstracao: { horasParaValerCriterio: 72 },
   voz: { provedor: 'pre-gerada', velocidade: 0.95 },
   alfabeto: { primeirasPalavrinhas: true },
-  sondagem: { aCadaFases: 8, aCadaDias: 30, idadeMinima: 6 },
+  sondagem: { aCadaFases: 8, aCadaDias: 30, idadeMinima: 4 },
   reforco: { errosMinPar: 3, sessoesSeguidasParaPreRequisito: 2, acertoMinSessao: 0.5, maxItens: 6 },
   risco: { sessoesSemDominio: 3, acertoMin: 0.6, janela: 10, trocasMin: 4, diasSemJogar: 14 },
   modoDemonstracao: false

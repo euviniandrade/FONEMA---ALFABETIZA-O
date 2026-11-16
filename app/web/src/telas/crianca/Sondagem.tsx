@@ -23,7 +23,7 @@ import { efeitos } from '../../servicos/efeitos.ts';
 import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
 import { falar } from '../../util.ts';
-import { Sondagem as MissaoDasPlacas } from './Extras.tsx';
+import { IDADE_DA_LEITURA, Sondagem as MissaoDasPlacas } from './Extras.tsx';
 
 /** Menos que isto de itens possíveis: a criança ainda viu pouco; vale a Missão das Placas antiga. */
 const MINIMO_DE_ITENS = 3;
@@ -51,8 +51,12 @@ export function SondagemDaVila({ criancaId }: { criancaId: string }) {
   }, [progresso, plano]);
   if (!crianca || !progresso || !plano) return <Carregando />;
   const primeira = !ultimaSondagem(progresso) && progresso.expressa.sondagemEm === undefined;
-  if (primeira || plano.total < MINIMO_DE_ITENS) return <MissaoDasPlacas criancaId={criancaId} />;
-  return <SondagemEmBlocos criancaId={criancaId} plano={plano} />;
+  // 4 e 5 anos (docs/pedagogia/06 §3): só o bloco de sons e letras (som inicial/letras; nada de fonema no meio da palavra)
+  const idade = new Date().getFullYear() - crianca.anoNascimento;
+  const doPlano = idade < IDADE_DA_LEITURA ? { ...plano, blocos: plano.blocos.filter((x) => x.area === 'sons-letras') } : plano;
+  const total = doPlano.blocos.reduce((n, x) => n + x.itens.length, 0);
+  if (primeira || total < MINIMO_DE_ITENS) return <MissaoDasPlacas criancaId={criancaId} />;
+  return <SondagemEmBlocos criancaId={criancaId} plano={{ ...doPlano, total }} />;
 }
 
 type Resposta = ItemSondagem & { area: AreaSondagem };

@@ -166,18 +166,24 @@ export function MostraProfessor({ criancaId, faseId }: { criancaId: string; fase
 }
 
 
-/** Sondagem lúdica "Missão das Placas da Vila" (D021 §3): para em 2 erros seguidos do mesmo degrau, termina no acerto. */
+/**
+ * Sondagem lúdica "Missão das Placas da Vila" (D021 §3): para em 2 erros seguidos do mesmo degrau, termina no acerto.
+ * Toda placa tem 3 opções ou mais (docs/pedagogia/04 §1 R8: com 2 opções o chute acerta metade). Para 4 e 5 anos
+ * (docs/pedagogia/06 §3: sondagem de entrada para todos) ficam só as placas de escuta, som inicial e letras (degraus 1 a 4).
+ */
+/** A partir desta idade entram as placas de leitura (degrau 5) e a sondagem em blocos completa. */
+export const IDADE_DA_LEITURA = 6;
 const PLACAS: { degrau: number; pergunta: string; ouvir?: string; mostrar?: string; opcoes: { id: string; rot: string }[]; certa: string }[] = [
-  { degrau: 1, pergunta: 'O que rima com GATO?', ouvir: 'gato', opcoes: [{ id: 'pato', rot: 'pato' }, { id: 'bola', rot: 'bola' }], certa: 'pato' },
-  { degrau: 1, pergunta: 'Quantas palmas tem BOLOTA?', ouvir: 'bo-lo-ta', opcoes: [{ id: '2', rot: 'mão mão' }, { id: '3', rot: 'mão mão mão' }], certa: '3' },
-  { degrau: 2, pergunta: 'Qual começa com /mmm/?', ouvir: 'mmmm', opcoes: [{ id: 'mala', rot: 'mala' }, { id: 'sol', rot: 'sol' }], certa: 'mala' },
-  { degrau: 2, pergunta: 'Qual começa com /sss/?', ouvir: 'ssss', opcoes: [{ id: 'sapo', rot: 'sapo' }, { id: 'lua', rot: 'lua' }], certa: 'sapo' },
+  { degrau: 1, pergunta: 'O que rima com GATO?', ouvir: 'gato', opcoes: [{ id: 'pato', rot: 'pato' }, { id: 'bola', rot: 'bola' }, { id: 'sol', rot: 'sol' }], certa: 'pato' },
+  { degrau: 1, pergunta: 'Quantas palmas tem BOLOTA?', ouvir: 'bo-lo-ta', opcoes: [{ id: '1', rot: 'mão' }, { id: '2', rot: 'mão mão' }, { id: '3', rot: 'mão mão mão' }], certa: '3' },
+  { degrau: 2, pergunta: 'Qual começa com /mmm/?', ouvir: 'mmmm', opcoes: [{ id: 'mala', rot: 'mala' }, { id: 'sol', rot: 'sol' }, { id: 'uva', rot: 'uva' }], certa: 'mala' },
+  { degrau: 2, pergunta: 'Qual começa com /sss/?', ouvir: 'ssss', opcoes: [{ id: 'sapo', rot: 'sapo' }, { id: 'lua', rot: 'lua' }, { id: 'ovo', rot: 'ovo' }], certa: 'sapo' },
   { degrau: 3, pergunta: 'Qual letra faz /aaa/?', ouvir: 'aaaa', opcoes: [{ id: 'A', rot: 'A' }, { id: 'O', rot: 'O' }, { id: 'U', rot: 'U' }], certa: 'A' },
   { degrau: 3, pergunta: 'Qual letra faz /iii/?', ouvir: 'iiii', opcoes: [{ id: 'E', rot: 'E' }, { id: 'I', rot: 'I' }, { id: 'A', rot: 'A' }], certa: 'I' },
   { degrau: 4, pergunta: 'Qual letra faz /fff/?', ouvir: 'ffff', opcoes: [{ id: 'F', rot: 'F' }, { id: 'M', rot: 'M' }, { id: 'L', rot: 'L' }], certa: 'F' },
   { degrau: 4, pergunta: 'Qual letra faz /lll/?', ouvir: 'llll', opcoes: [{ id: 'M', rot: 'M' }, { id: 'L', rot: 'L' }, { id: 'S', rot: 'S' }], certa: 'L' },
-  { degrau: 5, pergunta: 'Lê a placa: qual é a figura?', mostrar: 'MALA', opcoes: [{ id: 'mala', rot: 'mala' }, { id: 'lua', rot: 'lua' }], certa: 'mala' },
-  { degrau: 5, pergunta: 'Lê a placa: qual é a figura?', mostrar: 'LUA', opcoes: [{ id: 'mala', rot: 'mala' }, { id: 'lua', rot: 'lua' }], certa: 'lua' }
+  { degrau: 5, pergunta: 'Lê a placa: qual é a figura?', mostrar: 'MALA', opcoes: [{ id: 'mala', rot: 'mala' }, { id: 'lua', rot: 'lua' }, { id: 'uva', rot: 'uva' }], certa: 'mala' },
+  { degrau: 5, pergunta: 'Lê a placa: qual é a figura?', mostrar: 'LUA', opcoes: [{ id: 'mala', rot: 'mala' }, { id: 'lua', rot: 'lua' }, { id: 'uva', rot: 'uva' }], certa: 'lua' }
 ];
 
 export function Sondagem({ criancaId }: { criancaId: string }) {
@@ -190,7 +196,9 @@ export function Sondagem({ criancaId }: { criancaId: string }) {
   const [errosSeguidos, setErrosSeguidos] = useState(0);
   const [maior, setMaior] = useState(0);
   const [fim, setFim] = useState(false);
-  const p = PLACAS[k];
+  const idade = crianca ? new Date().getFullYear() - crianca.anoNascimento : 6;
+  const placas = idade < IDADE_DA_LEITURA ? PLACAS.filter((x) => x.degrau <= 4) : PLACAS;
+  const p = placas[k];
   useEffect(() => {
     if (!crianca || fim || !p) return;
     (async () => {
@@ -219,10 +227,10 @@ export function Sondagem({ criancaId }: { criancaId: string }) {
     const m = certo ? Math.max(maior, p.degrau) : maior;
     setMaior(m);
     // para em 2 erros seguidos no mesmo degrau (a criança nunca vê "errado")
-    const mesmoDegrau = PLACAS[k - 1]?.degrau === p.degrau;
+    const mesmoDegrau = placas[k - 1]?.degrau === p.degrau;
     const e = certo ? 0 : mesmoDegrau ? errosSeguidos + 1 : 1;
     setErrosSeguidos(e);
-    if (e >= 2 || k + 1 >= PLACAS.length) return terminar(m);
+    if (e >= 2 || k + 1 >= placas.length) return terminar(m);
     setK(k + 1);
   };
   return (
@@ -239,7 +247,7 @@ export function Sondagem({ criancaId }: { criancaId: string }) {
             </>
           ) : (
             <>
-              <h2 className="titulo-cena t"><Icone nome="placa" />Placa {k + 1} de {PLACAS.length}</h2>
+              <h2 className="titulo-cena t"><Icone nome="placa" />Placa {k + 1} de {placas.length}</h2>
               <p className="objetivo">{p.pergunta}</p>
               {p.mostrar ? <div className="pergunta"><div className="palavra-grande">{p.mostrar}</div></div> : p.ouvir ? <div className="pergunta"><BotaoOuvir onClick={() => voz.falar(p.ouvir!, { quem: 'sofia' })} rotulo="Ouvir de novo" /></div> : null}
               <div className="opcoes">

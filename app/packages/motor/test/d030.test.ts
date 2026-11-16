@@ -520,7 +520,9 @@ describe('sondagem periódica', () => {
     const p = progressoInicial('c1', T0);
     expect(situacaoSondagem(p, cfg, T0).devida).toBe(false);
     expect(situacaoSondagem(jogou(p), cfg, T0)).toMatchObject({ devida: true, motivo: 'inicial' });
-    expect(situacaoSondagem(jogou(p), cfg, T0, 5).devida).toBe(false);
+    // sondagem de entrada para todos a partir dos 4 anos (06 §3); aos 4–5 só com placas de som inicial e letras (tela)
+    expect(situacaoSondagem(jogou(p), cfg, T0, 3).devida).toBe(false);
+    expect(situacaoSondagem(jogou(p), cfg, T0, 4).devida).toBe(true);
     expect(situacaoSondagem(jogou(p), cfg, T0, 6).devida).toBe(true);
   });
 
