@@ -133,6 +133,26 @@ export interface AvaliacaoDominio {
   faltaPseudo: boolean;
   faltaItens: boolean;
   faltaTipos: boolean;
+  /** Pares mínimos (06 §2 item 4): acertos sem ajuda na janela das últimas tentativas do contraste, e quantos eram exigidos. */
+  pares?: { janela: number; acertos: number; exigidos: number };
+  /** Habilidade de par mínimo sem os 8 de 10 (ou a proporção equivalente, ver `criterioPares`). */
+  faltaPares: boolean;
+}
+
+/** Habilidade de discriminação de pares mínimos (gravada por contraste: `par-minimo-p-b`, `par-minimo-vogal`…). */
+export const ehHabilidadeDePar = (habilidade: string | undefined) => !!habilidade?.startsWith('par-minimo-');
+
+/**
+ * Critério dos PARES MÍNIMOS (docs/pedagogia/06 §2 item 4; 04 §1 R8) [DP]: "8 de 10" = `acertos` certos e sem ajuda nas
+ * últimas `janela` tentativas AVALIADAS daquele contraste. Regra para não travar quando ainda não houve 10 tentativas
+ * (as lições oferecem 2 a 5 itens por contraste): vale a MESMA proporção sobre as que houver, arredondada para cima
+ * (8 tentativas → 7 certas; 9 → 8; 10 ou mais → 8 das últimas 10). O mínimo geral de tentativas (critério 1) continua valendo,
+ * então nunca basta menos de 80%. Tentativas antigas de 2 opções entram na janela (é para elas que o "8 de 10" existe).
+ */
+export function criterioPares(ts: Tentativa[], cfg: ConfigPlataforma['dominio']): { janela: number; acertos: number; exigidos: number } {
+  const { janela, acertos } = cfg.paresMinimos ?? { janela: 10, acertos: 8 };
+  const ultimas = ts.slice(-janela);
+  return { janela: ultimas.length, acertos: ultimas.filter((t) => t.acertou && !t.comAjuda).length, exigidos: Math.ceil((acertos / janela) * ultimas.length - 1e-9) };
 }
 
 /**
@@ -143,6 +163,7 @@ export interface AvaliacaoDominio {
  *  5. variedade: em habilidade de PALAVRAS (o alvo gravado é palavra), ≥ itensDiferentesMin palavras diferentes certas;
  *     e acertos em ≥ tiposDeAtividadeMin TIPOS de atividade, quando o conteúdo publicado oferece esses tipos para a
  *     habilidade (`habilidade` informada). Dado antigo sem mecânica nem alvo não é cobrado (não se inventa evidência).
+ *  4. pares mínimos (`par-minimo-*`): 8 de 10 nas últimas tentativas do contraste (`criterioPares`);
  *  6. retenção: fica com a revisão espaçada (revisao.ts), que devolve a habilidade ao treino quando a criança erra.
  */
 export function avaliarDominio(h: EstadoHabilidade | undefined, cfg: ConfigPlataforma['dominio'], exigePseudo: boolean, habilidade?: string): AvaliacaoDominio {
@@ -175,10 +196,16 @@ export function avaliarDominio(h: EstadoHabilidade | undefined, cfg: ConfigPlata
   if (faltaPseudo) falta.push(`${cfg.pseudoMin - pseudoCertas} pseudopalavra(s) em atividade conferida`);
   if (faltaItens) falta.push(`acertar ${itensMin - itensDiferentes} palavra(s) diferente(s)`);
   if (faltaTipos) falta.push(`acertar em mais ${tiposMin - tiposDeAtividade} tipo(s) de atividade (ex.: ouvir e achar a letra, ver a letra e achar o som)`);
+  // 4. pares mínimos: 8 de 10 no contraste (ou a mesma proporção, quando ainda não houve 10)
+  const nomeHab = habilidade ?? ts[0]?.habilidade;
+  const pares = ehHabilidadeDePar(nomeHab) && ts.length ? criterioPares(ts, cfg) : undefined;
+  const faltaPares = !!pares && pares.acertos < pares.exigidos;
+  if (faltaPares) falta.push(`${pares!.exigidos} acertos sem ajuda nas últimas ${pares!.janela} tentativas deste par (hoje ${pares!.acertos}; meta 8 de 10)`);
   const soFaltaVariedade = basico && (faltaItens || faltaTipos);
   return {
     dominado: falta.length === 0, p, tentativas: ts.length, sessoes, acertosRecentes, pseudoCertas, itensDiferentes, tiposDeAtividade,
-    participacoes: todas.length - ts.length, falta, soFaltaPseudo, soFaltaVariedade, basicoCumprido: basico, faltaPseudo, faltaItens, faltaTipos
+    participacoes: todas.length - ts.length, falta, soFaltaPseudo, soFaltaVariedade, basicoCumprido: basico, faltaPseudo, faltaItens, faltaTipos,
+    ...(pares ? { pares } : {}), faltaPares
   };
 }
 

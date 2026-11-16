@@ -248,6 +248,12 @@ export function faseMede(fase: Fase, habilidade: string, pseudo = false): boolea
   });
 }
 
+/** Quantos itens de par mínimo do contraste a fase oferece (cenas que contam para o domínio). */
+export function itensDeParDaFase(fase: Fase, habilidade: string): number {
+  return fase.cenas.reduce((n, c) => n + (c.contaDominio && c.atividade?.tipo === 'parMinimo'
+    ? c.atividade.itens.filter((i) => (i.habilidade ?? c.atividade!.habilidade) === habilidade).length : 0), 0);
+}
+
 /**
  * Critério de uma fase de DOMÍNIO para uma habilidade (D030):
  *  - regra geral: a habilidade está dominada (tentativas avaliadas);
@@ -270,6 +276,9 @@ export function criterioDaFaseCumprido(p: Progresso, fase: Fase, habilidade: str
   if (av.faltaPseudo && faseMede(fase, habilidade, true)) return false;
   if (av.faltaTipos && (tiposDeAtividadeDaFase(fase).get(habilidade)?.size ?? 0) >= Math.min(cfg.dominio.tiposDeAtividadeMin ?? 2, tiposDeAtividadeDoConteudo(habilidade).size)) return false;
   if (av.faltaItens && palavrasDaFase(fase, habilidade) >= (cfg.dominio.itensDiferentesMin ?? 3)) return false;
+  // pares mínimos: a fase só segura o "8 de 10" quando ela mesma oferece itens suficientes do contraste (nenhuma lição
+  // de hoje oferece: 2 a 5 itens); senão conclui e a habilidade segue para revisão, treino e painel, sem ficar dominada
+  if (av.faltaPares && itensDeParDaFase(fase, habilidade) >= (cfg.dominio.paresMinimos?.janela ?? 10)) return false;
   return true;
 }
 

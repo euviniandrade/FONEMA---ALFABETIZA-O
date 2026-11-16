@@ -36,7 +36,8 @@ export function leiturasDaFase(f: Fase): LeituraDaFase[] {
       case 'ditado': for (const w of a.palavras) add(w, 'escrita'); break;
       case 'sintese': for (const i of a.itens) add(i.palavra, i.pseudo ? 'pseudo' : 'palavra'); break;
       case 'caixas': for (const i of a.itens) add(i.palavra, 'escrita'); break;
-      case 'parMinimo': for (const i of a.itens) if (i.modo === 'ler') add(i.alvo, 'palavra'); break;
+      // no modo ler, a 3ª leitura (distrator) também passa pelo verificador: nada de som ainda não ensinado entre as opções
+      case 'parMinimo': for (const i of a.itens) if (i.modo === 'ler') { add(i.alvo, 'palavra'); if (i.distrator) add(i.distrator, 'palavra'); } break;
       case 'troca': for (const i of a.itens) { add(i.de, 'palavra'); add(i.para, 'palavra'); } break;
       case 'frase': for (const i of a.itens) add(i.frase, 'frase'); break;
       default: break;

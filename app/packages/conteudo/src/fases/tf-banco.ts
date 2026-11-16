@@ -26,7 +26,7 @@ export const PALAVRAS_TF: EntradaBanco[] = [
   e('foi', 'f o i'), e('fui', 'f u i'), e('fia', 'f i a'), e('afia', 'a f i a'),
   pseudo('fami', 'f a m i', true), pseudo('mafu', 'm a f u', true),
   // TF-09 · V
-  e('uva', 'u v a', { figura: 'uva' }), e('viu', 'v i u', ox), e('vai', 'v a i'), e('via', 'v i a'), e('viva', 'v i v a'),
+  e('uva', 'u v a', { figura: 'uva' }), e('viu', 'v i u', ox), e('vai', 'v a i'), e('via', 'v i a'), e('viva', 'v i v a'), e('voa', 'v o a'),
   pseudo('vafi', 'v a f i', true), pseudo('muva', 'm u v a'),
   // TF-10 · L
   e('lua', 'l u a', { figura: 'lua' }), e('mala', 'm a l a', { figura: 'mala' }), e('fila', 'f i l a', { figura: 'fila' }), e('mula', 'm u l a', { figura: 'mula' }),
@@ -62,10 +62,10 @@ export const PALAVRAS_TF: EntradaBanco[] = [
   pseudo('bufi', 'b u f i', true), pseudo('labu', 'l a b u', true),
   // TF-19 · C (ca, co, cu)
   e('faca', 'f a k a', { figura: 'faca' }), e('vaca', 'v a k a', { figura: 'vaca' }), e('macaco', 'm a k a k u', { figura: 'macaco' }), e('suco', 's u k u', { figura: 'suco' }),
-  e('jaca', 'ʒ a k a', { figura: 'jaca' }), e('boca', 'b o k a'), e('caju', 'k a ʒ u', ox), e('come', 'k ɔ m i'),
+  e('jaca', 'ʒ a k a', { figura: 'jaca' }), e('foca', 'f ɔ k a', { figura: 'foca' }), e('boca', 'b o k a'), e('caju', 'k a ʒ u', ox), e('come', 'k ɔ m i'),
   pseudo('cafu', 'k a f u', true), pseudo('cavu', 'k a v u', true),
   // TF-20 · D
-  e('dado', 'd a d u', { figura: 'dado' }), e('dedo', 'd e d u', { figura: 'dedo' }), e('vida', 'v i d a'), e('nada', 'n a d a'), e('lado', 'l a d u'),
+  e('dado', 'd a d u', { figura: 'dado' }), e('dedo', 'd e d u', { figura: 'dedo' }), e('vida', 'v i d a'), e('nada', 'n a d a'), e('lado', 'l a d u'), e('cada', 'k a d a'),
   pseudo('dufa', 'd u f a'), pseudo('midu', 'm i d u', true),
   // TF-21 · G (ga, go, gu)
   e('gato', 'g a t u', { figura: 'gato' }), e('galo', 'g a l u', { figura: 'galo' }), e('fogo', 'f o g u', { figura: 'fogo' }), e('gota', 'g o t a'), e('figo', 'f i g u'),

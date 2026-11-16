@@ -1,6 +1,6 @@
 # Relatório de decodificabilidade (gerado)
 
-Gerado por `scripts/relatorio-decodificabilidade.ts`. 323 leituras e escritas conferidas em 64 fases · **0 erros** · 21 com aviso.
+Gerado por `scripts/relatorio-decodificabilidade.ts`. 341 leituras e escritas conferidas em 64 fases · **0 erros** · 21 com aviso.
 Erro = valor sonoro ainda não ensinado na unidade da fase (o teste falha). Aviso = A5 (vogal nasalizada pela consoante seguinte), vogal átona que muda na fala ou pronúncia regional (TI/DI).
 
 ### AL-A · Letra A
@@ -126,7 +126,9 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-09-C4c | escrita | UVA | ok |
 | TF-09-C4c | escrita | VAI | ok |
 | TF-09-C5p | palavra | via | ok |
+| TF-09-C5p | palavra | viu | ok |
 | TF-09-C5p | palavra | fia | ok |
+| TF-09-C5p | palavra | mia | ok |
 
 ### AL-L · Letra L
 
@@ -242,9 +244,13 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-14-C4c | escrita | ZOA | ok |
 | TF-14-C4c | escrita | ZELO | ok |
 | TF-14-C5p | palavra | selo | ok |
+| TF-14-C5p | palavra | sala | ok |
 | TF-14-C5p | palavra | zelo | ok |
+| TF-14-C5p | palavra | sala | ok |
 | TF-14-C5p | palavra | zoa | ok |
+| TF-14-C5p | palavra | voa | ok |
 | TF-14-C5p | palavra | soa | ok |
+| TF-14-C5p | palavra | sua | ok |
 
 ### AL-J · Letra J
 
@@ -280,7 +286,9 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-R2-C5d | escrita | OVO | ok |
 | TF-R2-C5d | escrita | NAVE | ok |
 | TF-R2-C5p | palavra | selo | ok |
+| TF-R2-C5p | palavra | sala | ok |
 | TF-R2-C5p | palavra | via | ok |
+| TF-R2-C5p | palavra | viu | ok |
 | TF-R2-C5t | palavra | LUA | ok |
 | TF-R2-C5t | palavra | SUA | ok |
 | TF-R2-C5t | palavra | SUA | ok |
@@ -362,9 +370,13 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-18-C4c | escrita | BOLO | ok |
 | TF-18-C4c | escrita | BALA | ok |
 | TF-18-C5p | palavra | pato | ok |
-| TF-18-C5p | palavra | bato | ok |
-| TF-18-C5p | palavra | bule | ok |
 | TF-18-C5p | palavra | pata | ok |
+| TF-18-C5p | palavra | bato | ok |
+| TF-18-C5p | palavra | bata | ok |
+| TF-18-C5p | palavra | pule | ok |
+| TF-18-C5p | palavra | pula | ok |
+| TF-18-C5p | palavra | pata | ok |
+| TF-18-C5p | palavra | pato | ok |
 
 ### AL-C · Letra C
 
@@ -408,7 +420,9 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-20-C4c | escrita | DEDO | ok |
 | TF-20-C4c | escrita | VIDA | ok |
 | TF-20-C5p | palavra | nada | ok |
+| TF-20-C5p | palavra | cada | ok |
 | TF-20-C5p | palavra | nata | ok |
+| TF-20-C5p | palavra | lata | ok |
 
 ### AL-G · Letra G
 
@@ -468,9 +482,13 @@ Sem leitura nem escrita sozinha nesta fase.
 | TF-R3-C5d | escrita | GATO | ok |
 | TF-R3-C5d | escrita | DEDO | ok |
 | TF-R3-C5p | palavra | pato | ok |
+| TF-R3-C5p | palavra | pata | ok |
 | TF-R3-C5p | palavra | nata | ok |
+| TF-R3-C5p | palavra | lata | ok |
 | TF-R3-C5p | palavra | galo | ok |
+| TF-R3-C5p | palavra | gato | ok |
 | TF-R3-C5p | palavra | gata | ok |
+| TF-R3-C5p | palavra | gota | ok |
 | TF-R3-C5t | palavra | PATO | ok |
 | TF-R3-C5t | palavra | MATO | ok |
 | TF-R3-C5t | palavra | MATO | ok |

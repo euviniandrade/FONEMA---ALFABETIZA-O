@@ -326,6 +326,11 @@ export interface ItemParMinimo {
   /** Figuras (modo ouvir). */
   figuraAlvo?: string;
   figuraOutra?: string;
+  /**
+   * 3ª opção (docs/pedagogia/04 §1 R8: com 2 opções o chute acerta 50%): outra palavra do banco, decodificável na unidade,
+   * que difere do alvo em OUTRO som (ou o membro de outro par já visto). No modo ouvir precisa ter figura.
+   */
+  distrator?: string;
   habilidade?: HabilidadeId;
 }
 export interface AtividadeParMinimo extends AtividadeBase {

@@ -12,8 +12,10 @@ import { OpcoesTF, registro } from './tf-comum.tsx';
 
 /**
  * PARES MÍNIMOS de palavras (docs/pedagogia/04 N3; SOA p. 147; MOR p. 214): duas palavras que mudam UM som.
- *  - ouvir: a dupla diz uma das palavras e a criança toca a figura certa (faca × vaca);
- *  - ler: a palavra aparece escrita e a criança escolhe, entre duas leituras, a que combina (pato × bato).
+ *  - ouvir: a dupla diz uma das palavras e a criança toca a figura certa (faca × vaca × foca);
+ *  - ler: a palavra aparece escrita e a criança escolhe, entre as leituras, a que combina (pato × bato × pata).
+ * Três opções quando o item traz `distrator` (04 §1 R8: com duas, o chute acerta metade); o domínio do contraste ainda
+ * pede 8 de 10 (motor, `dominio.ts`).
  * Posição sorteada; 1º erro: as duas palavras, uma depois da outra, e o que muda entre os dois sons; 2º erro: a certa
  * brilha (ajuda). Depois do acerto, no modo ler, as duas palavras aparecem lado a lado com a letra que muda destacada.
  */
@@ -25,7 +27,7 @@ export function ParMinimo({ atividade, crianca, sessao, cenaId, revisao, onFim }
   const opcoes: Opcao[] = useMemo(() => {
     if (!item) return [];
     const op = (w: string): Opcao => (item.modo === 'ouvir' ? { id: w, rotulo: w, figura: '', falar: w } : { id: w, rotulo: '', falar: w, botaoDeSom: true });
-    return embaralhar([op(item.alvo), op(item.outra)], semente ? semente + i * 31 : 0);
+    return embaralhar([op(item.alvo), op(item.outra), ...(item.distrator ? [op(item.distrator)] : [])], semente ? semente + i * 31 : 0);
   }, [item, semente, i]);
   const [fala, setFala] = useState(atividade.enunciado);
   const [marcadas, setMarcadas] = useState<string[]>([]);
@@ -70,7 +72,7 @@ export function ParMinimo({ atividade, crianca, sessao, cenaId, revisao, onFim }
       tents.current.push(registro({
         // cada par grava a habilidade do SEU contraste (nunca a da atividade nem a leitura em geral)
         habilidade: item.habilidade ?? habilidadeDoPar(item.sons), sessao, cena: cenaId, mecanica: 'parMinimo', alvo: item.alvo.toUpperCase(), respostas: respostas.current.map((x) => x.toUpperCase()),
-        distratores: [item.outra.toUpperCase()], inicio: inicio.current, revisao, posicaoCerta: opcoes.findIndex((x) => x.id === item.alvo), posicaoEscolhida: pos.current, nOpcoes: 2, ouviuDeNovo: ouviu.current
+        distratores: [item.outra, ...(item.distrator ? [item.distrator] : [])].map((x) => x.toUpperCase()), inicio: inicio.current, revisao, posicaoCerta: opcoes.findIndex((x) => x.id === item.alvo), posicaoEscolhida: pos.current, nOpcoes: opcoes.length, ouviuDeNovo: ouviu.current
       }));
       await voz.falar(item.alvo, { quem: 'sofia' });
       await espera(250);
@@ -84,7 +86,15 @@ export function ParMinimo({ atividade, crianca, sessao, cenaId, revisao, onFim }
     efeitos.suave();
     setMarcadas((m) => [...m, o.id]);
     setOcupado(true);
-    if (respostas.current.length === 1) {
+    if (respostas.current.length === 1 && o.id !== item.outra) {
+      // tocou o distrator (muda OUTRO som): ouve a escolhida e a certa, sem a explicação do par
+      await diz('Escuta os dois e tenta de novo.');
+      await voz.falar(o.id, { quem: 'sofia' });
+      await espera(300);
+      await voz.falar(item.alvo, { quem: 'sofia' });
+      await espera(300);
+      await estimulo();
+    } else if (respostas.current.length === 1) {
       // as duas palavras e o que muda entre os dois sons
       await diz('Escuta os dois e tenta de novo.');
       await voz.falar(item.outra, { quem: 'sofia' });
@@ -112,7 +122,7 @@ export function ParMinimo({ atividade, crianca, sessao, cenaId, revisao, onFim }
       </div>
       <div className="par-palco">
         <OpcoesTF opcoes={opcoes} correta={item.alvo} marcadas={marcadas} acertou={acertou} ocupado={ocupado} mostrarCerta={respostas.current.length >= 2} onEscolher={escolher} />
-        <span className="par-diferente" aria-hidden="true">≠</span>
+        {opcoes.length === 2 ? <span className="par-diferente" aria-hidden="true">≠</span> : null}
       </div>
       {acertou && item.modo === 'ler' ? (
         <div className="par-comparar" aria-label="As duas palavras">

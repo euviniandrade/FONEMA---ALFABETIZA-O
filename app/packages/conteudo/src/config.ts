@@ -22,6 +22,11 @@ export interface ConfigPlataforma {
     itensDiferentesMin?: number;
     /** docs/pedagogia/06 §2 item 5 [DP]: tipos de atividade diferentes com acerto (ex.: som → letra e letra → som). Ausente = 2. */
     tiposDeAtividadeMin?: number;
+    /**
+     * docs/pedagogia/06 §2 item 4 e 04 §1 R8 [DP]: habilidades de PARES MÍNIMOS (`par-minimo-*`) pedem `acertos` certos e sem
+     * ajuda nas últimas `janela` tentativas avaliadas daquele contraste. Ausente = 8 de 10.
+     */
+    paresMinimos?: { janela: number; acertos: number };
   };
   /** Revisão espaçada: Jardim da Revisão (dias). */
   revisao: { intervalosDias: number[]; maxItensPorSessao: number };
@@ -63,7 +68,7 @@ export const CONFIG_PADRAO: ConfigPlataforma = {
   conquistas: { naEntradaDaFase: true },
   espelho: { licao: ['frente', 'lado'], conhecaSeuCorpo: ['frente', 'lado', 'dentro', 'corpo'] },
   moedinhas: { atividade: 1, marcoDominio: 5, regiao: 10, tetoDia: 12 },
-  dominio: { pMin: 0.95, tentativasMin: 8, sessoesMin: 2, ultimas: 5, acertosNasUltimas: 4, pseudoMin: 2, itensDiferentesMin: 3, tiposDeAtividadeMin: 2 },
+  dominio: { pMin: 0.95, tentativasMin: 8, sessoesMin: 2, ultimas: 5, acertosNasUltimas: 4, pseudoMin: 2, itensDiferentesMin: 3, tiposDeAtividadeMin: 2, paresMinimos: { janela: 10, acertos: 8 } },
   revisao: { intervalosDias: [1, 2, 4, 8, 16, 32, 60], maxItensPorSessao: 4 },
   demonstracao: { horasParaValerCriterio: 72 },
   voz: { provedor: 'pre-gerada', velocidade: 0.95 },

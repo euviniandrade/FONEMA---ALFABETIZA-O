@@ -351,7 +351,7 @@
   "id": "s-17b3h6e",
   "voz": "sofia",
   "texto": "Faz de conta que você morde uma maçã bem crocante.",
-  "origem": "TF-19-C2"
+  "origem": "AL-K-C2"
  },
  {
   "id": "s-17jgt4r",
@@ -454,6 +454,12 @@
   "voz": "sofia",
   "texto": "Escuta de novo.",
   "origem": "falas fônicas (D030)"
+ },
+ {
+  "id": "s-19ibw0r",
+  "voz": "sofia",
+  "texto": "Agora as vogais vão mostrar os outros sons delas!",
+  "origem": "AL-FESTA"
  },
  {
   "id": "s-19ky6vm",
@@ -600,12 +606,6 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "s-1ctre7b",
-  "voz": "sofia",
-  "texto": "Agora a gente vai juntar as letras e fazer sílabas!",
-  "origem": "AL-FESTA"
- },
- {
   "id": "s-1cw53da",
   "voz": "sofia",
   "texto": "Letra E.",
@@ -615,7 +615,7 @@
   "id": "s-1cw53f0",
   "voz": "sofia",
   "texto": "Letra G.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "AL-RV3-C4f"
  },
  {
   "id": "s-1cw53gq",
@@ -633,49 +633,49 @@
   "id": "s-1cw53k6",
   "voz": "sofia",
   "texto": "Letra M.",
-  "origem": "AL-FESTA-C4b"
+  "origem": "AL-RV2-C4f"
  },
  {
   "id": "s-1cw53lw",
   "voz": "sofia",
   "texto": "Letra O.",
-  "origem": "AL-FESTA-C4d"
+  "origem": "AL-RV1-C4f"
  },
  {
   "id": "s-1cw53nm",
   "voz": "sofia",
   "texto": "Letra I.",
-  "origem": "AL-R2-C4f"
+  "origem": "AL-RV1-C4f"
  },
  {
   "id": "s-1cw53pc",
   "voz": "sofia",
   "texto": "Letra K.",
-  "origem": "AL-R3-C4f"
+  "origem": "AL-FESTA-C4a"
  },
  {
   "id": "s-1cw53ry",
   "voz": "sofia",
   "texto": "Letra U.",
-  "origem": "AL-FESTA-C4f"
+  "origem": "AL-RV1-C4f"
  },
  {
   "id": "s-1cw53to",
   "voz": "sofia",
   "texto": "Letra W.",
-  "origem": "AL-FESTA-C4a"
+  "origem": "AL-FESTA-C4f"
  },
  {
   "id": "s-1cw53ve",
   "voz": "sofia",
   "texto": "Letra Q.",
-  "origem": "AL-FESTA-C4e"
+  "origem": "AL-FESTA-C4f"
  },
  {
   "id": "s-1cw53x4",
   "voz": "sofia",
   "texto": "Letra S.",
-  "origem": "AL-FESTA-C4d"
+  "origem": "AL-RV2-C4f"
  },
  {
   "id": "s-1cw542a",
@@ -759,13 +759,13 @@
   "id": "s-1duq1j3",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do A.",
-  "origem": "TF-22-C1"
+  "origem": "AL-FESTA-C4b"
  },
  {
   "id": "s-1duq1kt",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do C.",
-  "origem": "TF-R3-C1"
+  "origem": "AL-RV3-C4f"
  },
  {
   "id": "s-1duq1mj",
@@ -777,13 +777,13 @@
   "id": "s-1duq1o9",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do G.",
-  "origem": "TF-R3-C1"
+  "origem": "AL-RV3-C4f"
  },
  {
   "id": "s-1duq1pz",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do I.",
-  "origem": "TF-22-C1"
+  "origem": "AL-FESTA-C4c"
  },
  {
   "id": "s-1duq1tf",
@@ -903,7 +903,7 @@
   "id": "s-1fx9aj2",
   "voz": "sofia",
   "texto": "W, de Wesley.",
-  "origem": "AL-FESTA-C4c"
+  "origem": "AL-FESTA-C4a"
  },
  {
   "id": "s-1fxrmyn",
@@ -1203,7 +1203,7 @@
   "id": "s-1mic20x",
   "voz": "sofia",
   "texto": "Faz de conta que você esqueceu o lanche em casa.",
-  "origem": "TF-03-C2"
+  "origem": "AL-Y-C2"
  },
  {
   "id": "s-1ms3ujt",
@@ -1437,7 +1437,7 @@
   "id": "s-1qah432",
   "voz": "sofia",
   "texto": "mia",
-  "origem": "TF-08-C5t"
+  "origem": "TF-09-C5p"
  },
  {
   "id": "s-1qah46q",
@@ -1689,13 +1689,19 @@
   "id": "s-1qahogx",
   "voz": "sofia",
   "texto": "viu",
-  "origem": "TF-09-C4b"
+  "origem": "TF-R2-C5p"
  },
  {
   "id": "s-1qahohh",
   "voz": "sofia",
   "texto": "via",
   "origem": "TF-22-C4b"
+ },
+ {
+  "id": "s-1qahoj7",
+  "voz": "sofia",
+  "texto": "voa",
+  "origem": "TF-14-C5p"
  },
  {
   "id": "s-1qahool",
@@ -1707,7 +1713,7 @@
   "id": "s-1qahqix",
   "voz": "sofia",
   "texto": "Não",
-  "origem": "AL-R2-C3a"
+  "origem": "AL-RV2-C3a"
  },
  {
   "id": "s-1qahuto",
@@ -1719,7 +1725,7 @@
   "id": "s-1qaib6k",
   "voz": "sofia",
   "texto": "Sim",
-  "origem": "AL-R2-C3a"
+  "origem": "AL-RV2-C3a"
  },
  {
   "id": "s-1qajwwy",
@@ -1899,13 +1905,13 @@
   "id": "s-1tqmk5t",
   "voz": "sofia",
   "texto": "Repita comigo!",
-  "origem": "TF-21-C2"
+  "origem": "AL-W-C2"
  },
  {
   "id": "s-1tssiez",
   "voz": "sofia",
   "texto": "Esta letra aparece em nomes.",
-  "origem": "AL-Y-C2"
+  "origem": "AL-W-C2"
  },
  {
   "id": "s-1ttf8j0",
@@ -2127,7 +2133,7 @@
   "id": "s-1uqi61f",
   "voz": "sofia",
   "texto": "lata",
-  "origem": "TF-17-C4c"
+  "origem": "TF-R3-C5p"
  },
  {
   "id": "s-1uqi64j",
@@ -2436,12 +2442,6 @@
   "origem": "telas (E2E)"
  },
  {
-  "id": "s-1uqmi6b",
-  "voz": "sofia",
-  "texto": "bife",
-  "origem": "AL-R2-C5p"
- },
- {
   "id": "s-1uqmk6q",
   "voz": "sofia",
   "texto": "aula",
@@ -2538,18 +2538,6 @@
   "origem": "rimas"
  },
  {
-  "id": "s-1uqnfco",
-  "voz": "sofia",
-  "texto": "copo",
-  "origem": "AL-P-C5p"
- },
- {
-  "id": "s-1uqnjlx",
-  "voz": "sofia",
-  "texto": "cama",
-  "origem": "AL-M-C5p"
- },
- {
   "id": "s-1uqnjsa",
   "voz": "sofia",
   "texto": "calo",
@@ -2559,7 +2547,7 @@
   "id": "s-1uqnjty",
   "voz": "sofia",
   "texto": "café",
-  "origem": "AL-R2-C5p"
+  "origem": "AL-C-C5p"
  },
  {
   "id": "s-1uqnju6",
@@ -2584,6 +2572,12 @@
   "voz": "sofia",
   "texto": "cafu",
   "origem": "TF-19-C4b"
+ },
+ {
+  "id": "s-1uqnjzg",
+  "voz": "sofia",
+  "texto": "cada",
+  "origem": "TF-20-C5p"
  },
  {
   "id": "s-1uqnk9n",
@@ -2619,7 +2613,7 @@
   "id": "s-1uqo3tr",
   "voz": "sofia",
   "texto": "doze",
-  "origem": "AL-Z-C5p"
+  "origem": "AL-D-C5p"
  },
  {
   "id": "s-1uqo4sh",
@@ -2757,7 +2751,7 @@
   "id": "s-1uqqbna",
   "voz": "sofia",
   "texto": "gota",
-  "origem": "TF-21-C3s"
+  "origem": "TF-R3-C5p"
  },
  {
   "id": "s-1uqqmi6",
@@ -2865,7 +2859,7 @@
   "id": "s-1uqx9xf",
   "voz": "sofia",
   "texto": "pula",
-  "origem": "TF-16-C3s"
+  "origem": "TF-18-C5p"
  },
  {
   "id": "s-1uqx9xj",
@@ -2907,7 +2901,7 @@
   "id": "s-1uqxk0f",
   "voz": "sofia",
   "texto": "pata",
-  "origem": "TF-18-C5p"
+  "origem": "TF-R3-C5p"
  },
  {
   "id": "s-1uqxk0r",
@@ -3012,12 +3006,6 @@
   "origem": "TF-11-C4b"
  },
  {
-  "id": "s-1uqzq7a",
-  "voz": "sofia",
-  "texto": "sopa",
-  "origem": "AL-S-C5p"
- },
- {
   "id": "s-1uqzv52",
   "voz": "sofia",
   "texto": "sapo",
@@ -3051,7 +3039,7 @@
   "id": "s-1uqzvg4",
   "voz": "sofia",
   "texto": "sala",
-  "origem": "TF-R2-C3s"
+  "origem": "TF-R2-C5p"
  },
  {
   "id": "s-1uqzvli",
@@ -3447,7 +3435,7 @@
   "id": "s-1wuhvy7",
   "voz": "sofia",
   "texto": "K, de kiwi.",
-  "origem": "AL-R3-C4c"
+  "origem": "AL-FESTA-C4a"
  },
  {
   "id": "s-1x9vait",
@@ -3501,7 +3489,7 @@
   "id": "s-1yowk78",
   "voz": "sofia",
   "texto": "Faz de conta que você é um macaquinho.",
-  "origem": "TF-05-C2"
+  "origem": "AL-W-C2"
  },
  {
   "id": "s-1yq5rgm",
@@ -4644,12 +4632,6 @@
   "origem": "figuras"
  },
  {
-  "id": "s-jt7slp",
-  "voz": "sofia",
-  "texto": "bo… la",
-  "origem": "AL-R4-C3a"
- },
- {
   "id": "s-jvlm91",
   "voz": "sofia",
   "texto": "Toque na letra que está brilhando.",
@@ -4660,12 +4642,6 @@
   "voz": "sofia",
   "texto": "Quando chove, a minha casa é o meu abrigo.",
   "origem": "bolota-chuva"
- },
- {
-  "id": "s-ki86cd",
-  "voz": "sofia",
-  "texto": "ca… sa",
-  "origem": "AL-R4-C3a"
  },
  {
   "id": "s-kkzzib",
@@ -5274,12 +5250,6 @@
   "origem": "falas fônicas (D030)"
  },
  {
-  "id": "s-sztnpj",
-  "voz": "sofia",
-  "texto": "pa… to",
-  "origem": "AL-R4-C3a"
- },
- {
   "id": "s-tb8y1h",
   "voz": "sofia",
   "texto": "Ajuda a Dona Cida a bordar, [NOME]? Um carretel para cada pedacinho.",
@@ -5445,19 +5415,19 @@
   "id": "s-xiiarc",
   "voz": "sofia",
   "texto": "qual começa com fff?",
-  "origem": "AL-R3-C3a"
+  "origem": "AL-RV3-C3a"
  },
  {
   "id": "s-xikenn",
   "voz": "sofia",
   "texto": "qual começa com mmm?",
-  "origem": "AL-R3-C3a"
+  "origem": "AL-RV3-C3a"
  },
  {
   "id": "s-xilzu5",
   "voz": "sofia",
   "texto": "qual começa com sss?",
-  "origem": "AL-R3-C3a"
+  "origem": "AL-RV3-C3a"
  },
  {
   "id": "s-xo29nl",
@@ -5811,7 +5781,7 @@
   "id": "t-19q9ifr",
   "voz": "tales",
   "texto": "H, de hipopótamo.",
-  "origem": "AL-R2-C4c"
+  "origem": "AL-FESTA-C4a"
  },
  {
   "id": "t-1a3hln2",
@@ -5823,7 +5793,7 @@
   "id": "t-1a3hlos",
   "voz": "tales",
   "texto": "Letra Z.",
-  "origem": "AL-FESTA-C4f"
+  "origem": "AL-RV2-C4f"
  },
  {
   "id": "t-1a3hlty",
@@ -5835,7 +5805,7 @@
   "id": "t-1a3hlvo",
   "voz": "tales",
   "texto": "Letra R.",
-  "origem": "AL-R4-C4f"
+  "origem": "AL-FESTA-C4f"
  },
  {
   "id": "t-1a3hlxe",
@@ -5847,13 +5817,13 @@
   "id": "t-1a3hlz4",
   "voz": "tales",
   "texto": "Letra V.",
-  "origem": "AL-FESTA-C4f"
+  "origem": "AL-RV2-C4f"
  },
  {
   "id": "t-1a3hm1q",
   "voz": "tales",
   "texto": "Letra H.",
-  "origem": "AL-R2-C4a"
+  "origem": "AL-FESTA-C4a"
  },
  {
   "id": "t-1a3hm3g",
@@ -5865,13 +5835,13 @@
   "id": "t-1a3hm56",
   "voz": "tales",
   "texto": "Letra L.",
-  "origem": "AL-R4-C4d"
+  "origem": "AL-FESTA-C4d"
  },
  {
   "id": "t-1a3hm6w",
   "voz": "tales",
   "texto": "Letra N.",
-  "origem": "AL-R3-C4f"
+  "origem": "AL-RV2-C4f"
  },
  {
   "id": "t-1a3hmac",
@@ -5889,7 +5859,7 @@
   "id": "t-1a3hmds",
   "voz": "tales",
   "texto": "Letra F.",
-  "origem": "AL-FESTA-C4d"
+  "origem": "AL-FESTA-C4b"
  },
  {
   "id": "t-1a7pp7p",
@@ -6477,7 +6447,7 @@
   "id": "t-1qshan4",
   "voz": "tales",
   "texto": "bola… casa",
-  "origem": "AL-R2-C3a"
+  "origem": "AL-RV2-C3a"
  },
  {
   "id": "t-1qx44il",
@@ -6729,7 +6699,7 @@
   "id": "t-81ipbg",
   "voz": "tales",
   "texto": "Repita comigo!",
-  "origem": "TF-20-C2"
+  "origem": "AL-X-C2"
  },
  {
   "id": "t-8495tb",
@@ -6987,7 +6957,7 @@
   "id": "t-ke5ywa",
   "voz": "tales",
   "texto": "janela… panela",
-  "origem": "AL-R2-C3a"
+  "origem": "AL-RV2-C3a"
  },
  {
   "id": "t-kggi3n",
@@ -7113,7 +7083,7 @@
   "id": "t-qfk4xb",
   "voz": "tales",
   "texto": "Isso! Esse é o som do L.",
-  "origem": "TF-22-C1"
+  "origem": "AL-FESTA-C4d"
  },
  {
   "id": "t-qfk4z1",
@@ -7125,31 +7095,31 @@
   "id": "t-qfk52h",
   "voz": "tales",
   "texto": "Isso! Esse é o som do J.",
-  "origem": "TF-22-C1"
+  "origem": "AL-FESTA-C4d"
  },
  {
   "id": "t-qfk547",
   "voz": "tales",
   "texto": "Isso! Esse é o som do D.",
-  "origem": "TF-R3-C1"
+  "origem": "AL-FESTA-C4e"
  },
  {
   "id": "t-qfk55x",
   "voz": "tales",
   "texto": "Isso! Esse é o som do F.",
-  "origem": "TF-22-C1"
+  "origem": "AL-FESTA-C4b"
  },
  {
   "id": "t-qfk59d",
   "voz": "tales",
   "texto": "Isso! Esse é o som do B.",
-  "origem": "TF-R3-C1"
+  "origem": "AL-FESTA-C4e"
  },
  {
   "id": "t-qfk5ff",
   "voz": "tales",
   "texto": "Isso! Esse é o som do X.",
-  "origem": "AL-FESTA-C4d"
+  "origem": "AL-FESTA-C4f"
  },
  {
   "id": "t-qfk5h5",
@@ -7161,7 +7131,7 @@
   "id": "t-qfk5iv",
   "voz": "tales",
   "texto": "Isso! Esse é o som do T.",
-  "origem": "TF-R3-C1"
+  "origem": "AL-FESTA-C4d"
  },
  {
   "id": "t-qfk5kl",
@@ -7173,13 +7143,13 @@
   "id": "t-qfk5mb",
   "voz": "tales",
   "texto": "Isso! Esse é o som do P.",
-  "origem": "TF-R3-C1"
+  "origem": "AL-FESTA-C4e"
  },
  {
   "id": "t-qfk5o1",
   "voz": "tales",
   "texto": "Isso! Esse é o som do R.",
-  "origem": "AL-R4-C4d"
+  "origem": "AL-FESTA-C4d"
  },
  {
   "id": "t-qi864h",
@@ -7269,7 +7239,7 @@
   "id": "t-u3jpxn",
   "voz": "tales",
   "texto": "Hora de brincar com as letras!",
-  "origem": "AL-R4"
+  "origem": "AL-RV3"
  },
  {
   "id": "t-ua10px",
@@ -7299,7 +7269,7 @@
   "id": "t-vpoc0d",
   "voz": "tales",
   "texto": "mão… pão",
-  "origem": "AL-R2-C3a"
+  "origem": "AL-RV2-C3a"
  },
  {
   "id": "t-w43s4o",
@@ -7354,12 +7324,6 @@
   "voz": "tales",
   "texto": "Escute os nomes. Qual palavra é mais comprida? Não vale olhar o tamanho da coisa!",
   "origem": "comprida"
- },
- {
-  "id": "t-zpc5yz",
-  "voz": "tales",
-  "texto": "Isso! Você entendeu a fala do Bolota!",
-  "origem": "AL-R4-C3a"
  },
  {
   "id": "t-zzm89g",

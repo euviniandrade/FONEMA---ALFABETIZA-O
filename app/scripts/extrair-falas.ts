@@ -45,7 +45,7 @@ for (const f of FASES) {
     if (a.tipo === 'somNovo') { addF(a.brincadeira, c.id); addF(a.repita, c.id); addF(a.revela, c.id); addF(a.apoio, c.id); a.regra?.partes.forEach((p) => { addF(p.explica, c.id); p.palavras.forEach((w) => add('sofia', w.palavra.toLowerCase(), c.id)); }); addF(a.regra?.fecha, c.id); }
     if (a.tipo === 'sintese') a.itens.forEach((i) => { add('sofia', i.correta, c.id); i.opcoes.forEach((o) => add('sofia', o.falar, c.id)); });
     if (a.tipo === 'caixas') a.itens.forEach((i) => add('sofia', i.palavra.toLowerCase(), c.id));
-    if (a.tipo === 'parMinimo') a.itens.forEach((i) => { add('sofia', i.alvo, c.id); add('sofia', i.outra, c.id); });
+    if (a.tipo === 'parMinimo') a.itens.forEach((i) => { add('sofia', i.alvo, c.id); add('sofia', i.outra, c.id); if (i.distrator) add('sofia', i.distrator, c.id); });
     if (a.tipo === 'troca') a.itens.forEach((i) => i.leituras.forEach((w) => add('sofia', w, c.id)));
     if (a.tipo === 'frase') a.itens.forEach((i) => { add('sofia', i.frase, c.id); addF(i.pergunta, c.id); i.opcoes.forEach((o) => add('sofia', o, c.id)); });
   }
