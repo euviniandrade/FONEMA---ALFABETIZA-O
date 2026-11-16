@@ -32,6 +32,7 @@ Para criar uma decisão nova, veja [`../CONVENCOES.md`](../CONVENCOES.md) §3.
 | [022](022-titulos-neutros-curva.md) | Títulos neutros pela ação e curva de desafios | 13/11/2026 | Aprovada | Títulos e selos nomeiam a ação (Primeiros Sons → Maestria da Leitura); curva de 2–6 → 8–14 → até 24 desafios por nível |
 | [023](023-escadas-de-patentes-por-area.md) | Escada de patentes em cada área | 13/11/2026 | Aprovada (nomes a confirmar) | 8 patentes neutras por área (Aprendiz → Lenda), com I-II-III e estrelas sem fim; convivem com os títulos da leitura (D022) |
 | [024](024-musica-danca-multissensorial.md) | Música, dança e todos os sentidos | 13/11/2026 | Aprovada | Músicas originais da dupla com dancinha que representa o som, sempre seguidas de atividade (D015); versão calma para TEA |
+| [031](031-alternar-letras-e-leitura.md) | Alternar "conhecer as letras" e "ler" | 15/11/2026 | Aprovada (resposta do dono: "B"); implementada em 16/11 | Na jornada, cada letra da Trilha A–Z vem logo antes da lição da Trilha dos Sons que ensina o som dela; revisões do alfabeto no fim de cada bloco; letras sem lição até TF-22 (R, H, X, Q, K, Y, W) antes da Festa; o mapa A–Z continua em ordem alfabética; progresso salvo recalculado sem perder nada |
 
 ## Conflitos entre decisões (e como ficam)
 
@@ -48,6 +49,7 @@ Para criar uma decisão nova, veja [`../CONVENCOES.md`](../CONVENCOES.md) §3.
 | Títulos com gênero | D019: "Caçador de Sílabas", "Mestre Leitor"… | **D022**: títulos e selos neutros pela ação ("Caça às Sílabas", "Maestria da Leitura") | jogo-completo/07 |
 | Vilão leve | D018 e rel. 37: "Nuvem Bagunceira" | **D019**: **Zum-Zum**, besouro barulhento (distração) que vira amigo | D018; jornada; esporte |
 | Capoeira | esporte-respeito-ambiente: roda com cantigas e mestre | **D019 §4**: só esporte e expressão corporal, sem cantigas religiosas, rituais ou política | esporte-respeito-ambiente §6 |
+| Ordem da jornada | D027 e D030 §4: Alfabeto inteiro (A–Z e Festa) → depois a Trilha dos Sons | **D031**: letra e lição do som alternadas (A, som /a/, E, som /ê/…), na ordem da trilha fônica | D031 "Substitui" |
 | Nome do recurso de boca | rels. de pesquisa: "Boquinha(s)" | **Espelho do Som** (doc. mestre, D005, D015); "Boquinhas" é marca de terceiro | — (já correto nos documentos) |
 
 Conflitos de **conteúdo** (documentos que ainda contradizem decisões) ficam listados no relatório de [`../QUALIDADE.md`](../QUALIDADE.md).

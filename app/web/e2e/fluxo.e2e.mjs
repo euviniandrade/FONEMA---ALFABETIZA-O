@@ -736,7 +736,7 @@ async function main() {
   const idA = page.url().split('/c/')[1].split('/')[0];
   await page.goto(BASE + `#/c/${idA}/alfabeto`);
   await page.getByTestId('trilha-alfabeto').waitFor();
-  ok(await page.locator('.marco.letra').count() === 26 && await page.locator('.marco.revisao').count() === 4 && await page.locator('.marco.festa').count() === 1, 'a trilha mostra os 26 marcos das letras, 4 revisões e a Festa do Alfabeto');
+  ok(await page.locator('.marco.letra').count() === 26 && await page.locator('.marco.revisao').count() === 3 && await page.locator('.marco.festa').count() === 1, 'a trilha mostra os 26 marcos das letras, 3 revisões (vogais, sons que esticam, sons que estouram) e a Festa do Alfabeto (D031)');
   ok((await page.locator('.marco.letra [data-fase]').evaluateAll((bs) => bs.map((b) => b.dataset.fase.slice(3)).join(''))) === 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'as letras estão em ordem, de A a Z');
   ok(await page.locator('[data-fase="AL-A"][data-estado="atual"]').count() === 1 && await page.locator('.marco-btn:not([disabled])').count() === 1, 'do zero: só a letra A está aberta');
   ok(/0 de 26/.test(await page.getByTestId('letras-feitas').innerText()), 'contador: 0 de 26 letras');
@@ -869,7 +869,7 @@ async function main() {
   await page.waitForTimeout(300);
   ok(page.url().includes('/vila'), 'sem pular fases: a revisão das vogais só abre depois das vogais');
   let tf01 = false;
-  for (let t = 0; t < 4 && !tf01; t++) {
+  for (let t = 0; t < 6 && !tf01; t++) {
     // sai da tela do ritual antes: a mesma rota com o mesmo hash não recarrega a sessão
     await page.goto(BASE + `#/c/${id}/sons`);
     await page.getByTestId('trilha-sons').waitFor();
@@ -1002,7 +1002,7 @@ async function main() {
         ok(viuTrofeu, 'Festa do Alfabeto: troféu "Alfabeto Completo"');
         await pj.goto(BASE + `#/c/${idj}/alfabeto`);
         await pj.getByTestId('trilha-alfabeto').waitFor();
-        ok(await pj.locator('.marco.feita').count() === 30 && /26 de 26/.test(await pj.getByTestId('letras-feitas').innerText()), 'trilha completa: 26 de 26 letras e as 4 estrelas brilhando');
+        ok(await pj.locator('.marco.feita').count() === 30 && /26 de 26/.test(await pj.getByTestId('letras-feitas').innerText()), 'trilha completa: 26 de 26 letras, as 3 revisões e a Festa brilhando');
         ok(/Continuar a jornada/.test(await pj.getByTestId('trilha-continuar').innerText()), 'depois da Festa, a trilha leva adiante na jornada (os outros sons das vogais)');
         await capA(pj, '15-trilha-completa', 1200);
       }
