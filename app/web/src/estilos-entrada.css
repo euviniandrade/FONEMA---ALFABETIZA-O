@@ -339,3 +339,6 @@ html.contraste .camada-veu{background:rgba(0,0,0,.8)}
   .area-item{min-height:42px;padding:0 10px;font-size:14px;gap:6px}
   .area-item .ic{width:18px;height:18px}
 }
+
+/* Restaurar uma cópia: o aviso de confirmação respira abaixo do botão */
+.aviso-restaurar{margin-top:14px;padding:12px 14px;border-radius:16px;background:rgba(255,244,230,.9);border:1px solid rgba(200,110,60,.35)}
