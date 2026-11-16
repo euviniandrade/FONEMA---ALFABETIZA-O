@@ -588,7 +588,7 @@ Sem leitura nem escrita sozinha nesta fase.
 | R2a-F03-C5b | escrita | MALA | ok |
 | R2a-F03-C5b | escrita | MULA | ok |
 
-### R2a-F04 · Juntar sílabas: primeiras palavras
+### R2a-F04 · Juntar sons: primeiras palavras
 
 | Cena | O quê | Texto | Resultado |
 |---|---|---|---|

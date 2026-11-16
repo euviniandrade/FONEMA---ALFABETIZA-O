@@ -28,6 +28,10 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   Tales ficou) passou a "feliz". Vozes: 8 clipes, 129 caracteres enviados (inclui o gancho pendente da Festa "Agora as vogais vão mostrar os
   outros sons delas!" e as leituras "voa" e "cada"); o texto corrido foi refeito uma vez porque o transcritor ouviu "oi" no
   lugar de "ui" na 1ª ordem ("Ui! Ai!"); a fala do Tales voltou a usar o clipe "Ai! Ui!", já auditado. Ninguém ouviu os clipes novos.
+- **Verificado (16/11, cópia separada no commit 3b728cb):** typecheck, lint, 259 testes, relatório de decodificabilidade (341 itens,
+  0 erros, 21 avisos), E2E `--trilha-sons` (19 lições, passou) e `--cantinho` (passou). Capturas `--capturas-trilha` no computador:
+  pares com 3 figuras e 3 leituras conferidos; a rodada do celular parou numa lição (TF-07, sem par mínimo) com "a sessão não chegou
+  ao ritual de fim" e não foi investigada. Falta ouvir "Voa." (transcrito "Vou, ah?").
 
 **Barra da vila, lâmpadas das Palmas e regra 6 (16/11, tarde; NÃO publicado ainda):**
 - **Barra da vila** (`web/src/telas/crianca/DocaVila.tsx`, `estilos-doca.css`): eram 8–9 botões (no celular de 25 a 48 px de largura).
