@@ -11,6 +11,7 @@ import { useConta } from '../entrada/Entrada.tsx';
 import { asset } from '../../servicos/ambiente.ts';
 import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
+import { PainelCantinho } from '../../componentes/PainelCantinho.tsx';
 import '../../estilos-painel.css';
 
 const ROTULO_NIVEL: Record<NivelInicial, string> = { zero: 'Do zero', 'letras-e-sons': 'Já conhece as letras e os sons', 'le-palavras': 'Já lê palavras' };
@@ -263,6 +264,7 @@ export function BlocosAprendizagem({ c, p, config }: { c: Crianca; p: Progresso;
         ) : <p>Ainda não treinou. O botão "Treino rápido" aparece na vila quando há algo para reforçar (no máximo uma vez por dia).</p>}
         <p className="nota-mic">O treino usa a "próxima prática recomendada": poucas perguntas, focadas no que {c.nome} confunde, com volta ao passo anterior quando precisa. Não dá nem tira moedinhas.</p>
       </div>
+      <PainelCantinho p={p} nome={c.nome} />
     </>
   );
 }

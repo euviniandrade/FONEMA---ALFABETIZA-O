@@ -1,6 +1,6 @@
 import { useEffect, useMemo, type CSSProperties } from 'react';
-import { FALAS_TRILHA_SONS, FASES_TF, REGIOES, type Fase } from '@fonema/conteudo';
-import { podeEntrar, type Progresso } from '@fonema/motor';
+import { FALAS_TRILHA_SONS, FASES_TF, REGIOES, TEXTOS_DECODIFICAVEIS, type Fase } from '@fonema/conteudo';
+import { podeEntrar, textoLiberado, type Progresso } from '@fonema/motor';
 import { useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Carregando, Topo } from '../../componentes/basicos.tsx';
@@ -8,6 +8,7 @@ import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { asset } from '../../servicos/ambiente.ts';
 import { falar } from '../../util.ts';
 import '../../estilos-trilha-sons.css';
+import '../../estilos-biblioteca.css';
 
 type Estado = 'dominada' | 'feita' | 'atual' | 'liberada' | 'aberta' | 'trancada';
 
@@ -92,6 +93,14 @@ export function TrilhaSons({ criancaId }: { criancaId: string }) {
                     );
                   })}
                 </ol>
+                {TEXTOS_DECODIFICAVEIS.filter((t) => t.bloco === b.n).map((t) => {
+                  const aberto = textoLiberado(progresso, t);
+                  return (
+                    <button key={t.id} className={`sons-livrinho ${aberto ? '' : 'trancado'}`} disabled={!aberto} onClick={() => navegar(`c/${criancaId}/leitura/texto-${t.id}`)} data-texto={t.id} aria-label={`Texto para ler sozinho: ${t.titulo}`}>
+                      <Icone nome={aberto ? 'caderno' : 'cadeado'} /><span>Ler sozinho: <b>{t.titulo}</b></span>
+                    </button>
+                  );
+                })}
               </section>
             ))}
           </div>

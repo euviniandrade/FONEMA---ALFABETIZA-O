@@ -37,7 +37,7 @@ export const JOGOS_ESCUTA: JogoEscuta[] = [
   },
   {
     id: 'escondida', modo: 'dentro', nome: 'Palavra escondida', treina: 'Achar uma palavra dentro de outra (sapato → pato)', habilidade: 'palavra-dentro',
-    enunciado: s('Tem uma palavra escondida dentro de outra. Escute bem!'), pergunta: 'Que palavra está escondida dentro de $X?', porRodada: 4, cor: 'mar', icone: 'olho',
+    enunciado: s('Tem uma palavra escondida dentro de outra. Escute bem!'), pergunta: 'Que palavra está escondida dentro de…', porRodada: 4, cor: 'mar', icone: 'olho',
     itens: [
       { estimulo: 'sapato', opcoes: ['pato', 'gato', 'rato'], correta: 'pato', revela: { sapato: ['SA', 'PATO'] } },
       { estimulo: 'luva', opcoes: ['uva', 'lua', 'ovo'], correta: 'uva', revela: { luva: ['L', 'UVA'] } },
@@ -48,7 +48,7 @@ export const JOGOS_ESCUTA: JogoEscuta[] = [
   },
   {
     id: 'rimas', modo: 'rima', nome: 'Achar a rima', treina: 'Achar a palavra que termina igual (pato, rato)', habilidade: 'rima',
-    enunciado: s('Palavras que rimam terminam com o mesmo som. Escute!'), pergunta: 'Qual rima com $X?', porRodada: 5, cor: 'verde', icone: 'nota',
+    enunciado: s('Palavras que rimam terminam com o mesmo som. Escute!'), pergunta: 'Qual rima com…', porRodada: 5, cor: 'verde', icone: 'nota',
     itens: [
       { estimulo: 'pato', opcoes: ['rato', 'sapo', 'mala'], correta: 'rato', revela: { pato: ['P', 'ATO'], rato: ['R', 'ATO'] } },
       { estimulo: 'mao', opcoes: ['pao', 'mel', 'mala'], correta: 'pao', revela: { mao: ['M', 'ÃO'], pao: ['P', 'ÃO'] } },
@@ -75,7 +75,7 @@ export const JOGOS_ESCUTA: JogoEscuta[] = [
   },
   {
     id: 'comeco', modo: 'inicio', nome: 'Mesmo começo', treina: 'Achar a palavra que começa com o mesmo som', habilidade: 'silaba-inicial',
-    enunciado: s('Escute o começo das palavras. Qual começa igual?'), pergunta: 'Qual começa igual a $X?', porRodada: 5, cor: 'ceu', icone: 'som',
+    enunciado: s('Escute o começo das palavras. Qual começa igual?'), pergunta: 'Qual começa igual a…', porRodada: 5, cor: 'ceu', icone: 'som',
     itens: [
       { estimulo: 'sapo', opcoes: ['sapato', 'pato', 'zebra'], correta: 'sapato', revela: { sapo: ['SA', 'PO'], sapato: ['SA', 'PATO'] } },
       { estimulo: 'mala', opcoes: ['macaco', 'bala', 'lama'], correta: 'macaco', revela: { mala: ['MA', 'LA'], macaco: ['MA', 'CACO'] } },

@@ -168,6 +168,8 @@ export function Vila({ criancaId }: { criancaId: string }) {
           {config.lojinha.naVila ? <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/lojinha`)}><Icone nome="lojinha" />Lojinha</button> : null}
           <button className="doca-btn doca-alfabeto" onClick={() => navegar(`c/${criancaId}/alfabeto`)} data-ponto="alfabeto"><span className="doca-abc" aria-hidden="true">Aa</span>Alfabeto</button>
           <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/sons`)} data-ponto="sons"><Icone nome="som" />Sons</button>
+          <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/leitura`)} data-ponto="leitura" data-testid="ir-leitura"><Icone nome="caderno" />Leitura</button>
+          <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/brincar`)} data-ponto="brincar" data-testid="ir-brincar"><Icone nome="nota" />Brincar</button>
           <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mapa`)}><Icone nome="mapa" />Ilhas</button>
           {mundo3d ? <button className="doca-btn" onClick={() => navegar(`c/${criancaId}/mundo`)} data-ponto="mundo3d"><Icone nome="cubo" />Passear 3D</button> : null}
           <BotaoTreino criancaId={criancaId} progresso={progresso} />

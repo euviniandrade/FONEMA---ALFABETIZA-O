@@ -100,7 +100,7 @@ export interface JogoEscuta {
   treina: string;
   habilidade: string;
   enunciado: Fala;
-  /** Pergunta de cada item; `$X` = nome da figura-estímulo. */
+  /** Pergunta de cada item (moldura): nos jogos com estímulo, a voz diz em seguida o nome da figura-estímulo. */
   pergunta: string;
   itens: ItemEscuta[];
   /** Palmas: palavras (usa a mecânica Palmas que já existe). */
