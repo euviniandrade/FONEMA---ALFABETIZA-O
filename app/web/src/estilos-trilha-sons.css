@@ -152,3 +152,9 @@
   .somnovo-onda i,.sintese-letra.guia,.caixa.agora,.troca-peca.sai,.troca-buraco,.sons-marco.atual .sons-disco{animation:none}
 }
 html.contraste .sintese-letra.acesa,html.contraste .caixa.acesa,html.contraste .frase-palavra.acesa{background:#FFD400}
+
+/* Celular (16/11): o cadeado fica pequeno, no canto de cima, sem cobrir a letra */
+@media (max-width:700px){
+  .sons-cadeado{width:22px;height:22px;right:-7px;top:-6px;bottom:auto}
+  .sons-cadeado .ic{width:13px;height:13px}
+}

@@ -329,3 +329,13 @@ html.contraste .camada-veu{background:rgba(0,0,0,.8)}
 }
 @media (max-width:560px){.fluxo-corpo .tecla{min-height:clamp(42px,5.6vh,54px)}.fluxo-corpo .teclado{gap:6px}}
 .pin-cartao>.pin{width:min(100%,220px)}.pin .pin-caixa{width:100%;max-width:220px}
+
+/* Celular (16/11): o aviso do rodapé vai para cima do botão (o "Continuar" não fica mais espremido)
+   e as abas da área do adulto quebram em duas linhas em vez de sumirem pela borda. */
+@media (max-width:560px){
+  .fluxo-pe{flex-wrap:wrap;row-gap:8px}
+  .fluxo-pe-nota{flex:1 1 100%;justify-content:center;text-align:center}
+  .area-menu{flex-wrap:wrap;justify-content:center;overflow:visible;row-gap:4px}
+  .area-item{min-height:42px;padding:0 10px;font-size:14px;gap:6px}
+  .area-item .ic{width:18px;height:18px}
+}

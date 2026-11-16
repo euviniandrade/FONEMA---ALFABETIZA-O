@@ -55,3 +55,20 @@ html.contraste .liga-cartao.sel,html.contraste .opcao.opcao-som.sel{background:#
 .opcao-ouvir:active{transform:scale(.92)}
 .opcao-ouvir[disabled]{opacity:.55}
 @media (max-width:560px){.opcao-ouvir{width:44px;height:44px;right:-4px;top:-6px}.opcao-ouvir .ic{width:32px;height:32px}}
+
+/* Celular (16/11): o botão de AVANÇO da lição ("Já conheci!", "Eu fiz o som!", "Continuar", "Pronto!") fica sempre
+   à vista, preso no rodapé da tela enquanto o conteúdo rola por trás; a lição também fica mais compacta. */
+@media (max-width:700px){
+  .tela-sessao .cartao.atividade .linha-botoes,.tela-sessao .assiste .linha-botoes{
+    position:sticky;bottom:0;z-index:20;margin:12px -12px 0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,.97) 30%);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    border-radius:20px 20px 0 0;flex-wrap:nowrap;justify-content:center;gap:8px
+  }
+  .tela-sessao .cartao.atividade .linha-botoes .btn{min-width:0;padding-left:12px;padding-right:12px}
+  .tela-sessao .cartao.atividade .linha-botoes .btn.grande{flex:1 1 auto;white-space:nowrap}
+  /* botões de apoio (ouvir de novo, devagar, dica) viram só o ícone; o texto continua como nome acessível */
+  .tela-sessao .cartao.atividade .linha-botoes .btn:not(.grande){flex:none;font-size:0;gap:0;width:58px;min-height:58px;padding:0;justify-content:center}
+  .tela-sessao .cartao.atividade .linha-botoes .btn:not(.grande) .ic{width:30px;height:30px;margin:0}
+  .mec-letra .letra-dupla .letra-bloco b{font-size:min(22vw,96px)}
+  .mec-espelho .espelho-palco{gap:10px}
+}
