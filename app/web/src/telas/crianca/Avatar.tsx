@@ -80,9 +80,11 @@ function Montador({ crianca, progresso, salvarCrianca }: { crianca: Crianca; pro
   const concluir = async () => {
     if (crianca.generoPendente) { setIndice(0); return; }
     const c = { ...crianca, avatar: { ...avatar, pronto: true } };
+    const aqui = location.hash;
     await salvarCrianca(c);
     await falar(FALAS.avatarPronto, c);
-    navegar(primeiraVez ? `c/${criancaId}/chegada` : `c/${criancaId}/vila`);
+    // se a pessoa já foi para outra tela durante a fala, não puxa de volta
+    if (location.hash === aqui) navegar(primeiraVez ? `c/${criancaId}/chegada` : `c/${criancaId}/vila`);
   };
 
   const opcoes = passo === 'sexo' || passo === 'lojinha' ? [] : passo === 'cabelo' ? cabelos : pecasPara(passo, sexo);
