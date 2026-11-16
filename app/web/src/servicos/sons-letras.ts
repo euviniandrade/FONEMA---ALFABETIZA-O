@@ -12,6 +12,7 @@
  * (o Espelho do Som pode usar para mexer a boca).
  */
 import { modoTeste } from './ambiente.ts';
+import { tocarAteOFim } from './midia.ts';
 
 export interface SomPublicado {
   arquivo: string;
@@ -93,6 +94,7 @@ class SonsLetras {
   private fonte: FonteGravacoes | null = null;
   private urls = new Map<string, string | null>();
   private atual: HTMLAudioElement | null = null;
+  private soltar: (() => void) | null = null;
   private geracao = 0;
 
   /** Liga o repositório do aparelho (gravações do adulto). Chamado uma vez pelo app. */
@@ -139,19 +141,16 @@ class SonsLetras {
       const el = new Audio(url);
       el.preload = 'auto';
       this.atual = el;
-      let feito = false;
-      const fim = (ok: boolean) => {
-        if (feito) return;
-        feito = true;
+      avisar('fonema:som', { fonema, origem, audio: el, inicio: performance.now() });
+      // a promessa sempre termina: fim, erro, pausa, play recusado, vigia ou tempo-limite (servicos/midia.ts)
+      const { fim, soltar } = tocarAteOFim(el);
+      this.soltar = soltar;
+      void fim.then((ok) => {
         if (this.atual === el) this.atual = null;
+        if (this.soltar === soltar) this.soltar = null;
         avisar('fonema:som-fim', { fonema });
         resolve(ok && g === this.geracao);
-      };
-      el.onended = () => fim(true);
-      el.onerror = () => fim(false);
-      el.onpause = () => { if (!el.ended) fim(false); };
-      avisar('fonema:som', { fonema, origem, audio: el, inicio: performance.now() });
-      el.play().catch(() => fim(false));
+      });
     });
   }
   /** Sons em sequência, com um respiro entre eles ("sss… ooo… lll"). */
@@ -167,7 +166,12 @@ class SonsLetras {
     }
     return true;
   }
-  private silenciar() { const el = this.atual; this.atual = null; if (el && !el.paused) { try { el.pause(); } catch { /* nada */ } } }
+  private silenciar() {
+    const el = this.atual; this.atual = null;
+    const soltar = this.soltar; this.soltar = null;
+    if (el && !el.paused) { try { el.pause(); } catch { /* nada */ } }
+    soltar?.();
+  }
   parar() { this.geracao++; this.silenciar(); }
 }
 

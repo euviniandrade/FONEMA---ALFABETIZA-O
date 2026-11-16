@@ -6,6 +6,7 @@ import { Figura, Icone, caminhoFigura } from '../componentes/ui.tsx';
 import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
+import { useDestravar } from '../servicos/destravar.ts';
 import { falar, textoVoz } from '../util.ts';
 import { tentativa, type PropsMecanica } from './comum.tsx';
 import '../estilos-trilha-sons.css';
@@ -31,6 +32,7 @@ export function SomNovo({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
   const vivo = useRef(true);
   const inicio = useRef(Date.now());
   const cena = CENAS_DO_SOM[a.letra];
+  const solto = useDestravar(passo !== 'pronto' && !feito);
 
   const diz = async (f: Fala | undefined) => {
     if (!f || !vivo.current) return vivo.current;
@@ -139,7 +141,7 @@ export function SomNovo({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
       <div className="linha-botoes centro">
         <button className="btn" onClick={() => { if (passo === 'pronto') void som(2); }} disabled={passo !== 'pronto'}><Icone nome="som" />Ouvir o som</button>
         <button className="btn" onClick={() => void apresentar()} disabled={passo !== 'pronto'}><Icone nome="voltar" />Ver de novo</button>
-        <button className="btn grande verde" onClick={continuar} disabled={passo !== 'pronto' || feito} data-testid="som-novo-continuar"><Icone nome="seta" />Continuar</button>
+        <button className="btn grande verde" onClick={continuar} disabled={(passo !== 'pronto' && !solto) || feito} data-testid="som-novo-continuar"><Icone nome="seta" />Continuar</button>
       </div>
     </div>
   );

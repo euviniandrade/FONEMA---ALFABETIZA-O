@@ -5,6 +5,7 @@ import { Rosto } from '../componentes/basicos.tsx';
 import { Icone } from '../componentes/ui.tsx';
 import { asset, modoTeste } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
+import { useDestravar } from '../servicos/destravar.ts';
 import { NOMES_PERSONAGEM, falarVarias, textoTela } from '../util.ts';
 
 /**
@@ -48,6 +49,8 @@ export function AssisteEFaz({ roteiro, imagem, video, audio, crianca, onFim }: {
 
   const fala = roteiro[Math.max(0, i)];
   const naMidia = temMidia && i < 0 && !acabou;
+  // com vídeo/áudio tocando não há fala da dupla: espera bem mais antes de soltar o botão
+  const solto = useDestravar(!acabou && i < roteiro.length - 1, naMidia ? 60000 : undefined);
   const pct = temMidia ? (i >= 0 || acabou ? 100 : progresso * 100) : ((i + 1) / Math.max(1, roteiro.length)) * 100;
   const eventos = {
     onTimeUpdate: (e: React.SyntheticEvent<HTMLMediaElement>) => setProgresso(e.currentTarget.duration ? e.currentTarget.currentTime / e.currentTarget.duration : 0),
@@ -78,7 +81,7 @@ export function AssisteEFaz({ roteiro, imagem, video, audio, crianca, onFim }: {
       </div>
       <div className="linha-botoes">
         <button className="btn vidro" onClick={tocar}><Icone nome="repetir" />Ver de novo</button>
-        <button className="btn grande ipe" onClick={() => { voz.parar(); midia.current?.pause(); onFim(); }} data-testid="minha-vez" disabled={!acabou && i < roteiro.length - 1}>
+        <button className="btn grande ipe" onClick={() => { voz.parar(); midia.current?.pause(); onFim(); }} data-testid="minha-vez" disabled={!acabou && i < roteiro.length - 1 && !solto}>
           {textoTela('Agora é a minha vez!', crianca)}<Icone nome="seta" />
         </button>
       </div>

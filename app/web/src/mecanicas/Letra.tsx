@@ -6,6 +6,7 @@ import { Figura, Icone, caminhoFigura } from '../componentes/ui.tsx';
 import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
+import { useDestravar } from '../servicos/destravar.ts';
 import { falar, textoVoz } from '../util.ts';
 import { tentativa, type PropsMecanica } from './comum.tsx';
 
@@ -30,6 +31,8 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
   const [palavra, setPalavra] = useState(-1);
   const vivo = useRef(true);
   const inicio = useRef(Date.now());
+  // rede de segurança: se a voz ficar muda por alguns segundos antes do fim, o botão libera assim mesmo
+  const solto = useDestravar(!pronto && !feito);
   const doNome = infoNome(crianca.nome, crianca.pronuncia.grafia).nome.normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().startsWith(l.letra);
 
   /** Uma fala da dupla; devolve false se a tela já saiu. */
@@ -128,7 +131,7 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
       {nota ? <p className={`letra-nota ${passo >= 3 ? 'visivel' : ''}`}>{l.segundoSom ? <Figura palavra={l.segundoSom.palavra} className="letra-nota-fig" /> : <Icone nome={nota.icone} />}<span>{nota.texto}</span></p> : null}
       <div className="linha-botoes">
         <button className="btn" onClick={apresentar}><Icone nome="som" />Ouvir de novo</button>
-        <button className="btn grande verde" onClick={continuar} disabled={!pronto || feito} data-testid="conheci-a-letra"><Icone nome="check" />Já conheci!</button>
+        <button className="btn grande verde" onClick={continuar} disabled={!(pronto || solto) || feito} data-testid="conheci-a-letra"><Icone nome="check" />Já conheci!</button>
       </div>
       {feito ? <Brilho ativo /> : null}
     </div>

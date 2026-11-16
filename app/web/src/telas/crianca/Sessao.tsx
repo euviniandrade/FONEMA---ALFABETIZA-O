@@ -28,6 +28,7 @@ import { Frase } from '../../mecanicas/Frase.tsx';
 import type { ResultadoMecanica } from '../../mecanicas/comum.tsx';
 import { Ritual } from './Ritual.tsx';
 
+/** Nome de MÉTODO de cada cena: só para o adulto e os documentos (fica em data-metodo); a criança vê pontinhos e o título da atividade. */
 const NOME_CENA: Record<string, string> = { C1: 'Revisão', C2: 'Eu faço', C3: 'Nós fazemos', C4: 'Você faz', C5: 'Desafio', C6: 'Pausa', C7: 'Projeto', C8: 'Ensinar', C9: 'Fim' };
 
 /** Sessão C0–C9 de uma fase. Toda regra vem do motor; aqui só a apresentação. */
@@ -131,7 +132,7 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
         <ol className="trilha vidro" aria-label="Trilha do dia">
           {cenas.map((e, k) => (
             <li key={e.cena!.id} className={k < posCena ? 'feito' : k === posCena && etapa.tipo === 'cena' ? 'agora' : ''} title={e.cena!.titulo} aria-current={k === posCena && etapa.tipo === 'cena' ? 'step' : undefined}>
-              <i>{k < posCena ? <Icone nome="check" /> : k + 1}</i><span>{NOME_CENA[e.cena!.tipo] ?? e.cena!.tipo}</span>
+              <i data-metodo={NOME_CENA[e.cena!.tipo] ?? e.cena!.tipo}>{k < posCena ? <Icone nome="check" /> : k + 1}</i><span>{e.cena!.titulo}</span>
             </li>
           ))}
         </ol>
@@ -143,7 +144,7 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
             <h1 className="t">{fase.titulo}</h1>
             <Balao fala={fase.acolhida} crianca={crianca} auto destaque />
             <ol className="trilha-dia">
-              {cenas.map((e, k) => <li key={e.cena!.id}><i>{k + 1}</i><span><b>{NOME_CENA[e.cena!.tipo]}</b> {e.cena!.titulo}</span></li>)}
+              {cenas.map((e, k) => <li key={e.cena!.id} data-metodo={NOME_CENA[e.cena!.tipo]}><i>{k + 1}</i><span>{e.cena!.titulo}</span></li>)}
             </ol>
             <button className="btn enorme ipe brilha" onClick={avancar} data-testid="comecar-sessao"><Icone nome="play" />Vamos!</button>
           </section>

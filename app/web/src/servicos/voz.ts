@@ -10,6 +10,8 @@
 import type { Personagem } from '@fonema/conteudo';
 import { modoTeste } from './ambiente.ts';
 import { fonemasDaSequencia, sonsLetras } from './sons-letras.ts';
+import { noMaximo, tocarAteOFim } from './midia.ts';
+export { noMaximo, tocarAteOFim } from './midia.ts';
 
 /** `rate` e `pitchExtra` são ignorados (ficaram só para não quebrar chamadas antigas): a voz nunca é esticada. */
 export interface OpcoesFala { quem?: Personagem; rate?: number; pitchExtra?: number }
@@ -112,6 +114,8 @@ const DEIXA_TERMINAR_S = 1.0;
 const FADE_MS = 90;
 /** Respiro extra depois do nome da criança, quando a frase continua ("Oi, Mariana! | Eu sou a Sofia."). */
 const PAUSA_DEPOIS_DO_NOME_MS = 140;
+/** Uma fala nova nunca espera mais que isto pelo fim da anterior (fade de 90 ms ou o último segundo do clipe). */
+const ESPERA_CAUDA_MS = DEIXA_TERMINAR_S * 1000 + 300;
 
 /**
  * Vozes OFICIAIS pré-geradas (ElevenLabs: "Sofia — FONEMA" e "Tales — FONEMA").
@@ -130,7 +134,9 @@ export class ProvedorPreGerado implements ProvedorVoz {
   private arqNomes: Record<string, Record<string, string>> = {};
   private atual: HTMLAudioElement | null = null;
   /** Termina quando a fala anterior acabou de verdade (fim natural do clipe ou fim do fade). */
-  private cauda: Promise<void> = Promise.resolve();
+  private cauda: Promise<unknown> = Promise.resolve();
+  /** Encerra a espera do clipe atual (fala cancelada). */
+  private soltar: (() => void) | null = null;
   private geracao = 0;
   nome = '';
   pronto: Promise<void>;
@@ -182,21 +188,17 @@ export class ProvedorPreGerado implements ProvedorVoz {
       return this.reserva.falar(texto, o);
     }
     const g = ++this.geracao;
-    // carrega TODOS os trechos antes de começar (e espera o finzinho da fala anterior)
-    const [els] = await Promise.all([Promise.all(plano.map(async (p) => carregar(await urlDoAudio(p.arquivo)))), this.cauda]);
+    // carrega TODOS os trechos antes de começar (e espera o finzinho da fala anterior, com limite)
+    const [els] = await Promise.all([Promise.all(plano.map(async (p) => carregar(await urlDoAudio(p.arquivo)))), noMaximo(this.cauda, ESPERA_CAUDA_MS)]);
     for (let i = 0; i < els.length; i++) {
       if (g !== this.geracao) return;
       const el = els[i];
-      const fim = new Promise<void>((resolve) => {
-        el.onended = () => resolve();
-        el.onerror = () => resolve();
-        el.onpause = () => { if (!el.ended) resolve(); };
-      });
       this.atual = el;
-      this.cauda = fim;
       el.playbackRate = 1; // D029 §5: nunca mudar tom nem velocidade
       avisar('fonema:fala', { quem, voz: vozDe(quem), texto, audio: el, arquivo: plano[i].arquivo.replace(/^\.\//, ''), inicio: performance.now(), trecho: i, trechos: els.length });
-      el.play().catch(() => el.onerror?.(new Event('error')));
+      const { fim, soltar } = tocarAteOFim(el);
+      this.soltar = soltar;
+      this.cauda = fim;
       await fim;
       if (this.atual === el) this.atual = null;
       if (g !== this.geracao || i === els.length - 1) avisar('fonema:fala-fim', { quem });
@@ -208,6 +210,11 @@ export class ProvedorPreGerado implements ProvedorVoz {
     this.geracao++;
     const el = this.atual;
     this.atual = null;
+    // a fala seguinte espera o finzinho desta só até o limite (o fade ou o último segundo do clipe)
+    this.cauda = noMaximo(this.cauda, ESPERA_CAUDA_MS);
+    const soltar = this.soltar;
+    this.soltar = null;
+    if (el && (el.paused || el.ended)) soltar?.();
     if (el && !el.paused && !el.ended) {
       const resta = (el.duration - el.currentTime) / (el.playbackRate || 1);
       if (!(resta <= DEIXA_TERMINAR_S)) {
@@ -215,7 +222,7 @@ export class ProvedorPreGerado implements ProvedorVoz {
         const t0 = performance.now();
         const passo = () => {
           const k = (performance.now() - t0) / FADE_MS;
-          if (k >= 1 || el.paused) { el.pause(); return; }
+          if (k >= 1 || el.paused) { el.pause(); soltar?.(); return; }
           el.volume = v0 * (1 - k) * (1 - k);
           setTimeout(passo, 15);
         };
@@ -227,14 +234,14 @@ export class ProvedorPreGerado implements ProvedorVoz {
   /** Toca um clipe solto (nome no cadastro) até o fim. */
   async tocarArquivo(caminho: string): Promise<void> {
     const g = ++this.geracao;
-    const [el] = await Promise.all([urlDoAudio(caminho).then(carregar), this.cauda]);
+    const [el] = await Promise.all([urlDoAudio(caminho).then(carregar), noMaximo(this.cauda, ESPERA_CAUDA_MS)]);
     if (g !== this.geracao) return;
-    const fim = new Promise<void>((resolve) => { el.onended = () => resolve(); el.onerror = () => resolve(); el.onpause = () => { if (!el.ended) resolve(); }; });
     this.atual = el;
-    this.cauda = fim;
     const quem = /nomes\/(sofia|tales)\//.exec(caminho)?.[1] ?? 'sofia';
     avisar('fonema:fala', { quem, voz: quem, texto: '', audio: el, arquivo: caminho.replace(/^\.\//, ''), inicio: performance.now(), trecho: 0, trechos: 1 });
-    el.play().catch(() => el.onerror?.(new Event('error')));
+    const { fim, soltar } = tocarAteOFim(el);
+    this.soltar = soltar;
+    this.cauda = fim;
     await fim;
     if (this.atual === el) this.atual = null;
     avisar('fonema:fala-fim', { quem });
@@ -320,14 +327,18 @@ class Voz {
   /** Fala uma sequência de falas, uma depois da outra. */
   async sequencia(falas: { texto: string; quem?: Personagem }[], aoMudar?: (i: number) => void): Promise<void> {
     this.parar();
+    const t = this.turno;
     for (let i = 0; i < falas.length; i++) {
+      if (t !== this.turno) return; // alguém parou a voz (outra fala, troca de tela): a fila acaba aqui
       aoMudar?.(i);
       coletar(falas[i].texto, falas[i].quem, this.pre.nome);
       if (this.ligada) await this.dizer(falas[i].texto, { quem: falas[i].quem });
       else await new Promise((r) => setTimeout(r, modoTeste() ? 10 : 1400));
     }
   }
-  parar() { this.provedor.parar(); sonsLetras.parar(); }
+  /** Muda a cada parar(): uma sequência em andamento sabe que foi cancelada. */
+  private turno = 0;
+  parar() { this.turno++; this.provedor.parar(); sonsLetras.parar(); }
 }
 
 export const voz = new Voz();

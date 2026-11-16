@@ -18,7 +18,7 @@ const IDADES = [3, 4, 5, 6, 7, 8];
 const GENEROS: [Genero, string][] = [['m', 'Menino'], ['f', 'Menina']];
 const FRASE_NIVEL: Record<NivelInicial, string> = {
   zero: 'Começa pelo alfabeto: cada letra e o som dela.',
-  'letras-e-sons': 'Pula o alfabeto e começa juntando letras em sílabas.',
+  'letras-e-sons': 'Pula o alfabeto e começa juntando os sons das letras para ler palavras.',
   'le-palavras': 'Começa lendo palavras sozinho, rumo às frases.'
 };
 

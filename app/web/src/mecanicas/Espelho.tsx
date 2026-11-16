@@ -7,6 +7,7 @@ import { EspelhoBoca, useEspelhoEmbed } from '../componentes/EspelhoDoSom.tsx';
 import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
+import { useDestravar } from '../servicos/destravar.ts';
 import { falar, textoVoz } from '../util.ts';
 import { tentativa, type PropsMecanica } from './comum.tsx';
 
@@ -22,6 +23,7 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
   const [falando, setFalando] = useState(false);
   const [fase, setFase] = useState<'mostra' | 'vez' | 'feito'>('mostra');
   const [dica, setDica] = useState(false);
+  const solto = useDestravar(fase === 'mostra');
 
   const quem = atividade.voz ?? 'sofia';
   const mostrar = async (lento = false) => {
@@ -83,7 +85,7 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
         <button className="btn" onClick={() => mostrar()}><Icone nome="som" />Ouvir o som</button>
         <button className="btn" onClick={() => mostrar(true)}><Icone nome="tartaruga" />Bem devagar</button>
         {fase !== 'mostra' && !atividade.falaSom && atividade.falaAncora === undefined ? <button className="btn" onClick={async () => { setDica(true); await voz.falar(s.correcao, { quem: 'sofia' }); }}><Icone nome="dica" />Dica de boca</button> : null}
-        <button className="btn grande verde" onClick={fiz} disabled={fase !== 'vez'} data-testid="fiz-o-som"><Icone nome="check" />Eu fiz o som!</button>
+        <button className="btn grande verde" onClick={fiz} disabled={fase === 'feito' || (fase === 'mostra' && !solto)} data-testid="fiz-o-som"><Icone nome="check" />Eu fiz o som!</button>
       </div>
       {fase === 'feito' ? <Brilho ativo /> : null}
     </div>

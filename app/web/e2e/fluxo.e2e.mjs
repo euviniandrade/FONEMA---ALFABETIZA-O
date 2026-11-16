@@ -13,6 +13,7 @@ import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { trechoVozReal } from './trecho-voz-real.mjs';
 
 const aqui = dirname(fileURLToPath(import.meta.url));
 const CAPTURAS_V2 = process.argv.includes('--capturas-v2');
@@ -655,6 +656,13 @@ async function main() {
     if (errosC.length) throw new Error(`erros na página:\n${errosC.join('\n')}`);
     return;
   }
+  if (process.argv.includes('--voz-real')) {
+    const errosV = [];
+    await trechoVozReal(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosV });
+    await browser.close(); servidor?.kill();
+    if (errosV.length) throw new Error(`erros na página:\n${errosV.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--trilha-sons')) {
     const errosTS = [];
     await trechoTrilhaSons(browser, errosTS);
@@ -1048,6 +1056,7 @@ async function main() {
   }
   await trechoTrilhaSons(browser, erros);
   await trechoCantinho(browser, erros);
+  await trechoVozReal(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
 
   if (CAPTURAS_AL) {
     const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR' });
