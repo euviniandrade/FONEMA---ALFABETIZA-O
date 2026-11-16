@@ -1,21 +1,45 @@
-import { useEffect, type ReactNode } from 'react';
+import { Suspense, lazy, useEffect, type ComponentType, type ReactNode } from 'react';
 import { navegar, useRota } from './rotas.ts';
 import { Carregando } from './componentes/basicos.tsx';
-import { EstudioSons } from './telas/adulto/EstudioSons.tsx';
-import { AdultoHome, Configuracoes, FamiliaHome, PainelFamilia, Professor, type AbaProfessor } from './telas/adulto/Adulto.tsx';
-import { Cadastro } from './telas/adulto/Cadastro.tsx';
 import { Alunos, Entrada, PrimeiraVez, Protegido, useConta } from './telas/entrada/Entrada.tsx';
-import { Avatar } from './telas/crianca/Avatar.tsx';
-import { Arquipelago, Chegada, EntradaFase, Regiao, Vila } from './telas/crianca/Mundo.tsx';
-import { TrilhaAlfabeto } from './telas/crianca/Alfabeto.tsx';
-import { TrilhaSons } from './telas/crianca/TrilhaSons.tsx';
-import { Sessao } from './telas/crianca/Sessao.tsx';
-import { Album, ConhecaSeuCorpo, MostraProfessor, Mundo3D } from './telas/crianca/Extras.tsx';
-import { SondagemDaVila } from './telas/crianca/Sondagem.tsx';
-import { Treino } from './telas/crianca/Treino.tsx';
-import { Biblioteca } from './telas/crianca/Biblioteca.tsx';
-import { BrincarSons } from './telas/crianca/BrincarSons.tsx';
-import { Lojinha } from './telas/crianca/Lojinha.tsx';
+import type { AbaProfessor } from './telas/adulto/Adulto.tsx';
+
+/**
+ * Primeiro acesso leve: só a entrada vem no JS inicial; as outras telas chegam sob demanda (cada arquivo vira um
+ * pedaço separado). O service worker guarda todos os pedaços no aparelho, então depois de instalado tudo abre sem internet.
+ */
+function sob<M, K extends keyof M>(carregar: () => Promise<M>, nome: K): M[K] {
+  // o componente preguiçoso tem as mesmas props do original (a tipagem continua conferida)
+  return lazy(() => carregar().then((m) => ({ default: m[nome] as unknown as ComponentType<object> }))) as unknown as M[K];
+}
+const adulto = () => import('./telas/adulto/Adulto.tsx');
+const mundo = () => import('./telas/crianca/Mundo.tsx');
+const extras = () => import('./telas/crianca/Extras.tsx');
+const EstudioSons = sob(() => import('./telas/adulto/EstudioSons.tsx'), 'EstudioSons');
+const AdultoHome = sob(adulto, 'AdultoHome');
+const Configuracoes = sob(adulto, 'Configuracoes');
+const FamiliaHome = sob(adulto, 'FamiliaHome');
+const PainelFamilia = sob(adulto, 'PainelFamilia');
+const Professor = sob(adulto, 'Professor');
+const Cadastro = sob(() => import('./telas/adulto/Cadastro.tsx'), 'Cadastro');
+const Avatar = sob(() => import('./telas/crianca/Avatar.tsx'), 'Avatar');
+const Arquipelago = sob(mundo, 'Arquipelago');
+const Chegada = sob(mundo, 'Chegada');
+const EntradaFase = sob(mundo, 'EntradaFase');
+const Regiao = sob(mundo, 'Regiao');
+const Vila = sob(mundo, 'Vila');
+const TrilhaAlfabeto = sob(() => import('./telas/crianca/Alfabeto.tsx'), 'TrilhaAlfabeto');
+const TrilhaSons = sob(() => import('./telas/crianca/TrilhaSons.tsx'), 'TrilhaSons');
+const Sessao = sob(() => import('./telas/crianca/Sessao.tsx'), 'Sessao');
+const Album = sob(extras, 'Album');
+const ConhecaSeuCorpo = sob(extras, 'ConhecaSeuCorpo');
+const MostraProfessor = sob(extras, 'MostraProfessor');
+const Mundo3D = sob(extras, 'Mundo3D');
+const SondagemDaVila = sob(() => import('./telas/crianca/Sondagem.tsx'), 'SondagemDaVila');
+const Treino = sob(() => import('./telas/crianca/Treino.tsx'), 'Treino');
+const Biblioteca = sob(() => import('./telas/crianca/Biblioteca.tsx'), 'Biblioteca');
+const BrincarSons = sob(() => import('./telas/crianca/BrincarSons.tsx'), 'BrincarSons');
+const Lojinha = sob(() => import('./telas/crianca/Lojinha.tsx'), 'Lojinha');
 import { useCrianca } from './contexto.tsx';
 
 /**
@@ -26,7 +50,7 @@ import { useCrianca } from './contexto.tsx';
 export function App() {
   const r = useRota();
   // transição de página: cada rota entra com fade/slide (desligada em "menos movimento" pelo CSS)
-  return <div className="pagina" key={r.join('/')}>{tela(r)}</div>;
+  return <div className="pagina" key={r.join('/')}><Suspense fallback={<Carregando />}>{tela(r)}</Suspense></div>;
 }
 
 const ABAS: Record<string, AbaProfessor> = { fila: 'fila', habilidades: 'habilidades', palavras: 'palavras' };

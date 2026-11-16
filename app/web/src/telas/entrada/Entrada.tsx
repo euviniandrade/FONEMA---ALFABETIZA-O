@@ -3,7 +3,7 @@
  * Sou aluno(a) · Sou pai, mãe ou responsável · Sou professor(a) · Primeira vez aqui. Cada um leva a uma área diferente.
  * O adulto entra com PIN de 4 dígitos (conta guardada neste aparelho, ver servicos/conta.ts); a criança nunca digita senha.
  */
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { calcularNivel, fasesConcluidas, missaoInicialFeita, type Crianca, type Progresso } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
@@ -24,10 +24,34 @@ const NOME_AREA: Record<TipoConta, string> = { responsavel: 'Área da Família',
 const ROTA_AREA: Record<TipoConta, string> = { responsavel: 'familia', professor: 'professor' };
 
 /* ------------------------------------------------------------------ primeira página */
+/** Mesma regra do CSS (estilos-entrada.css): tela em pé ou estreita usa a arte em retrato. */
+const PAISAGEM = '(orientation: landscape) and (min-width: 901px)';
+function useTelaDeitada(): boolean {
+  return useSyncExternalStore(
+    (avisar) => { const m = matchMedia(PAISAGEM); m.addEventListener('change', avisar); return () => m.removeEventListener('change', avisar); },
+    () => typeof matchMedia === 'undefined' || matchMedia(PAISAGEM).matches
+  );
+}
+/**
+ * O vídeo da entrada (1,1 MB) não atrasa a primeira pintura: a arte parada aparece primeiro e o vídeo só começa a
+ * baixar depois que a página terminou de carregar e o navegador ficou livre. Em tela em pé ele nem existe.
+ */
+function useDepoisDeCarregar(): boolean {
+  const [livre, setLivre] = useState(false);
+  useEffect(() => {
+    let t = 0;
+    const ir = () => { t = window.setTimeout(() => setLivre(true), 600); };
+    if (document.readyState === 'complete') ir(); else window.addEventListener('load', ir, { once: true });
+    return () => { window.removeEventListener('load', ir); clearTimeout(t); };
+  }, []);
+  return livre;
+}
 export function Entrada() {
   const { repo, pronto, prefs } = useApp();
   const [criancas, setCriancas] = useState<Crianca[] | null>(null);
   const video = useRef<HTMLVideoElement>(null);
+  const deitada = useTelaDeitada();
+  const livre = useDepoisDeCarregar();
   useEffect(() => { repo.listarCriancas().then(setCriancas); }, [repo]);
   const semMovimento = prefs.menosMovimento || (typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches);
   useEffect(() => {
@@ -39,11 +63,11 @@ export function Entrada() {
   const ultima = criancas.find((c) => c.id === ultimoPerfil()) ?? criancas[0];
   return (
     <div className="tela-entrada" data-testid="inicio">
-      <img className="entrada-midia paisagem" src={asset('arte/hero-paisagem.webp')} alt="" />
-      {!semMovimento ? (
+      {deitada ? <img className="entrada-midia paisagem" src={asset('arte/hero-paisagem.webp')} alt="" fetchPriority="high" /> : null}
+      {deitada && !semMovimento && livre ? (
         <video ref={video} className="entrada-midia paisagem" src={asset('arte/hero-loop.mp4')} poster={asset('arte/hero-paisagem.webp')} autoPlay muted loop playsInline preload="auto" aria-hidden="true" />
       ) : null}
-      <img className="entrada-midia retrato" src={asset('arte/hero-retrato.webp')} alt="" />
+      {!deitada ? <img className="entrada-midia retrato" src={asset('arte/hero-retrato.webp')} alt="" fetchPriority="high" /> : null}
       <div className="entrada-veu" aria-hidden="true" />
 
       <div className="entrada-cima"><Ajustes /></div>
