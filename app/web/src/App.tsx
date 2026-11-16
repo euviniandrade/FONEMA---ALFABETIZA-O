@@ -10,7 +10,26 @@ import type { AbaProfessor } from './telas/adulto/Adulto.tsx';
  */
 function sob<M, K extends keyof M>(carregar: () => Promise<M>, nome: K): M[K] {
   // o componente preguiçoso tem as mesmas props do original (a tipagem continua conferida)
-  return lazy(() => carregar().then((m) => ({ default: m[nome] as unknown as ComponentType<object> }))) as unknown as M[K];
+  return lazy(() => carregar().then(
+    (m) => { pedacoCarregou(); return { default: m[nome] as unknown as ComponentType<object> }; },
+    pedacoFaltou
+  )) as unknown as M[K];
+}
+/**
+ * Versão nova publicada com a página aberta: os pedaços da versão antiga somem (e o service worker novo apaga os dele).
+ * Em vez de a tela ficar em branco, recarrega a página UMA vez para pegar a versão nova (que tem os pedaços certos).
+ */
+const CHAVE_RECARGA = 'fonema-recarga-pedaco';
+function pedacoCarregou() { try { sessionStorage.removeItem(CHAVE_RECARGA); } catch { /* sem armazenamento */ } }
+function pedacoFaltou(erro: unknown): never | Promise<never> {
+  let ultima = 0;
+  try { ultima = Number(sessionStorage.getItem(CHAVE_RECARGA) ?? 0); } catch { /* sem armazenamento */ }
+  if (Date.now() - ultima > 15000) {
+    try { sessionStorage.setItem(CHAVE_RECARGA, String(Date.now())); } catch { /* sem armazenamento */ }
+    location.reload();
+    return new Promise<never>(() => undefined); // a página vai recarregar: fica no "Carregando…"
+  }
+  throw erro;
 }
 const adulto = () => import('./telas/adulto/Adulto.tsx');
 const mundo = () => import('./telas/crianca/Mundo.tsx');
