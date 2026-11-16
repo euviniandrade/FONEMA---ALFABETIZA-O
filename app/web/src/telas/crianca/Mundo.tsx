@@ -126,7 +126,8 @@ export function Vila({ criancaId }: { criancaId: string }) {
       id: 'missao', ...LUGAR.missao,
       conteudo: (
         <button className="pino missao" onClick={() => navegar(`c/${criancaId}/fase/${fase.id}`)} data-ponto="missao" aria-label={`Missão de hoje: ${fase.titulo}`}>
-          <span className="pino-bolha"><Icone nome="play" /></span>
+          {/* estrela: a Sofia diz "Toque na estrela para a missão de hoje" */}
+          <span className="pino-bolha"><Icone nome="estrela" /></span>
           <span className="pino-rotulo">{fase.titulo}<small>Missão de hoje</small></span>
         </button>
       )
