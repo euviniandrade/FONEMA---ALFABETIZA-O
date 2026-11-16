@@ -17,7 +17,10 @@ export function PainelCantinho({ p, nome }: { p: Progresso; nome: string }) {
     <>
       <div className="bloco" data-testid="painel-fluencia">
         <h2><Icone nome="raio" />Fluência: ler mais ligeiro</h2>
-        <p>Precisão de leitura nas últimas {prec.respostas} respostas conferidas: <b>{Math.round(prec.precisao * 100)}%</b>. A releitura cronometrada abre a partir de 95% (Manual ABC, p. 375–376).</p>
+        {prec.respostas > 0
+          ? <p>Precisão de leitura nas últimas {prec.respostas} respostas conferidas: <b>{Math.round(prec.precisao * 100)}%</b>. A leitura cronometrada abre quando a precisão chega a 95%.</p>
+          : <p>Precisão de leitura: <b>ainda sem dados</b>. Aparece depois das primeiras palavras lidas. A leitura cronometrada abre quando a precisão chega a 95%.</p>}
+        <details className="saiba-mais"><summary>Saiba mais</summary><p>Ler com precisão vem antes de ler depressa: o limite de 95% segue o Manual ABC, p. 375–376.</p></details>
         <GraficoFluenciaAdulto leituras={d.fluencia} />
       </div>
       <div className="bloco" data-testid="painel-escrita-propria">
