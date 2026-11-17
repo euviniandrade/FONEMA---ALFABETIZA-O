@@ -102,3 +102,62 @@ export const PALAVRAS_TEXTOS: EntradaBanco[] = [
   e('de', 'dʒ i'), e('da', 'd a'), e('no', 'n u'), e('caiu', 'k a i u', ox)
 ];
 Object.assign(BANCO, montarBanco(PALAVRAS_TEXTOS.filter((x) => !BANCO[x.texto])));
+
+/**
+ * Palavras dos BLOCOS 4 e 5 da Trilha dos Sons (TF-23…TF-32: é e ó com acento; E e O abertos sem acento, ê e ô; as vogais
+ * nasais; M antes de P e B e ão, ãe, õe, -em; o R forte do começo e o R fraco entre vogais), acrescentadas em 17/11 em bloco
+ * separado. Palavra que já estava no banco com a MESMA anotação só ganha a figura (a anotação nunca muda aqui).
+ * E/O tônicos sem acento anotados pela fala comum do Brasil; os DUVIDOSOS estão listados em docs/pedagogia/00 §7 e no
+ * relatório da rodada. [DP] Listas montadas pelo projeto: revisar com alfabetizadora.
+ */
+export const PALAVRAS_BLOCOS_4_5: EntradaBanco[] = [
+  // TF-23 · é e ó com acento (a sílaba forte é a do acento)
+  e('pé', 'p ɛ', { figura: 'pe' }), e('vovó', 'v o v ɔ', { figura: 'vovo-f' }), e('avó', 'a v ɔ'), e('jiló', 'ʒ i l ɔ'), e('pó', 'p ɔ'),
+  e('fé', 'f ɛ'), e('só', 's ɔ'), e('boné', 'b o n ɛ'), e('picolé', 'p i k o l ɛ'), e('cafuné', 'k a f u n ɛ'), e('café', 'k a f ɛ'),
+  pseudo('lupé', 'l u p ɛ'), pseudo('nafó', 'n a f ɔ'),
+  // TF-24 · E e O abertos sem acento; ê e ô com chapeuzinho
+  e('bola', 'b ɔ l a', { figura: 'bola' }), e('vela', 'v ɛ l a', { figura: 'vela' }), e('mola', 'm ɔ l a', { figura: 'mola' }), e('cola', 'k ɔ l a', { figura: 'cola' }),
+  e('copo', 'k ɔ p u', { figura: 'copo' }), e('moto', 'm ɔ t u', { figura: 'moto' }), e('janela', 'ʒ a n ɛ l a', { figura: 'janela' }),
+  e('boneca', 'b o n ɛ k a', { figura: 'boneca' }), e('peteca', 'p e t ɛ k a', { figura: 'peteca' }), e('sacola', 's a k ɔ l a', { figura: 'sacola' }),
+  e('pipoca', 'p i p ɔ k a', { figura: 'pipoca' }), e('caneca', 'k a n ɛ k a', { figura: 'caneca' }), e('panela', 'p a n ɛ l a', { figura: 'panela' }),
+  e('ela', 'ɛ l a'), e('bota', 'b ɔ t a'), e('nova', 'n ɔ v a'), e('pote', 'p ɔ tʃ i'), e('vovô', 'v o v o', { figura: 'vovo-m' }), e('avô', 'a v o'),
+  e('veto', 'v ɛ t u'), e('cota', 'k ɔ t a'),
+  pseudo('dovê', 'd o v e'), pseudo('bupô', 'b u p o'),
+  // TF-25 · /ã/: ã, e AN antes de consoante (AM antes de P e B fica para TF-30)
+  e('lã', 'l ã', { figura: 'novelo-la' }), e('fã', 'f ã'), e('anta', 'ã t a', { figura: 'anta' }), e('panda', 'p ã d a', { figura: 'panda' }),
+  e('manta', 'm ã t a'), e('canto', 'k ã t u'), e('tanto', 't ã t u'), e('tato', 't a t u'), e('janta', 'ʒ ã t a'), e('lá', 'l a'),
+  pseudo('lantu', 'l ã t u', true), pseudo('tanfi', 't ã f i', true),
+  // TF-26 · /ẽ/: EN (o -EM do fim, "tem", fica para TF-30)
+  e('dente', 'd ẽ tʃ i'), e('pente', 'p ẽ tʃ i'), e('vento', 'v ẽ t u'), e('lento', 'l ẽ t u'), e('lenda', 'l ẽ d a'), e('venda', 'v ẽ d a'),
+  pseudo('fendu', 'f ẽ d u', true), pseudo('benfa', 'b ẽ f a'),
+  // TF-27 · /ĩ/: IM no fim e IN antes de consoante
+  e('sim', 's ĩ'), e('fim', 'f ĩ'), e('lindo', 'l ĩ d u'), e('lido', 'l i d u'), e('tinta', 't ĩ t a'), e('vinte', 'v ĩ tʃ i'), e('minto', 'm ĩ t u'),
+  e('mito', 'm i t u'), e('ninja', 'n ĩ ʒ a'),
+  pseudo('tindu', 't ĩ d u', true), pseudo('binta', 'b ĩ t a'),
+  // TF-28 · /õ/: OM no fim e ON antes de consoante
+  e('bom', 'b õ'), e('som', 's õ'), e('onda', 'õ d a'), e('ponte', 'p õ tʃ i'), e('conta', 'k õ t a'), e('fonte', 'f õ tʃ i'), e('monte', 'm õ tʃ i'),
+  pseudo('lontu', 'l õ t u', true), pseudo('donfa', 'd õ f a'),
+  // TF-29 · /ũ/: UM no fim e UN antes de consoante
+  e('um', 'ũ'), e('mundo', 'm ũ d u'), e('mudo', 'm u d u'), e('fundo', 'f ũ d u'), e('junto', 'ʒ ũ t u'), e('nunca', 'n ũ k a'), e('nuca', 'n u k a'),
+  e('atum', 'a t ũ'),
+  pseudo('tunfa', 't ũ f a'), pseudo('lunti', 'l ũ tʃ i', true),
+  // TF-30 · M antes de P e B; ão, ãe, õe e o -EM do fim
+  e('campo', 'k ã p u'), e('tampa', 't ã p a'), e('tapa', 't a p a'), e('bomba', 'b õ b a'), e('boba', 'b o b a'), e('pomba', 'p õ b a'),
+  e('tombo', 't õ b u'), e('limpo', 'l ĩ p u'), e('samba', 's ã b a'),
+  e('mão', 'm ã u', { figura: 'mao' }), e('pão', 'p ã u', { figura: 'pao' }), e('mãe', 'm ã i'), e('mamãe', 'm a m ã i', { figura: 'mamae' }), e('cão', 'k ã u'),
+  e('tem', 't ẽ i'), e('bem', 'b ẽ i'), e('põe', 'p õ i'),
+  pseudo('tampu', 't ã p u', true), pseudo('lombi', 'l õ b i', true),
+  // TF-31 · R forte no começo da palavra (todo sotaque vale)
+  e('rato', 'R a t u', { figura: 'rato' }), e('rua', 'R u a', { figura: 'rua' }), e('roda', 'R ɔ d a', { figura: 'roda' }), e('rio', 'R i u'), e('rede', 'R e dʒ i'),
+  e('rolo', 'R o l u'), e('rabo', 'R a b u'), e('ripa', 'R i p a'), e('ruga', 'R u g a'),
+  pseudo('rafu', 'R a f u', true), pseudo('rupi', 'R u p i', true),
+  // TF-32 · R fraco entre vogais (não começa palavra)
+  e('cara', 'k a ɾ a'), e('cala', 'k a l a'), e('pera', 'p e ɾ a'), e('pela', 'p e l a'), e('muro', 'm u ɾ u'), e('arara', 'a ɾ a ɾ a'),
+  e('fera', 'f ɛ ɾ a'), e('puro', 'p u ɾ u'), e('coro', 'k o ɾ u'), e('vara', 'v a ɾ a'), e('jura', 'ʒ u ɾ a'),
+  pseudo('furi', 'f u ɾ i', true), pseudo('lari', 'l a ɾ i', true)
+];
+for (const x of PALAVRAS_BLOCOS_4_5) {
+  const k = x.texto.toLowerCase();
+  if (BANCO[k] && BANCO[k].sons !== x.sons) throw new Error(`Banco: "${k}" com duas anotações diferentes`);
+  BANCO[k] = { ...BANCO[k], ...x };
+}

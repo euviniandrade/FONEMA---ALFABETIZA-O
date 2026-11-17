@@ -440,6 +440,8 @@ export function verificarPseudo(palavra: string, n: number, banco: Record<string
   if (!banco[w]?.pseudo) r.erros.push(`"${palavra}" não está marcada como inventada no banco`);
   if (reais.has(w)) r.erros.push(`"${palavra}" é palavra de verdade`);
   if (PROIBIDAS.some((p) => w === p || w.startsWith(p) || w.endsWith(p))) r.erros.push(`"${palavra}" parece palavra feia`);
-  if (!/^([bcdfgjlmnpstvz]?[aeiou][iu]?)+$/.test(w)) r.erros.push(`"${palavra}" tem sílaba que não é do português simples`);
+  // sílabas simples: consoante (opcional) + vogal (com ou sem acento, ou Ã) + I/U de ditongo, e M/N no fim da sílaba (vogal
+  // nasal); os valores (acento, nasal, R) continuam barrados pela unidade em `verificarPalavra`
+  if (!/^([bcdfgjlmnprstvz]?(ã|[aeiouáéíóúâêô][iu]?)([mn](?![aeiouáéíóúâêôã]))?)+$/.test(w)) r.erros.push(`"${palavra}" tem sílaba que não é do português simples`);
   return { ok: r.erros.length === 0, erros: r.erros, avisos: r.avisos };
 }
