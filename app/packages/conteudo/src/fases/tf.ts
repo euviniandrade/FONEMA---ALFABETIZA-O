@@ -182,7 +182,7 @@ const APOIO_DO_GRAFEMA: Record<string, string> = {
   EN: 'E e N, de dente.', IN: 'I e N, de lindo.', ON: 'O e N, de onda.', UN: 'U e N, de mundo.'
 };
 /** Cena do faz de conta (web/public/assets/figuras) dos grafemas novos; as letras usam `CENAS_DO_SOM`. */
-const CENA_DO_GRAFEMA: Record<string, string> = { É: 'cena-e-aberto', Ó: 'cena-o-aberto', Ã: 'cena-a-nasal' };
+const CENA_DO_GRAFEMA: Record<string, string> = { É: 'cena-e-aberto', Ó: 'cena-o-aberto-sofia', Ã: 'cena-a-nasal-sofia' }; // Ó e Ã: a Sofia fazendo a ação (17/11)
 /** A letra (Trilha A–Z) ou o grafema novo. */
 const letraDe = (x: string): LetraAlfabeto => LETRA_POR_ID[x] ?? GRAFEMAS_TF[x];
 /** Som (chave do mapa de sons) de uma letra ou grafema da trilha. */
@@ -511,7 +511,7 @@ export const LICOES_TF: Licao[] = [
     unidade: 'TF-32', tipo: 'regra-r', bloco: 5, letra: 'R', rotulo: 'r·r', titulo: 'O R fraco (arara)', habilidadeRegra: 'regra-r',
     objetivo: 'Ler o R entre vogais com o som fraco (cara, arara)',
     // MP p. 88: gato ronronando = R fraco (cachorro rosnando = R forte); o R fraco não começa palavra (ABC p. 120)
-    somProprio: { fonema: 'r', letra: 'R', brincadeira: 'Faz de conta que você é um gatinho ronronando no colo.', apoio: 'R, de arara.', cena: 'cena-r-fraco' },
+    somProprio: { fonema: 'r', letra: 'R', brincadeira: 'Faz de conta que você é um gatinho ronronando no colo.', apoio: 'R, de arara.', cena: 'cena-r-fraco-sofia' },
     regra: [
       { mostrar: 'CA_A', palavra: 'cara', certa: 'R', outras: ['L', 'D'], som: 'r' }, { mostrar: 'PE_A', palavra: 'pera', certa: 'R', outras: ['L', 'N'], som: 'r' },
       { mostrar: 'MU_O', palavra: 'muro', certa: 'R', outras: ['L', 'D'], som: 'r' }, { mostrar: 'ARA_A', palavra: 'arara', certa: 'R', outras: ['L', 'N'], som: 'r' }
