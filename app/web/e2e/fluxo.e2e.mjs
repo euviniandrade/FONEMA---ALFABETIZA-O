@@ -963,7 +963,8 @@ async function main() {
   await page.waitForFunction(() => location.hash.includes('/vila'), null, { timeout: 8000 }).catch(() => {});
   ok(page.url().includes('/vila'), 'sem pular fases: a letra B bloqueada volta para a vila');
   await page.goto(BASE + `#/c/${id}/sessao/AL-RV1`);
-  await page.waitForTimeout(300);
+  // a tela da sessão vem sob demanda (React.lazy): espera o desvio para a vila em vez de um tempo fixo (300 ms falhava às vezes)
+  await page.waitForFunction(() => location.hash.includes('/vila'), null, { timeout: 8000 }).catch(() => {});
   ok(page.url().includes('/vila'), 'sem pular fases: a revisão das vogais só abre depois das vogais');
   let tf01 = false;
   for (let t = 0; t < 6 && !tf01; t++) {
