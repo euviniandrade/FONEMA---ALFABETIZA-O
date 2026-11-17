@@ -29,7 +29,7 @@
 import type { AtividadeEscolher, Cena, Fala, Fase, ItemEscolha, ItemFrase, ItemParMinimo, ItemTroca, Opcao, PalavraComSons } from '../tipos.ts';
 import { BRINCADEIRAS, LETRA_POR_ID, falaChave, type LetraAlfabeto } from '../alfabeto.ts';
 import { FALAS_FONICAS, habilidadeDoPar, parConfuso } from '../sons.ts';
-import { analisar, numeroDaUnidade } from '../decodificabilidade.ts';
+import { analisar, grafemas, numeroDaUnidade } from '../decodificabilidade.ts';
 import { BANCO } from './tf-banco.ts';
 import { falaApoio, figurasDoSom } from './alfabeto.ts';
 
@@ -960,6 +960,63 @@ export const FASES_TF_EM_ESPERA: FaseEmEspera[] = TODAS_AS_FASES_TF.slice(PRONTA
     motivo: [sonsQueFaltam.length ? `aguardando som: ${sonsQueFaltam.join(', ')}` : '', fase !== primeira ? `vem depois de ${primeira.id} (a trilha não se pula)` : ''].filter(Boolean).join('; ')
   };
 });
+
+/* ------------------------------------------------------------------------------------------------------------ */
+/* leituras faladas sem clipe: os sons puros emendados                                                           */
+/* ------------------------------------------------------------------------------------------------------------ */
+
+const SOM_DA_LETRA: Record<string, string> = {
+  a: 'a', á: 'a', â: 'a', ã: 'a~', e: 'e', é: 'E', ê: 'e', i: 'i', í: 'i', o: 'o', ó: 'O', ô: 'o', u: 'u', ú: 'u',
+  b: 'b', d: 'd', f: 'f', g: 'g', j: 'j', l: 'l', m: 'm', n: 'n', p: 'p', t: 't', v: 'v', z: 'z', x: 'x'
+};
+const NASAL_DE: Record<string, string> = { a: 'a~', â: 'a~', e: 'e~', ê: 'e~', i: 'i~', o: 'o~', ô: 'o~', u: 'u~' };
+/**
+ * Sons de uma leitura falada que não está no banco (as leituras ERRADAS das opções: "lupê", "dové"…), pelas regras simples
+ * da trilha: vogal + M/N no fim da sílaba = vogal nasal; E e O do fim sem acento = I e U; C e G antes de A, O, U; R do começo
+ * forte, R entre vogais fraco. `null` = letra sem som próprio ali.
+ */
+function sonsDeduzidos(w: string): (string | null)[] {
+  const out: (string | null)[] = [];
+  const acento = /[áâãéêíóôú]/.test(w);
+  const gs = grafemas(w);
+  gs.forEach((g, k) => {
+    const c = g.g;
+    const ultimo = k === gs.length - 1;
+    let som: string | undefined;
+    if (c.length === 2 && NASAL_DE[c[0]] && 'mn'.includes(c[1])) som = NASAL_DE[c[0]];
+    else if (c === 'e' && ultimo && !acento && w.length > 2) som = 'i';
+    else if (c === 'o' && ultimo && !acento && w.length > 2) som = 'u';
+    else if (c === 'c') som = /[eiéêí]/.test(w[g.i + 1] ?? '') ? 's' : 'k';
+    else if (c === 's') som = g.i === 0 ? 's' : 'z';
+    else if (c === 'r') som = g.i === 0 ? 'rr' : 'r';
+    else som = SOM_DA_LETRA[c[0]];
+    out.push(som ?? null);
+    for (let j = 1; j < c.length; j++) out.push(null);
+  });
+  return out;
+}
+
+/**
+ * LEITURAS FALADAS da Trilha dos Sons (palavras, palavras inventadas, as leituras erradas das opções, palavras ditas nas caixas,
+ * nos pares e na troca-letras) com os sons puros de cada letra. Quando a leitura ainda não tem clipe de voz gravado, o app toca
+ * estes sons emendados, bem ligeiro (web/src/servicos/voz.ts): a lição funciona com os sons que existem e a voz entra depois.
+ * [DP] É uma ponte até a gravação (app/docs/falas-pendentes.md), não substitui a voz.
+ */
+export const LEITURAS_EM_SONS: Record<string, (string | null)[]> = (() => {
+  const ws = new Set<string>();
+  const add = (t?: string) => { if (t && /^[a-záâãéêíóôõú]+$/.test(t)) ws.add(t); };
+  for (const f of TODAS_AS_FASES_TF) for (const c of f.cenas) {
+    const a = c.atividade;
+    if (!a) continue;
+    if (a.tipo === 'escolher') for (const i of a.itens) { add(i.ouvir); i.opcoes.forEach((o) => add(o.falar)); }
+    if (a.tipo === 'sintese') for (const i of a.itens) { add(i.correta); i.opcoes.forEach((o) => add(o.falar)); }
+    if (a.tipo === 'caixas') for (const i of a.itens) add(i.palavra.toLowerCase());
+    if (a.tipo === 'ditado') for (const w of a.palavras) add(w.toLowerCase());
+    if (a.tipo === 'parMinimo') for (const i of a.itens) { add(i.alvo); add(i.outra); add(i.distrator); }
+    if (a.tipo === 'troca') for (const i of a.itens) i.leituras.forEach(add);
+  }
+  return Object.fromEntries([...ws].map((w) => [w, BANCO[w] ? comSons(w).sons : sonsDeduzidos(w)]));
+})();
 
 /** Revisão de bloco → a última unidade do bloco (o que já foi ensinado ao chegar nela). */
 export const UNIDADE_DA_REVISAO_TF: Record<string, string> = Object.fromEntries(LICOES_TF.filter((l) => l.ate).map((l) => [l.unidade, l.ate!]));

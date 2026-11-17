@@ -14,7 +14,7 @@ export { FASES_ALFABETO, FASES_ALFABETO_REVISOES_ANTIGAS, FALAS_ALFABETO, MARCAD
 export { FASES_R0 } from './fases/r0.ts';
 export { FASES_R1 } from './fases/r1.ts';
 export { FASES_R2A } from './fases/r2a.ts';
-export { FASES_TF, FASES_TF_EM_ESPERA, TODAS_AS_FASES_TF, SONS_PUBLICADOS, UNIDADE_DA_REVISAO_TF, GRAFEMAS_TF, FALAS_TRILHA_SONS, LICOES_TF, LETRAS_DA_TRILHA_SONS, SILABA_DO_SOM, SONS_DUVIDOSOS, comSons, fonemaDoGrafema, fonemasDaFase, habilidadeTF, type FaseEmEspera } from './fases/tf.ts';
+export { FASES_TF, FASES_TF_EM_ESPERA, LEITURAS_EM_SONS, TODAS_AS_FASES_TF, SONS_PUBLICADOS, UNIDADE_DA_REVISAO_TF, GRAFEMAS_TF, FALAS_TRILHA_SONS, LICOES_TF, LETRAS_DA_TRILHA_SONS, SILABA_DO_SOM, SONS_DUVIDOSOS, comSons, fonemaDoGrafema, fonemasDaFase, habilidadeTF, type FaseEmEspera } from './fases/tf.ts';
 export { PALAVRAS_BLOCOS_4_5 } from './fases/tf-banco.ts';
 export { BANCO, PALAVRAS_TF, PALAVRAS_OUTRAS_TRILHAS } from './fases/tf-banco.ts';
 export * from './decodificabilidade.ts';

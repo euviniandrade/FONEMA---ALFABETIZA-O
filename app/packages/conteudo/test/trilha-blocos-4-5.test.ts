@@ -7,11 +7,12 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import {
-  BANCO, FASES, FASES_TF, FASES_TF_EM_ESPERA, HABILIDADE_POR_ID, SONS_PUBLICADOS, TODAS_AS_FASES_TF, fonemasDaFase, habilidadeDoPar, montarLetrasESons
+  BANCO, FASES, FASES_TF, FASES_TF_EM_ESPERA, HABILIDADE_POR_ID, LEITURAS_EM_SONS, SONS_PUBLICADOS, TODAS_AS_FASES_TF, fonemasDaFase, habilidadeDoPar, montarLetrasESons
 } from '../src/index.ts';
 import { leiturasDaFase, verificarFase } from '../src/fases/verificar-fases.ts';
 
 const MAPA = JSON.parse(readFileSync(fileURLToPath(new URL('../../../web/public/audio/sons/mapa.json', import.meta.url)), 'utf8')) as { fonemas: Record<string, unknown> };
+const VOZ = JSON.parse(readFileSync(fileURLToPath(new URL('../../../web/public/audio/falas/manifesto.json', import.meta.url)), 'utf8')) as Record<string, string>;
 const NOVAS = TODAS_AS_FASES_TF.filter((f) => ['TF-R4', ...Array.from({ length: 10 }, (_, k) => `TF-${k + 23}`)].includes(f.id));
 
 describe('Trilha dos Sons, blocos 4 e 5', () => {
@@ -38,6 +39,25 @@ describe('Trilha dos Sons, blocos 4 e 5', () => {
       const a = c.atividade;
       if (a?.tipo === 'escolher') for (const i of a.itens) expect(i.ouvir ?? '', `${c.id}`).not.toMatch(/^Letra /);
     }
+  });
+
+  it('leitura falada sem clipe de voz nas lições da jornada: toca os sons puros emendados, todos publicados', () => {
+    const naJornada = new Set<string>();
+    for (const f of FASES_TF.filter((x) => NOVAS.includes(x))) for (const c of f.cenas) {
+      const a = c.atividade;
+      if (a?.tipo === 'escolher') for (const i of a.itens) i.opcoes.forEach((o) => o.falar && naJornada.add(o.falar));
+      if (a?.tipo === 'parMinimo') for (const i of a.itens) [i.alvo, i.outra, i.distrator!].forEach((w) => naJornada.add(w));
+      if (a?.tipo === 'caixas') for (const i of a.itens) naJornada.add(i.palavra.toLowerCase());
+    }
+    const semVoz = [...naJornada].filter((w) => !VOZ[`sofia|${w}`]);
+    expect(semVoz.length).toBeGreaterThan(0); // hoje: as palavras novas (lista em app/docs/falas-pendentes.md)
+    for (const w of semVoz) {
+      const sons = LEITURAS_EM_SONS[w];
+      expect(sons, `"${w}" sem voz e sem sons`).toBeDefined();
+      for (const x of sons!.filter(Boolean)) expect(SONS_PUBLICADOS, `"${w}": som ${x}`).toContain(x);
+    }
+    expect(LEITURAS_EM_SONS['lupê']).toEqual(['l', 'u', 'p', 'e']);
+    expect(LEITURAS_EM_SONS['lanta']).toEqual(['l', 'a~', null, 't', 'a']);
   });
 
   it('o verificador passa em TODAS as lições escritas, também nas em espera (erro = build falha)', () => {

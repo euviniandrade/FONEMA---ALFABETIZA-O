@@ -7,7 +7,8 @@
  *  - Som REAL das letras (fonemas): clipes próprios em public/audio/sons (ou gravados pelo adulto no Estúdio de sons),
  *    tocados por servicos/sons-letras.ts. É a única voz diferente da dupla, autorizada só para o som da letra (D029 §2).
  */
-import type { Personagem } from '@fonema/conteudo';
+import { LEITURAS_EM_SONS, type Personagem } from '@fonema/conteudo';
+import { pararSons, tocarSonsEmendados } from '../mecanicas/sons-emendados.ts';
 import { modoTeste } from './ambiente.ts';
 import { fonemasDaSequencia, sonsLetras } from './sons-letras.ts';
 import { noMaximo, tocarAteOFim } from './midia.ts';
@@ -316,6 +317,18 @@ class Voz {
   private async dizer(texto: string, o?: OpcoesFala): Promise<void> {
     const seq = fonemasDaSequencia(texto);
     if (seq && !modoTeste() && (await sonsLetras.temTodos(seq))) { await sonsLetras.tocarSequencia(seq); return; }
+    // leitura da Trilha dos Sons ainda sem clipe de voz ("lupé", "anta"…): os sons puros emendados, ligeiro (ponte até a
+    // gravação; nunca voz do navegador nem nome de letra). Lista e sons em @fonema/conteudo › LEITURAS_EM_SONS.
+    const sons = LEITURAS_EM_SONS[texto.trim()];
+    if (sons) {
+      await this.pre.pronto;
+      if (!this.pre.temTrecho(texto, o?.quem ?? 'sofia') && (await sonsLetras.temTodos(sons.filter((x): x is string => !!x)))) {
+        this.emendando = true;
+        await tocarSonsEmendados(sons, 'rapido');
+        this.emendando = false;
+        return;
+      }
+    }
     return this.provedor.falar(texto, o);
   }
   /**
@@ -372,7 +385,9 @@ class Voz {
   }
   /** Muda a cada parar(): uma sequência em andamento sabe que foi cancelada. */
   private turno = 0;
-  parar() { this.turno++; this.provedor.parar(); sonsLetras.parar(); }
+  parar() { this.turno++; this.provedor.parar(); sonsLetras.parar(); if (this.emendando) { this.emendando = false; pararSons(); } }
+  /** Uma leitura sem clipe está tocando em sons emendados (só ela é parada por `parar`). */
+  private emendando = false;
 }
 
 export const voz = new Voz();

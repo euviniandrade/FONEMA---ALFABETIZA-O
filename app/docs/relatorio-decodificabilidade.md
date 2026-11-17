@@ -1,6 +1,6 @@
 # Relatório de decodificabilidade (gerado)
 
-Gerado por `scripts/relatorio-decodificabilidade.ts`. 341 leituras e escritas conferidas em 64 fases · **0 erros** · 21 com aviso.
+Gerado por `scripts/relatorio-decodificabilidade.ts`. 386 leituras e escritas conferidas em 67 fases · **0 erros** · 21 com aviso.
 Erro = valor sonoro ainda não ensinado na unidade da fase (o teste falha). Aviso = A5 (vogal nasalizada pela consoante seguinte), vogal átona que muda na fala ou pronúncia regional (TI/DI).
 
 ### AL-A · Letra A
@@ -503,6 +503,66 @@ Sem leitura nem escrita sozinha nesta fase.
 | AL-RV3-C5p | escrita | JACA | ok |
 | AL-RV3-C5p | escrita | VACA | ok |
 
+### TF-23 · Os sons /é/ e /ó/ (até TF-23)
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| TF-23-C3s | palavra | CAFÉ | ok |
+| TF-23-C3s | palavra | VOVÓ | ok |
+| TF-23-C3s | palavra | BABÁ | ok |
+| TF-23-C4a | palavra | PÉ | ok |
+| TF-23-C4a | palavra | VOVÓ | ok |
+| TF-23-C4b | palavra | CAFÉ | ok |
+| TF-23-C4b | palavra | BABÁ | ok |
+| TF-23-C4b | pseudo | LUPÉ | ok |
+| TF-23-C4b | pseudo | NAFÓ | ok |
+| TF-23-C4c | escrita | PÉ | ok |
+| TF-23-C4c | escrita | VOVÓ | ok |
+| TF-23-C4c | escrita | CAFÉ | ok |
+| TF-23-C5p | palavra | avó | ok |
+| TF-23-C5p | palavra | ave | ok |
+
+### TF-24 · É ou ê? Ó ou ô? (até TF-24)
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| TF-24-C3r | escrita | VOVÔ | ok |
+| TF-24-C3r | escrita | VOVÓ | ok |
+| TF-24-C3r | escrita | BEBÊ | ok |
+| TF-24-C3r | escrita | CAFÉ | ok |
+| TF-24-C3r | escrita | PÉ | ok |
+| TF-24-C3s | palavra | BOLA | ok |
+| TF-24-C3s | palavra | VELA | ok |
+| TF-24-C3s | palavra | MOTO | ok |
+| TF-24-C4a | palavra | BOLA | ok |
+| TF-24-C4a | palavra | VELA | ok |
+| TF-24-C4a | palavra | JANELA | ok |
+| TF-24-C4a | palavra | PIPOCA | ok |
+| TF-24-C4b | palavra | ELA | ok |
+| TF-24-C4b | pseudo | DOVÊ | ok |
+| TF-24-C4b | pseudo | BUPÔ | ok |
+| TF-24-C4c | escrita | BOLA | ok |
+| TF-24-C4c | escrita | VELA | ok |
+| TF-24-C4c | escrita | COPO | ok |
+| TF-24-C5f | frase | A vovó viu a bola. | ok |
+
+### TF-25 · O som /ã/ (até TF-25)
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| TF-25-C3s | palavra | PANDA | ok |
+| TF-25-C3s | palavra | LÃ | ok |
+| TF-25-C3s | palavra | ANTA | ok |
+| TF-25-C4a | palavra | PANDA | ok |
+| TF-25-C4a | palavra | LÃ | ok |
+| TF-25-C4b | palavra | ANTA | ok |
+| TF-25-C4b | palavra | MANTA | ok |
+| TF-25-C4b | pseudo | LANTU | ok |
+| TF-25-C4b | pseudo | TANFI | ok |
+| TF-25-C4c | escrita | LÃ | ok |
+| TF-25-C4c | escrita | FÃ | ok |
+| TF-25-C5f | frase | A anta viu a lua. | ok |
+
 ### AL-R · Letra R
 
 Sem leitura nem escrita sozinha nesta fase.
@@ -610,7 +670,7 @@ Sem leitura nem escrita sozinha nesta fase.
 | R2a-F04-C5b | pseudo | MIFA | ok |
 | R2a-F04-C5b | pseudo | MUFA | ok |
 
-### R2a-F05 · Chefe: Cachoeira das Sílabas
+### R2a-F05 · Chefe: Cachoeira dos Sons
 
 | Cena | O quê | Texto | Resultado |
 |---|---|---|---|
@@ -631,3 +691,184 @@ Sem leitura nem escrita sozinha nesta fase.
 ### R0-F01 · O som do meu nome
 
 Sem leitura nem escrita sozinha nesta fase.
+
+## Lições da Trilha dos Sons em espera (fora da jornada)
+
+Escritas e conferidas, mas fora da jornada até existirem os sons puros que elas tocam (fases/tf.ts › FASES_TF_EM_ESPERA). 137 leituras e escritas · **0 erros**.
+
+### TF-26 · O som /ẽ/ (até TF-26) — em espera: aguardando som: e~
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| TF-26-C3s | palavra | DENTE | ok, com aviso: "dente": ti-di varia de região (todas as pronúncias valem) |
+| TF-26-C3s | palavra | VENTO | ok |
+| TF-26-C3s | palavra | LENDA | ok |
+| TF-26-C4b | palavra | DENTE | ok, com aviso: "dente": ti-di varia de região (todas as pronúncias valem) |
+| TF-26-C4b | palavra | VENTO | ok |
+| TF-26-C4b | palavra | LENTO | ok |
+| TF-26-C4b | pseudo | FENDU | ok |
+| TF-26-C4b | pseudo | BENFA | ok |
+| TF-26-C5d | escrita | DENTE | ok, com aviso: "dente": ti-di varia de região (todas as pronúncias valem) |
+| TF-26-C5d | escrita | VENTO | ok |
+| TF-26-C5p | palavra | vento | ok |
+| TF-26-C5p | palavra | lento | ok |
+| TF-26-C5p | palavra | veto | ok |
+| TF-26-C5p | palavra | vale | ok |
+
+### TF-27 · O som /ĩ/ (até TF-27) — em espera: aguardando som: e~, i~; vem depois de TF-26 (a trilha não se pula)
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| TF-27-C3s | palavra | FIM | ok |
+| TF-27-C3s | palavra | LINDO | ok |
+| TF-27-C3s | palavra | TINTA | ok |
+| TF-27-C4b | palavra | SIM | ok |
+| TF-27-C4b | palavra | LINDO | ok |
+| TF-27-C4b | palavra | VINTE | ok, com aviso: "vinte": ti-di varia de região (todas as pronúncias valem) |
+| TF-27-C4b | palavra | NINJA | ok |
+| TF-27-C4b | pseudo | TINDU | ok |
+| TF-27-C4b | pseudo | BINTA | ok |
+| TF-27-C5d | escrita | FIM | ok |
+| TF-27-C5d | escrita | LINDO | ok |
+| TF-27-C5p | palavra | lindo | ok |
+| TF-27-C5p | palavra | lado | ok |
+| TF-27-C5p | palavra | minto | ok |
+| TF-27-C5p | palavra | mato | ok |
+| TF-27-C5p | palavra | mito | ok |
+| TF-27-C5p | palavra | meio | ok |
+
+### TF-28 · O som /õ/ (até TF-28) — em espera: aguardando som: i~, e~, o~; vem depois de TF-26 (a trilha não se pula)
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| TF-28-C3s | palavra | BOM | ok |
+| TF-28-C3s | palavra | ONDA | ok |
+| TF-28-C3s | palavra | PONTE | ok, com aviso: "ponte": ti-di varia de região (todas as pronúncias valem) |
+| TF-28-C4b | palavra | BOM | ok |
+| TF-28-C4b | palavra | ONDA | ok |
+| TF-28-C4b | palavra | CONTA | ok |
+| TF-28-C4b | palavra | MONTE | ok, com aviso: "monte": ti-di varia de região (todas as pronúncias valem) |
+| TF-28-C4b | pseudo | LONTU | ok |
+| TF-28-C4b | pseudo | DONFA | ok |
+| TF-28-C5d | escrita | BOM | ok |
+| TF-28-C5d | escrita | ONDA | ok |
+| TF-28-C5d | escrita | PONTE | ok, com aviso: "ponte": ti-di varia de região (todas as pronúncias valem) |
+| TF-28-C5p | palavra | conta | ok |
+| TF-28-C5p | palavra | canto | ok |
+| TF-28-C5p | palavra | ponte | ok, com aviso: "ponte": ti-di varia de região (todas as pronúncias valem) |
+| TF-28-C5p | palavra | pente | ok, com aviso: "pente": ti-di varia de região (todas as pronúncias valem) |
+| TF-28-C5p | palavra | cota | ok |
+| TF-28-C5p | palavra | cola | ok |
+
+### TF-29 · O som /ũ/ (até TF-29) — em espera: aguardando som: o~, i~, e~, u~; vem depois de TF-26 (a trilha não se pula)
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| TF-29-C3s | palavra | MUNDO | ok |
+| TF-29-C3s | palavra | NUNCA | ok |
+| TF-29-C3s | palavra | ATUM | ok |
+| TF-29-C4b | palavra | MUNDO | ok |
+| TF-29-C4b | palavra | JUNTO | ok |
+| TF-29-C4b | palavra | NUNCA | ok |
+| TF-29-C4b | palavra | UM | ok |
+| TF-29-C4b | pseudo | TUNFA | ok |
+| TF-29-C4b | pseudo | LUNTI | ok, com aviso: "lunti": ti-di varia de região (todas as pronúncias valem) |
+| TF-29-C5d | escrita | UM | ok |
+| TF-29-C5d | escrita | MUNDO | ok |
+| TF-29-C5d | escrita | FUNDO | ok |
+| TF-29-C5p | palavra | mundo | ok |
+| TF-29-C5p | palavra | lado | ok |
+| TF-29-C5p | palavra | nunca | ok |
+| TF-29-C5p | palavra | nada | ok |
+| TF-29-C5p | palavra | mudo | ok |
+| TF-29-C5p | palavra | mato | ok |
+
+### TF-30 · M antes de P e B; ÃO, ÃE e ÕE (até TF-30) — em espera: aguardando som: u~, o~, e~, i~; vem depois de TF-26 (a trilha não se pula)
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| TF-30-C3r | escrita | CAMPO | ok |
+| TF-30-C3r | escrita | TAMPA | ok |
+| TF-30-C3r | escrita | BOMBA | ok |
+| TF-30-C3r | escrita | ONDA | ok |
+| TF-30-C3r | escrita | MÃO | ok |
+| TF-30-C3s | palavra | MÃO | ok |
+| TF-30-C3s | palavra | CAMPO | ok |
+| TF-30-C3s | palavra | BOMBA | ok |
+| TF-30-C4a | palavra | MÃO | ok |
+| TF-30-C4a | palavra | PÃO | ok |
+| TF-30-C4b | palavra | TAMPA | ok |
+| TF-30-C4b | palavra | POMBA | ok |
+| TF-30-C4b | palavra | TEM | ok |
+| TF-30-C4b | pseudo | TAMPU | ok |
+| TF-30-C4b | pseudo | LOMBI | ok |
+| TF-30-C5d | escrita | MÃO | ok |
+| TF-30-C5d | escrita | PÃO | ok |
+| TF-30-C5d | escrita | CAMPO | ok |
+| TF-30-C5d | escrita | BOMBA | ok |
+| TF-30-C5p | palavra | tampa | ok |
+| TF-30-C5p | palavra | tatu | ok |
+| TF-30-C5p | palavra | bomba | ok |
+| TF-30-C5p | palavra | bola | ok |
+
+### TF-R4 · Revisão: vogais abertas e nasais (até TF-30) — em espera: aguardando som: u~, o~, e~, i~; vem depois de TF-26 (a trilha não se pula)
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| TF-R4-C3s | palavra | VOVÓ | ok |
+| TF-R4-C3s | palavra | MÃO | ok |
+| TF-R4-C3s | palavra | BOLA | ok |
+| TF-R4-C4b | pseudo | LANTU | ok |
+| TF-R4-C4b | pseudo | TINDU | ok |
+| TF-R4-C5d | escrita | PÉ | ok |
+| TF-R4-C5d | escrita | LÃ | ok |
+| TF-R4-C5d | escrita | DENTE | ok, com aviso: "dente": ti-di varia de região (todas as pronúncias valem) |
+| TF-R4-C5d | escrita | MUNDO | ok |
+| TF-R4-C5d | escrita | BOLA | ok |
+| TF-R4-C5p | palavra | lindo | ok |
+| TF-R4-C5p | palavra | lado | ok |
+| TF-R4-C5p | palavra | conta | ok |
+| TF-R4-C5p | palavra | canto | ok |
+| TF-R4-C5p | palavra | manta | ok |
+| TF-R4-C5p | palavra | nata | ok |
+| TF-R4-C5f | frase | A vovó viu o pão. | ok |
+
+### TF-31 · O R do começo (rato) (até TF-31) — em espera: aguardando som: u~, o~, e~, i~; vem depois de TF-26 (a trilha não se pula)
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| TF-31-C3s | palavra | RATO | ok |
+| TF-31-C3s | palavra | RUA | ok |
+| TF-31-C3s | palavra | RODA | ok |
+| TF-31-C4a | palavra | RATO | ok |
+| TF-31-C4a | palavra | RUA | ok |
+| TF-31-C4a | palavra | RODA | ok |
+| TF-31-C4b | palavra | REI | ok |
+| TF-31-C4b | pseudo | RAFU | ok |
+| TF-31-C4b | pseudo | RUPI | ok |
+| TF-31-C4c | escrita | RATO | ok |
+| TF-31-C4c | escrita | RUA | ok |
+| TF-31-C4c | escrita | REI | ok |
+| TF-31-C5f | frase | O rato viu a roda. | ok |
+
+### TF-32 · O R fraco (arara) (até TF-32) — em espera: aguardando som: u~, o~, e~, i~, r; vem depois de TF-26 (a trilha não se pula)
+
+| Cena | O quê | Texto | Resultado |
+|---|---|---|---|
+| TF-32-C3r | escrita | CARA | ok |
+| TF-32-C3r | escrita | PERA | ok |
+| TF-32-C3r | escrita | MURO | ok |
+| TF-32-C3r | escrita | ARARA | ok |
+| TF-32-C3s | palavra | CARA | ok |
+| TF-32-C3s | palavra | MURO | ok |
+| TF-32-C3s | palavra | PERA | ok |
+| TF-32-C4b | palavra | CARA | ok |
+| TF-32-C4b | palavra | MURO | ok |
+| TF-32-C4b | palavra | ARARA | ok |
+| TF-32-C4b | palavra | FERA | ok |
+| TF-32-C4b | pseudo | FURI | ok |
+| TF-32-C4b | pseudo | LARI | ok |
+| TF-32-C4c | escrita | CARA | ok |
+| TF-32-C4c | escrita | MURO | ok |
+| TF-32-C4c | escrita | PERA | ok |
+| TF-32-C5f | frase | A arara viu o pato. | ok |
