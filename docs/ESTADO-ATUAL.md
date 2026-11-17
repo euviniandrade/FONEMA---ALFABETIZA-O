@@ -9,6 +9,40 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Tutorial "A grande aventura" e painel guia (D032 itens 1 e 2; 17/11, noite; NÃO publicado ainda):**
+- **Tutorial** (`web/src/telas/crianca/Tutorial.tsx`, rota `#/c/:id/tutorial`; reaberto em `#/c/:id/tutorial/de-novo`): abre
+  sozinho na primeira vez, logo depois do boneco (antes ia para a Chegada). 6 passos, tudo falado e animado, a criança toca na
+  seta para seguir: (1) o mundo — arquipélago com a câmera passeando, Sofia e Tales; (2) **o caminho do que vai aprender** em
+  9 etapas (Letras e sons → Ler palavras → Frases → Historinhas → Outros sons das vogais; trancadas com cadeado: Sons pelo nariz,
+  R e H, Letras em dupla, Encontros), acesas uma a uma enquanto a Sofia fala, com "Você está aqui" e o rostinho da criança;
+  (3) como mexer — tocar na estrela e arrastar a moedinha até o porquinho (também dá para tocar na moeda e depois no porquinho),
+  botão do som e setinha de voltar; (4) moedinhas, Lojinha (roupas do boneco; barco e carro aparecem trancados, "um dia"),
+  selos/álbum e nível; (5) Brincar e alguns jogos; (6) a primeira missão com a barrinha enchendo → "Vamos!" leva direto à
+  sessão da primeira fase. "Pular (para o adulto)" leva à Chegada; reaberto, o botão vira "Fechar".
+- **Etapas do caminho:** `packages/conteudo/src/caminho.ts` (agrupamento da jornada D031, cortes [DP]: até TF-05, TF-09, TF-15,
+  Festa do Alfabeto, fim). **Motor:** `packages/motor/src/guia.ts` (`tutorialPendente`, `tutorialNovo`, `passoParaRetomar`,
+  `marcarTutorial`, `estadoDoCaminho`, `missaoDeHoje`, `estrelasDaMissao`). Progresso ganhou os campos opcionais `tutorial`
+  (passo/vistoEm/puladoEm/vezes) e `ultimaMissao` (estrelinhas 1–3 pelas respostas conferidas sem ajuda, selos ganhos;
+  gravado em `fecharSessao`). Sem mudança de versão: progresso antigo sem o campo = nunca viu; **quem já fez missão não é
+  interrompido** (o "Como jogar?" fica marcado com uma estrelinha até ver). O tutorial NÃO grava tentativa, desafio nem moedinha
+  (regra 4; conferido no E2E). Retoma no passo em que parou (a vila manda de volta ao tutorial enquanto ele estiver pendente).
+  Testes: `packages/motor/test/guia.test.ts` (12).
+- **Painel guia** (`web/src/componentes/Guia.tsx`, `estilos-guia.css`): nível e bolinhas até o próximo, estrelinhas e selos da
+  última missão, missão de hoje com a barrinha e o botão grande "Começar/Continuar", o caminho compacto com "Você está aqui"
+  (toque fala a etapa) e "Como jogar?". Vila no PC/tablet deitado (≥ 900 px): **coluna própria à esquerda e o mapa começa depois
+  dela** (nada do mapa fica escondido). Trilhas (Alfabeto e Sons) ≥ 1200 px: duas colunas na página (painel "grudado" ao rolar).
+  Celular e telas menores: faixa recolhida no topo (nível, etapa, barrinha) que abre ao tocar. Correção de 17/11: a 1ª versão
+  usava `position: fixed` e, com a animação de entrada da página, cobria a letra A na Trilha do Alfabeto (achado pelo E2E
+  `--sem-jornada`); o E2E agora confere em 1850×980, 1366×768, 1280×800, 768×1024 e 390×844 que nenhum alvo tocável fica
+  debaixo do painel.
+- **Sessão:** a trilha de números no topo virou a **barrinha da missão** (pontinhos com check, estrela no passo de agora, baú no
+  fim); o nome do método continua só em `data-metodo`.
+- **Vozes:** 25 clipes novos (Sofia multilingual_v2, Tales v3), 1.151 caracteres enviados (a fala da Lojinha foi refeita uma vez:
+  "E, mais para a frente" saiu engolido → "Um dia, até barco e carro!"); auditoria: todos ok; bocas.json refeito. Ninguém
+  ouviu os clipes ainda. O botão "Você está aqui" reusa as falas das etapas.
+- **E2E:** `node web/e2e/fluxo.e2e.mjs --tutorial` (percorre tudo) e `--capturas-tutorial` (capturas `v10-tutorial-*.png`);
+  os outros trechos pulam o tutorial dentro de `montarAvatar`. O completo e o `--sem-jornada` também rodam o trecho.
+
 **Área do administrador e troca de áudios (D032 item 5; 17/11, noite; NÃO publicado ainda):**
 - **Rota própria `#/admin`** (link discreto no fim das Configurações da família/professor). Senha do administrador criada no
   primeiro uso (mín. 8 caracteres, com letras), guardada só como hash PBKDF2-SHA-256 (150 mil iterações, salt) no banco
