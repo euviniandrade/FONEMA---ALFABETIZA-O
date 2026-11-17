@@ -133,6 +133,9 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   E2E **`node web/e2e/fluxo.e2e.mjs --admin`** (também dentro do completo e do `--sem-jornada`; `--capturas-admin` tira
   capturas 1850×980 e 390×844): senha, troca do /m/, a lição AL-M toca exatamente os bytes subidos, gravação pelo microfone
   falso do Chromium, pacote, volta ao original (toca `audio/sons/m.mp3`), CSV da escola. Ninguém gravou voz real ainda.
+  **O `--sem-jornada` inteiro NÃO chegou ao trecho do administrador** nas duas tentativas (17/11, build de `aacda48`+): a 1ª
+  morreu no trecho 11 (Trilha dos Sons, navegador fechado ao meio); a 2ª falhou antes, em "sem pular fases: a revisão das
+  vogais só abre depois das vogais" — partes mexidas por outras frentes ao mesmo tempo, não investigadas aqui.
 
 **Espelho do Som: boca em desenho (17/11; proposta, NÃO integrada):** pedido D032 §6 (boca "como desenho, igual a Sofia, com a
 língua, o dente"). Geradas 102 imagens na MiniMax com a arte da Sofia como referência (7 formas de pedir). Servem A, I, U, M/B/P, S/Z;
