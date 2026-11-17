@@ -18,6 +18,8 @@ export const HABILIDADES: Habilidade[] = [
   { id: 'rima', regiao: 'R0', nome: 'Rimas', paraFamilia: 'percebe palavras que rimam', exigePseudo: false },
   { id: 'silaba', regiao: 'R0', nome: 'Sílabas (palmas)', paraFamilia: 'separa palavras em sílabas com palmas', exigePseudo: false },
   { id: 'som-inicial', regiao: 'R0', nome: 'Som inicial', paraFamilia: 'acha o primeiro som das palavras', exigePseudo: false },
+  // D032 §4: Bichinho Come-Som, variação "termina com" (CFN-FIM, docs/pedagogia/02); só nos jogos livres e de escuta
+  { id: 'som-final', regiao: 'R0', nome: 'Som final', paraFamilia: 'acha o último som das palavras (pato termina com u)', exigePseudo: false },
   { id: 'sintese', regiao: 'R0', nome: 'Juntar sons', paraFamilia: 'junta sons falados devagar e descobre a palavra', exigePseudo: false },
   // R1 · vogais
   { id: 'vogal-a', regiao: 'R1', nome: 'Vogal A', paraFamilia: 'reconhece o som do A', exigePseudo: false, seloMaestria: 'S-SOM-A' },

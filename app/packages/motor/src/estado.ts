@@ -28,7 +28,9 @@ export type TipoTentativa = 'avaliada' | 'exposicao' | 'autorrelato';
 /** Mecânica que gerou a tentativa: o `tipo` da atividade ('escolher', 'ligar', 'montar'…), mais a sondagem. */
 export type MecanicaTentativa = Atividade['tipo'] | 'sondagem' | MecanicaLivre;
 /** Mecânicas do Cantinho da Leitura e do Brincar com sons (biblioteca.ts). */
-export type MecanicaLivre = 'historia' | 'texto' | 'fluencia' | 'escuta';
+export type MecanicaLivre = 'historia' | 'texto' | 'fluencia' | 'escuta' | MecanicaJogo;
+/** D032 §4: jogos fônicos (jogos-fonicos.ts). Cada escolha conferida é uma tentativa AVALIADA; moedas e distância não contam. */
+export type MecanicaJogo = 'corre-som' | 'come-som';
 
 /** De que natureza é o `alvo` (para o painel separar sons, letras e palavras). */
 export type CategoriaAlvo = 'fonema' | 'grafema' | 'silaba' | 'palavra' | 'pseudopalavra' | 'outro';
@@ -89,7 +91,8 @@ export interface DetalheTentativa {
 export type NivelAjuda = 'nenhuma' | 'repetiu' | 'contraste' | 'caminho' | 'resposta-mostrada';
 export const NIVEIS_AJUDA: NivelAjuda[] = ['nenhuma', 'repetiu', 'contraste', 'caminho', 'resposta-mostrada'];
 
-export type ContextoTentativa = 'trilha' | 'revisao' | 'sondagem' | 'reforco' | 'livre';
+/** 'desafio' (D032 §4): jogo fônico escolhido pela criança no lugar de uma cena da fase (mesmos itens; conta como a cena). */
+export type ContextoTentativa = 'trilha' | 'revisao' | 'sondagem' | 'reforco' | 'livre' | 'desafio';
 
 export interface Tentativa extends DetalheTentativa {
   /** Momento (ms desde 1970). */

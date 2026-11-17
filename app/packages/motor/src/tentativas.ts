@@ -18,6 +18,8 @@ export const TIPO_POR_MECANICA: Partial<Record<string, TipoTentativa>> = {
   ditado: 'avaliada',
   palmas: 'avaliada',
   sondagem: 'avaliada',
+  'corre-som': 'avaliada',
+  'come-som': 'avaliada',
   letra: 'exposicao',
   espelho: 'exposicao',
   tracar: 'exposicao',
