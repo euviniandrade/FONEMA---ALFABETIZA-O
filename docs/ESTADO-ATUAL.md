@@ -9,6 +9,16 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Cenas do som com a Sofia (pedido do dono, fila nº 13; 17/11, noite; NÃO publicado ainda):** a figura do faz de conta de
+A, E, I/Y, L, V e X (`CENAS_DO_SOM` em `conteudo/src/alfabeto.ts`) agora é a Sofia fazendo a ação (no médico com a boca aberta, erguendo
+o troféu, mão na testa "iii!", lambendo o sorvete, voando o aviãozinho, dedo nos lábios), com o "A" azul no peito em A, I, L, V e X.
+As figuras antigas continuam em `web/public/assets/figuras` (regra 7); falas e vozes não mudaram. Prontas como **proposta** (não
+ligadas): Ó (surpresa), Ã (mão no queixo, olhando para cima) e R fraco (gato ronronando) — trocar em `CENA_DO_GRAFEMA` (`fases/tf.ts`)
+se o dono aprovar. **Não saíram** (ficou a figura atual): O, U, N, M, F, H, S, Z, J e É — o gerador (MiniMax `image-01`) não fez o gesto
+ou trocou a menina. 180 imagens geradas; folha antes × depois, tentativas, ferramentas e capturas em
+`docs/propostas/06-fonema-unificada/cenas-do-som-sofia/`. **Verificado** (cópia separada, commit 2fc0d4b): typecheck, lint, testes,
+relatório de decodificabilidade (0 erros) e capturas de AL-A, AL-X, TF-03 e TF-10 em 1850×980 e 390×844 (olhadas: cena aparece certa).
+
 **Jogos fônicos 1 e 2: Corre-Som e Bichinho Come-Som (D032 §4, pesquisa 47 G1/G5; 17/11, noite; NÃO publicado ainda):**
 - **Corre-Som** (`web/src/mecanicas/jogos/CorreSom.tsx` + pista 3D `corre-som-3d.ts`, three.js sob demanda, avatar 3D da criança de
   costas): rua de 3 pistas no campo, árvores, cerquinhas, moedinhas de enfeite e almofadas fofas para pular (sem castigo: só um tropeço).

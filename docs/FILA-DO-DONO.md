@@ -21,7 +21,7 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 | 10 | Áudios: texto ao lado de cada áudio (letra, palavra, sílaba, frase), subir/gravar áudio que entra no lugar certo; "Gravar o alfabeto" com a Agatha (17/11) | ✅ pronto no repositório (1.708 áudios listados; pacote .zip + importador; falta publicar) | app/docs/como-trocar-audios.md |
 | 11 | Lições depois da TF-22 (é/ó, vogais misturadas, nasais, R…) (17/11, "faça tudo") | 🔧 | pedagogia/01 |
 | 12 | Testes automáticos no GitHub (recomendação aceita) (17/11) | ✅ criado; 1ª execução completa a confirmar | .github/workflows/ci.yml |
-| 13 | Sofia nas cenas do som segurando coisas / fazendo a ação (médico "aaa", silêncio "xiii"…) (17/11) | 🔧 | — |
+| 13 | Sofia nas cenas do som segurando coisas / fazendo a ação (médico "aaa", silêncio "xiii"…) (17/11) | ✅ pronto no repositório: A, E, I/Y, L, V e X trocadas (falta publicar). Ó, Ã e R fraco prontos como proposta para as lições TF; O, U, N, M, F, H, S, Z, J e É não saíram bons e ficaram como estavam | docs/propostas/06-fonema-unificada/cenas-do-som-sofia |
 | 14 | Fichas de leitura por campo semântico, boquinha em cima de cada letra, 4 níveis (17/11) | 🔧 | D033 |
 | 15 | Mais agentes para ir mais rápido e com mais qualidade (17/11) | ✅ em uso | — |
 | 16 | Revisão final de qualidade de tudo o que entrou nesta rodada + teste completo + publicar (17/11) | ⏳ | — |
