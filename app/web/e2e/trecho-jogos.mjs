@@ -163,7 +163,7 @@ export async function trechoJogos(browser, h) {
     await jogarSessao(pg, {
       gancho: async (page, cena) => {
         const oferta = page.getByTestId('oferecer-jogo');
-        if (process.env.DEPURAR_JOGOS) console.log('    cena', cena, await page.locator('.mec').first().getAttribute('class').catch(() => '-'), await oferta.count());
+        if (process.env.DEPURAR_JOGOS) console.log('    cena', cena, await page.locator('.mec').first().evaluate((e) => e.outerHTML.slice(0, 300)).catch(() => '-'), await oferta.count());
         // a cena pode montar entre o gancho e o clique na resposta: nas duas cenas que viram jogo, espera a oferta aparecer
         if (/^AL-A-C[34]$/.test(cena) && jogados.size < 2) await oferta.waitFor({ timeout: 4000 }).catch(() => {});
         if (!(await oferta.isVisible().catch(() => false))) return;

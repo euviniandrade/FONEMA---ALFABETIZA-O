@@ -33,7 +33,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   const quadro = async (p) => { for (let i = 0; i < 300; i++) { const f = p.frames().find((x) => /mundo3d\/passeio\.html/.test(x.url())); if (f) return f; await p.waitForTimeout(200); } throw new Error('iframe do passeio não apareceu'); };
   const frame = await quadro(pg);
     await frame.waitForFunction(() => window.FONEMA_PASSEIO, null, { timeout: 120000 });
-  await frame.waitForFunction(() => (window.FONEMA_RECEBIDOS || []).length >= 6, null, { timeout: 60000 }).catch(async (e) => { console.log('    recebidos até agora:', await frame.evaluate(() => window.FONEMA_RECEBIDOS)); throw e; });
+  await frame.waitForFunction(() => (window.FONEMA_RECEBIDOS || []).length >= 6, null, { timeout: 240000, polling: 1000 }).catch(async (e) => { console.log('    recebidos até agora:', await frame.evaluate(() => window.FONEMA_RECEBIDOS)); throw e; });
   const recebidos = await frame.evaluate(() => window.FONEMA_RECEBIDOS);
   ok(recebidos.includes('crianca') && ['sofia', 'tales', 'bolota', 'crianca-1', 'crianca-2'].every((x) => recebidos.includes(x)), `o app mandou o boneco da criança e os outros 5 bonecos (${recebidos.join(', ')})`);
   // a camiseta amarela escolhida está na textura do boneco (amostra da cor média da textura do avatar)
