@@ -33,7 +33,7 @@ export type MecanicaLivre = 'historia' | 'texto' | 'fluencia' | 'escuta' | 'fich
  * D032 §4: jogos fônicos. Corre-Som e Bichinho Come-Som (jogos-fonicos.ts); Estrada e Rio dos Pares, Carteiro da Vila e Casa do
  * Som (jogos-vila.ts). Cada escolha conferida é uma tentativa AVALIADA; moedas, distância e enfeites não contam.
  */
-export type MecanicaJogo = 'corre-som' | 'come-som' | 'estrada-pares' | 'carteiro' | 'casa-som';
+export type MecanicaJogo = 'corre-som' | 'come-som' | 'estrada-pares' | 'carteiro' | 'casa-som' | 'memoria-sons';
 
 /** De que natureza é o `alvo` (para o painel separar sons, letras e palavras). */
 export type CategoriaAlvo = 'fonema' | 'grafema' | 'silaba' | 'palavra' | 'pseudopalavra' | 'outro';

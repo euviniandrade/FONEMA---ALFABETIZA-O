@@ -23,6 +23,8 @@ export const TIPO_POR_MECANICA: Partial<Record<string, TipoTentativa>> = {
   'estrada-pares': 'avaliada',
   carteiro: 'avaliada',
   'casa-som': 'avaliada',
+  // Memória dos Sons: o par fechado com decisão é avaliado; o palpite e o nível 1 gravam tipo 'exposicao' na própria tentativa
+  'memoria-sons': 'avaliada',
   letra: 'exposicao',
   espelho: 'exposicao',
   tracar: 'exposicao',
