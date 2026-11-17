@@ -72,9 +72,12 @@ function Desenho({ p, id }: { p: PoseBoca; id: string }) {
   // y para baixo no SVG: Y = -y
   const labios = `M${f(-w - 0.12)} 0 C${f(-w * 0.4)} ${f(-(hu + tu * 1.5))} ${f(w * 0.4)} ${f(-(hu + tu * 1.5))} ${f(w + 0.12)} 0 C${f(w * 0.5)} ${f(hl + tl * 1.6)} ${f(-w * 0.5)} ${f(hl + tl * 1.6)} ${f(-w - 0.12)} 0Z`;
   const boca = `M${f(-w)} 0 Q0 ${f(-hu * 2)} ${f(w)} 0 Q0 ${f(hl * 2)} ${f(-w)} 0Z`;
-  const pontaEmCima = p.ponta > 0.2;
+  // a ponta da língua só aparece quando há espaço entre os dentes (T, D, N, L, R); no S e no Z os dentes ficam juntinhos
+  const pontaEmCima = p.ponta > 0.2 && p.jaw >= 2.5;
+  // ponta da língua em cima (T, D, N, L, S…): uma coluna rosa do chão da boca até atrás dos dentes de cima, bem visível
+  const fundo = Math.max(0.3, hl * 1.6);
   const lingua = pontaEmCima
-    ? { cy: 0.02, rx: Math.min(w * 0.62, 0.78), ry: 0.36 }
+    ? { cy: (fundo - 0.12) / 2, rx: Math.min(w * 0.34, 0.4), ry: Math.max(0.24, (fundo + 0.12) / 2) }
     : { cy: hl + 0.1, rx: w * 0.8, ry: 0.5 };
   return (
     <g>
@@ -97,11 +100,13 @@ function Desenho({ p, id }: { p: PoseBoca; id: string }) {
         <rect x="-3" y="-3" width="6" height="6" fill="#5A1428" />
         {pontaEmCima ? null : <ellipse cx="0" cy={f(lingua.cy)} rx={f(lingua.rx)} ry={f(lingua.ry)} fill="#F2607C" />}
         <rect x="-1.3" y={f(0.02 + jd)} width="2.6" height="0.6" rx="0.18" fill="#FFFDF6" />
-        {pontaEmCima ? <ellipse cx="0" cy={f(lingua.cy)} rx={f(lingua.rx)} ry={f(lingua.ry)} fill="#F2607C" stroke="#D84866" strokeWidth=".05" /> : null}
+        {pontaEmCima ? <ellipse cx="0" cy={f(lingua.cy)} rx={f(lingua.rx)} ry={f(lingua.ry)} fill="#F2607C" stroke="#B8304F" strokeWidth=".07" /> : null}
         <rect x="-1.5" y="-0.65" width="3" height="0.7" rx="0.18" fill="#FFFDF6" />
       </g>
       {/* F e V: os dentes de cima pousam no lábio de baixo */}
       {ld > 0.5 ? <rect x="-0.95" y="-0.08" width="1.9" height="0.36" rx="0.1" fill="#FFFDF6" stroke="#E7DCCB" strokeWidth=".04" opacity={ld} /> : null}
+      {/* lábios fechados (P, B, M): a linha onde um lábio encosta no outro */}
+      {p.ab < 0.12 && ld < 0.5 ? <path d={`M${f(-w - 0.05)} 0 Q0 0.12 ${f(w + 0.05)} 0`} fill="none" stroke="#7A2236" strokeWidth=".09" strokeLinecap="round" opacity={f(1 - p.ab / 0.12)} /> : null}
       <path d={labios} fill="none" stroke="#9C3344" strokeWidth=".05" opacity=".45" />
       <ellipse cx={f(-w * 0.35)} cy={f(-(hu + tu * 1.1))} rx={f(w * 0.22)} ry="0.07" fill="#fff" opacity=".35" />
     </g>
@@ -134,7 +139,7 @@ export function Boquinha({ fonema, falando = false, fixa = false, destaque = fal
   return (
     <span className={`boquinha ${falando ? 'falando' : ''} ${destaque ? 'destaque' : ''} ${fonema ? '' : 'calada'} ${className}`} style={tamanho ? { width: tamanho, height: tamanho } : undefined}
       role={rotulo ? 'img' : undefined} aria-label={rotulo} aria-hidden={rotulo ? undefined : true} data-fonema={fonema ?? ''}>
-      <svg viewBox="-3.1 -2.5 6.2 5.6" preserveAspectRatio="xMidYMid slice"><Desenho p={p} id={id} /></svg>
+      <svg viewBox="-2.15 -2.05 4.3 4.3" preserveAspectRatio="xMidYMid slice"><Desenho p={p} id={id} /></svg>
     </span>
   );
 }

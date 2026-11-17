@@ -112,6 +112,10 @@
   .ficha-campo{min-height:170px}
   .ficha-campo-capa{width:90px;height:90px}
   .ficha-campos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ficha-ligar-bocas{gap:8px;flex-wrap:nowrap}
+  .ficha-boca-btn{min-width:0;padding:6px}
+  .ficha-boca-btn .boquinha{width:64px}
+  .ficha-letra-solta{width:66px;height:76px}
 }
 html.menos-movimento .boquinha,html.menos-movimento .ficha-pedaco,html.menos-movimento .ficha-revela{transition:none;animation:none}
 @media (prefers-reduced-motion:reduce){.boquinha,.ficha-pedaco{transition:none}.ficha-revela,.ficha-opcao.modelo{animation:none}}
