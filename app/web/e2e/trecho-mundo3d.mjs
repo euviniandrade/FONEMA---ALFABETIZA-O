@@ -96,8 +96,9 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   ok(pz.z > -25.5, `a parede da escola segura o boneco (parou em z = ${pz.z.toFixed(1)})`);
 
   // clique no chão = ir até lá
-  await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(0, 19.5, Math.PI));
-  await pg.waitForTimeout(400);
+  await frame.evaluate(() => { const p = window.FONEMA_PASSEIO; p.teleportar(0, 19.5, Math.PI); p.girarCamera(0 - p.camera.giro); });
+  // espera a câmera chegar atrás do boneco (ela encaixa no próximo quadro)
+  await ate(() => { const c = window.FONEMA_MUNDO.camera.position, p = window.FONEMA_PASSEIO.posicao; return Math.hypot(c.x - p.x, c.z - p.z) < 12 && c.z > p.z; }, null, 30000);
   const antes = await pos();
   await pg.mouse.click(box.x + box.width * 0.35, box.y + box.height * 0.72);
   ok(await ate(({ x, z }) => { const p = window.FONEMA_PASSEIO.posicao; return Math.hypot(p.x - x, p.z - z) > 1; }, { x: antes.x, z: antes.z }, 25000), 'clicar no chão leva o boneco até lá');

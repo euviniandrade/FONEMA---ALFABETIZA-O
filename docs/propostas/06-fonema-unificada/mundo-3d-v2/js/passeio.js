@@ -232,7 +232,7 @@ export function criarPasseio(mundo, h = {}) {
 
   // ---------- quadro ----------
   const _f = new THREE.Vector3(), _d = new THREE.Vector3();
-  let avisoT = 0, tempoParado = 0, travado = 0;
+  let avisoT = 0, tempoParado = 0, travado = 0, encaixar = false;
   function aviso(tipo) { if (performance.now() - avisoT > 2600) { avisoT = performance.now(); h.aoAviso?.(tipo); } }
 
   function mover(dx, dz) {
@@ -345,7 +345,8 @@ export function criarPasseio(mundo, h = {}) {
     cam.distReal = livre < cam.distReal ? lerp(cam.distReal, livre, 1 - Math.exp(-dt * 18)) : lerp(cam.distReal, livre, 1 - Math.exp(-dt * (cam.alto ? 2.5 : 4)));
     desejada.copy(alvoCam).addScaledVector(_d, cam.distReal);
     desejada.y = Math.max(desejada.y, colisao.altura(desejada.x, desejada.z) + 1.25);
-    camera.position.lerp(desejada, menos ? 1 - Math.exp(-dt * 6) : 1 - Math.exp(-dt * 14));
+    if (encaixar) { encaixar = false; cam.distReal = livre; desejada.copy(alvoCam).addScaledVector(_d, livre); camera.position.copy(desejada); }
+    else camera.position.lerp(desejada, menos ? 1 - Math.exp(-dt * 6) : 1 - Math.exp(-dt * 14));
     camera.lookAt(alvoCam);
     mundo.controls.target.copy(alvoCam);
   }
@@ -372,6 +373,6 @@ export function criarPasseio(mundo, h = {}) {
     zoom(f) { cam.dist = clamp(cam.dist * f, LIM_DIST[0], LIM_DIST[1]); },
     verDoAlto(on = !cam.alto) { cam.alto = on; return on; },
     irPara(x, z) { destino = { x, z, perto: 0.4 }; },
-    teleportar(x, z, g = giro) { pos.x = x; pos.z = z; giro = g; },
+    teleportar(x, z, g = giro) { pos.x = x; pos.z = z; giro = g; velX = velZ = 0; destino = null; encaixar = true; },
   };
 }
