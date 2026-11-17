@@ -124,7 +124,7 @@ export const PALAVRAS_BLOCOS_4_5: EntradaBanco[] = [
   e('veto', 'v ɛ t u'), e('cota', 'k ɔ t a'),
   pseudo('dovê', 'd o v e'), pseudo('bupô', 'b u p o'),
   // TF-25 · /ã/: ã, e AN antes de consoante (AM antes de P e B fica para TF-30)
-  e('lã', 'l ã', { figura: 'novelo-la' }), e('fã', 'f ã'), e('anta', 'ã t a', { figura: 'anta' }), e('panda', 'p ã d a', { figura: 'panda' }),
+  e('lã', 'l ã', { figura: 'novelo-la' }), e('fã', 'f ã'), e('anta', 'ã t a'), e('panda', 'p ã d a', { figura: 'panda' }),
   e('manta', 'm ã t a'), e('canto', 'k ã t u'), e('tanto', 't ã t u'), e('tato', 't a t u'), e('janta', 'ʒ ã t a'), e('lá', 'l a'),
   pseudo('lantu', 'l ã t u', true), pseudo('tanfi', 't ã f i', true),
   // TF-26 · /ẽ/: EN (o -EM do fim, "tem", fica para TF-30)

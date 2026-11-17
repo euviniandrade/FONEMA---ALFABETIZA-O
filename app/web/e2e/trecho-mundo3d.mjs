@@ -16,6 +16,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await ctx.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { /* sem armazenamento */ } });
   const pg = await ctx.newPage();
   pg.on('pageerror', (e) => erros.push(String(e)));
+  pg.on('console', (m) => { if (/passeio|npcs|avatar3d|glb/.test(m.text())) console.log(`    [console ${m.type()}] ${m.text().slice(0, 240)}`); });
   await pg.goto(BASE + '#/adulto/cadastro');
   await passarPorteira(pg);
   await cadastrar(pg, 'Bia', 'f');
@@ -32,7 +33,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   const frame = await (await pg.getByTestId('passeio3d-iframe').elementHandle()).contentFrame();
   frame.on?.('pageerror', (e) => erros.push(String(e)));
   await frame.waitForFunction(() => window.FONEMA_PASSEIO, null, { timeout: 120000 });
-  await frame.waitForFunction(() => (window.FONEMA_RECEBIDOS || []).length >= 6, null, { timeout: 60000 });
+  await frame.waitForFunction(() => (window.FONEMA_RECEBIDOS || []).length >= 6, null, { timeout: 60000 }).catch(async (e) => { console.log('    recebidos até agora:', await frame.evaluate(() => window.FONEMA_RECEBIDOS)); throw e; });
   const recebidos = await frame.evaluate(() => window.FONEMA_RECEBIDOS);
   ok(recebidos.includes('crianca') && ['sofia', 'tales', 'bolota', 'crianca-1', 'crianca-2'].every((x) => recebidos.includes(x)), `o app mandou o boneco da criança e os outros 5 bonecos (${recebidos.join(', ')})`);
   // a camiseta amarela escolhida está na textura do boneco (amostra da cor média da textura do avatar)

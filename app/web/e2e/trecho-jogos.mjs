@@ -159,8 +159,10 @@ export async function trechoJogos(browser, h) {
     await pg.goto(BASE + `#/c/${id}/sessao/AL-A`);
     const jogados = new Set();
     await jogarSessao(pg, {
-      gancho: async (page) => {
+      gancho: async (page, cena) => {
         const oferta = page.getByTestId('oferecer-jogo');
+        // a cena pode montar entre o gancho e o clique na resposta: nas duas cenas que viram jogo, espera a oferta aparecer
+        if (/^AL-A-C[34]$/.test(cena) && jogados.size < 2) await oferta.waitFor({ timeout: 4000 }).catch(() => {});
         if (!(await oferta.isVisible().catch(() => false))) return;
         const jogo = await oferta.getAttribute('data-jogo');
         if (jogados.has(jogo)) return;

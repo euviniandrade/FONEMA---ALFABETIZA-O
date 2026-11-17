@@ -420,8 +420,8 @@ export const LICOES_TF: Licao[] = [
   },
   {
     unidade: 'TF-25', tipo: 'grafema', bloco: 4, letra: 'Ã', rotulo: 'ã', titulo: 'O som /ã/', objetivo: 'Ligar o som /ã/ ao Ã e ao AN (lã, anta) e ouvir a diferença de /a/',
-    sintese: [['anta', 'anta', 'panda', 'lã'], ['panda', 'panda', 'pato', 'anta'], ['lã', 'lã', 'lua', 'uva']],
-    leitura: [{ palavra: 'anta', outras: ['panda', 'pato'] }, { palavra: 'panda', outras: ['anta', 'pato'] }, { palavra: 'lã', outras: ['lua', 'uva'] }, { palavra: 'manta', outras: ['mata', 'nata'] }],
+    sintese: [['panda', 'panda', 'pato', 'papai'], ['lã', 'lã', 'lua', 'uva'], ['anta', 'anta', 'manta', 'janta']],
+    leitura: [{ palavra: 'panda', outras: ['pato', 'papai'] }, { palavra: 'lã', outras: ['lua', 'uva'] }, { palavra: 'anta', outras: ['janta', 'manta'] }, { palavra: 'manta', outras: ['mata', 'nata'] }],
     pseudo: [['lantu', 'latu', 'lanta'], ['tanfi', 'tafi', 'tanfa']],
     caixas: ['lã', 'fã'],
     desafio: {

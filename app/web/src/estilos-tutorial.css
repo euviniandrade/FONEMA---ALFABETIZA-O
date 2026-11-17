@@ -125,7 +125,7 @@
 .tut-fala p{flex:1;font-size:clamp(18px,1.7vw,22px);color:var(--tinta);line-height:1.25}
 .tut-fala p b{display:block;font-family:var(--f-titulo);font-size:13px;letter-spacing:.6px;text-transform:uppercase;color:var(--terracota)}
 .tut-fala[data-quem=tales] p b{color:var(--marinho2)}
-.tut-ouvir{width:64px;height:64px;flex:none}
+.tut-fala .tut-ouvir{width:64px;height:64px;flex:none}
 .tut-nav{display:flex;gap:12px}
 .tut-seta{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#fff,#E8F2FC);box-shadow:0 6px 0 #B9CEE2,var(--s1);transition:transform .2s var(--mola)}
 .tut-seta img{width:58%;height:58%;object-fit:contain}
@@ -163,7 +163,7 @@
   .tut-fala{border-radius:28px;min-height:76px;padding:6px}
   .tut-fala .rosto{width:56px!important;height:56px!important}
   .tut-fala p{font-size:16px}
-  .tut-ouvir{width:56px;height:56px}
+  .tut-fala .tut-ouvir{width:60px;height:60px}
   .tut-base{flex-direction:column;align-items:stretch}
   .tut-nav{justify-content:space-between}
   .tut-seta{width:72px;height:72px}.tut-seta.seguir{width:88px;height:88px}
