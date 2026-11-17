@@ -138,7 +138,10 @@
 
 /* celular e tablet em pé */
 @media (max-width:899px){
-  .tela-tutorial{padding:10px 10px 12px;gap:8px}
+  .tela-tutorial{padding:10px 10px 12px;gap:8px;height:100vh;height:100dvh;min-height:0}
+  .tut-palco{min-height:0}
+  .tut-jogos-lista li:nth-child(n+5){display:none}
+  .tut-jogos-lista li{min-height:60px}
   .tut-passos{padding:5px 8px}.tut-passos li{width:34px;height:34px;margin-left:10px}.tut-passos li::before{width:10px}.tut-passos li.agora{width:46px;height:46px}
   .tut-pular{padding:4px 12px;font-size:14px}
   .tut-palco{align-items:start;overflow:auto}

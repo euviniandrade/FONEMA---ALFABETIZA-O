@@ -29,9 +29,9 @@
 .etapa-nome{font-family:var(--f-titulo);font-weight:600;font-size:16px;color:var(--marinho);line-height:1.1;max-width:120px}
 .etapa-selo{position:absolute;right:-4px;top:-4px;width:32px;height:32px;border-radius:50%;background:linear-gradient(180deg,#5CCB85,#2A9150);color:#fff;display:grid;place-items:center;box-shadow:0 0 0 3px #fff}
 .etapa-selo .ic{width:20px;height:20px}
-.etapa-cadeado{position:absolute;inset:0;border-radius:50%;background:rgba(40,60,98,.42);display:grid;place-items:center}
-.etapa-cadeado img{width:48%;filter:drop-shadow(0 3px 3px rgba(0,0,0,.35))}
-.etapa.trancada .etapa-disco{filter:saturate(.35)}
+.etapa-cadeado{position:absolute;right:-6px;bottom:-4px;width:40%;height:40%;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 2px 4px rgba(12,26,64,.3)}
+.etapa-cadeado img{width:78%;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}
+.etapa.trancada .etapa-disco{background:radial-gradient(circle at 35% 28%,#F2F5F9,#D9E2EC)}.etapa.trancada .etapa-img{filter:grayscale(.75) opacity(.75)}
 .etapa.trancada .etapa-nome{color:#7C8AA0}
 .etapa.feita .etapa-disco{box-shadow:0 6px 0 var(--folha-esc),0 0 0 4px #fff,0 0 0 7px var(--folha),0 14px 18px -8px rgba(12,26,64,.38)}
 .etapa.agora .etapa-disco{background:radial-gradient(circle at 35% 28%,#FFF8D8,#FFE07A 60%,#F6B42B);box-shadow:0 6px 0 var(--ipe-esc),0 0 0 5px #fff,0 0 0 11px rgba(255,201,63,.55),0 16px 22px -8px rgba(12,26,64,.4);animation:etapaPulsa 2.2s var(--suave) infinite}
