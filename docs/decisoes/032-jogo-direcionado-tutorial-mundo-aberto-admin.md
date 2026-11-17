@@ -29,3 +29,9 @@ Data: 2026-11-17. Origem: pedido do dono ("elevar o nível… o jogo está solto
 - Crianças de 4–7 anos: conversa com IA, chat e sala online exigem decisão do dono sobre servidor, custo, moderação e LGPD antes de
   ir ao ar; até lá, bonecos com falas roteirizadas e seguras.
 - Toda atividade de leitura e escrita segue as regras pedagógicas 1–9 (CLAUDE.md); jogo nunca conta exposição como domínio.
+
+## Respostas do dono (17/11/2026)
+- **Servidor: não, por enquanto** ("estou sem dinheiro"). Tudo continua local no aparelho; áudios novos do administrador viram um
+  pacote que é aplicado ao repositório e publicado. IA de conversa e multijogador online ficam para quando houver servidor.
+- **"Faça tudo isso e as recomendações que você me trouxe."** Os 5 jogos da pesquisa 47 entram (Corre-Som, Bichinho Come-Som,
+  Estrada e Rio dos Pares, Carteiro da Vila, Casa do Som), primeiro dentro dos desafios e depois no Parque de Jogos.
