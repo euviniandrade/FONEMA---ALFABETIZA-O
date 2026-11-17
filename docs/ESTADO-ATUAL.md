@@ -9,6 +9,35 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Jogos fônicos 1 e 2: Corre-Som e Bichinho Come-Som (D032 §4, pesquisa 47 G1/G5; 17/11, noite; NÃO publicado ainda):**
+- **Corre-Som** (`web/src/mecanicas/jogos/CorreSom.tsx` + pista 3D `corre-som-3d.ts`, three.js sob demanda, avatar 3D da criança de
+  costas): rua de 3 pistas no campo, árvores, cerquinhas, moedinhas de enfeite e almofadas fofas para pular (sem castigo: só um tropeço).
+  Toca o som puro; vêm 3 arcos com placa (letra ou figura) em pistas sorteadas; a rua **para** antes de cada escolha. Escolhe tocando na
+  pista, deslizando, setas/A-D (+ ↑/Espaço/Enter ou parar 1,4 s na pista) ou "Passar"; ficar parado não responde; sem resposta em 9 s o som
+  toca de novo (ajuda "repetiu", não erro). Variações: **Letras** (som → letra) e **Figuras** (som → figura que começa com ele). Sem WebGL:
+  arcos em 2D. "Menos movimento": a rua não corre.
+- **Bichinho Come-Som** (`ComeSom.tsx`): o **Bolota** pede um som (bolha que pulsa) e a criança dá, entre 3 pratinhos sorteados, a
+  comida/figura que **começa** (ou **termina**: a, i, u — pato termina com /u/) com o som. Alto-falante em cada pratinho (R10). Errou: o
+  Bolota cheira, faz "?" e devolve; nunca fica triste. Prefere figuras de comida; sem comida para o som, vale outra figura com voz.
+- **Regras** (`motor/src/jogos-fonicos.ts`, teste `motor/test/jogos-fonicos.test.ts`): só sons de letras com fase concluída
+  (`letrasComSomVisto`), sem H/K/W/Y e **sem os sons "duvidosos" da auditoria** (L, V, J, P, T, B, C, D, G: na trilha eles nunca são o
+  único estímulo, então no jogo também ficam fora até a gravação conferida [DP]); 3 opções; posição da certa sorteada sem repetir; um
+  distrator parecido quando os dois sons foram ensinados (s/z, m/n); cada som entra antes de repetir; rodada de 6. Variações abrem com 3 sons
+  (Letras/Figuras/Começa) e com A, I e U (Termina). Correção contrastiva só com falas gravadas ("Você escolheu este som:" / "Essa letra faz
+  este som:" + som, pares de voz, "Eu pedi este som:" + som); 3º arco/prato: a certa brilha e vale "com ajuda". R12: na 1ª vez de cada
+  variação no Brincar, a Sofia faz um exemplo ("Olha como eu faço.") que não vale.
+- **Registro:** cada escolha = tentativa `avaliada`, mecânica `corre-som`/`come-som`, alvo/escolhido (letra; ou o SOM, nas figuras),
+  respostas, distratores, tempo, 3 opções, posição certa e escolhida, formato; contexto **`livre`** no Brincar e **`desafio`** (novo em
+  `ContextoTentativa`) dentro da fase. Moedas e distância não viram tentativa; porquinho não muda. Habilidade nova **`som-final`** (R0).
+- **Onde:** Brincar › seção **"Jogos"** (cartões trancados até haver sons; `#/c/:id/brincar/corre-som` e `/come-som`) e, como **desafio
+  opcional**, nas cenas de fase em que TODOS os itens são "som → letra" com som real (vira Corre-Som; item de 4 opções perde um distrator
+  distante) ou "som → figura" (vira Bichinho): botão "Jogar no Corre-Som"/"Dar comida ao Bolota" no canto da cena, antes da 1ª resposta;
+  mesmos itens da fase (`desafioDaCena`). Ex.: Letra A C3 e C4, lições TF de vogais/M/F/S/N/Z. Sem o toque, a cena segue igual (E2E).
+- **Falta voz** de 8 falas próprias (enunciado do "termina com", entrada dos jogos, reações do Bolota…): `app/docs/falas-pendentes.md` §1c.
+- **Verificado (17/11, cópia separada, porta 4530):** typecheck, lint, 366 testes, relatório de decodificabilidade (0 erros), build,
+  E2E `node web/e2e/fluxo.e2e.mjs --jogos` (trecho `web/e2e/trecho-jogos.mjs`, também dentro do `--sem-jornada`) e capturas
+  `--capturas-jogos` (`app/docs/capturas/v10-jogos-*`, 1850×980 e 390×844). Ver a linha "E2E" abaixo para o resultado do `--sem-jornada`.
+
 **Fichas de leitura por campo semântico (D033, pedido do dono; 17/11, noite; NÃO publicado ainda):**
 - **Onde:** Cantinho da Leitura › "Fichas de leitura" (`#/c/:id/leitura/fichas`), 6 cartões: Animais, Comidas, Coisas da casa,
   Brinquedos, Família e corpo, Natureza. Também como **desafio opcional no fim das lições da Trilha dos Sons** (botão "Ficha de
