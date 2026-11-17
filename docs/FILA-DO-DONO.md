@@ -15,7 +15,7 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 | 4 | Nadar no rio, barco, carro, "construir uma vida", profissões (17/11) | ⏳ (parte nos jogos 3–5; mundo 3D preparado) | D032 §3 |
 | 5 | Pesquisa dos jogos mais jogados e adaptação à fonética (17/11) | ✅ pesquisa 47 | docs/pesquisa/47 |
 | 6 | Jogos: Corre-Som e Bichinho Come-Som (17/11) | 🔧 | pesquisa 47 |
-| 7 | Jogos: Estrada e Rio dos Pares, Carteiro da Vila, Casa do Som (17/11) | 🔧 | pesquisa 47 |
+| 7 | Jogos: Estrada e Rio dos Pares, Carteiro da Vila, Casa do Som (17/11) | ✅ pronto no repositório (falta publicar; testar o botão de desafio no fim da missão e o arrastar no celular real) | pesquisa 47 |
 | 8 | Jogos primeiro dentro dos desafios; depois livres no Parque de Jogos, mostrando os tipos de jogo (17/11) | 🔧 | D032 §4 |
 | 9 | Página do administrador (login do dono, aba à parte; admin da escola; configurar o site) (17/11) | 🔧 | D032 §5 |
 | 10 | Áudios: texto ao lado de cada áudio (letra, palavra, sílaba, frase), subir/gravar áudio que entra no lugar certo; "Gravar o alfabeto" com a Agatha (17/11) | 🔧 (sem servidor: pacote enviado e aplicado ao repositório) | D032 §5 |
