@@ -31,7 +31,7 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 |---|---|---|
 | A1 | Boca do Espelho do Som bonita (desenho estilo Sofia/Tales ou vídeo) (17/11) | Escolher: vídeo da boca da Agatha (recomendado) e/ou autorizar a Cloudinary para editar só a boca, ou ilustrador. Tentativa com IA: docs/propostas/06-fonema-unificada/espelho-do-som-desenho |
 | A2 | Áudios da Agatha: sons de cada letra, palavras, frases (17/11) | Gravar pela página do administrador e enviar o pacote (como-trocar-audios.md); autorização por escrito dela |
-| A3 | Vídeo do YouTube com palavras (17/11) | Só como referência (não copiar o áudio), salvo se o vídeo for do dono ou houver autorização; mandar o link |
+| A3 | Vídeo do YouTube com palavras (17/11): https://www.youtube.com/watch?v=FXylvtji5uM | É o mesmo vídeo do canal Kidspace Tv já estudado (pesquisa 45): de terceiros, então não copiamos o áudio. Já usado como referência (faz de conta, ordem, palavras). Se o dono tiver autorização por escrito do canal, revemos |
 | A4 | IA conversando com os bonecos; sala de aula online com vários alunos (17/11) | Servidor (dono: "sem dinheiro por enquanto"), moderação e LGPD |
 | A5 | Validar os sons puros e as listas de palavras (fonoaudióloga/alfabetizadora); conferir E/O duvidosos e vozes novas de ouvido | Pessoa para ouvir |
 | A6 | LGPD/termos com advogado antes de piloto com crianças | Advogado |
