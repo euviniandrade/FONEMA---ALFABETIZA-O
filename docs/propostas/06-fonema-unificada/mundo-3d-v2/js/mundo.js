@@ -10,6 +10,10 @@
 //   window.addEventListener('fonema:missao', (e) => console.log(e.detail.id));
 //
 // Eventos (no container E na window): fonema:pronto, fonema:lugar, fonema:missao, fonema:regiao, fonema:cena, fonema:qualidade.
+//
+// Passeio em terceira pessoa (passeio.html): `opts.passeio = true` monta a vila sem os personagens recortados e sem os
+// portais antigos; `mundo.usarControlador(c)` desliga a órbita e, a cada quadro, chama `c.tick(dt, t)` (js/passeio.js).
+// `opts.dprMax` limita a densidade de pixels (celular).
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -93,7 +97,7 @@ export async function criarMundo(container, opts = {}) {
   FASES_R0.forEach((f, i) => { estados[f.id] = o.fasesFeitas.includes(f.id) ? 'feita' : f.id === o.faseAtual ? 'atual' : i < idxAtual ? 'feita' : 'bloqueada'; });
   const cenas = {};
   async function obter(nome) {
-    if (!cenas[nome]) cenas[nome] = nome === 'vila' ? await criarVila({ U, q: nivel, renderer, estados }) : await criarArquipelago({ U, q: nivel, regiaoAtual: o.regiaoAtual });
+    if (!cenas[nome]) cenas[nome] = nome === 'vila' ? await criarVila({ U, q: nivel, renderer, estados, passeio: !!o.passeio }) : await criarArquipelago({ U, q: nivel, regiaoAtual: o.regiaoAtual });
     return cenas[nome];
   }
   let cenaAtual = null, C = null;
@@ -164,7 +168,7 @@ export async function criarMundo(container, opts = {}) {
   }
   function aplicarQualidade(n) {
     nivel = n; Q = QUALIDADES[n];
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, Q.dpr));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, Q.dpr, o.dprMax || 9));
     renderer.shadowMap.enabled = Q.sombra > 0;
     if (Q.sombra) { ceu.sun.shadow.mapSize.set(Q.sombra, Q.sombra); if (ceu.sun.shadow.map) { ceu.sun.shadow.map.dispose(); ceu.sun.shadow.map = null; } }
     scene.traverse((m) => { if (m.material) m.material.needsUpdate = true; });
@@ -179,7 +183,7 @@ export async function criarMundo(container, opts = {}) {
     if (passes.grade) passes.grade.uniforms.uRes.value.set(w, h);
   }
   const ro = new ResizeObserver(redimensionar); ro.observe(container);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, Q.dpr));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, Q.dpr, o.dprMax || 9));
   montarPos();
 
   // ---------- voo de câmera ----------
@@ -251,7 +255,7 @@ export async function criarMundo(container, opts = {}) {
   canvas.addEventListener('pointerdown', (e) => { down = { x: e.clientX, y: e.clientY, t: performance.now() }; if (passeioAtivo) { passeioAtivo = false; emitir('fonema:passeio', { ativo: false }); } voo = null; });
   canvas.addEventListener('pointerup', (e) => {
     if (!down) return; const mov = Math.hypot(e.clientX - down.x, e.clientY - down.y), dt = performance.now() - down.t; down = null;
-    if (mov > 10 || dt > 600) return;
+    if (mov > 10 || dt > 600 || controlador) return;
     const rc = canvas.getBoundingClientRect(); ptr.set(((e.clientX - rc.left) / rc.width) * 2 - 1, -((e.clientY - rc.top) / rc.height) * 2 + 1);
     ray.setFromCamera(ptr, camera);
     tocar(ray);
@@ -333,17 +337,18 @@ export async function criarMundo(container, opts = {}) {
       if (!voo) { passeioT += dt; const s = tourAt(passeioT); camera.position.copy(s.cam); controls.target.copy(s.alvo); if (passeioT > tour.dur) { passeioAtivo = false; emitir('fonema:passeio', { ativo: false }); } }
     }
     passoVoo(dt);
-    if (!voo && !passeioAtivo) controls.update(); else camera.lookAt(controls.target);
+    if (controlador) controlador.tick(dt, tempo);
+    else if (!voo && !passeioAtivo) controls.update(); else camera.lookAt(controls.target);
     atualizar(tempo, dt);
     fade += (fadeAlvo - fade) * Math.min(1, dt * 7); veu.style.opacity = fade.toFixed(3);
     render();
     // medidor: se o quadro passar de 45 ms por 3 s, desce um degrau de qualidade
     fpsAcc += dt; fpsN++;
-    if (fpsAcc > 1) { const ms = (fpsAcc / fpsN) * 1000; fpsAcc = 0; fpsN = 0; info.ms = ms;
+    if (fpsAcc > 1) { const ms = (fpsAcc / fpsN) * 1000; fpsAcc = 0; fpsN = 0; info.ms = ms; info.fps = 1000 / ms;
       if (o.qualidade === 'auto' && ms > 45) { lentoDesde += 1; if (lentoDesde >= 3 && nivel !== 'baixo') { lentoDesde = 0; aplicarQualidade(nivel === 'alto' ? 'medio' : 'baixo'); } } else lentoDesde = 0; }
   }
-  const info = { ms: 0 };
-  let destruido = false;
+  const info = { ms: 0, fps: 0 };
+  let destruido = false, controlador = null;
 
   await trocarCena(o.cena);
   if (o.vista && VISTAS[o.vista]) aplicarVista(o.vista);
@@ -381,6 +386,9 @@ export async function criarMundo(container, opts = {}) {
     irPara, voar, deslizar, zoom, orbitar, focar, passeio, entrarMissao, trocarCena: async (n) => { if (n === 'vila' && cenaAtual === 'arquipelago') { vooParaVila(); return; } await trocarCena(n); },
     vooParaVila, miniMapa,
     abrirPortalPorId(id) { const p = C.portais && C.portais.find((x) => x.userData.id === id); if (p) abrirPortal(p); },
+    get vila() { return cenas.vila; },
+    /** Passeio em 3ª pessoa: o controlador move a câmera (e o alvo) a cada quadro; a órbita fica desligada. */
+    usarControlador(c) { controlador = c; controls.enabled = !c; passeioAtivo = false; voo = null; },
     definirHora(t) { ciclo = false; hora = clamp(t, 0, 1); ceu.aplicar(hora, renderer); },
     cicloDoDia(on = true) { ciclo = on; },
     tiltShift(on = true) { o.tiltShift = on; },

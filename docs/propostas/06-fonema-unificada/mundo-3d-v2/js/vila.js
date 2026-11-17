@@ -114,7 +114,7 @@ function pintarChao(S) {
   }, { aniso: 8 });
 }
 
-export async function criarVila({ U, q, renderer, estados = {} }) {
+export async function criarVila({ U, q, renderer, estados = {}, passeio = false }) {
   const grupo = new THREE.Group(); grupo.name = 'vila';
   const r = rng(2024);
   const matCorpo = addRim(matStd(), '#FFE4BE', 0.22, 3.0);
@@ -357,6 +357,8 @@ export async function criarVila({ U, q, renderer, estados = {} }) {
   const tales = await criarSprite('tales.png', 1.85, { fase: 2.1 }); tales.position.set(-24.2, 0.05, 22.6); grupo.add(tales);
   const bolota = criarBolota(); bolota.position.set(0.9, 0.05, 14.6); bolota.rotation.y = -2.5; grupo.add(bolota);
   const zum = criarZumZum(); grupo.add(zum);
+  // passeio em 3ª pessoa: os personagens recortados (sprites) dão lugar aos bonecos 3D andando (js/npcs.js)
+  if (passeio) for (const s of [dupla, sofia, tales, bolota]) s.visible = false;
   const bichos = criarBichinhos(grupo, { passaros: q === 'baixo' ? 4 : 10, borboletas: q === 'baixo' ? 5 : 14, centros: [new THREE.Vector3(-9.5, 0.6, -6), new THREE.Vector3(9.5, 0.6, 9), new THREE.Vector3(22, 0.6, 19), new THREE.Vector3(-21, 0.4, 22), new THREE.Vector3(-9.5, 0.6, 9)] });
 
   // ---------- portais de missão ----------
@@ -364,7 +366,7 @@ export async function criarVila({ U, q, renderer, estados = {} }) {
   for (const f of FASES_R0) {
     const p = criarPortal({ id: f.id, nome: f.nome, letra: f.letra, estado: estados[f.id] || 'bloqueada' });
     p.position.set(f.pos[0], altura(f.pos[0], f.pos[2]) + 0.02, f.pos[2]);
-    p.userData.fase = f; grupo.add(p); portais.push(p);
+    p.userData.fase = f; if (!passeio) { grupo.add(p); portais.push(p); }
   }
 
   // luzes pontuais da praça (só alto, só ao entardecer)
@@ -375,6 +377,8 @@ export async function criarVila({ U, q, renderer, estados = {} }) {
   const tint = new THREE.Color();
   return {
     grupo, POIS, portais, rio, altura,
+    // para o passeio (colisão e água): peças dos lotes, troncos, arbustos, rio e barquinho
+    pecas: () => [ctx.C.parts, ctx.Fo.parts], troncos: arv.troncos, arbustos: ctx.arbustos, distRio, NIVEL_AGUA, RIO_W, barco,
     sprites: [dupla, sofia, tales],
     tick(t, cam, hora) {
       for (const s of [dupla, sofia, tales]) s.userData.tick(t, cam, tint.setRGB(1, lerp(1, 0.9, hora), lerp(1, 0.8, hora)));

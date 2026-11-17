@@ -39,6 +39,8 @@ export function criarArvores(U, q) {
       troncos.add(M(x, y - 0.2, z, (r() - 0.5) * 0.12, r() * 6, (r() - 0.5) * 0.12, s * 0.9, h + 0.6, s * 0.9), '#8A5A3A');
       (distante ? longe : copas[k]).add(M(x, y + h + cs * 0.3, z, 0, r() * 6, 0, cs, cs * (0.8 + r() * 0.2), cs), cor || VERDES[Math.floor(r() * VERDES.length)]);
     },
+    /** [matriz, cor] de cada tronco (o passeio usa para a colisão). */
+    troncos: troncos.l,
     build(grupo, fator = 1) { [troncos, longe, ...copas].forEach((c) => { if (c.l.length) grupo.add(c.build(fator)); }); },
   };
 }
