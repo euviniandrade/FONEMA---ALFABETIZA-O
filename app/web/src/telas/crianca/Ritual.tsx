@@ -1,7 +1,7 @@
 import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { useEffect, useMemo, useState } from 'react';
 import { CONQUISTA_POR_ID, FASE_POR_ID, FALAS, type Fase } from '@fonema/conteudo';
-import { calcularNivel, fasesConcluidas, missaoInicialFeita, infoNome, situacaoSondagem, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
+import { calcularNivel, desafioDaFase, fasesConcluidas, missaoInicialFeita, infoNome, situacaoSondagem, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Topo } from '../../componentes/basicos.tsx';
@@ -11,6 +11,8 @@ import { efeitos } from '../../servicos/efeitos.ts';
 import { voz } from '../../servicos/voz.ts';
 import { textoTela, textoVoz } from '../../util.ts';
 import { BotaoTreino } from './Treino.tsx';
+
+const NOME_DESAFIO = { 'estrada-pares': 'Desafio: Estrada dos Pares', carteiro: 'Desafio: Carteiro da Vila', 'casa-som': 'Desafio: Casa do Som' } as const;
 
 /**
  * C9 · Ritual de fim: recapitula, moedinhas EM BLOCO voando ao porquinho (cofrinho), conquistas e surpresas
@@ -24,6 +26,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
   const proxima = FASE_POR_ID[progresso.faseAtual];
   const letra = infoNome(crianca.nome, crianca.pronuncia.grafia).letras;
   const saldoAntes = progresso.moedinhas.saldo - relatorio.moedinhas;
+  const desafio = useMemo(() => desafioDaFase(progresso, fase.id), [progresso, fase.id]);
 
   useEffect(() => {
     let vivo = true;
@@ -112,6 +115,8 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
             {config.lojinha.noFimDaSessao ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/lojinha`)} data-testid="ir-lojinha"><Icone nome="lojinha" />Lojinha</button> : null}
             {situacaoSondagem(progresso, config, Date.now(), idade).devida ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/sondagem`)}><Icone nome="placa" />Missão das Placas</button> : null}
             <BotaoTreino criancaId={crianca.id} progresso={progresso} className="btn grande btn-treino" />
+            {/* D032 §4: desafio opcional com um jogo da vila, com o que esta missão trabalhou (jogos-vila.ts › desafioDaFase) */}
+            {desafio ? <button className="btn grande verde" onClick={() => navegar(`c/${crianca.id}/jogo/${desafio.jogo}/${fase.id}`)} data-testid="desafio-jogo"><Icone nome="play" />{NOME_DESAFIO[desafio.jogo]}</button> : null}
             <button className="btn grande ipe" onClick={() => navegar(`c/${crianca.id}/vila`)} data-testid="voltar-vila"><Icone nome="casa" />{textoTela('Tchau! Voltar para a vila', crianca)}</button>
           </div>
         </section>

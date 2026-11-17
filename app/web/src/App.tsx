@@ -59,6 +59,7 @@ const SondagemDaVila = sob(() => import('./telas/crianca/Sondagem.tsx'), 'Sondag
 const Treino = sob(() => import('./telas/crianca/Treino.tsx'), 'Treino');
 const Biblioteca = sob(() => import('./telas/crianca/Biblioteca.tsx'), 'Biblioteca');
 const BrincarSons = sob(() => import('./telas/crianca/BrincarSons.tsx'), 'BrincarSons');
+const JogosVila = sob(() => import('./telas/crianca/JogosVila.tsx'), 'JogosVila');
 const Lojinha = sob(() => import('./telas/crianca/Lojinha.tsx'), 'Lojinha');
 const Tutorial = sob(() => import('./telas/crianca/Tutorial.tsx'), 'Tutorial');
 import { useCrianca } from './contexto.tsx';
@@ -132,6 +133,7 @@ function telaCrianca(cid: string, t: string | undefined, arg: string) {
     case 'treino': return <Treino criancaId={cid} />;
     case 'leitura': return <Biblioteca criancaId={cid} sub={arg} />;
     case 'brincar': return <BrincarSons criancaId={cid} jogoId={arg} />;
+    case 'jogo': return <JogosVila key={arg ?? ''} criancaId={cid} jogoId={arg} />;
     case 'mundo': return <Mundo3D criancaId={cid} />;
     default: return <Vila criancaId={cid} />;
   }
