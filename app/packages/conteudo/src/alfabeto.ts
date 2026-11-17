@@ -270,11 +270,13 @@ export const usaSomReal = (l: LetraAlfabeto): boolean => !!l.fonema && !LETRAS_N
 /**
  * CENA DO SOM de cada letra (jogo "Liga o som"): a figura do faz de conta em `BRINCADEIRAS`
  * (web/public/assets/figuras/<nome>.webp). C = K = Q, I = Y e U = W dividem a cena. H é o zíper na boca: sem som.
+ * A, E, I/Y, L, V e X usam a SOFIA fazendo a ação (17/11, `*-sofia`); as figuras antigas ficam no repositório
+ * (docs/propostas/06-fonema-unificada/cenas-do-som-sofia).
  */
 export const CENAS_DO_SOM: Record<string, string> = {
-  A: 'cena-a', B: 'bola', C: 'maca-mordida', D: 'tambor', E: 'trofeu-taca', F: 'bolo-velinhas', G: 'copo-agua', H: 'ziper',
-  I: 'cena-i', J: 'barco-motor', K: 'maca-mordida', L: 'sorvete', M: 'cupcake', N: 'cena-n', O: 'cena-o', P: 'bolhas-sabao',
-  Q: 'maca-mordida', R: 'carrinho', S: 'cobra', T: 'porta', U: 'macaco', V: 'aviao', W: 'macaco', X: 'cena-x', Y: 'cena-i', Z: 'abelha'
+  A: 'cena-a-sofia', B: 'bola', C: 'maca-mordida', D: 'tambor', E: 'cena-e-sofia', F: 'bolo-velinhas', G: 'copo-agua', H: 'ziper',
+  I: 'cena-i-sofia', J: 'barco-motor', K: 'maca-mordida', L: 'cena-l-sofia', M: 'cupcake', N: 'cena-n', O: 'cena-o', P: 'bolhas-sabao',
+  Q: 'maca-mordida', R: 'carrinho', S: 'cobra', T: 'porta', U: 'macaco', V: 'cena-v-sofia', W: 'macaco', X: 'cena-x-sofia', Y: 'cena-i-sofia', Z: 'abelha'
 };
 
 /** Letras em espelho (minúsculas): treinadas juntas DEPOIS do primeiro contato, com a correção "olha o desenho". */
