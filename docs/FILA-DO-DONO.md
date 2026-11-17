@@ -25,6 +25,7 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 | 14 | Fichas de leitura por campo semântico, boquinha em cima de cada letra, 4 níveis (17/11) | 🔧 | D033 |
 | 15 | Mais agentes para ir mais rápido e com mais qualidade (17/11) | ✅ em uso | — |
 | 16 | Revisão final de qualidade de tudo o que entrou nesta rodada + teste completo + publicar (17/11) | ⏳ | — |
+| 17 | "Amei a ideia das figuras e o som do outro lado, manda ver" (17/11): jogo da memória de cartas — de um lado a figura (cena da Sofia fazendo o som), do outro a letra; a carta TOCA o som ao virar; achar os pares letra × cena (ideia da pesquisa 46) | 🔧 | docs/pesquisa/46 |
 
 ## Aguardando o dono
 | # | Pedido | O que falta |
