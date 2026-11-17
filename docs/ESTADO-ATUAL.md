@@ -9,6 +9,14 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Espelho do Som: boca em desenho (17/11; proposta, NÃO integrada):** pedido D032 §6 (boca "como desenho, igual a Sofia, com a
+língua, o dente"). Geradas 102 imagens na MiniMax com a arte da Sofia como referência (7 formas de pedir). Servem A, I, U, M/B/P, S/Z;
+E e K/G mais ou menos; **F/V, L, T/D/N, R e X/J não saíram** (o gerador não põe dente no lábio nem a ponta da língua para cima) e a
+Sofia muda de imagem para imagem, então não dá para trocar quadro a quadro. Por isso o app ficou como está (3D). Folha atual × proposta
+e o que falta: `docs/propostas/06-fonema-unificada/espelho-do-som-desenho/README.md`. **Pergunta ao dono:** usar um editor de imagem
+que mexe só na boca (Higgsfield sem crédito; Cloudinary tem cota grátis mas o uso foi barrado sem autorização dele), um artista, ou o
+vídeo da boca da Agatha.
+
 **Pares mínimos com 3 opções, Bolota igual nas páginas e 1º texto (16/11, tarde; NÃO publicado ainda):**
 - **Pares mínimos:** todo item avaliado tem 3 opções: o par + um distrator do banco que muda OUTRO som (pato × bato × pata,
   pule × bule × pula, galo × calo × gato…; no modo ouvir, com figura: faca × vaca × foca). No modo ler o distrator passa pelo
