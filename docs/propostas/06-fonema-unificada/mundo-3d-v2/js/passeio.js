@@ -247,7 +247,9 @@ export function criarPasseio(mundo, h = {}) {
     return false;
   }
 
-  function tick(dt, t) {
+  function tick(dtMundo, t, bruto = dtMundo) {
+    // aparelho lento: o passo do boneco usa o tempo real (até 0,1 s), para não andar em câmera lenta
+    const dt = Math.min(0.1, Math.max(dtMundo, bruto || 0));
     // direção pedida (relativa à câmera)
     const fx = -Math.sin(cam.giro), fz = -Math.cos(cam.giro), rx = Math.cos(cam.giro), rz = -Math.sin(cam.giro);
     let ix = 0, iz = 0, vMax = 0;

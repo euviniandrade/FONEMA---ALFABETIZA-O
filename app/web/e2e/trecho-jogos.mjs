@@ -44,7 +44,9 @@ async function jogarRodada(pg, { errar = false, tirar = async () => {} } = {}) {
         await tirar('corre-escolher');
         const alvo = errou ? '.cs-pista[data-correta="1"]' : '.cs-pista:not([data-correta])';
         await pg.locator(alvo).first().click({ timeout: 2000 }).catch(() => {});
-        if (!errou) { errou = true; await pg.waitForTimeout(300); await tirar('corre-correcao'); }
+        // só conta o toque que a tela aceitou (a fase sai de "escolher")
+        const aceito = await pg.waitForFunction(() => document.querySelector('[data-testid=corre-som]')?.getAttribute('data-fase') !== 'escolher', null, { timeout: 1500 }).then(() => true, () => false);
+        if (!errou && aceito) { errou = true; await pg.waitForTimeout(300); await tirar('corre-correcao'); }
         await pg.waitForTimeout(120);
         continue;
       }
@@ -56,7 +58,8 @@ async function jogarRodada(pg, { errar = false, tirar = async () => {} } = {}) {
         await tirar('come-escolher');
         const alvo = errou ? '.cm-prato[data-correta="1"]' : '.cm-prato:not([data-correta])';
         await pg.locator(alvo).first().click({ timeout: 2000 }).catch(() => {});
-        if (!errou) { errou = true; await pg.waitForTimeout(150); await tirar('come-correcao'); }
+        const aceito = await pg.waitForFunction(() => !document.querySelector('[data-testid=come-som]')?.hasAttribute('data-livre'), null, { timeout: 1500 }).then(() => true, () => false);
+        if (!errou && aceito) { errou = true; await pg.waitForTimeout(150); await tirar('come-correcao'); }
         await pg.waitForTimeout(120);
         continue;
       }

@@ -114,6 +114,19 @@ function pintarChao(S) {
   }, { aniso: 8 });
 }
 
+/** Divide um lote em blocos (grade de `tam` m pela posição de cada peça). Devolve um grupo com uma malha por bloco. */
+function emBlocos(lote, mat, o = {}, tam = 24) {
+  const blocos = new Map();
+  for (const p of lote.parts) {
+    const k = `${Math.floor(p.m.elements[12] / tam)},${Math.floor(p.m.elements[14] / tam)}`;
+    let L = blocos.get(k); if (!L) { L = new Lote(1); blocos.set(k, L); }
+    L.parts.push(p); L.nv += p.geo.attributes.position.count; L.ni += p.geo.index.count;
+  }
+  const g = new THREE.Group();
+  for (const L of blocos.values()) g.add(L.build(mat, o));
+  return g;
+}
+
 export async function criarVila({ U, q, renderer, estados = {}, passeio = false }) {
   const grupo = new THREE.Group(); grupo.name = 'vila';
   const r = rng(2024);
@@ -142,7 +155,7 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   const anel = new THREE.Mesh(gOut, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95 })); anel.receiveShadow = true; grupo.add(anel);
 
   // ---------- rio ----------
-  const rio = criarRio({ curva: RIO2D, largura: RIO_W, y: NIVEL_AGUA, U, reflexo: q !== 'baixo', resolucao: q === 'alto' ? 1024 : 512 });
+  const rio = criarRio({ curva: RIO2D, largura: RIO_W, y: NIVEL_AGUA, U, reflexo: passeio ? q === 'alto' : q !== 'baixo', resolucao: q === 'alto' ? 1024 : 512 });
   grupo.add(rio);
 
   // ---------- praça ----------
@@ -341,10 +354,13 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   { const L = F(14.6, 0, 13.0, -0.6); ctx.C.add(rbox(0.16, 1.6, 0.16, 0.05), P.madeira, L(0, 0.8, 0)); const m = new THREE.Mesh(new THREE.PlaneGeometry(2.0, 0.8), new THREE.MeshStandardMaterial({ map: placaTex('HORTA', { icone: '🥕' }), roughness: 0.6 })); m.position.copy(L.pt(0, 1.75, 0.1)); m.rotation.y = -0.6; grupo.add(m); }
 
   // ---------- montar lotes ----------
-  const corpo = ctx.C.build(matCorpo); grupo.add(corpo);
-  const folhas = ctx.Fo.build(matFolha); grupo.add(folhas);
-  const janelas = ctx.J.build(matJanela, { cast: false }); grupo.add(janelas);
-  const luzes = ctx.Lz.build(matLuz, { cast: false }); grupo.add(luzes);
+  // no passeio (câmera no chão, sombra só perto do boneco) os lotes saem em blocos de 24 m: a câmera e a sombra
+  // desenham só os blocos que enxergam (no celular isso corta a maior parte dos triângulos de cada quadro)
+  const montar = (lote, mat, o) => (passeio ? emBlocos(lote, mat, o) : lote.build(mat, o));
+  const corpo = montar(ctx.C, matCorpo); grupo.add(corpo);
+  const folhas = montar(ctx.Fo, matFolha); grupo.add(folhas);
+  const janelas = montar(ctx.J, matJanela, { cast: false }); grupo.add(janelas);
+  const luzes = montar(ctx.Lz, matLuz, { cast: false }); grupo.add(luzes);
 
   // fumaça da padaria
   const fumTex = radialTex('rgba(255,255,255,0.9)', 'rgba(255,255,255,0)');

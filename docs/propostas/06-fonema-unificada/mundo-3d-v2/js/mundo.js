@@ -337,7 +337,7 @@ export async function criarMundo(container, opts = {}) {
       if (!voo) { passeioT += dt; const s = tourAt(passeioT); camera.position.copy(s.cam); controls.target.copy(s.alvo); if (passeioT > tour.dur) { passeioAtivo = false; emitir('fonema:passeio', { ativo: false }); } }
     }
     passoVoo(dt);
-    if (controlador) controlador.tick(dt, tempo);
+    if (controlador) controlador.tick(dt, tempo, bruto);
     else if (!voo && !passeioAtivo) controls.update(); else camera.lookAt(controls.target);
     atualizar(tempo, dt);
     fade += (fadeAlvo - fade) * Math.min(1, dt * 7); veu.style.opacity = fade.toFixed(3);
