@@ -13,6 +13,7 @@ import { concluirFase, fasesConcluidas, missaoInicialFeita, regiaoConcluida } fr
 import { avaliarConquistas } from './conquistas.ts';
 import { calcularNivel } from './nivel.ts';
 import { resultadoProvaRelampago } from './trilha-expressa.ts';
+import { resumoDaMissao } from './guia.ts';
 
 export interface ResultadoAtividade {
   sessao: string;
@@ -203,6 +204,9 @@ export function fecharSessao(
       areas: [...p.areas, ...surpresas.filter((s) => s.tipo === 'area').map((s) => s.id)]
     };
   }
+
+  // 6. D032: resumo da última missão para o painel guia (estrelinhas e selos; não mexe no domínio)
+  p = { ...p, ultimaMissao: resumoDaMissao({ faseId: fase.id, atividades: args.atividades, tentativas: args.tentativasDaSessao, selos: ac.novas.map((g) => g.id), faseConcluida }, agora) };
 
   return {
     progresso: p,

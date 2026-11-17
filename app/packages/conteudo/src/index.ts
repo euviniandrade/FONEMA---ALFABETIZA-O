@@ -19,3 +19,4 @@ export { BANCO, PALAVRAS_TF, PALAVRAS_OUTRAS_TRILHAS } from './fases/tf-banco.ts
 export * from './decodificabilidade.ts';
 export * from './nomes-comuns.ts';
 export * from './biblioteca/index.ts';
+export * from './caminho.ts';

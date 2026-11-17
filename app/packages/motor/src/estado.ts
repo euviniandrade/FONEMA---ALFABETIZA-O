@@ -193,6 +193,21 @@ export interface Progresso {
   sessoesFeitas: number;
   ultimaSessao?: number;
   criadoEm: number;
+  /** D032: tutorial "A grande aventura" (guia.ts). Ausente = nunca viu. `passo` = onde parou (para retomar). */
+  tutorial?: { passo?: number; vistoEm?: number; puladoEm?: number; vezes?: number };
+  /** D032: resumo da última missão feita (painel guia: estrelinhas e selos). */
+  ultimaMissao?: ResumoMissao;
+}
+
+/** D032: resumo da última missão, para o painel guia (estrelinhas = retorno à criança, não domínio). */
+export interface ResumoMissao {
+  faseId: string;
+  em: number;
+  desafios: number;
+  estrelas: 1 | 2 | 3;
+  /** Conquistas (selos) ganhas nesta missão. */
+  selos: string[];
+  faseConcluida: boolean;
 }
 
 /* ------------------------------ sondagem periódica (D030, etapa 9) ------------------------------ */

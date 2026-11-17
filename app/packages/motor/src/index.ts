@@ -24,3 +24,4 @@ export * from './sondagem-itens.ts';
 export * from './ajuda.ts';
 export * from './reforco-treino.ts';
 export * from './biblioteca.ts';
+export * from './guia.ts';
