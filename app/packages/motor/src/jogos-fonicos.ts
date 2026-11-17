@@ -173,6 +173,10 @@ export const FIGURAS_SOM_FINAL: { palavra: string; som: string }[] = (() => {
   return out;
 })();
 
+/** Figuras de comer (o Bichinho prefere estas; sem comida para um som, vale outra figura com voz). */
+export const COMIDAS = new Set(['uva', 'abacaxi', 'banana', 'jaca', 'pipoca', 'peixe', 'ovo', 'suco', 'tomate', 'queijo', 'quiabo', 'doce', 'kiwi', 'mel', 'yakisoba', 'ketchup', 'wafer']);
+const comidaPrimeiro = (ws: string[]) => [...ws.filter((w) => COMIDAS.has(w)), ...ws.filter((w) => !COMIDAS.has(w))];
+
 const opFigura = (palavra: string, som: string): OpcaoJogo => ({ id: palavra, figura: palavra, som, falar: palavra });
 const opLetra = (s: SomEnsinado): OpcaoJogo => ({ id: s.letra, letra: s.letra, som: s.som });
 
@@ -252,7 +256,8 @@ export function montarRodada(p: Progresso, jogo: JogoFonicoId, pedido: PedidoRod
       const chave = LETRA_POR_ID[s.letra].palavra;
       const livres = fs.filter((w) => !usadas.has(w));
       const boas = livres.filter((w) => w !== chave);
-      const w = (boas.length ? misturar(boas, r)[0] : livres.length ? livres[0] : misturar(fs, r)[0]);
+      const ordem = (xs: string[]) => (jogo === 'come-som' ? comidaPrimeiro(misturar(xs, r)) : misturar(xs, r));
+      const w = (boas.length ? ordem(boas)[0] : livres.length ? livres[0] : misturar(fs, r)[0]);
       usadas.add(w);
       return w;
     };
@@ -269,7 +274,8 @@ export function montarRodada(p: Progresso, jogo: JogoFonicoId, pedido: PedidoRod
   const usadas = new Set<string>();
   const figuraQueTermina = (som: string) => {
     const fs = FIGURAS_SOM_FINAL.filter((f) => f.som === som && !usadas.has(f.palavra));
-    const f = misturar(fs.length ? fs : FIGURAS_SOM_FINAL.filter((x) => x.som === som), r)[0];
+    const lista = misturar(fs.length ? fs : FIGURAS_SOM_FINAL.filter((x) => x.som === som), r);
+    const f = lista.find((x) => COMIDAS.has(x.palavra)) ?? lista[0];
     usadas.add(f.palavra);
     return f.palavra;
   };

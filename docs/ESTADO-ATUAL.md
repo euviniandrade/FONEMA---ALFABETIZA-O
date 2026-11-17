@@ -9,6 +9,37 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Fichas de leitura por campo semântico (D033, pedido do dono; 17/11, noite; NÃO publicado ainda):**
+- **Onde:** Cantinho da Leitura › "Fichas de leitura" (`#/c/:id/leitura/fichas`), 6 cartões: Animais, Comidas, Coisas da casa,
+  Brinquedos, Família e corpo, Natureza. Também como **desafio opcional no fim das lições da Trilha dos Sons** (botão "Ficha de
+  leitura: …" no Ritual, `campoDoDesafio`; grava contexto `desafio`). Nada trava a trilha nem dá moedinhas.
+- **Só o que a criança já lê:** palavra entra para LER só com todos os valores sonoros ensinados numa unidade concluída (verificador),
+  sem aviso de nasalização e com todos os sons puros publicados (`motor/src/fichas.ts › legivelNaFicha`). As outras aparecem só como
+  figura apagada com cadeado, "em breve", nunca escritas. 36 palavras novas no FIM do `tf-banco.ts` (`PALAVRAS_FICHAS`; peixe e pia só
+  ganharam figura). **Duvidosas:** leão (E átono), formiga (O átono), estrela ("es-" = "is-"), tambor/sorvete/porta/urso (R de fim de
+  sílaba), poça e olho (O fechado), mel e sol (L final = U).
+- **Níveis** (destrancam com 3 acertos sozinho no anterior, em qualquer campo [DP]; nada fecha de novo):
+  1 **"Vamos ler juntos?"**: palavra grande, sem figura; em cima de cada letra (ou dígrafo) uma **boquinha** faz o som daquela posição
+  (o O final de "pato" faz /u/) enquanto a letra acende e o som puro toca, um por um; depois emendados devagar e ligeiro; "o que
+  ficou?" → 3 figuras; a certa aparece com festa. Ler junto = **exposição**; a escolha = **leitura avaliada** (`leitura-cvcv`).
+  2 **Só o som** (bolinhas acendem, sem letras nem boca) → 3 figuras (`sintese`); degrau **som → palavra escrita** entre 3 palavras
+  todas legíveis (`leitura-cvcv`). 3 **Letra e boquinha**: 3–4 letras soltas × bocas paradas, sem som; toca a letra e depois a boca;
+  só vale como medida com ≥ 3 bocas na tela. 4 **Só a boquinha**: a sequência de bocas, sem som nem letras → 3 figuras.
+  Correção: 1º erro = toca a escolhida e de novo a certa (sons ou bocas), sem dizer a resposta; 2º = a certa brilha (com ajuda).
+- **Habilidade nova `boca-som`** (consciência articulatória; habilidades.ts) para os níveis 3 e 4. **Bocas distinguíveis**
+  (`conteudo/src/fichas.ts › CLASSE_DA_BOCA`, conservador [DP]): p/b/m · f/v · t/d/n/l/r · s/z/i/e/é · u/ch/j · o/ó · a/k/g/rr —
+  nunca duas da mesma classe na rodada (nível 3) nem palavras com a mesma sequência de bocas entre as opções (nível 4).
+- **Boquinha** (`componentes/Boquinha.tsx`): vista de frente do Espelho do Som em SVG, com a MESMA tabela de poses do 3D
+  (`fonemas.js`; um teste compara os números). Escolhida no lugar de 1 cena 3D por letra (pesado no celular) e das bocas desenhadas
+  (só 5–7 sons servem e a Sofia muda de imagem para imagem). "Menos movimento": troca a pose sem animar. Validar com fonoaudióloga.
+- **Voz:** nenhuma gerada. "Vamos ler juntos?" e "O que ficou?" usam clipes parecidos; 3 falas e os nomes das palavras novas sem
+  clipe em `app/docs/falas-pendentes.md` §1f (o nome da palavra cai nos sons emendados).
+- **Registro:** mecânica `ficha`, `formato` `ficha-ler`/`ficha-ler-junto`/`ficha-ouvir`/`ficha-ouvir-palavra`/`ficha-bocas`/
+  `ficha-bocas-palavra`, com alvo, escolhido, respostas, distratores, tempo, nOpcoes, posições e contexto; resumo em `biblioteca.jogos`.
+- **Verificado:** typecheck, lint, 366 testes (novos: `motor/test/fichas.test.ts`, `web/src/componentes/boquinha.test.ts`),
+  verificador (0 erros), build numa cópia (worktree, porta 4580) e E2E **`node web/e2e/fluxo.e2e.mjs --fichas`** (32 checagens, os 4
+  níveis e o desafio; também no completo e no `--sem-jornada`). Capturas `--capturas-fichas` em `app/docs/capturas/v11-fichas-*`.
+
 **Trilha dos Sons, blocos 4 e 5: TF-23…TF-32 e TF-R4 (17/11, noite; NÃO publicado ainda):**
 - **Na jornada** (depois da revisão P…G, antes de R…W e da Festa): **TF-23** é e ó com acento (faz de conta: nojo ao pisar na lama;
   surpresa), **TF-24** E/O abertos sem acento e ê/ô (regra "leia fechado; se não virar palavra, tente o aberto"; item avaliado = qual

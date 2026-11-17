@@ -49,6 +49,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   const pos = () => frame.evaluate(() => window.FONEMA_PASSEIO.posicao);
   const q = await frame.evaluate(() => ({ q: window.FONEMA_MUNDO.qualidade, fps: window.FONEMA_MUNDO.info.fps }));
   console.log(`    qualidade ${q.q}, ${q.fps.toFixed(1)} quadros/s`);
+  const CLIQUE = { noWaitAfter: true, timeout: 60000 }; // a página do mundo fica ocupada desenhando
   const canvas = fr.locator('#palco canvas');
   await canvas.focus();
   // o navegador de teste desenha sem placa de vídeo (poucos quadros por segundo): as conferências esperam o
@@ -81,7 +82,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   ok(await ate(() => window.FONEMA_PASSEIO.posicao.noAr), 'espaço pula');
   ok(await ate(() => !window.FONEMA_PASSEIO.posicao.noAr, null, 30000), 'e o boneco volta ao chão');
   // tchau (botão grande)
-  await fr.getByTestId('passeio-tchau').click();
+  await fr.getByTestId('passeio-tchau').click(CLIQUE);
   ok(await ate(() => window.FONEMA_MUNDO.scene.getObjectByName('boneco-crianca').children.some((c) => c.isSprite && c.visible)), 'Tchau: o boneco acena (mãozinha aparece)');
   if (capturas) { await pg.waitForTimeout(150); await pg.screenshot({ path: `${capturas}/mundo3d-02-tchau.png` }); }
 
@@ -105,22 +106,22 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await frame.evaluate(() => { const s = window.FONEMA_PASSEIO.npcs.lista.find((n) => n.id === 'sofia').boneco.raiz.position; window.FONEMA_PASSEIO.teleportar(s.x + 1.4, s.z + 1.4); });
   await fr.locator('#btAcao.on').waitFor({ timeout: 20000 });
   ok(/Conversar/.test(await fr.locator('#btAcao').innerText()), 'perto da Sofia aparece o botão "Conversar"');
-  await fr.locator('#btAcao').click();
+  await fr.locator('#btAcao').click(CLIQUE);
   await fr.locator('#cartao.aberto').waitFor();
   const txt = await fr.locator('#cartao').innerText();
   ok(/Sofia/.test(txt) && /Oi, Bia!/.test(txt) && /Missão/.test(txt), 'a Sofia diz "Oi, Bia!" (fala já gravada) e convida para a missão');
   if (capturas) { await pg.waitForTimeout(500); await pg.screenshot({ path: `${capturas}/mundo3d-03-conversa-sofia.png` }); }
-  await fr.locator('#cartao button', { hasText: 'Tchau' }).click();
+  await fr.locator('#cartao button', { hasText: 'Tchau' }).click(CLIQUE);
 
   // porta trancada (Coreto: "Ler mais ligeiro" ainda não abriu para quem começa)
   await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(-2.5, 9.6, Math.PI));
   await frame.evaluate(() => { const s = window.FONEMA_PASSEIO.npcs.lista.find((n) => n.id === 'sofia'); s.boneco.raiz.position.set(-3.5, 0, 14); s.espera = 30; });
   await fr.locator('#btAcao.on.trancado').waitFor({ timeout: 20000 });
-  await fr.locator('#btAcao').click();
+  await fr.locator('#btAcao').click(CLIQUE);
   await fr.locator('#cartao.aberto').waitFor();
   ok(/trancado/.test(await fr.locator('#cartao').innerText()) && /palavras/.test(await fr.locator('#cartao').innerText()), 'porta trancada: cadeado e o que falta ("…ler mais palavras")');
   if (capturas) { await pg.waitForTimeout(400); await pg.screenshot({ path: `${capturas}/mundo3d-04-porta-trancada.png` }); }
-  await fr.locator('#cartao button', { hasText: 'Ok' }).click();
+  await fr.locator('#cartao button', { hasText: 'Ok' }).click(CLIQUE);
 
   // FPS (rAF dentro do iframe, 3 s andando)
   await canvas.focus();
@@ -138,7 +139,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await fr.locator('#btAcao.on:not(.trancado)').waitFor({ timeout: 40000 });
   ok(/Entrar/.test(await fr.locator('#btAcao').innerText()) && /Biblioteca/.test(await fr.locator('#lugar').innerText()), 'na porta da Biblioteca aparece o botão grande "Entrar"');
   if (capturas) { await pg.waitForTimeout(600); await pg.screenshot({ path: `${capturas}/mundo3d-05-porta-biblioteca.png` }); }
-  await fr.locator('#btAcao').click();
+  await fr.locator('#btAcao').click(CLIQUE);
   await pg.getByTestId('biblioteca').waitFor({ timeout: 10000 });
   ok(pg.url().endsWith(`/c/${id}/leitura`), 'Entrar leva ao Cantinho da Leitura');
   await ctx.close();

@@ -282,10 +282,10 @@ export class PistaCorreSom {
       meia.position.y = 1.3; grupo.add(meia);
       const { tex, pronta } = texturaPlaca(p, CORES_ARCO[k]);
       prontas.push(pronta);
-      const placa = new THREE.Mesh(new THREE.CircleGeometry(0.55, 40), new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
-      placa.position.set(0, 2.38, 0.02);
-      const brilho = new THREE.Mesh(new THREE.CircleGeometry(0.85, 40), new THREE.MeshBasicMaterial({ map: texturaRadial('rgba(255,236,140,1)'), transparent: true, depthWrite: false, opacity: 0 }));
-      brilho.position.set(0, 2.38, -0.02);
+      const placa = new THREE.Mesh(new THREE.CircleGeometry(0.64, 40), new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
+      placa.position.set(0, 2.45, 0.02);
+      const brilho = new THREE.Mesh(new THREE.CircleGeometry(0.95, 40), new THREE.MeshBasicMaterial({ map: texturaRadial('rgba(255,236,140,1)'), transparent: true, depthWrite: false, opacity: 0 }));
+      brilho.position.set(0, 2.45, -0.02);
       grupo.add(brilho, placa);
       grupo.position.x = PISTAS[k];
       this.cena.add(grupo);

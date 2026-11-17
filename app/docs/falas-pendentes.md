@@ -114,6 +114,22 @@ arara…) e inventadas (fendu, benfa, tindu, binta, lontu, donfa, tunfa, lunti, 
 sons ou por fonoaudióloga, D030); a Sofia tem clipes "ẽẽẽẽ", "ĩĩĩĩ", "õõõõ", "ũũũũ" (vogais esticadas) que **ninguém ouviu** e não estão
 no mapa — podem servir de ponto de partida se uma pessoa aprovar.
 
+## 1f. Fichas de leitura por campo semântico (D033, 17/11; NENHUMA voz gerada)
+
+Textos em `packages/conteudo/src/fichas.ts` › `FALAS_FICHAS`. Pedidas pelo dono, sem clipe, e o que a tela usa no lugar:
+
+| Fala pedida | No lugar, hoje (clipe existente) |
+|---|---|
+| "Vamos ler juntos?" | "Agora vamos ler juntos, em voz alta." (o botão da tela diz "Vamos ler juntos?") |
+| "O que ficou?" | "Que palavra os sons formaram?" |
+
+Sem clipe nenhum (o balão mostra o texto e a dupla fica calada):
+- "Ligue cada letra à boquinha que faz o som dela." (nível 3; antes toca "Olha a boca: ela se mexe diferente em cada som.")
+- "Que palavra a boquinha falou?" (nível 4)
+- "Escute os sons e descubra a palavra." (nível 2)
+- O NOME das palavras novas das fichas (leão, zebra, queijo, xícara… e as que já estavam no banco sem clipe): quando a figura
+  certa aparece, a tela toca o clipe da palavra se houver; senão, os sons puros emendados, ligeiro (nunca voz do aparelho).
+
 ## 2. Com clipe, mas a auditoria pede regravação ou conferência de ouvido
 
 | Voz | Fala | O que a transcrição ouviu | Situação |

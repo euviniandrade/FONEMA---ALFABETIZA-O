@@ -285,7 +285,7 @@ export function CorreSom({ itens, crianca, sessao, cena, contexto, enunciado, de
       <Balao fala={fala} crianca={crianca} />
       <div className="jogo-topo">
         <Progressinho atual={emDemo ? 0 : i} total={itens.length} />
-        <button className="ouvir jogo-ouvir" onClick={ouvirDeNovo} disabled={!escolhendo} aria-label="Ouvir o som de novo" data-testid="jogo-ouvir"><Icone nome="som" /></button>
+        <button className="ouvir jogo-ouvir" onClick={ouvirDeNovo} disabled={!escolhendo} aria-label="Ouvir o som de novo" data-testid="jogo-ouvir"><Icone nome="som" />Ouvir o som</button>
       </div>
       <div className="cs-palco" onPointerDown={aoApertar} onPointerUp={aoSoltar}>
         {comWebGL ? <canvas ref={canvas} className="cs-canvas" aria-hidden="true" /> : null}
