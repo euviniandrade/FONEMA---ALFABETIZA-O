@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FALAS, PASSOS_AVATAR, pecasPara, type Fala, type Genero, type PassoAvatar, type PecaAvatar } from '@fonema/conteudo';
-import { definirSexo, estadoPeca, pecaEmUso, proximasPecas, rotuloCadeado, vestir, type AvatarCrianca, type Crianca, type Progresso } from '@fonema/motor';
+import { definirSexo, estadoPeca, pecaEmUso, proximasPecas, rotuloCadeado, tutorialPendente, vestir, type AvatarCrianca, type Crianca, type Progresso } from '@fonema/motor';
 import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
@@ -84,7 +84,8 @@ function Montador({ crianca, progresso, salvarCrianca }: { crianca: Crianca; pro
     await salvarCrianca(c);
     await falar(FALAS.avatarPronto, c);
     // se a pessoa já foi para outra tela durante a fala, não puxa de volta
-    if (location.hash === aqui) navegar(primeiraVez ? `c/${criancaId}/chegada` : `c/${criancaId}/vila`);
+    // D032: na primeira vez, depois do boneco vem o tutorial "A grande aventura" (que termina na primeira missão)
+    if (location.hash === aqui) navegar(primeiraVez ? (tutorialPendente(progresso) ? `c/${criancaId}/tutorial` : `c/${criancaId}/chegada`) : `c/${criancaId}/vila`);
   };
 
   const opcoes = passo === 'sexo' || passo === 'lojinha' ? [] : passo === 'cabelo' ? cabelos : pecasPara(passo, sexo);

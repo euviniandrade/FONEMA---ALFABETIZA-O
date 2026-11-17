@@ -79,7 +79,8 @@ export function registrarLivre(
 ): { progresso: Progresso; novas: ConquistaGanha[]; dominadasAgora: string[] } {
   const { sessao, cfg, agora } = args;
   const cena: Cena = { id: args.cena.id, titulo: args.cena.titulo, tipo: 'C5', cenario: 'biblioteca' };
-  const marcadas = args.tentativas.map((t) => ({ ...t, sessao, contexto: 'livre' as const }));
+  // 'desafio' (jogo opcional dentro de uma fase, D032 §4) fica marcado como tal; o resto é 'livre'
+  const marcadas = args.tentativas.map((t) => ({ ...t, sessao, contexto: t.contexto === 'desafio' ? 'desafio' as const : 'livre' as const }));
   let p = aplicarAtividade(p0, { sessao, cena, tentativas: marcadas, tentouDeNovo: 0 }, cfg, agora);
   const habilidades = { ...p.habilidades };
   const dominadasAgora: string[] = [];

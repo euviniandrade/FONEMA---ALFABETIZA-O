@@ -6,7 +6,7 @@
  * Uso: npx tsx scripts/extrair-falas.ts
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { ALFABETO, NOMES_COMUNS, FASES, FALAS, FALAS_TRILHA_SONS, SILABA_DO_SOM, FALAS_ALFABETO, FALAS_FONICAS, VOZES_DAS_FALAS_FONICAS, FALAS_DOS_PARES, FALA_ESPELHO_BD, FALAS_DAS_TELAS, PASSOS_AVATAR, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
+import { ALFABETO, NOMES_COMUNS, FASES, FALAS, FALAS_TRILHA_SONS, SILABA_DO_SOM, FALAS_ALFABETO, FALAS_FONICAS, VOZES_DAS_FALAS_FONICAS, FALAS_DOS_PARES, FALA_ESPELHO_BD, FALAS_DAS_TELAS, FALAS_TUTORIAL, PASSOS_AVATAR, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
 import { concordar, silabas } from '@fonema/motor';
 import { FALAS_BIBLIOTECA, FALAS_ESCUTA, FALAS_HISTORIA, FALAS_TEXTO, HISTORIAS, JOGOS_ESCUTA, TEXTOS_DECODIFICAVEIS, nomeDaFigura, textoCorrido } from '@fonema/conteudo';
 
@@ -58,6 +58,8 @@ FALAS.voltou.forEach((f) => addF(f, 'voltou'));
 addF(FALAS.avatar, 'avatar'); addF(FALAS.avatarPronto, 'avatar'); addF(FALAS.avatarSexo, 'avatar'); addF(FALAS.avatarLojinha, 'avatar');
 PASSOS_AVATAR.forEach((p) => add('tales', p.pergunta, 'avatar'));
 FALAS_DAS_TELAS.forEach((f) => addF(f, 'telas'));
+// D032: tutorial "A grande aventura" (e o botão "Você está aqui" do painel guia, que reusa as falas das etapas)
+Object.values(FALAS_TUTORIAL).forEach((f) => addF(f, 'tutorial'));
 add('sofia', 'Continue a trilha para descobrir!', 'telas');
 Object.values(FALAS_DOS_PARES).forEach((p) => { add('sofia', p.tocou, 'pares (D030)'); add('sofia', p.como, 'pares (D030)'); });
 add('sofia', FALA_ESPELHO_BD, 'pares (D030)'); addF(FALAS.suaVez, 'geral');

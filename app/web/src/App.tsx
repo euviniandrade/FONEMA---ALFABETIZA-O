@@ -60,6 +60,7 @@ const Treino = sob(() => import('./telas/crianca/Treino.tsx'), 'Treino');
 const Biblioteca = sob(() => import('./telas/crianca/Biblioteca.tsx'), 'Biblioteca');
 const BrincarSons = sob(() => import('./telas/crianca/BrincarSons.tsx'), 'BrincarSons');
 const Lojinha = sob(() => import('./telas/crianca/Lojinha.tsx'), 'Lojinha');
+const Tutorial = sob(() => import('./telas/crianca/Tutorial.tsx'), 'Tutorial');
 import { useCrianca } from './contexto.tsx';
 
 /**
@@ -116,6 +117,7 @@ function telaCrianca(cid: string, t: string | undefined, arg: string) {
   switch (t) {
     case 'avatar': return <Avatar criancaId={cid} />;
     case 'chegada': return <Chegada criancaId={cid} />;
+    case 'tutorial': return <Tutorial key={arg ?? ''} criancaId={cid} deNovo={arg === 'de-novo'} />;
     case 'mapa': return <Arquipelago criancaId={cid} />;
     case 'alfabeto': return <TrilhaAlfabeto criancaId={cid} />;
     case 'sons': return <TrilhaSons criancaId={cid} />;

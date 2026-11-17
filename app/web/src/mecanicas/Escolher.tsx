@@ -9,6 +9,7 @@ import { voz } from '../servicos/voz.ts';
 import { falar, textoVoz } from '../util.ts';
 import { explicarContraste, temFrasesDoPar } from './contraste.ts';
 import { Progressinho, embaralhar, sementeDaTentativa, sortearItens, tentativa, type PropsMecanica } from './comum.tsx';
+import { JogoNaFase, useDesafioDaCena } from './jogos/JogoFonico.tsx';
 
 const F = FALAS_FONICAS;
 /** O que vai para o registro: a letra, a chave do fonema ("b"), a palavra. */
@@ -33,7 +34,15 @@ function categoriaDoItem(item: ItemEscolha, certa: Opcao): CategoriaAlvo {
  *  - registro: alvo, respostas, distratores, tempo e número da tentativa.
  * Nada de X vermelho, buzina, perda ou cronômetro.
  */
-export function Escolher({ atividade, crianca, sessao, cenaId, revisao, onFim }: PropsMecanica<AtividadeEscolher>) {
+export function Escolher(props: PropsMecanica<AtividadeEscolher>) {
+  // D032 §4: a cena "som → letra" / "som → figura" pode virar jogo (Corre-Som / Bichinho Come-Som), se a criança quiser
+  const desafio = useDesafioDaCena(props.atividade);
+  const [jogando, setJogando] = useState(false);
+  if (jogando && desafio) return <JogoNaFase desafio={desafio} {...props} />;
+  return <EscolherClassico {...props} oferecerJogo={desafio ? { jogo: desafio.jogo, iniciar: () => setJogando(true) } : undefined} />;
+}
+
+function EscolherClassico({ atividade, crianca, sessao, cenaId, revisao, onFim, oferecerJogo }: PropsMecanica<AtividadeEscolher> & { oferecerJogo?: { jogo: string; iniciar: () => void } }) {
   const semente = useMemo(sementeDaTentativa, []);
   const itens = useMemo(() => sortearItens(atividade.itens, atividade.sortear, semente), [atividade, semente]);
   const [i, setI] = useState(0);
@@ -195,6 +204,12 @@ export function Escolher({ atividade, crianca, sessao, cenaId, revisao, onFim }:
   const temOuvir = !!(item.ouvir || item.somAlvo);
   return (
     <div className={`mec mec-escolher estilo-${atividade.estilo ?? 'tocar'}`} data-formato={item.formato ?? ''} data-item={i}>
+      {oferecerJogo && i === 0 && !acertou && !marcadas.length ? (
+        <button className={`jogo-desafio ${oferecerJogo.jogo === 'come-som' ? 'come' : ''}`} onClick={() => { voz.parar(); efeitos.toque(); oferecerJogo.iniciar(); }} data-testid="oferecer-jogo" data-jogo={oferecerJogo.jogo}>
+          <span className="jogo-desafio-ic"><Icone nome={oferecerJogo.jogo === 'come-som' ? 'coracao' : 'raio'} /></span>
+          <span className="rot">{oferecerJogo.jogo === 'come-som' ? 'Dar comida ao Bolota' : 'Jogar no Corre-Som'}</span>
+        </button>
+      ) : null}
       <Balao fala={atividade.enunciado} crianca={crianca} humor={atividade.estilo === 'ensinar' ? 'pensando' : 'alegre'} />
       <Progressinho atual={i} total={itens.length} />
       <div className="pergunta">

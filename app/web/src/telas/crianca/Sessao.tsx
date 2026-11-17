@@ -27,6 +27,7 @@ import { Troca } from '../../mecanicas/Troca.tsx';
 import { Frase } from '../../mecanicas/Frase.tsx';
 import type { ResultadoMecanica } from '../../mecanicas/comum.tsx';
 import { Ritual } from './Ritual.tsx';
+import { BarraMissao } from '../../componentes/Guia.tsx';
 
 /** Nome de MÉTODO de cada cena: só para o adulto e os documentos (fica em data-metodo); a criança vê pontinhos e o título da atividade. */
 const NOME_CENA: Record<string, string> = { C1: 'Revisão', C2: 'Eu faço', C3: 'Nós fazemos', C4: 'Você faz', C5: 'Desafio', C6: 'Pausa', C7: 'Projeto', C8: 'Ensinar', C9: 'Fim' };
@@ -129,13 +130,13 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
     <div className={`tela-sessao ${limpo ? 'fundo-limpo' : ''}`} data-etapa={etapa.tipo} data-cena={etapa.cena?.id}>
       {!limpo ? <Fundo cena={cenaDe(cenario)} desfoque={18} tom="calmo" /> : null}
       <Topo crianca={crianca} voltar={`c/${criancaId}/vila`} titulo={fase.titulo}>
-        <ol className="trilha vidro" aria-label="Trilha do dia">
-          {cenas.map((e, k) => (
-            <li key={e.cena!.id} className={k < posCena ? 'feito' : k === posCena && etapa.tipo === 'cena' ? 'agora' : ''} title={e.cena!.titulo} aria-current={k === posCena && etapa.tipo === 'cena' ? 'step' : undefined}>
-              <i data-metodo={NOME_CENA[e.cena!.tipo] ?? e.cena!.tipo}>{k < posCena ? <Icone nome="check" /> : k + 1}</i><span>{e.cena!.titulo}</span>
-            </li>
-          ))}
-        </ol>
+        {/* D032: barrinha da missão bem visível — um pontinho por passo (check = feito, estrela = agora); o nome do método fica só em data-metodo */}
+        <div className="trilha-missao vidro" data-testid="trilha-missao">
+          <BarraMissao passos={cenas.length} feitos={posCena} agora={etapa.tipo === 'cena' ? posCena : undefined} rotulo={`Missão: passo ${Math.min(posCena + 1, cenas.length)} de ${cenas.length}`} />
+          <ol className="sr" aria-hidden="true">
+            {cenas.map((e, k) => <li key={e.cena!.id} className={k < posCena ? 'feito' : k === posCena && etapa.tipo === 'cena' ? 'agora' : ''} data-metodo={NOME_CENA[e.cena!.tipo] ?? e.cena!.tipo}>{e.cena!.titulo}</li>)}
+          </ol>
+        </div>
       </Topo>
       <main className="palco" id="palco">
         {etapa.tipo === 'acolhida' ? (

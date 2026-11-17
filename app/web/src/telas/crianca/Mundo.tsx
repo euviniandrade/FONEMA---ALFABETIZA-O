@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { CONQUISTA_POR_ID, FALAS, FASES, FASE_POR_ID, REGIOES, REGIAO_POR_ID, type Fala } from '@fonema/conteudo';
-import { calcularNivel, faseEmExpressa, fasesConcluidas, missaoInicialFeita, infoNome, podeEntrar, type Crianca, type Progresso } from '@fonema/motor';
+import { calcularNivel, faseEmExpressa, fasesConcluidas, missaoInicialFeita, infoNome, podeEntrar, tutorialPendente, type Crianca, type Progresso } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Ajustes, AvatarMini, Balao, BotaoOuvir, Carregando, Moedinhas, Rosto, Topo } from '../../componentes/basicos.tsx';
@@ -9,6 +9,7 @@ import { PersonagemVivo } from '../../componentes/PersonagemVivo.tsx';
 import { Fundo, Icone, MapaNavegavel, type Marcador } from '../../componentes/ui.tsx';
 import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
 import { DocaVila } from './DocaVila.tsx';
+import { PainelGuia } from '../../componentes/Guia.tsx';
 import { Dupla3DGiravel } from '../../componentes/Personagem3D.tsx';
 import { falar, falarVarias, textoTela } from '../../util.ts';
 
@@ -83,12 +84,16 @@ export function Vila({ criancaId }: { criancaId: string }) {
     });
   }, [crianca, repo]);
 
+  // D032: quem ainda não viu o tutorial e não fez nenhuma missão volta para ele (retoma no passo em que parou)
+  const tutorial = !!progresso && tutorialPendente(progresso);
+  useEffect(() => { if (tutorial) navegar(`c/${criancaId}/tutorial`); }, [tutorial, criancaId]);
+
   useEffect(() => {
-    if (crianca && progresso && !recado) falar(progresso.sessoesFeitas ? FALAS.voltou[0] : FALAS.chegada[0], crianca);
+    if (crianca && progresso && !recado && !tutorialPendente(progresso)) falar(progresso.sessoesFeitas ? FALAS.voltou[0] : FALAS.chegada[0], crianca);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [crianca?.id, progresso?.sessoesFeitas]);
 
-  if (!crianca || !progresso) return <Carregando />;
+  if (!crianca || !progresso || tutorial) return <Carregando />;
   const fase = FASE_POR_ID[progresso.faseAtual];
   const nivel = nivelDe(progresso);
   const idx = FASES.findIndex((f) => f.id === fase.id);
@@ -157,6 +162,9 @@ export function Vila({ criancaId }: { criancaId: string }) {
           <Ajustes />
         </div>
       </div>
+
+      {/* D032: painel guia (ao lado no PC; faixa recolhível em cima no celular) */}
+      <PainelGuia crianca={crianca} progresso={progresso} onde="vila" />
 
       <div className="hud-base">
         <div className={`hud-fala vidro ${recado ? 'balao-destaque' : ''}`} data-quem={fala.quem}>

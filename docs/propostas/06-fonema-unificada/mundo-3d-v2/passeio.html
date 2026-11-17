@@ -145,7 +145,7 @@ avisar('fonema:ola');
 
 function aplicarBonecos() {
   for (const b of app.bonecos.splice(0)) {
-    try { if (b.id === 'crianca') passeio.usarAvatar(b.pacote); else passeio.usarModeloNpc(b.id, b.pacote); }
+    try { if (b.id === 'crianca') passeio.usarAvatar(b.pacote); else passeio.usarModeloNpc(b.id, b.pacote); (window.FONEMA_RECEBIDOS ??= []).push(b.id); }
     catch (e) { console.warn('[passeio] boneco não montou', b.id, e); }
   }
 }

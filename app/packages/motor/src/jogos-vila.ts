@@ -3,8 +3,8 @@
  *
  *  - ESTRADA E RIO DOS PARES (G6, corrida com bifurcações): o carrinho (ou o barco) chega numa bifurcação; cada caminho tem
  *    uma placa. Variação "ouvir": a Sofia diz uma palavra (vaca) e as placas têm FIGURAS do par mínimo + 1 distrator (vaca ×
- *    faca × foca). Variação "ler": o passageiro mostra a FIGURA de onde quer ir e as placas têm as palavras ESCRITAS (pato ×
- *    bato × pata). Os itens saem dos pares das lições JÁ CONCLUÍDAS da Trilha dos Sons (os mesmos que passaram pelo verificador),
+ *    faca × foca). Variação "ler": o passageiro mostra a palavra ESCRITA de onde quer ir (VACA) e as placas têm as mesmas
+ *    figuras; ninguém diz a palavra antes (04 R9). Os itens saem dos pares das lições JÁ CONCLUÍDAS da Trilha dos Sons,
  *    então os dois sons de cada par já foram ensinados. Habilidade = a do contraste (`habilidadeDoPar`): conta para o 8 de 10.
  *  - CARTEIRO DA VILA (G10): o envelope traz uma palavra ESCRITA; as casas têm a placa com a FIGURA de quem mora lá; a criança
  *    lê e entrega na casa certa. Palavras decodificáveis na unidade já concluída (`verificarPalavra`); as figuras das outras
@@ -97,7 +97,8 @@ function paresDasFases(p: Progresso, faseId?: string): ItemParMinimo[] {
 /**
  * Banco da Estrada: os pares das lições concluídas, nas duas variações.
  *  - ouvir: as três palavras com figura (o que se ouve é livre, 05 §3; as figuras não podem faltar).
- *  - ler: o alvo com figura (o passageiro mostra a figura) e as três palavras liberadas para ler agora (verificador).
+ *  - ler: as três com figura e o alvo (a palavra que a criança lê) liberado para ler agora (verificador). As outras duas
+ *    só aparecem como figura (não são lidas).
  * Um item de "ouvir" vira também de "ler" quando cumpre isso, e vice-versa (mesmo par, mesmo contraste, mesma habilidade).
  */
 export function bancoDaEstrada(p: Progresso, variacao: VariacaoEstrada, faseId?: string): ParDaEstrada[] {
@@ -105,7 +106,7 @@ export function bancoDaEstrada(p: Progresso, variacao: VariacaoEstrada, faseId?:
   const visto = new Set<string>();
   for (const i of paresDasFases(p, faseId)) {
     const tres = [i.alvo, i.outra, i.distrator!];
-    const ok = variacao === 'ouvir' ? tres.every(temFiguraVila) : temFiguraVila(i.alvo) && tres.every((w) => palavraLiberada(p, w));
+    const ok = tres.every(temFiguraVila) && (variacao === 'ouvir' || palavraLiberada(p, i.alvo));
     const k = `${i.alvo}|${i.outra}`;
     if (!ok || visto.has(k)) continue;
     visto.add(k);

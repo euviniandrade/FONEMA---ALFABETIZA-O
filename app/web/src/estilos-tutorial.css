@@ -1,0 +1,175 @@
+/* D032 · tutorial "A grande aventura" (telas/crianca/Tutorial.tsx). Alvos ≥ 60 px; "menos movimento" desliga câmera e pulsos. */
+.tela-tutorial{position:relative;min-height:100vh;min-height:100dvh;display:grid;grid-template-rows:auto 1fr auto;gap:10px;padding:16px clamp(12px,2.4vw,32px) 16px;overflow:hidden}
+.tut-fundo{position:absolute;inset:0;z-index:0;overflow:hidden;background:#BFE1F7}
+.tut-paisagem{width:100%;height:100%;object-fit:cover;filter:blur(8px) saturate(1.1);transform:scale(1.08);opacity:.92}
+.tut-fundo::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(255,255,255,0) 40%,rgba(12,26,64,.25))}
+/* passo 1: a câmera passeia pelo arquipélago */
+.tut-camera{position:absolute;inset:-6%;animation:tutCamera 22s ease-in-out infinite alternate}
+.tut-camera img{width:100%;height:100%;object-fit:cover}
+@keyframes tutCamera{0%{transform:scale(1.35) translate(8%,4%)}35%{transform:scale(1.5) translate(-6%,6%)}70%{transform:scale(1.4) translate(-8%,-6%)}100%{transform:scale(1.15) translate(2%,-2%)}}
+.tela-tutorial>*:not(.tut-fundo){position:relative;z-index:1}
+
+/* topo: os 6 passos (figuras) e o "Pular" do adulto */
+.tut-topo{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.tut-passos{list-style:none;display:flex;align-items:center;gap:0;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:var(--s-vidro)}
+.tut-passos li{position:relative;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#E4EEF8;margin-left:22px;transition:all .35s var(--mola);box-shadow:inset 0 -3px 0 rgba(12,26,64,.1)}
+.tut-passos li:first-child{margin-left:0}
+.tut-passos li::before{content:"";position:absolute;right:100%;top:50%;width:22px;height:5px;margin-top:-2.5px;background:repeating-linear-gradient(90deg,#C3D4E5 0 5px,transparent 5px 8px)}
+.tut-passos li:first-child::before{display:none}
+.tut-passos li img{width:70%;height:70%;object-fit:contain;filter:grayscale(.8) opacity(.6)}
+.tut-passos li.feito{background:linear-gradient(180deg,#5CCB85,#2A9150)}.tut-passos li.feito::before{background:var(--folha)}
+.tut-passos li.feito img{filter:none}
+.tut-passos li.agora{width:60px;height:60px;background:radial-gradient(circle at 35% 28%,#FFF6C9,#FFD652 55%,#F6A91B);box-shadow:0 4px 0 var(--ipe-esc),0 0 0 5px rgba(255,214,82,.45)}
+.tut-passos li.agora img{filter:drop-shadow(0 2px 2px rgba(12,26,64,.3))}
+.tut-pular{min-height:60px;min-width:60px;padding:6px 18px;border-radius:999px;background:rgba(255,255,255,.82);box-shadow:var(--s1);font-family:var(--f-adulto);font-weight:700;font-size:16px;color:var(--marinho2);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05}
+.tut-pular small{font-weight:400;font-size:12px;color:var(--cinza)}
+.tut-pular .ic{width:22px;height:22px}
+
+/* palco */
+.tut-palco{display:grid;place-items:center;min-height:0;animation:tutEntra .5s var(--suave) both}
+@keyframes tutEntra{from{opacity:0;transform:translateY(18px) scale(.98)}}
+.tut-cartao{width:min(1180px,100%);border-radius:var(--r-x);padding:clamp(16px,2.6vw,34px)}
+.tut-sub{font-family:var(--f-titulo);font-size:clamp(22px,2.4vw,30px);color:var(--marinho);text-align:center;margin:0 0 18px}
+
+/* 1 · o mundo */
+.tut-mundo{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:space-between}
+.tut-titulo{font-family:var(--f-titulo);font-weight:700;font-size:clamp(40px,6vw,84px);color:#fff;text-align:center;line-height:.95;text-shadow:0 4px 0 var(--marinho),0 10px 24px rgba(12,26,64,.55);letter-spacing:1px;margin-top:2vh;animation:tutTitulo 1s var(--mola) both}
+.tut-titulo span{display:block;font-size:.5em;color:var(--ipe);text-shadow:0 3px 0 var(--ipe-esc),0 8px 18px rgba(12,26,64,.5)}
+@keyframes tutTitulo{from{opacity:0;transform:scale(.6) rotate(-4deg)}}
+.tut-dupla{width:min(560px,80vw);height:min(46vh,440px);align-self:flex-end;margin-right:4vw}
+
+/* 2 · o caminho */
+.tut-caminho{max-width:1240px}
+.tut-caminho .caminho{padding-top:6px}
+.tut-caminho .etapa-aqui .avatar-mini{box-shadow:0 0 0 3px var(--ipe)}
+
+/* 3 · como mexer */
+.tut-mexer{display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:18px;align-items:stretch;max-width:1100px}
+.tut-mexer-caixa{position:relative;border-radius:var(--r-g);background:rgba(255,255,255,.7);padding:18px;display:flex;align-items:center;justify-content:center;gap:16px;min-height:240px;transition:all .35s var(--suave);box-shadow:inset 0 0 0 2px rgba(201,220,238,.8)}
+.tut-mexer-caixa.agora{background:#fff;box-shadow:inset 0 0 0 3px var(--ipe),0 0 0 6px rgba(255,201,63,.3),var(--s2)}
+.tut-mexer-caixa.espera{opacity:.45;filter:saturate(.5)}
+.tut-mexer-caixa.feito{opacity:.8}
+.tut-mexer-num{position:absolute;left:12px;top:12px;width:44px;height:44px}.tut-mexer-num img{width:100%;height:100%;object-fit:contain}
+.tut-estrela{position:relative;width:160px;height:160px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 40% 30%,#FFF8DC,#FFE9A6);box-shadow:0 8px 0 #E8C66A,var(--s2);transition:transform .2s var(--mola)}
+.tut-estrela img{width:78%;height:78%;object-fit:contain;filter:drop-shadow(0 4px 4px rgba(12,26,64,.3))}
+.tut-mexer-caixa.agora .tut-estrela{animation:tutPulo 1.4s var(--suave) infinite}
+.tut-estrela:active{transform:scale(.92)}
+@keyframes tutPulo{50%{transform:scale(1.08)}}
+.tut-mao{position:absolute;right:-10px;bottom:-14px;width:70px;height:70px;background:url(/assets/figuras/dedo.webp) center/contain no-repeat;animation:tutMao 1.4s ease-in-out infinite;pointer-events:none}
+@keyframes tutMao{50%{transform:translate(-10px,-12px)}}
+.tut-ok{position:absolute;right:-6px;top:-6px;width:48px;height:48px;border-radius:50%;background:linear-gradient(180deg,#5CCB85,#2A9150);color:#fff;display:grid;place-items:center;box-shadow:0 0 0 4px #fff;animation:tutTitulo .5s var(--mola) both}
+.tut-ok .ic{width:30px;height:30px}
+.tut-arrasto{position:relative;width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.tut-moeda{position:relative;width:110px;height:110px;border-radius:50%;touch-action:none;cursor:grab;z-index:3;transition:transform .25s var(--mola)}
+.tut-moeda.segurando{transition:none;cursor:grabbing;filter:drop-shadow(0 16px 14px rgba(12,26,64,.35))}
+.tut-moeda.pegou{box-shadow:0 0 0 5px var(--ipe),0 0 0 10px rgba(255,201,63,.35)}
+.tut-moeda img{width:100%;height:100%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 5px 4px rgba(12,26,64,.3))}
+.tut-mexer-caixa.agora .tut-moeda:not(.segurando){animation:tutMoeda 1.8s ease-in-out infinite}
+@keyframes tutMoeda{40%{transform:translateX(26px)}60%{transform:translateX(26px)}}
+.tut-moeda-vazia{width:110px;height:110px}
+.tut-trilha-arrasto{flex:1;height:10px;border-radius:5px;background:repeating-linear-gradient(90deg,#F6A91B 0 14px,transparent 14px 24px);opacity:.6;-webkit-mask:linear-gradient(90deg,transparent,#000 20%,#000 80%,transparent);mask:linear-gradient(90deg,transparent,#000 20%,#000 80%,transparent)}
+.tut-porco{position:relative;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#fff,#FCE3EA);box-shadow:0 6px 0 #E9B8C6,var(--s1)}
+.tut-porco img{width:90%;height:90%;object-fit:contain}
+.tut-porco.cheio{animation:tutTitulo .5s var(--mola)}
+.tut-mexer-caixa.botoes{flex-direction:column}
+.tut-demo{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#fff,#E8F2FC);box-shadow:0 5px 0 #B9CEE2;transition:all .3s var(--mola)}
+.tut-demo .ic{width:48px;height:48px;color:var(--marinho2)}.tut-demo img{width:62%;height:62%;object-fit:contain}
+.tut-demo.aceso{transform:scale(1.15);box-shadow:0 5px 0 var(--ipe-esc),0 0 0 6px var(--ipe),0 0 0 12px rgba(255,201,63,.35)}
+
+/* 4 · prêmios */
+.tut-premios{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px}
+.tut-premio{border-radius:var(--r-g);background:rgba(255,255,255,.72);padding:16px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;transition:all .35s var(--mola);box-shadow:inset 0 0 0 2px rgba(201,220,238,.8)}
+.tut-premio.aceso{background:#fff;transform:translateY(-6px) scale(1.03);box-shadow:inset 0 0 0 3px var(--ipe),0 0 0 6px rgba(255,201,63,.3),var(--s2)}
+.tut-premio b{font-family:var(--f-titulo);font-size:24px;color:var(--marinho)}
+.tut-premio-fig{position:relative;width:100%;height:190px;display:flex;align-items:center;justify-content:center}
+.tut-premio-fig>img{max-height:100%;width:auto;object-fit:contain;filter:drop-shadow(0 8px 8px rgba(12,26,64,.25))}
+.tut-porco-g{height:150px}
+.tut-moeda-voa{position:absolute!important;width:54px!important;height:54px!important;left:16%;top:6%;animation:tutVoa 2.4s ease-in infinite}
+.tut-moeda-voa.d2{left:26%;top:30%;animation-delay:1.2s}
+@keyframes tutVoa{0%{transform:translate(0,0) scale(1);opacity:0}15%{opacity:1}80%{transform:translate(110px,30px) scale(.6);opacity:1}100%{transform:translate(120px,34px) scale(.4);opacity:0}}
+.tut-premio-fig.loja>img{height:150px}
+.tut-boneco{position:absolute;right:6%;bottom:2%}
+.tut-boneco .avatar-mini,.tut-boneco img{border-radius:50%;box-shadow:0 0 0 4px #fff,var(--s1)}
+.tut-depois{display:flex;gap:10px}
+.tut-depois span{position:relative;width:64px;height:64px;border-radius:16px;background:#EEF3F8;display:grid;place-items:center}
+.tut-depois span>img{width:80%;height:80%;object-fit:contain;filter:saturate(.3) opacity(.7)}
+.tut-depois i{position:absolute;right:-6px;bottom:-6px;width:30px;height:30px}.tut-depois i img{width:100%;height:100%}
+.tut-trofeu{position:absolute!important;right:10%;bottom:0;height:110px!important}
+.tut-niveis{display:flex;align-items:center;gap:6px}
+.tut-niveis i{width:20px;height:20px;border-radius:50%;background:#DCE8F4}.tut-niveis i.cheia{background:radial-gradient(circle at 35% 30%,#FFF1B8,var(--ipe) 60%,var(--ipe2));box-shadow:0 2px 0 var(--ipe-esc)}
+.tut-niveis em{font-style:normal;font-family:var(--f-titulo);font-size:15px;color:var(--cinza)}
+
+/* 5 · jogos */
+.tut-jogos{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;max-width:1000px}
+.tut-brincar{position:relative}
+.tut-brincar-btn{width:200px;height:200px;border-radius:40px;background:linear-gradient(180deg,#fff,#E8F2FC);box-shadow:0 8px 0 #B9CEE2,var(--s2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;animation:tutPulo 1.8s var(--suave) infinite}
+.tut-brincar-btn img{width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 6px 6px rgba(12,26,64,.3))}
+.tut-brincar-btn b{font-family:var(--f-titulo);font-size:28px;color:var(--marinho)}
+.tut-mao-aponta{position:absolute;right:-30px;bottom:-26px;width:90px;height:90px;background:url(/assets/figuras/dedo.webp) center/contain no-repeat;animation:tutMao 1.4s ease-in-out infinite}
+.tut-jogos-lista{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.tut-jogos-lista li{display:flex;align-items:center;gap:10px;min-height:64px;padding:8px 16px 8px 8px;border-radius:999px;background:#fff;box-shadow:0 4px 0 #C9DCEE;font-family:var(--f-titulo);font-weight:600;font-size:18px;color:var(--marinho);animation:tutEntra .5s var(--suave) both;animation-delay:calc(var(--i) * .12s)}
+.tut-jogos-lista li .ic{width:46px;height:46px;padding:9px;border-radius:50%;background:var(--ceu);color:var(--marinho2);flex:none}
+.tut-jogos-lista li.cor-ipe .ic{background:var(--ipe-claro);color:var(--ipe-esc)}.tut-jogos-lista li.cor-mata .ic{background:var(--folha-claro);color:var(--folha2)}.tut-jogos-lista li.cor-barro .ic{background:#F7DCCF;color:var(--terracota)}
+
+/* 6 · a missão */
+.tut-missao{max-width:820px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.tut-missao-sobre{font-family:var(--f-titulo);font-size:16px;letter-spacing:.8px;text-transform:uppercase;color:var(--marinho2)}
+.tut-missao-titulo{font-family:var(--f-titulo);font-size:clamp(34px,4.4vw,56px);color:var(--marinho);margin:0}
+.tut-missao .barra-missao{width:calc(100% - 70px);align-self:flex-start;margin:18px 70px 18px 10px}
+.tut-comecar{min-width:280px}
+
+/* base: a fala e as setas */
+.tut-base{display:flex;align-items:flex-end;gap:14px}
+.tut-fala{flex:1;display:flex;align-items:center;gap:12px;border-radius:999px;padding:8px 10px 8px 8px;min-height:88px}
+.tut-fala .rosto{width:72px;height:72px;border-radius:50%;flex:none;object-fit:cover;background:#FFE7A3}
+.tut-fala p{flex:1;font-size:clamp(18px,1.7vw,22px);color:var(--tinta);line-height:1.25}
+.tut-fala p b{display:block;font-family:var(--f-titulo);font-size:13px;letter-spacing:.6px;text-transform:uppercase;color:var(--terracota)}
+.tut-fala[data-quem=tales] p b{color:var(--marinho2)}
+.tut-ouvir{width:64px;height:64px;flex:none}
+.tut-nav{display:flex;gap:12px}
+.tut-seta{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#fff,#E8F2FC);box-shadow:0 6px 0 #B9CEE2,var(--s1);transition:transform .2s var(--mola)}
+.tut-seta img{width:58%;height:58%;object-fit:contain}
+.tut-seta:disabled{opacity:.35;cursor:default}
+.tut-seta:active:not(:disabled){transform:translateY(4px);box-shadow:0 2px 0 #B9CEE2}
+.tut-seta.seguir{width:104px;height:104px;background:radial-gradient(circle at 35% 28%,#FFF6C9,#FFD652 55%,#F6A91B);color:#3B2500;box-shadow:0 7px 0 var(--ipe-esc),var(--s2)}
+.tut-seta.seguir .ic{width:52px;height:52px}
+.tut-seta.seguir.vai{animation:tutSeta 1.3s var(--suave) infinite}
+@keyframes tutSeta{50%{transform:scale(1.1);box-shadow:0 7px 0 var(--ipe-esc),0 0 0 12px rgba(255,201,63,.35)}}
+
+/* celular e tablet em pé */
+@media (max-width:899px){
+  .tela-tutorial{padding:10px 10px 12px;gap:8px}
+  .tut-passos{padding:5px 8px}.tut-passos li{width:34px;height:34px;margin-left:10px}.tut-passos li::before{width:10px}.tut-passos li.agora{width:46px;height:46px}
+  .tut-pular{padding:4px 12px;font-size:14px}
+  .tut-palco{align-items:start;overflow:auto}
+  .tut-cartao{padding:14px;border-radius:28px}
+  .tut-mexer{grid-template-columns:1fr 1fr;gap:10px}
+  .tut-mexer-caixa{min-height:170px;padding:12px}
+  .tut-mexer-caixa.arrastar{grid-column:1 / -1;grid-row:2}
+  .tut-estrela{width:120px;height:120px}
+  .tut-demo{width:64px;height:64px}.tut-demo .ic{width:36px;height:36px}
+  .tut-moeda,.tut-moeda-vazia{width:84px;height:84px}.tut-porco{width:110px;height:110px}
+  .tut-premios{grid-template-columns:1fr;gap:10px}
+  .tut-premio{display:grid;grid-template-columns:120px 1fr;grid-template-areas:"fig nome" "fig extra";text-align:left;align-items:center;padding:10px}
+  .tut-premio-fig{grid-area:fig;height:110px}.tut-premio b{grid-area:nome;font-size:20px}
+  .tut-premio .tut-depois,.tut-premio .tut-niveis{grid-area:extra}
+  .tut-porco-g,.tut-premio-fig.loja>img{height:96px!important}.tut-trofeu{height:70px!important}
+  .tut-boneco .avatar-mini,.tut-boneco img{width:46px!important;height:46px!important}
+  .tut-depois span{width:48px;height:48px}
+  .tut-jogos{grid-template-columns:1fr;justify-items:center;gap:18px}
+  .tut-brincar-btn{width:150px;height:150px}.tut-brincar-btn img{width:86px;height:86px}
+  .tut-jogos-lista{grid-template-columns:1fr;width:100%}
+  .tut-dupla{width:92vw;height:42vh;margin:0 auto}
+  .tut-fala{border-radius:28px;min-height:76px;padding:6px}
+  .tut-fala .rosto{width:56px!important;height:56px!important}
+  .tut-fala p{font-size:16px}
+  .tut-ouvir{width:56px;height:56px}
+  .tut-base{flex-direction:column;align-items:stretch}
+  .tut-nav{justify-content:space-between}
+  .tut-seta{width:72px;height:72px}.tut-seta.seguir{width:88px;height:88px}
+  .tut-missao .barra-missao{width:calc(100% - 60px);margin-right:60px}
+  .tut-comecar{min-width:0;width:100%}
+}
+.menos-movimento .tut-camera,.menos-movimento .tut-mexer-caixa .tut-estrela,.menos-movimento .tut-mao,.menos-movimento .tut-moeda,.menos-movimento .tut-moeda-voa,
+.menos-movimento .tut-brincar-btn,.menos-movimento .tut-mao-aponta,.menos-movimento .tut-seta.seguir.vai,.menos-movimento .tut-titulo,.menos-movimento .tut-palco{animation:none!important}
+.menos-movimento .tut-camera{transform:scale(1.15)}

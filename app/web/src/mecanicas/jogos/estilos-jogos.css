@@ -1,0 +1,122 @@
+/* ============================== JOGOS FÔNICOS: Corre-Som e Bichinho Come-Som (D032 §4) ============================== */
+/* Alvos de toque ≥ 60 px; "menos movimento" desliga as animações de enfeite (html.menos-movimento / prefers-reduced-motion). */
+
+.jogo-topo{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px}
+.jogo-topo .progressinho{margin:0}
+.jogo-ouvir{width:64px;height:64px}
+
+/* ---------- Corre-Som ---------- */
+.jogo-corre .cs-palco{position:relative;width:100%;height:clamp(340px,62vh,640px);border-radius:var(--r-g);overflow:hidden;touch-action:none;user-select:none;
+  background:linear-gradient(180deg,#bfe6ff 0%,#dff2ff 46%,#8fd16a 46.2%,#7cc35a 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 18px 34px -18px rgba(12,26,64,.55)}
+.cs-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.cs-carregando{position:absolute;inset:0;display:grid;place-items:center}
+.cs-pistas{position:absolute;inset:0 0 0 0}
+.cs-pista{position:absolute;top:0;bottom:0;min-width:60px;border:0;background:transparent;cursor:pointer;border-radius:0;-webkit-tap-highlight-color:transparent;transition:background .2s}
+.cs-pista.ativa:hover,.cs-pista.ativa:focus-visible{background:linear-gradient(180deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.18))}
+.cs-pista:focus-visible{outline:4px solid var(--ipe);outline-offset:-6px}
+/* reserva 2D (sem WebGL): os arcos desenhados com CSS */
+.sem-3d .cs-pistas{display:flex;align-items:flex-end;padding-bottom:12%}
+.sem-3d .cs-pista{display:grid;place-items:end center;padding-bottom:12%}
+.cs-arco-2d{display:grid;place-items:center;width:min(86%,190px);aspect-ratio:1/1.15;border-radius:999px 999px 18px 18px;border:12px solid var(--cor);border-bottom:0;
+  background:radial-gradient(circle at 50% 42%,#fffaf0 0 46%,transparent 47%);box-shadow:0 10px 0 rgba(12,26,64,.15)}
+.cs-arco-2d .fig{width:70%;height:auto}
+.cs-letra{font-family:var(--f-leitura);font-weight:700;font-size:clamp(52px,9vw,88px);color:#22407a;line-height:1}
+.sem-3d .cs-pista.aqui .cs-arco-2d{transform:translateY(-8px);box-shadow:0 0 0 6px rgba(255,255,255,.8),0 16px 0 rgba(12,26,64,.18)}
+.sem-3d .cs-pista.tentado .cs-arco-2d{filter:grayscale(.85) opacity(.6)}
+.sem-3d .cs-pista.modelo .cs-arco-2d,.sem-3d .cs-pista.acesa .cs-arco-2d{box-shadow:0 0 0 6px #FFD652,0 0 30px 10px rgba(255,214,82,.7);animation:pulsa 1.1s ease-in-out infinite}
+.sem-3d .cs-pista.certo .cs-arco-2d{box-shadow:0 0 0 6px #FFD652,0 0 34px 12px rgba(255,214,82,.8)}
+.cs-nomes{position:absolute;left:0;right:0;top:10px;height:0}
+.cs-nome{position:absolute;transform:translateX(-50%);width:60px;height:60px;border-radius:50%;border:0;background:rgba(255,255,255,.92);box-shadow:var(--s2);display:grid;place-items:center;cursor:pointer}
+.cs-nome .ic{width:34px;height:34px}
+.cs-maozinha{position:absolute;bottom:22%;width:64px;height:64px;transform:translateX(-50%);pointer-events:none;border-radius:50%;
+  background:radial-gradient(circle,#fff 0 30%,rgba(255,255,255,.55) 31% 52%,transparent 53%);animation:csToque 1.6s ease-in-out infinite}
+@keyframes csToque{0%,100%{transform:translateX(-50%) scale(.85);opacity:.45}50%{transform:translateX(-50%) scale(1.1);opacity:1}}
+.jogo-rodape{display:flex;justify-content:center;margin-top:12px}
+.jogo-pular{min-width:180px;min-height:64px;font-size:22px}
+.jogo-corre .balao{margin-bottom:8px}
+
+/* ---------- Bichinho Come-Som ---------- */
+.jogo-come .cm-cena{display:grid;grid-template-columns:minmax(200px,0.9fr) 1.6fr;align-items:end;gap:clamp(12px,3vw,40px);padding:clamp(12px,2vw,24px);border-radius:var(--r-g);
+  background:radial-gradient(120% 90% at 50% 100%,#9ed873 0 38%,transparent 39%),linear-gradient(180deg,#e9f6ff,#d9f0ff 60%,#c7ecb0);box-shadow:inset 0 2px 0 #fff,0 18px 34px -18px rgba(12,26,64,.5);min-height:clamp(320px,52vh,520px)}
+.cm-bolota{position:relative;display:grid;justify-items:center;align-self:end}
+.cm-bolota-img{width:clamp(170px,22vw,260px);height:auto;filter:drop-shadow(0 18px 16px rgba(12,26,64,.28));transform-origin:50% 100%;animation:cmRespira 3s ease-in-out infinite}
+.humor-mastigando .cm-bolota-img{animation:cmNham .3s ease-in-out 3}
+.humor-feliz .cm-bolota-img,.cheio .cm-bolota-img{animation:cmPula .7s var(--mola) 2}
+.humor-cheirando .cm-bolota-img{animation:cmCheira .9s ease-in-out 1}
+@keyframes cmRespira{0%,100%{transform:scale(1,1)}50%{transform:scale(1.015,.985)}}
+@keyframes cmNham{0%,100%{transform:scale(1,1)}50%{transform:scale(1.07,.9)}}
+@keyframes cmPula{0%,100%{transform:translateY(0)}40%{transform:translateY(-26px) rotate(-4deg)}}
+@keyframes cmCheira{0%,100%{transform:rotate(0)}30%{transform:rotate(-7deg)}70%{transform:rotate(6deg)}}
+.cm-bolha{position:absolute;top:-6px;right:-6px;z-index:2;width:76px;height:76px;border-radius:50% 50% 50% 12px;border:0;background:#fff;box-shadow:var(--s2);display:grid;place-items:center;cursor:pointer}
+.cm-bolha .ic{width:40px;height:40px}
+.cm-bolha:disabled{cursor:default}
+.cm-bolha-ondas{position:absolute;inset:0;pointer-events:none}
+.cm-bolha.pulsando{animation:pulsa .8s ease-in-out infinite}
+.cm-bolha.pulsando .cm-bolha-ondas i{position:absolute;inset:0;border-radius:inherit;border:3px solid var(--ipe);animation:cmOnda 1.2s ease-out infinite}
+.cm-bolha.pulsando .cm-bolha-ondas i:nth-child(2){animation-delay:.4s}.cm-bolha.pulsando .cm-bolha-ondas i:nth-child(3){animation-delay:.8s}
+@keyframes cmOnda{from{transform:scale(1);opacity:.9}to{transform:scale(1.7);opacity:0}}
+.cm-barriga{position:absolute;bottom:-4px;display:flex;gap:4px}
+.cm-barriga i{width:14px;height:14px;border-radius:50%;background:var(--ipe);box-shadow:0 2px 0 var(--ipe-esc);animation:entraCartao .5s var(--mola) both}
+.cm-coracoes{position:absolute;top:18%;left:50%;pointer-events:none}
+.cm-coracoes i{position:absolute;width:22px;height:22px;background:#ff7aa2;transform:rotate(45deg);border-radius:4px 0 4px 4px;animation:cmCoracao 1.2s ease-out forwards}
+.cm-coracoes i::before,.cm-coracoes i::after{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:inherit}
+.cm-coracoes i::before{left:-11px}.cm-coracoes i::after{top:-11px}
+.cm-coracoes i:nth-child(2){animation-delay:.2s;left:-40px}.cm-coracoes i:nth-child(3){animation-delay:.35s;left:34px}
+@keyframes cmCoracao{from{transform:translateY(0) rotate(45deg) scale(.4);opacity:0}30%{opacity:1}to{transform:translateY(-90px) rotate(45deg) scale(1);opacity:0}}
+.cm-hum{position:absolute;top:8%;left:12%;font-family:var(--f-titulo);font-size:54px;font-weight:700;color:var(--azul);text-shadow:0 3px 0 #fff;animation:entraCartao .5s var(--mola) both}
+.cm-toalha{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,2vw,22px);padding:clamp(12px,2vw,22px) clamp(8px,1.5vw,18px) clamp(16px,2vw,26px);border-radius:28px;
+  background:repeating-linear-gradient(45deg,#ffd9d2 0 22px,#fff4ef 22px 44px);box-shadow:0 10px 0 #e8b4a8,0 24px 30px -16px rgba(12,26,64,.45)}
+.cm-prato-caixa{position:relative;display:grid;justify-items:center;gap:8px;animation:entraCartao .55s var(--mola) both;animation-delay:calc(var(--k) * 90ms);transition:transform .6s var(--suave),opacity .6s}
+.cm-prato-caixa.voando{transform:translate(calc(-60% - var(--k) * 70%),-38%) scale(.45);opacity:.25;z-index:3}
+.cm-prato{position:relative;width:100%;max-width:190px;aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;
+  background:radial-gradient(circle,#fff 0 56%,#eef3f7 57% 68%,#fff 69%);box-shadow:0 8px 0 #c9d6e3,0 18px 22px -12px rgba(12,26,64,.45);transition:transform .25s var(--mola),box-shadow .2s}
+.cm-prato .fig{width:72%;height:auto;filter:drop-shadow(0 8px 8px rgba(12,26,64,.22))}
+.cm-prato:not(:disabled):hover{transform:translateY(-6px)}
+.cm-prato.acesa{box-shadow:0 8px 0 var(--ipe-esc),0 0 0 6px #FFD652,0 0 30px 8px rgba(255,214,82,.6);transform:translateY(-6px)}
+.cm-prato.tentado{filter:grayscale(.7);opacity:.6}
+.cm-prato.modelo{box-shadow:0 8px 0 var(--ipe-esc),0 0 0 6px #FFD652,0 0 30px 10px rgba(255,214,82,.7);animation:pulsa 1.1s ease-in-out infinite}
+.cm-prato.certo{box-shadow:0 8px 0 var(--folha2),0 0 0 6px #8ee0a8}
+.cm-prato:disabled{cursor:default}
+.cm-prato-ouvir{width:60px;height:60px;border-radius:50%;border:0;background:#fff;box-shadow:var(--s1);display:grid;place-items:center;cursor:pointer}
+.cm-prato-ouvir .ic{width:32px;height:32px}
+
+/* ---------- moldura (Brincar › Jogos) ---------- */
+.jogo-capa{display:flex;align-items:flex-end;justify-content:center;min-height:96px}
+.jogo-capa .fig{width:84px;height:84px;margin:0 -6px;filter:drop-shadow(0 10px 10px rgba(12,26,64,.25))}
+.jogo-capa-letra{display:grid;place-items:center;width:70px;height:70px;margin:0 2px;border-radius:50%;background:#fffaf0;border:7px solid #ff8a65;font-family:var(--f-leitura);font-size:40px;color:#22407a;box-shadow:0 8px 12px -6px rgba(12,26,64,.4)}
+.jogo-capa-letra:nth-child(2){border-color:#ffc93c}.jogo-capa-letra:nth-child(3){border-color:#5ec2e8}
+.jogo-variacoes-cab{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center;text-align:center}
+.jogo-variacoes-cab p{font-family:var(--f-adulto);color:var(--cinza)}
+.jogo-variacoes-grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(12px,2vw,22px);margin-top:18px}
+.jogo-variacao{position:relative;display:grid;gap:6px;justify-items:center;text-align:center;padding:16px 16px 20px;min-height:200px;border:0;border-radius:var(--r-g);cursor:pointer;
+  background:linear-gradient(180deg,#fff 30%,var(--cor-fundo,#EAF3FC));box-shadow:0 9px 0 var(--cor-sombra,#9FBCDD),0 24px 30px -14px rgba(12,26,64,.5),inset 0 2px 0 #fff;
+  transition:transform .3s var(--mola);animation:entraCartao .6s var(--mola) both;animation-delay:calc(var(--k,0) * 80ms)}
+.jogo-variacao:not(:disabled):hover{transform:translateY(-7px) rotate(-1.2deg)}
+.jogo-variacao b{font-family:var(--f-titulo);font-size:24px;color:var(--marinho)}
+.jogo-variacao small{font-family:var(--f-adulto);font-size:15px;color:var(--cinza)}
+.jogo-variacao.trancada{filter:saturate(.35);opacity:.8;cursor:default}
+.jogo-cadeado{position:absolute;top:10px;right:12px}.jogo-cadeado .ic{width:36px;height:36px}
+.jogo-carregando{display:grid;place-items:center;min-height:240px}
+.brincar-secao{font-family:var(--f-titulo);color:var(--marinho);font-size:22px;margin:18px 0 0;text-align:center}
+.brincar-jogos-grade .brincar-jogo-cartao{min-height:210px}
+.brincar-jogo-cartao.trancado{filter:saturate(.4);opacity:.85}
+
+/* ---------- oferta do desafio dentro da fase ---------- */
+.jogo-desafio{position:absolute;top:-6px;right:0;z-index:3;display:inline-flex;align-items:center;gap:8px;min-height:60px;padding:8px 18px 8px 10px;border:0;border-radius:var(--r-pilula);cursor:pointer;
+  font-family:var(--f-titulo);font-size:17px;font-weight:600;color:var(--marinho);background:linear-gradient(180deg,#fff,#fff1c6);box-shadow:0 6px 0 #e2b44e,0 16px 20px -12px rgba(12,26,64,.5);
+  animation:entraCartao .6s var(--mola) both .6s}
+.jogo-desafio .jogo-desafio-ic{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#ff8a65;color:#fff}
+.jogo-desafio.come .jogo-desafio-ic{background:#37A862}
+.jogo-desafio:hover{transform:translateY(-3px)}
+
+@media (max-width:640px){
+  .jogo-come .cm-cena{grid-template-columns:1fr;justify-items:center}
+  .cm-bolota-img{width:150px}
+  .cm-toalha{width:100%}
+  .jogo-corre .cs-palco{height:clamp(360px,56vh,560px)}
+  .jogo-desafio{position:static;margin:0 0 10px auto;display:flex;width:max-content}
+  .jogo-desafio span.rot{font-size:15px}
+}
+html.menos-movimento .cm-bolota-img,html.menos-movimento .cs-maozinha,html.menos-movimento .cm-bolha.pulsando,html.menos-movimento .cm-prato.modelo{animation:none!important}
+html.menos-movimento .cm-prato-caixa.voando{transform:none;opacity:.5}
+@media (prefers-reduced-motion:reduce){.cm-bolota-img,.cs-maozinha,.cm-bolha.pulsando,.cm-prato.modelo{animation:none!important}.cm-prato-caixa.voando{transform:none;opacity:.5}}

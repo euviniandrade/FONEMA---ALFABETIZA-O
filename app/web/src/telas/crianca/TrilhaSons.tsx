@@ -4,6 +4,7 @@ import { podeEntrar, textoLiberado, type Progresso } from '@fonema/motor';
 import { useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Carregando, Topo } from '../../componentes/basicos.tsx';
+import { PainelGuia } from '../../componentes/Guia.tsx';
 import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { asset } from '../../servicos/ambiente.ts';
 import { falar } from '../../util.ts';
@@ -48,10 +49,11 @@ export function TrilhaSons({ criancaId }: { criancaId: string }) {
   let k = 0;
 
   return (
-    <div className="tela-sons" data-testid="trilha-sons">
+    <div className="tela-sons com-guia" data-testid="trilha-sons">
       <Fundo cena="biblioteca" desfoque={14} tom="claro" />
       <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/vila`} titulo="Trilha dos Sons" />
       <main className="palco">
+        <PainelGuia crianca={crianca} progresso={progresso} onde="trilha" />
         <section className="cartao sons-cartao">
           <header className="sons-cab">
             <img className="sons-dupla" src={asset('dupla/dupla-corpo.webp')} alt="Sofia e Tales" />

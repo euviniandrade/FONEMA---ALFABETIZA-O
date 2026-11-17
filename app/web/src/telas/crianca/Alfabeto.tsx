@@ -4,6 +4,7 @@ import { podeEntrar, type Progresso } from '@fonema/motor';
 import { useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Carregando, Topo } from '../../componentes/basicos.tsx';
+import { PainelGuia } from '../../componentes/Guia.tsx';
 import { Figura, Fundo, Icone } from '../../componentes/ui.tsx';
 import { asset } from '../../servicos/ambiente.ts';
 import { falar } from '../../util.ts';
@@ -51,10 +52,11 @@ export function TrilhaAlfabeto({ criancaId }: { criancaId: string }) {
   const etapaAtual = REGIOES.find((r) => r.fases.includes(progresso.faseAtual))?.id;
 
   return (
-    <div className="tela-alfabeto" data-testid="trilha-alfabeto">
+    <div className="tela-alfabeto com-guia" data-testid="trilha-alfabeto">
       <Fundo cena="quintal" desfoque={14} tom="claro" />
       <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/vila`} titulo="Trilha do Alfabeto" />
       <main className="palco">
+        <PainelGuia crianca={crianca} progresso={progresso} onde="trilha" />
         <section className="cartao alfabeto-cartao">
           <header className="alfabeto-cab">
             <img className="alfabeto-dupla" src={asset('dupla/dupla-corpo.webp')} alt="Sofia e Tales" />

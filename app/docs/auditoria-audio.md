@@ -2,9 +2,9 @@
 
 Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai ao ar sem esta auditoria**.
 
-- Clipes auditados: **1651** (1361 falas + 290 nomes; vozes Sofia e Tales)
-- Graves (defeito audível provável): **49** · a conferir de ouvido (palavra/som solto com transcrição diferente): **132** · leves (higiene do sinal): **0** · sem defeito: **1470**
-- Conteúdo conferido por transcrição: **1651** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
+- Clipes auditados: **1676** (1386 falas + 290 nomes; vozes Sofia e Tales)
+- Graves (defeito audível provável): **50** · a conferir de ouvido (palavra/som solto com transcrição diferente): **132** · leves (higiene do sinal): **0** · sem defeito: **1494**
+- Conteúdo conferido por transcrição: **1676** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
 - Volume (clipes ≥ 0,4 s): mediana -17.4 LUFS, de -22.8 a -14.6 (alvo -16)
 
 ## Defeitos por tipo
@@ -27,9 +27,9 @@ Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai
 | conteúdo: transcrição vazia | 2 | 1 |
 | conteúdo: sílaba faltando no meio | 0 | 3 |
 | conteúdo: fim faltando | 0 | 2 |
-| mudo | 1 | 0 |
+| conteúdo: palavra faltando | 0 | 2 |
 | conteúdo: começo faltando | 0 | 1 |
-| conteúdo: palavra faltando | 0 | 1 |
+| mudo | 1 | 0 |
 
 Antes: 275 graves, 52 a conferir e 188 leves em 915 clipes (915 com transcrição).
 
@@ -85,6 +85,7 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 | tales | Ajuda o Bolota a fazer o guia da mata? Lê a figurinha! | Ajudo o Bolota a fazer o guia da mata? Leia a figurinha | palavra trocada (“le” → “lea”) | `falas/tales-8xpboj-v3-m1.mp3` |
 | tales | Isso! Você entendeu o Bolota! | Isso! Você entendeu, Bolota | palavra faltando “o” | `falas/tales-1xuz4l0-v3-m1.mp3` |
 | tales | Isso! Você me entendeu! | É isso. Você me entendeu? | sobrando “e” | `falas/tales-hohrig-v3-m1.mp3` |
+| tales | Na Lojinha, você troca as moedinhas por roupas para o seu boneco. E, m | Na lojinha, você troca as moedinhas por roupas para o seu boneco e mai | palavra faltando “a” | `falas/tales-18e834u-v3-m1.mp3` |
 | tales | Olha a Lojinha! A cada letra abrem coisas novas para o seu boneco. | Olhe a lojinha! A cada letra abrem coisas novas para o seu boneco | palavra trocada (“olia” → “olie”) | `falas/tales-s8k98h-v3-m1.mp3` |
 | tales | X, de xícara | Xis, de chave. / X de chave | palavra trocada (“xikara” → “xave”) | `falas/tales-1ooggl2-v3-m1.mp3` |
 | sofia | bryan | Brian | clipping | `nomes/sofia/bryan-m1.mp3` |

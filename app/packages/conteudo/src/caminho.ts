@@ -50,7 +50,7 @@ export const FALAS_TUTORIAL = {
   ouvir: { quem: 'sofia', texto: 'Quer ouvir de novo? Toque no botão do som.' },
   voltar: { quem: 'sofia', texto: 'E a setinha leva você de volta.' },
   moedas: { quem: 'tales', texto: 'Cada desafio feito vale moedinhas para o seu porquinho!' },
-  lojinha: { quem: 'tales', texto: 'Na Lojinha, você troca as moedinhas por roupas para o seu boneco. E, mais para a frente, até barco e carro!' },
+  lojinha: { quem: 'tales', texto: 'Na Lojinha, você troca as moedinhas por roupas para o seu boneco. Um dia, até barco e carro!' },
   selos: { quem: 'sofia', texto: 'Você também ganha selos para o seu álbum e sobe de nível.' },
   brincar: { quem: 'tales', texto: 'Quer brincar com os sons? Toque em Brincar. Lá tem um monte de jogos!' },
   barra1: { quem: 'sofia', texto: 'Cada missão tem uma barrinha. A cada desafio, ela enche um pouco.' },

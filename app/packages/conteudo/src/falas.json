@@ -30,6 +30,12 @@
   "origem": "TF-05-C2"
  },
  {
+  "id": "s-10qls62",
+  "voz": "sofia",
+  "texto": "Aí vêm as frases.",
+  "origem": "tutorial"
+ },
+ {
   "id": "s-10qm0oq",
   "voz": "sofia",
   "texto": "Escada",
@@ -306,6 +312,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-16aeuu5",
+  "voz": "sofia",
+  "texto": "Depois, junta os sons e lê palavras.",
+  "origem": "tutorial"
+ },
+ {
   "id": "s-16axgv3",
   "voz": "sofia",
   "texto": "Elefante",
@@ -328,6 +340,12 @@
   "voz": "sofia",
   "texto": "Oi, [NOME]! O farol precisa das cinco vogais para acender.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-16u5byu",
+  "voz": "sofia",
+  "texto": "Elas vão abrindo, uma por uma, enquanto você aprende.",
+  "origem": "tutorial"
  },
  {
   "id": "s-16x3tb8",
@@ -382,6 +400,12 @@
   "voz": "sofia",
   "texto": "Enche o peito de ar…",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-17z5h4z",
+  "voz": "sofia",
+  "texto": "Depois, os outros sons das vogais.",
+  "origem": "tutorial"
  },
  {
   "id": "s-181eno1",
@@ -936,6 +960,12 @@
   "origem": "pares (D030)"
  },
  {
+  "id": "s-1hbgnbk",
+  "voz": "sofia",
+  "texto": "[NOME], vem comigo conhecer o nosso mundo!",
+  "origem": "tutorial"
+ },
+ {
   "id": "s-1hey3cw",
   "voz": "sofia",
   "texto": "Você montou a palavra!",
@@ -1110,6 +1140,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1khg81u",
+  "voz": "sofia",
+  "texto": "Para brincar, é só tocar. Toque na estrela!",
+  "origem": "tutorial"
+ },
+ {
   "id": "s-1khlkeh",
   "voz": "sofia",
   "texto": "O gato viu a vaca.",
@@ -1162,6 +1198,12 @@
   "voz": "sofia",
   "texto": "O que a tia viu?",
   "origem": "TF-22-C5f"
+ },
+ {
+  "id": "s-1lvocle",
+  "voz": "sofia",
+  "texto": "E a setinha leva você de volta.",
+  "origem": "tutorial"
  },
  {
   "id": "s-1lx8sog",
@@ -1890,6 +1932,12 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1tah8q8",
+  "voz": "sofia",
+  "texto": "Primeiro, você conhece as letras e os sons.",
+  "origem": "tutorial"
+ },
+ {
   "id": "s-1tkcdan",
   "voz": "sofia",
   "texto": "A mala cheia de roupa ficou pesada.",
@@ -1918,6 +1966,12 @@
   "voz": "sofia",
   "texto": "A tia viu o tomate.",
   "origem": "TF-22-C5f"
+ },
+ {
+  "id": "s-1tyeomu",
+  "voz": "sofia",
+  "texto": "Você também ganha selos para o seu álbum e sobe de nível.",
+  "origem": "tutorial"
  },
  {
   "id": "s-1tzsjgn",
@@ -1954,6 +2008,12 @@
   "voz": "sofia",
   "texto": "Escreva o nome desta figura do seu jeito. Não tem certo nem errado!",
   "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-1ueikft",
+  "voz": "sofia",
+  "texto": "A estrela mostra onde você está.",
+  "origem": "tutorial"
  },
  {
   "id": "s-1ug1ozc",
@@ -3456,6 +3516,12 @@
   "origem": "R2a-F02"
  },
  {
+  "id": "s-1xreojm",
+  "voz": "sofia",
+  "texto": "Quando ela ficar cheia, a missão está feita!",
+  "origem": "tutorial"
+ },
+ {
   "id": "s-1xrnhjd",
   "voz": "sofia",
   "texto": "Escute o começo das palavras. Qual começa igual?",
@@ -3810,10 +3876,22 @@
   "origem": "cantinho da leitura"
  },
  {
+  "id": "s-4wv2ni",
+  "voz": "sofia",
+  "texto": "Este é o caminho que você vai fazer.",
+  "origem": "tutorial"
+ },
+ {
   "id": "s-50jnuk",
   "voz": "sofia",
   "texto": "Vamos lembrar dessa parte da história.",
   "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-534yk3",
+  "voz": "sofia",
+  "texto": "Quer ouvir de novo? Toque no botão do som.",
+  "origem": "tutorial"
  },
  {
   "id": "s-559ma2",
@@ -4776,6 +4854,12 @@
   "origem": "TF-12-C5f"
  },
  {
+  "id": "s-mtqurv",
+  "voz": "sofia",
+  "texto": "Agora arraste a moedinha até o porquinho.",
+  "origem": "tutorial"
+ },
+ {
   "id": "s-mty594",
   "voz": "sofia",
   "texto": "Lê comigo, [NOME]. Devagar e até o fim.",
@@ -4870,6 +4954,12 @@
   "voz": "sofia",
   "texto": "Quando termina igual, a gente diz que RIMA.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-ouofrv",
+  "voz": "sofia",
+  "texto": "E as historinhas!",
+  "origem": "tutorial"
  },
  {
   "id": "s-oxvob",
@@ -5532,6 +5622,12 @@
   "origem": "TF-19-C5f"
  },
  {
+  "id": "s-yf63ie",
+  "voz": "sofia",
+  "texto": "Cada missão tem uma barrinha. A cada desafio, ela enche um pouco.",
+  "origem": "tutorial"
+ },
+ {
   "id": "s-ygpicm",
   "voz": "sofia",
   "texto": "Mostrar as vogais para o professor",
@@ -5964,6 +6060,12 @@
   "origem": "avatar"
  },
  {
+  "id": "t-1ewnyc1",
+  "voz": "tales",
+  "texto": "Agora é com você, [NOME]! Vamos continuar a missão?",
+  "origem": "tutorial"
+ },
+ {
   "id": "t-1f8sg8x",
   "voz": "tales",
   "texto": "Faz de conta que você pede silêncio.",
@@ -5998,6 +6100,12 @@
   "voz": "tales",
   "texto": "/uuu/, biquinho de assobio. Sua vez, [NOME]!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1gnc0wg",
+  "voz": "tales",
+  "texto": "Quer brincar com os sons? Toque em Brincar. Lá tem um monte de jogos!",
+  "origem": "tutorial"
  },
  {
   "id": "t-1gyhqij",
@@ -6864,6 +6972,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-effr4l",
+  "voz": "tales",
+  "texto": "Cada desafio feito vale moedinhas para o seu porquinho!",
+  "origem": "tutorial"
+ },
+ {
   "id": "t-en5dqv",
   "voz": "tales",
   "texto": "Falar /mmm/, tocar o M e juntar MA.",
@@ -6970,6 +7084,12 @@
   "voz": "tales",
   "texto": "O farol precisa da sua vogal, [NOME]!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-kxby7s",
+  "voz": "tales",
+  "texto": "Na Lojinha, você troca as moedinhas por roupas para o seu boneco. Um dia, até barco e carro!",
+  "origem": "tutorial"
  },
  {
   "id": "t-l91e0d",
@@ -7164,6 +7284,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-r0ozh4",
+  "voz": "tales",
+  "texto": "E lá na frente tem mais lugares trancados, esperando por você!",
+  "origem": "tutorial"
+ },
+ {
   "id": "t-rgnjzv",
   "voz": "tales",
   "texto": "janela",
@@ -7174,6 +7300,12 @@
   "voz": "tales",
   "texto": "jacaré",
   "origem": "palmas"
+ },
+ {
+  "id": "t-rjtdr9",
+  "voz": "tales",
+  "texto": "Olha quantas ilhas! Cada uma guarda um segredo das letras.",
+  "origem": "tutorial"
  },
  {
   "id": "t-s420wk",
@@ -7324,6 +7456,12 @@
   "voz": "tales",
   "texto": "Como é o seu cabelo?",
   "origem": "avatar"
+ },
+ {
+  "id": "t-zdlb0t",
+  "voz": "tales",
+  "texto": "Tudo pronto, [NOME]? Vamos para a primeira missão!",
+  "origem": "tutorial"
  },
  {
   "id": "t-zga8wo",

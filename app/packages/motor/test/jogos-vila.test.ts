@@ -54,13 +54,13 @@ describe('Estrada e Rio dos Pares', () => {
     }
   });
 
-  it('ouvir: as 3 placas têm figura com arte; ler: as 3 palavras passam no verificador e o alvo tem figura', () => {
+  it('as 3 placas têm figura com arte; ler: a palavra lida passa no verificador', () => {
     const p = ateTF('TF-22');
     const n = unidadeConcluida(p);
     for (const i of bancoDaEstrada(p, 'ouvir')) for (const w of [i.alvo, i.outra, i.distrator]) expect(ARTE(w) || ARTE(w + '-velinhas'), w).toBe(true);
     for (const i of bancoDaEstrada(p, 'ler')) {
-      expect(temFiguraVila(i.alvo)).toBe(true);
-      for (const w of [i.alvo, i.outra, i.distrator]) expect(verificarPalavra(w, n, BANCO).ok, w).toBe(true);
+      for (const w of [i.alvo, i.outra, i.distrator]) expect(temFiguraVila(w), w).toBe(true);
+      expect(verificarPalavra(i.alvo, n, BANCO).ok, i.alvo).toBe(true);
     }
     // a palavra dita (ouvir) tem clipe gravado
     for (const i of bancoDaEstrada(p, 'ouvir')) expect(VOZ[`sofia|${i.alvo}`], i.alvo).toBeTruthy();
