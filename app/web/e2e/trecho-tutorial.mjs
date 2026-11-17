@@ -52,6 +52,7 @@ export async function trechoTutorial(browser, h) {
   ok(/\/tutorial$/.test(pg.url()), 'depois do boneco, na primeira vez, o tutorial abre sozinho');
   ok(await pg.locator('.tut-passos li').count() === 6 && await pg.getByTestId('pular-tutorial').count() === 1, 'tutorial: 6 passos com figuras e o botão "Pular" do adulto');
   ok((await pequenos(pg, '.tela-tutorial')).length === 0, `tutorial: todos os botões com 60 px ou mais ${JSON.stringify(await pequenos(pg, '.tela-tutorial'))}`);
+  await pg.locator('.tut-camera img').evaluate((i) => i.complete || new Promise((r) => { i.onload = r; i.onerror = r; }));
   await cap('01-mundo', 900);
 
   // 2 · o caminho

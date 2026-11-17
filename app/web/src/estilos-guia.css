@@ -50,7 +50,7 @@
 .caminho.compacto{grid-template-columns:repeat(9,1fr);gap:3px}
 .caminho.compacto::before{top:13px;height:5px;background:repeating-linear-gradient(90deg,#E9D2A6 0 8px,transparent 8px 12px)}
 .caminho.compacto .etapa:nth-child(even){margin-top:0}
-.caminho.compacto .etapa-disco{width:28px;height:28px;box-shadow:0 2px 0 #B9CEE2}
+.caminho.compacto .etapa-disco{width:25px;height:25px;box-shadow:0 2px 0 #B9CEE2}
 .caminho.compacto .etapa-abc{font-size:11px;padding:0 3px;border-radius:5px;box-shadow:0 2px 0 var(--ipe-esc)}
 .caminho.compacto .etapa-img.capa{border-radius:4px;box-shadow:none}
 .caminho.compacto .etapa-selo{width:14px;height:14px;right:-4px;top:-4px;box-shadow:0 0 0 1.5px #fff}.caminho.compacto .etapa-selo .ic{width:10px;height:10px}
@@ -107,7 +107,7 @@
 /* PC/tablet deitado: o painel tem a sua própria coluna (o mapa começa depois dela), então nunca cobre um lugar tocável do mapa */
 @media (min-width:900px){
   .tela-vila:has(.guia-vila) .mapa-nav{left:336px!important}
-  .guia-vila{position:absolute;z-index:4;left:0;top:0;bottom:0;width:336px;padding:96px 14px 0 16px;overflow:hidden;background:linear-gradient(180deg,#CFE6F7 0%,#E6F3FC 45%,#F6EEDC 100%);box-shadow:inset -10px 0 18px -12px rgba(12,26,64,.35)}
+  .tela-vila>aside.guia-vila{position:absolute;z-index:4;left:0;top:0;bottom:0;width:336px;padding:96px 14px 0 16px;overflow:hidden;background:linear-gradient(180deg,#CFE6F7 0%,#E6F3FC 45%,#F6EEDC 100%);box-shadow:inset -10px 0 18px -12px rgba(12,26,64,.35)}
   .guia-vila::before{content:"";position:absolute;inset:0;background:url(/assets/arte/hero-paisagem.webp) 30% 60%/cover;opacity:.32;filter:blur(10px);pointer-events:none;z-index:-1}
   .guia-vila .guia-corpo{padding:10px;gap:8px;max-height:calc(100dvh - 96px - 128px);overflow:auto;scrollbar-width:thin}
 }
@@ -117,7 +117,7 @@
   .guia-vila .guia-aqui{margin-top:20px}
 }
 @media (max-width:899px){
-  .guia-vila{position:absolute;left:10px;right:10px;top:84px}
+  .tela-vila>aside.guia-vila{position:absolute;z-index:6;left:10px;right:10px;top:84px}
   .guia-vila .guia-faixa{display:flex}
   .guia-vila .guia-corpo{display:none;margin-top:8px;max-height:calc(100dvh - 180px);overflow:auto}
   .guia-vila.aberto .guia-corpo{display:flex}
@@ -142,7 +142,7 @@
   .etapa-disco{width:76px;height:76px}
   .etapa-nome{font-size:14px}
   .caminho.compacto{grid-template-columns:repeat(9,1fr);row-gap:0}
-  .caminho.compacto .etapa-disco{width:28px;height:28px}
+  .caminho.compacto .etapa-disco{width:25px;height:25px}
 }
 .menos-movimento .etapa.agora .etapa-disco,.menos-movimento .guia-como.novo{animation:none}
 .menos-movimento .bm-enche{transition:none}
