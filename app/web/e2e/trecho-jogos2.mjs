@@ -82,7 +82,10 @@ export async function trechoJogos2(browser, h) {
   await passarPorteira(pg);
   await cadastrar(pg, 'Lia', 'f');
   await montarAvatar(pg);
-  await pg.getByTestId('primeira-missao').waitFor();
+  // D032: depois do boneco pode abrir o tutorial "A grande aventura" (pulado aqui; ele tem o trecho próprio)
+  await pg.locator('[data-testid="tutorial"], [data-testid="primeira-missao"]').first().waitFor({ timeout: 20000 });
+  if (await pg.getByTestId('tutorial').count()) { await pg.getByTestId('pular-tutorial').click(); await pg.getByTestId('tutorial').waitFor({ state: 'detached' }); }
+  await pg.waitForURL(/\/c\/[^/]+/);
   const id = pg.url().split('/c/')[1].split('/')[0];
 
   // sem nada ensinado: os três aparecem no Brincar, trancados

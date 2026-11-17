@@ -61,6 +61,26 @@ Fariam falta (hoje o texto aparece no balão sem voz, ou a tela fica sem a fala)
 | "Hum… esse não é o som que eu pedi." | Bolota | Quando a comida errada volta para o prato (hoje só a animação e o "hum?") |
 | "Nham! Que gostoso!" | Bolota | Quando o Bolota come a comida certa (hoje só o efeito sonoro e os corações) |
 
+## 1d. Jogos da vila: Estrada e Rio dos Pares, Carteiro da Vila, Casa do Som (D032 §4, 17/11; NENHUMA voz gerada)
+
+Os três usam só clipes já gravados: "Escute a palavra e toque na figura certa." (Estrada, ouvir), "Leia a palavra e toque na figura."
+(Estrada, ler, e Carteiro), "Agora você escreve, [NOME]. Escuta a palavra e monta com as letras." (Casa do Som), as palavras soltas
+da Sofia (vaca, faca, mala, pia, bule, mapa…), o som puro das letras, a correção ("Escuta os dois e tenta de novo.", as frases dos
+pares p/b, f/v…, "Leia de novo, letra por letra.", "O som desta letra é este:", "Você tocou em:"), o confronto da escrita própria
+("Olha o que você escreveu…", "Aqui tem mais um som. Escute:", "Esse som se escreve com esta letra.", "Quer escrever de novo, agora
+sem olhar?"), "Olha como eu faço." / "Agora é com você!", "Muito bem!" e os elogios. Fariam falta:
+
+| Fala sugerida | Quem | Onde entraria |
+|---|---|---|
+| "Olhe a palavra no barco e escolha o caminho da figura dela." | Sofia | Estrada, variação ler (hoje "Leia a palavra e toque na figura.") |
+| "Vamos dirigir! Em cada caminho, escute a palavra e vire para a figura certa." | Tales | Entrada da Estrada (hoje direto no enunciado) |
+| "Chegou carta! Leia o nome no envelope e entregue na casa certa." | Sofia | Entrada do Carteiro (hoje "Leia a palavra e toque na figura.") |
+| "Essa casa não é a do envelope." | Sofia | Carteiro, quando a carta volta (hoje "Você tocou em:" + nome da figura) |
+| "O que você quer para a sua casinha? Escreva o nome e o móvel chega!" | Sofia | Entrada da Casa do Som (hoje a fala do ditado) |
+| "Chegou o seu móvel! Arraste para onde quiser." | Tales | Quando o móvel chega (hoje "Muito bem!") |
+| "Quer um desafio? Vamos de Estrada dos Pares! / entregar cartas? / encomendar um móvel?" | Sofia | Botão do desafio opcional no fim da missão (hoje botão sem fala) |
+| Nomes dos jogos ("Estrada dos Pares", "Rio dos Pares", "Carteiro da Vila", "Casa do Som") | Sofia | Cartões do Brincar (hoje só o toque) |
+
 ## 2. Com clipe, mas a auditoria pede regravação ou conferência de ouvido
 
 | Voz | Fala | O que a transcrição ouviu | Situação |
