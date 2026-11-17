@@ -660,6 +660,7 @@ export function Configuracoes({ area = 'familia' }: { area?: AreaId }) {
             </fieldset>
             <div className="linha-botoes"><button className="btn" onClick={() => set(CONFIG_PADRAO)}><Icone nome="repetir" />Voltar ao recomendado</button></div>
           </details>
+          <p className="nota-mic"><button style={{ background: 'none', border: 0, padding: 0, color: 'var(--cinza)', textDecoration: 'underline', font: 'inherit', cursor: 'pointer' }} onClick={() => navegar('admin')} data-testid="ir-admin">Área do administrador</button></p>
         </section>
     </Area>
   );

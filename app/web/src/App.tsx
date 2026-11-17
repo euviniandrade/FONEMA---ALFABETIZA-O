@@ -35,6 +35,7 @@ const adulto = () => import('./telas/adulto/Adulto.tsx');
 const mundo = () => import('./telas/crianca/Mundo.tsx');
 const extras = () => import('./telas/crianca/Extras.tsx');
 const EstudioSons = sob(() => import('./telas/adulto/EstudioSons.tsx'), 'EstudioSons');
+const Admin = sob(() => import('./telas/admin/Admin.tsx'), 'Admin');
 const AdultoHome = sob(adulto, 'AdultoHome');
 const Configuracoes = sob(adulto, 'Configuracoes');
 const FamiliaHome = sob(adulto, 'FamiliaHome');
@@ -64,7 +65,7 @@ import { useCrianca } from './contexto.tsx';
 /**
  * Rotas (hash) — Decisão 028: a primeira página é sempre "Entrar no FONEMA".
  * #/ entrada · #/aluno cartões das crianças · #/primeira-vez criar conta · #/familia/... Área da Família (PIN)
- * · #/professor/... Área do Professor (PIN) · #/c/:id/... aventura da criança · #/adulto/... (rotas antigas, redirecionadas)
+ * · #/professor/... Área do Professor (PIN) · #/admin/... Área do administrador (senha) · #/c/:id/... aventura da criança · #/adulto/... (rotas antigas, redirecionadas)
  */
 export function App() {
   const r = useRota();
@@ -78,6 +79,8 @@ function tela(r: string[]) {
   const [raiz, sub, id] = r;
   if (raiz === 'aluno') return <Alunos />;
   if (raiz === 'primeira-vez') return <PrimeiraVez />;
+  // D032 item 5: Área do administrador (senha própria, aba à parte; não usa o PIN dos adultos)
+  if (raiz === 'admin') return <Admin aba={sub} sub={id} />;
   if (raiz === 'familia') {
     return (
       <Protegido tipo="responsavel">

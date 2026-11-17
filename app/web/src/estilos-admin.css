@@ -1,0 +1,104 @@
+/* Área do administrador (D032 item 5): tela de trabalho de adulto, densa e legível (fonte de adulto, botões menores). */
+.adm{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:linear-gradient(180deg,#EEF4FB,#F8FAFD 40%);font-family:var(--f-adulto);color:var(--tinta)}
+.adm-topo{position:sticky;top:0;z-index:30;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:10px clamp(10px,2vw,22px);background:rgba(255,255,255,.96);border-bottom:3px solid var(--marinho);box-shadow:0 8px 20px -14px rgba(12,26,64,.45)}
+.adm-marca{display:flex;flex-direction:column;line-height:1.15;margin-right:auto}
+.adm-marca b{font-family:var(--f-titulo);font-size:20px;color:var(--marinho)}
+.adm-marca small{color:var(--cinza);font-size:14px}
+.adm-abas{display:flex;flex-wrap:wrap;gap:6px;order:3;width:100%}
+@media (min-width:1100px){.adm-abas{order:0;width:auto}}
+.adm-aba{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:12px;border:1.5px solid var(--linha);background:#fff;color:var(--marinho);font:600 16px var(--f-adulto);cursor:pointer}
+.adm-aba .ic{width:20px;height:20px}
+.adm-aba[aria-current=page]{background:var(--marinho);border-color:var(--marinho);color:#fff}
+.adm-palco{width:100%;max-width:1280px;margin:0 auto;padding:16px clamp(8px,2vw,24px) 48px;flex:1}
+.adm-cartao{background:#fff;border-radius:18px;padding:clamp(14px,2.4vw,28px);box-shadow:0 10px 30px -18px rgba(12,26,64,.35);border:1px solid var(--linha)}
+.adm-cartao.estreito{max-width:520px;margin:8vh auto 0}
+.adm-cartao h1{font-family:var(--f-titulo);font-size:clamp(22px,2.6vw,30px);color:var(--marinho);margin:0}
+.adm-cartao h2{font-family:var(--f-titulo);font-size:21px;color:var(--marinho);margin:24px 0 8px}
+.adm-cab{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.adm-acesso{justify-content:flex-start;padding:0 12px}
+.adm-form{display:flex;flex-direction:column;gap:12px;margin:12px 0}
+.btn.adm-btn{min-height:44px;padding:0 14px;font-size:16px;border-radius:12px;gap:6px;font-family:var(--f-adulto);box-shadow:0 3px 0 var(--bb),0 8px 12px -8px rgba(12,26,64,.3),inset 0 2px 0 rgba(255,255,255,.75)}
+.btn.adm-btn .ic{width:20px;height:20px}
+.btn.adm-btn[disabled]{opacity:.5;cursor:not-allowed}
+.adm-link{background:none;border:0;padding:0;color:var(--azul);text-decoration:underline;font:inherit;cursor:pointer}
+.adm-nota{color:var(--cinza);font-size:15px;line-height:1.4;margin:6px 0}
+.adm-erro{color:var(--terracota);font-weight:700;margin:6px 0}
+.adm-linha{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:8px 0}
+.adm-linha.entre{justify-content:space-between}
+.adm-campo{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:700;color:var(--cinza);min-width:150px}
+.adm-campo.largo{flex:1 1 260px}
+.adm-campo input,.adm-campo select,.adm-tabela input,.adm-tabela select{min-height:42px;padding:6px 10px;border:1.5px solid var(--linha);border-radius:10px;font:400 16px var(--f-adulto);color:var(--tinta);background:#fff;width:100%}
+.adm-check{display:flex;align-items:center;gap:8px;font-size:16px;min-height:40px}
+.adm-check input{width:20px;height:20px}
+.adm-aviso{background:#FFF7E0;border:1.5px solid #F2D27A;border-radius:14px;padding:10px 14px;margin:10px 0}
+.adm-aviso p{margin:4px 0}
+.adm-aviso .ic{width:18px;height:18px;vertical-align:-3px;color:var(--ipe-esc)}
+.adm-filtros{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin:12px 0 4px}
+.adm-audios{list-style:none;margin:8px 0;padding:0;display:grid;gap:8px}
+.adm-audio{border:1.5px solid var(--linha);border-radius:14px;padding:10px 14px;background:#fff}
+.adm-audio.trocado{border-color:#7CCB98;background:#F4FBF6}
+.adm-audio-cab{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.adm-texto{font-size:19px;margin:6px 0 2px;font-family:var(--f-leitura);word-break:break-word}
+.adm-tipo,.adm-etq,.adm-voz{display:inline-block;font-size:13px;font-weight:700;padding:3px 9px;border-radius:999px;background:#EAF1FA;color:var(--marinho2)}
+.adm-voz{background:#F2ECFA;color:#5B3D8F}
+.adm-etq.verde{background:var(--folha-claro);color:var(--folha-esc)}
+.adm-etq.cinza{background:#EEF0F4;color:var(--cinza)}
+.adm-etq.terra{background:#FBE3DA;color:var(--terracota)}
+.adm-etq.ipe{background:var(--ipe-claro);color:#7A4D00}
+.adm-tipo.t-som-letra{background:#FFE9B0;color:#7A4D00}
+.adm-tipo.t-palavra{background:#DDF4E4;color:var(--folha-esc)}
+.adm-tipo.t-silaba{background:#E3F0FF;color:#1E4F8F}
+.adm-tipo.t-nome-letra{background:#FFE0D3;color:#8A3A1B}
+.adm-editor{margin-top:8px;padding:10px 12px;border-radius:12px;background:#F5F8FC;border:1.5px dashed #B9CEE2}
+.adm-contagem{display:flex;align-items:center;gap:14px;font-family:var(--f-titulo)}
+.adm-contagem span{font-size:56px;line-height:1;color:var(--terracota);min-width:44px;text-align:center}
+.adm-gravando{display:inline-block;width:160px;height:14px;border-radius:999px;background:#E6ECF4;overflow:hidden}
+.adm-gravando i{display:block;height:100%;background:linear-gradient(90deg,var(--folha),var(--ipe2),var(--terracota));transform-origin:left;transition:transform .08s linear}
+.adm-numeros{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.adm-numero{border:1.5px solid var(--linha);border-radius:14px;padding:10px 14px;display:flex;flex-direction:column}
+.adm-numero b{font-family:var(--f-titulo);font-size:30px;color:var(--marinho)}
+.adm-numero span{color:var(--cinza);font-size:14px}
+.adm-rolar{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.adm-tabela{border-collapse:collapse;width:100%;font-size:15px;margin:6px 0}
+.adm-tabela th,.adm-tabela td{border-bottom:1px solid var(--linha);padding:6px 8px;text-align:left;vertical-align:middle}
+.adm-tabela th{background:#F2F6FB;color:var(--marinho);font-size:14px;white-space:nowrap}
+.adm-tabela td input{min-width:110px}
+.adm-saude{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.adm-saude-item{border:1.5px solid var(--linha);border-radius:14px;padding:10px 14px}
+.adm-saude-item p{margin:6px 0}
+.adm-saude-item ul{margin:4px 0;padding-left:18px;font-size:14px}
+.adm-bom{color:var(--folha2);font-weight:700}.adm-ruim{color:var(--terracota);font-weight:700}
+.adm-grupo{border:1.5px solid var(--linha);border-radius:14px;padding:10px 14px 14px;margin:14px 0}
+.adm-grupo legend{font-family:var(--f-titulo);font-size:18px;color:var(--marinho);padding:0 6px}
+.adm-grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:10px}
+.adm-lista{margin:6px 0;padding-left:20px;line-height:1.6}
+.adm-lista li .btn{margin-left:8px}
+.adm-passos{line-height:1.6;padding-left:22px}
+.adm-alfabeto{margin-top:10px}
+.adm-letras{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}
+.adm-letrinha{min-width:40px;min-height:40px;border-radius:10px;border:1.5px solid var(--linha);background:#fff;font:700 17px var(--f-titulo);color:var(--marinho);cursor:pointer}
+.adm-letrinha.ok{background:var(--folha-claro);border-color:#7CCB98;color:var(--folha-esc)}
+.adm-letrinha.atual{outline:3px solid var(--ipe2);outline-offset:1px}
+.adm-passo{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;background:#FFFBF1;border:1.5px solid #F2E2B5;border-radius:16px;padding:14px 18px}
+.adm-passo-letra{font:700 clamp(64px,9vw,110px)/1 var(--f-leitura);color:var(--marinho);min-width:1.4em;text-align:center}
+.adm-passo-letra small{font-size:.6em;margin-left:.12em;color:var(--azul)}
+.adm-passo-info h2{margin-top:0}
+.adm-passo-info p{margin:4px 0;font-size:17px}
+@media (max-width:640px){
+  .adm-passo{grid-template-columns:1fr;gap:4px}
+  .adm-passo-letra{text-align:left}
+  .adm-aba{padding:0 10px;font-size:15px}
+  .adm-aba .ic{display:none}
+  .adm-campo{min-width:calc(50% - 6px);flex:1 1 calc(50% - 6px)}
+  .adm-texto{font-size:17px}
+}
+/* relatório para imprimir/salvar em PDF: só aparece no papel */
+.adm-impressao{display:none}
+@media print{
+  html.adm-imprimindo body *{visibility:hidden}
+  html.adm-imprimindo .adm-impressao,html.adm-imprimindo .adm-impressao *{visibility:visible}
+  html.adm-imprimindo .adm-impressao{display:block;position:absolute;left:0;top:0;width:100%;font:12px/1.35 system-ui,sans-serif;color:#000}
+  html.adm-imprimindo .adm-impressao h1{font-size:18px;margin:0 0 4px}
+  html.adm-imprimindo .adm-impressao table{border-collapse:collapse;width:100%;margin:8px 0}
+  html.adm-imprimindo .adm-impressao th,html.adm-imprimindo .adm-impressao td{border:1px solid #999;padding:3px 5px;text-align:left}
+}
