@@ -174,7 +174,7 @@ export function CasaDoSom({ itens, crianca, sessao, cena, contexto, onFim, aoRec
       </div>
       {etapa === 'escrever' ? (
         <>
-          <div className="pecas escrita-teclado cs-bandeja" role="group" aria-label="Letras móveis">
+          <div className="pecas cs-bandeja" role="group" aria-label="Letras móveis">
             {item.letras.map((l) => <button key={l} className="peca" onClick={() => por(l)} disabled={ocupado} data-letra={l} aria-label={`Letra ${l}`}>{l}</button>)}
           </div>
           <div className="linha-botoes centro">

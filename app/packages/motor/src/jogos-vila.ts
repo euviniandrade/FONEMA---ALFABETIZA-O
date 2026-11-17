@@ -295,11 +295,11 @@ export function rodadaDaCasa(p: Progresso, args: { semente: number; n?: number }
 
 export const dadosJogosVila = (p: Progresso): DadosJogosVila => ({ moveis: [], posicoes: {}, ...(p.jogosVila ?? {}) });
 
-/** Lugar inicial de um móvel novo na sala (em %), espalhado em grade para não cair um em cima do outro. */
+/** Lugar inicial de um móvel novo na sala (em %: o pé do móvel no chão), espalhado em grade para não cair um em cima do outro. */
 export function lugarInicial(k: number): { x: number; y: number } {
   const col = k % 4;
   const lin = Math.floor(k / 4) % 3;
-  return { x: 14 + col * 24, y: 52 + lin * 15 };
+  return { x: 14 + col * 24, y: 74 + lin * 9 };
 }
 
 /** O móvel chegou (brincadeira: chega mesmo se a escrita não saiu certa; o domínio vem só da tentativa avaliada). */
