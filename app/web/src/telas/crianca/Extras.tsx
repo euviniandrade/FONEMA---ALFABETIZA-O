@@ -1,19 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import { PersonagemVivo } from '../../componentes/PersonagemVivo.tsx';
 import { CONQUISTAS, FASE_POR_ID, REGIOES, SONS, SURPRESAS } from '@fonema/conteudo';
-import { AREA_DO_DEGRAU, ehSeloDeParticipacao, infoNome, podeEntrar, registrarSondagem, resultadoPorArea, situacaoSondagem, type AreaSondagem, type ItemSondagem } from '@fonema/motor';
+import { AREA_DO_DEGRAU, ehSeloDeParticipacao, infoNome, registrarSondagem, resultadoPorArea, situacaoSondagem, type AreaSondagem, type ItemSondagem } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { AvatarGrande, Balao, BotaoOuvir, Carregando, Topo } from '../../componentes/basicos.tsx';
 import { Figura, Fundo, Icone } from '../../componentes/ui.tsx';
 import { Modelo3D, Selo } from '../../componentes/recompensas.tsx';
 import { EspelhoBoca, useEspelhoEmbed } from '../../componentes/EspelhoDoSom.tsx';
-import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
+import { asset } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
 import { gravar, temGravacao } from '../../servicos/microfone.ts';
 import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
-import { falar, falarVarias, textoTela } from '../../util.ts';
+import { falar, falarVarias } from '../../util.ts';
 
 /** Álbum de Conquistas: por região; ganhas brilham; as outras mostram a HABILIDADE (P1-b). */
 export function Album({ criancaId }: { criancaId: string }) {
@@ -262,46 +262,7 @@ export function Sondagem({ criancaId }: { criancaId: string }) {
 }
 
 /**
- * Mundo 3D explorável (docs/propostas/06-fonema-unificada/mundo-3d-v2, copiado para ./mundo3d/ no build).
- * Embutido por <iframe> + postMessage: o app envia {tipo:'fonema:init', cena, regiaoAtual} e recebe
- * {tipo:'fonema:missao', faseId}. Sem a pasta, cai no mapa 2D da vila.
+ * Passeio 3D pela vila (D032 item 3): a criança anda com o próprio boneco, em terceira pessoa. A tela fica em
+ * Passeio3D.tsx; a rota `c/:id/mundo` continua a mesma (botão "Passear 3D" do "Mais").
  */
-export function Mundo3D({ criancaId }: { criancaId: string }) {
-  const { crianca, progresso } = useCrianca(criancaId);
-  const [ok, setOk] = useState<boolean | null>(null);
-  const ref = useRef<HTMLIFrameElement>(null);
-  useEffect(() => {
-    mundo3dDisponivel().then(setOk);
-  }, []);
-  useEffect(() => {
-    const f = (e: MessageEvent) => {
-      const d = e.data;
-      if (!d || typeof d !== 'object') return;
-      if (d.tipo === 'fonema:pronto' && progresso) {
-        ref.current?.contentWindow?.postMessage({ tipo: 'fonema:init', cena: 'vila', regiaoAtual: progresso.faseAtual.split('-')[0], faseAtual: progresso.faseAtual, nome: crianca?.nome }, '*');
-      }
-      if (d.tipo === 'fonema:missao') {
-        const fid = d.detalhe?.id ?? d.faseId ?? progresso?.faseAtual;
-        navegar(progresso && podeEntrar(progresso, fid) ? `c/${criancaId}/fase/${fid}` : `c/${criancaId}/fase/${progresso?.faseAtual}`);
-      }
-      if (d.tipo === 'fonema:lojinha') navegar(`c/${criancaId}/lojinha`);
-      if (d.tipo === 'fonema:album') navegar(`c/${criancaId}/album`);
-    };
-    window.addEventListener('message', f);
-    return () => window.removeEventListener('message', f);
-  }, [criancaId, progresso, crianca]);
-  useEffect(() => { if (ok === false) navegar(`c/${criancaId}/vila`); }, [ok, criancaId]);
-  if (!crianca || !progresso || ok === null) return <Carregando />;
-  if (!ok) return null;
-  const regiao = progresso.faseAtual.split('-')[0];
-  const feitas = Object.entries(progresso.fases).filter(([, f]) => f.estado === 'concluida').map(([k]) => k).join(',');
-  return (
-    <div className="tela-mundo3d">
-      <Topo crianca={crianca} voltar={`c/${criancaId}/vila`} titulo="Passeio pela vila em 3D">
-        <button className="btn ipe" onClick={() => navegar(`c/${criancaId}/fase/${progresso.faseAtual}`)}><Icone nome="play" />Missão</button>
-      </Topo>
-      <iframe ref={ref} className="mundo3d" src={`./mundo3d/index.html?cena=vila&regiao=${regiao}&fase=${progresso.faseAtual}&feitas=${feitas}`} title="Mundo 3D da Vila" allow="autoplay; fullscreen" />
-      <p className="sr">{textoTela('Explore a vila, [NOME]!', crianca)}</p>
-    </div>
-  );
-}
+export { Passeio3D as Mundo3D } from './Passeio3D.tsx';

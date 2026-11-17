@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>FONEMA · Passeio pela Vila das Letras</title>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }</script>
+<style>
+  @font-face { font-family: Fredoka; src: url(fonts/fredoka-latin-600-normal.woff2) format('woff2'); font-weight: 600; }
+  @font-face { font-family: Fredoka; src: url(fonts/fredoka-latin-700-normal.woff2) format('woff2'); font-weight: 700; }
+  @font-face { font-family: Andika; src: url(fonts/andika-latin-700-normal.woff2) format('woff2'); font-weight: 700; }
+  :root { --tinta: #2E4374; --papel: #FFF8EC; --sol: #F2B33D; --sombra: 0 6px 0 rgba(46,67,116,.18), 0 10px 26px rgba(40,30,60,.22); --topo: 0px; }
+  body.embed { --topo: 78px; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #BFE3F2; font-family: Fredoka, Andika, system-ui, sans-serif; color: var(--tinta); user-select: none; -webkit-user-select: none; touch-action: none; }
+  #palco { position: fixed; inset: 0; }
+  #palco canvas { outline: none; }
+  .hud { position: fixed; z-index: 5; }
+  .bt { border: 0; cursor: pointer; font: 700 20px Fredoka, sans-serif; color: var(--tinta); background: var(--papel); border-radius: 28px; box-shadow: var(--sombra);
+        min-width: 64px; min-height: 64px; padding: 10px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: transform .12s, opacity .2s; touch-action: manipulation; }
+  .bt:active { transform: translateY(3px) scale(.96); }
+  .bt .ic { font-size: 32px; line-height: 1; }
+  .bt.sol { background: var(--sol); }
+  .bt.redondo { border-radius: 50%; padding: 0; flex-direction: column; gap: 0; font-size: 15px; }
+  .bt:focus-visible { outline: 5px solid #fff; outline-offset: 2px; }
+  /* ações (canto de baixo, à direita) */
+  #acoes { right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: grid; grid-template-columns: auto auto; grid-template-areas: "acao acao" "tchau pular"; gap: 14px; justify-items: end; align-items: end; }
+  #btPular { grid-area: pular; width: 104px; height: 104px; background: var(--sol); }
+  #btPular .ic { font-size: 40px; }
+  #btTchau { grid-area: tchau; width: 84px; height: 84px; }
+  #btAcao { grid-area: acao; min-height: 84px; font-size: 26px; padding: 12px 26px; background: var(--sol); display: none; }
+  #btAcao.on { display: inline-flex; animation: chama 1.2s ease-in-out infinite; }
+  #btAcao.trancado { background: #E1E4EC; animation: none; }
+  @keyframes chama { 0%,100% { transform: scale(1) } 50% { transform: scale(1.06) } }
+  /* topo: lugar e botões */
+  #lugar { left: 50%; transform: translateX(-50%); top: calc(var(--topo) + 12px); background: var(--papel); border-radius: 30px; box-shadow: var(--sombra); padding: 8px 20px; font-size: 22px; display: none; align-items: center; gap: 10px; pointer-events: none; white-space: nowrap; }
+  #lugar.on { display: flex; }
+  #topoDir { right: max(14px, env(safe-area-inset-right)); top: calc(var(--topo) + 12px); display: flex; flex-direction: column; gap: 12px; }
+  #topoDir .bt { width: 64px; height: 64px; }
+  #topoDir .bt.on { outline: 5px solid var(--sol); }
+  /* joystick (aparece onde o dedo encosta) */
+  #joy { position: fixed; left: 0; top: 0; width: 140px; height: 140px; border-radius: 50%; background: rgba(255,248,236,.32); border: 4px solid rgba(255,248,236,.85); box-shadow: 0 8px 24px rgba(40,30,60,.25);
+         z-index: 4; pointer-events: none; opacity: 0; transition: opacity .15s; display: grid; place-items: center; }
+  #joy.ativo { opacity: 1; }
+  #joy i { width: 64px; height: 64px; border-radius: 50%; background: var(--papel); box-shadow: var(--sombra); display: block; }
+  /* lugar fixo do joystick no celular (dica de onde encostar o dedo) */
+  #joyCasa { left: max(22px, env(safe-area-inset-left)); bottom: max(26px, env(safe-area-inset-bottom)); width: 130px; height: 130px; border-radius: 50%; border: 4px dashed rgba(255,248,236,.9); background: rgba(46,67,116,.18);
+             display: none; place-items: center; pointer-events: none; font-size: 40px; }
+  body.toque #joyCasa { display: grid; }
+  body.joy-on #joyCasa { opacity: 0; }
+  /* cartão (porta trancada, conversa) */
+  #cartao { position: fixed; z-index: 9; left: 50%; bottom: max(150px, calc(env(safe-area-inset-bottom) + 150px)); transform: translate(-50%, 30px) scale(.94); opacity: 0; pointer-events: none; transition: all .28s cubic-bezier(.2,.9,.3,1.3);
+            background: var(--papel); border-radius: 34px; box-shadow: 0 20px 60px rgba(40,30,60,.4); padding: 20px 26px; text-align: center; width: min(520px, calc(100vw - 24px)); }
+  #cartao.aberto { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  #cartao .ic { font-size: 54px; line-height: 1; }
+  #cartao h3 { margin: 6px 0 4px; font-size: 28px; }
+  #cartao p { margin: 0 0 14px; font: 700 22px Andika, sans-serif; opacity: .85; }
+  #cartao .acoes { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  #toast { position: fixed; z-index: 9; left: 50%; top: calc(var(--topo) + 74px); transform: translateX(-50%); background: var(--tinta); color: #fff; padding: 12px 22px; border-radius: 30px; font-size: 22px; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
+  #dica { position: fixed; z-index: 6; left: 50%; top: calc(var(--topo) + 76px); transform: translateX(-50%); background: rgba(255,248,236,.96); border-radius: 28px; box-shadow: var(--sombra); padding: 14px 22px; font-size: 19px; display: none; gap: 18px; pointer-events: none; transition: opacity .5s; }
+  #dica.on { display: flex; }
+  #dica div { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; max-width: 150px; }
+  #dica b { font-size: 34px; line-height: 1.1; }
+  #veu { position: fixed; inset: 0; z-index: 10; background: #FFF8EC; opacity: 0; pointer-events: none; transition: opacity .6s; }
+  #veu.on { opacity: 1; }
+  #carga { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; background: radial-gradient(circle at 50% 40%, #FFF3D6, #F7D9A0); transition: opacity .6s; }
+  #carga .caixa { text-align: center; }
+  #carga .logo { font: 700 64px Fredoka, sans-serif; letter-spacing: 2px; color: var(--tinta); }
+  #carga .logo span { color: var(--sol); }
+  #carga .barra { width: 260px; height: 18px; border-radius: 10px; background: #fff; margin: 18px auto; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,.1); }
+  #carga .barra i { display: block; height: 100%; width: 30%; background: var(--sol); border-radius: 10px; animation: vai 1.4s ease-in-out infinite; }
+  @keyframes vai { 0% { margin-left: -30% } 100% { margin-left: 100% } }
+  #semgl { position: fixed; inset: 0; z-index: 30; display: none; place-items: center; background: center/cover no-repeat url(capturas/09-rua-das-casas.png) #BFE3F2; }
+  #semgl .painel { background: var(--papel); border-radius: 30px; padding: 20px 26px; box-shadow: var(--sombra); max-width: 92vw; text-align: center; font-size: 20px; }
+  #semgl .painel div { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
+  @media (max-width: 700px) {
+    #btPular { width: 92px; height: 92px; }
+    #btTchau { width: 76px; height: 76px; }
+    #btAcao { min-height: 76px; font-size: 22px; padding: 10px 20px; }
+    #lugar { font-size: 18px; padding: 6px 14px; }
+    #dica { font-size: 15px; gap: 10px; padding: 10px 14px; width: max-content; max-width: calc(100vw - 110px); left: calc(50% - 40px); }
+    #dica div { max-width: 96px; }
+    #cartao { bottom: 220px; }
+    #cartao h3 { font-size: 24px; }
+    #cartao p { font-size: 19px; }
+  }
+  @media (prefers-reduced-motion: reduce) { #btAcao.on { animation: none; } .bt { transition: none; } }
+  body.menos #btAcao.on { animation: none; }
+</style>
+</head>
+<body>
+<div id="palco"></div>
+<div id="joy"><i></i></div>
+<div id="joyCasa" class="hud" aria-hidden="true">👆</div>
+
+<div id="lugar" class="hud" aria-live="polite"><span id="lugarIc">🏡</span><span id="lugarNome"></span></div>
+<div id="topoDir" class="hud">
+  <button class="bt redondo" id="btAlto" title="Ver a vila do alto" aria-label="Ver a vila do alto"><span class="ic">🦅</span></button>
+  <button class="bt redondo" id="btAjuda" title="Como mexer" aria-label="Como mexer"><span class="ic">❔</span></button>
+</div>
+<div id="acoes" class="hud">
+  <button class="bt" id="btAcao" data-testid="passeio-acao"><span class="ic" id="acaoIc">▶️</span><span id="acaoRot">Entrar</span></button>
+  <button class="bt redondo" id="btTchau" data-testid="passeio-tchau" aria-label="Dar tchau"><span class="ic">👋</span>Tchau</button>
+  <button class="bt redondo" id="btPular" data-testid="passeio-pular" aria-label="Pular"><span class="ic">⤴️</span>Pular</button>
+</div>
+<div id="dica"></div>
+<div id="cartao" role="dialog" aria-live="polite"><div class="ic" id="cIc">🔒</div><h3 id="cTit"></h3><p id="cTxt"></p><div class="acoes" id="cAcoes"></div></div>
+<div id="toast" role="status"></div>
+<div id="veu"></div>
+<div id="carga"><div class="caixa"><div class="logo">FONE<span>MA</span></div><div class="barra"><i></i></div><div>Preparando a Vila das Letras…</div></div></div>
+<div id="semgl"><div class="painel"><b>Este aparelho não mostra o passeio em 3D.</b><br>Tudo bem! Escolha aonde ir:<div id="semglLugares"></div></div></div>
+
+<script type="module">
+import { criarMundo, temWebGL } from './js/mundo.js';
+import { criarPasseio, LUGARES } from './js/passeio.js';
+
+const P = new URLSearchParams(location.search);
+const EMBED = window.parent !== window;
+const $ = (s) => document.querySelector(s);
+const avisar = (tipo, detalhe = {}) => { if (EMBED) window.parent.postMessage({ tipo, detalhe }, '*'); };
+const toque = matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 1;
+if (EMBED) document.body.classList.add('embed');
+if (toque) document.body.classList.add('toque');
+let toastT = 0;
+const toast = (txt) => { const t = $('#toast'); t.textContent = txt; t.style.opacity = 1; clearTimeout(toastT); toastT = setTimeout(() => (t.style.opacity = 0), 2600); };
+
+// ---------- o que o app manda (pode chegar antes do mundo ficar pronto) ----------
+const app = { nome: P.get('nome') || '', primeiraMissao: P.get('primeira') === '1', lugares: null, menos: P.get('menos') === '1' || matchMedia('(prefers-reduced-motion: reduce)').matches, bonecos: [] };
+let passeio = null;
+const bt = (rot, ic, fn, cls = '') => { const b = document.createElement('button'); b.className = `bt ${cls}`; b.innerHTML = `<span class="ic">${ic}</span>${rot}`; b.onclick = fn; return b; };
+const LUGAR_POR_ID = Object.fromEntries(LUGARES.map((l) => [l.id, l]));
+const nomeNoTexto = (t) => t.replace(/\[NOME\]/g, app.nome || 'você');
+
+window.addEventListener('message', (ev) => {
+  const m = ev.data; if (!m || typeof m !== 'object') return;
+  if (m.tipo === 'fonema:init') {
+    const d = m.detalhe || {};
+    app.nome = d.nome ?? app.nome; app.primeiraMissao = !!d.primeiraMissao; app.lugares = d.lugares || null; app.menos = !!d.menosMovimento || app.menos;
+    if (app.menos) document.body.classList.add('menos');
+    if (passeio && app.lugares) passeio.definirLugares(app.lugares);
+  }
+  if (m.tipo === 'fonema:boneco') { app.bonecos.push(m.detalhe); if (passeio) aplicarBonecos(); }
+});
+avisar('fonema:ola');
+
+function aplicarBonecos() {
+  for (const b of app.bonecos.splice(0)) {
+    try { if (b.id === 'crianca') passeio.usarAvatar(b.pacote); else passeio.usarModeloNpc(b.id, b.pacote); }
+    catch (e) { console.warn('[passeio] boneco não montou', b.id, e); }
+  }
+}
+
+if (!temWebGL()) {
+  $('#carga').style.display = 'none'; $('#semgl').style.display = 'grid';
+  for (const l of LUGARES) if (!l.emBreve) $('#semglLugares').appendChild(bt(l.sub, l.icone, () => avisar('fonema:entrar', { id: l.id })));
+  avisar('fonema:pronto', { semWebGL: true });
+} else {
+  const movel = toque;
+  const mundo = await criarMundo($('#palco'), { cena: 'vila', passeio: true, qualidade: P.get('q') || 'auto', dprMax: movel ? 1.25 : 1.75, hora: Number(P.get('hora') || 0) });
+  window.FONEMA_MUNDO = mundo;
+  const cartao = {
+    abrir(ic, tit, txt, botoes = []) { $('#cIc').textContent = ic; $('#cTit').textContent = tit; $('#cTxt').textContent = txt; const a = $('#cAcoes'); a.innerHTML = ''; botoes.forEach((b) => a.appendChild(b)); $('#cartao').classList.add('aberto'); },
+    fechar() { $('#cartao').classList.remove('aberto'); },
+  };
+  passeio = criarPasseio(mundo, {
+    menosMovimento: app.menos,
+    joystick: { base: $('#joy'), bola: $('#joy i') },
+    nome: () => app.nome,
+    primeiraMissao: () => app.primeiraMissao,
+    pausado: () => false,
+    aoPerto(p) {
+      const b = $('#btAcao');
+      b.classList.toggle('on', !!p); b.classList.remove('trancado');
+      if (!p) { $('#lugar').classList.remove('on'); cartao.fechar(); return; }
+      if (p.tipo === 'npc') { $('#acaoIc').textContent = '💬'; $('#acaoRot').textContent = 'Conversar'; $('#lugarIc').textContent = '🙂'; $('#lugarNome').textContent = p.npc.nome; }
+      else {
+        const l = p.lugar; $('#lugarIc').textContent = l.icone; $('#lugarNome').textContent = `${l.nome} · ${l.sub}`;
+        if (p.aberto) { $('#acaoIc').textContent = '▶️'; $('#acaoRot').textContent = 'Entrar'; }
+        else { $('#acaoIc').textContent = '🔒'; $('#acaoRot').textContent = 'Trancado'; b.classList.add('trancado'); }
+      }
+      $('#lugar').classList.add('on');
+    },
+    aoTrancado(l, st) {
+      const fala = app.lugares?.[l.id]?.fala;
+      cartao.abrir(l.emBreve ? '⛵' : '🔒', l.emBreve ? `${l.nome}: em breve!` : `${l.nome}: ainda trancado`, st.falta || (l.emBreve ? 'Logo, logo dá para passear de barco.' : 'Abre depois, continue aprendendo!'), [bt('Ok', '👍', () => cartao.fechar(), 'sol')]);
+      if (fala) avisar('fonema:falar', { falas: [fala] });
+    },
+    aoEntrando(l) { cartao.fechar(); $('#btAcao').classList.remove('on'); },
+    aoEntrar(l) {
+      $('#veu').classList.add('on');
+      setTimeout(() => {
+        if (EMBED) avisar('fonema:entrar', { id: l.id });
+        else { toast(`▶️ ${l.sub}`); $('#veu').classList.remove('on'); passeio.cancelarEntrada(); }
+      }, 450);
+    },
+    aoConversar(n, r) {
+      const botoes = [];
+      if (r.acao) { const l = LUGAR_POR_ID[r.acao.lugar]; const aberto = app.lugares ? app.lugares[r.acao.lugar]?.aberto !== false : true; if (aberto) botoes.push(bt(r.acao.rotulo, r.acao.icone || '▶️', () => { cartao.fechar(); passeio.fimConversa(); avisar('fonema:entrar', { id: l.id }); $('#veu').classList.add('on'); }, 'sol')); }
+      botoes.push(bt('Tchau', '👋', () => { cartao.fechar(); passeio.acenar(); passeio.fimConversa(); avisar('fonema:parar'); }));
+      cartao.abrir(n.papel === 'crianca' ? '👋' : '💬', n.nome, r.balao ? nomeNoTexto(r.balao) : '', botoes);
+      if (r.falas?.length) avisar('fonema:falar', { falas: r.falas });
+    },
+    aoFimConversa() { cartao.fechar(); avisar('fonema:parar'); },
+    aoAviso(tipo) {
+      if (tipo === 'limite') toast('🌳 A mata fica para outro dia!');
+      if (tipo === 'fundo') toast('🌊 Aqui é fundo! Fique na beirinha.');
+      if (tipo === 'agua') toast('🏊 Nadando na beirinha!');
+    },
+    aoTchau() {},
+    aoToque() { esconderDica(); },
+  });
+  window.FONEMA_PASSEIO = passeio;
+  if (app.lugares) passeio.definirLugares(app.lugares);
+  aplicarBonecos();
+
+  $('#btPular').onclick = () => { passeio.pular(); esconderDica(); };
+  $('#btTchau').onclick = () => passeio.acenar();
+  $('#btAcao').onclick = () => passeio.interagir();
+  $('#btAlto').onclick = () => { const on = passeio.verDoAlto(); $('#btAlto').classList.toggle('on', on); };
+  $('#btAjuda').onclick = () => mostrarDica(9000);
+  // os botões não devem roubar as setinhas do teclado
+  for (const b of document.querySelectorAll('.bt')) b.addEventListener('keydown', (e) => { if (e.key.startsWith('Arrow') || e.key === ' ') e.preventDefault(); });
+
+  // dica de controles (some sozinha ou no primeiro passo)
+  const DICA_TOQUE = [['👈', 'Dedo à esquerda: andar'], ['👉', 'Dedo à direita: girar'], ['👆', 'Toque no chão: ir até lá']];
+  const DICA_PC = [['⬆️⬇️⬅️➡️', 'Setinhas ou WASD: andar'], ['🖱️', 'Arraste: girar · Roda: zoom'], ['␣', 'Espaço: pular · T: tchau'], ['👆', 'Clique no chão: ir até lá']];
+  let dicaT = 0;
+  function mostrarDica(ms = 7000) {
+    const d = $('#dica'); d.innerHTML = '';
+    for (const [ic, tx] of toque ? DICA_TOQUE : DICA_PC) { const e = document.createElement('div'); e.innerHTML = `<b>${ic}</b>${tx}`; d.appendChild(e); }
+    d.classList.add('on'); d.style.opacity = 1; clearTimeout(dicaT); dicaT = setTimeout(esconderDica, ms);
+  }
+  function esconderDica() { const d = $('#dica'); d.style.opacity = 0; clearTimeout(dicaT); dicaT = setTimeout(() => d.classList.remove('on'), 500); }
+  setTimeout(() => mostrarDica(), 600);
+  window.addEventListener('keydown', (e) => { if (/^(arrow|[wasd]$)/i.test(e.key)) esconderDica(); }, { once: false });
+  const obs = new MutationObserver(() => document.body.classList.toggle('joy-on', $('#joy').classList.contains('ativo')));
+  obs.observe($('#joy'), { attributes: true, attributeFilter: ['class'] });
+
+  $('#carga').style.opacity = 0; setTimeout(() => $('#carga').remove(), 700);
+  $('#palco canvas').tabIndex = 0; $('#palco canvas').focus();
+  avisar('fonema:pronto', { passeio: true, qualidade: mundo.qualidade, colisaoMs: Math.round(passeio.colisao.ms), rotasRuins: passeio.rotasRuins.length });
+  window.addEventListener('message', (ev) => { if (ev.data?.tipo === 'fonema:foco') $('#palco canvas').focus(); });
+}
+</script>
+</body>
+</html>

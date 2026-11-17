@@ -39,11 +39,11 @@ export const CEREBRO_ROTEIRIZADO = {
 
 /** Elenco padrão: rotas (x, z) por ruas e praças, conferidas contra a colisão ao montar. */
 export const ELENCO = [
-  { id: 'sofia', nome: 'Sofia', papel: 'sofia', altura: 1.5, velocidade: 1.1, rota: [[0, 17], [11, 12.5], [16, 1], [11, -10.5], [0, -15], [-11, -10.5], [-16, 1], [-11, 12.5]] },
-  { id: 'tales', nome: 'Tales', papel: 'tales', altura: 1.55, velocidade: 1.25, rota: [[-37, 17], [-30.5, 17.5], [-30.5, 25.5], [-37, 25.5]] },
+  { id: 'sofia', nome: 'Sofia', papel: 'sofia', altura: 1.5, velocidade: 1.0, rota: [[-3.5, 14], [3.5, 14], [3.5, 11], [-3.5, 11]] },
+  { id: 'tales', nome: 'Tales', papel: 'tales', altura: 1.55, velocidade: 1.25, rota: [[-35, 17], [-29.5, 17], [-29.5, 28], [-35, 28]] },
   { id: 'bolota', nome: 'Bolota', papel: 'bolota', altura: 0.75, velocidade: 1.5, rota: [[-2, 15], [-2, 30], [2, 44], [2, 30]] },
-  { id: 'crianca-1', nome: 'Lia', papel: 'crianca', altura: 1.4, velocidade: 1.0, rota: [[14, -1], [18.5, -10], [13, -14]] },
-  { id: 'crianca-2', nome: 'Davi', papel: 'crianca', altura: 1.45, velocidade: 1.15, rota: [[-24, 33.5], [-4, 33.5], [4, 33.5], [24, 33.5]] },
+  { id: 'crianca-1', nome: 'Lia', papel: 'crianca', altura: 1.4, velocidade: 1.0, rota: [[14.5, -1], [17.5, -12], [14.5, -14.5]] },
+  { id: 'crianca-2', nome: 'Davi', papel: 'crianca', altura: 1.45, velocidade: 1.15, rota: [[-36, 33.5], [-12, 33.5]] },
 ];
 
 const RESERVA = {

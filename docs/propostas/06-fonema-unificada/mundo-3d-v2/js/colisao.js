@@ -33,7 +33,8 @@ export function criarColisao(vila, { celula = 0.25, ext = 90, corpo = [0.45, 1.6
     if (x1 - x0 > 60 || z1 - z0 > 60) return; // nada tão grande é parede
     const g = altura((x0 + x1) / 2, (z0 + z1) / 2);
     const bloqueia = !soTopo && y0 < g + corpo[1] && y1 > g + corpo[0];
-    const cobre = y1 > g + corpo[0];
+    // câmera: só o que desce até perto do chão (paredes, muros, troncos); fio e varal (pegada enganosa) ficam de fora
+    const cobre = y1 > g + corpo[0] && y0 < g + 2.5;
     if (!bloqueia && !cobre) return;
     _m.copy(m).invert();
     const e = _m.elements, yT = clamp(g + 1.0, y0, y1);
