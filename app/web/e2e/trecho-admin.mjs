@@ -51,7 +51,11 @@ async function entrarAdmin(pg, BASE, rota = 'admin') {
 
 /** Espera o som de um fonema tocar na lição e devolve o registro { origem, url }. */
 async function somTocado(pg, fonema) {
-  await pg.getByTestId('comecar-sessao').click({ timeout: 20000 });
+  await pg.reload();
+  try { await pg.getByTestId('comecar-sessao').click({ timeout: 20000 }); } catch (e) {
+    await pg.screenshot({ path: resolve(process.env.CAPTURAS_ADMIN ?? '.', 'admin-falha-licao.png') }).catch(() => {});
+    throw e;
+  }
   const h = await pg.waitForFunction((id) => (window.__fonemaAudiosTocados ?? []).find((t) => t.id === id) ?? null, `som:${fonema}`, { timeout: 30000 });
   return h.jsonValue();
 }
