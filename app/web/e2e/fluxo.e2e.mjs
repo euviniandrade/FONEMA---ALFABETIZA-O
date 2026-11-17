@@ -16,6 +16,7 @@ import { fileURLToPath } from 'node:url';
 import { trechoVozReal } from './trecho-voz-real.mjs';
 import { trechoCopia } from './trecho-copia.mjs';
 import { trechoJogos } from './trecho-jogos.mjs';
+import { trechoJogos2 } from './trecho-jogos2.mjs';
 import { trechoMundo3d } from './trecho-mundo3d.mjs';
 import { trechoAdmin } from './trecho-admin.mjs';
 
@@ -684,6 +685,18 @@ async function main() {
     if (errosM.length) throw new Error(`erros na página:\n${errosM.join('\n')}`);
     return;
   }
+  if (process.argv.includes('--jogos2') || process.argv.includes('--capturas-jogos2')) {
+    const errosJ2 = [];
+    const h2 = { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosJ2, dirCap: DIR_CAP };
+    if (process.argv.includes('--capturas-jogos2')) {
+      mkdirSync(DIR_CAP, { recursive: true });
+      await trechoJogos2(browser, { ...h2, w: 1850, h: 980, capturar: true });
+      await trechoJogos2(browser, { ...h2, w: 390, h: 844, suf: '-celular', movel: true, capturar: true });
+    } else await trechoJogos2(browser, h2);
+    await browser.close(); servidor?.kill();
+    if (errosJ2.length) throw new Error(`erros na página:\n${errosJ2.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--jogos') || process.argv.includes('--capturas-jogos')) {
     const errosJ = [];
     const h = { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros: errosJ, dirCap: DIR_CAP };
@@ -1099,6 +1112,7 @@ async function main() {
   await trechoVozReal(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoCopia(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoJogos(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros, dirCap: DIR_CAP });
+  await trechoJogos2(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, dirCap: DIR_CAP });
   await trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
 
