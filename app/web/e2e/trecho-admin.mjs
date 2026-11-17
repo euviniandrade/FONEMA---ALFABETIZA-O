@@ -51,6 +51,7 @@ async function entrarAdmin(pg, BASE, rota = 'admin') {
 
 /** Espera o som de um fonema tocar na lição e devolve o registro { origem, url }. */
 async function somTocado(pg, fonema) {
+  await pg.getByTestId('comecar-sessao').click({ timeout: 20000 });
   const h = await pg.waitForFunction((id) => (window.__fonemaAudiosTocados ?? []).find((t) => t.id === id) ?? null, `som:${fonema}`, { timeout: 30000 });
   return h.jsonValue();
 }
@@ -107,7 +108,7 @@ export async function trechoAdmin(_browser, { BASE, ok, passarPorteira, cadastra
   await pg.getByTestId('tabela-criancas').waitFor();
   ok(/Mel/.test(await pg.getByTestId('tabela-criancas').innerText()), 'visão geral: a criança do aparelho aparece com o progresso resumido');
   await pg.waitForFunction(() => /erros/.test(document.querySelector('[data-testid="saude-decod"]')?.textContent ?? ''), null, { timeout: 15000 });
-  ok(true, `saúde do conteúdo: ${(await pg.getByTestId('saude-decod').innerText()).split('\n')[1]}`);
+  ok(true, `saúde do conteúdo: ${(await pg.getByTestId('saude-decod').innerText()).replace(/\s+/g, ' ').replace(/^Decodificabilidade /, '')}`);
   await cap('02-visao-geral');
 
   // sair e entrar de novo (senha errada recusada)
