@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { FALAS, FALAS_TRILHA_SONS as T, LETRA_POR_ID, SILABA_DO_SOM, SONS_DUVIDOSOS, contrasteDosSons, habilidadeTF, type AtividadeTroca, type Opcao } from '@fonema/conteudo';
+import { FALAS, FALAS_TRILHA_SONS as T, SILABA_DO_SOM, SONS_DUVIDOSOS, contrasteDosSons, fonemaDoGrafema, habilidadeTF, type AtividadeTroca, type Opcao } from '@fonema/conteudo';
 import { Balao, Brilho } from '../componentes/basicos.tsx';
 import { Icone } from '../componentes/ui.tsx';
 import { efeitos } from '../servicos/efeitos.ts';
@@ -33,7 +33,7 @@ export function Troca({ atividade, crianca, sessao, cenaId, revisao, onFim }: Pr
   const inicio = useRef(Date.now());
   const tents = useRef<ReturnType<typeof registro>[]>([]);
   const vivo = useRef(true);
-  const letras: Opcao[] = useMemo(() => embaralhar(item.letras.map((l) => ({ id: l, rotulo: l, letra: l, som: LETRA_POR_ID[l].fonema! })), semente ? semente + i * 17 : 0), [item, semente, i]);
+  const letras: Opcao[] = useMemo(() => embaralhar(item.letras.map((l) => ({ id: l, rotulo: l, letra: l, som: fonemaDoGrafema(l)! })), semente ? semente + i * 17 : 0), [item, semente, i]);
   const leituras: Opcao[] = useMemo(() => embaralhar(item.leituras.map((w) => ({ id: w, rotulo: '', falar: w, botaoDeSom: true })), semente ? semente + i * 23 : 0), [item, semente, i]);
 
   const diz = async (texto: string) => { setFala({ quem: 'sofia', texto }); await voz.falar(textoVoz(texto, crianca), { quem: 'sofia' }); };

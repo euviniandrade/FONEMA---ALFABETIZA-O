@@ -268,6 +268,8 @@ export interface AtividadeSomNovo extends AtividadeBase {
   fonema: ChaveFonema;
   /** Letra que escreve o som (maiúscula). */
   letra: string;
+  /** Figura do faz de conta (web/public/assets/figuras), quando não é a cena da letra (`CENAS_DO_SOM`): É, Ó, Ã, R fraco. */
+  cena?: string;
   /** Faz de conta do som (o clipe já gravado da Trilha A–Z). */
   brincadeira?: Fala;
   /** "Repita comigo!" */

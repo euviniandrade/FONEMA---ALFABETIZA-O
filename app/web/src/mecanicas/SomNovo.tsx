@@ -31,7 +31,7 @@ export function SomNovo({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
   const [feito, setFeito] = useState(false);
   const vivo = useRef(true);
   const inicio = useRef(Date.now());
-  const cena = CENAS_DO_SOM[a.letra];
+  const cena = a.cena ?? CENAS_DO_SOM[a.letra];
   const solto = useDestravar(passo !== 'pronto' && !feito);
 
   const diz = async (f: Fala | undefined) => {

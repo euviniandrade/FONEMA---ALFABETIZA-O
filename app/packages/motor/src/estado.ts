@@ -169,8 +169,8 @@ export interface ConquistaGanha {
 
 export interface Progresso {
   criancaId: string;
-  /** 2 = registro detalhado e domínio honesto (D030); 3 = ordem alternada letras/sons (D031). Versões antigas: migracao.ts. */
-  versao: 1 | 2 | 3;
+  /** 2 = registro detalhado e domínio honesto (D030); 3 = ordem alternada letras/sons (D031); 4 = TF-23…TF-25 na jornada. Versões antigas: migracao.ts. */
+  versao: 1 | 2 | 3 | 4;
   /** D026: de onde a criança começou (escolha do adulto). Ausente = do zero. */
   nivelInicial?: NivelInicial;
   faseAtual: string;

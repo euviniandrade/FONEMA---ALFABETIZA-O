@@ -27,11 +27,14 @@ const ROTULO: Record<Estado, string> = {
 const BLOCOS: { n: number; titulo: string; sub: string }[] = [
   { n: 1, titulo: 'Os sons das vogais', sub: 'a, e, i, o, u e as vogais juntas' },
   { n: 2, titulo: 'Sons que esticam', sub: 'mmm, fff, vvv, lll, sss… e as primeiras frases' },
-  { n: 3, titulo: 'Sons que estouram', sub: 'p, t, b, c, d, g e o TI e DI' }
+  { n: 3, titulo: 'Sons que estouram', sub: 'p, t, b, c, d, g e o TI e DI' },
+  // 17/11: blocos 4 e 5 aparecem quando têm lição na jornada (as em espera de som ficam de fora, fases/tf.ts)
+  { n: 4, titulo: 'Vogais abertas e nasais', sub: 'é, ó, ê, ô, ã…' },
+  { n: 5, titulo: 'O som do R', sub: 'rato, rua, arara' }
 ];
 
 /**
- * TRILHA DOS SONS (D030): a trilha fônica que ensina a LER e ESCREVER, em três blocos. Cada disco é uma lição (o som
+ * TRILHA DOS SONS (D030): a trilha fônica que ensina a LER e ESCREVER, em blocos (vogais, sons que esticam, sons que estouram, vogais abertas e nasais, R). Cada disco é uma lição (o som
  * novo), uma regra (O/E no fim, TI/DI) ou uma revisão (estrela). Verde = concluída; dourado = dominada (respostas
  * conferidas, em dias diferentes). Sem pular: só abre o que o motor liberou (D021/D026).
  */
@@ -72,7 +75,7 @@ export function TrilhaSons({ criancaId }: { criancaId: string }) {
           </header>
 
           <div className="sons-blocos">
-            {BLOCOS.map((b) => (
+            {BLOCOS.filter((b) => FASES_TF.some((f) => f.trilhaSons?.bloco === b.n)).map((b) => (
               <section key={b.n} className={`sons-bloco b${b.n}`} aria-label={b.titulo}>
                 <h2 className="t">{b.titulo} <small>{b.sub}</small></h2>
                 <ol className="sons-fila">

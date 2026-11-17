@@ -8,6 +8,7 @@ import { FASES } from '../regioes.ts';
 import { UNIDADES_TF, numeroDaUnidade, valoresAte, verificarFrase, verificarPalavra, verificarPseudo, type Resultado, type ValorTF } from '../decodificabilidade.ts';
 import { VALORES_ENSINADOS } from '../palavras.ts';
 import { BANCO } from './tf-banco.ts';
+import { UNIDADE_DA_REVISAO_TF } from './tf.ts';
 
 export interface LeituraDaFase {
   cena: string;
@@ -49,7 +50,7 @@ export function leiturasDaFase(f: Fase): LeituraDaFase[] {
 /** Unidade em que a fase está: TF-07 → 7; revisões de bloco valem como a última unidade do bloco. */
 export function unidadeDaFase(f: Fase): number | null {
   if (f.regiao !== 'TF') return null;
-  const u = f.id === 'TF-R2' ? 'TF-15' : f.id === 'TF-R3' ? 'TF-22' : f.id;
+  const u = UNIDADE_DA_REVISAO_TF[f.id] ?? f.id;
   return numeroDaUnidade(u);
 }
 

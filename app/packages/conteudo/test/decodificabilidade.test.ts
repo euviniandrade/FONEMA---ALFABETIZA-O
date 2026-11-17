@@ -115,7 +115,7 @@ describe('verificador de decodificabilidade', () => {
       expect(f.criterio.tipo, f.id).toBe('dominio');
     }
     expect(FASES_TF.filter((f) => f.trilhaSons!.tipo === 'revisao').map((f) => f.id)).toEqual(['TF-06', 'TF-R2', 'TF-R3']);
-    expect(LICOES_TF.map((l) => l.unidade).filter((u) => /^TF-\d+$/.test(u))).toEqual(UNIDADES_TF.slice(0, 22).map((u) => u.id));
+    expect(LICOES_TF.map((l) => l.unidade).filter((u) => /^TF-\d+$/.test(u))).toEqual(UNIDADES_TF.slice(0, 32).map((u) => u.id));
     // as frases decodificáveis vêm a partir de TF-10, com pergunta e figuras plausíveis
     const frases = FASES_TF.flatMap((f) => f.cenas).filter((c) => c.atividade?.tipo === 'frase');
     expect(frases.length).toBeGreaterThanOrEqual(8);

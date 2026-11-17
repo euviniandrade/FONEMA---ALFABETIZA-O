@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { FALAS, FALAS_TRILHA_SONS as T, LETRA_POR_ID, contrasteDosSons, type AtividadeCaixas } from '@fonema/conteudo';
+import { FALAS, FALAS_TRILHA_SONS as T, contrasteDosSons, fonemaDoGrafema, type AtividadeCaixas } from '@fonema/conteudo';
 import { Balao, Brilho } from '../componentes/basicos.tsx';
 import { Figura, Icone } from '../componentes/ui.tsx';
 import { efeitos } from '../servicos/efeitos.ts';
@@ -154,7 +154,7 @@ export function Caixas({ atividade, crianca, sessao, cenaId, revisao, onFim }: P
     setErrosLetra(e);
     setOcupado(true);
     const somCerto = item.sons[pos];
-    const somDela = LETRA_POR_ID[l]?.fonema ?? null;
+    const somDela = fonemaDoGrafema(l); // letra da Trilha A–Z ou grafema novo (É, Ó, Ã…)
     if (e >= 2) { ajudaLetra.current = true; await diz(FALAS.erro2); }
     else if (somCerto && somDela === somCerto && item.palavra.endsWith(certaAgora) && pos === item.palavra.length - 1) {
       // O e E do fim: o som é U/I, mas a letra é O/E

@@ -16,6 +16,14 @@ const pequenos = (pg, sel, min = 60) => pg.evaluate(([s, m]) => [...document.que
   .filter((b) => { const r = b.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(b).visibility !== 'hidden' && (r.width < m - 0.5 || r.height < m - 0.5); })
   .map((b) => `${b.getAttribute('data-testid') ?? b.className} ${Math.round(b.getBoundingClientRect().width)}×${Math.round(b.getBoundingClientRect().height)}`), [sel, min]);
 
+/** Alvos tocáveis (fases, lugares do mapa, botões da barra) cujo centro está debaixo do painel guia. */
+const cobertosPeloGuia = (pg) => pg.evaluate(() => [...document.querySelectorAll('[data-fase], [data-ponto], [data-regiao], .hud-doca button, .hud-fala button, .topo button')]
+  .filter((e) => !e.closest('.guia'))
+  .map((e) => { const r = e.getBoundingClientRect(); return { e, x: r.left + r.width / 2, y: r.top + r.height / 2, r }; })
+  .filter(({ x, y, r }) => r.width > 0 && x >= 0 && y >= 0 && x < innerWidth && y < innerHeight)
+  .filter(({ x, y }) => !!document.elementFromPoint(x, y)?.closest('.guia'))
+  .map(({ e }) => e.getAttribute('data-fase') ?? e.getAttribute('data-ponto') ?? e.className));
+
 const sobrepoe = (a, b) => !!a && !!b && a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
 
 /**
@@ -122,7 +130,9 @@ export async function trechoTutorial(browser, h) {
   ok(/\/vila$/.test(pg.url()), 'depois de visto, o tutorial não abre mais sozinho');
   await pg.getByTestId('painel-guia').waitFor();
   if (!movel) {
-    const guia = await pg.locator('.guia-corpo').boundingBox();
+    const guia = await pg.locator('.guia-vila .guia-corpo').boundingBox();
+    const mapa = await pg.locator('.mapa-nav').boundingBox();
+    ok(mapa.x >= guia.x + guia.width - 1, 'vila (PC): o mapa começa depois da coluna do painel (nenhum lugar fica escondido)');
     const fala = await pg.locator('.hud-fala').boundingBox();
     const doca = await pg.locator('.hud-doca').boundingBox();
     ok(guia && guia.height > 200 && !sobrepoe(guia, fala) && !sobrepoe(guia, doca), 'vila (PC): painel guia ao lado, sem cobrir a fala nem a barra');
@@ -138,7 +148,25 @@ export async function trechoTutorial(browser, h) {
   ok((await pequenos(pg, '.guia-vila .guia-corpo')).length === 0, `painel guia: botões com 60 px ou mais ${JSON.stringify(await pequenos(pg, '.guia-vila .guia-corpo'))}`);
   await cap(movel ? '09-vila-guia-aberto' : '08-vila-guia', 1200);
 
+  // nenhum alvo tocável debaixo do painel, em vários tamanhos (o painel do celular é aberto/fechado pela criança)
+  if (!capturar) {
+    for (const [vw, vh] of [[1850, 980], [1366, 768], [1280, 800], [768, 1024], [390, 844]]) {
+      await pg.setViewportSize({ width: vw, height: vh });
+      for (const r of ['vila', 'alfabeto', 'sons']) {
+        await pg.goto(BASE + `#/c/${id}/${r}`);
+        await pg.getByTestId('painel-guia').waitFor();
+        await pg.waitForTimeout(700);
+        const cob = await cobertosPeloGuia(pg);
+        ok(cob.length === 0, `${r} ${vw}×${vh}: o painel guia não cobre nada tocável ${cob.length ? JSON.stringify(cob) : ''}`);
+      }
+    }
+    await pg.setViewportSize({ width: w, height: alt });
+    await pg.goto(BASE + `#/c/${id}/vila`);
+    await pg.getByTestId('vila').waitFor();
+  }
+
   // reabrir pelo "Como jogar?" e fechar
+  if (movel && !(await pg.getByTestId('como-jogar').isVisible())) await pg.getByTestId('guia-abrir').click();
   await pg.getByTestId('como-jogar').click();
   await passo(0);
   ok(/\/tutorial\/de-novo$/.test(pg.url()) && /Fechar/.test(await pg.getByTestId('pular-tutorial').innerText()), '"Como jogar?" reabre o tutorial do começo, com "Fechar"');

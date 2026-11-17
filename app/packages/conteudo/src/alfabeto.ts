@@ -187,13 +187,18 @@ export const GRUPOS_ALFABETO: string[][] = ['ABCDE', 'FGHIJ', 'KLMNO', 'PQRST', 
 export const LICAO_DA_LETRA: Record<string, string> = {
   A: 'TF-01', E: 'TF-02', I: 'TF-03', O: 'TF-04', U: 'TF-05',
   M: 'TF-07', F: 'TF-08', V: 'TF-09', L: 'TF-10', S: 'TF-11', N: 'TF-13', Z: 'TF-14', J: 'TF-15',
-  P: 'TF-16', T: 'TF-17', B: 'TF-18', C: 'TF-19', D: 'TF-20', G: 'TF-21'
+  P: 'TF-16', T: 'TF-17', B: 'TF-18', C: 'TF-19', D: 'TF-20', G: 'TF-21',
+  // 17/11: a lição do R forte já está escrita. Enquanto ela estiver EM ESPERA (fases/tf.ts › FASES_TF_EM_ESPERA), a fase do R
+  // continua no bloco da Festa; quando ela entrar na jornada, a fase do R passa sozinha para logo antes dela (regioes.ts).
+  R: 'TF-31'
 };
 
 /**
  * D031: blocos de letras da jornada, reagrupados pelas letras realmente vistas. Cada bloco fecha com uma revisão do alfabeto
  * logo depois da lição `depoisDe` (fim de bloco da trilha fônica). O último bloco são as letras que a Trilha dos Sons ainda não
  * usa até TF-22, na ordem da trilha fônica (R: TF-31, H: TF-35, X: TF-39, Q: TF-40, K, Y e W: TF-48); ele fecha com a Festa.
+ * Letra deste bloco cuja lição já está na jornada (`LICAO_DA_LETRA`) sai do fim e entra logo antes da lição (regioes.ts);
+ * na Festa ela continua sendo revista junto com as outras.
  */
 export const BLOCOS_ALFABETO: { id: string; letras: string[]; depoisDe?: string }[] = [
   { id: 'AL-RV1', letras: [...'AEIOU'], depoisDe: 'TF-06' },

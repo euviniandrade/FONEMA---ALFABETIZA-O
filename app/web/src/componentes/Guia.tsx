@@ -116,7 +116,7 @@ export function PainelGuia({ crianca, progresso, onde }: { crianca: Crianca; pro
       <button className="guia-faixa vidro" onClick={() => { efeitos.suave(); setAberto((a) => !a); }} aria-expanded={aberto} aria-controls={`guia-corpo-${onde}`} data-testid="guia-abrir">
         {etapaAgora ? <span className="guia-faixa-fig"><FiguraEtapa etapa={etapaAgora} /></span> : null}
         <span className="guia-faixa-txt"><b>{nivel.nivel > 0 ? `Nível ${nivel.nivel}` : 'Começando'}</b><small>{etapaAgora ? etapaAgora.titulo : 'Seu guia'}</small></span>
-        <BarraMissao passos={missao.passos} feitos={missao.feitaHoje ? missao.passos : 0} className="guia-faixa-barra" />
+        <BarraMissao passos={missao.passos} feitos={missao.feitaHoje ? missao.passos : 0} agora={missao.feitaHoje ? undefined : 0} className="guia-faixa-barra" />
         <span className="guia-faixa-seta"><Icone nome={aberto ? 'x' : 'mais'} /></span>
       </button>
 

@@ -1,7 +1,13 @@
 /**
- * TF · TRILHA DOS SONS (D030 etapas 6–8): a trilha fônica que ENSINA A LER. Blocos 1, 2 e 3 de
- * docs/pedagogia/01-escopo-e-sequencia.md: vogais (TF-01…06), consoantes que se prolongam (TF-07…15) e consoantes de
- * estouro (TF-16…22), com uma revisão no fim dos blocos 2 e 3. A Trilha A–Z continua como "conhecer as letras".
+ * TF · TRILHA DOS SONS (D030 etapas 6–8): a trilha fônica que ENSINA A LER. Blocos 1 a 5 de
+ * docs/pedagogia/01-escopo-e-sequencia.md: vogais (TF-01…06), consoantes que se prolongam (TF-07…15), consoantes de
+ * estouro (TF-16…22), vogais abertas e nasais (TF-23…30) e o R (TF-31, TF-32), com revisões no fim dos blocos 2, 3 e 4.
+ * A Trilha A–Z continua como "conhecer as letras".
+ *
+ * LIÇÃO EM ESPERA (17/11): uma lição só entra na jornada quando TODOS os sons puros que ela toca estão publicados no mapa de
+ * sons (`SONS_PUBLICADOS`, igual a web/public/audio/sons/mapa.json) E todas as lições anteriores da trilha também entraram
+ * (a ordem de docs/pedagogia/01 não se pula: o que vem depois pode usar o que vem antes). As outras ficam escritas e
+ * conferidas em `FASES_TF_EM_ESPERA`, fora da jornada, até o som existir. Nada de voz do navegador nem de nome de letra no lugar.
  *
  * Roteiro de cada lição (docs/pedagogia/04 §4 [DP]; o "eu faço, nós fazemos, você faz" na lição de som é extensão do projeto):
  *   1. revisão cumulativa dos sons já ensinados (ABC p. 510, 513);
@@ -21,7 +27,7 @@
  * VOZES: só frases-moldura genéricas (`FALAS_TRILHA_SONS`) + os clipes de som, de palavra e de letra que já existem.
  */
 import type { AtividadeEscolher, Cena, Fala, Fase, ItemEscolha, ItemFrase, ItemParMinimo, ItemTroca, Opcao, PalavraComSons } from '../tipos.ts';
-import { LETRA_POR_ID, falaChave, type LetraAlfabeto } from '../alfabeto.ts';
+import { BRINCADEIRAS, LETRA_POR_ID, falaChave, type LetraAlfabeto } from '../alfabeto.ts';
 import { FALAS_FONICAS, habilidadeDoPar, parConfuso } from '../sons.ts';
 import { analisar, numeroDaUnidade } from '../decodificabilidade.ts';
 import { BANCO } from './tf-banco.ts';
@@ -87,7 +93,7 @@ export const FALAS_TRILHA_SONS = {
 
 const FONEMA_DO_SOM: Record<string, string> = {
   a: 'a', e: 'e', ɛ: 'E', i: 'i', o: 'o', ɔ: 'O', u: 'u', ã: 'a~', m: 'm', n: 'n', f: 'f', v: 'v', s: 's', z: 'z', ʃ: 'x', ʒ: 'j', l: 'l',
-  R: 'rr', p: 'p', b: 'b', t: 't', d: 'd', k: 'k', g: 'g', tʃ: 't', dʒ: 'd'
+  R: 'rr', p: 'p', b: 'b', t: 't', d: 'd', k: 'k', g: 'g', tʃ: 't', dʒ: 'd', ẽ: 'e~', ĩ: 'i~', õ: 'o~', ũ: 'u~', ɾ: 'r'
 };
 /** Palavra do banco com o som (chave de fonema) de cada LETRA, na ordem. */
 export function comSons(palavra: string): PalavraComSons {
@@ -105,15 +111,28 @@ export function comSons(palavra: string): PalavraComSons {
 /* as lições                                                                                                     */
 /* ------------------------------------------------------------------------------------------------------------ */
 
-type Tipo = 'vogal' | 'consoante' | 'revisao-vogais' | 'regra-final' | 'regra-tidi' | 'revisao';
+/**
+ * `grafema`: lição de um som novo escrito com acento, til ou duas letras (É, Ó, Ã, EN, IN, ON, UN), no roteiro das consoantes.
+ * `regra-aberta` (TF-24), `regra-mn` (TF-30) e `regra-r` (TF-32): unidades de regra com apresentação própria (`apresentacao`).
+ */
+type Tipo = 'vogal' | 'consoante' | 'grafema' | 'revisao-vogais' | 'regra-final' | 'regra-tidi' | 'regra-aberta' | 'regra-mn' | 'regra-r' | 'revisao';
+/** Apresentação de uma unidade de regra: palavras com a letra destacada e o som que ela faz ali (como TF-12 e TF-22). */
+interface Apresentacao { fonema: string; letra: string; partes: { explica: string; palavras: { palavra: string; destaque: number; som?: string }[] }[]; fecha?: string }
 interface Leitura { palavra: string; outras: string[] }
 interface Desafio { pares?: ItemParMinimo[]; trocas?: ItemTroca[]; frase?: Omit<ItemFrase, 'palavras'>; eco?: boolean }
 interface Licao {
   unidade: string;
   tipo: Tipo;
   bloco: number;
-  /** Letra nova (maiúscula). */
+  /** Letra nova (maiúscula), ou o grafema novo (É, Ã, EN…). */
   letra?: string;
+  /** Mais de um grafema novo na mesma lição (TF-23: É e Ó). O primeiro é `letra`. */
+  letras?: string[];
+  /** Unidades de regra novas (TF-24, TF-30): a apresentação e a habilidade da regra. */
+  apresentacao?: Apresentacao;
+  habilidadeRegra?: string;
+  /** Som novo que não é o som principal da letra (TF-32: R fraco), com faz de conta, apoio e cena próprios. */
+  somProprio?: { fonema: string; letra: string; brincadeira: string; apoio: string; cena: string };
   /** Rótulo do disco na trilha. */
   rotulo: string;
   titulo: string;
@@ -137,12 +156,44 @@ interface Licao {
   regra?: { mostrar: string; palavra: string; certa: string; outras: string[]; som: string }[];
 }
 
+/**
+ * GRAFEMAS NOVOS dos blocos 4 e 5 (não são letras da Trilha A–Z): o som, a palavra-apoio e o faz de conta de cada um.
+ * Faz de conta: ideias do projeto a partir de docs/pesquisa/46 §"O que levamos" (é de nojo ao pisar na lama, ó de surpresa,
+ * ã de quem está pensando) [DP]; o som que se ouve é sempre o SOM PURO do mapa de sons, nunca o nome da letra (regra 1).
+ */
+const grafema = (letra: string, fonema: string, ipa: string, palavra: string, brincadeira: string, dicaBoca: string): LetraAlfabeto => ({
+  letra, minuscula: letra.toLowerCase(), tipo: 'vogal', ipa, fonema, palavra, dicaBoca, gesto: '', voz: 'sofia', somPuro: { gravado: false }, brincadeira, palavras: [palavra, palavra, palavra]
+});
+const NASAL = 'Faz de conta que o som escorrega pelo nariz.';
+export const GRAFEMAS_TF: Record<string, LetraAlfabeto> = {
+  É: grafema('É', 'E', '/ɛ/', 'pé', 'Faz de conta que você pisou na lama. Que nojo!', 'Boca bem aberta, sorriso largo.'),
+  Ó: grafema('Ó', 'O', '/ɔ/', 'vovó', 'Faz de conta que você viu uma coisa linda. Que surpresa!', 'Bolinha bem aberta.'),
+  Ê: grafema('Ê', 'e', '/e/', 'bebê', BRINCADEIRAS.E, 'Sorriso meio aberto.'),
+  Ô: grafema('Ô', 'o', '/o/', 'vovô', BRINCADEIRAS.O, 'Boca redonda e fechadinha.'),
+  Ã: grafema('Ã', 'a~', '/ã/', 'lã', 'Faz de conta que você está pensando, bem quietinho.', 'Boca aberta, e o som passa pelo nariz.'),
+  EN: grafema('EN', 'e~', '/ẽ/', 'dente', NASAL, 'Sorriso pequeno, e o som passa pelo nariz.'),
+  IN: grafema('IN', 'i~', '/ĩ/', 'lindo', NASAL, 'Sorriso largo, e o som passa pelo nariz.'),
+  ON: grafema('ON', 'o~', '/õ/', 'onda', NASAL, 'Boca redondinha, e o som passa pelo nariz.'),
+  UN: grafema('UN', 'u~', '/ũ/', 'mundo', NASAL, 'Biquinho, e o som passa pelo nariz.')
+};
+/** Apoio dito depois do som, com o nome da letra (como "M, de macaco."). */
+const APOIO_DO_GRAFEMA: Record<string, string> = {
+  É: 'É, de pé.', Ó: 'Ó, de vovó.', Ê: 'Ê, de bebê.', Ô: 'Ô, de vovô.', Ã: 'A com til, de lã.',
+  EN: 'E e N, de dente.', IN: 'I e N, de lindo.', ON: 'O e N, de onda.', UN: 'U e N, de mundo.'
+};
+/** Cena do faz de conta (web/public/assets/figuras) dos grafemas novos; as letras usam `CENAS_DO_SOM`. */
+const CENA_DO_GRAFEMA: Record<string, string> = { É: 'cena-e-aberto', Ó: 'cena-o-aberto', Ã: 'cena-a-nasal' };
+/** A letra (Trilha A–Z) ou o grafema novo. */
+const letraDe = (x: string): LetraAlfabeto => LETRA_POR_ID[x] ?? GRAFEMAS_TF[x];
+/** Som (chave do mapa de sons) de uma letra ou grafema da trilha. */
+export const fonemaDoGrafema = (x: string): string | null => letraDe(x)?.fonema ?? null;
+
 /** Item de par mínimo: a habilidade vem SEMPRE do contraste (`habilidadeDoPar`), nunca da leitura em geral. */
 const par = (modo: 'ouvir' | 'ler', alvo: string, outra: string, sons: [string, string], distrator: string): ItemParMinimo => ({
   modo, alvo, outra, sons, distrator, ...(modo === 'ouvir' ? { figuraAlvo: alvo, figuraOutra: outra } : {}), habilidade: habilidadeDoPar(sons)
 });
 const troca = (acao: 'trocar' | 'acrescentar', de: string, para: string, posicao: number, letra: string, letras: string[], leituras: string[]): ItemTroca => ({
-  acao, de: de.toUpperCase(), para: para.toUpperCase(), posicao, letra, som: LETRA_POR_ID[letra].fonema!, letras, leituras
+  acao, de: de.toUpperCase(), para: para.toUpperCase(), posicao, letra, som: fonemaDoGrafema(letra)!, letras, leituras
 });
 const frase = (texto: string, pergunta: string, correta: string, opcoes: string[]): Omit<ItemFrase, 'palavras'> => ({ frase: texto, pergunta: sofia(pergunta), correta, opcoes });
 
@@ -333,6 +384,146 @@ export const LICOES_TF: Licao[] = [
       trocas: [troca('trocar', 'pato', 'mato', 0, 'M', ['M', 'N', 'B'], ['mato', 'pato', 'nato']), troca('trocar', 'mato', 'gato', 0, 'G', ['G', 'C', 'D'], ['gato', 'mato', 'cato'])],
       frase: frase('O gato viu a vaca.', 'Quem o gato viu?', 'vaca', ['vaca', 'faca', 'pato']), eco: true
     }
+  },
+  // BLOCO 4 · vogais abertas e nasais (docs/pedagogia/01 §4). Só na trilha fônica é que o E e o O ganham o som aberto.
+  {
+    unidade: 'TF-23', tipo: 'grafema', bloco: 4, letra: 'É', letras: ['É', 'Ó'], rotulo: 'é·ó', titulo: 'Os sons /é/ e /ó/',
+    objetivo: 'Ligar os sons /é/ e /ó/ ao acento agudo (pé, vovó) e ouvir a diferença de /ê/ e /ô/',
+    sintese: [['café', 'café', 'cafu', 'cafa'], ['vovó', 'vovó', 'vovô', 'ovo'], ['babá', 'babá', 'bebê', 'bala']],
+    leitura: [{ palavra: 'pé', outras: ['pato', 'pipoca'] }, { palavra: 'vovó', outras: ['vovô', 'ovo'] }, { palavra: 'café', outras: ['cafa', 'cafu'] }, { palavra: 'babá', outras: ['bebê', 'bala'] }],
+    pseudo: [['lupé', 'lupê', 'lupa'], ['nafó', 'nafô', 'nafa']],
+    caixas: ['pé', 'vovó', 'café'],
+    desafio: { pares: [par('ouvir', 'vovó', 'vovô', ['O', 'o'], 'vela'), par('ouvir', 'vovô', 'vovó', ['o', 'O'], 'bola'), par('ler', 'avó', 'avô', ['O', 'o'], 'ave')] }
+  },
+  {
+    unidade: 'TF-24', tipo: 'regra-aberta', bloco: 4, letra: 'O', rotulo: 'é·ê', titulo: 'É ou ê? Ó ou ô?', habilidadeRegra: 'regra-vogal-aberta',
+    objetivo: 'Ler E e O abertos sem acento (bola, vela) e ê e ô com chapeuzinho (bebê, vovô)',
+    apresentacao: {
+      fonema: 'O', letra: 'O',
+      partes: [
+        { explica: 'Sem acento, o O às vezes soa ó.', palavras: [{ palavra: 'BOLA', destaque: 1, som: 'O' }, { palavra: 'COPO', destaque: 1, som: 'O' }] },
+        { explica: 'E o E às vezes soa é.', palavras: [{ palavra: 'VELA', destaque: 1, som: 'E' }, { palavra: 'JANELA', destaque: 3, som: 'E' }] },
+        { explica: 'Com chapeuzinho, o som é fechado: ô e ê.', palavras: [{ palavra: 'VOVÔ', destaque: 3, som: 'o' }, { palavra: 'BEBÊ', destaque: 3, som: 'e' }] }
+      ],
+      fecha: 'Leia primeiro com o som fechado. Se não virar palavra, tente o aberto!'
+    },
+    regra: [
+      { mostrar: 'VOV_', palavra: 'vovô', certa: 'Ô', outras: ['Ó', 'O'], som: 'o' }, { mostrar: 'VOV_', palavra: 'vovó', certa: 'Ó', outras: ['Ô', 'O'], som: 'O' },
+      { mostrar: 'BEB_', palavra: 'bebê', certa: 'Ê', outras: ['É', 'E'], som: 'e' }, { mostrar: 'CAF_', palavra: 'café', certa: 'É', outras: ['Ê', 'E'], som: 'E' },
+      { mostrar: 'P_', palavra: 'pé', certa: 'É', outras: ['Ê', 'E'], som: 'E' }
+    ],
+    sintese: [['bola', 'bola', 'mola', 'cola'], ['vela', 'vela', 'bola', 'mala'], ['moto', 'moto', 'mola', 'pato']],
+    leitura: [{ palavra: 'bola', outras: ['mola', 'cola'] }, { palavra: 'vela', outras: ['bola', 'mala'] }, { palavra: 'janela', outras: ['panela', 'caneca'] }, { palavra: 'pipoca', outras: ['peteca', 'boneca'] }, { palavra: 'ela', outras: ['ele', 'eli'] }],
+    pseudo: [['dovê', 'dové', 'dova'], ['bupô', 'bupó', 'bupa']],
+    caixas: ['bola', 'vela', 'copo'],
+    desafio: { frase: frase('A vovó viu a bola.', 'O que a vovó viu?', 'bola', ['bola', 'vela', 'mola']), pares: [par('ler', 'avô', 'avó', ['o', 'O'], 'ave'), par('ler', 'avó', 'avô', ['O', 'o'], 'ave')] }
+  },
+  {
+    unidade: 'TF-25', tipo: 'grafema', bloco: 4, letra: 'Ã', rotulo: 'ã', titulo: 'O som /ã/', objetivo: 'Ligar o som /ã/ ao Ã e ao AN (lã, anta) e ouvir a diferença de /a/',
+    sintese: [['anta', 'anta', 'panda', 'lã'], ['panda', 'panda', 'pato', 'anta'], ['lã', 'lã', 'lua', 'uva']],
+    leitura: [{ palavra: 'anta', outras: ['panda', 'pato'] }, { palavra: 'panda', outras: ['anta', 'pato'] }, { palavra: 'lã', outras: ['lua', 'uva'] }, { palavra: 'manta', outras: ['mata', 'nata'] }],
+    pseudo: [['lantu', 'latu', 'lanta'], ['tanfi', 'tafi', 'tanfa']],
+    caixas: ['lã', 'fã'],
+    desafio: {
+      frase: frase('A anta viu a lua.', 'O que a anta viu?', 'lua', ['lua', 'uva', 'bola']),
+      pares: [par('ler', 'manta', 'mata', ['a~', 'a'], 'nata'), par('ler', 'tanto', 'tato', ['a~', 'a'], 'canto'), par('ler', 'lã', 'lá', ['a~', 'a'], 'fã')]
+    }
+  },
+  {
+    unidade: 'TF-26', tipo: 'grafema', bloco: 4, letra: 'EN', rotulo: 'en', titulo: 'O som /ẽ/', objetivo: 'Ligar o som /ẽ/ ao EN (dente, vento)',
+    sintese: [['dente', 'dente', 'dedo', 'pente'], ['vento', 'vento', 'veto', 'lento'], ['lenda', 'lenda', 'venda', 'lado']],
+    leitura: [{ palavra: 'dente', outras: ['pente', 'dedo'] }, { palavra: 'vento', outras: ['veto', 'venda'] }, { palavra: 'lento', outras: ['lenda', 'lado'] }],
+    pseudo: [['fendu', 'fedu', 'fenda'], ['benfa', 'befa', 'binfa']],
+    ditado: ['DENTE', 'VENTO'],
+    desafio: { pares: [par('ler', 'vento', 'veto', ['e~', 'E'], 'lento'), par('ler', 'veto', 'vento', ['E', 'e~'], 'vale')] }
+  },
+  {
+    unidade: 'TF-27', tipo: 'grafema', bloco: 4, letra: 'IN', rotulo: 'in', titulo: 'O som /ĩ/', objetivo: 'Ligar o som /ĩ/ ao IM e ao IN (sim, lindo)',
+    sintese: [['fim', 'fim', 'sim', 'fio'], ['lindo', 'lindo', 'lido', 'minto'], ['tinta', 'tinta', 'tanto', 'vinte']],
+    leitura: [{ palavra: 'sim', outras: ['fim', 'fio'] }, { palavra: 'lindo', outras: ['lido', 'minto'] }, { palavra: 'vinte', outras: ['vento', 'vela'] }, { palavra: 'ninja', outras: ['nata', 'mito'] }],
+    pseudo: [['tindu', 'tidu', 'tinda'], ['binta', 'bita', 'banta']],
+    ditado: ['FIM', 'LINDO'],
+    desafio: { pares: [par('ler', 'lindo', 'lido', ['i~', 'i'], 'lado'), par('ler', 'minto', 'mito', ['i~', 'i'], 'mato'), par('ler', 'mito', 'minto', ['i', 'i~'], 'meio')] }
+  },
+  {
+    unidade: 'TF-28', tipo: 'grafema', bloco: 4, letra: 'ON', rotulo: 'on', titulo: 'O som /õ/', objetivo: 'Ligar o som /õ/ ao OM e ao ON (bom, onda)',
+    sintese: [['bom', 'bom', 'som', 'boi'], ['onda', 'onda', 'conta', 'lenda'], ['ponte', 'ponte', 'pote', 'fonte']],
+    leitura: [{ palavra: 'bom', outras: ['som', 'boi'] }, { palavra: 'onda', outras: ['anta', 'lenda'] }, { palavra: 'conta', outras: ['cota', 'canto'] }, { palavra: 'monte', outras: ['ponte', 'dente'] }],
+    pseudo: [['lontu', 'lotu', 'lonta'], ['donfa', 'dofa', 'danfa']],
+    ditado: ['BOM', 'ONDA', 'PONTE'],
+    desafio: { pares: [par('ler', 'conta', 'cota', ['o~', 'O'], 'canto'), par('ler', 'ponte', 'pote', ['o~', 'O'], 'pente'), par('ler', 'cota', 'conta', ['O', 'o~'], 'cola')] }
+  },
+  {
+    unidade: 'TF-29', tipo: 'grafema', bloco: 4, letra: 'UN', rotulo: 'un', titulo: 'O som /ũ/', objetivo: 'Ligar o som /ũ/ ao UM e ao UN (um, mundo)',
+    sintese: [['mundo', 'mundo', 'mudo', 'fundo'], ['nunca', 'nunca', 'nuca', 'junto'], ['atum', 'atum', 'tatu', 'fim']],
+    leitura: [{ palavra: 'mundo', outras: ['mudo', 'fundo'] }, { palavra: 'junto', outras: ['fundo', 'janta'] }, { palavra: 'nunca', outras: ['nuca', 'janta'] }, { palavra: 'um', outras: ['oi', 'eu'] }],
+    pseudo: [['tunfa', 'tufa', 'tanfa'], ['lunti', 'luti', 'lanti']],
+    ditado: ['UM', 'MUNDO', 'FUNDO'],
+    desafio: { pares: [par('ler', 'mundo', 'mudo', ['u~', 'u'], 'lado'), par('ler', 'nunca', 'nuca', ['u~', 'u'], 'nada'), par('ler', 'mudo', 'mundo', ['u', 'u~'], 'mato')] }
+  },
+  {
+    unidade: 'TF-30', tipo: 'regra-mn', bloco: 4, letra: 'M', rotulo: 'ão', titulo: 'M antes de P e B; ÃO, ÃE e ÕE', habilidadeRegra: 'regra-m-n',
+    objetivo: 'Escrever o som do nariz com M antes de P e B (campo, bomba) e ler ão, ãe, õe e o -em do fim (mão, mãe, tem)',
+    apresentacao: {
+      fonema: 'a~', letra: 'M',
+      partes: [
+        { explica: 'Antes de P e B, o som do nariz se escreve com M.', palavras: [{ palavra: 'CAMPO', destaque: 2 }, { palavra: 'BOMBA', destaque: 2 }] },
+        { explica: 'Com til, o A e o O do fim fazem ão.', palavras: [{ palavra: 'MÃO', destaque: 1, som: 'a~' }, { palavra: 'PÃO', destaque: 1, som: 'a~' }] },
+        { explica: 'E o EM do fim soa assim.', palavras: [{ palavra: 'TEM', destaque: 1, som: 'e~' }] }
+      ],
+      fecha: 'Cada som do nariz tem o seu jeito de escrever!'
+    },
+    regra: [
+      { mostrar: 'CA_PO', palavra: 'campo', certa: 'M', outras: ['N', 'P'], som: 'a~' }, { mostrar: 'TA_PA', palavra: 'tampa', certa: 'M', outras: ['N', 'B'], som: 'a~' },
+      { mostrar: 'BO_BA', palavra: 'bomba', certa: 'M', outras: ['N', 'D'], som: 'o~' }, { mostrar: 'O_DA', palavra: 'onda', certa: 'N', outras: ['M', 'D'], som: 'o~' },
+      { mostrar: 'M_O', palavra: 'mão', certa: 'Ã', outras: ['A', 'O'], som: 'a~' }
+    ],
+    sintese: [['mão', 'mão', 'pão', 'mamãe'], ['campo', 'campo', 'canto', 'tampa'], ['bomba', 'bomba', 'boba', 'pomba']],
+    leitura: [{ palavra: 'mão', outras: ['pão', 'mamãe'] }, { palavra: 'pão', outras: ['mão', 'pato'] }, { palavra: 'tampa', outras: ['tapa', 'tanto'] }, { palavra: 'pomba', outras: ['bomba', 'ponte'] }, { palavra: 'tem', outras: ['bem', 'tia'] }],
+    pseudo: [['tampu', 'tapu', 'tantu'], ['lombi', 'lobi', 'londi']],
+    ditado: ['MÃO', 'PÃO', 'CAMPO', 'BOMBA'],
+    desafio: { pares: [par('ler', 'tampa', 'tapa', ['a~', 'a'], 'tatu'), par('ler', 'bomba', 'boba', ['o~', 'o'], 'bola')] }
+  },
+  {
+    unidade: 'TF-R4', tipo: 'revisao', bloco: 4, ate: 'TF-30', rotulo: '★', titulo: 'Revisão: vogais abertas e nasais', objetivo: 'Ler, escrever e comparar é, ó, ê, ô e os sons do nariz',
+    revisaoLetras: ['É', 'Ó', 'Ã', 'EN', 'IN', 'ON', 'UN'],
+    sintese: [['vovó', 'vovó', 'vovô', 'ovo'], ['mão', 'mão', 'pão', 'mamãe'], ['bola', 'bola', 'mola', 'cola']],
+    pseudo: [['lantu', 'latu', 'lanta'], ['tindu', 'tidu', 'tinda']],
+    ditado: ['PÉ', 'LÃ', 'DENTE', 'MUNDO', 'BOLA'],
+    desafio: {
+      pares: [par('ouvir', 'vovó', 'vovô', ['O', 'o'], 'vela'), par('ler', 'lindo', 'lido', ['i~', 'i'], 'lado'), par('ler', 'conta', 'cota', ['o~', 'O'], 'canto'), par('ler', 'manta', 'mata', ['a~', 'a'], 'nata')],
+      frase: frase('A vovó viu o pão.', 'O que a vovó viu?', 'pão', ['pão', 'pé', 'bola']), eco: true
+    }
+  },
+  // BLOCO 5 · R (só TF-31 e TF-32 por enquanto; R no fim da sílaba, RR e H mudo são TF-33…35)
+  {
+    unidade: 'TF-31', tipo: 'consoante', bloco: 5, letra: 'R', rotulo: 'r', titulo: 'O R do começo (rato)', objetivo: 'Ligar o R do começo da palavra ao som forte (rato, rua): todo sotaque vale',
+    sintese: [['rato', 'rato', 'pato', 'gato'], ['rua', 'rua', 'lua', 'uva'], ['roda', 'roda', 'rato', 'bola']],
+    leitura: [{ palavra: 'rato', outras: ['pato', 'gato'] }, { palavra: 'rua', outras: ['lua', 'uva'] }, { palavra: 'roda', outras: ['rato', 'bola'] }, { palavra: 'rei', outras: ['lei', 'ai'] }],
+    pseudo: [['rafu', 'lafu', 'rafa'], ['rupi', 'lupi', 'rupa']],
+    caixas: ['rato', 'rua', 'rei'],
+    desafio: {
+      frase: frase('O rato viu a roda.', 'O que o rato viu?', 'roda', ['roda', 'rua', 'bola']),
+      trocas: [troca('trocar', 'pato', 'rato', 0, 'R', ['R', 'L', 'B'], ['rato', 'pato', 'lato']), troca('trocar', 'lua', 'rua', 0, 'R', ['R', 'L', 'N'], ['rua', 'lua', 'nua'])]
+    }
+  },
+  {
+    unidade: 'TF-32', tipo: 'regra-r', bloco: 5, letra: 'R', rotulo: 'r·r', titulo: 'O R fraco (arara)', habilidadeRegra: 'regra-r',
+    objetivo: 'Ler o R entre vogais com o som fraco (cara, arara)',
+    // MP p. 88: gato ronronando = R fraco (cachorro rosnando = R forte); o R fraco não começa palavra (ABC p. 120)
+    somProprio: { fonema: 'r', letra: 'R', brincadeira: 'Faz de conta que você é um gatinho ronronando no colo.', apoio: 'R, de arara.', cena: 'cena-r-fraco' },
+    regra: [
+      { mostrar: 'CA_A', palavra: 'cara', certa: 'R', outras: ['L', 'D'], som: 'r' }, { mostrar: 'PE_A', palavra: 'pera', certa: 'R', outras: ['L', 'N'], som: 'r' },
+      { mostrar: 'MU_O', palavra: 'muro', certa: 'R', outras: ['L', 'D'], som: 'r' }, { mostrar: 'ARA_A', palavra: 'arara', certa: 'R', outras: ['L', 'N'], som: 'r' }
+    ],
+    sintese: [['cara', 'cara', 'cala', 'vara'], ['muro', 'muro', 'mudo', 'puro'], ['pera', 'pera', 'pela', 'fera']],
+    leitura: [{ palavra: 'cara', outras: ['cala', 'vara'] }, { palavra: 'muro', outras: ['mudo', 'puro'] }, { palavra: 'arara', outras: ['arada', 'alala'] }, { palavra: 'fera', outras: ['vela', 'pera'] }],
+    pseudo: [['furi', 'fuli', 'fudi'], ['lari', 'lali', 'ladi']],
+    caixas: ['cara', 'muro', 'pera'],
+    desafio: {
+      frase: frase('A arara viu o pato.', 'Quem a arara viu?', 'pato', ['pato', 'gato', 'sapo']),
+      pares: [par('ler', 'pera', 'pela', ['r', 'l'], 'pata'), par('ler', 'cara', 'cala', ['r', 'l'], 'cada'), par('ler', 'pela', 'pera', ['l', 'r'], 'vela')]
+    }
   }
 ];
 
@@ -340,26 +531,39 @@ export const LICOES_TF: Licao[] = [
 /* construção das fases                                                                                          */
 /* ------------------------------------------------------------------------------------------------------------ */
 
+/** Lição que ensina letra (ou grafema) nova. */
+const ensinaLetra = (l: Licao) => l.tipo === 'vogal' || l.tipo === 'consoante' || l.tipo === 'grafema';
+/** As letras (ou grafemas) novas da lição. */
+const letrasDa = (l: Licao): string[] => (l.letras ?? (l.letra ? [l.letra] : []));
 /** Ordem das letras ensinadas (para revisão cumulativa e distratores). */
-const ORDEM: string[] = LICOES_TF.filter((l) => l.tipo === 'vogal' || l.tipo === 'consoante').map((l) => l.letra!);
+const ORDEM: string[] = LICOES_TF.filter(ensinaLetra).flatMap(letrasDa);
 const letrasAte = (unidade: string) => {
   const n = numeroDaUnidade(unidade);
-  return LICOES_TF.filter((l) => (l.tipo === 'vogal' || l.tipo === 'consoante') && numeroDaUnidade(l.unidade) <= n).map((l) => l.letra!);
+  return LICOES_TF.filter((l) => ensinaLetra(l) && numeroDaUnidade(l.unidade) <= n).flatMap(letrasDa);
 };
 /** Unidade que vale para o que já foi ensinado (a revisão de bloco vale como a última unidade do bloco). */
 const efetiva = (li: Licao) => li.ate ?? li.unidade;
-const letraDe = (x: string): LetraAlfabeto => LETRA_POR_ID[x];
 
+/** Habilidade dos grafemas novos (docs/pedagogia/02 §4: FG-AB-01 e FG-NAS-01 a 05). */
+const HABILIDADE_DO_GRAFEMA: Record<string, string> = {
+  É: 'e-aberto-fechado', Ê: 'e-aberto-fechado', Ó: 'o-aberto-fechado', Ô: 'o-aberto-fechado',
+  Ã: 'gpc-nasal-a', EN: 'gpc-nasal-e', IN: 'gpc-nasal-i', ON: 'gpc-nasal-o', UN: 'gpc-nasal-u'
+};
 /** Habilidade da relação som ↔ letra de cada letra da trilha (docs/pedagogia/02 §4). */
-export const habilidadeTF = (letra: string): string => (ehVogal(letra) ? `vogal-${letra.toLowerCase()}` : letra === 'C' ? 'gpc-c' : `gpc-${letra.toLowerCase()}`);
+export const habilidadeTF = (letra: string): string =>
+  HABILIDADE_DO_GRAFEMA[letra] ?? (ehVogal(letra) ? `vogal-${letra.toLowerCase()}` : letra === 'C' ? 'gpc-c' : `gpc-${letra.toLowerCase()}`);
 const ehVogal = (x: string) => 'AEIOU'.includes(x);
 
 /**
  * Sons "duvidosos" e de estouro (docs/pedagogia/03 §5; app/docs/auditoria-sons-letras.md): não são o ÚNICO estímulo
  * de item que conta. Para eles o estímulo é uma sílaba falada pela Sofia, com o som colado à vogal.
  */
-export const SILABA_DO_SOM: Record<string, string> = { L: 'la', V: 'vo', J: 'ja', P: 'pa', T: 'ta', B: 'bo', C: 'ca', D: 'dá', G: 'ga', M: 'ma', F: 'fa', S: 'sa', N: 'ne' };
-export const SONS_DUVIDOSOS = ['L', 'V', 'J', 'P', 'T', 'B', 'C', 'D', 'G'];
+export const SILABA_DO_SOM: Record<string, string> = {
+  L: 'la', V: 'vo', J: 'ja', P: 'pa', T: 'ta', B: 'bo', C: 'ca', D: 'dá', G: 'ga', M: 'ma', F: 'fa', S: 'sa', N: 'ne',
+  // Ã e R forte também são "duvidosos" no mapa (a nasalidade não é medida; o R muda com o sotaque): a Sofia diz o som esticado
+  Ã: 'ãããã', R: 'rrrrá'
+};
+export const SONS_DUVIDOSOS = ['L', 'V', 'J', 'P', 'T', 'B', 'C', 'D', 'G', 'Ã', 'R'];
 const duvidoso = (x: string) => SONS_DUVIDOSOS.includes(x);
 
 const opLetra = (x: string): Opcao => ({ id: x, rotulo: x, letra: x, som: letraDe(x).fonema! });
@@ -432,7 +636,7 @@ const escolher = (habilidade: string, enunciado: Fala, itens: ItemEscolha[], ext
 });
 
 function cenaRevisao(id: string, li: Licao): Cena | null {
-  const antes = li.revisaoLetras ?? letrasAte(efetiva(li)).filter((x) => x !== li.letra);
+  const antes = li.revisaoLetras ?? letrasAte(efetiva(li)).filter((x) => !letrasDa(li).includes(x));
   if (!antes.length) return null;
   const itens = antes.map((x, k) => itemSomLetra(x, efetiva(li), k, antes));
   // nas revisões de bloco entra também o outro sentido: ver a letra e achar o som
@@ -443,9 +647,29 @@ function cenaRevisao(id: string, li: Licao): Cena | null {
   };
 }
 
-function cenaSomNovo(id: string, li: Licao): Cena {
-  const l = letraDe(li.letra!);
-  const hab = habilidadeTF(li.letra!);
+function cenaSomNovo(id: string, li: Licao, x: string = li.letra!): Cena {
+  const l = letraDe(x);
+  const hab = habilidadeTF(x);
+  if (li.apresentacao) {
+    const a = li.apresentacao;
+    return {
+      id, tipo: 'C2', titulo: li.titulo, cenario: 'licao', contaDominio: true,
+      atividade: {
+        tipo: 'somNovo', habilidade: li.habilidadeRegra!, fonema: a.fonema, letra: a.letra, enunciado: sofia(FALAS_TRILHA_SONS.acolhidaRegra), revela: sofia(FALAS_TRILHA_SONS.revela),
+        regra: { partes: a.partes.map((p) => ({ explica: sofia(p.explica), palavras: p.palavras })), ...(a.fecha ? { fecha: sofia(a.fecha) } : {}) }
+      }
+    };
+  }
+  if (li.somProprio) {
+    const sp = li.somProprio;
+    return {
+      id, tipo: 'C2', titulo: 'Som novo', cenario: 'licao', contaDominio: true,
+      atividade: {
+        tipo: 'somNovo', habilidade: li.habilidadeRegra!, fonema: sp.fonema, letra: sp.letra, cena: sp.cena, enunciado: sofia(FALAS_TRILHA_SONS.somNovo),
+        brincadeira: sofia(sp.brincadeira), repita: sofia('Repita comigo!'), revela: sofia(FALAS_TRILHA_SONS.revela), apoio: sofia(sp.apoio)
+      }
+    };
+  }
   if (li.tipo === 'regra-final') {
     return {
       id, tipo: 'C2', titulo: 'O segredo do fim da palavra', cenario: 'licao', contaDominio: true,
@@ -478,8 +702,8 @@ function cenaSomNovo(id: string, li: Licao): Cena {
   return {
     id, tipo: 'C2', titulo: 'Som novo', cenario: 'licao', contaDominio: true,
     atividade: {
-      tipo: 'somNovo', habilidade: hab, fonema: l.fonema!, letra: l.letra, enunciado: sofia(FALAS_TRILHA_SONS.somNovo),
-      brincadeira: f(l.voz, l.brincadeira), repita: f(l.voz, 'Repita comigo!'), revela: sofia(FALAS_TRILHA_SONS.revela), apoio: f(l.voz, falaChave(l))
+      tipo: 'somNovo', habilidade: hab, fonema: l.fonema!, letra: l.letra, enunciado: sofia(FALAS_TRILHA_SONS.somNovo), ...(CENA_DO_GRAFEMA[x] ? { cena: CENA_DO_GRAFEMA[x] } : {}),
+      brincadeira: f(l.voz, l.brincadeira), repita: f(l.voz, 'Repita comigo!'), revela: sofia(FALAS_TRILHA_SONS.revela), apoio: f(l.voz, APOIO_DO_GRAFEMA[x] ?? falaChave(l))
     }
   };
 }
@@ -490,11 +714,14 @@ function cenasAcharLetra(id: string, li: Licao): Cena[] {
   const l = letraDe(x);
   const hab = habilidadeTF(x);
   const ate = efetiva(li);
-  // primeira vez: só o sentido som → letra (4 itens, distratoras diferentes); letra → som fica para as revisões
+  const novas = letrasDa(li);
+  // primeira vez: só o sentido som → letra (4 itens, distratoras diferentes); letra → som fica para as revisões.
+  // Com dois grafemas novos (TF-23: É e Ó), dois itens de cada, alternados.
+  const itens = novas.length > 1 ? [0, 1, 2, 3].map((k) => itemSomLetra(novas[k % novas.length], ate, k)) : [0, 1, 2, 3].map((k) => itemSomLetra(x, ate, k));
   const cenas: Cena[] = [
     {
       id: `${id}a`, tipo: 'C3', titulo: 'Ouça o som e ache a letra', cenario: 'quintal', contaDominio: true,
-      atividade: escolher(hab, duvidoso(x) ? sofia(FALAS_TRILHA_SONS.silabaLetra) : f(l.voz, 'Ouça e toque na letra.'), [0, 1, 2, 3].map((k) => itemSomLetra(x, ate, k)))
+      atividade: escolher(hab, duvidoso(x) ? sofia(FALAS_TRILHA_SONS.silabaLetra) : f(l.voz, 'Ouça e toque na letra.'), itens)
     }
   ];
   if (li.tipo === 'vogal') {
@@ -624,9 +851,11 @@ function faseDaLicao(li: Licao, numero: number): Fase {
   const cenas: Cena[] = [];
   const add = (c: Cena | null) => { if (c) cenas.push(c); };
   const revisaoDeBloco = li.tipo === 'revisao';
-  const ehLicaoDeLetra = li.tipo === 'vogal' || li.tipo === 'consoante';
+  const ehLicaoDeLetra = ensinaLetra(li);
+  const regraNova = li.tipo === 'regra-aberta' || li.tipo === 'regra-mn' || li.tipo === 'regra-r';
   add(cenaRevisao(`${id}-C1`, li));
-  if (ehLicaoDeLetra || li.tipo === 'regra-final' || li.tipo === 'regra-tidi') add(cenaSomNovo(`${id}-C2`, li));
+  if (ehLicaoDeLetra && letrasDa(li).length > 1) letrasDa(li).forEach((x, k) => add(cenaSomNovo(`${id}-C2${'ab'[k] ?? k}`, li, x)));
+  else if (ehLicaoDeLetra || li.tipo === 'regra-final' || li.tipo === 'regra-tidi' || regraNova) add(cenaSomNovo(`${id}-C2`, li));
   if (ehLicaoDeLetra) {
     cenas.push(...cenasAcharLetra(`${id}-C3`, li));
     // o traçado fica na Trilha A–Z ("conhecer as letras"); aqui a lição é curta: som, leitura e escrita
@@ -639,6 +868,7 @@ function faseDaLicao(li: Licao, numero: number): Fase {
   }
   if (li.tipo === 'regra-final') add(cenaRegra(`${id}-C3r`, li, 'regra-vogal-final'));
   if (li.tipo === 'regra-tidi') add(cenaRegra(`${id}-C3r`, li, 'regra-ti-di'));
+  if (regraNova) add(cenaRegra(`${id}-C3r`, li, li.habilidadeRegra!));
   add(cenaSintese(`${id}-C3s`, li));
   cenas.push(...cenasLeitura(`${id}-C4`, li, li.tipo === 'revisao-vogais' ? 'leitura-vogais' : 'leitura-cvcv'));
   add(cenaCaixas(`${id}-C4c`, li));
@@ -648,11 +878,12 @@ function faseDaLicao(li: Licao, numero: number): Fase {
   const prioridade = (c: Cena) => ({ frase: 0, parMinimo: 1, troca: 2 } as Record<string, number>)[c.atividade?.tipo ?? ''] ?? 3;
   cenas.push(...(revisaoDeBloco ? desafios : [...desafios].sort((a, b) => prioridade(a) - prioridade(b)).slice(0, 1)));
 
-  const habPrincipal = li.tipo === 'vogal' || li.tipo === 'consoante' ? habilidadeTF(li.letra!) : li.tipo === 'regra-final' ? 'regra-vogal-final' : li.tipo === 'regra-tidi' ? 'regra-ti-di' : li.tipo === 'revisao-vogais' ? 'vogais' : 'leitura-cvcv';
+  const habsDaLetra = ehLicaoDeLetra ? letrasDa(li).map(habilidadeTF) : [];
+  const habPrincipal = ehLicaoDeLetra ? habsDaLetra[0] : li.tipo === 'regra-final' ? 'regra-vogal-final' : li.tipo === 'regra-tidi' ? 'regra-ti-di' : regraNova ? li.habilidadeRegra! : li.tipo === 'revisao-vogais' ? 'vogais' : 'leitura-cvcv';
   const leituraHab = li.tipo === 'revisao-vogais' ? 'leitura-vogais' : 'leitura-cvcv';
   const temLeitura = !!(li.leitura?.length || li.pseudo?.length);
-  // critério: domínio da relação som-letra da unidade + leitura (com palavras inventadas conferidas), quando há
-  const criterio = [...new Set([...(revisaoDeBloco ? [] : [habPrincipal]), ...(temLeitura ? [leituraHab] : [])])];
+  // critério: domínio da relação som-letra da unidade (de cada grafema novo) + leitura (com palavras inventadas conferidas), quando há
+  const criterio = [...new Set([...(revisaoDeBloco ? [] : [habPrincipal, ...habsDaLetra]), ...(temLeitura ? [leituraHab] : [])])];
   const habilidades = [...new Set(cenas.flatMap((c) => [c.atividade?.habilidade ?? '', ...(c.atividade?.tipo === 'escolher' ? c.atividade.itens.map((i) => i.habilidade ?? '') : [])]).filter(Boolean))];
   const conquistas = [
     ...(li.letra && li.tipo === 'vogal' ? [CONQUISTAS_VOGAL[li.letra]] : []),
@@ -662,6 +893,7 @@ function faseDaLicao(li: Licao, numero: number): Fase {
     ...(revisaoDeBloco ? ['S-R2a-07'] : [])
   ];
   const tipoTrilha = revisaoDeBloco || li.tipo === 'revisao-vogais' ? 'revisao' : li.tipo.startsWith('regra') ? 'regra' : 'licao';
+  const ipa = ehLicaoDeLetra ? letrasDa(li).map((x) => `/${letraDe(x).ipa?.replace(/\//g, '') ?? x.toLowerCase()}/`).join(' e ') : '';
   return {
     id, regiao: 'TF', numero, titulo: li.titulo, objetivo: li.objetivo, sessoesPrevistas: '1 lição (o avanço é por domínio)', curta: true,
     habilidades: [habPrincipal, ...habilidades.filter((h) => h !== habPrincipal)], cenas,
@@ -672,14 +904,65 @@ function faseDaLicao(li: Licao, numero: number): Fase {
     gancho: sofia(FALAS_TRILHA_SONS.gancho),
     fechamento: `${li.titulo}: mais um passo na Trilha dos Sons.`,
     emCasa: li.letra && ehLicaoDeLetra
-      ? `Brinquem de achar o som /${letraDe(li.letra).ipa?.replace(/\//g, '') ?? li.letra.toLowerCase()}/ no começo das palavras. Falem o SOM, não o nome da letra.`
+      ? `Brinquem de achar o som ${ipa} ${li.tipo === 'grafema' ? 'nas palavras' : 'no começo das palavras'}. Falem o SOM, não o nome da letra.`
       : 'Leiam juntos as palavras da lição em voz alta, devagar e até o fim, apontando cada letra.',
     conquistas
   };
 }
 
-/** As fases da Trilha dos Sons, na ordem da jornada. */
-export const FASES_TF: Fase[] = LICOES_TF.map((li, i) => faseDaLicao(li, i + 1));
+/* ------------------------------------------------------------------------------------------------------------ */
+/* lições em espera: só entra na jornada o que dá para tocar com os sons que existem                             */
+/* ------------------------------------------------------------------------------------------------------------ */
+
+/**
+ * Sons puros PUBLICADOS no mapa de sons (web/public/audio/sons/mapa.json; aprovados e duvidosos). Um teste confere que esta
+ * lista é igual à do mapa: quando um som novo for gravado e publicado (vogais nasais, R fraco), entra aqui e as lições que
+ * dependem dele passam a entrar na jornada sozinhas.
+ */
+export const SONS_PUBLICADOS: string[] = ['a', 'E', 'e', 'i', 'O', 'o', 'u', 'a~', 'm', 'n', 'l', 'v', 'f', 's', 'x', 'z', 'j', 'rr', 'p', 'b', 't', 'd', 'k', 'g'];
+
+/** Todos os sons puros que a fase toca: som novo, estímulos, botões de som, síntese, caixas, troca-letras e frases. */
+export function fonemasDaFase(f: Fase): string[] {
+  const s = new Set<string>();
+  const add = (x: string | null | undefined) => { if (x) s.add(x); };
+  for (const c of f.cenas) {
+    const a = c.atividade;
+    if (!a) continue;
+    if (a.tipo === 'somNovo') { add(a.fonema); a.regra?.partes.forEach((p) => p.palavras.forEach((w) => add(w.som))); }
+    if (a.tipo === 'escolher') for (const i of a.itens) { add(i.somAlvo); add(i.somCorreta); i.opcoes.forEach((o) => add(o.som)); }
+    if (a.tipo === 'sintese' || a.tipo === 'caixas') for (const i of a.itens) i.sons.forEach(add);
+    if (a.tipo === 'troca') for (const i of a.itens) add(i.som);
+    if (a.tipo === 'frase') for (const i of a.itens) i.palavras.forEach((w) => w.sons.forEach(add));
+  }
+  return [...s];
+}
+
+/** Todas as fases escritas da Trilha dos Sons, na ordem da trilha (as da jornada e as em espera). */
+export const TODAS_AS_FASES_TF: Fase[] = LICOES_TF.map((li, i) => faseDaLicao(li, i + 1));
+
+/** Por que cada lição em espera ainda não entrou na jornada. */
+export interface FaseEmEspera { fase: Fase; sonsQueFaltam: string[]; motivo: string }
+const PRONTAS = (() => {
+  let k = 0;
+  while (k < TODAS_AS_FASES_TF.length && fonemasDaFase(TODAS_AS_FASES_TF[k]).every((x) => SONS_PUBLICADOS.includes(x))) k++;
+  return k;
+})();
+
+/** As fases da Trilha dos Sons que estão na JORNADA, na ordem: as lições prontas até a primeira em espera (a trilha não se pula). */
+export const FASES_TF: Fase[] = TODAS_AS_FASES_TF.slice(0, PRONTAS);
+
+/** Lições escritas e conferidas que esperam um som puro (delas ou de uma lição anterior); ficam fora da jornada. */
+export const FASES_TF_EM_ESPERA: FaseEmEspera[] = TODAS_AS_FASES_TF.slice(PRONTAS).map((fase) => {
+  const sonsQueFaltam = fonemasDaFase(fase).filter((x) => !SONS_PUBLICADOS.includes(x));
+  const primeira = TODAS_AS_FASES_TF[PRONTAS];
+  return {
+    fase, sonsQueFaltam,
+    motivo: [sonsQueFaltam.length ? `aguardando som: ${sonsQueFaltam.join(', ')}` : '', fase !== primeira ? `vem depois de ${primeira.id} (a trilha não se pula)` : ''].filter(Boolean).join('; ')
+  };
+});
+
+/** Revisão de bloco → a última unidade do bloco (o que já foi ensinado ao chegar nela). */
+export const UNIDADE_DA_REVISAO_TF: Record<string, string> = Object.fromEntries(LICOES_TF.filter((l) => l.ate).map((l) => [l.unidade, l.ate!]));
 
 /** Letras ensinadas pela trilha, na ordem (para a tela da trilha). */
 export const LETRAS_DA_TRILHA_SONS = ORDEM;

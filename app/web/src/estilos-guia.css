@@ -104,8 +104,17 @@
 .guia-faixa-seta{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--marinho2);color:#fff;flex:none}
 
 /* ---- na vila ---- */
+/* PC/tablet deitado: o painel tem a sua própria coluna (o mapa começa depois dela), então nunca cobre um lugar tocável do mapa */
 @media (min-width:900px){
-  .guia-vila{position:absolute;left:20px;top:104px;width:304px;max-height:calc(100dvh - 104px - 128px);overflow:auto;scrollbar-width:thin;border-radius:var(--r-g)}
+  .tela-vila:has(.guia-vila) .mapa-nav{left:336px!important}
+  .guia-vila{position:absolute;z-index:4;left:0;top:0;bottom:0;width:336px;padding:96px 14px 0 16px;overflow:hidden;background:linear-gradient(180deg,#CFE6F7 0%,#E6F3FC 45%,#F6EEDC 100%);box-shadow:inset -10px 0 18px -12px rgba(12,26,64,.35)}
+  .guia-vila::before{content:"";position:absolute;inset:0;background:url(/assets/arte/hero-paisagem.webp) 30% 60%/cover;opacity:.32;filter:blur(10px);pointer-events:none;z-index:-1}
+  .guia-vila .guia-corpo{padding:10px;gap:8px;max-height:calc(100dvh - 96px - 128px);overflow:auto;scrollbar-width:thin}
+}
+@media (min-width:900px) and (max-height:820px){
+  .guia-vila .guia-continuar{min-height:64px;font-size:22px;margin-top:4px}
+  .guia-vila .guia-bloco{padding:8px 10px}
+  .guia-vila .guia-aqui{margin-top:20px}
 }
 @media (max-width:899px){
   .guia-vila{position:absolute;left:10px;right:10px;top:84px}
@@ -114,9 +123,11 @@
   .guia-vila.aberto .guia-corpo{display:flex}
 }
 /* ---- nas trilhas ---- */
+/* PC largo: duas colunas na própria página (o painel reserva o seu espaço; nada de "fixed", que a animação da página quebraria) */
 @media (min-width:1200px){
-  .com-guia .palco{max-width:min(1240px,calc(100vw - 360px));margin-left:max(340px,calc(50vw - 620px));margin-right:auto}
-  .guia-trilha{position:fixed;left:20px;top:calc(var(--topo) + 22px);width:304px;max-height:calc(100dvh - var(--topo) - 40px);overflow:auto;scrollbar-width:thin;border-radius:var(--r-g)}
+  div.com-guia .palco{max-width:1640px;display:grid;grid-template-columns:304px minmax(0,1fr);gap:22px;align-items:start}
+  div.com-guia .palco>.cartao{min-width:0;max-width:none;margin:0}
+  .guia-trilha{position:sticky;top:calc(var(--topo) + 10px);max-height:calc(100dvh - var(--topo) - 24px);overflow:auto;scrollbar-width:thin;border-radius:var(--r-g)}
 }
 @media (max-width:1199px){
   .guia-trilha{max-width:1100px;margin:0 auto 14px}

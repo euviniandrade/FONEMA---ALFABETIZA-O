@@ -171,6 +171,7 @@ export async function trechoJogos(browser, h) {
         await jogarRodada(page, { tirar: async () => cap('fase-')(jogo === 'corre-som' ? '12-desafio-corre' : '14-desafio-come') });
       }
     });
+    console.log('  · jogos oferecidos na Letra A:', [...jogados].join(', ') || 'nenhum');
     ok(jogados.has('corre-som') && jogados.has('come-som'), 'Letra A: a cena "som → letra" ofereceu o Corre-Som e a "som → figura" o Bichinho, e os dois foram jogados');
     await pg.getByTestId('ritual').locator('h1').waitFor();
     p = await lerProgresso(pg, id);

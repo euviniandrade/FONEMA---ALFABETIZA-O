@@ -1,6 +1,10 @@
 /**
  * Migração dos dados salvos, SEM PERDER PROGRESSO.
  *
+ * Versão 3 → 4 (17/11, Trilha dos Sons TF-23…TF-25 na jornada, antes das letras R…W e da Festa): a mesma regra da versão 3
+ * (`reordenarJornada`): nada concluído se desfaz, as lições novas entram trancadas e a fase atual é a primeira que falta na
+ * ordem nova (quem já tinha passado da revisão P…G volta para TF-23, a primeira lição nova).
+ *
  * Versão 2 → 3 (D031, letras e sons alternados): a ordem da jornada mudou. Fases concluídas continuam concluídas e as liberadas
  * pelo nível inicial continuam liberadas; fases novas (revisões do alfabeto por bloco) entram trancadas; a fase atual é
  * recalculada pela nova ordem (a primeira que ainda falta) e é a única aberta de novo (as outras, não concluídas, voltam a
@@ -23,7 +27,7 @@ import { avaliarDominio, recalcularP } from './dominio.ts';
 import { normalizarTentativa } from './tentativas.ts';
 import { marcarFasesDominadas } from './jornada.ts';
 
-export const VERSAO_PROGRESSO = 3;
+export const VERSAO_PROGRESSO = 4;
 
 /** Habilidades confirmadas por prova de fase (chefe vencido ou prova-relâmpago aprovada). */
 function confirmadasPorProva(p: Progresso): Set<string> {

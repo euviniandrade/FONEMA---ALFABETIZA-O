@@ -54,6 +54,18 @@ export const HABILIDADES: Habilidade[] = [
   { id: 'par-minimo-k-g', regiao: 'TF', nome: 'Pares mínimos C × G', paraFamilia: 'ouve e lê a diferença entre C e G (calo, galo)', exigePseudo: false },
   { id: 'par-minimo-m-b', regiao: 'TF', nome: 'Pares mínimos M × B (escuta)', paraFamilia: 'ouve a diferença entre M e B (mala, bala)', exigePseudo: false },
   { id: 'par-minimo-vogal', regiao: 'TF', nome: 'Pares mínimos de vogal (escuta)', paraFamilia: 'ouve a diferença entre vogais (dado, dedo)', exigePseudo: false },
+  // Blocos 4 e 5 (TF-23…TF-32; docs/pedagogia/02 §4: FG-AB-01, FG-NAS-01 a 05, FG-CTX)
+  { id: 'e-aberto-fechado', regiao: 'TF', nome: 'é × ê', paraFamilia: 'lê e ouve a diferença entre é e ê (pé, bebê)', exigePseudo: false },
+  { id: 'regra-vogal-aberta', regiao: 'TF', nome: 'E e O abertos sem acento; ê e ô', paraFamilia: 'lê E e O abertos sem acento (bola, vela) e sabe que o chapeuzinho fecha o som (vovô, bebê)', exigePseudo: false },
+  ...(['a', 'e', 'i', 'o', 'u'] as const).map((v): Habilidade => {
+    const g: Record<string, string> = { a: 'Ã e AN', e: 'EN', i: 'IM e IN', o: 'OM e ON', u: 'UM e UN' };
+    const ex: Record<string, string> = { a: 'lã, anta', e: 'dente, vento', i: 'sim, lindo', o: 'bom, onda', u: 'um, mundo' };
+    return { id: `gpc-nasal-${v}`, regiao: 'TF', nome: `${g[v]} ↔ som /${v}/ nasal`, paraFamilia: `lê o som de ${v.toUpperCase()} pelo nariz (${ex[v]})`, exigePseudo: false };
+  }),
+  { id: 'regra-m-n', regiao: 'TF', nome: 'M antes de P e B; ão, ãe, õe', paraFamilia: 'escreve o som do nariz com M antes de P e B (campo) e lê mão, mãe, tem', exigePseudo: false },
+  { id: 'gpc-r', regiao: 'TF', nome: 'Letra R do começo ↔ R forte', paraFamilia: 'lê o R do começo da palavra (rato, rua), do jeito da sua região', exigePseudo: false },
+  { id: 'regra-r', regiao: 'TF', nome: 'R fraco entre vogais', paraFamilia: 'lê o R entre vogais com o som fraco (cara, arara)', exigePseudo: false },
+  { id: 'par-minimo-l-r', regiao: 'TF', nome: 'Pares mínimos L × R', paraFamilia: 'lê a diferença entre L e R (pela, pera)', exigePseudo: false },
   { id: 'leitura-frase', regiao: 'TF', nome: 'Ler uma frase curta', paraFamilia: 'lê uma frase curta sem ajuda', exigePseudo: false },
   { id: 'compreensao-lida', regiao: 'TF', nome: 'Entender o que leu', paraFamilia: 'responde a uma pergunta sobre a frase que leu', exigePseudo: false },
   // Cantinho da Leitura e Brincar com sons (docs/pedagogia/02: CF-SIL-03, CF-SIL-04, CF-PDP-01, COMP-OUV-01, VOC-01, DEC-TXT-01,

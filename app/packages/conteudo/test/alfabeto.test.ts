@@ -23,11 +23,13 @@ describe('Trilha do Alfabeto (D027)', () => {
     expect(REGIAO_POR_ID.AL.fases).toEqual(FASES_ALFABETO.map((f) => f.id));
     // jornada: cada letra com lição entra LOGO ANTES da lição TF que ensina o som dela
     const ids = FASES.map((f) => f.id);
-    for (const [letra, tf] of Object.entries(LICAO_DA_LETRA)) expect(ids[ids.indexOf(tf) - 1], `${letra} antes de ${tf}`).toBe(faseDaLetra(letra));
+    // (lição ainda EM ESPERA, fora da jornada: a letra fica no bloco da Festa; ver o teste de montarLetrasESons)
+    for (const [letra, tf] of Object.entries(LICAO_DA_LETRA)) if (ids.includes(tf)) expect(ids[ids.indexOf(tf) - 1], `${letra} antes de ${tf}`).toBe(faseDaLetra(letra));
     expect(ids.slice(0, ids.indexOf('AL-FESTA') + 1).join(' ')).toBe([
       'AL-A TF-01 AL-E TF-02 AL-I TF-03 AL-O TF-04 AL-U TF-05 TF-06 AL-RV1',
       'AL-M TF-07 AL-F TF-08 AL-V TF-09 AL-L TF-10 AL-S TF-11 TF-12 AL-N TF-13 AL-Z TF-14 AL-J TF-15 TF-R2 AL-RV2',
       'AL-P TF-16 AL-T TF-17 AL-B TF-18 AL-C TF-19 AL-D TF-20 AL-G TF-21 TF-22 TF-R3 AL-RV3',
+      'TF-23 TF-24 TF-25',
       'AL-R AL-H AL-X AL-Q AL-K AL-Y AL-W AL-FESTA'
     ].join(' '));
     expect(ORDEM_LETRAS_JORNADA.join('')).toBe('AEIOUMFVLSNZJPTBCDGRHXQKYW');

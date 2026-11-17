@@ -23,7 +23,8 @@ describe('conteúdo da jornada', () => {
     expect(REGIOES.map((r) => r.id)).toEqual(['AL', 'TF', 'R1', 'R2a', 'R0']);
     expect(REGIOES.map((r) => r.etapa)).toEqual(['Alfabeto', 'Ler e escrever', 'Vogais abertas', 'Palavras', 'Meu nome']);
     expect(FASES.filter((f) => f.regiao === 'AL')).toHaveLength(30); // 26 letras + 3 revisões por bloco + Festa
-    expect(FASES.filter((f) => f.regiao === 'TF')).toHaveLength(24);
+    // TF-01…TF-25 e as revisões TF-06 (vogais), TF-R2 e TF-R3; as lições em espera (TF-26 em diante) ficam fora (fases/tf.ts)
+    expect(FASES.filter((f) => f.regiao === 'TF')).toHaveLength(27);
     expect(FASES.filter((f) => f.regiao === 'R1').map((f) => f.id)).toEqual(['R1-F02', 'R1-F03', 'R1-F06', 'R1-F07']);
     expect(FASES.filter((f) => f.regiao === 'R2a')).toHaveLength(5);
     expect(FASES.filter((f) => f.regiao === 'R0').map((f) => f.id)).toEqual(['R0-F01']);

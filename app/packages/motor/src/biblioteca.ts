@@ -11,7 +11,7 @@
  *   p. 379 são de Portugal) — o gráfico compara a criança com ela mesma.
  * Números marcados [DP] são decisão do projeto, a calibrar com uso real.
  */
-import { FASES_TF, HABILIDADE_POR_ID, TEXTOS_DECODIFICAVEIS, numeroDaUnidade, verificarPalavra } from '@fonema/conteudo';
+import { FASES_TF, HABILIDADE_POR_ID, TEXTOS_DECODIFICAVEIS, UNIDADE_DA_REVISAO_TF, numeroDaUnidade, verificarPalavra } from '@fonema/conteudo';
 import type { Cena, ConfigPlataforma, EntradaBanco, TextoDecodificavel } from '@fonema/conteudo';
 import type { ConquistaGanha, Demonstracao, Progresso, Tentativa } from './estado.ts';
 import { aplicarAtividade } from './jornada.ts';
@@ -99,14 +99,13 @@ export function registrarLivre(
 
 /* ------------------------------------------------------------ o que já está liberado ------------------------------------------------------------ */
 
-const UNIDADE_DA_REVISAO: Record<string, string> = { 'TF-R2': 'TF-15', 'TF-R3': 'TF-22' };
 
 /** Maior unidade da Trilha dos Sons já CONCLUÍDA (0 = nenhuma). Revisões valem como a última unidade do bloco. */
 export function unidadeConcluida(p: Progresso): number {
   let n = 0;
   for (const f of FASES_TF) {
     if (p.fases[f.id]?.estado !== 'concluida') continue;
-    n = Math.max(n, numeroDaUnidade(UNIDADE_DA_REVISAO[f.id] ?? f.id));
+    n = Math.max(n, numeroDaUnidade(UNIDADE_DA_REVISAO_TF[f.id] ?? f.id));
   }
   return n;
 }

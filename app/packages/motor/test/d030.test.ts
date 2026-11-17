@@ -283,7 +283,7 @@ describe('migração dos dados salvos (versão 1 → 2) sem perder progresso', (
   it('mantém fases, moedinhas, selos, desafios, revisão e TODAS as tentativas', () => {
     const v1 = antigo();
     const v2 = migrarProgresso(v1, cfg);
-    expect(v2.versao).toBe(3); // 1 → 2 (D030) e 2 → 3 (D031: ordem alternada)
+    expect(v2.versao).toBe(4); // 1 → 2 (D030), 2 → 3 (D031: ordem alternada) e 3 → 4 (TF-23…TF-25 na jornada)
     expect(v2.fases).toEqual(v1.fases);
     expect(v2.moedinhas).toEqual(v1.moedinhas);
     expect(v2.conquistas).toEqual(v1.conquistas);

@@ -34,7 +34,7 @@ describe('D031: migração do progresso salvo na ordem antiga', () => {
   it('no meio do alfabeto (A–K feitas, L aberta): nada concluído se perde e a fase atual passa a ser a lição do som /a/', () => {
     const antigo = salvoNaOrdemAntiga(ORDEM_ANTIGA.indexOf('AL-L'));
     const p = migrarProgresso(antigo, cfg);
-    expect(p.versao).toBe(3);
+    expect(p.versao).toBe(4);
     for (const id of ORDEM_ANTIGA.slice(0, ORDEM_ANTIGA.indexOf('AL-L'))) expect(p.fases[id].estado, id).toBe('concluida');
     // as revisões antigas (fora da jornada) ficam guardadas como estavam
     expect(p.fases['AL-R1'].estado).toBe('concluida');
@@ -75,7 +75,7 @@ describe('D031: migração do progresso salvo na ordem antiga', () => {
     expect(migrarProgresso(p, cfg)).toBe(p);
     expect(reordenarJornada(p, T0)).toEqual(p);
     const novo = progressoInicial('c1', T0);
-    expect(novo.versao).toBe(3);
+    expect(novo.versao).toBe(4);
     expect(migrarProgresso(novo, cfg)).toBe(novo);
   });
 

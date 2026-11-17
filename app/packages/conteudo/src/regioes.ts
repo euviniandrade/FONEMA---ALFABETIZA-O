@@ -14,12 +14,15 @@ import { FASES_TF } from './fases/tf.ts';
  *      A TF-01 · E TF-02 · I TF-03 · O TF-04 · U TF-05 · TF-06 · revisão das vogais (AL-RV1)
  *      M TF-07 · F TF-08 · V TF-09 · L TF-10 · S TF-11 · TF-12 · N TF-13 · Z TF-14 · J TF-15 · TF-R2 · revisão M…J (AL-RV2)
  *      P TF-16 · T TF-17 · B TF-18 · C TF-19 · D TF-20 · G TF-21 · TF-22 · TF-R3 · revisão P…G (AL-RV3)
- *      R · H · X · Q · K · Y · W (letras que a trilha fônica só usa depois de TF-22, na ordem dela) · Festa do Alfabeto
+ *      TF-23 (é, ó) · TF-24 (é × ê, ó × ô) · TF-25 (ã) — bloco 4 da trilha fônica; TF-26…TF-30 e TF-R4 (vogais nasais) e o bloco 5
+ *      (TF-31 R forte, TF-32 R fraco) estão escritos e EM ESPERA de sons puros (fases/tf.ts › FASES_TF_EM_ESPERA)
+ *      R · H · X · Q · K · Y · W (letras que a trilha fônica só usa depois, na ordem dela; o R vai para logo antes de TF-31
+ *      quando ela entrar) · Festa do Alfabeto
  *    A Trilha A–Z é "conhecer as letras": NÃO libera leitura e escrita sozinha (D030 §4); quem ensina a ler é a Trilha dos Sons.
  *    No MAPA a Trilha A–Z continua inteira, em ordem alfabética (regra 7): só o caminho guiado mudou.
  *    O nível inicial "já conhece as letras e os sons" começa em TF-06 e deixa a Trilha A–Z inteira aberta para revisar.
- * 2. R1  · Os OUTROS sons das vogais (é/ê, ó/ô) e as 5 vogais misturadas: na trilha fônica eles vêm DEPOIS das
- *          consoantes de estouro (TF-23 e TF-24, docs/pedagogia/01 §6), e é exatamente aqui que ficam.
+ * 2. R1  · Os OUTROS sons das vogais (é/ê, ó/ô) e as 5 vogais misturadas: desde 17/11 a trilha fônica já os ensina em TF-23
+ *          e TF-24 (antes da Festa); a Ilha das Vogais fica aqui como revisão (regra 7: nada sai).
  * 3. R2a · Vale do M-L-F: as primeiras palavras e o chefe "Cachoeira dos Sons". Depois da Trilha dos Sons vira
  *          REVISÃO de leitura e escrita (M, L e F já foram ensinados em TF-07, TF-08 e TF-10; as habilidades são as mesmas).
  * 4. R0  · Meu nome: "O som do meu nome" chega como presente depois das primeiras palavras, quando a criança já
@@ -33,24 +36,29 @@ const R1_NA_JORNADA = ['R1-F02', 'R1-F03', 'R1-F06', 'R1-F07'];
 const FASES_VOGAIS = FASES_R1.filter((f) => R1_NA_JORNADA.includes(f.id));
 const FASES_MEU_NOME = FASES_R0.filter((f) => f.id === 'R0-F01');
 
-/** D031: letras e lições alternadas (cada fase da letra logo antes da lição do som dela; revisões no fim de cada bloco). */
-export const FASES_LETRAS_E_SONS: Fase[] = (() => {
+/**
+ * D031: letras e lições alternadas (cada fase da letra logo antes da lição do som dela; revisões no fim de cada bloco).
+ * `fasesTF` = as lições da Trilha dos Sons que estão na jornada (as em espera ficam de fora; fases/tf.ts). Letra do último bloco
+ * cuja lição já está na jornada (R → TF-31) sai do fim e entra logo antes da lição; as outras continuam no bloco da Festa.
+ */
+export function montarLetrasESons(fasesTF: Fase[]): Fase[] {
   const al = Object.fromEntries(FASES_ALFABETO.map((f) => [f.id, f]));
   const letraDaLicao = Object.fromEntries(Object.entries(LICAO_DA_LETRA).map(([letra, tf]) => [tf, letra]));
   const revisaoDepois = Object.fromEntries(BLOCOS_ALFABETO.filter((b) => b.depoisDe).map((b) => [b.depoisDe!, b.id]));
   const out: Fase[] = [];
-  for (const tf of FASES_TF) {
+  for (const tf of fasesTF) {
     if (letraDaLicao[tf.id]) out.push(al[faseDaLetra(letraDaLicao[tf.id])]);
     out.push(tf);
     if (revisaoDepois[tf.id]) out.push(al[revisaoDepois[tf.id]]);
   }
   const ultimo = BLOCOS_ALFABETO[BLOCOS_ALFABETO.length - 1];
-  for (const letra of ultimo.letras) out.push(al[faseDaLetra(letra)]);
+  for (const letra of ultimo.letras) if (!out.includes(al[faseDaLetra(letra)])) out.push(al[faseDaLetra(letra)]);
   out.push(al[ultimo.id]);
   const faltam = FASES_ALFABETO.filter((f) => !out.includes(f));
-  if (faltam.length || out.some((f) => !f)) throw new Error(`Jornada D031 incompleta: ${faltam.map((f) => f.id).join(', ')}`);
+  if (faltam.length || out.some((f) => !f) || new Set(out).size !== out.length) throw new Error(`Jornada D031 incompleta ou repetida: ${faltam.map((f) => f.id).join(', ')}`);
   return out;
-})();
+}
+export const FASES_LETRAS_E_SONS: Fase[] = montarLetrasESons(FASES_TF);
 
 export const FASES: Fase[] = [...FASES_LETRAS_E_SONS, ...FASES_VOGAIS, ...FASES_R2A, ...FASES_MEU_NOME];
 export const FASE_POR_ID: Record<string, Fase> = Object.fromEntries(FASES.map((f) => [f.id, f]));
