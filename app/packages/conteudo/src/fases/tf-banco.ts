@@ -164,7 +164,7 @@ for (const x of PALAVRAS_BLOCOS_4_5) {
 
 /**
  * Palavras das FICHAS DE LEITURA por campo semântico (D033; conteudo/src/fichas.ts), acrescentadas em 17/11 em bloco
- * separado. São as figuras dos campos que ainda não estavam no banco: a maioria usa sons de unidades futuras e aparece
+ * separado. São as figuras dos campos que ainda não estavam no banco ("peixe" e "pia" já estavam: só ganham a figura): a maioria usa sons de unidades futuras e aparece
  * TRANCADA ("em breve") até a criança chegar lá; nenhuma entra para ler antes disso (regra 2). Anotação pela fala comum do
  * Brasil: E/O tônicos abertos × fechados conferidos um a um; O e E átonos do fim como U e I.
  * DUVIDOSAS (revisar com alfabetizadora): "leão" (E átono pode soar I: "liãu"), "formiga" (O átono pode soar U), "estrela"
@@ -173,7 +173,7 @@ for (const x of PALAVRAS_BLOCOS_4_5) {
  */
 export const PALAVRAS_FICHAS: EntradaBanco[] = [
   // animais
-  e('leão', 'l e ã u', { figura: 'leao' }), e('zebra', 'z e b ɾ a', { figura: 'zebra' }), e('abelha', 'a b e ʎ a', { figura: 'abelha' }),
+  e('peixe', 'p e i ʃ i', { figura: 'peixe' }), e('pia', 'p i a', { figura: 'pia' }), e('leão', 'l e ã u', { figura: 'leao' }), e('zebra', 'z e b ɾ a', { figura: 'zebra' }), e('abelha', 'a b e ʎ a', { figura: 'abelha' }),
   e('jacaré', 'ʒ a k a ɾ ɛ', { figura: 'jacare' }), e('cobra', 'k ɔ b ɾ a', { figura: 'cobra' }), e('elefante', 'e l e f ã tʃ i', { figura: 'elefante' }),
   e('formiga', 'f o ɾ m i g a', { figura: 'formiga' }), e('ovelha', 'o v e ʎ a', { figura: 'ovelha' }), e('urso', 'u ɾ s u', { figura: 'urso' }),
   // comidas

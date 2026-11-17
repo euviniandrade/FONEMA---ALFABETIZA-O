@@ -11,7 +11,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { BANCO, FALAS_BIBLIOTECA as B, FASES_TF, HISTORIAS, HISTORIA_POR_ID, TEXTOS_DECODIFICAVEIS, TEXTO_POR_ID, nomeDaFigura, type AtividadeFrase } from '@fonema/conteudo';
 import {
-  anotarBiblioteca, dadosBiblioteca, estadoFluencia, palavrasParaEscrever, registrarLivre, resumoFluencia, textoLiberado, type DadosBiblioteca,
+  anotarBiblioteca, dadosBiblioteca, estadoDosCampos, estadoFluencia, palavrasParaEscrever, registrarLivre, resumoFluencia, textoLiberado, type DadosBiblioteca,
   type Tentativa
 } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
@@ -28,6 +28,7 @@ import { TextoLeitura } from '../../mecanicas/TextoLeitura.tsx';
 import { Fluencia } from '../../mecanicas/Fluencia.tsx';
 import { EcoCoro } from '../../mecanicas/EcoCoro.tsx';
 import { EscritaPropria } from '../../mecanicas/EscritaPropria.tsx';
+import { TelaFichas } from './Fichas.tsx';
 import '../../estilos-biblioteca.css';
 
 /** Salva o que a criança fez numa atividade livre (respostas conferidas → motor; resumo → adulto). */
@@ -73,6 +74,8 @@ export function Biblioteca({ criancaId, sub }: { criancaId: string; sub?: string
   const escrever = useMemo(() => (progresso ? palavrasParaEscrever(progresso, BANCO) : []), [progresso]);
   const escolhidas = useMemo(() => (progresso ? [...frasesEstudadas(progresso)].sort(() => Math.random() - 0.5).slice(0, 3) : []), [sub, rodada, !!progresso]); // eslint-disable-line react-hooks/exhaustive-deps
   const palavraEscrita = useMemo(() => (escrever.length ? escrever[Math.floor(Math.random() * escrever.length)] : null), [escrever, rodada]); // eslint-disable-line react-hooks/exhaustive-deps
+  // D033: fichas de leitura por campo semântico (tela própria: Fichas.tsx)
+  if (sub && /^fichas?(\.|$)/.test(sub)) return <TelaFichas criancaId={criancaId} sub={sub} />;
   if (!crianca || !progresso) return <Carregando />;
 
   const voltar = `c/${criancaId}/leitura`;
@@ -214,6 +217,21 @@ function Menu({ criancaId, d, flu, frases, escrever, progresso }: {
             </button>
           );
         })}
+      </div>
+
+      {/* D033: fichas de leitura por campo semântico (só as palavras que a criança já lê; o resto trancado) */}
+      <h2 className="biblio-secao t"><Icone nome="boca" />Fichas de leitura <small>palavras por tema, com a boquinha em cada letra</small></h2>
+      <div className="biblio-grade praticas">
+        {(() => {
+          const cs = estadoDosCampos(progresso);
+          const n = cs.reduce((s, c) => s + c.legiveis.length, 0);
+          return (
+            <button className={`biblio-pratica fichas ${n ? '' : 'trancado'}`} style={estilo()} disabled={!n} onClick={() => ir('fichas')} data-testid="ir-fichas">
+              <span className="biblio-pratica-icone"><Icone nome="boca" /></span>
+              <b>Fichas de leitura</b><small>{n ? `${n} palavras para ler em ${cs.filter((c) => c.legiveis.length).length} temas` : 'Abre quando você aprender os sons de uma palavra'}</small>
+            </button>
+          );
+        })()}
       </div>
 
       <h2 className="biblio-secao t"><Icone nome="raio" />Praticar a leitura</h2>

@@ -245,7 +245,7 @@ export function FichaBocas({ progresso, campo, crianca, sessao, contexto, onFim 
 }) {
   const semente = useMemo(novaSemente, []);
   const rodada = useMemo(() => rodadaDeBocas(progresso, campo, sorteio(semente)), []); // eslint-disable-line react-hooks/exhaustive-deps
-  const pares = rodada?.pares ?? [];
+  const pares = useMemo(() => rodada?.pares ?? [], [rodada]);
   const letras = useMemo(() => [...pares].sort((a, b) => a.letra.localeCompare(b.letra)), [pares]);
   const bocas = useMemo(() => {
     const r = sorteio(semente + 11);

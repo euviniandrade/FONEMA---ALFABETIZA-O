@@ -43,11 +43,18 @@ type Rng = () => number;
 
 /** A palavra pode ser LIDA na ficha agora? (sons ensinados numa unidade concluída, sem aviso, sons puros publicados) */
 export function legivelNaFicha(p: Progresso, w: string): boolean {
-  const n = unidadeConcluida(p);
+  return legivelNaUnidade(unidadeConcluida(p), w);
+}
+/** O resultado só depende da unidade concluída: guardado para não refazer a análise a cada tela. */
+const LEGIVEL = new Map<string, boolean>();
+function legivelNaUnidade(n: number, w: string): boolean {
+  const chave = `${n}|${w.toLowerCase()}`;
+  const ja = LEGIVEL.get(chave);
+  if (ja !== undefined) return ja;
   const e = BANCO[w.toLowerCase()];
-  if (n <= 0 || !e || e.pseudo || !verificarPalavra(e.texto, n, BANCO).ok) return false;
-  if (valoresDaEntrada(e).valores.some((v) => VALORES_AVISO.includes(v))) return false;
-  return fichaTemSons(e.texto);
+  const ok = n > 0 && !!e && !e.pseudo && verificarPalavra(e.texto, n, BANCO).ok && !valoresDaEntrada(e).valores.some((v) => VALORES_AVISO.includes(v)) && fichaTemSons(e.texto);
+  LEGIVEL.set(chave, ok);
+  return ok;
 }
 
 export interface EstadoCampo { campo: CampoSemantico; legiveis: string[]; trancadas: string[] }

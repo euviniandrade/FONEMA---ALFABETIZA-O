@@ -1,7 +1,7 @@
 import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { useEffect, useMemo, useState } from 'react';
-import { CONQUISTA_POR_ID, FASE_POR_ID, FALAS, type Fase } from '@fonema/conteudo';
-import { calcularNivel, desafioDaFase, fasesConcluidas, missaoInicialFeita, infoNome, situacaoSondagem, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
+import { CAMPO_POR_ID, CONQUISTA_POR_ID, FASE_POR_ID, FALAS, type Fase } from '@fonema/conteudo';
+import { calcularNivel, campoDoDesafio, desafioDaFase, fasesConcluidas, missaoInicialFeita, infoNome, situacaoSondagem, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Topo } from '../../componentes/basicos.tsx';
@@ -27,6 +27,8 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
   const letra = infoNome(crianca.nome, crianca.pronuncia.grafia).letras;
   const saldoAntes = progresso.moedinhas.saldo - relatorio.moedinhas;
   const desafio = useMemo(() => desafioDaFase(progresso, fase.id), [progresso, fase.id]);
+  // D033: ficha de leitura como desafio opcional nas lições da Trilha dos Sons (campo com palavras que a criança já lê)
+  const ficha = useMemo(() => campoDoDesafio(progresso, fase.id), [progresso, fase.id]);
 
   useEffect(() => {
     let vivo = true;
@@ -117,6 +119,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
             <BotaoTreino criancaId={crianca.id} progresso={progresso} className="btn grande btn-treino" />
             {/* D032 §4: desafio opcional com um jogo da vila, com o que esta missão trabalhou (jogos-vila.ts › desafioDaFase) */}
             {desafio ? <button className="btn grande verde" onClick={() => navegar(`c/${crianca.id}/jogo/${desafio.jogo}/${fase.id}`)} data-testid="desafio-jogo"><Icone nome="play" />{NOME_DESAFIO[desafio.jogo]}</button> : null}
+            {ficha ? <button className="btn grande verde" onClick={() => navegar(`c/${crianca.id}/leitura/ficha.${ficha}.desafio`)} data-testid="desafio-ficha"><Icone nome="boca" />Ficha de leitura: {CAMPO_POR_ID[ficha].titulo}</button> : null}
             <button className="btn grande ipe" onClick={() => navegar(`c/${crianca.id}/vila`)} data-testid="voltar-vila"><Icone nome="casa" />{textoTela('Tchau! Voltar para a vila', crianca)}</button>
           </div>
         </section>

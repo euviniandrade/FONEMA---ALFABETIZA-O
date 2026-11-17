@@ -115,7 +115,13 @@ export function pedacosDaPalavra(palavra: string): PedacoFicha[] {
 }
 
 /** Sons da palavra (fonemas do mapa, sem as letras caladas). */
-export const sonsDaFicha = (palavra: string): string[] => pedacosDaPalavra(palavra).map((p) => p.fonema).filter((f): f is string => !!f);
+const SONS_CACHE = new Map<string, string[]>();
+export function sonsDaFicha(palavra: string): string[] {
+  const w = palavra.toLowerCase();
+  let s = SONS_CACHE.get(w);
+  if (!s) { s = pedacosDaPalavra(w).map((p) => p.fonema).filter((f): f is string => !!f); SONS_CACHE.set(w, s); }
+  return s;
+}
 
 /** Todos os sons da palavra já existem como som puro publicado (dá para tocar a ficha inteira)? */
 export const fichaTemSons = (palavra: string): boolean => sonsDaFicha(palavra).every((f) => SONS_PUBLICADOS.includes(f));
