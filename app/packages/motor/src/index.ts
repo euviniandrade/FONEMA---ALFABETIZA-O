@@ -26,3 +26,4 @@ export * from './reforco-treino.ts';
 export * from './biblioteca.ts';
 export * from './guia.ts';
 export * from './jogos-fonicos.ts';
+export * from './jogos-vila.ts';

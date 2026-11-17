@@ -29,8 +29,11 @@ export type TipoTentativa = 'avaliada' | 'exposicao' | 'autorrelato';
 export type MecanicaTentativa = Atividade['tipo'] | 'sondagem' | MecanicaLivre;
 /** Mecânicas do Cantinho da Leitura e do Brincar com sons (biblioteca.ts). */
 export type MecanicaLivre = 'historia' | 'texto' | 'fluencia' | 'escuta' | MecanicaJogo;
-/** D032 §4: jogos fônicos (jogos-fonicos.ts). Cada escolha conferida é uma tentativa AVALIADA; moedas e distância não contam. */
-export type MecanicaJogo = 'corre-som' | 'come-som';
+/**
+ * D032 §4: jogos fônicos. Corre-Som e Bichinho Come-Som (jogos-fonicos.ts); Estrada e Rio dos Pares, Carteiro da Vila e Casa do
+ * Som (jogos-vila.ts). Cada escolha conferida é uma tentativa AVALIADA; moedas, distância e enfeites não contam.
+ */
+export type MecanicaJogo = 'corre-som' | 'come-som' | 'estrada-pares' | 'carteiro' | 'casa-som';
 
 /** De que natureza é o `alvo` (para o painel separar sons, letras e palavras). */
 export type CategoriaAlvo = 'fonema' | 'grafema' | 'silaba' | 'palavra' | 'pseudopalavra' | 'outro';
@@ -200,6 +203,18 @@ export interface Progresso {
   tutorial?: { passo?: number; vistoEm?: number; puladoEm?: number; vezes?: number };
   /** D032: resumo da última missão feita (painel guia: estrelinhas e selos). */
   ultimaMissao?: ResumoMissao;
+  /** D032 §4: jogos da vila (jogos-vila.ts): casinha decorada e cor do carro/barco. Brincadeira: nada aqui conta como domínio. */
+  jogosVila?: DadosJogosVila;
+}
+
+/** Casa do Som e garagem (jogos-vila.ts). Só enfeite e brincadeira (regra 4): nunca entra no domínio. */
+export interface DadosJogosVila {
+  /** Móveis já recebidos na Casa do Som (palavra do móvel), na ordem em que chegaram. */
+  moveis: string[];
+  /** Onde cada móvel está na casinha (em % da sala: x da esquerda, y de cima). */
+  posicoes: Record<string, { x: number; y: number }>;
+  /** Cor escolhida do carro/barco (id da cor em jogos-vila.ts › CORES_VEICULO). */
+  corVeiculo?: string;
 }
 
 /** D032: resumo da última missão, para o painel guia (estrelinhas = retorno à criança, não domínio). */
