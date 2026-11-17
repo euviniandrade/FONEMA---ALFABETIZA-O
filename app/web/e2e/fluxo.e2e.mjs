@@ -700,8 +700,8 @@ async function main() {
     const errosM = [];
     const capM = process.argv.includes('--capturas-mundo3d') ? DIR_CAP : undefined;
     if (capM) mkdirSync(DIR_CAP, { recursive: true });
-    await trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosM, capturas: capM });
-    await browser.close(); servidor?.kill();
+    try { await trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosM, capturas: capM }); }
+    finally { await browser.close(); servidor?.kill(); }
     if (errosM.length) throw new Error(`erros na página:\n${errosM.join('\n')}`);
     return;
   }

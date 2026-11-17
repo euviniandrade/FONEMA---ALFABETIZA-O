@@ -17,8 +17,8 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 | 6 | Jogos: Corre-Som e Bichinho Come-Som (17/11) | 🔧 | pesquisa 47 |
 | 7 | Jogos: Estrada e Rio dos Pares, Carteiro da Vila, Casa do Som (17/11) | ✅ pronto no repositório (falta publicar; testar o botão de desafio no fim da missão e o arrastar no celular real) | pesquisa 47 |
 | 8 | Jogos primeiro dentro dos desafios; depois livres no Parque de Jogos, mostrando os tipos de jogo (17/11) | 🔧 | D032 §4 |
-| 9 | Página do administrador (login do dono, aba à parte; admin da escola; configurar o site) (17/11) | 🔧 | D032 §5 |
-| 10 | Áudios: texto ao lado de cada áudio (letra, palavra, sílaba, frase), subir/gravar áudio que entra no lugar certo; "Gravar o alfabeto" com a Agatha (17/11) | 🔧 (sem servidor: pacote enviado e aplicado ao repositório) | D032 §5 |
+| 9 | Página do administrador (login do dono, aba à parte; admin da escola; configurar o site) (17/11) | ✅ pronto no repositório (#/admin; falta publicar) | D032 §5 |
+| 10 | Áudios: texto ao lado de cada áudio (letra, palavra, sílaba, frase), subir/gravar áudio que entra no lugar certo; "Gravar o alfabeto" com a Agatha (17/11) | ✅ pronto no repositório (1.708 áudios listados; pacote .zip + importador; falta publicar) | app/docs/como-trocar-audios.md |
 | 11 | Lições depois da TF-22 (é/ó, vogais misturadas, nasais, R…) (17/11, "faça tudo") | 🔧 | pedagogia/01 |
 | 12 | Testes automáticos no GitHub (recomendação aceita) (17/11) | ✅ criado; 1ª execução completa a confirmar | .github/workflows/ci.yml |
 | 13 | Sofia nas cenas do som segurando coisas / fazendo a ação (médico "aaa", silêncio "xiii"…) (17/11) | 🔧 | — |
