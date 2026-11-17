@@ -17,7 +17,7 @@
  * jogo substitui, por escolha da criança, uma cena "som → letra" ou "som → figura" de uma fase (mesmos itens da fase).
  * Números marcados [DP] são decisão do projeto, a calibrar com uso real.
  */
-import { FIGURAS, LETRA_POR_ID, LICAO_DA_LETRA, PALAVRAS_SEM_VOZ, PARES_DE_VOZ, SONS_PARECIDOS, figurasDoSom, fonemasDasLetras, habilidadeLetra, habilidadeTF, parConfuso, usaSomReal } from '@fonema/conteudo';
+import { FIGURAS, LETRA_POR_ID, SONS_DUVIDOSOS, LICAO_DA_LETRA, PALAVRAS_SEM_VOZ, PARES_DE_VOZ, SONS_PARECIDOS, figurasDoSom, fonemasDasLetras, habilidadeLetra, habilidadeTF, parConfuso, usaSomReal } from '@fonema/conteudo';
 import type { AtividadeEscolher, Fala, ItemEscolha } from '@fonema/conteudo';
 import type { CategoriaAlvo, Progresso } from './estado.ts';
 import { letrasComSomVisto } from './sondagem-itens.ts';
@@ -99,14 +99,17 @@ export interface SomEnsinado { letra: string; som: string }
 
 /**
  * Sons que a criança JÁ estudou numa fase concluída (Trilha A–Z, Trilha dos Sons, vogais, Vale do M-L-F), um por som:
- * só letras do som real (sem H, K, W, Y; 04 R9) e só fonemas com clipe (`temSom`, quando informado). C, K e Q têm o
- * mesmo som: fica a primeira letra (C).
+ * só letras do som real (sem H, K, W, Y; 04 R9), sem os sons duvidosos da auditoria (SONS_DUVIDOSOS) e só fonemas com clipe
+ * (`temSom`, quando informado).
  */
 export function sonsEnsinados(p: Progresso, temSom?: (fonema: string) => boolean): SomEnsinado[] {
   const out: SomEnsinado[] = [];
   for (const letra of letrasComSomVisto(p)) {
     const l = LETRA_POR_ID[letra];
     if (!l?.fonema || !usaSomReal(l)) continue;
+    // som "duvidoso" na auditoria (L, V, J e os de estouro): na trilha ele nunca é o único estímulo de item que conta
+    // (a Sofia fala a sílaba); no jogo o estímulo é só o som, então eles ficam de fora até a gravação conferida [DP]
+    if (SONS_DUVIDOSOS.some((d) => LETRA_POR_ID[d]?.fonema === l.fonema)) continue;
     if (temSom && !temSom(l.fonema)) continue;
     if (out.some((x) => x.som === l.fonema)) continue;
     out.push({ letra, som: l.fonema });

@@ -33,10 +33,10 @@ describe('jogos fônicos: só o que a criança já estudou', () => {
     expect(variacoesDoJogo(concluidas(ALFA('AEI')), 'corre-som')[0]).toMatchObject({ liberada: true });
   });
 
-  it('H, K, W e Y não entram (sem som real); C, K e Q valem um som só', () => {
-    const p = concluidas(ALFA('ACHKQWYM'));
+  it('H, K, W e Y não entram (sem som real); sons duvidosos (C, V, P…) também não; cada som uma vez', () => {
+    const p = concluidas(ALFA('ACHKQWYMVPS'));
     const s = sonsEnsinados(p);
-    expect(s.map((x) => x.letra)).toEqual(['A', 'C', 'M']);
+    expect(s.map((x) => x.letra)).toEqual(['A', 'M', 'S']);
     expect(new Set(s.map((x) => x.som)).size).toBe(s.length);
   });
 
@@ -45,7 +45,7 @@ describe('jogos fônicos: só o que a criança já estudou', () => {
     expect(sonsEnsinados(p, (f) => f !== 'm').map((x) => x.letra)).not.toContain('M');
   });
 
-  const GRUPOS = ['AEI', 'AEIOU', 'AEIOUMF', 'AFCV', 'AUVLMS', 'ABCDEFGIJLMNOPSTUVZ', 'FACULIVOTDRB'];
+  const GRUPOS = ['AEI', 'AEIOU', 'AEIOUMF', 'AFSCV', 'AUVLMS', 'ABCDEFGIJLMNOPSTUVZ', 'FACULIVOTDRBS'];
   it('Corre-Som "letra": 3 opções, todas de letras já ensinadas, sons diferentes, som puro como estímulo', () => {
     for (const g of GRUPOS) {
       const p = concluidas(ALFA(g));
@@ -64,12 +64,12 @@ describe('jogos fônicos: só o que a criança já estudou', () => {
     }
   });
 
-  it('distrator parecido quando os dois sons já foram ensinados (R7: f/v, m/n, p/b)', () => {
-    const p = concluidas(ALFA('AFVIU'));
+  it('distrator parecido quando os dois sons já foram ensinados (R7: s/z, m/n)', () => {
+    const p = concluidas(ALFA('ASZIU'));
     let comPar = 0;
     for (let s = 1; s < 30; s++) {
       for (const i of montarRodada(p, 'corre-som', { variacao: 'letra', semente: s })) {
-        if (i.correta === 'F' || i.correta === 'V') { expect(i.opcoes.some((o) => o.id === (i.correta === 'F' ? 'V' : 'F'))).toBe(true); comPar++; }
+        if (i.correta === 'S' || i.correta === 'Z') { expect(i.opcoes.some((o) => o.id === (i.correta === 'S' ? 'Z' : 'S'))).toBe(true); comPar++; }
       }
     }
     expect(comPar).toBeGreaterThan(0);
