@@ -19,6 +19,7 @@ import { trechoJogos } from './trecho-jogos.mjs';
 import { trechoJogos2 } from './trecho-jogos2.mjs';
 import { trechoMundo3d } from './trecho-mundo3d.mjs';
 import { trechoAdmin } from './trecho-admin.mjs';
+import { trechoTutorial } from './trecho-tutorial.mjs';
 
 const aqui = dirname(fileURLToPath(import.meta.url));
 const CAPTURAS_V2 = process.argv.includes('--capturas-v2');
@@ -65,6 +66,20 @@ async function montarAvatar(page, escolhas = {}) {
     await page.locator(`.montar-corpo [data-peca="${peca}"][aria-checked="true"]`).waitFor();
   }
   await page.getByTestId('avatar-pronto').click();
+  await pularTutorial(page);
+}
+
+/**
+ * D032: na primeira vez, depois do boneco abre o tutorial "A grande aventura". Os outros trechos pulam (botão do adulto) e caem
+ * na Chegada, como antes; o tutorial inteiro é percorrido em `--tutorial` (trecho-tutorial.mjs).
+ */
+async function pularTutorial(page) {
+  const alvo = page.locator('[data-testid="tutorial"], [data-testid="primeira-missao"], [data-testid="vila"]').first();
+  await alvo.waitFor({ timeout: 15000 }).catch(() => {});
+  if (await page.getByTestId('tutorial').count()) {
+    await page.getByTestId('pular-tutorial').click();
+    await page.getByTestId('tutorial').waitFor({ state: 'detached' });
+  }
 }
 
 let n = 0;
@@ -709,6 +724,18 @@ async function main() {
     if (errosJ.length) throw new Error(`erros na página:\n${errosJ.join('\n')}`);
     return;
   }
+  if (process.argv.includes('--tutorial') || process.argv.includes('--capturas-tutorial')) {
+    const errosT = [];
+    const hT = { BASE, ok, passarPorteira, cadastrar, erros: errosT, dirCap: DIR_CAP };
+    if (process.argv.includes('--capturas-tutorial')) {
+      mkdirSync(DIR_CAP, { recursive: true });
+      await trechoTutorial(browser, { ...hT, w: 1850, h: 980, capturar: true });
+      await trechoTutorial(browser, { ...hT, w: 390, h: 844, suf: '-celular', movel: true, capturar: true });
+    } else await trechoTutorial(browser, hT);
+    await browser.close(); servidor?.kill();
+    if (errosT.length) throw new Error(`erros na página:\n${errosT.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--voz-real')) {
     const errosV = [];
     await trechoVozReal(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosV });
@@ -788,6 +815,10 @@ async function main() {
   ok(await page.locator('.vitrine-lista li').count() >= 4 && /Abre na Letra I/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'o fim da personalização ensina a Lojinha: o que abre depois, com fase e moedas');
   ok(/Acessibilidade/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'acessibilidade não vem de entrada: fica na Lojinha, grátis');
   await page.getByTestId('avatar-pronto').click();
+  // D032: o tutorial abre sozinho na primeira vez; aqui o adulto pula e a criança cai na Chegada (o tutorial inteiro: --tutorial)
+  await page.getByTestId('tutorial').waitFor();
+  ok(true, 'depois do boneco, na primeira vez, abre o tutorial "A grande aventura"');
+  await pularTutorial(page);
   await page.getByTestId('primeira-missao').waitFor();
   await page.waitForTimeout(300);
   await cap(page, 'chegada-oi-nome');
@@ -1002,6 +1033,7 @@ async function main() {
   await page.locator('[data-ir-passo="corCabelo"]').click();
   ok(await page.locator('.montar-corpo [data-peca="preto"][aria-checked="true"]').count() === 1, 'avatar antigo migrado: a cor do cabelo equivalente já vem escolhida');
   await page.getByTestId('avatar-pronto').click();
+  await pularTutorial(page);
   await page.locator('[data-testid="primeira-missao"], [data-testid="vila"]').first().waitFor();
   await page.goto(BASE + '#/c/cr-antiga/vila');
   await page.getByTestId('vila').waitFor();
@@ -1115,6 +1147,7 @@ async function main() {
   await trechoJogos2(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, dirCap: DIR_CAP });
   await trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
+  await trechoTutorial(browser, { BASE, ok, passarPorteira, cadastrar, erros, dirCap: DIR_CAP });
 
   if (CAPTURAS_AL) {
     const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR' });
