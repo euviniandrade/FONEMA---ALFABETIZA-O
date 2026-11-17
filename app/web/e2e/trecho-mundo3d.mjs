@@ -30,9 +30,9 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await pg.locator('[data-ponto="mundo3d"]').click();
   await pg.getByTestId('passeio3d').waitFor();
   const fr = pg.frameLocator('[data-testid="passeio3d-iframe"]');
-  const frame = await (await pg.getByTestId('passeio3d-iframe').elementHandle()).contentFrame();
-  frame.on?.('pageerror', (e) => erros.push(String(e)));
-  await frame.waitForFunction(() => window.FONEMA_PASSEIO, null, { timeout: 120000 });
+  const quadro = async (p) => { for (let i = 0; i < 300; i++) { const f = p.frames().find((x) => /mundo3d\/passeio\.html/.test(x.url())); if (f) return f; await p.waitForTimeout(200); } throw new Error('iframe do passeio não apareceu'); };
+  const frame = await quadro(pg);
+    await frame.waitForFunction(() => window.FONEMA_PASSEIO, null, { timeout: 120000 });
   await frame.waitForFunction(() => (window.FONEMA_RECEBIDOS || []).length >= 6, null, { timeout: 60000 }).catch(async (e) => { console.log('    recebidos até agora:', await frame.evaluate(() => window.FONEMA_RECEBIDOS)); throw e; });
   const recebidos = await frame.evaluate(() => window.FONEMA_RECEBIDOS);
   ok(recebidos.includes('crianca') && ['sofia', 'tales', 'bolota', 'crianca-1', 'crianca-2'].every((x) => recebidos.includes(x)), `o app mandou o boneco da criança e os outros 5 bonecos (${recebidos.join(', ')})`);
@@ -155,7 +155,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   const idc = pc.url().split('/c/')[1].split('/')[0];
   await pc.goto(BASE + `#/c/${idc}/mundo`);
   await pc.getByTestId('passeio3d').waitFor();
-  const fc = await (await pc.getByTestId('passeio3d-iframe').elementHandle()).contentFrame();
+  const fc = await quadro(pc);
   await fc.waitForFunction(() => window.FONEMA_PASSEIO && (window.FONEMA_RECEBIDOS || []).includes('crianca'), null, { timeout: 120000 });
   const tamanhos = await fc.evaluate(() => ['#btPular', '#btTchau'].map((s) => { const r = document.querySelector(s).getBoundingClientRect(); return Math.min(r.width, r.height); }));
   ok(tamanhos.every((t) => t >= 60), `botões grandes no celular: Pular e Tchau com ${tamanhos.map((t) => Math.round(t)).join(' e ')} px`);

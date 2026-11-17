@@ -110,6 +110,7 @@ export async function trechoJogos(browser, h) {
   await cap('')('01-brincar-jogos');
   ok(await pg.locator('[data-testid="jogo-corre-som"].trancado').count() === 0, 'com sons ensinados, o Corre-Som abre');
 
+  if (!process.env.SO_FASE) {
   // ---- Corre-Som, letras ----
   await pg.getByTestId('jogo-corre-som').click();
   await pg.getByTestId('variacao-letra').waitFor();
@@ -154,6 +155,7 @@ export async function trechoJogos(browser, h) {
   p = await lerProgresso(pg, id);
   ok(tentativasDo(p, 'come-som').filter((t) => t.habilidade === 'som-final').length === 6, 'variação "termina com": 6 escolhas na habilidade som final');
 
+  }
   // ---- desafio dentro da fase: Letra A ----
   if (!capturar || !movel) {
     await pg.goto(BASE + `#/c/${id}/sessao/AL-A`);
@@ -161,6 +163,7 @@ export async function trechoJogos(browser, h) {
     await jogarSessao(pg, {
       gancho: async (page, cena) => {
         const oferta = page.getByTestId('oferecer-jogo');
+        if (process.env.DEPURAR_JOGOS) console.log('    cena', cena, await page.locator('.mec').first().getAttribute('class').catch(() => '-'), await oferta.count());
         // a cena pode montar entre o gancho e o clique na resposta: nas duas cenas que viram jogo, espera a oferta aparecer
         if (/^AL-A-C[34]$/.test(cena) && jogados.size < 2) await oferta.waitFor({ timeout: 4000 }).catch(() => {});
         if (!(await oferta.isVisible().catch(() => false))) return;
