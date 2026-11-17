@@ -9,6 +9,37 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Jogos da vila: Estrada e Rio dos Pares, Carteiro da Vila e Casa do Som (D032 §4; pesquisa 47 G6, G10, G3; 17/11, noite; NÃO publicado ainda):**
+- **Regras puras** em `motor/src/jogos-vila.ts` (testes `motor/test/jogos-vila.test.ts`, 14). Telas em `web/src/mecanicas/jogos/`
+  (`EstradaPares.tsx`, `Carteiro.tsx`, `CasaDoSom.tsx`, `vila-comum.tsx`, `estilos-jogos-vila.css`) e `web/src/telas/crianca/JogosVila.tsx`
+  (rota `#/c/:id/jogo[/:jogo[/:faseId]]`); cartões e rotas sem as telas em `telas/crianca/jogos-vila-cartoes.ts`. Aparecem na área
+  **Jogos** do Brincar, ao lado do Corre-Som e do Bichinho (trancados com o motivo até a trilha chegar lá).
+- **Estrada e Rio dos Pares:** o carrinho ou o barco do avatar para em cada bifurcação; 3 placas com figura (par mínimo + distrator,
+  lado sorteado). "Ouvir": a Sofia diz a palavra. "Ler": a palavra vem escrita no barco/carro e ninguém a diz antes. Itens = os
+  pares das lições JÁ CONCLUÍDAS da Trilha dos Sons (faca/vaca/foca, vaca/faca/jaca, mala/bala/mula, dado/dedo/pato; o "ler" só com
+  palavra liberada pelo verificador). Grava na habilidade do contraste (`par-minimo-*`): conta para o 8 de 10. Cores do carro na
+  garagem: 2 grátis, 4 compradas com moedinhas da jornada (`CORES_VEICULO`, `comprar`); nada de dinheiro.
+- **Carteiro da Vila:** envelope com a palavra escrita, 3 casas com a placa de figura (nomes de escrita parecida: FACA × VACA × JACA).
+  Banco = itens "leia e toque na figura" das lições concluídas + palavras com figura que o verificador libera (sem vogal nasalizada).
+  Errou: "Você tocou em:" + nome da casa, "Leia de novo, letra por letra." e a letra que muda sobe no envelope com o som dela.
+  **Gancho do mundo 3D:** abrir `#/c/:id/jogo/carteiro` (ou `#/c/:id/jogo` para os três); `rotaDoJogoDaVila()` em
+  `jogos-vila-cartoes.ts`. Nada no `public/mundo3d` nem no `mundo-3d-v2` foi mexido.
+- **Casa do Som:** encomenda = escrever o nome do móvel com letras móveis (palavra dita, sem modelo; bandeja = letras da palavra +
+  distratoras já ensinadas: par confundível, U do O final, vogal). Confronto letra a letra como no Escrever do meu jeito, sem "errado";
+  pode reescrever sem o modelo. Só a 1ª escrita conta. O móvel chega sempre e a criança arrasta na casinha (lugar salvo em
+  `Progresso.jogosVila`). 16 móveis (uva, ovo, mala, pia, lupa, mapa, sapato, pato, bule, bolo, suco, jaca, dado, gato, tapete, tomate);
+  figuras novas **pia, bule e mapa** (MiniMax; o 1º mapa saiu em forma de nuvem e foi refeito; olhadas).
+- **Na jornada:** no fim de uma missão da Trilha dos Sons concluída, o Ritual mostra um botão opcional "Desafio: …" (`desafioDaFase`:
+  pares → Estrada com os pares daquela fase; ditado → Casa; leitura com figura → Carteiro); grava contexto **'desafio'**
+  (`registrarLivre` agora mantém 'desafio'). Não troca nenhuma cena da fase (E2E e verificador intactos).
+- Regra 4: jogar não dá nem tira moedinhas; casinha, cor e cartas entregues não viram tentativa. Sem cronômetro (o carro espera),
+  sem ranking, sem caixa surpresa. Primeira vez de cada jogo: 1 exemplo feito pela Sofia (não vale).
+- **Voz:** nenhuma gerada; usa só clipes existentes. O que faria falta: `app/docs/falas-pendentes.md` §1d.
+- **Verificado (cópia separada, commit 93d6245):** typecheck, lint, 338 testes, relatório de decodificabilidade (341 itens, 0 erros),
+  build e E2E novo `node web/e2e/fluxo.e2e.mjs --jogos2` (32 checagens; também ligado no E2E completo e no `--sem-jornada`, que não
+  rodei inteiros). Capturas `--capturas-jogos2` em `app/docs/capturas/v10-vila-*` (1850×980 e 390×844). **Não visto:** o botão de
+  desafio dentro de um Ritual real (testado só pela regra e pela rota); o arrastar com o dedo num celular de verdade.
+
 **Tutorial "A grande aventura" e painel guia (D032 itens 1 e 2; 17/11, noite; NÃO publicado ainda):**
 - **Tutorial** (`web/src/telas/crianca/Tutorial.tsx`, rota `#/c/:id/tutorial`; reaberto em `#/c/:id/tutorial/de-novo`): abre
   sozinho na primeira vez, logo depois do boneco (antes ia para a Chegada). 6 passos, tudo falado e animado, a criança toca na
