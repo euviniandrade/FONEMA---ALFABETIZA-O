@@ -9,6 +9,41 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Área do administrador e troca de áudios (D032 item 5; 17/11, noite; NÃO publicado ainda):**
+- **Rota própria `#/admin`** (link discreto no fim das Configurações da família/professor). Senha do administrador criada no
+  primeiro uso (mín. 8 caracteres, com letras), guardada só como hash PBKDF2-SHA-256 (150 mil iterações, salt) no banco
+  IndexedDB **`fonema-admin`** (separado do `fonema`; "Apagar todos os dados" não mexe nele). 5 erros = 60 s de espera.
+  "Esqueci a senha" zera o acesso (contas, escola e áudios trocados) e pede o PIN de um adulto do aparelho, se houver.
+  Papéis: **geral** (dono, todas as abas) e **escola** (criado pelo geral; só Visão geral e Escola). `servicos/admin-conta.ts`.
+- **Abas:** Visão geral (crianças, turmas, sessões 7/30 dias, tempo de uso estimado pelos registros, verificador de
+  decodificabilidade rodando no navegador, falas sem áudio, clipes da auditoria via `telas/admin/auditoria-resumo.json`
+  — refazer com `npx tsx scripts/resumo-auditoria-audio.ts`); Escola (cadastro formal, turmas, professores, turma de cada
+  criança, CSV e impressão/PDF, acesso da escola); **Áudios**; Publicar; Site (só os liga/desliga que já existem; Mundo 3D,
+  Brincar, Leitura e textos da entrada listados como "sem ponto de configuração"; o resto como "precisa de servidor").
+- **Áudios:** catálogo de 1.708 áudios (`servicos/catalogo-audios.ts`: 27 sons puros, nome da letra, palavras, sílabas,
+  frases, sons ditos pela dupla, 290 nomes, o diálogo do Assiste e Faz e as falas do conteúdo ainda SEM clipe), com o texto
+  ao lado, busca e filtros (tipo, voz/Bolota, letra, fase, trocados/sem áudio/auditoria). Ouvir o atual, subir arquivo ou
+  gravar (contagem 3-2-1, medidor, ouvir antes de salvar), aparar silêncio e igualar volume no navegador
+  (`servicos/audio-edicao.ts`; sem as duas opções guarda o arquivo byte a byte), "Voltar ao original". Modo **Gravar o
+  alfabeto**: letra por letra com faz de conta, palavras-exemplo, boca e os dois sons quando há; no fim LH, NH e ã.
+  Aviso de autorização por escrito + "quem grava" + marca de autorização (vão para o pacote).
+- **Camada de substituição** (`servicos/substituicoes.ts`): ids lógicos `som:<fonema>`, `fala:<voz>|<trecho>`,
+  `nome:<voz>|<chave>`, `arquivo:<caminho>`; consultada por `voz.ts` (falas e nomes; fala sem clipe oficial também toca se
+  tiver substituto), `sons-letras.ts` (antes da gravação do Estúdio e do mapa publicado) e `AssisteEFaz` (`useUrlDeAudio`).
+  Toca por endereço `blob:` — não passa pelo service worker, o cache não muda. Registro do que tocou em
+  `window.__fonemaAudiosTocados` (também no modo rápido; usado no E2E). A boca da dupla acompanha o texto, não a gravação.
+- **Publicar sem servidor:** pacote `.zip` (`servicos/pacote-audios.ts`: pacote.json + LEIA-ME + audios/) e
+  **`scripts/importar-pacote-audios.ts`** (sons → `public/audio/sons/<f>-humana-<hash>.mp3` + mapa "voz humana"; falas e
+  nomes → `audio-fontes/` + masterização; `audio-fontes/voz-humana.json`; marca na `docs/auditoria-audio.json` e seção em
+  `docs/auditoria-sons-letras.md`; `--seco`, `--sem-masterizar`, exige `--confirmo-autorizacao` se faltar a marca).
+  Testado de verdade numa cópia com ffmpeg + masterização (diffs limpos). `servicos/provedor-audios.ts`: lugar do provedor
+  remoto (Vercel Blob/DB) sem implementação nem credencial. Passo a passo do dono: **`app/docs/como-trocar-audios.md`**.
+- **Verificado:** typecheck, lint, 338 testes (novos: substituições, pacote/zip, catálogo, edição de áudio, conta do admin,
+  resumo, importador; `vitest.config.ts` passou a incluir `scripts/**/*.test.ts`), build numa cópia (worktree, porta 4520) e
+  E2E **`node web/e2e/fluxo.e2e.mjs --admin`** (também dentro do completo e do `--sem-jornada`; `--capturas-admin` tira
+  capturas 1850×980 e 390×844): senha, troca do /m/, a lição AL-M toca exatamente os bytes subidos, gravação pelo microfone
+  falso do Chromium, pacote, volta ao original (toca `audio/sons/m.mp3`), CSV da escola. Ninguém gravou voz real ainda.
+
 **Espelho do Som: boca em desenho (17/11; proposta, NÃO integrada):** pedido D032 §6 (boca "como desenho, igual a Sofia, com a
 língua, o dente"). Geradas 102 imagens na MiniMax com a arte da Sofia como referência (7 formas de pedir). Servem A, I, U, M/B/P, S/Z;
 E e K/G mais ou menos; **F/V, L, T/D/N, R e X/J não saíram** (o gerador não põe dente no lábio nem a ponta da língua para cima) e a

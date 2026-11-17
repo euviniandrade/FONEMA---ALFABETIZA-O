@@ -164,12 +164,12 @@ export function importarPacote(zip: Uint8Array, o: OpcoesImportacao = {}): Resul
 
   let masterizou = false;
   if (!seco) {
-    writeFileSync(mapaSonsP, JSON.stringify(mapaSons, null, 1) + '\n');
-    writeFileSync(fontesFalasP, JSON.stringify(fontesFalas, null, 1) + '\n');
-    writeFileSync(fontesNomesP, JSON.stringify(fontesNomes, null, 1) + '\n');
+    writeFileSync(mapaSonsP, JSON.stringify(mapaSons, null, 1));
+    writeFileSync(fontesFalasP, JSON.stringify(fontesFalas, null, 1));
+    writeFileSync(fontesNomesP, JSON.stringify(fontesNomes, null, 1));
     if (diretoParaPublic) {
-      writeFileSync(pubFalasP, JSON.stringify(pubFalas, null, 1) + '\n');
-      writeFileSync(pubNomesP, JSON.stringify(pubNomes, null, 1) + '\n');
+      writeFileSync(pubFalasP, JSON.stringify(pubFalas, null, 1));
+      writeFileSync(pubNomesP, JSON.stringify(pubNomes, null, 1));
     }
     mkdirSync(FONTES, { recursive: true });
     writeFileSync(registroP, JSON.stringify(registro, null, 1) + '\n');
@@ -186,22 +186,45 @@ export function importarPacote(zip: Uint8Array, o: OpcoesImportacao = {}): Resul
   return { aplicados, avisos, masterizou };
 }
 
+const MARCAR_PY = `
+import json, sys
+p = sys.argv[1]
+lista = json.load(open(p))
+for m in json.load(sys.stdin):
+    achou = False
+    for c in lista:
+        if c.get('voz') != m['voz']:
+            continue
+        if m['tipo'] == 'fala':
+            ok = c.get('tipo') == 'fala' and c.get('chave') == m['chave']
+        else:
+            arq = str(c.get('arquivo', ''))
+            ok = c.get('tipo') != 'fala' and ('nomes/' + m['voz'] + '/') in arq and (c.get('chave') == m['chave'] or ('/' + m['chave']) in arq)
+        if ok:
+            c['voz_humana'] = m['marca']
+            achou = True
+    if not achou:
+        lista.append({'tipo': m['tipo'], 'voz': m['voz'], 'chave': m['chave'], 'arquivo': m['marca'].get('destino'), 'gravidade': 'humana', 'voz_humana': m['marca']})
+json.dump(lista, open(p, 'w'), ensure_ascii=False, indent=1)
+`;
+
 /** Marca os clipes trocados como "voz humana" na auditoria (docs/auditoria-audio.json e docs/auditoria-sons-letras.md). */
 function marcarAuditoria(raiz: string, pacote: Pacote, aplicados: { id: string; destino: string }[], agora: string) {
   const audP = resolve(raiz, 'docs/auditoria-audio.json');
   const destinoDe = new Map(aplicados.map((a) => [a.id, a.destino]));
   const marca = (it: ItemPacote) => ({ em: agora, pacote: pacote.criadoEm, quem: it.quem ?? null, autorizacao: !!it.autorizacao, destino: destinoDe.get(it.id) });
   if (existsSync(audP)) {
-    const lista = JSON.parse(readFileSync(audP, 'utf8')) as Record<string, unknown>[];
+    const marcas: { tipo: string; voz: string; chave: string; marca: ReturnType<typeof marca> }[] = [];
     for (const it of pacote.itens) {
       const [tipo, resto] = [it.id.slice(0, it.id.indexOf(':')), it.id.slice(it.id.indexOf(':') + 1)];
       if (tipo !== 'fala' && tipo !== 'nome') continue;
-      const [vozId, chave] = [resto.slice(0, resto.indexOf('|')), resto.slice(resto.indexOf('|') + 1)];
-      const achados = lista.filter((c) => c.voz === vozId && (tipo === 'fala' ? c.tipo === 'fala' && c.chave === chave : c.tipo !== 'fala' && String(c.arquivo ?? '').includes(`nomes/${vozId}/`) && (c.chave === chave || String(c.arquivo).includes(`/${chave}`))));
-      if (achados.length) for (const c of achados) c.voz_humana = marca(it);
-      else lista.push({ tipo, voz: vozId, chave, arquivo: destinoDe.get(it.id), gravidade: 'humana', voz_humana: marca(it) });
+      marcas.push({ tipo, voz: resto.slice(0, resto.indexOf('|')), chave: resto.slice(resto.indexOf('|') + 1), marca: marca(it) });
     }
-    writeFileSync(audP, JSON.stringify(lista, null, 1) + '\n');
+    // o arquivo é escrito pelo Python (ferramentas/auditar-audio.py): marcado pelo Python para manter o mesmo formato
+    if (marcas.length) {
+      const r = spawnSync('python3', ['-c', MARCAR_PY, audP], { input: JSON.stringify(marcas), encoding: 'utf8' });
+      if (r.status !== 0) throw new Error(`Não deu para marcar a auditoria: ${(r.stderr || r.error?.message || '').toString().slice(0, 200)}`);
+    }
   }
   const sons = pacote.itens.filter((i) => i.id.startsWith('som:'));
   const sonsP = resolve(raiz, 'docs/auditoria-sons-letras.md');

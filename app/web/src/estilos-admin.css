@@ -85,6 +85,9 @@
 .adm-passo-info h2{margin-top:0}
 .adm-passo-info p{margin:4px 0;font-size:17px}
 @media (max-width:640px){
+  .adm-topo{position:static;padding:8px 10px}
+  .adm-abas{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+  .adm-aba{flex:0 0 auto;min-height:40px}
   .adm-passo{grid-template-columns:1fr;gap:4px}
   .adm-passo-letra{text-align:left}
   .adm-aba{padding:0 10px;font-size:15px}

@@ -70,6 +70,10 @@ export async function trechoAdmin(_browser, { BASE, ok, passarPorteira, cadastra
     executablePath: process.env.CHROMIUM ?? '/opt/pw-browsers/chromium',
     args: ['--autoplay-policy=no-user-gesture-required', '--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream']
   });
+  try { await fluxoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, capturas }); } finally { await browser.close(); }
+}
+
+async function fluxoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, capturas }) {
   const ctx = await browser.newContext({ viewport: { width: 1850, height: 980 }, locale: 'pt-BR', serviceWorkers: 'block', acceptDownloads: true });
   await ctx.grantPermissions(['microphone']);
   await ctx.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { /* sem armazenamento */ } });
@@ -81,7 +85,7 @@ export async function trechoAdmin(_browser, { BASE, ok, passarPorteira, cadastra
   // uma criança para a lição do M
   await pg.goto(BASE + '#/adulto/cadastro');
   await passarPorteira(pg);
-  await cadastrar(pg, 'Mel', 'f');
+  await cadastrar(pg, 'Mel', 'f', { nivel: 'letras-e-sons' }); // letras liberadas: a lição do M abre direto
   await montarAvatar(pg);
   await pg.waitForFunction(() => location.hash.includes('/c/'));
   const criancaId = /#\/c\/([^/]+)/.exec(pg.url())[1];
@@ -244,5 +248,4 @@ export async function trechoAdmin(_browser, { BASE, ok, passarPorteira, cadastra
     await cap('08-site');
   }
   await ctx.close();
-  await browser.close();
 }
