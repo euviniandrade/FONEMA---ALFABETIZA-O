@@ -472,6 +472,11 @@ async function trechoTrilhaSons(browser, erros) {
   const concluidas = await pg.locator('.sons-marco.feita').count() + dominadas;
   ok(concluidas === 19 && dominadas >= 1, `concluída × dominada na trilha: ${concluidas} lições concluídas, ${dominadas} já douradas (dominadas pelo motor)`);
   ok(await pg.locator('[data-fase="TF-R3"][data-estado="atual"]').count() === 1, 'depois de TF-22 vem a revisão dos sons que estouram (TF-R3)');
+  // bloco 4 (17/11): TF-23 (é, ó), TF-24 (abertas sem acento, ê, ô) e TF-25 (ã) na jornada; TF-26 em diante em espera de som
+  for (const f of ['TF-R3', 'TF-23', 'TF-24', 'TF-25']) ok(await jogar(f), `${f} jogada e concluída (bloco 4: é/ó, ê/ô, ã)`);
+  await pg.goto(BASE + `#/c/${id}/sons`);
+  await pg.getByTestId('trilha-sons').waitFor();
+  ok(await pg.locator('[data-fase="TF-25"]').count() === 1 && await pg.locator('[data-fase="TF-26"]').count() === 0, 'a trilha mostra o bloco 4 até TF-25; as lições em espera de som (TF-26…) não aparecem');
   await guardarFalas(pg);
   await ctx.close();
 }
@@ -955,7 +960,7 @@ async function main() {
   await page.waitForFunction(() => location.hash.includes('/fase/'));
   ok(page.url().includes('/fase/TF-01'), 'o botão da Trilha A–Z abre a lição do som /a/ (TF-01), na outra trilha');
   await page.goto(BASE + `#/c/${id}/fase/AL-B`);
-  await page.waitForTimeout(300);
+  await page.waitForFunction(() => location.hash.includes('/vila'), null, { timeout: 8000 }).catch(() => {});
   ok(page.url().includes('/vila'), 'sem pular fases: a letra B bloqueada volta para a vila');
   await page.goto(BASE + `#/c/${id}/sessao/AL-RV1`);
   await page.waitForTimeout(300);
