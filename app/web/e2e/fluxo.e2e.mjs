@@ -20,6 +20,7 @@ import { trechoJogos2 } from './trecho-jogos2.mjs';
 import { trechoMundo3d } from './trecho-mundo3d.mjs';
 import { trechoAdmin } from './trecho-admin.mjs';
 import { trechoTutorial } from './trecho-tutorial.mjs';
+import { trechoFichas } from './trecho-fichas.mjs';
 
 const aqui = dirname(fileURLToPath(import.meta.url));
 const CAPTURAS_V2 = process.argv.includes('--capturas-v2');
@@ -705,6 +706,18 @@ async function main() {
     if (errosM.length) throw new Error(`erros na página:\n${errosM.join('\n')}`);
     return;
   }
+  if (process.argv.includes('--fichas') || process.argv.includes('--capturas-fichas')) {
+    const errosF = [];
+    const hF = { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosF, dirCap: DIR_CAP };
+    if (process.argv.includes('--capturas-fichas')) {
+      mkdirSync(DIR_CAP, { recursive: true });
+      await trechoFichas(browser, { ...hF, w: 1850, h: 980, capturar: true });
+      await trechoFichas(browser, { ...hF, w: 390, h: 844, suf: '-celular', movel: true, capturar: true });
+    } else await trechoFichas(browser, hF);
+    await browser.close(); servidor?.kill();
+    if (errosF.length) throw new Error(`erros na página:\n${errosF.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--jogos2') || process.argv.includes('--capturas-jogos2')) {
     const errosJ2 = [];
     const h2 = { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosJ2, dirCap: DIR_CAP };
@@ -1151,6 +1164,7 @@ async function main() {
   await trechoCopia(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoJogos(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros, dirCap: DIR_CAP });
   await trechoJogos2(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, dirCap: DIR_CAP });
+  await trechoFichas(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, dirCap: DIR_CAP });
   await trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoTutorial(browser, { BASE, ok, passarPorteira, cadastrar, erros, dirCap: DIR_CAP });
