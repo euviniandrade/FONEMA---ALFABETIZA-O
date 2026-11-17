@@ -144,7 +144,7 @@ export async function trechoTutorial(browser, h) {
     await pg.locator('.guia-vila .guia-corpo').waitFor();
     ok(true, 'vila (celular): tocar na faixa abre o painel');
   }
-  ok(/Você está aqui/.test(await pg.locator('.guia-vila').innerText()) && /Letras e sons/.test(await pg.locator('.guia-vila .guia-aqui').innerText()), 'painel guia: "Você está aqui: Letras e sons"');
+  ok(/Você está aqui/i.test(await pg.locator('.guia-vila').innerText()) && /Letras e sons/.test(await pg.locator('.guia-vila .guia-aqui').innerText()), 'painel guia: "Você está aqui: Letras e sons"');
   ok((await pequenos(pg, '.guia-vila .guia-corpo')).length === 0, `painel guia: botões com 60 px ou mais ${JSON.stringify(await pequenos(pg, '.guia-vila .guia-corpo'))}`);
   await cap(movel ? '09-vila-guia-aberto' : '08-vila-guia', 1200);
 
