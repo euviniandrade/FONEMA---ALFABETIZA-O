@@ -10,3 +10,6 @@ app/web/public/mundo3d/
 app/web/dev-dist/
 app/web/test-results/
 .pub*/
+
+# Artefatos de falha do E2E (logs e capturas locais)
+app/web/e2e-falha/
