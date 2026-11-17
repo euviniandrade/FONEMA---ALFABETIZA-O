@@ -19,7 +19,6 @@ import { trechoAdmin } from './trecho-admin.mjs';
 import { trechoJogos } from './trecho-jogos.mjs';
 import { trechoJogos2 } from './trecho-jogos2.mjs';
 import { trechoMundo3d } from './trecho-mundo3d.mjs';
-import { trechoAdmin } from './trecho-admin.mjs';
 import { trechoTutorial } from './trecho-tutorial.mjs';
 
 const aqui = dirname(fileURLToPath(import.meta.url));
@@ -737,14 +736,6 @@ async function main() {
     if (errosT.length) throw new Error(`erros na página:\n${errosT.join('\n')}`);
     return;
   }
-  if (process.argv.includes('--admin') || process.argv.includes('--capturas-admin')) {
-    const errosA = [];
-    const capturas = process.argv.includes('--capturas-admin') ? (process.env.CAPTURAS_ADMIN ?? DIR_CAP) : undefined;
-    await trechoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosA, capturas });
-    await browser.close(); servidor?.kill();
-    if (errosA.length) throw new Error(`erros na página:\n${errosA.join('\n')}`);
-    return;
-  }
   if (process.argv.includes('--voz-real')) {
     const errosV = [];
     await trechoVozReal(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosV });
@@ -1156,7 +1147,6 @@ async function main() {
   await trechoJogos(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros, dirCap: DIR_CAP });
   await trechoJogos2(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, dirCap: DIR_CAP });
   await trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
-  await trechoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoTutorial(browser, { BASE, ok, passarPorteira, cadastrar, erros, dirCap: DIR_CAP });
 
   if (CAPTURAS_AL) {
