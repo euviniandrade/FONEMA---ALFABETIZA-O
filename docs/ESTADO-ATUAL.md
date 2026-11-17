@@ -36,7 +36,7 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   sem ranking, sem caixa surpresa. Primeira vez de cada jogo: 1 exemplo feito pela Sofia (não vale).
 - **Voz:** nenhuma gerada; usa só clipes existentes. O que faria falta: `app/docs/falas-pendentes.md` §1d.
 - **Verificado (cópia separada, commit 93d6245):** typecheck, lint, 338 testes, relatório de decodificabilidade (341 itens, 0 erros),
-  build e E2E novo `node web/e2e/fluxo.e2e.mjs --jogos2` (32 checagens; também ligado no E2E completo e no `--sem-jornada`, que não
+  build e E2E novo `node web/e2e/fluxo.e2e.mjs --jogos2` (26 checagens, todas verdes; também ligado no E2E completo e no `--sem-jornada`, que não
   rodei inteiros). Capturas `--capturas-jogos2` em `app/docs/capturas/v10-vila-*` (1850×980 e 390×844). **Não visto:** o botão de
   desafio dentro de um Ritual real (testado só pela regra e pela rota); o arrastar com o dedo num celular de verdade.
 
