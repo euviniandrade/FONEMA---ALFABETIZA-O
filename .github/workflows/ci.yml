@@ -1,0 +1,165 @@
+# FONEMA · verificação automática (explicação em app/docs/ci.md)
+# - A cada push ou pull request: typecheck, lint, testes (inclui o verificador de decodificabilidade), build
+#   e o E2E rápido (--sem-jornada) no Chromium.
+# - Uma vez por semana (domingo de madrugada) ou pelo botão "Run workflow": o E2E completo (com a jornada).
+name: CI
+
+on:
+  push:
+    branches: [claude/eager-brahmagupta-3d2lhr, main]
+    paths-ignore: ['**/*.md', 'app/docs/capturas/**']
+  pull_request:
+    branches: [claude/eager-brahmagupta-3d2lhr, main]
+    paths-ignore: ['**/*.md', 'app/docs/capturas/**']
+  schedule:
+    - cron: '17 6 * * 0' # domingo, 06:17 UTC (03:17 em Brasília)
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: 'Quais opções passar ao E2E (vazio = completo, com a jornada inteira)'
+        required: false
+        default: ''
+
+# Muitos pushes seguidos no mesmo ramo: só a última versão roda; as anteriores são canceladas (economiza minutos).
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: app
+
+env:
+  NODE_VERSION: '22'
+
+jobs:
+  verificar:
+    name: Typecheck, lint, testes e build
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: Instalar dependências
+        run: npm ci --no-audit --no-fund
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Testes (inclui o verificador de decodificabilidade)
+        run: npm test
+      - name: Resumo do verificador de decodificabilidade
+        run: npx tsx scripts/relatorio-decodificabilidade.ts
+      - name: Build
+        run: npm run build
+
+  e2e:
+    name: E2E rápido (--sem-jornada)
+    needs: verificar
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: Instalar dependências
+        run: npm ci --no-audit --no-fund
+      - name: Instalar o Chromium do Playwright
+        working-directory: app/web
+        run: |
+          npx playwright install --with-deps chromium
+          echo "CHROMIUM=$(node -e "console.log(require('@playwright/test').chromium.executablePath())")" >> "$GITHUB_ENV"
+      - name: Build
+        run: npm run build
+      - name: Servir o dist (servidor estático do Vite)
+        working-directory: app/web
+        run: |
+          mkdir -p ../e2e-saida
+          nohup npx vite preview --port 4180 --strictPort > ../e2e-saida/servidor.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf http://localhost:4180/ > /dev/null && exit 0; sleep 1; done
+          echo "o servidor não subiu"; cat ../e2e-saida/servidor.log; exit 1
+      - name: E2E --sem-jornada
+        working-directory: app/web
+        timeout-minutes: 45
+        env:
+          BASE_URL: http://localhost:4180/
+          CAPTURAS_FALHA: ${{ github.workspace }}/app/e2e-saida/capturas
+        run: |
+          set -o pipefail
+          mkdir -p ../e2e-saida
+          node --import ../../.github/ci/capturas-na-falha.mjs e2e/fluxo.e2e.mjs --sem-jornada 2>&1 | tee ../e2e-saida/e2e.log
+      - name: Guardar log e capturas da falha
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-falha-${{ github.run_id }}
+          path: app/e2e-saida/
+          retention-days: 14
+
+  e2e-completo:
+    name: E2E completo (semanal ou manual)
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: Instalar dependências
+        run: npm ci --no-audit --no-fund
+      - name: Testes
+        run: npm test
+      - name: Instalar o Chromium do Playwright
+        working-directory: app/web
+        run: |
+          npx playwright install --with-deps chromium
+          echo "CHROMIUM=$(node -e "console.log(require('@playwright/test').chromium.executablePath())")" >> "$GITHUB_ENV"
+      - name: Build
+        run: npm run build
+      - name: Servir o dist (servidor estático do Vite)
+        working-directory: app/web
+        run: |
+          mkdir -p ../e2e-saida
+          nohup npx vite preview --port 4180 --strictPort > ../e2e-saida/servidor.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf http://localhost:4180/ > /dev/null && exit 0; sleep 1; done
+          echo "o servidor não subiu"; cat ../e2e-saida/servidor.log; exit 1
+      - name: E2E completo
+        working-directory: app/web
+        timeout-minutes: 100
+        env:
+          BASE_URL: http://localhost:4180/
+          CAPTURAS_FALHA: ${{ github.workspace }}/app/e2e-saida/capturas
+          MODO: ${{ github.event.inputs.modo }}
+        run: |
+          set -o pipefail
+          # MODO vem do botão "Run workflow" (ex.: --trilha-sons); separado em palavras de propósito
+          # shellcheck disable=SC2086
+          mkdir -p ../e2e-saida
+          node --import ../../.github/ci/capturas-na-falha.mjs e2e/fluxo.e2e.mjs $MODO 2>&1 | tee ../e2e-saida/e2e.log
+      - name: Guardar log e capturas da falha
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-completo-falha-${{ github.run_id }}
+          path: app/e2e-saida/
+          retention-days: 14
