@@ -6,6 +6,7 @@ import { Icone } from '../componentes/ui.tsx';
 import { asset, modoTeste } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
 import { useDestravar } from '../servicos/destravar.ts';
+import { useUrlDeAudio } from '../servicos/substituicoes.ts';
 import { NOMES_PERSONAGEM, falarVarias, textoTela } from '../util.ts';
 
 /**
@@ -23,6 +24,8 @@ export function AssisteEFaz({ roteiro, imagem, video, audio, crianca, onFim }: {
   const rodando = useRef(false);
   const midia = useRef<HTMLVideoElement & HTMLAudioElement>(null);
   const temMidia = !!(video || audio);
+  // o administrador pode ter trocado este áudio neste aparelho (servicos/substituicoes.ts)
+  const srcAudio = useUrlDeAudio(audio ? asset(`audio/${audio}.mp3`) : undefined);
 
   const falarRoteiro = async () => {
     if (rodando.current) return;
@@ -65,7 +68,7 @@ export function AssisteEFaz({ roteiro, imagem, video, audio, crianca, onFim }: {
         ) : (
           <img className={`video-fundo ${naMidia || i >= 0 ? 'movendo' : ''}`} src={asset(`fundos/${imagem ?? 'dupla-praca'}.webp`)} alt="" />
         )}
-        {audio ? <audio ref={midia} src={asset(`audio/${audio}.mp3`)} preload="auto" {...eventos} /> : null}
+        {audio ? <audio ref={midia} src={srcAudio} preload="auto" {...eventos} /> : null}
         <span className="selo-assiste"><Icone nome="tocar" />Assiste e Faz</span>
         {precisaToque ? (
           <button className="video-tocar" onClick={tocar} aria-label="Tocar o vídeo"><Icone nome="play" /></button>

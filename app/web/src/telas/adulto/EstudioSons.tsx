@@ -5,7 +5,7 @@ import { SONS_DO_ESTUDIO, sonsLetras, type MapaSons } from '../../servicos/sons-
 import { apagarSom, exportarSons, importarSons, iniciarGravacao, salvarSom, temMicrofone, type GravacaoEmCurso } from '../../servicos/estudio-sons.ts';
 import { voz } from '../../servicos/voz.ts';
 
-type Origem = 'gravado' | 'publicado' | null;
+type Origem = 'substituto' | 'gravado' | 'publicado' | null;
 
 /**
  * ESTÚDIO DE SONS (Área da Família / do Professor, atrás do PIN): um adulto grava o som de cada letra do jeito que
@@ -97,7 +97,7 @@ export function EstudioSons() {
               <span className="estudio-letra">{s.rotulo}</span>
               <span className="estudio-como"><b>{s.como}</b><small>como em {s.exemplo}</small></span>
               <span className={`estudio-estado ${o ?? 'vazio'} ${o === 'publicado' ? pub?.estado ?? '' : ''}`}>
-                {o === 'gravado' ? 'Gravado por você' : o === 'publicado' ? (pub?.estado === 'duvidoso' ? 'Som gerado: confira de ouvido' : 'Som gerado') : 'Sem som: a dupla diz a palavra'}
+                {o === 'substituto' ? 'Trocado pelo administrador' : o === 'gravado' ? 'Gravado por você' : o === 'publicado' ? (pub?.estado === 'duvidoso' ? 'Som gerado: confira de ouvido' : 'Som gerado') : 'Sem som: a dupla diz a palavra'}
               </span>
               {aqui ? (
                 <span className="estudio-medidor" aria-label="Volume do microfone"><i style={{ width: `${Math.round(nivel * 100)}%` }} /></span>

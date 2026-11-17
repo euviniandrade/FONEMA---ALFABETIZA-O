@@ -2,6 +2,8 @@
  * SOM REAL DAS LETRAS (D029 §2): o fonema puro ("mmm", "sss", "p, p, p"), como a professora faz na alfabetização fônica.
  *
  * De onde vem o som de cada fonema, por ordem de prioridade:
+ *  0. áudio trocado pelo ADMINISTRADOR neste aparelho (Área do administrador › Áudios; servicos/substituicoes.ts,
+ *     id `som:<fonema>`): é o "subir um áudio que entra no lugar certo" da D032;
  *  1. gravação feita pelo ADULTO no Estúdio de sons (Área do Professor/Família), guardada no aparelho (IndexedDB,
  *     id `som-letra-<fonema>`): é a rota garantida para o som "igual ao da escola";
  *  2. clipe publicado em public/audio/sons (mapa.json: fonema → arquivo), só com sons que passaram na verificação;
@@ -13,11 +15,14 @@
  */
 import { modoTeste } from './ambiente.ts';
 import { tocarAteOFim } from './midia.ts';
+import { anotarTocado, idSom, substituicoes } from './substituicoes.ts';
 
 export interface SomPublicado {
   arquivo: string;
   /** Só 'aprovado' e 'duvidoso' são publicados; reprovados ficam fora do mapa. */
   estado: 'aprovado' | 'duvidoso';
+  /** 'voz humana' quando veio de um pacote de áudios do administrador (scripts/importar-pacote-audios.ts). */
+  origem?: string;
   tipo: 'vogal' | 'continuo' | 'explosivo';
   ipa: string;
   duracaoMs: number;
@@ -116,7 +121,9 @@ class SonsLetras {
     return u;
   }
   /** De onde sai o som deste fonema agora. */
-  async origem(fonema: string): Promise<{ url: string; origem: 'gravado' | 'publicado' } | null> {
+  async origem(fonema: string): Promise<{ url: string; origem: 'substituto' | 'gravado' | 'publicado' } | null> {
+    const s = await substituicoes.url(idSom(fonema));
+    if (s) return { url: s, origem: 'substituto' };
     const g = await this.gravado(fonema);
     if (g) return { url: g, origem: 'gravado' };
     const p = (await this.carregarMapa())?.fonemas[fonema];
@@ -133,6 +140,7 @@ class SonsLetras {
     this.silenciar();
     const o = await this.origem(fonema);
     if (!o || g !== this.geracao) return false;
+    anotarTocado({ id: idSom(fonema), origem: o.origem, url: o.url });
     if (modoTeste()) { await new Promise((r) => setTimeout(r, 20)); return true; }
     return this.tocarUrl(o.url, fonema, o.origem, g);
   }
@@ -160,6 +168,7 @@ class SonsLetras {
     for (let i = 0; i < fonemas.length; i++) {
       const o = await this.origem(fonemas[i]);
       if (!o || g !== this.geracao) return false;
+      anotarTocado({ id: idSom(fonemas[i]), origem: o.origem, url: o.url });
       if (modoTeste()) { await new Promise((r) => setTimeout(r, 10)); continue; }
       if (!(await this.tocarUrl(o.url, fonemas[i], o.origem, g))) return false;
       if (i < fonemas.length - 1) await new Promise((r) => setTimeout(r, pausaMs));

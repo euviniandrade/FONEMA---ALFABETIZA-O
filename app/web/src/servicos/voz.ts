@@ -11,6 +11,7 @@ import type { Personagem } from '@fonema/conteudo';
 import { modoTeste } from './ambiente.ts';
 import { fonemasDaSequencia, sonsLetras } from './sons-letras.ts';
 import { noMaximo, tocarAteOFim } from './midia.ts';
+import { anotarTocado, idFala, idNome, substituicoes } from './substituicoes.ts';
 export { noMaximo, tocarAteOFim } from './midia.ts';
 
 /** `rate` e `pitchExtra` são ignorados (ficaram só para não quebrar chamadas antigas): a voz nunca é esticada. */
@@ -144,7 +145,9 @@ export class ProvedorPreGerado implements ProvedorVoz {
   constructor(private reserva: ProvedorVoz) {
     this.pronto = Promise.all([
       fetch('./audio/falas/manifesto.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
-      fetch('./audio/nomes/manifesto.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({}))
+      fetch('./audio/nomes/manifesto.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+      // áudios trocados pelo administrador neste aparelho (servicos/substituicoes.ts)
+      substituicoes.carregar()
     ]).then(([f, n]: any[]) => { this.falas = f; this.nomes = { sofia: n.sofia ?? [], tales: n.tales ?? [] }; this.arqNomes = n.arquivos ?? {}; });
   }
   /** Caminho do clipe do nome (o manifesto diz o arquivo; sem ele, <nome>.mp3). */
@@ -154,34 +157,53 @@ export class ProvedorPreGerado implements ProvedorVoz {
   }
   /** Existe clipe para este trecho (sem nome) nesta voz? */
   temTrecho(texto: string, quem: string): boolean {
-    return !!this.falas?.[`${vozDe(quem)}|${chaveTrecho(texto)}`];
+    const k = `${vozDe(quem)}|${chaveTrecho(texto)}`;
+    return !!this.falas?.[k] || substituicoes.tem(`fala:${k}`);
+  }
+  /** O nome tem clipe nesta voz (oficial ou trocado pelo administrador)? */
+  temNomeNaVoz(voz: 'sofia' | 'tales', nome: string): boolean {
+    const k = chaveNome(nome);
+    return !!this.nomes[voz]?.includes(k) || substituicoes.tem(idNome(voz, k));
   }
   /** Lista de arquivos para uma fala, ou null se faltar algum trecho. */
   arquivos(texto: string, quem: string): string[] | null {
     return this.plano(texto, quem)?.map((p) => p.arquivo) ?? null;
   }
-  /** Trechos da fala em ordem, com a pausa extra depois de cada um. */
-  plano(texto: string, quem: string): { arquivo: string; pausaMs: number }[] | null {
+  /**
+   * Trechos da fala em ordem, com a pausa extra depois de cada um. `id` = id lógico do trecho (substituicoes.ts):
+   * se o administrador trocou o áudio neste aparelho, toca o substituto; um trecho sem clipe oficial mas com
+   * substituto também toca (arquivo "substituto:<id>").
+   */
+  plano(texto: string, quem: string): { arquivo: string; pausaMs: number; id: string }[] | null {
     if (!this.falas) return null;
     const v = { voz: vozDe(quem) };
     const partes = this.nome ? texto.split(this.nome) : [texto];
-    const temNome = this.nome && this.nomes[v.voz]?.includes(chaveNome(this.nome));
-    const out: { arquivo: string; pausaMs: number }[] = [];
+    const temNome = this.nome && this.temNomeNaVoz(v.voz, this.nome);
+    const out: { arquivo: string; pausaMs: number; id: string }[] = [];
     for (let i = 0; i < partes.length; i++) {
-      if (i > 0 && temNome) out.push({ arquivo: this.arquivoDoNome(v.voz, this.nome), pausaMs: chaveTrecho(partes[i]) ? PAUSA_DEPOIS_DO_NOME_MS : 0 });
+      if (i > 0 && temNome) out.push({ arquivo: this.arquivoDoNome(v.voz, this.nome), pausaMs: chaveTrecho(partes[i]) ? PAUSA_DEPOIS_DO_NOME_MS : 0, id: idNome(v.voz, chaveNome(this.nome)) });
       const k = chaveTrecho(partes[i]);
       if (!k) continue;
+      const id = idFala(v.voz, k);
       const arq = this.falas[`${v.voz}|${k}`];
-      if (!arq) return null;
-      out.push({ arquivo: `./audio/falas/${arq}`, pausaMs: 0 });
+      if (!arq && !substituicoes.tem(id)) return null;
+      out.push({ arquivo: arq ? `./audio/falas/${arq}` : `substituto:${id}`, pausaMs: 0, id });
     }
     return out.length ? out : null;
+  }
+  /** Endereço de um trecho: o substituto do administrador, se houver; senão o clipe oficial. */
+  private async urlDoTrecho(p: { arquivo: string; id: string }): Promise<{ url: string; substituto: boolean }> {
+    const s = await substituicoes.url(p.id);
+    return s ? { url: s, substituto: true } : { url: await urlDoAudio(p.arquivo), substituto: false };
   }
   async falar(texto: string, o: OpcoesFala = {}): Promise<void> {
     await this.pronto;
     const quem = o.quem ?? 'sofia';
     const plano = this.plano(texto, quem);
-    if (modoTeste()) return this.reserva.falar(texto, o);
+    if (modoTeste()) {
+      for (const p of plano ?? []) anotarTocado({ id: p.id, origem: substituicoes.tem(p.id) ? 'substituto' : 'original' });
+      return this.reserva.falar(texto, o);
+    }
     if (!plano) {
       // sem áudio oficial: NUNCA voz do aparelho; o texto fica no balão e a tela segue no ritmo da leitura
       faltando.add(`${vozDe(quem)}|${texto}`);
@@ -189,13 +211,17 @@ export class ProvedorPreGerado implements ProvedorVoz {
     }
     const g = ++this.geracao;
     // carrega TODOS os trechos antes de começar (e espera o finzinho da fala anterior, com limite)
-    const [els] = await Promise.all([Promise.all(plano.map(async (p) => carregar(await urlDoAudio(p.arquivo)))), noMaximo(this.cauda, ESPERA_CAUDA_MS)]);
+    const urls = await Promise.all(plano.map((p) => this.urlDoTrecho(p)));
+    const [els] = await Promise.all([Promise.all(urls.map((u) => carregar(u.url))), noMaximo(this.cauda, ESPERA_CAUDA_MS)]);
     for (let i = 0; i < els.length; i++) {
       if (g !== this.geracao) return;
       const el = els[i];
       this.atual = el;
       el.playbackRate = 1; // D029 §5: nunca mudar tom nem velocidade
-      avisar('fonema:fala', { quem, voz: vozDe(quem), texto, audio: el, arquivo: plano[i].arquivo.replace(/^\.\//, ''), inicio: performance.now(), trecho: i, trechos: els.length });
+      // substituto: sem boca pré-calculada (o PersonagemVivo acompanha o texto)
+      const arquivo = urls[i].substituto ? `substituto:${plano[i].id}` : plano[i].arquivo.replace(/^\.\//, '');
+      anotarTocado({ id: plano[i].id, origem: urls[i].substituto ? 'substituto' : 'original', url: urls[i].url });
+      avisar('fonema:fala', { quem, voz: vozDe(quem), texto, audio: el, arquivo, inicio: performance.now(), trecho: i, trechos: els.length });
       const { fim, soltar } = tocarAteOFim(el);
       this.soltar = soltar;
       this.cauda = fim;
@@ -231,14 +257,15 @@ export class ProvedorPreGerado implements ProvedorVoz {
     }
     this.reserva.parar();
   }
-  /** Toca um clipe solto (nome no cadastro) até o fim. */
-  async tocarArquivo(caminho: string): Promise<void> {
+  /** Toca um clipe solto (nome no cadastro) até o fim. Com `id`, toca o substituto do administrador se houver. */
+  async tocarArquivo(caminho: string, id?: string): Promise<void> {
     const g = ++this.geracao;
-    const [el] = await Promise.all([urlDoAudio(caminho).then(carregar), noMaximo(this.cauda, ESPERA_CAUDA_MS)]);
+    const sub = id ? await substituicoes.url(id) : null;
+    const [el] = await Promise.all([(sub ? Promise.resolve(sub) : urlDoAudio(caminho)).then(carregar), noMaximo(this.cauda, ESPERA_CAUDA_MS)]);
     if (g !== this.geracao) return;
     this.atual = el;
     const quem = /nomes\/(sofia|tales)\//.exec(caminho)?.[1] ?? 'sofia';
-    avisar('fonema:fala', { quem, voz: quem, texto: '', audio: el, arquivo: caminho.replace(/^\.\//, ''), inicio: performance.now(), trecho: 0, trechos: 1 });
+    avisar('fonema:fala', { quem, voz: quem, texto: '', audio: el, arquivo: sub && id ? `substituto:${id}` : caminho.replace(/^\.\//, ''), inicio: performance.now(), trecho: 0, trechos: 1 });
     const { fim, soltar } = tocarAteOFim(el);
     this.soltar = soltar;
     this.cauda = fim;
@@ -316,15 +343,15 @@ class Voz {
   /** O nome tem clipe gravado nas vozes oficiais? (lista de nomes comuns) */
   async temNome(nome: string): Promise<boolean> {
     await this.pre.pronto;
-    return this.pre.nomesDe('sofia').includes(chaveNome(nome)) && this.pre.nomesDe('tales').includes(chaveNome(nome));
+    return this.pre.temNomeNaVoz('sofia', nome) && this.pre.temNomeNaVoz('tales', nome);
   }
   /** Toca o nome na voz OFICIAL da Sofia ou do Tales (cadastro). Devolve false se o nome ainda não tem gravação. */
   async ouvirNome(nome: string, quem: 'sofia' | 'tales'): Promise<boolean> {
     this.parar();
     await this.pre.pronto;
-    if (!this.pre.nomesDe(quem).includes(chaveNome(nome))) return false;
+    if (!this.pre.temNomeNaVoz(quem, nome)) return false;
     if (!this.ligada || modoTeste()) return true;
-    await this.pre.tocarArquivo(this.pre.arquivoDoNome(quem, nome));
+    await this.pre.tocarArquivo(this.pre.arquivoDoNome(quem, nome), idNome(quem, chaveNome(nome)));
     return true;
   }
   /** Todas estas falas curtas (sílabas, sons) têm clipe na voz oficial? Se faltar uma, é melhor não falar nenhuma. */
