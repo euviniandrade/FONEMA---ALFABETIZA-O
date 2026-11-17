@@ -31,9 +31,8 @@ import '../../mecanicas/jogos/estilos-jogos-vila.css';
 export { JOGOS_DA_VILA, rotaDoJogoDaVila, situacaoDosJogosDaVila };
 
 /** Registro das respostas conferidas (motor, contexto livre/desafio) + o que muda na casinha/garagem. */
-function useRegistroJogo(criancaId: string) {
+function useRegistroJogo(criancaId: string, progresso: Progresso | undefined, salvarProgresso: (p: Progresso) => Promise<void>) {
   const { repo, config } = useApp();
-  const { progresso, salvarProgresso } = useCrianca(criancaId);
   const sessao = useRef(novoId('jogo'));
   const atual = useRef<Progresso | undefined>(progresso);
   useEffect(() => { if (progresso) atual.current = progresso; }, [progresso]);
@@ -60,8 +59,9 @@ function useRegistroJogo(criancaId: string) {
 }
 
 export function JogosVila({ criancaId, jogoId }: { criancaId: string; jogoId?: string }) {
-  const { crianca, progresso } = useCrianca(criancaId);
-  const reg = useRegistroJogo(criancaId);
+  // um só estado da criança para a tela e para o registro (a casinha e a cor aparecem na hora)
+  const { crianca, progresso, salvarProgresso } = useCrianca(criancaId);
+  const reg = useRegistroJogo(criancaId, progresso, salvarProgresso);
   const faseId = lerRota()[4];
   const jogo = JOGOS_DA_VILA.find((j) => j.id === jogoId);
   const [jogando, setJogando] = useState<{ rodada: number; variacao?: VariacaoEstrada } | null>(null);
