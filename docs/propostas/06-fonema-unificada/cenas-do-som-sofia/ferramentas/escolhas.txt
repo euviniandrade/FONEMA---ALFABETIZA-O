@@ -1,0 +1,9 @@
+a-B3 cena-a-sofia
+e-t2 cena-e-sofia
+i-B3 cena-i-sofia
+l-A1 cena-l-sofia
+x-A2 cena-x-sofia
+v-B1 cena-v-sofia
+o-b4 cena-o-aberto-sofia
+an-t2 cena-a-nasal-sofia
+r-r2 cena-r-fraco-sofia

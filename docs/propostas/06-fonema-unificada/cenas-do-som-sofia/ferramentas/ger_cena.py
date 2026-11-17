@@ -4,7 +4,7 @@ import base64, json, sys, os, urllib.request, concurrent.futures as cf
 lote = json.load(open(sys.argv[1])); pasta = sys.argv[2]; os.makedirs(pasta, exist_ok=True)
 B = 'data:image/jpeg;base64,' + base64.b64encode(open(sys.argv[3], 'rb').read()).decode()
 MOLDE = ("{acao} {plano} {quem} stylized 3D animated family film character, curly dark hair, "
-         "plain white t-shirt with navy blue sleeves, navy pants. Plain light cream background. "
+         "white t-shirt with navy blue raglan sleeves and a small navy blue capital letter A embroidered on the left side of the chest, navy pants. Plain light cream background. " if os.environ.get("COMA") else "plain white t-shirt with navy blue sleeves, navy pants. Plain light cream background. "
          "Bare arms and bare wrists. Clean simple clothes.")
 def um(item):
     pr = MOLDE.format(acao=item['acao'], plano=item.get('plano', 'Medium shot from the knees up.'), quem=('A 6 year old girl with warm medium-brown skin, round cheeks, big round brown eyes, very long voluminous dark brown spiral curly hair falling past her shoulders,' if os.environ.get('SEMREF') else 'The girl from the reference image,'))
