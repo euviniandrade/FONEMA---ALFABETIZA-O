@@ -332,7 +332,7 @@ export async function criarMundo(container, opts = {}) {
   function quadro() {
     if (destruido) return;
     requestAnimationFrame(quadro);
-    clock.update(); const dt = Math.min(0.05, clock.getDelta()); tempo += dt;
+    clock.update(); const bruto = clock.getDelta(), dt = Math.min(0.05, bruto); tempo += dt;
     if (passeioAtivo) {
       if (!voo) { passeioT += dt; const s = tourAt(passeioT); camera.position.copy(s.cam); controls.target.copy(s.alvo); if (passeioT > tour.dur) { passeioAtivo = false; emitir('fonema:passeio', { ativo: false }); } }
     }
@@ -343,9 +343,9 @@ export async function criarMundo(container, opts = {}) {
     fade += (fadeAlvo - fade) * Math.min(1, dt * 7); veu.style.opacity = fade.toFixed(3);
     render();
     // medidor: se o quadro passar de 45 ms por 3 s, desce um degrau de qualidade
-    fpsAcc += dt; fpsN++;
+    fpsAcc += bruto; fpsN++; // tempo real (sem o teto do dt): num aparelho muito lento a qualidade cai logo
     if (fpsAcc > 1) { const ms = (fpsAcc / fpsN) * 1000; fpsAcc = 0; fpsN = 0; info.ms = ms; info.fps = 1000 / ms;
-      if (o.qualidade === 'auto' && ms > 45) { lentoDesde += 1; if (lentoDesde >= 3 && nivel !== 'baixo') { lentoDesde = 0; aplicarQualidade(nivel === 'alto' ? 'medio' : 'baixo'); } } else lentoDesde = 0; }
+      if (o.qualidade === 'auto' && ms > 45) { lentoDesde += ms > 150 ? 3 : 1; if (lentoDesde >= 3 && nivel !== 'baixo') { lentoDesde = 0; aplicarQualidade(nivel === 'alto' && ms < 150 ? 'medio' : 'baixo'); } } else lentoDesde = 0; }
   }
   const info = { ms: 0, fps: 0 };
   let destruido = false, controlador = null;

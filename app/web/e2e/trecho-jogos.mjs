@@ -110,7 +110,6 @@ export async function trechoJogos(browser, h) {
   await cap('')('01-brincar-jogos');
   ok(await pg.locator('[data-testid="jogo-corre-som"].trancado').count() === 0, 'com sons ensinados, o Corre-Som abre');
 
-  if (!process.env.SO_FASE) {
   // ---- Corre-Som, letras ----
   await pg.getByTestId('jogo-corre-som').click();
   await pg.getByTestId('variacao-letra').waitFor();
@@ -131,7 +130,7 @@ export async function trechoJogos(browser, h) {
   ok(tc.length === 6, `Corre-Som: 6 escolhas gravadas (${tc.length})`);
   ok(tc.every((t) => t.tipo === 'avaliada' && t.contexto === 'livre' && t.nOpcoes === 3 && typeof t.tempoMs === 'number' && t.posicaoCerta !== undefined && t.posicaoEscolhida !== undefined && t.alvo && t.escolhido && t.formato === 'som-letra'),
     'cada escolha: avaliada, contexto livre, alvo, escolhido, tempo, 3 opções e posições');
-  ok(tc.some((t) => t.respostas.length === 2 && t.comAjuda && t.escolhido !== t.alvo), 'o item errado ficou "com ajuda" e com a escolha errada registrada (matriz de confusão)');
+  ok(tc.some((t) => t.respostas.length === 2 && t.comAjuda && t.escolhido !== t.alvo), `o item errado ficou "com ajuda" e com a escolha errada registrada (matriz de confusão) ${JSON.stringify(tc.map((t) => [t.alvo, t.respostas, t.comAjuda]))}`);
   ok(p.moedinhas.saldo === antes.moedinhas.saldo, 'moedinhas da pista são enfeite: o porquinho não muda (regra 4)');
 
   // ---- Bichinho Come-Som, começo ----
@@ -155,7 +154,6 @@ export async function trechoJogos(browser, h) {
   p = await lerProgresso(pg, id);
   ok(tentativasDo(p, 'come-som').filter((t) => t.habilidade === 'som-final').length === 6, 'variação "termina com": 6 escolhas na habilidade som final');
 
-  }
   // ---- desafio dentro da fase: Letra A ----
   if (!capturar || !movel) {
     await pg.goto(BASE + `#/c/${id}/sessao/AL-A`);
@@ -163,9 +161,8 @@ export async function trechoJogos(browser, h) {
     await jogarSessao(pg, {
       gancho: async (page, cena) => {
         const oferta = page.getByTestId('oferecer-jogo');
-        if (process.env.DEPURAR_JOGOS) console.log('    cena', cena, await page.locator('.mec').first().evaluate((e) => e.outerHTML.slice(0, 300)).catch(() => '-'), await oferta.count());
         // a cena pode montar entre o gancho e o clique na resposta: nas duas cenas que viram jogo, espera a oferta aparecer
-        if (/^AL-A-C[34]$/.test(cena) && jogados.size < 2) await oferta.waitFor({ timeout: 4000 }).catch(() => {});
+        if (/^AL-A-C(2b|3|3b|4)$/.test(cena) && jogados.size < 2) await oferta.waitFor({ timeout: 1500 }).catch(() => {});
         if (!(await oferta.isVisible().catch(() => false))) return;
         const jogo = await oferta.getAttribute('data-jogo');
         if (jogados.has(jogo)) return;
