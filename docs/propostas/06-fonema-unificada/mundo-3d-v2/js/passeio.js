@@ -30,7 +30,7 @@ export const LUGARES = [
   { id: 'barco', nome: 'Barquinho', sub: 'Em breve na Lojinha', icone: '⛵', pos: [40.4, 12.6], raio: 4.2, alto: 2.6, emBreve: true },
 ];
 
-const PARTIDA = { x: 0, z: 13.2, giro: Math.PI }; // na praça, de frente para o coreto
+const PARTIDA = { x: 0, z: 19.5, giro: Math.PI }; // na entrada da praça, de frente para o coreto (a Sofia passeia ali)
 const ALTURA = 1.5; // a criança no mundo (m)
 const ANDAR = 3.2, CORRER = 5.8, TECLADO = 4.2, PULO = 6.4, GRAVIDADE = 20;
 

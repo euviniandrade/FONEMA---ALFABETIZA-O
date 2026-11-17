@@ -15,6 +15,9 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { trechoVozReal } from './trecho-voz-real.mjs';
 import { trechoCopia } from './trecho-copia.mjs';
+import { trechoJogos } from './trecho-jogos.mjs';
+import { trechoMundo3d } from './trecho-mundo3d.mjs';
+import { trechoAdmin } from './trecho-admin.mjs';
 
 const aqui = dirname(fileURLToPath(import.meta.url));
 const CAPTURAS_V2 = process.argv.includes('--capturas-v2');
@@ -664,6 +667,35 @@ async function main() {
     if (errosK.length) throw new Error(`erros na página:\n${errosK.join('\n')}`);
     return;
   }
+  if (process.argv.includes('--admin') || process.argv.includes('--capturas-admin')) {
+    const errosA = [];
+    const capturas = process.argv.includes('--capturas-admin') ? (process.env.CAPTURAS_ADMIN ?? DIR_CAP) : undefined;
+    await trechoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosA, capturas });
+    await browser.close(); servidor?.kill();
+    if (errosA.length) throw new Error(`erros na página:\n${errosA.join('\n')}`);
+    return;
+  }
+  if (process.argv.includes('--mundo3d') || process.argv.includes('--capturas-mundo3d')) {
+    const errosM = [];
+    const capM = process.argv.includes('--capturas-mundo3d') ? DIR_CAP : undefined;
+    if (capM) mkdirSync(DIR_CAP, { recursive: true });
+    await trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosM, capturas: capM });
+    await browser.close(); servidor?.kill();
+    if (errosM.length) throw new Error(`erros na página:\n${errosM.join('\n')}`);
+    return;
+  }
+  if (process.argv.includes('--jogos') || process.argv.includes('--capturas-jogos')) {
+    const errosJ = [];
+    const h = { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros: errosJ, dirCap: DIR_CAP };
+    if (process.argv.includes('--capturas-jogos')) {
+      mkdirSync(DIR_CAP, { recursive: true });
+      await trechoJogos(browser, { ...h, w: 1850, h: 980, capturar: true });
+      await trechoJogos(browser, { ...h, w: 390, h: 844, suf: '-celular', movel: true, capturar: true });
+    } else await trechoJogos(browser, h);
+    await browser.close(); servidor?.kill();
+    if (errosJ.length) throw new Error(`erros na página:\n${errosJ.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--voz-real')) {
     const errosV = [];
     await trechoVozReal(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosV });
@@ -1066,6 +1098,9 @@ async function main() {
   await trechoCantinho(browser, erros);
   await trechoVozReal(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoCopia(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
+  await trechoJogos(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros, dirCap: DIR_CAP });
+  await trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
+  await trechoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
 
   if (CAPTURAS_AL) {
     const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR' });

@@ -43,6 +43,24 @@ próxima rodada de voz ou para decisão do dono.
 | Sofia | "Montar sílabas na tábua" | Dica do selo S-R2a-04 | Decisão do dono (selos, D022) |
 | Sofia | "Chefe: Cachoeira das Sílabas…", "Atravessar/Vencer a Cachoeira das Sílabas" | Chefe R2a-F05, selos e título do nível 16 | Nome de título/selo (D022): **não mudado**; sugestão ao dono |
 
+## 1c. Jogos fônicos: Corre-Som e Bichinho Come-Som (D032 §4, 17/11; NENHUMA voz gerada)
+
+Os dois jogos usam só clipes já gravados: o som puro de cada letra (`public/audio/sons`), "Ouça e toque na letra.", "Qual figura
+começa com este som?", a correção contrastiva ("Você escolheu este som:", "Essa letra faz este som:", "Eu pedi este som:", as frases
+dos pares p/b, f/v…, "Escuta os dois e tenta de novo."), "Olha como eu faço." / "Agora é com você!", os elogios e os nomes das figuras.
+Fariam falta (hoje o texto aparece no balão sem voz, ou a tela fica sem a fala):
+
+| Fala sugerida | Quem | Onde entraria |
+|---|---|---|
+| "Qual figura termina com este som?" | Sofia | Enunciado do Bichinho, variação "termina com" (hoje só no balão) |
+| "Escute o fim da palavra." | Sofia | Correção do "termina com" (hoje usa "Você escolheu este som:" + som + "Eu pedi este som:" + som) |
+| "O Bolota está com fome de sons! Dê a ele a comida que começa com este som." | Tales | Entrada do Bichinho (hoje usa "Qual figura começa com este som?") |
+| "Corra para o arco do som que você ouvir!" | Tales | Entrada do Corre-Som, variação letras (hoje "Ouça e toque na letra.") |
+| "Toque na pista para o boneco ir até ela. Deslize para pular!" | Sofia | Primeira vez no Corre-Som (hoje só a mãozinha piscando) |
+| "Quer brincar de Corre-Som?" / "Quer dar comida ao Bolota?" | Sofia | Botão do desafio opcional dentro da fase (hoje botão sem fala) |
+| "Hum… esse não é o som que eu pedi." | Bolota | Quando a comida errada volta para o prato (hoje só a animação e o "hum?") |
+| "Nham! Que gostoso!" | Bolota | Quando o Bolota come a comida certa (hoje só o efeito sonoro e os corações) |
+
 ## 2. Com clipe, mas a auditoria pede regravação ou conferência de ouvido
 
 | Voz | Fala | O que a transcrição ouviu | Situação |

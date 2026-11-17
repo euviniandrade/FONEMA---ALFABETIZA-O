@@ -47609,6 +47609,40 @@
   "gravidade": "ok"
  },
  {
+  "tipo": "fala",
+  "voz": "tales",
+  "chave": "Na Lojinha, você troca as moedinhas por roupas para o seu boneco. Um dia, até barco e carro!",
+  "arquivo": "falas/tales-kxby7s-v3-m1.mp3",
+  "esperado": "Na Lojinha, você troca as moedinhas por roupas para o seu boneco. Um dia, até barco e carro!",
+  "sinal": {
+   "dur": 7.748,
+   "silencio_ini_ms": 105,
+   "silencio_fim_ms": 125,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -2.4,
+   "rms_fala_db": -17.4,
+   "lufs": -17.8,
+   "ms_por_caractere": 106,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 30,
+   "subida_ini_ms": 109,
+   "problemas": [],
+   "desvio_volume_db": 0.0
+  },
+  "fonte": "falas/tales-kxby7s-v3.mp3",
+  "sha": "c1bd520aa8bb9ede",
+  "fonte_problemas": [],
+  "ouvido": "Na lojinha, você troca as moedinhas por roupas para o seu boneco. Um dia, até barco e carro",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
+ },
+ {
   "tipo": "nome",
   "voz": "sofia",
   "chave": "helena",

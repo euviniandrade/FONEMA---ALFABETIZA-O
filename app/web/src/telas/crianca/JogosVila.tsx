@@ -10,7 +10,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { FALAS_ESCUTA } from '@fonema/conteudo';
 import {
-  CORES_VEICULO, carteiroLiberado, casaLiberada, comprar, corLiberada, dadosBiblioteca, dadosJogosVila, escolherCor, moverMovel, podeComprar, receberMovel,
+  CORES_VEICULO, comprar, corLiberada, dadosBiblioteca, dadosJogosVila, escolherCor, moverMovel, podeComprar, receberMovel,
   registrarLivre, rodadaDaCasa, rodadaDaEstrada, rodadaDoCarteiro, variacoesDaEstrada, type JogoVilaId, type Progresso, type Tentativa, type VariacaoEstrada
 } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
@@ -25,29 +25,10 @@ import { EstradaPares } from '../../mecanicas/jogos/EstradaPares.tsx';
 import { Carteiro } from '../../mecanicas/jogos/Carteiro.tsx';
 import { CasaDoSom, CasinhaDoSom } from '../../mecanicas/jogos/CasaDoSom.tsx';
 import { Veiculo, corDoVeiculo } from '../../mecanicas/jogos/vila-comum.tsx';
+import { JOGOS_DA_VILA, rotaDoJogoDaVila, situacaoDosJogosDaVila } from './jogos-vila-cartoes.ts';
 import '../../mecanicas/jogos/estilos-jogos-vila.css';
 
-/** Endereço de cada jogo (para o Parque, o fim da missão e o mundo 3D). */
-export const rotaDoJogoDaVila = (criancaId: string, jogo: JogoVilaId, faseId?: string) => `c/${criancaId}/jogo/${jogo}${faseId ? `/${faseId}` : ''}`;
-
-/** Cartões dos jogos da vila (para o Parque de Jogos / Brincar mostrar). */
-export const JOGOS_DA_VILA: { id: JogoVilaId; nome: string; treina: string; capa: string[]; cor: string }[] = [
-  { id: 'estrada-pares', nome: 'Estrada e Rio dos Pares', treina: 'Ouvir e ler palavras quase iguais', capa: ['vaca', 'faca'], cor: 'azul' },
-  { id: 'carteiro', nome: 'Carteiro da Vila', treina: 'Ler o nome e entregar a carta', capa: ['mala', 'lua'], cor: 'laranja' },
-  { id: 'casa-som', nome: 'Casa do Som', treina: 'Escrever para montar a casinha', capa: ['pia', 'bule'], cor: 'verde' }
-];
-
-/** Situação de cada jogo para a criança (aberto ou o que falta). */
-export function situacaoDosJogosDaVila(p: Progresso): Record<JogoVilaId, { aberto: boolean; motivo?: string }> {
-  const est = variacoesDaEstrada(p);
-  const c = carteiroLiberado(p);
-  const casa = casaLiberada(p);
-  return {
-    'estrada-pares': { aberto: est.some((v) => v.liberada), motivo: est[0].motivo },
-    carteiro: { aberto: c.liberada, motivo: c.motivo },
-    'casa-som': { aberto: casa.liberada, motivo: casa.motivo }
-  };
-}
+export { JOGOS_DA_VILA, rotaDoJogoDaVila, situacaoDosJogosDaVila };
 
 /** Registro das respostas conferidas (motor, contexto livre/desafio) + o que muda na casinha/garagem. */
 function useRegistroJogo(criancaId: string) {
@@ -110,7 +91,7 @@ export function JogosVila({ criancaId, jogoId }: { criancaId: string; jogoId?: s
   const vila = dadosJogosVila(progresso);
   const cor = corDoVeiculo(vila.corVeiculo);
   const contexto = faseId ? 'desafio' as const : 'livre' as const;
-  const voltar = faseId ? `c/${criancaId}/vila` : jogo ? `c/${criancaId}/jogo` : `c/${criancaId}/brincar`;
+  const voltar = faseId ? `c/${criancaId}/vila` : `c/${criancaId}/brincar`;
 
   const terminar = async (tentativas: Tentativa[]) => {
     if (!jogo) return;
@@ -186,7 +167,7 @@ export function JogosVila({ criancaId, jogoId }: { criancaId: string; jogoId?: s
             {fim || faseId ? (
               <div className="linha-botoes centro">
                 {faseId ? <button className="btn grande ipe" onClick={() => navegar(`c/${criancaId}/vila`)} data-testid="voltar-vila"><Icone nome="casa" />Voltar para a vila</button>
-                  : <button className="btn grande ipe" onClick={() => navegar(`c/${criancaId}/jogo`)}><Icone nome="seta-esq" />Outros jogos</button>}
+                  : <button className="btn grande ipe" onClick={() => navegar(`c/${criancaId}/brincar`)} data-testid="jogo-outros"><Icone nome="seta-esq" />Outros jogos</button>}
               </div>
             ) : null}
           </section>

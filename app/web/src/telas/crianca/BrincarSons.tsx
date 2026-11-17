@@ -17,6 +17,7 @@ import { JogoEscuta } from '../../mecanicas/JogoEscuta.tsx';
 import { Palmas } from '../../mecanicas/Palmas.tsx';
 import { embaralhar, sementeDaTentativa } from '../../mecanicas/comum.tsx';
 import { useRegistroLivre } from './Biblioteca.tsx';
+import { JOGOS_DA_VILA, rotaDoJogoDaVila, situacaoDosJogosDaVila } from './jogos-vila-cartoes.ts';
 import { Capa, JOGOS_FONICOS, JOGO_FONICO_POR_ID, TelaJogoFonico } from '../../mecanicas/jogos/JogoFonico.tsx';
 import '../../estilos-biblioteca.css';
 
@@ -36,6 +37,7 @@ export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?:
   useEffect(() => () => voz.parar(), []);
   if (!crianca || !progresso) return <Carregando />;
   const d = dadosBiblioteca(progresso);
+  const vila = situacaoDosJogosDaVila(progresso);
   // D032 §4: jogos fônicos (Corre-Som e Bichinho Come-Som), com os sons já ensinados
   const jogoFonico = jogoId ? JOGO_FONICO_POR_ID[jogoId] : undefined;
   if (jogoFonico) {
@@ -102,6 +104,19 @@ export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?:
                     <Capa itens={j.capa} />
                     <b>{j.nome}</b>
                     <small>{aberto ? j.treina : 'Abre com os primeiros sons da trilha'}</small>
+                    {vezes ? <span className="biblio-selo"><Icone nome="check" />{vezes}×</span> : null}
+                  </button>
+                );
+              })}
+              {/* D032 §4: jogos da vila (Estrada e Rio dos Pares, Carteiro, Casa do Som), telas em JogosVila.tsx */}
+              {JOGOS_DA_VILA.map((j, k) => {
+                const vezes = d.jogos.filter((x) => x.id === j.id).length;
+                const s = vila[j.id];
+                return (
+                  <button key={j.id} className={`brincar-jogo-cartao cor-${j.cor} ${s.aberto ? '' : 'trancado'}`} style={{ ['--k' as string]: k + JOGOS_FONICOS.length } as CSSProperties} onClick={() => navegar(rotaDoJogoDaVila(criancaId, j.id))} data-testid={`jogo-${j.id}`}>
+                    <span className="brincar-figs" aria-hidden="true">{j.capa.map((f) => <Figura key={f} palavra={f} />)}</span>
+                    <b>{j.nome}</b>
+                    <small>{s.aberto ? j.treina : s.motivo}</small>
                     {vezes ? <span className="biblio-selo"><Icone nome="check" />{vezes}×</span> : null}
                   </button>
                 );
