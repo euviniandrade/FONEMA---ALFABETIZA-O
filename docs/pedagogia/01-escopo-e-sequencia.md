@@ -184,7 +184,9 @@ alfabetização (SOA p. 166, 336) e estão fora deste escopo.
 - **Caminho da jornada (D031)** **[DP]**: cada fase da Trilha A–Z entra logo antes da lição que ensina aquela letra, e as revisões do
   alfabeto fecham cada bloco: A TF-01 · E TF-02 · I TF-03 · O TF-04 · U TF-05 · TF-06 · revisão das vogais · M TF-07 · F TF-08 · V TF-09 ·
   L TF-10 · S TF-11 · TF-12 · N TF-13 · Z TF-14 · J TF-15 · TF-R2 · revisão M…J · P TF-16 · T TF-17 · B TF-18 · C TF-19 · D TF-20 ·
-  G TF-21 · TF-22 · TF-R3 · revisão P…G · R · H · X · Q · K · Y · W (na ordem das lições futuras: TF-31, 35, 39, 40, 48) · Festa do Alfabeto.
+  G TF-21 · TF-22 · TF-R3 · revisão P…G · TF-23 · TF-24 · TF-25 · R · H · X · Q · K · Y · W (na ordem das lições futuras: TF-31, 35,
+  39, 40, 48) · Festa do Alfabeto. Lição escrita mas EM ESPERA de som puro (TF-26…TF-32 e TF-R4, 17/11) fica fora até o som existir;
+  quando TF-31 entrar, a letra R vai para logo antes dela (00 §7).
   Depois: é/ê e ó/ô (R1), Vale do M-L-F (R2a) e Meu nome (R0). No mapa a Trilha A–Z continua em ordem alfabética (regra 7). Fundamento
   para ler cedo, com poucas letras: ABC p. 123 e p. 330–331; VT-PE p. 82–96 (ver D031). A forma de alternar é decisão do projeto.
 - A leitura começa na **Trilha dos Sons** (TF-06…TF-22, com as revisões TF-R2 e TF-R3: vogais e M, F, V, L, S, N, Z, J, P, T, B, C, D, G,

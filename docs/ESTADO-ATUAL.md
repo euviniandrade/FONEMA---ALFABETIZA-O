@@ -1,6 +1,6 @@
 # FONEMA — Estado atual e passagem de bastão
 
-Atualizado em 2026-11-16 (seção 0: revisão da metodologia). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
+Atualizado em 2026-11-17 (seção 0: Trilha dos Sons, blocos 4 e 5). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
 Tudo o que foi feito está neste repositório, no ramo `claude/eager-brahmagupta-3d2lhr` (commit e push a cada mudança). Nada depende
 da memória da conversa anterior.
 
@@ -8,6 +8,31 @@ da memória da conversa anterior.
 
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
+
+**Trilha dos Sons, blocos 4 e 5: TF-23…TF-32 e TF-R4 (17/11, noite; NÃO publicado ainda):**
+- **Na jornada** (depois da revisão P…G, antes de R…W e da Festa): **TF-23** é e ó com acento (faz de conta: nojo ao pisar na lama;
+  surpresa), **TF-24** E/O abertos sem acento e ê/ô (regra "leia fechado; se não virar palavra, tente o aberto"; item avaliado = qual
+  acento falta: VOV_ vovó × vovô), **TF-25** ã e AN antes de consoante (faz de conta: pensando; frase "A anta viu a lua.").
+- **Escritas, conferidas e EM ESPERA** (fora da jornada): TF-26 EN, TF-27 IM/IN, TF-28 OM/ON, TF-29 UM/UN, TF-30 M antes de P/B e
+  ão/ãe/õe/-em, TF-R4 (revisão com frase e eco), TF-31 R do começo, TF-32 R fraco (gatinho ronronando, MP p. 88). Regra automática
+  em `conteudo/src/fases/tf.ts`: entra na jornada a lição cujos sons puros estão no mapa (`SONS_PUBLICADOS` = `mapa.json`, testado)
+  e cujas anteriores entraram (a trilha não se pula). **Faltam os sons puros /ẽ/, /ĩ/, /õ/, /ũ/ e /ɾ/** (Estúdio de sons ou
+  fonoaudióloga); TF-31 (R forte, que tem som) espera só por vir depois das nasais. Quando entrar, a letra R vai sozinha para logo
+  antes de TF-31 (`regioes.ts › montarLetrasESons`, D031 §3). Progresso salvo: **versão 4** (`reordenarJornada`; quem já estava
+  nas letras R…W volta para TF-23, nada concluído se perde; teste `motor/test/trilha-blocos-4-5.test.ts`).
+- **Voz: nenhuma gerada.** ~39 falas da jornada (≈ 590 caracteres) e ~140 das lições em espera estão em `app/docs/falas-pendentes.md`
+  §1e. Ponte: leitura falada sem clipe toca os sons puros emendados (`LEITURAS_EM_SONS` → `web/src/servicos/voz.ts`); funciona, mas
+  **gerar as 39 falas antes de publicar**. Frases e falas de apresentação novas ficam só no balão até lá.
+- **Palavras** no fim de `fases/tf-banco.ts` (`PALAVRAS_BLOCOS_4_5`, pronúncia anotada); verificador aceita inventadas com acento e
+  nasal; relatório refeito (386 itens na jornada, 0 erros; 137 nas lições em espera, 0 erros). Duvidosas para alfabetizadora em
+  `docs/pedagogia/00 §7` (pera/pela, coro, boba, boné, copo, moto, veto, cota; tato, veto, mito, nuca nos pares; ninja).
+- **Figuras novas** (MiniMax, olhadas): `cena-e-aberto`, `cena-o-aberto`, `cena-a-nasal`, `cena-r-fraco`, `panda`, `novelo-la`.
+  A anta saiu 3 vezes como javali/porco e foi descartada (TF-25 lê "anta" sem figura).
+- Mecânicas: `SomNovo` aceita `cena`; `Troca` e `Caixas` aceitam os grafemas novos (`fonemaDoGrafema`); tela da trilha mostra os
+  blocos 4 e 5 quando têm lição na jornada.
+- **Pergunta ao dono:** a Ilha das Vogais (R1, é/ê e ó/ô) continua depois da Festa como revisão, e o gancho da Festa ("Agora as
+  vogais vão mostrar os outros sons delas!") ficou menos exato, porque TF-23/24 já ensinam esses sons. Manter, mudar o texto ou tirar
+  R1 do caminho (sem apagar, regra 7)?
 
 **Jogos da vila: Estrada e Rio dos Pares, Carteiro da Vila e Casa do Som (D032 §4; pesquisa 47 G6, G10, G3; 17/11, noite; NÃO publicado ainda):**
 - **Regras puras** em `motor/src/jogos-vila.ts` (testes `motor/test/jogos-vila.test.ts`, 14). Telas em `web/src/mecanicas/jogos/`

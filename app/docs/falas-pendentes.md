@@ -81,6 +81,39 @@ sem olhar?"), "Olha como eu faço." / "Agora é com você!", "Muito bem!" e os e
 | "Quer um desafio? Vamos de Estrada dos Pares! / entregar cartas? / encomendar um móvel?" | Sofia | Botão do desafio opcional no fim da missão (hoje botão sem fala) |
 | Nomes dos jogos ("Estrada dos Pares", "Rio dos Pares", "Carteiro da Vila", "Casa do Som") | Sofia | Cartões do Brincar (hoje só o toque) |
 
+## 1e. Trilha dos Sons, blocos 4 e 5 (TF-23…TF-32 e TF-R4, 17/11; NENHUMA voz gerada)
+
+As lições novas usam as molduras já gravadas da trilha ("Escute o som novo.", "Esta é a letra deste som.", "Toque para ouvir cada
+leitura e escolha a que combina."…), os sons puros do mapa e os clipes de palavras que já existiam (pé, vovó, vovô, café, babá,
+bebê, bola, vela, mola, cola, copo, moto, janela, panela, caneca, boneca, peteca, pipoca, ela, ave, mata, nata, latu, lua, uva…).
+**Ponte até a voz:** uma leitura falada da trilha sem clipe (palavra, palavra inventada, leitura errada das opções, palavra das
+caixas e dos pares) toca os SONS PUROS emendados, bem ligeiro (`LEITURAS_EM_SONS` em `packages/conteudo/src/fases/tf.ts`, usado
+por `web/src/servicos/voz.ts`). Funciona, mas não é a leitura natural: **gerar estas falas antes de publicar.** Frase e fala de
+apresentação sem clipe ficam só escritas no balão.
+
+**Lições que já estão na jornada (TF-23, TF-24, TF-25): 39 falas, ≈ 590 caracteres (Sofia)**
+
+| Fala | Lição |
+|---|---|
+| "Faz de conta que você pisou na lama. Que nojo!" · "É, de pé." · "Faz de conta que você viu uma coisa linda. Que surpresa!" · "Ó, de vovó." | TF-23 (som novo: faz de conta e apoio) |
+| "Isso! Esse é o som do É." · "Isso! Esse é o som do Ó." · "Isso! Esse é o som do Ã." | TF-23 em diante (apoio depois do acerto) |
+| lupé, lupê, nafó, nafô (palavras inventadas e leituras erradas) · avó, avô (par mínimo) | TF-23 |
+| "Sem acento, o O às vezes soa ó." · "E o E às vezes soa é." · "Com chapeuzinho, o som é fechado: ô e ê." · "Leia primeiro com o som fechado. Se não virar palavra, tente o aberto!" | TF-24 (apresentação da regra) |
+| dovê, dové, dova, bupô, bupó, bupa · "A vovó viu a bola." · "O que a vovó viu?" | TF-24 |
+| "Faz de conta que você está pensando, bem quietinho." · "A com til, de lã." | TF-25 (som novo) |
+| panda, lã, fã, anta, manta, janta · lantu, lanta, tanfi, tafi, tanfa · "A anta viu a lua." · "O que a anta viu?" | TF-25 |
+
+**Lições escritas e em espera de som (TF-26…TF-30, TF-R4, TF-31, TF-32): mais ≈ 140 falas, ≈ 930 caracteres.** A lista completa sai
+de `npx tsx` sobre `TODAS_AS_FASES_TF` × `web/public/audio/falas/manifesto.json` (mesma conta do gerador de vozes). Inclui: "Faz de conta que o
+som escorrega pelo nariz.", "E e N, de dente.", "I e N, de lindo.", "O e N, de onda.", "U e N, de mundo.", "Antes de P e B, o som do
+nariz se escreve com M.", "Com til, o A e o O do fim fazem ão.", "E o EM do fim soa assim.", "Cada som do nariz tem o seu jeito de
+escrever!", "Faz de conta que você é um gatinho ronronando no colo.", "R, de arara.", as frases "A vovó viu o pão.", "O rato viu a
+roda.", "A arara viu o pato." e as perguntas, e as palavras (dente, vento, lindo, sim, bom, onda, mundo, campo, bomba, tem, cara, pera,
+arara…) e inventadas (fendu, benfa, tindu, binta, lontu, donfa, tunfa, lunti, tampu, lombi, rafu, rupi, furi, lari…).
+**Antes da voz, estas lições precisam dos SONS PUROS** /ẽ/, /ĩ/, /õ/, /ũ/ e do R fraco (/ɾ/) no mapa de sons (gravação no Estúdio de
+sons ou por fonoaudióloga, D030); a Sofia tem clipes "ẽẽẽẽ", "ĩĩĩĩ", "õõõõ", "ũũũũ" (vogais esticadas) que **ninguém ouviu** e não estão
+no mapa — podem servir de ponto de partida se uma pessoa aprovar.
+
 ## 2. Com clipe, mas a auditoria pede regravação ou conferência de ouvido
 
 | Voz | Fala | O que a transcrição ouviu | Situação |

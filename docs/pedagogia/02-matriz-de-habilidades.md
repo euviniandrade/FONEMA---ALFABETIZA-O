@@ -61,10 +61,10 @@ ouvir o som e achar a letra (som → letra) e ver a letra e dizer ou escolher o 
 | FG-V-01 a 05 | `vogal-a`, `vogal-e`, `vogal-i`, `vogal-o`, `vogal-u` | liga cada vogal ao seu som | CFN-INI-01 | Som → letra; letra → som | 4 das últimas 5 em cada sentido, 2 sessões | escolha com 3 ou 4 opções; distratores incluem a vogal mais parecida |
 | FG-V-06 | `vogais` | reconhece as 5 vogais misturadas | FG-V-01 a 05 | idem | 8 de 10 | idem |
 | FG-C-xx | `gpc-m`, `gpc-l`, `gpc-f` (existem); `gpc-<letra>` a criar para as demais | liga a consoante da unidade ao seu som | unidade anterior | Som → letra; letra → som; completar a letra que falta (ABC p. 330–331; VT-1A p. 78; SOA p. 126–130) | idem FG-V | idem; depois do 1º contato, os distratores **incluem o par confundível** (p/b, t/d, f/v…) |
-| FG-AB-01 | `o-aberto-fechado`; `e-aberto-fechado` a criar | lê é/ê e ó/ô | Bloco 3 | Pares (vovó × vovô) | 8 de 10 | escolha |
-| FG-NAS-01 a 05 | a criar (`gpc-nasal-a` …) | lê e escreve as vogais nasais | TF-24 | Unidades TF-25 a TF-30 | idem FG-V | idem |
+| FG-AB-01 | `o-aberto-fechado`, `e-aberto-fechado` (TF-23); `regra-vogal-aberta` (TF-24, E/O abertos sem acento e ê/ô) | lê é/ê e ó/ô | Bloco 3 | Pares (vovó × vovô); qual acento falta (VOV_) | 8 de 10 | escolha |
+| FG-NAS-01 a 05 | `gpc-nasal-a` … `gpc-nasal-u`; `regra-m-n` (TF-30) | lê e escreve as vogais nasais | TF-24 | Unidades TF-25 a TF-30 | idem FG-V | idem |
 | FG-DIG-xx | a criar (`gpc-lh`, `gpc-nh`, `gpc-ch`, `gpc-rr`, `gpc-ss`, `gpc-qu`, `gpc-gu`) | lê o dígrafo como um som só | unidade anterior | idem | idem | idem |
-| FG-CTX-xx | a criar (`regra-c`, `regra-g`, `regra-r`, `regra-s`, `regra-l-final`, `regra-vogal-final`, `regra-ti-di`, `regra-m-n`) | aplica a regra de posição | letras envolvidas | Comparar pares (MURO × MURRO; SOA p. 154–155), cruzadinhas CA/QUE/CE (MOR p. 212) | 8 de 10, com palavras novas | leitura e escrita de pares |
+| FG-CTX-xx | `regra-vogal-final`, `regra-ti-di`, `regra-m-n`, `regra-r` (R fraco, TF-32) e `gpc-r` (R do começo, TF-31) existem; a criar `regra-c`, `regra-g`, `regra-s`, `regra-l-final` | aplica a regra de posição | letras envolvidas | Comparar pares (MURO × MURRO; SOA p. 154–155), cruzadinhas CA/QUE/CE (MOR p. 212) | 8 de 10, com palavras novas | leitura e escrita de pares |
 | LET-xx | `letra-a` … `letra-z` (existem, Trilha A–Z) | conhece nome, forma e traçado da letra | — | Letra, Traçar, Ouça e toque na letra | **não libera leitura**; conclui por participação (como hoje) | — |
 
 Importante: `letra-<x>` (Trilha A–Z) e `gpc-<x>` (trilha fônica) são habilidades **diferentes**. Dominar `letra-b` não prova que a

@@ -122,7 +122,7 @@ A D030 decidiu: onde discordam, **entram as duas práticas**. O quadro completo 
 
 ## 7. O plano em nove etapas da D030
 
-Estado em 2026-11-16. O estado vivo fica em [`../ESTADO-ATUAL.md`](../ESTADO-ATUAL.md).
+Estado em 2026-11-17. O estado vivo fica em [`../ESTADO-ATUAL.md`](../ESTADO-ATUAL.md).
 
 | # | Etapa | O que resolve (achado do diagnóstico) | Estado |
 |---|---|---|---|
@@ -131,7 +131,7 @@ Estado em 2026-11-16. O estado vivo fica em [`../ESTADO-ATUAL.md`](../ESTADO-ATU
 | 3 | Som no lugar do nome da letra | "Letra B." é o estímulo de 196 itens (DIAG §2, §8.1) | **Entregue na Trilha A–Z** (15/11): em 22 letras o estímulo é o som real, 2 vezes, nos dois sentidos (som → letra e letra → som com botões de som); o nome da letra só entra depois do acerto. H, K, W e Y ficam no comportamento antigo; R fraco, LH e NH não têm clipe. **Nenhum som foi ouvido por pessoa** |
 | 4 | Distratores, sorteio e fim do modelo permanente | Posições fixas, distratores fáceis, modelo na tela, brilho entrega a resposta (DIAG §2) | **Entregue** (15/11): posições e itens sorteados; pares confundíveis (p/b, t/d, f/v, s/z, x/j, c/g, m/n, l/r, o/u) e letras em espelho (b, d, p, q) nas revisões; correção contrastiva no 1º erro, resposta só brilha na 3ª tentativa; figura sem a letra e fora da palavra-chave; Montar com demonstração e depois sem modelo; "Bolota leu errado" e pseudopalavras por áudio; "qual som falta"; jogo "Liga o som". Limites: itens de R0 e R1 com figura ainda usam a escada antiga; pares mínimos de PALAVRAS (faca × vaca) não foram feitos |
 | 5 | Exposição fora do domínio | Letra, Espelho, Traçar e Falar contam sempre como acerto (DIAG §4) | **Entregue no motor**: só tentativa avaliada conta; concluída × dominada; "a confirmar" para dado antigo, chefe vencido e prova-relâmpago (16/11); sílaba (montar por sílaba, "qual sílaba falta") é exposição; critério 5 de 06 §2 (palavras e tipos de atividade diferentes) desde 16/11 |
-| 6 | Trilha fônica | Ordem alfabética; 23 letras sem prática de leitura (DIAG §4, §8.9) | **Blocos 1–3 entregues** (15/11): TF-01…TF-22 + revisões TF-R2 e TF-R3 (`conteudo/src/fases/tf.ts`), depois da Trilha A–Z; lição de 7–8 cenas (revisão, som novo, som → letra, síntese, leitura com palavras inventadas conferidas, caixas de sons, desafio); domínio pelo motor. Faltam TF-23…TF-53 |
+| 6 | Trilha fônica | Ordem alfabética; 23 letras sem prática de leitura (DIAG §4, §8.9) | **Blocos 1–3 entregues** (15/11): TF-01…TF-22 + revisões TF-R2 e TF-R3 (`conteudo/src/fases/tf.ts`), alternadas com a Trilha A–Z (D031); lição de 7–8 cenas (revisão, som novo, som → letra, síntese, leitura com palavras inventadas conferidas, caixas de sons, desafio); domínio pelo motor. **Blocos 4–5 escritos** (17/11): TF-23 (é, ó), TF-24 (E/O abertos sem acento; ê, ô) e TF-25 (ã, AN) **na jornada**; TF-26…TF-30 (nasais, M antes de P/B, ão/ãe/õe/-em), TF-R4, TF-31 (R forte) e TF-32 (R fraco) **escritos, conferidos e em espera** dos sons puros /ẽ ĩ õ ũ ɾ/ (regra abaixo). Faltam TF-33…TF-53 |
 | 7 | Verificador de decodificabilidade em tudo | O verificador não vale para o Alfabeto e só olha letras (DIAG §4) | **Entregue** (15/11): `decodificabilidade.ts` + banco com pronúncia anotada (`fases/tf-banco.ts`): valores por unidade, erro × aviso, frases, textos, palavras inventadas, todas as trilhas, relatório por fase (`app/docs/relatorio-decodificabilidade.md`); falha o build. A lista de palavras frequentes é [DP] e pede aprovação |
 | 8 | Frases, textos, fluência e compreensão | Não existem (DIAG §7) | **Entregue o essencial** (16/11): frases decodificáveis com pergunta por figura (TF-10 em diante) e eco nas revisões; **Cantinho da Leitura** (`web/src/telas/crianca/Biblioteca.tsx`, dados em `conteudo/src/biblioteca/`, regras em `motor/src/biblioteca.ts`): 2 histórias OUVIDAS com figuras, perguntas antes (previsão), durante e depois (direta e de dedução) e 3 palavras de vocabulário cada (VT-PE p. 41, 48, 83, 92; ABC p. 230–233, 397–398; SOA p. 232–246); 3 textos decodificáveis, um no fim de cada bloco (até TF-06, TF-15 e TF-22), conferidos pelo verificador, com perguntas e leitura em coro (ABC p. 334–335, 375–376); **fluência** por releitura cronometrada de palavras já lidas certo, só com precisão ≥ 95% (ABC p. 375–376), conferida pela escolha da figura (microfone só como apoio), com caminho de estrelas para a criança e palavras certas por minuto para o adulto, **sem meta** (06 §6; metas = [DP] a calibrar); leitura em eco e em coro (autorrelato, fora do domínio); **escrita própria com confronto** (N13). **Brincar com sons** (`BrincarSons.tsx`): palavra comprida, palavra escondida, rima, quem não rima, mesmo começo e palmas, sempre abertos. Falta: mais histórias e textos, textos dos blocos 4–8, leitura de texto cronometrada na sondagem, metas de fluência |
 | 9 | Sondagem periódica e reforço dirigido | Sondagem única; sem volta ao pré-requisito (DIAG §6) | **Entregue o essencial** (15/11): tela própria de sondagem em 5 placas (sons das letras, leitura de palavras, pseudopalavras conferidas por escolha entre 3 leituras ouvidas, quantos sons, ditado), montada só com letras e valores sonoros de fases concluídas (`motor/src/sondagem-itens.ts`, testado); sem dica, sem nota e sem "errado" para a criança; a primeira sondagem continua a Missão das Placas (Trilha Expressa). Painel com sondagens lado a lado, queda entre sondagens (alerta + "voltar uma fase") e o que a criança escreveu no ditado. **Treino rápido com a Sofia**: a prática recomendada vira rodada jogável (par confundido + volta ao pré-requisito), registrada como avaliada no contexto "reforço", 1 vez por dia (`reforco-treino.ts`). Selos de habilidade só com resposta conferida e sem ajuda; selos de participação marcados à parte; nada já ganho é tirado. Ajuda graduada, "ouviu de novo", posição da resposta e chute no contrato e no painel. **Falta**: as mecânicas gravarem `nivelAjuda`, `ouviuDeNovo`, `posicaoCerta`, `posicaoEscolhida`, `nOpcoes` e `contexto` (o motor deduz o que dá); ditado de frases, leitura cronometrada e compreensão na sondagem; voz para a instrução de "quantos sons"; números (queda 25 pontos, chute 1,2 s) sem calibragem |
@@ -150,5 +150,28 @@ Estado em 2026-11-16. O estado vivo fica em [`../ESTADO-ATUAL.md`](../ESTADO-ATU
   4 que havia), no painel do adulto.
 - Sondagem de entrada também para 4–5 anos (só escuta, som inicial e letras); toda placa com 3 opções.
 - Documentos: citações corrigidas (ABC p. 334 Quadro 3; Soares p. 146; MP p. 88 sobre o R; roteiro "eu faço…" como extensão do projeto).
+
+**Blocos 4 e 5 da trilha fônica (17/11) — decisões do projeto [DP]:**
+- **Lição em espera:** uma lição só entra na jornada quando todos os sons puros que ela toca estão publicados no mapa de sons
+  (`SONS_PUBLICADOS`, conferido com `web/public/audio/sons/mapa.json` em teste) **e** todas as lições anteriores entraram (a ordem
+  de 01 não se pula; assim nenhuma palavra da jornada usa valor de lição que ficou de fora). Hoje: TF-23, TF-24 e TF-25 entram;
+  TF-26 em diante esperam /ẽ/ (e depois /ĩ/, /õ/, /ũ/ e o R fraco). Quando o som for publicado, a lição entra sozinha, no lugar certo,
+  e a letra R passa para logo antes de TF-31 (`montarLetrasESons`, D031 §3). Progresso salvo: versão 4 (`reordenarJornada`).
+- **Ponte até a voz:** leitura falada sem clipe da dupla toca os sons puros emendados (`LEITURAS_EM_SONS`); nunca voz do navegador
+  nem nome da letra (regra 1). Falas novas listadas em `app/docs/falas-pendentes.md` §1e.
+- **Sons duvidosos novos** (Ã e R forte, como L, V, J e os de estouro em 03 §5): no item que conta, o estímulo é a Sofia dizendo o som
+  esticado ("ãããã", "rrrrá"), não o clipe puro sozinho.
+- **Faz de conta:** é = nojo ao pisar na lama, ó = surpresa, ã = pensando (ideias nossas a partir de docs/pesquisa/46); R fraco =
+  gatinho ronronando (MP p. 88). Figuras próprias (MiniMax): `cena-e-aberto`, `cena-o-aberto`, `cena-a-nasal`, `cena-r-fraco`.
+- **TF-24:** "leia primeiro com o som fechado; se não virar palavra, tente o aberto" (01 TF-24 [DP]); o item avaliado da regra é o
+  acento (VOV_ = vovó × vovô; P_ = pé, não "pe"), que é regular; se uma palavra sem acento leva É/Ó é coisa de memória e não é cobrado.
+- **Caixas de sons** só com palavras de uma letra por som; nas lições de nasal com duas letras (EN, IN…) a escrita é o ditado.
+- **TF-25** usa só Ã e AN antes de consoante; AM antes de P e B fica para TF-30, como em 01.
+- **Palavras que pedem ouvido de alfabetizadora** (anotação E/O e vocabulário): `pera` /e/ e `pela` /e/ (preposição; o verbo é /ɛ/),
+  `coro` /o/ (substantivo), `boba` /o/, `boné` e `picolé` (O átono anotado /o/), `copo`, `moto`, `bota`, `cota`, `pote` /ɔ/, `veto` /ɛ/;
+  palavras pouco conhecidas aos 4–7 anos usadas em pares mínimos (`tato`, `veto`, `cota`, `mito`, `lido`, `nuca`, `tapa`); `ninja`
+  (estrangeirismo); e as palavras inventadas com acento no fim (`lupé`, `nafó`, `dovê`, `bupô`).
+- A Ilha das Vogais (R1, é/ê e ó/ô) continua depois da Festa como revisão (regra 7); o gancho da Festa ("Agora as vogais vão mostrar
+  os outros sons delas!") ficou menos exato, porque TF-23/24 já ensinam esses sons antes: **pergunta ao dono**.
 
 Pendências que dependem do dono (D030): validação de ouvido dos sons puros, de preferência por fonoaudióloga; créditos de voz para as falas novas.
