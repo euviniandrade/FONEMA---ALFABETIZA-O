@@ -27,3 +27,4 @@ export * from './biblioteca.ts';
 export * from './guia.ts';
 export * from './jogos-fonicos.ts';
 export * from './jogos-vila.ts';
+export * from './fichas.ts';

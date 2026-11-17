@@ -28,7 +28,7 @@ export type TipoTentativa = 'avaliada' | 'exposicao' | 'autorrelato';
 /** Mecânica que gerou a tentativa: o `tipo` da atividade ('escolher', 'ligar', 'montar'…), mais a sondagem. */
 export type MecanicaTentativa = Atividade['tipo'] | 'sondagem' | MecanicaLivre;
 /** Mecânicas do Cantinho da Leitura e do Brincar com sons (biblioteca.ts). */
-export type MecanicaLivre = 'historia' | 'texto' | 'fluencia' | 'escuta' | MecanicaJogo;
+export type MecanicaLivre = 'historia' | 'texto' | 'fluencia' | 'escuta' | 'ficha' | MecanicaJogo;
 /**
  * D032 §4: jogos fônicos. Corre-Som e Bichinho Come-Som (jogos-fonicos.ts); Estrada e Rio dos Pares, Carteiro da Vila e Casa do
  * Som (jogos-vila.ts). Cada escolha conferida é uma tentativa AVALIADA; moedas, distância e enfeites não contam.

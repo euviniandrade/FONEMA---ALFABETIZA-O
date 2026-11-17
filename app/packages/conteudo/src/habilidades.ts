@@ -77,7 +77,11 @@ export const HABILIDADES: Habilidade[] = [
   { id: 'compreensao-ouvida', regiao: 'R0', nome: 'Entender uma história ouvida', paraFamilia: 'responde perguntas sobre uma história que ouviu', exigePseudo: false },
   { id: 'vocabulario', regiao: 'R0', nome: 'Palavras novas das histórias', paraFamilia: 'aprende palavras novas das histórias', exigePseudo: false },
   { id: 'leitura-texto', regiao: 'TF', nome: 'Ler um texto curto sozinho', paraFamilia: 'lê sozinho um texto curto e mostra que entendeu', exigePseudo: false },
-  { id: 'fluencia-palavras', regiao: 'TF', nome: 'Ler palavras conhecidas mais ligeiro', paraFamilia: 'relê palavras conhecidas cada vez mais ligeiro, sem errar', exigePseudo: false }
+  { id: 'fluencia-palavras', regiao: 'TF', nome: 'Ler palavras conhecidas mais ligeiro', paraFamilia: 'relê palavras conhecidas cada vez mais ligeiro, sem errar', exigePseudo: false },
+  // D033 · Fichas de leitura, níveis 3 e 4: consciência ARTICULATÓRIA (ligar a letra à boca que faz o som dela; descobrir a
+  // palavra só pelas bocas). Soares, Alfaletrar, p. 146, usa o ponto de articulação. Livre: não trava fase. Só com bocas
+  // visualmente diferentes na mesma rodada (conteudo/src/fichas.ts › CLASSE_DA_BOCA).
+  { id: 'boca-som', regiao: 'TF', nome: 'Boca ↔ som (consciência articulatória)', paraFamilia: 'olha a boca e sabe que som (e que letra) ela está fazendo', exigePseudo: false }
 ];
 
 export const HABILIDADE_POR_ID: Record<string, Habilidade> = Object.fromEntries(HABILIDADES.map((h) => [h.id, h]));

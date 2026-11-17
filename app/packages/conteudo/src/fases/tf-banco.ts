@@ -161,3 +161,39 @@ for (const x of PALAVRAS_BLOCOS_4_5) {
   if (BANCO[k] && BANCO[k].sons !== x.sons) throw new Error(`Banco: "${k}" com duas anotações diferentes`);
   BANCO[k] = { ...BANCO[k], ...x };
 }
+
+/**
+ * Palavras das FICHAS DE LEITURA por campo semântico (D033; conteudo/src/fichas.ts), acrescentadas em 17/11 em bloco
+ * separado. São as figuras dos campos que ainda não estavam no banco: a maioria usa sons de unidades futuras e aparece
+ * TRANCADA ("em breve") até a criança chegar lá; nenhuma entra para ler antes disso (regra 2). Anotação pela fala comum do
+ * Brasil: E/O tônicos abertos × fechados conferidos um a um; O e E átonos do fim como U e I.
+ * DUVIDOSAS (revisar com alfabetizadora): "leão" (E átono pode soar I: "liãu"), "formiga" (O átono pode soar U), "estrela"
+ * (o "es-" do começo soa "is-": anotado assim, A19), "tambor" e "sorvete"/"porta"/"urso" (R de fim de sílaba varia por região:
+ * anotado como R fraco), "poça" e "olho" (O fechado), "mel" e "sol" (L do fim soando U). [DP]
+ */
+export const PALAVRAS_FICHAS: EntradaBanco[] = [
+  // animais
+  e('leão', 'l e ã u', { figura: 'leao' }), e('zebra', 'z e b ɾ a', { figura: 'zebra' }), e('abelha', 'a b e ʎ a', { figura: 'abelha' }),
+  e('jacaré', 'ʒ a k a ɾ ɛ', { figura: 'jacare' }), e('cobra', 'k ɔ b ɾ a', { figura: 'cobra' }), e('elefante', 'e l e f ã tʃ i', { figura: 'elefante' }),
+  e('formiga', 'f o ɾ m i g a', { figura: 'formiga' }), e('ovelha', 'o v e ʎ a', { figura: 'ovelha' }), e('urso', 'u ɾ s u', { figura: 'urso' }),
+  // comidas
+  e('queijo', 'k e i ʒ u', { figura: 'queijo' }), e('doce', 'd o s i', { figura: 'doce' }), e('mel', 'm ɛ u', { figura: 'mel' }),
+  e('feijão', 'f e i ʒ ã u', { figura: 'feijao' }), e('sorvete', 's o ɾ v e tʃ i', { figura: 'sorvete' }), e('abacaxi', 'a b a k a ʃ i', { ...ox, figura: 'abacaxi' }),
+  // casa
+  e('casa', 'k a z a', { figura: 'casa' }), e('mesa', 'm e z a', { figura: 'mesa' }), e('chave', 'ʃ a v i', { figura: 'chave' }),
+  e('porta', 'p ɔ ɾ t a', { figura: 'porta' }), e('xícara', 'ʃ i k a ɾ a', { figura: 'xicara' }),
+  // corpo
+  e('olho', 'o ʎ u', { figura: 'olho' }), e('unha', 'u ɲ a', { figura: 'unha' }),
+  // brinquedos
+  e('ioiô', 'i o i o', { figura: 'ioio' }), e('pandeiro', 'p ã d e i ɾ u', { figura: 'pandeiro' }), e('tambor', 't ã b o ɾ', { ...ox, figura: 'tambor' }),
+  e('carrinho', 'k a R i ɲ u', { figura: 'carrinho' }),
+  // natureza
+  e('sol', 's ɔ u', { figura: 'sol' }), e('nuvem', 'n u v ẽ i', { figura: 'nuvem' }), e('chuva', 'ʃ u v a', { figura: 'chuva' }),
+  e('folha', 'f o ʎ a', { figura: 'folha' }), e('estrela', 'i s t ɾ e l a', { figura: 'estrela' }), e('ilha', 'i ʎ a', { figura: 'ilha' }),
+  e('concha', 'k õ ʃ a', { figura: 'concha' }), e('poça', 'p o s a', { figura: 'poca' })
+];
+for (const x of PALAVRAS_FICHAS) {
+  const k = x.texto.toLowerCase();
+  if (BANCO[k] && BANCO[k].sons !== x.sons) throw new Error(`Banco: "${k}" com duas anotações diferentes`);
+  BANCO[k] = { ...BANCO[k], ...x };
+}
