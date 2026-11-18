@@ -162,8 +162,12 @@ entravam nos jogos, e os cadeados não diziam quanto faltava. Tabela completa do
   era de critério: cadeados longe demais (peças) ou mudos.
 - **Verificado:** typecheck, lint, testes (novo `motor/test/desbloqueio.test.ts`), E2E `node web/e2e/fluxo.e2e.mjs --desbloqueio`
   (trecho `web/e2e/trecho-desbloqueio.mjs`, também no completo e no `--sem-jornada`; joga Letra A → som /a/ → Letra E como criança
-  nova) e capturas `--capturas-desbloqueio` (`app/docs/capturas/v13-desbloqueio-*`, 1850×980 e 390×844, olhadas). Resultado do
-  `--sem-jornada` e do completo: ver a fila nº 22. Falas novas sugeridas (sem voz): `app/docs/falas-pendentes.md` §1h.
+  nova) e capturas `--capturas-desbloqueio` (`app/docs/capturas/v13-desbloqueio-*`, 1850×980 e 390×844, olhadas). `--sem-jornada` (cópia
+  separada, commit 34725ad, porta 4600): 260 checagens até o trecho D, J2, F e M (Memória) verdes; parou no Passeio 3D ("nada com a
+  cabeça fora d'água", outra frente), antes da checagem nova do Coreto, que ficou SEM conferir no E2E. Nessa cópia pulei 2 checagens
+  de "sem aba/passo de cabelo" que a frente do avatar quebrou ao pôr cabelos novos (não é do desbloqueio; falta ajustar o E2E).
+  O trecho J falhou 1 vez sob carga (oferta do Corre-Som na Letra A) e passou sozinho. Completo: as 67 fases da jornada concluídas
+  sem falha; o processo foi cortado pelo limite de 2 h depois da jornada. Falas novas sugeridas (sem voz): `app/docs/falas-pendentes.md` §1h.
 
 **Passeio 3D em terceira pessoa (D032 item 3; 17–18/11; NÃO publicado ainda):** o botão "Passear 3D" (no "Mais") abre
 `public/mundo3d/passeio.html` (fonte: `docs/propostas/06-fonema-unificada/mundo-3d-v2`, copiado no build; fora do precache).
