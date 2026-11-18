@@ -26,6 +26,12 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 | 15 | Mais agentes para ir mais rápido e com mais qualidade (17/11) | ✅ em uso | — |
 | 16 | Revisão final de qualidade de tudo o que entrou nesta rodada + teste completo + publicar (17/11) | ✅ no ar 18/11 (E2E completo 396 ✓, sem-jornada 324 ✓, 375 testes) | — |
 | 17 | "Amei a ideia das figuras e o som do outro lado, manda ver" (17/11): jogo da memória de cartas — de um lado a figura (cena da Sofia fazendo o som), do outro a letra; a carta TOCA o som ao virar; achar os pares letra × cena (ideia da pesquisa 46) | ✅ no ar 18/11 (): **Memória dos Sons** em Brincar › Jogos (4 níveis) e como desafio no fim das fases da Trilha A–Z; a cena toca o som puro ao virar | docs/pesquisa/46; motor/src/memoria-sons.ts |
+| 18 | Sistema de gerenciamento da plataforma: editar TUDO (áudios, textos, personagens, missões etc.) (18/11) | 🔧 | — |
+| 19 | "Robô": enviar uma foto e ele transforma em 3D e coloca na plataforma (18/11) | 🔧 (pesquisa de caminho grátis; sem servidor) | — |
+| 20 | Personagens do aluno: vários tipos de cabelo; cor dos olhos ruim/desconfigurada (18/11) | 🔧 | D029 |
+| 21 | Passeio 3D: o boneco não anda (fica pulando) e não nada (some no mar) (18/11) | 🔧 | D032 §3 |
+| 22 | Tarefas e funções bloqueadas mesmo depois de terminar a atividade: liberar conforme for fazendo, para não cansar nem desanimar (18/11) | 🔧 | — |
+| 23 | "Tem muita coisa ruim ainda": revisão geral de qualidade olhando o app como usuário (18/11) | 🔧 | — |
 
 ## Aguardando o dono
 | # | Pedido | O que falta |
