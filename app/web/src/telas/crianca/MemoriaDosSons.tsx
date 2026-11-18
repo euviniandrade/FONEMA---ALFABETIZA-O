@@ -36,7 +36,7 @@ export function CapaMemoria({ itens }: { itens: ('fig' | 'letra' | 'som' | 'vers
     <span className="mem-capa" aria-hidden="true">
       {itens.map((x, k) => (
         <span key={k} className={`mini ${x}`}>
-          {x === 'fig' ? <Figura palavra="cena-a-sofia" /> : x === 'letra' ? 'A' : x === 'som' ? <Icone nome="som" /> : <Icone nome="estrela" />}
+          {x === 'fig' ? <Figura palavra="cena-a-sofia" /> : x === 'letra' ? 'Aa' : x === 'som' ? <Icone nome="som" /> : <Icone nome="estrela" />}
         </span>
       ))}
     </span>

@@ -169,7 +169,7 @@ export function Cadastro({ area = 'familia' }: { area?: 'familia' | 'professor' 
                 <button key={n.id} type="button" className="nivel" aria-pressed={nivel === n.id} onClick={() => setNivel(n.id)} data-nivel={n.id}>
                   {n.id === 'zero' ? <span className="etiqueta verde recomendado">Recomendado</span> : null}
                   <span className="nivel-arte">
-                    {n.id === 'zero' ? <img src={asset('figuras/muda.webp')} alt="" /> : n.id === 'letras-e-sons' ? <span className="mini-pecas" aria-hidden="true"><span>A</span><span>M</span><span>L</span></span> : <img src={asset('recompensas/bau-livros.webp')} alt="" />}
+                    {n.id === 'zero' ? <img src={asset('figuras/muda.webp')} alt="" /> : n.id === 'letras-e-sons' ? <span className="mini-pecas" aria-hidden="true"><span>Aa</span><span>Mm</span><span>Ll</span></span> : <img src={asset('recompensas/bau-livros.webp')} alt="" />}
                   </span>
                   <span className="nivel-texto"><b>{n.titulo}</b><small>{FRASE_NIVEL[n.id]}</small></span>
                 </button>
