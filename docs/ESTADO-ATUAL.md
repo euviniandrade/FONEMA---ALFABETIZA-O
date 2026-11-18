@@ -143,7 +143,7 @@ animação antiga sacudia o corpo inteiro; no rio, o corpo deitado ficava abaixo
   virou piso (o boneco pisa nele em vez de afundar); com o cartão de conversa ou de porta aberto, a imagem sobe para o boneco aparecer acima.
 - **Verificado (18/11, cópia separada, porta 4610):** `npm run typecheck` e lint verdes no e194c84; `npm test` 410 de 411 (a que
   falhou, `d030 › a jornada inteira anda`, estourou o tempo com a máquina a carga 20, fora desta frente). E2E `--sem-jornada` inteiro
-  "E2E OK" (377 ✓, 0 ✗) no f3db046. E2E `--mundo3d` verde (33 ✓) no e194c84, já com o mundo novo da outra frente: 13 ossos +
+  "E2E OK" (377 ✓, 0 ✗) no f3db046. E2E `--mundo3d` verde (33 ✓ no e194c84, já com o mundo novo da outra frente; 35 ✓ no ce79eaf, com a checagem do avatar): 13 ossos +
   captura carregada, silhueta, cabeça sobe e desce só 4 cm andando, 24 amostras nadando sempre com a cabeça fora, Mergulhar desce
   ~0,5 m e volta, Tchau levanta o braço (osso). **Pé que não escorrega, medido:** com o pé no chão ele anda 2 a 7% da velocidade do
   corpo (0,6 a 3,7 m/s). **Custo:** a animação de 6 bonecos gasta ~0,6 ms por quadro (CPU); o peso está no desenho.
