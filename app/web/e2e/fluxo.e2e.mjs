@@ -17,6 +17,7 @@ import { trechoVozReal } from './trecho-voz-real.mjs';
 import { trechoCopia } from './trecho-copia.mjs';
 import { trechoJogos } from './trecho-jogos.mjs';
 import { trechoJogos2 } from './trecho-jogos2.mjs';
+import { trechoMemoria } from './trecho-memoria.mjs';
 import { trechoMundo3d } from './trecho-mundo3d.mjs';
 import { trechoAdmin } from './trecho-admin.mjs';
 import { trechoTutorial } from './trecho-tutorial.mjs';
@@ -718,6 +719,18 @@ async function main() {
     if (errosF.length) throw new Error(`erros na página:\n${errosF.join('\n')}`);
     return;
   }
+  if (process.argv.includes('--memoria') || process.argv.includes('--capturas-memoria')) {
+    const errosMe = [];
+    const hMe = { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosMe, dirCap: DIR_CAP };
+    if (process.argv.includes('--capturas-memoria')) {
+      mkdirSync(DIR_CAP, { recursive: true });
+      await trechoMemoria(browser, { ...hMe, w: 1850, h: 980, capturar: true });
+      await trechoMemoria(browser, { ...hMe, w: 390, h: 844, suf: '-celular', movel: true, capturar: true });
+    } else await trechoMemoria(browser, hMe);
+    await browser.close(); servidor?.kill();
+    if (errosMe.length) throw new Error(`erros na página:\n${errosMe.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--jogos2') || process.argv.includes('--capturas-jogos2')) {
     const errosJ2 = [];
     const h2 = { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosJ2, dirCap: DIR_CAP };
@@ -1165,6 +1178,7 @@ async function main() {
   await trechoJogos(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros, dirCap: DIR_CAP });
   await trechoJogos2(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, dirCap: DIR_CAP });
   await trechoFichas(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, dirCap: DIR_CAP });
+  await trechoMemoria(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoTutorial(browser, { BASE, ok, passarPorteira, cadastrar, erros, dirCap: DIR_CAP });
