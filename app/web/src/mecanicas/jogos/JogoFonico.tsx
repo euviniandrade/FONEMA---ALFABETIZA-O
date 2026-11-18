@@ -16,6 +16,7 @@ import { Falta, useMissoesAteAbrir } from '../../componentes/Desbloqueio.tsx';
 import { CorreSom, type ResultadoJogo, type ResumoCorrida } from './CorreSom.tsx';
 import { ResultadoCorrida } from './CorridaResultado.tsx';
 import './estilos-jogos.css';
+import { letraAa } from '../../componentes/LetraAa.tsx';
 
 export interface InfoJogo {
   id: JogoFonicoId;
@@ -71,7 +72,7 @@ export function useSonsComClipe(): Set<string> | null {
 export function Capa({ itens }: { itens: string[] }) {
   return (
     <span className="jogo-capa" aria-hidden="true">
-      {itens.map((x) => (x.startsWith('letra:') ? <b key={x} className="jogo-capa-letra">{x.slice(6)}</b> : <Figura key={x} palavra={x} />))}
+      {itens.map((x) => (x.startsWith('letra:') ? <b key={x} className="jogo-capa-letra">{letraAa(x.slice(6))}</b> : <Figura key={x} palavra={x} />))}
     </span>
   );
 }

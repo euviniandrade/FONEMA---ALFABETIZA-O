@@ -20,6 +20,7 @@ import { efeitos } from '../../servicos/efeitos.ts';
 import { voz } from '../../servicos/voz.ts';
 import { textoVoz } from '../../util.ts';
 import './estilos-memoria.css';
+import { letraAa } from '../../componentes/LetraAa.tsx';
 
 const F = FALAS_FONICAS;
 
@@ -184,7 +185,7 @@ export function MemoriaSons({ rodada, crianca, sessao, cena, contexto, onFim }: 
         <span className="mem-giro">
           <span className="mem-verso" aria-hidden="true"><i className="mem-verso-selo"><Icone nome={c.lado === 'letra' ? 'estrela' : 'som'} /></i></span>
           <span className="mem-frente" aria-hidden="true">
-            {c.lado === 'letra' ? <b className="mem-letra">{c.letra}</b>
+            {c.lado === 'letra' ? <b className="mem-letra">{letraAa(c.letra)}</b>
               : c.cena ? <Figura palavra={c.cena} className="mem-fig" />
               : <span className="mem-som"><Icone nome="som" /><span className="mem-ondas"><i /><i /><i /></span></span>}
             {c.lado === 'cena' && c.cena ? <span className="mem-som-mini"><Icone nome="som" /></span> : null}

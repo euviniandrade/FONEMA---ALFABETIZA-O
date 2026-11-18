@@ -9,6 +9,7 @@ import { useEffect, useMemo, useRef, type CSSProperties } from 'react';
 import { abriuParaMostrar, missoesAteAbrir, textoMissoes, type Extra, type Progresso } from '@fonema/motor';
 import { Figura, Icone } from './ui.tsx';
 import '../estilos-desbloqueio.css';
+import { letraAa } from './LetraAa.tsx';
 
 const chave = (criancaId: string) => `fonema-visto:${criancaId}`;
 function vistos(criancaId: string): string[] {
@@ -85,7 +86,7 @@ export function PainelAbriu({ ids, sexo, criancaId, ir }: { ids: string[]; sexo?
           return (
             <button key={x.id} className={`abriu-item grupo-${x.grupo}`} style={{ ['--k' as string]: k } as CSSProperties} data-abriu={x.id}
               onClick={() => { marcarVistoAqui(criancaId, x.id); ir(`c/${criancaId}/${x.rota}`); }}>
-              <span className="abriu-fig" aria-hidden="true">{letra ? <b className="abriu-letra">{letra}</b> : fig ? <Figura palavra={fig} /> : <Icone nome={ICONE_DO_GRUPO[x.grupo]} />}</span>
+              <span className="abriu-fig" aria-hidden="true">{letra ? <b className="abriu-letra">{letraAa(letra)}</b> : fig ? <Figura palavra={fig} /> : <Icone nome={ICONE_DO_GRUPO[x.grupo]} />}</span>
               <span className="abriu-nome">{x.nome}</span>
               <SeloNovo />
             </button>

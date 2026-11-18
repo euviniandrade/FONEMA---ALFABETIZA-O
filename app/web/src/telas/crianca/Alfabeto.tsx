@@ -91,7 +91,7 @@ export function TrilhaAlfabeto({ criancaId }: { criancaId: string }) {
                     onClick={() => navegar(`c/${criancaId}/fase/${f.id}`)}
                   >
                     <span className="marco-disco">
-                      {l ? <b>{l.letra}<small>{l.minuscula}</small></b> : <Icone nome={tipo === 'festa' ? 'trofeu' : 'estrela'} />}
+                      {l ? <b className="letra-aa">{l.letra}{l.minuscula}</b> : <Icone nome={tipo === 'festa' ? 'trofeu' : 'estrela'} />}
                       {e === 'feita' ? <span className="marco-check"><Icone nome="check" /></span> : null}
                       {e === 'trancada' ? <span className="marco-cadeado"><Icone nome="cadeado" /></span> : null}
                     </span>

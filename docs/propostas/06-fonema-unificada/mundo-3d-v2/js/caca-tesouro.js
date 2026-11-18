@@ -100,7 +100,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
       g.beginPath(); g.arc(w / 2, h / 2, 118, 0, 7); g.fillStyle = '#FFFFFF'; g.shadowColor = 'rgba(40,30,60,.35)'; g.shadowBlur = 12; g.fill(); g.shadowColor = 'transparent';
       g.lineWidth = 10; g.strokeStyle = '#F2B33D'; g.stroke();
       g.fillStyle = '#2E4374'; g.textAlign = 'center'; g.textBaseline = 'middle';
-      if (b.letra) { g.font = '700 170px Andika, Fredoka, sans-serif'; g.fillText(b.letra, w / 2, h / 2 + 8); }
+      if (b.letra) { const t = b.rotulo || b.letra; g.font = `700 ${t.length > 1 ? 118 : 170}px Andika, Fredoka, sans-serif`; g.fillText(t, w / 2, h / 2 + 8); } // fila nº 27 (4): rótulo "Aa" vem do app
       else if (!b.figura) { g.font = '700 150px Fredoka, sans-serif'; g.fillText('?', w / 2, h / 2 + 6); }
     });
     if (b.figura) {
@@ -325,7 +325,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
         (d.opcoes || []).forEach((o, k) => {
           const b = el('button', { className: 'bt op', onclick: () => { if (b.classList.contains('tentado')) return; avisar('fonema:caca-escolha', { id: o.id, pos: k }); } });
           b.dataset.testid = `caca-opcao-${k}`; b.dataset.id = o.id;
-          if (o.figura) { const im = el('img', { src: o.figura, alt: '' }); b.append(im); b.setAttribute('aria-label', 'Figura'); } else b.textContent = o.letra;
+          if (o.figura) { const im = el('img', { src: o.figura, alt: '' }); b.append(im); b.setAttribute('aria-label', 'Figura'); } else b.textContent = o.rotulo || o.letra;
           if ((d.marcadas || []).includes(o.id)) b.classList.add('tentado');
           if (d.brilha === o.id) b.classList.add('brilha');
           ops.append(b);

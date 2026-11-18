@@ -14,6 +14,7 @@ import { gravar, temGravacao } from '../../servicos/microfone.ts';
 import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
 import { falar, falarVarias, semFonetica } from '../../util.ts';
+import { letraAa } from '../../componentes/LetraAa.tsx';
 
 /** Álbum de Conquistas: por região; ganhas brilham; as outras mostram a HABILIDADE (P1-b). */
 export function Album({ criancaId }: { criancaId: string }) {
@@ -251,7 +252,7 @@ export function Sondagem({ criancaId }: { criancaId: string }) {
               <p className="objetivo">{p.pergunta}</p>
               {p.mostrar ? <div className="pergunta"><div className="palavra-grande">{p.mostrar}</div></div> : p.ouvir ? <div className="pergunta"><BotaoOuvir onClick={() => voz.falar(p.ouvir!, { quem: 'sofia' })} rotulo="Ouvir de novo" /></div> : null}
               <div className="opcoes">
-                {p.opcoes.map((o) => <button key={o.id} className={`opcao ${o.rot.length === 1 ? 'opcao-letra' : ''}`} onClick={() => responder(o.id)}>{o.rot.length === 1 ? <span className="letra">{o.rot}</span> : o.rot.includes(' ') ? <span className="fig-grupo">{o.rot.split(' ').map((w, n) => <Figura key={n} palavra={w} />)}</span> : <Figura palavra={o.rot} />}</button>)}
+                {p.opcoes.map((o) => <button key={o.id} className={`opcao ${o.rot.length === 1 ? 'opcao-letra' : ''}`} onClick={() => responder(o.id)}>{o.rot.length === 1 ? <span className="letra">{letraAa(o.rot)}</span> : o.rot.includes(' ') ? <span className="fig-grupo">{o.rot.split(' ').map((w, n) => <Figura key={n} palavra={w} />)}</span> : <Figura palavra={o.rot} />}</button>)}
               </div>
             </>
           )}

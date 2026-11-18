@@ -10,6 +10,7 @@ import { falar, textoVoz } from '../util.ts';
 import { PAUSA_ENTRE_SONS_MS, explicarContraste, temFrasesDoPar } from './contraste.ts';
 import { Progressinho, embaralhar, sementeDaTentativa, sortearItens, tentativa, type PropsMecanica } from './comum.tsx';
 import { JogoNaFase, useDesafioDaCena } from './jogos/JogoFonico.tsx';
+import { letraAa } from '../componentes/LetraAa.tsx';
 
 const F = FALAS_FONICAS;
 /** O que vai para o registro: a letra, a chave do fonema ("b"), a palavra. */
@@ -241,7 +242,7 @@ function EscolherClassico({ atividade, crianca, sessao, cenaId, revisao, onFim, 
                 data-correta={o.id === item.correta ? '1' : undefined}
               >
                 {o.botaoDeSom ? <span className="som-botao"><Icone nome="som" /><b>{k + 1}</b></span>
-                  : o.letra ? <span className="letra">{o.letra}</span> : <Figura emoji={o.figura || undefined} palavra={o.id} />}
+                  : o.letra ? <span className="letra">{letraAa(o.letra)}</span> : <Figura emoji={o.figura || undefined} palavra={o.id} />}
                 {mostrarRotulo(o) && !o.letra && !o.botaoDeSom ? <span className="rot">{o.rotulo}</span> : null}
                 {ehCerta ? <Brilho ativo /> : null}
               </button>

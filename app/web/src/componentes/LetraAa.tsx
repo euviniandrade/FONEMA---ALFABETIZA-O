@@ -6,5 +6,5 @@
 export const letraAa = (l: string): string => (l.length === 1 && l.toUpperCase() !== l.toLowerCase() ? `${l.toUpperCase()}${l.toLowerCase()}` : l);
 
 export function LetraAa({ letra, className }: { letra: string; className?: string }) {
-  return <b className={className} aria-label={`letra ${letra.toUpperCase()}`}>{letraAa(letra)}</b>;
+  return <b className={`letra-aa${className ? ` ${className}` : ''}`} aria-label={`letra ${letra.toUpperCase()}`}>{letraAa(letra)}</b>;
 }

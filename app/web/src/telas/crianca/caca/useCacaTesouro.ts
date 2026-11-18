@@ -25,6 +25,7 @@ import { registro } from '../../../mecanicas/tf-comum.tsx';
 import { comemorar, corrigirEscolha, tocarSom } from '../../../mecanicas/jogos/correcao.ts';
 import { useSonsComClipe } from '../../../mecanicas/jogos/JogoFonico.tsx';
 import { useRegistroLivre } from '../Biblioteca.tsx';
+import { letraAa } from '../../../componentes/LetraAa.tsx'; // fila nº 27 (4)
 
 interface Msg { tipo: string; detalhe?: Record<string, unknown> }
 /** Para os testes (E2E): o que o juiz espera agora. Não entrega nada à criança (fica na janela do app, fora da tela). */
@@ -137,7 +138,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
     const base = (ps: PassoCaca) => ({ habilidade: ps.habilidade, sessao: rg.sessao, cena: cena.id, mecanica: 'caca-tesouro' as const, categoria: ps.categoria });
     const comoItem = (ps: PassoCaca): ItemJogo => ({ correta: ps.alvo, somAlvo: ps.somAlvo, opcoes: ps.opcoes ?? [], posicaoCerta: ps.posicaoCerta ?? 0, habilidade: ps.habilidade, formato: ps.formato === 'som-figura' ? 'som-figura' : 'som-letra', categoria: ps.categoria });
     const comoOpcao = (b: BauCaca): OpcaoJogo => ({ id: b.letra ?? b.figura ?? b.id, ...(b.letra ? { letra: b.letra } : { figura: b.figura, falar: b.figura }), som: b.som });
-    const bauParaPagina = (b: BauCaca) => ({ id: b.id, x: b.x, z: b.z, letra: b.letra, figura: b.figura ? urlFigura(b.figura) : undefined, modo: b.lugar ? LUGAR_CACA_POR_ID[b.lugar].modo : 'terra', lugar: b.lugar });
+    const bauParaPagina = (b: BauCaca) => ({ id: b.id, x: b.x, z: b.z, letra: b.letra, rotulo: b.letra ? letraAa(b.letra) : undefined, figura: b.figura ? urlFigura(b.figura) : undefined, modo: b.lugar ? LUGAR_CACA_POR_ID[b.lugar].modo : 'terra', lugar: b.lugar });
     let acertos = 0, total = 0;
     const achados: string[] = [];
 
@@ -220,7 +221,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
         const opcoes = ps.opcoes!;
         const marcadas: string[] = [];
         let brilha: string | undefined;
-        const painel = () => enviar('fonema:caca-escolher', { titulo: 'Qual letra faz este som?', opcoes: opcoes.map((o) => ({ id: o.id, letra: o.letra })), marcadas, brilha });
+        const painel = () => enviar('fonema:caca-escolher', { titulo: 'Qual letra faz este som?', opcoes: opcoes.map((o) => ({ id: o.id, letra: o.letra, rotulo: o.letra ? letraAa(o.letra) : undefined })), marcadas, brilha });
         painel();
         dicas = 0;
         const mostrarCerto = () => { ajuda = 'resposta-mostrada'; brilha = opcoes[ps.posicaoCerta!].id; painel(); };

@@ -8,6 +8,7 @@
  */
 import geometria from './selos-geometria.json';
 import { asset } from '../servicos/ambiente.ts';
+import { letraAa } from './LetraAa.tsx';
 
 export type Forma = 'estrela' | 'escudo' | 'medalha' | 'hexagono';
 export type Metal = 'bronze' | 'prata' | 'ouro' | 'diamante';
@@ -168,7 +169,8 @@ function pintarNome(ctx: Ctx, arte: ArteSelo) {
 
 /* ------------------------------------------------------------------ motivo */
 function pintarLetra(ctx: Ctx, texto: string, cx: number, cy: number, r: number, folga: number, cinza: boolean) {
-  const t = texto.toLocaleUpperCase('pt-BR').slice(0, 2);
+  // fila nº 27 (4): letra sozinha sempre maiúscula e minúscula ("Aa"); duas letras (iniciais) continuam como estão
+  const t = texto.length === 1 ? letraAa(texto) : texto.toLocaleUpperCase('pt-BR').slice(0, 2);
   let fs = r * (t.length > 1 ? 1.12 : 1.62);
   ctx.font = FONTE(700, fs);
   const w0 = ctx.measureText(t).width;
@@ -407,10 +409,11 @@ export function pintarVerso(canvas: HTMLCanvasElement, arte: ArteSelo, im: Image
   // revisão 18/11 (item 12): selo de letra tem a LETRA também no verso (antes era uma estrela genérica, e o selo ampliado no
   // celular podia abrir de costas mostrando "uma medalha qualquer")
   if (arte.motivo.tipo === 'letra') {
-    const fs = R * 1.9;
+    const tv = arte.motivo.texto.length === 1 ? letraAa(arte.motivo.texto) : arte.motivo.texto; // fila nº 27 (4): "Aa"
+    const fs = R * (tv.length > 1 ? 1.25 : 1.9);
     ctx.font = FONTE(700, fs); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillStyle = 'rgba(255,255,255,.6)'; ctx.fillText(arte.motivo.texto, cx + fs * 0.02, cy + fs * 0.05);
-    ctx.fillStyle = tom.escuro; ctx.globalAlpha = 0.85; ctx.fillText(arte.motivo.texto, cx, cy); ctx.globalAlpha = 1;
+    ctx.fillStyle = 'rgba(255,255,255,.6)'; ctx.fillText(tv, cx + fs * 0.02, cy + fs * 0.05);
+    ctx.fillStyle = tom.escuro; ctx.globalAlpha = 0.85; ctx.fillText(tv, cx, cy); ctx.globalAlpha = 1;
   } else relevoEstrela(ctx, cx, cy, R, tom);
   // gravação: nível e data
   const gravar = (t: string, y: number, fs: number) => {

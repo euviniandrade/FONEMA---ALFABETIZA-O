@@ -8,6 +8,7 @@ import { voz } from '../servicos/voz.ts';
 import { falar, textoVoz } from '../util.ts';
 import { PAUSA_ENTRE_SONS_MS, explicarContraste } from './contraste.ts';
 import { embaralhar, sementeDaTentativa, sortearItens, tentativa, type PropsMecanica } from './comum.tsx';
+import { letraAa } from '../componentes/LetraAa.tsx';
 
 type Lado = 'letra' | 'cena';
 interface Ponta { lado: Lado; letra: string }
@@ -196,7 +197,7 @@ export function Ligar({ atividade, crianca, sessao, cenaId, revisao, onFim }: Pr
           {arrasto ? <line className="liga-arrasto" x1={arrasto.x1} y1={arrasto.y1} x2={arrasto.x} y2={arrasto.y} /> : null}
         </svg>
         <div className="liga-coluna" role="group" aria-label="Letras">
-          {letras.map((p, k) => cartao({ lado: 'letra', letra: p.letra }, k, <span className="letra">{p.letra}</span>, 'Letra'))}
+          {letras.map((p, k) => cartao({ lado: 'letra', letra: p.letra }, k, <span className="letra">{letraAa(p.letra)}</span>, 'Letra'))}
         </div>
         <div className="liga-coluna" role="group" aria-label="Cenas: toque para ouvir o som">
           {cenas.map((p, k) => cartao({ lado: 'cena', letra: p.letra }, k, <><Figura palavra={p.cena} /><span className="liga-som"><Icone nome="som" /></span></>, 'Cena'))}

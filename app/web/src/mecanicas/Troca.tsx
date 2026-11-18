@@ -9,6 +9,7 @@ import { falar, textoVoz } from '../util.ts';
 import { PAUSA_ENTRE_SONS_MS, explicarContraste } from './contraste.ts';
 import { Progressinho, embaralhar, sementeDaTentativa, type PropsMecanica } from './comum.tsx';
 import { OpcoesTF, registro } from './tf-comum.tsx';
+import { letraAa } from '../componentes/LetraAa.tsx';
 
 type Etapa = 'letra' | 'muda' | 'ler' | 'feito';
 
@@ -149,7 +150,7 @@ export function Troca({ atividade, crianca, sessao, cenaId, revisao, onFim }: Pr
           <div className="opcoes n3 troca-letras" role="group" aria-label="Letras">
             {letras.map((o, k) => (
               <button key={o.id} className={`opcao opcao-letra ${marcadas.includes(o.id) ? 'tentada' : ''} ${marcadas.length >= 2 && o.id === item.letra ? 'modelo' : ''}`} onClick={() => void escolherLetra(o, k)} data-correta={o.id === item.letra ? '1' : undefined} aria-label={`Letra ${o.letra}`}>
-                <span className="letra">{o.letra}</span>
+                <span className="letra">{letraAa(o.letra ?? '')}</span>
               </button>
             ))}
           </div>
