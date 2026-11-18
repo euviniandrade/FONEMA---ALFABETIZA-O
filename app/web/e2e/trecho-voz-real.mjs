@@ -25,7 +25,12 @@ export async function trechoVozReal(browser, { BASE, ok, passarPorteira, cadastr
         this.__medido = true;
         const el = this; // eslint-disable-line @typescript-eslint/no-this-alias
         let atual = null;
-        el.addEventListener('playing', () => { atual = { tipo: 'audio', nome: String(el.src).split('/').pop(), ini: agora(), fim: null }; window.__intervalos.push(atual); });
+        // 'playing' volta a disparar depois de um engasgo da rede: só abre um intervalo novo se o anterior já fechou
+        el.addEventListener('playing', () => {
+          if (atual && atual.fim === null) return;
+          atual = { tipo: 'audio', nome: String(el.src).split('/').pop(), ini: agora(), fim: null, el: new WeakRef(el), t0: el.currentTime };
+          window.__intervalos.push(atual);
+        });
         const fecha = () => { if (atual && atual.fim === null) atual.fim = agora(); };
         el.addEventListener('pause', fecha); el.addEventListener('ended', fecha);
       }
@@ -128,7 +133,15 @@ export async function trechoVozReal(browser, { BASE, ok, passarPorteira, cadastr
   await pg.locator('.mec-escolher button.opcao:not([data-correta])').first().click();
   // a correção contrastiva inteira (≈ 10 s com voz real)
   await pg.waitForTimeout(14000);
-  const ivs = await pg.evaluate(() => window.__intervalos.map((x) => ({ ...x, fim: x.fim ?? performance.now() })));
+  // intervalo sem evento de fim (o defeito simulado da Trilha dos Sons): se o clipe já parou, o fim é o início + o que ele tocou
+  const ivs = await pg.evaluate(() => window.__intervalos.map((x) => {
+    let fim = x.fim;
+    if (fim === null) {
+      const e = x.el?.deref();
+      fim = e && (e.paused || e.ended) ? x.ini + Math.max(0, e.currentTime - (x.t0 ?? 0)) * 1000 : performance.now();
+    }
+    return { tipo: x.tipo, nome: x.nome, ini: x.ini, fim };
+  }));
   // sons emendados de um mesmo lote se encostam de propósito (50 ms): junta-os antes de medir
   const el = ivs.filter((x) => x.tipo === 'audio');
   const wa = ivs.filter((x) => x.tipo === 'webaudio').sort((a, b) => a.ini - b.ini).reduce((acc, x) => { const u = acc.at(-1); if (u && x.ini <= u.fim + 5) u.fim = Math.max(u.fim, x.fim); else acc.push({ ...x }); return acc; }, []);
