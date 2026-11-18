@@ -3,7 +3,9 @@
 
 .jogo-topo{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px}
 .jogo-topo .progressinho{margin:0}
-.jogo-ouvir{display:inline-flex!important;align-items:center;gap:8px;width:auto!important;height:auto!important;min-height:60px;padding:6px 18px 6px 8px!important;border-radius:var(--r-pilula)!important;font-family:var(--f-titulo);font-size:18px;font-weight:600;color:var(--marinho)}
+.jogo-ouvir{display:inline-flex;align-items:center;gap:8px;flex:none;min-height:60px;min-width:60px;padding:6px 18px 6px 8px;border:0;border-radius:var(--r-pilula);cursor:pointer;
+  background:#fff;box-shadow:0 5px 0 #c9d6e3,0 12px 18px -10px rgba(12,26,64,.45);font-family:var(--f-titulo);font-size:18px;font-weight:600;color:var(--marinho)}
+.jogo-ouvir:disabled{opacity:.55;cursor:default}
 .jogo-ouvir .ic{width:44px;height:44px}
 
 /* ---------- Corre-Som ---------- */
@@ -103,7 +105,7 @@
 .brincar-jogo-cartao.trancado{filter:saturate(.4);opacity:.85}
 
 /* ---------- oferta do desafio dentro da fase ---------- */
-.jogo-desafio{position:absolute;top:-6px;right:0;z-index:3;display:inline-flex;align-items:center;gap:8px;min-height:60px;padding:8px 18px 8px 10px;border:0;border-radius:var(--r-pilula);cursor:pointer;
+.jogo-desafio{position:relative;z-index:3;display:flex;width:max-content;margin:0 0 10px auto;align-items:center;gap:8px;min-height:60px;padding:8px 18px 8px 10px;border:0;border-radius:var(--r-pilula);cursor:pointer;
   font-family:var(--f-titulo);font-size:17px;font-weight:600;color:var(--marinho);background:linear-gradient(180deg,#fff,#fff1c6);box-shadow:0 6px 0 #e2b44e,0 16px 20px -12px rgba(12,26,64,.5);
   animation:entraCartao .6s var(--mola) both .6s}
 .jogo-desafio .jogo-desafio-ic{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#ff8a65;color:#fff}
@@ -114,8 +116,8 @@
   .jogo-come .cm-cena{grid-template-columns:1fr;justify-items:center}
   .cm-bolota-img{width:150px}
   .cm-toalha{width:100%}
-  .jogo-corre .cs-palco{height:clamp(360px,56vh,560px)}
-  .jogo-desafio{position:static;margin:0 0 10px auto;display:flex;width:max-content}
+  .jogo-corre .cs-palco{height:clamp(320px,48vh,520px)}
+  .jogo-ouvir{padding:6px 8px}.jogo-ouvir span{display:none}
   .jogo-desafio span.rot{font-size:15px}
 }
 html.menos-movimento .cm-bolota-img,html.menos-movimento .cs-maozinha,html.menos-movimento .cm-bolha.pulsando,html.menos-movimento .cm-prato.modelo{animation:none!important}
