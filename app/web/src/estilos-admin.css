@@ -157,3 +157,5 @@
 .adm-img-item>.adm-editor{flex-basis:100%}
 .adm-pagina{border-top:1px dashed var(--linha);padding-top:6px;margin-top:6px}
 .btn.adm-btn.desligado{opacity:.5;pointer-events:none}
+.adm-previa-nomes{max-height:360px;overflow:auto;list-style:none;padding-left:0}
+.adm-previa-nomes s{color:var(--cinza)}

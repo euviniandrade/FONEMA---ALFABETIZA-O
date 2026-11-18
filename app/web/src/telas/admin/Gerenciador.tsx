@@ -13,7 +13,7 @@ import { Icone } from '../../componentes/ui.tsx';
 import { navegar } from '../../rotas.ts';
 import { asset } from '../../servicos/ambiente.ts';
 import { edicoes, type MidiaTrocada } from '../../servicos/edicoes.ts';
-import { CampoEditavel, Paginas, useVersaoEdicoes, quemEdita } from './edicao-comum.tsx';
+import { CampoEditavel, Paginas, useVersaoEdicoes, quemEdita, salvarVerificando, textosAgora, trechosDaFala } from './edicao-comum.tsx';
 import { dataCurta } from './dados-admin.ts';
 
 declare const __FONEMA_IMAGENS__: string[] | undefined;
@@ -212,9 +212,10 @@ export function AbaPersonagens() {
           <CampoEditavel alvo={{ colecao: 'personagens', item: p.id, caminho: ['papel'] }} rotulo="Quem é (para o adulto)" multilinha />
           {p.apresentacao ? <CampoEditavel alvo={p.apresentacao} rotulo="Como se apresenta (fala da chegada)" quem={p.id} multilinha /> : null}
           {p.imagens.length ? <div className="adm-linha">{p.imagens.map((c) => <ImagemDoItem key={c} caminho={c} />)}</div> : <p className="adm-nota">Ainda sem figura própria.</p>}
+          <TrocarNomeNasFalas id={p.id} nome={p.nome} />
         </fieldset>
       )) : null}
-      {parte === 'personagens' ? <p className="adm-nota">O nome muda nos rótulos das telas. As falas que dizem o nome ("Eu sou a Sofia") são texto das falas: mude em Textos e falas (e regrave o áudio).</p> : null}
+      {parte === 'personagens' ? <p className="adm-nota">O nome muda nos rótulos das telas. Para mudar também dentro das falas ("Eu sou a Sofia"), use "Trocar o nome nas falas" de cada personagem: mostra cada fala antes de mudar e marca o áudio como desatualizado.</p> : null}
       {parte === 'lojinha' ? ITENS_LOJA.map((i) => (
         <fieldset key={i.id} className="adm-grupo" data-item-loja={i.id}>
           <legend>{i.nome}</legend>
@@ -250,6 +251,55 @@ export function AbaPersonagens() {
       ) : null}
       {parte === 'selos' ? <p className="adm-nota">As imagens dos troféus e baús (360°) ficam na aba Imagens, pasta <b>recompensas</b> e <b>modelos3d</b>.</p> : null}
     </section>
+  );
+}
+
+/** Buscar e substituir o nome de um personagem dentro de TODOS os textos e falas, com pré-visualização. */
+const escapar = (t: string) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function TrocarNomeNasFalas({ id, nome }: { id: string; nome: string }) {
+  useVersaoEdicoes();
+  const original = (CONTEUDO_EDITAVEL.original('personagens', id) as { nome?: string } | undefined)?.nome ?? nome;
+  const [aberto, setAberto] = useState(false);
+  const [de, setDe] = useState(original);
+  const [para, setPara] = useState(nome !== original ? nome : '');
+  const [fora, setFora] = useState<Set<string>>(new Set());
+  const [msg, setMsg] = useState('');
+  const re = de.trim() ? new RegExp(`(^|[^\\p{L}])${escapar(de.trim())}(?![\\p{L}])`, 'gu') : null;
+  const achados = useMemo(() => (aberto && re ? textosAgora().filter((t) => { re.lastIndex = 0; return re.test(t.texto); }) : []),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [aberto, de, CONTEUDO_EDITAVEL.edicoes()]);
+  const trocar = (t: string) => (re ? t.replace(re, (_m, a: string) => a + para.trim()) : t);
+  const chave = (t: { colecao: string; item: string; caminho: (string | number)[] }) => `${t.colecao}|${t.item}|${t.caminho.join('/')}`;
+  const aplicar = async () => {
+    let ok = 0, barradas = 0;
+    for (const t of achados) {
+      if (fora.has(chave(t))) continue;
+      const valor = trocar(t.texto);
+      const r = await salvarVerificando({ colecao: t.colecao, item: t.item, tipo: 'definir', caminho: t.caminho, valor, ...(t.tipo === 'fala' && t.quem ? { audios: trechosDaFala(valor, t.quem).map((x) => x.id) } : {}), nota: `nome "${de}" → "${para}"` });
+      if (r.ok) ok++; else barradas++;
+    }
+    setMsg(`${ok} texto(s) mudado(s)${barradas ? `, ${barradas} barrado(s) pelo verificador` : ''}. As falas mudadas ficam com o áudio desatualizado (aba Textos e falas › Mostrar só os editados).`);
+  };
+  if (!aberto) return <button className="btn adm-btn" onClick={() => setAberto(true)} data-testid="abrir-trocar-nome"><Icone nome="caderno" />Trocar o nome nas falas</button>;
+  return (
+    <div className="adm-editor" data-testid="trocar-nome">
+      <div className="adm-linha">
+        <label className="adm-campo">Trocar <input value={de} onChange={(e) => { setMsg(''); setDe(e.target.value); }} data-testid="nome-de" /></label>
+        <label className="adm-campo">por <input value={para} onChange={(e) => { setMsg(''); setPara(e.target.value); }} data-testid="nome-para" /></label>
+        <button className="btn adm-btn pri" disabled={!para.trim() || !achados.length} onClick={() => void aplicar()} data-testid="aplicar-nome"><Icone nome="check" />Trocar em {achados.length - [...fora].filter((k) => achados.some((t) => chave(t) === k)).length} texto(s)</button>
+        <button className="btn adm-btn" onClick={() => setAberto(false)}>Fechar</button>
+      </div>
+      {msg ? <p className="adm-etq verde" role="status" data-testid="nome-trocado">{msg}</p> : null}
+      <p className="adm-nota" data-testid="contagem-nome">{achados.length} texto(s) com "{de}". Desmarque o que não deve mudar.</p>
+      <ul className="adm-lista adm-previa-nomes">
+        {achados.slice(0, 200).map((t) => (
+          <li key={chave(t)}>
+            <label className="adm-check"><input type="checkbox" checked={!fora.has(chave(t))} onChange={(e) => setFora((f) => { const n = new Set(f); if (e.target.checked) n.delete(chave(t)); else n.add(chave(t)); return n; })} />
+              <span><small>{t.onde}</small><br /><s>{t.texto}</s> → <b>{para.trim() ? trocar(t.texto) : '…'}</b></span></label>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -338,7 +388,9 @@ export function AbaHistorico() {
     <section className="adm-cartao" data-testid="aba-historico">
       <div className="adm-cab"><h1>Histórico de edições</h1><span className="adm-nota">{lista.length} edições e {midias.length} figuras trocadas neste aparelho</span></div>
       {semLugar.length ? <div className="adm-aviso" role="alert"><b>Edições sem efeito</b> (o conteúdo do repositório mudou e o lugar não existe mais): <ul>{semLugar.map((s, i) => <li key={i}>{s.edicao.colecao} › {s.edicao.item}: {s.motivo}</li>)}</ul></div> : null}
-      {!lista.length && !midias.length ? <p className="adm-nota">Nada editado neste aparelho ainda.</p> : null}
+      {!lista.length && !midias.length ? <p className="adm-nota">Nada editado neste aparelho ainda.</p> : (
+        <div className="adm-linha"><button className="btn adm-btn terra" onClick={() => { if (window.confirm('Voltar TUDO ao original neste aparelho? As mudanças que ainda não foram para um pacote se perdem.')) void edicoes.voltarTudo(); }} data-testid="voltar-tudo"><Icone nome="lixeira" />Voltar tudo ao original</button></div>
+      )}
       <ul className="adm-audios" data-testid="lista-historico">
         {lista.map((e) => (
           <li key={e.chave} className="adm-audio trocado" data-testid="edicao" data-chave={e.chave}>

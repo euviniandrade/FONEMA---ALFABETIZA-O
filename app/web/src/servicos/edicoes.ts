@@ -143,6 +143,15 @@ export class Edicoes {
     this.reaplicar();
   }
 
+  /** Tira TODAS as edições e figuras deste aparelho (vale só o publicado). */
+  async voltarTudo(): Promise<void> {
+    await this.carregar();
+    for (const r of this.lista) await this.padrao()?.apagarEdicao(r.chave);
+    this.lista = [];
+    for (const m of [...this.midiasMeta.keys()]) await this.removerMidia(m);
+    this.reaplicar();
+  }
+
   /* ---------------------------------------------------------------- figuras e modelos */
   private ligarMidia(m: MidiaTrocada) {
     const c = normalizarCaminhoAsset(m.caminho);

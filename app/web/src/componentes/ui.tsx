@@ -8,7 +8,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ButtonH
 import { asset, figuraExiste, modoTeste } from '../servicos/ambiente.ts';
 
 /* ------------------------------------------------------------------ ícones */
-const ICONES_3D = new Set(['som', 'tartaruga', 'contraste', 'engrenagem', 'cadeado', 'mapa', 'lojinha', 'album', 'casa', 'play', 'voltar', 'familia']);
+const ICONES_3D = new Set(['som', 'tartaruga', 'contraste', 'engrenagem', 'cadeado', 'mapa', 'lojinha', 'album', 'casa', 'play', 'voltar', 'familia', 'boneco', 'passeio']);
 
 /** Ícones de traço (24×24), todos com a mesma espessura e cantos redondos. */
 const TRACO: Record<string, ReactNode> = {
