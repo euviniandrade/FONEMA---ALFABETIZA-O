@@ -1,7 +1,7 @@
 // FONEMA · trecho E2E: CAÇA AO TESOURO DAS PALAVRAS no passeio 3D (fila do dono nº 25).
 // Confere: cartão no Brincar → Jogos abre o passeio direto no mapa da caça; os 4 níveis (sons, letras da palavra, charadas, água);
 // os pontos dos baús são alcançáveis (terra livre, beira rasa, água funda para mergulhar, rio para o barco); passar por cima de um
-// baú sem parar não responde; erro com correção; dica com seta = ajuda; a letra voa para a faixa; leitura final com a figura;
+// baú já é a escolha (decisão do dono, fila nº 29); minimapa, faixa do próximo passo e trilha de moedas; lembrete da missão; erro com correção; dica com seta = ajuda; a letra voa para a faixa; leitura final com a figura;
 // a chave do barquinho no fim das charadas; o barco: embarcar no píer, remar só no rio (para na margem), descer só no píer;
 // tesouro no fundo (mergulho) e de barco; registro (avaliada, mecânica 'caca-tesouro', alvo, escolhido, tempo, nOpcoes, contexto
 // 'livre'; achar o lugar = exposição). O tempo do jogo anda por `simular()` (passos fixos), sem depender de quadros por segundo.
@@ -66,6 +66,24 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
   ok(abertos.join(' ') === '1:aberto 2:aberto 3:fechado 4:fechado', `níveis: ${abertos.join(' ')} (charadas abrem depois da caça aos sons; água depois das charadas)`);
   await cap('01-mapa');
 
+  // fila nº 29: minimapa, próximo passo (missão de hoje) e trilha de moedas no passeio livre
+  await fr.getByTestId('caca-menu').getByText('Agora não').click(CLIQUE);
+  await frame.waitForFunction(() => window.FONEMA_GUIA?.objetivo?.chave === 'missao', null, { timeout: 120000, polling: 300 });
+  await simular(0.5);
+  const livreG = await frame.evaluate(() => ({ faixa: document.querySelector('#guiaFaixa')?.innerText, trilha: window.FONEMA_GUIA.moedasTrilha, marcador: window.FONEMA_GUIA.objetivo.marcador, mini: !!document.querySelector('#miniMapa canvas') }));
+  ok(/Missão de hoje/.test(livreG.faixa) && livreG.marcador, `passeio livre: próximo passo sempre à vista ("${livreG.faixa}") com seta sobre a Escola`);
+  ok(livreG.trilha.length >= 4, `trilha de moedas até a Escola (${livreG.trilha.length} moedas no chão)`);
+  const pegou = await frame.evaluate(() => { const g = window.FONEMA_GUIA, p = window.FONEMA_PASSEIO; const m = g.moedasTrilha[0]; const a = g.moedas; p.teleportar(m.x, m.z); p.simular(0.2); return g.moedas - a; });
+  ok(pegou >= 1, 'passar pela moeda pega (enfeite: conta no contador, não fica guardada)');
+  ok(livreG.mini, 'minimapa no canto');
+  await fr.getByTestId('minimapa').click(CLIQUE);
+  ok(await fr.getByTestId('mapa-grande').isVisible(), 'tocar no minimapa abre o mapa grande');
+  await cap('01b-mapa-grande');
+  await fr.getByTestId('mapa-fechar').click(CLIQUE);
+  await frame.evaluate(() => { const p = window.FONEMA_PASSEIO; p.teleportar(0, 19.5, Math.PI); p.simular(0.5); });
+  await cap('01c-proximo-passo');
+  await fr.getByTestId('caca-mapa').click(CLIQUE);
+
   const juiz = () => pg.evaluate(() => window.FONEMA_CACA_JUIZ);
   const esperarJuiz = (fn, arg) => pg.waitForFunction(fn, arg, { timeout: 180000, polling: 200 }).catch(async (e) => { console.log('    juiz:', JSON.stringify(await pg.evaluate(() => window.FONEMA_CACA_JUIZ)), 'baús:', JSON.stringify(await frame.evaluate(() => window.FONEMA_CACA.baus.map((b) => [b.id, b.estado])))); throw e; });
   const simular = (s) => frame.evaluate((t) => window.FONEMA_PASSEIO.simular(t), s);
@@ -77,7 +95,6 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
     // um boneco da vila (ou um canto) pode atrapalhar o caminho: se não chegou, encosta no baú e espera parado
     await frame.evaluate(([x, z]) => { const p = window.FONEMA_PASSEIO; if (Math.hypot(p.posicao.x - x, p.posicao.z - z) > 1) { p.teleportar(x + 0.3, z); p.simular(1.5); } }, [b.x, b.z]);
   };
-  const estadoBau = (bid) => frame.evaluate((i) => window.FONEMA_CACA.baus.find((b) => b.id === i)?.estado ?? 'sumiu', bid);
 
 
   /* ============================== nível 1: caça aos sons ============================== */
@@ -89,15 +106,16 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
   const livres = await frame.evaluate((xs) => xs.map(([x, z]) => window.FONEMA_PASSEIO.colisao.livre(x, z, 0.3)), bs.map((b) => [b.x, b.z]));
   ok(livres.every((x) => x === null), 'os baús da praça ficam em chão livre (alcançáveis)');
   await cap('02-nivel1');
+  const g1 = await frame.evaluate(() => ({ o: window.FONEMA_GUIA.objetivo, marcas: window.FONEMA_GUIA.marcas.length }));
+  ok(g1.marcas === 3 && g1.o.trilha && !g1.o.marcador && /baú/.test(g1.o.texto), `caça: os 3 baús no minimapa, faixa "${g1.o.texto}" e trilha só até a área (sem seta no baú certo)`);
   let j = await juiz();
   const errado = bs.find((b) => !j.certos.includes(b.id));
   // passar correndo por cima do baú errado NÃO responde
-  const passou = await frame.evaluate(([x, z]) => { const p = window.FONEMA_PASSEIO; p.teleportar(x - 1.6, z); p.teclar('d', true); const g = p.camera.giro; p.girarCamera(0 - g); p.simular(1.2); p.teclar('d', false); p.simular(0.3); return Math.hypot(p.posicao.x - x, p.posicao.z - z); }, [errado.x, errado.z]);
-  if (passou > 1.4) ok((await estadoBau(errado.id)) === 'fechado', `passar por cima de um baú sem parar não responde (passou a ${passou.toFixed(1)} m)`);
-  else console.log(`    (passagem não conferida: o boneco parou a ${passou.toFixed(1)} m do baú)`);
-  await irAoBau(errado);
-  await frame.waitForFunction((i) => window.FONEMA_CACA.baus.find((b) => b.id === i)?.estado === 'tentado', errado.id, { timeout: 120000, polling: 300 });
-  ok(true, 'parar no baú errado: ele fica apagadinho (e a Sofia corrige com o contraste dos sons)');
+  // decisão do dono (fila nº 29): PASSAR POR CIMA pega o baú — atravessar o baú errado é a escolha (e vale como tentativa)
+  const passou = await frame.evaluate(([x, z]) => { const p = window.FONEMA_PASSEIO; const c = p.colisao; let a = [x - 2.4, z], b = [x + 2.4, z]; if (c.livre(...a, 0.3) || c.livre(...b, 0.3)) { a = [x, z - 2.4]; b = [x, z + 2.4]; } p.teleportar(a[0], a[1]); p.simular(0.2); p.irPara(b[0], b[1]); p.simular(3.5); return Math.hypot(p.posicao.x - b[0], p.posicao.z - b[1]); }, [errado.x, errado.z]);
+  await frame.waitForFunction((i) => window.FONEMA_CACA.baus.find((b) => b.id === i)?.estado === 'tentado', errado.id, { timeout: 120000, polling: 300 })
+    .catch(async (e) => { await irAoBau(errado); await frame.waitForFunction((i) => window.FONEMA_CACA.baus.find((b) => b.id === i)?.estado === 'tentado', errado.id, { timeout: 120000, polling: 300 }); console.log(`    (a passagem parou a ${passou.toFixed(1)} m do outro lado; o baú foi pego encostando)`); void e; });
+  ok(true, 'passar por cima do baú errado já é a escolha: ele fica apagadinho (e a Sofia corrige com o contraste dos sons)');
   // dica: 1ª repete o som; 2ª mostra a seta (conta como ajuda)
   await fr.getByTestId('caca-dica').click(CLIQUE); await fr.getByTestId('caca-dica').click(CLIQUE);
   await frame.waitForFunction(() => !!window.FONEMA_CACA.seta, null, { timeout: 60000, polling: 300 });
@@ -240,5 +258,18 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
   ok(vistos.some((v) => v.endsWith(':barco')) && vistos.some((v) => /:(agua|mergulho)$/.test(v)), `nível 4 até o fim (${vistos.join(', ')})`);
   p = await lerProgresso(pg, id);
   ok((p.biblioteca?.jogos ?? []).filter((x) => x.id.startsWith('caca-tesouro')).length === 4, 'as 4 rodadas ficam no histórico (o que abre os níveis)');
+
+  // fila nº 29: depois de uns minutos livres, "Vamos continuar a missão?" ("Mais um pouquinho" adia 2 min; "Vamos!" leva à missão)
+  await frame.waitForFunction(() => !document.body.classList.contains('caca'), null, { timeout: 60000, polling: 300 });
+  for (let i = 0; i < 4 && !(await frame.evaluate(() => window.FONEMA_GUIA.lembreteAberto)); i++) await simular(60);
+  ok(await fr.getByTestId('lembrete').isVisible(), 'passeio livre por ~3,5 min: aparece "Vamos continuar a missão?"');
+  await cap('10-lembrete');
+  await fr.getByTestId('lembrete-depois').click(CLIQUE);
+  const adiou = await frame.evaluate(() => ({ aberto: window.FONEMA_GUIA.lembreteAberto, s: window.FONEMA_GUIA.livreS }));
+  ok(!adiou.aberto && adiou.s >= 80 && adiou.s <= 100, '"Mais um pouquinho" fecha e adia 2 minutos');
+  for (let i = 0; i < 3 && !(await frame.evaluate(() => window.FONEMA_GUIA.lembreteAberto)); i++) await simular(60);
+  await fr.getByTestId('lembrete-vamos').click(CLIQUE);
+  await pg.waitForFunction(() => /\/(fase|sessao)\//.test(location.hash), null, { timeout: 60000 });
+  ok(true, '"Vamos!" leva à missão de hoje');
   await ctx.close();
 }

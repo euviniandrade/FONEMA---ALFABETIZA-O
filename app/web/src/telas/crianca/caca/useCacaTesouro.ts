@@ -10,7 +10,7 @@
  * As tentativas são gravadas de uma vez no fim da rodada ou quando a criança sai (porta, botão sair, voltar).
  */
 import { useEffect, useRef, type RefObject } from 'react';
-import { FALAS, FALAS_CACA, FALAS_ESCUTA, LUGAR_CACA_POR_ID, type Fala } from '@fonema/conteudo';
+import { FALAS, FALAS_CACA, FALAS_ESCUTA, FASE_POR_ID, LUGAR_CACA_POR_ID, type Fala } from '@fonema/conteudo';
 import {
   NOME_NIVEL_CACA, barcoLiberado, bausDaPalavra, idJogoCaca, niveisDaCaca, rodadaDaCaca,
   type BauCaca, type ItemJogo, type NivelAjuda, type NivelCaca, type OpcaoJogo, type PassoCaca, type Tentativa
@@ -61,6 +61,13 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
     if (modoTeste()) console.info('[caca] níveis', niveis.map((n) => `${n.nivel}:${n.aberto ? 1 : 0}`).join(' '));
     enviar('fonema:caca-niveis', { niveis, abrir, barco: barcoLiberado(p), falaBarco: FALAS_CACA.barco });
   };
+  /** Fila nº 29: o "próximo passo" do passeio livre é a missão de hoje (porta da Escola); o lembrete usa a fala já gravada do Tales. */
+  const mandarGuia = () => {
+    const p = d.current.progresso;
+    if (!p) return;
+    const titulo = FASE_POR_ID[p.faseAtual]?.titulo;
+    enviar('fonema:guia', { missao: { texto: titulo ? `Missão de hoje: ${titulo}` : 'Missão de hoje: vá até a Escola', fala: FALAS_CACA.missaoHoje, lembrete: { quem: 'tales', texto: 'Agora é com você, [NOME]! Vamos continuar a missão?' } } });
+  };
   /** Grava o que a rodada juntou (uma vez). `fimNivel` anota a rodada feita (é o que abre o nível seguinte e o barco). */
   const gravar = async (fimNivel?: { nivel: NivelCaca; acertos: number; total: number }) => {
     const pend = pendentes.current; pendentes.current = null;
@@ -92,6 +99,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
       if (!m || typeof m.tipo !== 'string' || !m.tipo.startsWith('fonema:caca')) return;
       if (m.tipo === 'fonema:caca-pronta') {
         pronta.current = true;
+        mandarGuia();
         if (d.current.temSom) { mandarNiveis(abrirDireto && !abriuMenu.current); abriuMenu.current = true; }
         return;
       }

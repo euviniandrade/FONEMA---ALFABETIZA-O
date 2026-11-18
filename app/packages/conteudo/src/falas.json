@@ -48,6 +48,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-10rzej3",
+  "voz": "sofia",
+  "texto": "Oi, [NOME]!",
+  "origem": "saudacao"
+ },
+ {
   "id": "s-10ti2mc",
   "voz": "sofia",
   "texto": "Quem pulou no bolo?",
@@ -2052,12 +2058,6 @@
   "origem": "bolota-chuva"
  },
  {
-  "id": "s-1szjibq",
-  "voz": "sofia",
-  "texto": "Oi, [NOME]! Que bom te ver de novo!",
-  "origem": "voltou"
- },
- {
   "id": "s-1t1o0jj",
   "voz": "sofia",
   "texto": "ketchup",
@@ -2074,6 +2074,12 @@
   "voz": "sofia",
   "texto": "A mala cheia de roupa ficou pesada.",
   "origem": "piquenique-fia"
+ },
+ {
+  "id": "s-1tmp87d",
+  "voz": "sofia",
+  "texto": "Sua missão de hoje está na Escola. Siga as moedinhas!",
+  "origem": "caca"
  },
  {
   "id": "s-1tqmk5t",
@@ -5098,12 +5104,6 @@
   "voz": "sofia",
   "texto": "zebra",
   "origem": "comeco"
- },
- {
-  "id": "s-m2l587",
-  "voz": "sofia",
-  "texto": "Oi, [NOME]! Que bom que você voltou, curioso!",
-  "origem": "voltou"
  },
  {
   "id": "s-m2l5a1",

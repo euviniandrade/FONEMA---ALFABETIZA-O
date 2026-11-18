@@ -15,8 +15,9 @@
 import * as THREE from 'three';
 import { canvasTex, radialTex, rbox } from './kit.js';
 import { criarBarco, PIER } from './barco.js';
+import { criarGuia } from './guia-passos.js';
 
-const RAIO = 1.25, PARADO = 0.55, VEL_PARADO = 0.45;
+const RAIO = 1.25;
 
 export function ligarCaca({ mundo, passeio, avisar }) {
   const { scene } = mundo;
@@ -33,7 +34,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
   #cacaBarra { left: max(14px, env(safe-area-inset-left)); top: calc(var(--topo) + 12px); display: none; flex-direction: column; gap: 12px; }
   body.caca #cacaBarra { display: flex; }
   #cacaBarra .bt { width: 64px; height: 64px; }
-  #cacaFaixa { left: 50%; transform: translateX(-50%); top: calc(var(--topo) + 64px); display: none; gap: 8px; padding: 8px 12px; background: rgba(255,248,236,.95); border-radius: 22px; box-shadow: var(--sombra); pointer-events: none; }
+  #cacaFaixa { left: 50%; transform: translateX(-50%); top: calc(var(--topo) + 122px); display: none; gap: 8px; padding: 8px 12px; background: rgba(255,248,236,.95); border-radius: 22px; box-shadow: var(--sombra); pointer-events: none; }
   #cacaFaixa.on { display: flex; }
   #cacaFaixa i { width: 54px; height: 64px; border-radius: 14px; background: #EFE4D0; display: grid; place-items: center; font: 700 44px Andika, sans-serif; font-style: normal; color: var(--tinta); }
   #cacaFaixa i.cheia { background: #fff; box-shadow: inset 0 0 0 3px var(--sol); }
@@ -55,8 +56,8 @@ export function ligarCaca({ mundo, passeio, avisar }) {
   #cacaMenu .bt.trancado { background: #E1E4EC; }
   #cacaMenu .bt small { font: 700 13px Andika, sans-serif; opacity: .8; }
   #cacaMenu .fechar { margin-top: 10px; width: auto; min-height: 56px; }
-  #cacaMoedas { left: max(90px, calc(env(safe-area-inset-left) + 90px)); top: calc(var(--topo) + 18px); background: rgba(255,248,236,.95); border-radius: 22px; padding: 6px 14px; font-size: 22px; box-shadow: var(--sombra); display: none; pointer-events: none; }
-  body.caca #cacaMoedas.on { display: block; }
+  #cacaMoedas { left: max(156px, calc(env(safe-area-inset-left) + 156px)); top: calc(var(--topo) + 18px); background: rgba(255,248,236,.95); border-radius: 22px; padding: 6px 14px; font-size: 22px; box-shadow: var(--sombra); display: none; pointer-events: none; }
+  #cacaMoedas.on { display: block; }
   #btDescer { position: fixed; z-index: 6; right: max(16px, env(safe-area-inset-right)); bottom: max(250px, calc(env(safe-area-inset-bottom) + 250px)); display: none; background: var(--sol); }
   body.no-barco #btDescer { display: inline-flex; }
   @media (max-width: 700px) {
@@ -65,7 +66,8 @@ export function ligarCaca({ mundo, passeio, avisar }) {
     #cacaPainel .op { width: 92px; height: 92px; font-size: 54px; } #cacaPainel .op img { width: 76px; height: 76px; }
     #cacaAviso { font-size: 16px; bottom: 210px; }
     #cacaPainel, #cacaMenu { bottom: 200px; }
-    #cacaMoedas { left: 76px; }
+    #cacaMoedas { left: 124px; }
+    #cacaFaixa { top: calc(var(--topo) + 112px); }
   }`;
   document.head.appendChild(css);
   const el = (tag, attrs = {}, html = '') => { const e = document.createElement(tag); Object.assign(e, attrs); if (html) e.innerHTML = html; return e; };
@@ -118,8 +120,9 @@ export function ligarCaca({ mundo, passeio, avisar }) {
   const baus = new Map(); // id → { def, g, tampa, sinal, anel, estado, espera, parado }
   function criarBau(def) {
     let { x, z } = def;
-    const modo = def.modo || 'terra';
+    let modo = def.modo || 'terra';
     if (modo === 'terra' || modo === 'agua') [x, z] = livreMaisPerto(x, z);
+    if (modo === 'terra' && colisao.agua(x, z) > 0.05) modo = 'agua'; // ponto da beira do rio: o baú boia na água rasa
     if (modo === 'barco') {
       // de barco: o baú fica na beira da água funda (o barco vai até ~4,7 m do meio do rio e alcança a ~4,2 m)
       const v = mundo.vila;
@@ -209,6 +212,26 @@ export function ligarCaca({ mundo, passeio, avisar }) {
     passeio.definirLugares({ barco: { aberto: true, falta: '' } });
   }
 
+  // ---------------------------------------------------------------- guia do próximo passo, minimapa e trilha (js/guia-passos.js) ----------------------------------------------------------------
+  const guia = criarGuia({ mundo, passeio, avisar });
+  guia.aoMoeda = () => contarMoedas();
+  function contarMoedas() { const n = nMoedas + guia.moedas; moedasEl.textContent = `🪙 ${n}`; moedasEl.classList.toggle('on', n > 0); }
+  /** Objetivo do guia conforme o momento da caça (nunca aponta o baú certo sem ser dica: regra 3). */
+  function guiaDosBaus(d) {
+    const lista = [...baus.values()];
+    if (!lista.length) return;
+    if (d.charada) {
+      // charada: a faixa repete a charada; o lugar NÃO aparece no mapa nem na trilha (é o que a criança descobre). A 2ª dica mostra.
+      const b = lista[0];
+      guia.definir({ chave: `charada-${b.def.id}`, x: b.g.position.x, z: b.g.position.z, texto: d.charada.texto, icone: d.charada.icone || '🗺️' });
+      return;
+    }
+    // escolha pelo som: a trilha leva à ÁREA dos baús (termina antes do baú mais perto do centro); o mapa mostra todos iguais
+    const cx = lista.reduce((a, b) => a + b.g.position.x, 0) / lista.length, cz = lista.reduce((a, b) => a + b.g.position.z, 0) / lista.length;
+    const raio = Math.max(4, Math.min(...lista.map((b) => Math.hypot(b.g.position.x - cx, b.g.position.z - cz))) - 1.5);
+    guia.definir({ chave: `baus-${lista[0].def.id}`, x: cx, z: cz, texto: d.titulo === 'Letras da palavra' ? 'Escute o som e ache a letra no baú' : 'Escute o som e passe pelo baú certo', icone: '🔊', trilha: true, parar: raio });
+  }
+
   // ---------------------------------------------------------------- estado da caça ----------------------------------------------------------------
   let niveis = [], emCaca = false;
   function abrirMenu() {
@@ -228,6 +251,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
   function sair() {
     emCaca = false; document.body.classList.remove('caca'); limparBaus(); fecharPainel(); faixa.classList.remove('on'); aviso.classList.remove('on');
     for (const m of moedas) grupo.remove(m); moedas.length = 0;
+    guia.marcas = []; guia.objetivoLivre();
     avisar('fonema:caca-sair');
   }
   function fecharPainel() { painel.classList.remove('on'); painel.innerHTML = ''; }
@@ -274,7 +298,8 @@ export function ligarCaca({ mundo, passeio, avisar }) {
         emCaca = true; document.body.classList.add('caca'); fecharMenu(); fecharPainel();
         limparBaus();
         for (const b of d.baus || []) criarBau(b);
-        if (d.moedas) { espalharMoedas(d.baus || []); moedasEl.classList.add('on'); }
+        if (d.moedas) espalharMoedas(d.baus || []);
+        guiaDosBaus(d);
         if (d.charada) {
           const novo = d.apresenta && apresentar(d.apresenta);
           mostrarAviso(d.charada.icone || '🗺️', novo ? `${d.apresenta.texto} ${d.charada.texto}` : d.charada.texto, 9000);
@@ -306,6 +331,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
           ops.append(b);
         });
         painel.append(ops); painel.classList.add('on');
+        { const p = passeio.posicao; guia.definir({ chave: `escolher-${d.titulo}-${d.palavra || ''}`, x: p.x, z: p.z, texto: d.titulo || '', icone: d.palavra ? '📖' : '🔊' }); }
         break;
       }
       case 'fonema:caca-fechar-painel': fecharPainel(); break;
@@ -313,11 +339,13 @@ export function ligarCaca({ mundo, passeio, avisar }) {
         if (!d.id && !d.ponto) { mostrarSeta(null); break; }
         const b = d.id ? baus.get(d.id) : null;
         mostrarSeta(b ? { id: d.id, x: b.g.position.x, y: b.g.position.y, z: b.g.position.z } : { x: d.ponto[0], y: colisao.altura(d.ponto[0], d.ponto[1]), z: d.ponto[1] });
+        // dica: a trilha de moedas vai até lá (conta como ajuda no app)
+        if (b) guia.definir({ chave: `seta-${d.id}`, x: b.g.position.x, z: b.g.position.z, texto: 'Siga as moedinhas!', icone: '✨', trilha: true, noMapa: true });
         break;
       }
       case 'fonema:caca-aviso': mostrarAviso(d.icone || '🗺️', d.texto || '', d.ms ?? 5000); break;
       case 'fonema:caca-fim':
-        emCaca = false; fecharPainel(); mostrarSeta(null);
+        emCaca = false; fecharPainel(); mostrarSeta(null); guia.marcas = []; guia.objetivoLivre();
         mostrarAviso('🏆', d.texto || 'Tesouro encontrado!', 5000);
         setTimeout(() => { if (!emCaca) { limparBaus(); faixa.classList.remove('on'); document.body.classList.remove('caca'); for (const mm of moedas) grupo.remove(mm); moedas.length = 0; } }, 2500);
         break;
@@ -327,11 +355,9 @@ export function ligarCaca({ mundo, passeio, avisar }) {
   });
 
   // ---------------------------------------------------------------- a cada passo ----------------------------------------------------------------
-  let ant = null, tAnim = 0;
+  let tAnim = 0;
   passeio.noQuadro((dt, t, pos) => {
     tAnim += dt;
-    const vel = ant ? Math.hypot(pos.x - ant.x, pos.z - ant.z) / Math.max(dt, 1e-3) : 0;
-    ant = { x: pos.x, z: pos.z };
     const st = passeio.posicao;
     for (const [id, b] of baus) {
       // animação: placa boiando, tampa abrindo, tremida do errado, sumir
@@ -347,22 +373,26 @@ export function ligarCaca({ mundo, passeio, avisar }) {
       if (modo === 'mergulho') chegou = st.mergulhando && d < 2.3;
       else if (modo === 'barco') chegou = barco.ativo && Math.hypot(b.g.position.x - barco.pos.x, b.g.position.z - barco.pos.z) < 4.2;
       else {
-        // é preciso PARAR no círculo (passar correndo por cima não responde)
-        if (d < RAIO && vel < VEL_PARADO && !barco.ativo) b.parado += dt; else b.parado = 0;
-        chegou = b.parado > PARADO;
+        // decisão do dono (fila nº 29): PASSAR POR CIMA pega o baú (sem precisar parar); vale a ENTRADA no círculo
+        // (quem já estava dentro quando o baú apareceu ou voltou a fechar precisa sair e entrar de novo)
+        const dentro = d < RAIO && !barco.ativo;
+        chegou = dentro && b.dentro === false;
+        b.dentro = dentro;
       }
       if (chegou) { b.espera = true; b.parado = 0; console.info('[caca] chegou', id); avisar('fonema:caca-chegou', { id }); }
     }
+    guia.marcas = emCaca ? [...baus.values()].filter((b) => !b.def.lugar && b.estado === 'fechado').map((b) => ({ x: b.g.position.x, z: b.g.position.z, cor: '#F2B33D' })) : [];
     // moedinhas de enfeite
     for (let i = moedas.length - 1; i >= 0; i--) {
       const s = moedas[i];
       if (!menos) s.position.y += Math.sin(tAnim * 3 + i) * 0.003;
-      if (Math.hypot(s.position.x - pos.x, s.position.z - pos.z) < 0.9) { grupo.remove(s); moedas.splice(i, 1); nMoedas++; moedasEl.textContent = `🪙 ${nMoedas}`; }
+      if (Math.hypot(s.position.x - pos.x, s.position.z - pos.z) < 0.9) { grupo.remove(s); moedas.splice(i, 1); nMoedas++; contarMoedas(); }
     }
     if (seta.visible) seta.children[0].position.y = menos ? 0 : Math.abs(Math.sin(tAnim * 3)) * 0.4;
   });
 
   const api = {
+    guia,
     /** passeio.html › aoEntrar: a porta do barquinho embarca aqui (devolve true = a página não navega). */
     aoEntrar(l) { if (l.id !== 'barco') return false; abrirBarco(); passeio.cancelarEntrada(); barco.embarcar(); return true; },
     embarcar: () => { abrirBarco(); passeio.cancelarEntrada(); return barco.embarcar(); },

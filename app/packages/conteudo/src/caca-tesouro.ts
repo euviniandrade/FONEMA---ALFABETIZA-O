@@ -21,7 +21,9 @@ export const FALAS_CACA = {
   agua: s('Agora os tesouros estão na água!'),
   chave: s('Você ganhou a chave do barquinho!'),
   barco: s('Arraste o dedo ou use as setinhas para remar. Para descer, volte ao píer.'),
-  leDeNovo: s('Olhe as letras de novo, som por som.')
+  leDeNovo: s('Olhe as letras de novo, som por som.'),
+  // guia do próximo passo no passeio livre (fila nº 29): dita uma vez, quando o objetivo vira a missão de hoje
+  missaoHoje: s('Sua missão de hoje está na Escola. Siga as moedinhas!')
 } as const;
 
 export type LugarCacaId = 'padaria' | 'biblioteca' | 'coreto' | 'horta' | 'campinho' | 'escola' | 'casa' | 'cais' | 'rio' | 'fundo' | 'ponte' | 'margem';
@@ -57,9 +59,11 @@ export const LUGARES_CACA: LugarCaca[] = [
 export const LUGAR_CACA_POR_ID = Object.fromEntries(LUGARES_CACA.map((l) => [l.id, l])) as Record<LugarCacaId, LugarCaca>;
 
 /**
- * Pontos da praça e arredores para os baús dos níveis 1 e 2 (perto da chegada; a posição de cada baú é sorteada entre eles).
- * js/caca-tesouro.js empurra um ponto para o lugar livre mais perto se ele cair numa parede.
+ * Pontos para os baús dos níveis 1 e 2, ESPALHADOS pela vila e pela beira do rio (pedido do dono, fila nº 29: "tesouros mais
+ * espalhados"); a posição de cada baú é sorteada entre eles e o minimapa e a trilha de moedas levam até a área. js/caca-tesouro.js
+ * empurra um ponto para o lugar livre mais perto se ele cair numa parede; ponto na água rasa vira baú boiando.
  */
 export const PONTOS_PRACA: [number, number][] = [
-  [-6, 14], [6, 14], [-10, 6], [10, 6], [-7, -3], [7, -3], [0, 27], [-7, 30], [7, 30], [12, 1], [-12, 1], [0, -9], [-4, 18.5], [4, 18.5], [-13, 12], [13, 12]
+  [-6, 14], [6, 14], [-10, 6], [10, 6], [0, 27], [-7, 30], [7, 30], [12, 1], [-12, 1], [0, -9],
+  [-6, -13], [6, -13], [24, 2], [22, 24], [-25, 18], [-32, 27], [0, 40], [-14, 35], [14, 35], [-19, -12], [19, -14], [37.5, -6], [37, 25]
 ];
