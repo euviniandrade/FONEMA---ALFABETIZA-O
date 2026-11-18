@@ -10,6 +10,7 @@
 import * as THREE from 'three';
 import { Boneco } from '../../avatar3d/motor3d.ts';
 import type { Aparencia } from '../../avatar3d/modelo.ts';
+import { asset } from '../../servicos/ambiente.ts';
 
 export interface PlacaArco { letra?: string; imagem?: string }
 export type MarcaArco = 'tentado' | 'modelo' | 'certo' | null;
@@ -95,6 +96,8 @@ export class PistaCorreSom {
   private readonly cena = new THREE.Scene();
   private readonly camera = new THREE.PerspectiveCamera(50, 1, 0.1, 140);
   private readonly boneco = new Boneco();
+  private fundo?: THREE.Texture;
+  private descartado = false;
   private readonly corredor = new THREE.Group();
   private readonly sombra: THREE.Mesh;
   private readonly rua: THREE.Mesh;
@@ -129,6 +132,14 @@ export class PistaCorreSom {
     this.r = r;
     this.cena.background = new THREE.Color(CEU);
     this.cena.fog = new THREE.Fog(CEU, 22, 70);
+    // revisão 18/11 (item 22): céu e morros pintados atrás da pista (arte/jogos/ceu-corre-som.webp), no lugar do azul liso
+    new THREE.TextureLoader().load(asset('arte/jogos/ceu-corre-som.webp'), (t) => {
+      if (this.descartado) { t.dispose(); return; }
+      t.colorSpace = THREE.SRGBColorSpace;
+      this.fundo = t;
+      this.cena.background = t;
+      this.ajustarFundo();
+    }, undefined, () => { /* sem a pintura, fica o céu azul */ });
 
     const sol = new THREE.DirectionalLight(0xfff0d8, 2.4);
     sol.position.set(3, 6, 4);
@@ -217,7 +228,17 @@ export class PistaCorreSom {
     this.camera.position.set(0, retrato ? 3.0 : 2.5, retrato ? 4.6 : 4.4);
     this.camera.lookAt(0, retrato ? 1.1 : 1.05, -5);
     this.camera.updateProjectionMatrix();
+    this.ajustarFundo();
   };
+
+  /** A pintura do céu cobre a tela inteira sem esticar (como background-size: cover). */
+  private ajustarFundo() {
+    const t = this.fundo;
+    const img = t?.image as { width: number; height: number } | undefined;
+    if (!t || !img?.width || !this.canvas.clientHeight) return;
+    const a = this.canvas.clientWidth / this.canvas.clientHeight, ai = img.width / img.height;
+    if (a < ai) { t.repeat.set(a / ai, 1); t.offset.set((1 - a / ai) / 2, 0); } else { t.repeat.set(1, ai / a); t.offset.set(0, (1 - ai / a) / 2); }
+  }
 
   /** Posição (0–1 da largura) de cada pista na tela, na altura dos arcos parados: para a tela pôr as áreas de toque. */
   colunasNaTela(): number[] {
@@ -483,6 +504,8 @@ export class PistaCorreSom {
     this.boneco.descartar();
     this.cena.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh) { m.geometry.dispose(); const mt = m.material as THREE.Material; mt.dispose(); } });
     this.texRua.dispose();
+    this.descartado = true;
+    this.fundo?.dispose();
     this.r.dispose();
   }
 }

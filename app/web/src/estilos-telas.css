@@ -168,3 +168,7 @@ html,body{overflow-x:clip}
 @media (min-width:900px){
   .tela-vila:has(aside.guia-vila) .doca2-missao{display:none}
 }
+
+/* ---------- Estrada e Rio dos Pares (item 22): campo pintado (visto de cima) no lugar da grama lisa ---------- */
+.jogo-estrada .ep-cena{background:linear-gradient(180deg,#bfe6ff 0 14%,transparent 14%),url(/assets/arte/jogos/campo-estrada.webp) center 60%/cover,#8fd06f}
+.mec.jogo-estrada.barco .ep-cena{background:linear-gradient(180deg,#bfe6ff 0 14%,transparent 14%),url(/assets/arte/jogos/campo-estrada.webp) center 60%/cover,#7cc66a}

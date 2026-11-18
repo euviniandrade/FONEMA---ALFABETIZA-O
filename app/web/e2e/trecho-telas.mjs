@@ -134,6 +134,12 @@ export async function trechoTelas(browser, h) {
     // a Letra A de verdade (do zero): cada cena com respostas é medida quando as respostas já podem ser tocadas
     const gancho = (prefixo) => async (p, cena) => {
       if (!cena || vistas.has(`${prefixo}-${cena}`)) return;
+      // Espelho do Som: as duas vistas (o quadro inteiro do espelho) acima do rodapé fixo, sem rolar
+      if (await p.locator('.mec-espelho .espelho-embed').count().catch(() => 0)) {
+        await medir(`${prefixo}-${cena}-espelho`, { espera: 900, visiveis: ['.mec-espelho .espelho-embed'] });
+        vistas.add(`${prefixo}-${cena}`);
+        return;
+      }
       const prontas = await p.locator(`${RESPOSTAS.split(',').map((s) => `${s}:not([disabled])`).join(',')}`).count().catch(() => 0);
       const ouvindo = await p.locator('.opcoes.ouvindo').count().catch(() => 0);
       if (!prontas || ouvindo) return;

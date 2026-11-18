@@ -105,7 +105,7 @@ export function JogosVila({ criancaId, jogoId }: { criancaId: string; jogoId?: s
 
   return (
     <div className="tela-jogos-vila" data-testid="jogos-vila" data-jogo={jogoId ?? ''} data-contexto={contexto}>
-      <Fundo cena={jogo?.id === 'casa-som' ? 'sala' : jogo?.id === 'carteiro' ? 'praca' : 'quintal'} desfoque={12} tom="claro" />
+      <Fundo cena={jogo?.id === 'casa-som' ? 'arte/jogos/sala-casa-som' : jogo?.id === 'carteiro' ? 'arte/jogos/rua-vila' : 'arte/paisagem-sem-dupla'} desfoque={12} tom="claro" />
       <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={voltar} titulo={jogo ? jogo.nome : 'Jogos da vila'} />
       <main className="palco">
         {!jogo ? (
