@@ -218,7 +218,7 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
     if (b.modo === 'barco') {
       const r = await frame.evaluate(([x, z]) => { const c = window.FONEMA_CACA, p = window.FONEMA_PASSEIO; c.embarcar(); p.simular(0.2); p.irPara(x, z); p.simular(40); return { ativo: c.barco.ativo, d: Math.hypot(c.barco.pos.x - x, c.barco.pos.z - z) }; }, [b.x, b.z]);
       if (k === 0 || capturas) await cap(`08-agua-${j.lugar}`);
-      ok(r.ativo && r.d < 3.5, `${j.lugar}: alcançado de barco (${r.d.toFixed(1)} m do baú)`);
+      ok(r.ativo && r.d < 4.2, `${j.lugar}: alcançado de barco (${r.d.toFixed(1)} m do baú)`);
     } else if (b.modo === 'mergulho') {
       const r = await frame.evaluate(([x, z]) => { const p = window.FONEMA_PASSEIO, c = p.colisao; const ok = c.livre(x, z, 0.3) === null && c.agua(x, z) > 0.5; p.teleportar(x - 0.8, z); p.simular(1); p.mergulhar(true); p.simular(1.2); return { ok, nada: p.posicao.nadando }; }, [b.x, b.z]);
       await cap('09-fundo');

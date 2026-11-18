@@ -121,9 +121,9 @@ export function ligarCaca({ mundo, passeio, avisar }) {
     const modo = def.modo || 'terra';
     if (modo === 'terra' || modo === 'agua') [x, z] = livreMaisPerto(x, z);
     if (modo === 'barco') {
-      // de barco: o baú fica na beira da água funda (o barco vai até ~4,7 m do meio do rio e alcança a ~3,4 m)
+      // de barco: o baú fica na beira da água funda (o barco vai até ~4,7 m do meio do rio e alcança a ~4,2 m)
       const v = mundo.vila;
-      for (let i = 0; i < 80 && v.distRio(x, z) > 5.6; i++) {
+      for (let i = 0; i < 80 && v.distRio(x, z) > 4.9; i++) {
         let mx = 0, mz = 0, md = 1e9; for (const q of v.RIO_PTS) { const dd = (q.x - x) ** 2 + (q.y - z) ** 2; if (dd < md) { md = dd; mx = q.x; mz = q.y; } }
         const l = Math.hypot(mx - x, mz - z) || 1; x += ((mx - x) / l) * 0.2; z += ((mz - z) / l) * 0.2;
       }
@@ -345,7 +345,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
       const modo = b.def.modo;
       let chegou = false;
       if (modo === 'mergulho') chegou = st.mergulhando && d < 2.3;
-      else if (modo === 'barco') chegou = barco.ativo && Math.hypot(b.g.position.x - barco.pos.x, b.g.position.z - barco.pos.z) < 3.4;
+      else if (modo === 'barco') chegou = barco.ativo && Math.hypot(b.g.position.x - barco.pos.x, b.g.position.z - barco.pos.z) < 4.2;
       else {
         // é preciso PARAR no círculo (passar correndo por cima não responde)
         if (d < RAIO && vel < VEL_PARADO && !barco.ativo) b.parado += dt; else b.parado = 0;
