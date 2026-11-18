@@ -124,9 +124,13 @@ function pintarChao(S) {
 let _flor = null;
 function florGeo() {
   if (_flor) return _flor;
+  // pétala = losango levemente em concha (2 triângulos; o material é dos dois lados): ~30 triângulos por flor
+  const petala = new THREE.BufferGeometry();
+  petala.setAttribute('position', new THREE.Float32BufferAttribute([0.05, 0.02, 0, 0.3, 0.06, -0.15, 0.55, 0.12, 0, 0.3, 0.06, 0.15, 0.3, 0.02, 0], 3));
+  petala.setIndex([0, 4, 1, 4, 2, 1, 0, 3, 4, 4, 3, 2]); petala.computeVertexNormals();
   const L = new Lote(5);
-  for (let i = 0; i < 5; i++) { const a = (i / 5) * Math.PI * 2; L.add(G.sphLo, '#FFFFFF', M(Math.cos(a) * 0.32, 0.04, Math.sin(a) * 0.32, 0, -a, 0.28, 0.42, 0.1, 0.26), { jit: 0 }); }
-  L.add(G.sphLo, '#F7C948', M(0, 0.09, 0, 0, 0, 0, 0.26, 0.16, 0.26), { jit: 0 });
+  for (let i = 0; i < 5; i++) L.add(petala, '#FFFFFF', M(0, 0, 0, 0, -(i / 5) * Math.PI * 2, 0), { jit: 0 });
+  L.add(new THREE.IcosahedronGeometry(0.13, 0), '#F7C948', M(0, 0.08, 0, 0, 0, 0, 1, 0.6, 1), { jit: 0 });
   _flor = L.geometry(); return _flor;
 }
 
@@ -354,7 +358,7 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   const capim = new Instancias(new THREE.ConeGeometry(0.035, 0.5, 3).translate(0, 0.25, 0), addWind(new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.9 }), U, 0.18, -1), { cast: false });
   if (q !== 'baixo') for (let i = 0; i < 2600; i++) { const a = r() * 7, d = 14 + r() * 66, x = Math.cos(a) * d, z = Math.sin(a) * d + 4; if (!livre(x, z) && r() < 0.9) continue; const h = altura(x, z); for (let k = 0; k < 3; k++) capim.add(M(x + (r() - 0.5) * 0.3, h, z + (r() - 0.5) * 0.3, (r() - 0.5) * 0.5, r() * 6, (r() - 0.5) * 0.5, 1, 0.6 + r() * 0.9, 1), r() < 0.5 ? '#6DB451' : '#86C35E'); }
   if (capim.l.length) grupo.add(capim.build());
-  const flor = new Instancias(florGeo(), new THREE.MeshStandardMaterial({ color: '#fff', vertexColors: true, roughness: 0.6, emissive: '#fff', emissiveIntensity: 0.05 }), { cast: false });
+  const flor = new Instancias(florGeo(), new THREE.MeshStandardMaterial({ color: '#fff', vertexColors: true, roughness: 0.6, emissive: '#fff', emissiveIntensity: 0.05, side: THREE.DoubleSide }), { cast: false });
   ctx.flores.forEach((f) => flor.add(f.m, f.c)); grupo.add(flor.build());
   const matArb = addRim(addWind(new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.85 }), U, 0.02, 0), '#FFF2B0', 0.28, 2.4);
   const arb = new Instancias(blobGeo(8, 1, 0.3), matArb); ctx.arbustos.forEach((f) => arb.add(f.m, f.c)); grupo.add(arb.build());

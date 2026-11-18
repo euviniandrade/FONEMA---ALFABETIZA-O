@@ -99,7 +99,7 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
         { float k = position.y; float fi = float(gl_InstanceID) * 0.73;
           transformed.x += (sin(uTempoP * 1.25 + fi + k * 2.2) * 0.16 + sin(uTempoP * 2.7 + fi * 1.7) * 0.04) * k * k;
           transformed.z += cos(uTempoP * 0.95 + fi * 1.3 + k * 1.6) * 0.1 * k * k; }`); };
-    const k0 = matPlanta.customProgramCacheKey(); matPlanta.customProgramCacheKey = () => k0 + 'plantaSub'; }
+    const k0 = matPlanta.customProgramCacheKey.bind(matPlanta); matPlanta.customProgramCacheKey = () => k0() + 'plantaSub'; }
   const plantas = new THREE.InstancedMesh(fita, matPlanta, QM.plantas);
   const VERDES = ['#4E9A47', '#5DAA4E', '#3F8A52', '#6FB65A', '#7DBE5C', '#4C8F6E'];
   { let i = 0, tent = 0;
@@ -148,7 +148,7 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
       sh.vertexShader = 'uniform float uTempoF;\n' + sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
         { float rabo = smoothstep(0.08, -0.3, position.z);
           transformed.x += sin(uTempoF * 12.0 + float(gl_InstanceID) * 1.9 - position.z * 9.0) * (0.012 + 0.05 * rabo); }`); };
-    const k0 = matPeixe.customProgramCacheKey(); matPeixe.customProgramCacheKey = () => k0 + 'peixe'; }
+    const k0 = matPeixe.customProgramCacheKey.bind(matPeixe); matPeixe.customProgramCacheKey = () => k0() + 'peixe'; }
   const NMAX = QM.cardumes * QM.peixes;
   const peixes = new THREE.InstancedMesh(peixeGeo(), matPeixe, NMAX);
   peixes.frustumCulled = false; peixes.castShadow = false; grupo.add(peixes);

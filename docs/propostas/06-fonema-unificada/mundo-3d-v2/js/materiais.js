@@ -39,11 +39,13 @@ export const GLSL_RELEVO = /* glsl */`
   }
 `;
 
+// Na qualidade "baixo" o acabamento nem entra no programa (o mundo marca needsUpdate ao trocar de qualidade e o
+// programa é refeito sem ele): aparelho fraco e o navegador de teste sem placa de vídeo desenham como antes.
 function encadear(mat, chave, fn) {
   const prev = mat.onBeforeCompile;
-  mat.onBeforeCompile = (sh, r) => { prev && prev(sh, r); fn(sh, r); };
+  mat.onBeforeCompile = (sh, r) => { prev && prev(sh, r); if (DETALHE.on.value > 0.5) fn(sh, r); };
   const k0 = mat.customProgramCacheKey ? mat.customProgramCacheKey.bind(mat) : () => '';
-  mat.customProgramCacheKey = () => k0() + chave;
+  mat.customProgramCacheKey = () => k0() + chave + (DETALHE.on.value > 0.5 ? '+' : '-');
   return mat;
 }
 const VERT_WP = (sh) => {
