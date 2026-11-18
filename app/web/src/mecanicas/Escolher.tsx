@@ -62,6 +62,9 @@ function EscolherClassico({ atividade, crianca, sessao, cenaId, revisao, onFim, 
   const ehLeitura = !!item?.mostrar;
   const comBotoesDeSom = !!item?.opcoes.some((o) => o.botaoDeSom);
 
+  // revisão 18/11, item 32: as figuras da atividade carregam antes; as opções só aparecem quando as do item estão prontas
+  // (uma opção em branco parecia "nenhuma"). Limite de 2,5 s: rede lenta não prende a tela.
+  const figurasProntas = useFigurasProntas(opcoes.map((o) => (o.letra || o.botaoDeSom ? null : caminhoFigura(o.figura || undefined, o.id))), itens);
   const quemOuvir = item?.quem ?? atividade.enunciado.quem;
   /** O estímulo do item: o som real da letra (2 vezes) quando existe; senão a fala gravada. */
   const tocarItem = async (vezes = 2, c = voz.cadeia()) => {
@@ -220,7 +223,7 @@ function EscolherClassico({ atividade, crianca, sessao, cenaId, revisao, onFim, 
         {item.mostrarFigura ? <div className="figura-pergunta" data-testid="figura-pergunta"><Figura palavra={item.mostrarFigura} /></div> : null}
         {temOuvir && !ehLeitura && !item.mostrarFigura ? <span className="dica-ouvir">Toque no alto-falante para ouvir de novo</span> : null}
       </div>
-      <div className={`opcoes n${opcoes.length} ${comBotoesDeSom ? 'opcoes-som' : ''} ${ocupado ? 'ouvindo' : ''}`} role="group" aria-label="Opções">
+      <div className={`opcoes n${opcoes.length} ${comBotoesDeSom ? 'opcoes-som' : ''} ${ocupado ? 'ouvindo' : ''}`} role="group" aria-label="Opções" style={figurasProntas ? undefined : { visibility: 'hidden' }} data-figuras-prontas={figurasProntas ? '1' : undefined}>
         {opcoes.map((o, k) => {
           const modelo = erros >= 2 && o.id === item.correta;
           const ehCerta = acertou && o.id === item.correta;
@@ -257,4 +260,23 @@ function EscolherClassico({ atividade, crianca, sessao, cenaId, revisao, onFim, 
       {aviso ? <p className="aviso-acolhe" role="status"><Icone nome="dica" /><span>{aviso.replace('[NOME]', crianca.nome)}</span></p> : null}
     </div>
   );
+}
+
+/** Pré-carrega as figuras de TODOS os itens da atividade e diz quando as do item atual estão prontas (no máximo 2,5 s). */
+function useFigurasProntas(urlsDoItem: (string | null)[], todos: ItemEscolha[]): boolean {
+  const chave = urlsDoItem.filter(Boolean).join('|');
+  const [prontas, setProntas] = useState<string>('');
+  useEffect(() => {
+    // todas as figuras da atividade de uma vez (as dos próximos itens já ficam no cache)
+    for (const it of todos) for (const o of it.opcoes) { const u = o.letra || o.botaoDeSom ? null : caminhoFigura(o.figura || undefined, o.id); if (u) { const im = new Image(); im.src = u; } }
+  }, [todos]);
+  useEffect(() => {
+    let vivo = true;
+    const urls = chave ? chave.split('|') : [];
+    const um = (u: string) => new Promise<void>((r) => { const im = new Image(); im.onload = () => r(); im.onerror = () => r(); im.src = u; if (im.complete) r(); });
+    const limite = new Promise<void>((r) => setTimeout(r, 2500));
+    void Promise.race([Promise.all(urls.map(um)), limite]).then(() => { if (vivo) setProntas(chave); });
+    return () => { vivo = false; };
+  }, [chave]);
+  return !chave || prontas === chave;
 }
