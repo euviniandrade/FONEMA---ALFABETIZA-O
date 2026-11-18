@@ -86,13 +86,15 @@ export function TrocarImagem({ caminho, aoFechar }: { caminho: string; aoFechar?
   const [orig, setOrig] = useState<{ w: number; h: number } | null>(null);
   const [erro, setErro] = useState('');
   const trocada = edicoes.midiaTrocada(caminho);
-  useEffect(() => { if (!modelo) void medidas(`./assets/${caminho}`).then(setOrig); }, [caminho, modelo]);
+  const [existe, setExiste] = useState(true);
+  useEffect(() => { if (!modelo) void medidas(`./assets/${caminho}`).then((m) => { setOrig(m); setExiste(!!m); }); }, [caminho, modelo]);
   useEffect(() => {
     if (!arquivo) { setPronta(null); return; }
     let vivo = true;
     setErro('');
     if (modelo) { setPronta({ blob: arquivo, url: '' }); return; }
-    const alvo = orig ?? { w: 512, h: 512 };
+    // figura nova (não existe no site): o tamanho das figuras do app
+    const alvo = orig ?? (caminho.startsWith('figuras/') ? { w: 220, h: 220 } : { w: 512, h: 512 });
     void prepararImagem(arquivo, alvo, modo, /\.png$/i.test(caminho) ? 'image/png' : 'image/webp').then(
       (b) => { if (vivo) setPronta((a) => { if (a?.url) URL.revokeObjectURL(a.url); return { blob: b, url: URL.createObjectURL(b) }; }); },
       (e: unknown) => { if (vivo) setErro(e instanceof Error ? e.message : 'Não deu.'); }
@@ -118,7 +120,7 @@ export function TrocarImagem({ caminho, aoFechar }: { caminho: string; aoFechar?
     <div className="adm-editor" data-testid="trocar-imagem" data-caminho={caminho}>
       <div className="adm-linha"><code>assets/{caminho}</code>{orig ? <span className="adm-nota">{orig.w} × {orig.h}</span> : null}{trocada ? <span className="adm-etq ipe">trocada aqui em {dataCurta(trocada.em)}</span> : null}</div>
       <div className="adm-antes-depois">
-        {!modelo ? <figure><img src={`./assets/${caminho}`} alt="" /><figcaption>Original</figcaption></figure> : <p className="adm-nota">Modelo 3D (.glb): entra como veio, sem recorte.</p>}
+        {modelo ? <p className="adm-nota">Modelo 3D (.glb): entra como veio, sem recorte.</p> : existe ? <figure><img src={`./assets/${caminho}`} alt="" /><figcaption>Original</figcaption></figure> : <p className="adm-nota">Figura nova: ainda não existe no site.</p>}
         {trocada && !modelo ? <figure><img src={asset(caminho)} alt="" /><figcaption>Agora (neste aparelho)</figcaption></figure> : null}
         {pronta?.url ? <figure><img src={pronta.url} alt="" data-testid="previa-imagem" /><figcaption>Nova ({modo === 'cortar' ? 'cortada para preencher' : 'inteira'})</figcaption></figure> : null}
       </div>

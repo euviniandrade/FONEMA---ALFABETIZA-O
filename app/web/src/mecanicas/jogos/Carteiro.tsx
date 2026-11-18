@@ -11,7 +11,7 @@ import { FALAS, FALAS_BIBLIOTECA as B, FALAS_ESCUTA, FALAS_FONICAS as F, FALAS_T
 import type { ItemCarteiro, Tentativa } from '@fonema/motor';
 import { Balao, Brilho } from '../../componentes/basicos.tsx';
 import { Figura, Icone } from '../../componentes/ui.tsx';
-import { espera, modoTeste } from '../../servicos/ambiente.ts';
+import { asset, espera, modoTeste } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
 import { voz } from '../../servicos/voz.ts';
 import { Progressinho } from '../comum.tsx';
@@ -20,8 +20,15 @@ import { registro } from '../tf-comum.tsx';
 import { useEscolha, type PropsJogoVila } from './vila-comum.tsx';
 import './estilos-jogos-vila.css';
 
-const TELHADOS = ['#e5674f', '#4f8de5', '#f0a93b'];
-const PAREDES = ['#fff4dd', '#e9f5ff', '#f2ffe9'];
+/**
+ * Revisão 18/11 (item 22): casinhas pintadas no padrão do app (arte/jogos/casa-carteiro-N.webp, geradas e olhadas uma a uma).
+ * Para cada arte: onde fica a placa em branco (centro x/y e largura, em fração da imagem) e a caixa de correio.
+ */
+const CASAS = [
+  { arte: 'arte/jogos/casa-carteiro-1.webp', placa: [0.49, 0.33, 0.42], correio: [0.76, 0.6] },
+  { arte: 'arte/jogos/casa-carteiro-2.webp', placa: [0.49, 0.44, 0.4], correio: [0.72, 0.73] },
+  { arte: 'arte/jogos/casa-carteiro-3.webp', placa: [0.49, 0.41, 0.4], correio: [0.72, 0.69] }
+] as const;
 
 function letraQueMuda(certa: string, outra: string): number {
   for (let k = 0; k < Math.min(certa.length, outra.length); k++) if (certa[k] !== outra[k]) return k;
@@ -139,12 +146,11 @@ export function Carteiro({ itens, demo, crianca, sessao, cena, contexto, onFim }
           {item.casas.map((w, k) => {
             const m = marcas[k];
             return (
-              <div key={`${i}-${w}`} className="ct-casa-caixa" style={{ ['--telhado' as string]: TELHADOS[k], ['--parede' as string]: PAREDES[k], ['--k' as string]: k } as CSSProperties}>
+              <div key={`${i}-${w}`} className="ct-casa-caixa" style={{ ['--k' as string]: k, ['--px' as string]: CASAS[k].placa[0], ['--py' as string]: CASAS[k].placa[1], ['--pl' as string]: CASAS[k].placa[2], ['--cx' as string]: CASAS[k].correio[0], ['--cy' as string]: CASAS[k].correio[1] } as CSSProperties}>
                 <button className={`ct-casa ${m ?? ''}`} onClick={() => escolher(k)} disabled={!livre} aria-label={`Casa ${k + 1}`} data-opcao={w} data-correta={k === item.posicaoCerta ? '1' : undefined}>
-                  <span className="ct-telhado" aria-hidden="true" />
-                  <span className="ct-parede" aria-hidden="true">
+                  <span className="ct-parede ct-arte" aria-hidden="true">
+                    <img className="ct-casa-img" src={asset(CASAS[k].arte)} alt="" draggable={false} />
                     <span className="ct-placa"><Figura palavra={w} /></span>
-                    <span className="ct-porta" />
                     <span className="ct-caixa-correio">{m === 'certo' ? <i className="ct-carta-dentro" /> : null}</span>
                   </span>
                   {m === 'certo' ? <Brilho ativo /> : null}

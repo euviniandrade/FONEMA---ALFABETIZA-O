@@ -11,6 +11,11 @@ export const asset = (caminho: string) => TROCADOS.get(normalizarCaminhoAsset(ca
 /** Figuras/modelos trocados pelo administrador: caminho em assets/ → endereço blob:. */
 const TROCADOS = new Map<string, string>();
 export const normalizarCaminhoAsset = (c: string) => c.replace(/^\.?\/?(assets\/)?/, '').split(/[?#]/)[0];
+declare const __FONEMA_IMAGENS__: string[] | undefined;
+/** Arquivos de public/assets no build (lista gerada pelo vite.config: inclui as figuras novas já publicadas). */
+const IMAGENS_DO_BUILD = new Set(typeof __FONEMA_IMAGENS__ !== 'undefined' ? __FONEMA_IMAGENS__ : []);
+/** A figura existe (no site publicado ou subida pelo administrador neste aparelho)? Para figuras novas do gerenciador. */
+export const figuraExiste = (nome: string) => TROCADOS.has(`figuras/${nome}.webp`) || IMAGENS_DO_BUILD.has(`figuras/${nome}.webp`);
 export function trocarAsset(caminho: string, url: string | null) {
   if (url) TROCADOS.set(normalizarCaminhoAsset(caminho), url); else TROCADOS.delete(normalizarCaminhoAsset(caminho));
 }

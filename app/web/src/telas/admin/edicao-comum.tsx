@@ -4,8 +4,8 @@
  */
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import {
-  CONTEUDO_EDITAVEL, anotarPalavra, chaveDaEdicao, conferirAnotacao, lerCaminho, perguntasDePronuncia, temAcentoGrafico, verificarEdicao,
-  type Caminho, type Edicao, type RespostaVogal, type ResultadoVerificacao
+  CONTEUDO_EDITAVEL, anotarPalavra, chaveDaEdicao, conferirAnotacao, lerCaminho, perguntasDePronuncia, temAcentoGrafico, todosOsTextos, verificarEdicao,
+  type Caminho, type Edicao, type RespostaVogal, type ResultadoVerificacao, type TextoEditavel
 } from '@fonema/conteudo';
 import { renderFala } from '@fonema/motor';
 import { Icone } from '../../componentes/ui.tsx';
@@ -35,6 +35,26 @@ export async function salvarVerificando(e: Omit<Edicao, 'em' | 'quem'>): Promise
   if (r.ok) await edicoes.salvar(ed);
   return r;
 }
+
+/* ------------------------------------------------------------------ falas iguais em outros lugares */
+let indice: { de: unknown; mapa: Map<string, TextoEditavel[]>; todos: TextoEditavel[] } | null = null;
+/** Todos os textos editáveis agora (refeito quando as edições mudam). */
+export function textosAgora(): TextoEditavel[] {
+  const de = CONTEUDO_EDITAVEL.edicoes();
+  if (indice?.de !== de) {
+    const todos = todosOsTextos(CONTEUDO_EDITAVEL);
+    const mapa = new Map<string, TextoEditavel[]>();
+    for (const t of todos) if (t.tipo === 'fala') { const k = `${t.quem}|${t.texto}`; if (!mapa.has(k)) mapa.set(k, []); mapa.get(k)!.push(t); }
+    indice = { de, mapa, todos };
+  }
+  return indice.todos;
+}
+/** Os lugares (fases, falas gerais…) onde a MESMA fala, da mesma pessoa, aparece. */
+export function lugaresDaFala(texto: string, quem: string): TextoEditavel[] {
+  textosAgora();
+  return indice!.mapa.get(`${quem}|${texto}`) ?? [];
+}
+const mesmoLugar = (t: Alvo, a: Alvo) => t.colecao === a.colecao && t.item === a.item && JSON.stringify(t.caminho) === JSON.stringify(a.caminho);
 
 /* ------------------------------------------------------------------ áudio da fala */
 
@@ -160,6 +180,7 @@ export function CampoEditavel({ alvo, rotulo, tipo = 'texto', quem, multilinha, 
   const [rascunho, setRascunho] = useState(() => paraTexto(atual, tipo));
   const [salvo, setSalvo] = useState('');
   const [rodada, setRodada] = useState(0);
+  const [emTodos, setEmTodos] = useState(false);
   const textoAtual = paraTexto(atual, tipo);
   useEffect(() => { setRascunho(textoAtual); }, [textoAtual]);
   const edicao = { colecao: alvo.colecao, item: alvo.item, tipo: 'definir' as const, caminho: alvo.caminho };
@@ -171,9 +192,16 @@ export function CampoEditavel({ alvo, rotulo, tipo = 'texto', quem, multilinha, 
   const r = useMemo(() => (mudou && !invalido ? verificarEdicao(CONTEUDO_EDITAVEL, { ...edicao, valor, em: 0 }, edicoes.edicoes()) : null),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [rascunho, mudou, invalido, rodada, alvo.colecao, alvo.item, JSON.stringify(alvo.caminho)]);
+  // a mesma fala em outros lugares (ex.: "Muito bem!" em várias fases): mudar só aqui ou em todos
+  const outros = useMemo(() => (quem && mudou ? lugaresDaFala(textoAtual, quem).filter((t) => !mesmoLugar(t, alvo)) : []),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [quem, mudou, textoAtual, rodada]);
   const salvar = async (v: unknown) => {
-    const res = await salvarVerificando({ ...edicao, valor: v, ...(quem ? { audios: trechosDaFala(String(v), quem).map((t) => t.id) } : {}) });
-    if (res.ok) setSalvo('Guardado neste aparelho.');
+    const audios = quem ? { audios: trechosDaFala(String(v), quem).map((t) => t.id) } : {};
+    const res = await salvarVerificando({ ...edicao, valor: v, ...audios });
+    let extra = 0;
+    if (res.ok && emTodos) for (const t of outros) if ((await salvarVerificando({ colecao: t.colecao, item: t.item, tipo: 'definir', caminho: t.caminho, valor: v, ...audios, nota: 'mesma fala, mudada em todos os lugares' })).ok) extra++;
+    if (res.ok) setSalvo(extra ? `Guardado aqui e em mais ${extra} lugar(es).` : 'Guardado neste aparelho.');
     setRodada((x) => x + 1);
   };
   const id = `campo-${alvo.colecao}-${alvo.item}-${alvo.caminho.join('-')}`.replace(/[^a-zA-Z0-9-]/g, '_');
@@ -193,6 +221,13 @@ export function CampoEditavel({ alvo, rotulo, tipo = 'texto', quem, multilinha, 
           {reg ? <button className="btn adm-btn" onClick={() => void edicoes.voltarAoOriginal(reg.chave)} data-testid="original-edicao"><Icone nome="lixeira" />Voltar ao original</button> : null}
         </div>
       )}
+      {outros.length ? (
+        <div className="adm-linha" data-testid="fala-compartilhada">
+          <span className="adm-nota">Esta mesma fala aparece em mais {outros.length} lugar(es) ({[...new Set(outros.map((t) => t.item))].slice(0, 4).join(', ')}{outros.length > 4 ? '…' : ''}):</span>
+          <label className="adm-check"><input type="radio" checked={!emTodos} onChange={() => setEmTodos(false)} /> só aqui</label>
+          <label className="adm-check"><input type="radio" checked={emTodos} onChange={() => setEmTodos(true)} data-testid="em-todos" /> em todos</label>
+        </div>
+      ) : null}
       {ajuda ? <p className="adm-nota">{ajuda}</p> : null}
       {editado && original !== undefined && tipo !== 'booleano' ? <p className="adm-nota">Original: <q>{paraTexto(original, tipo)}</q></p> : null}
       {salvo ? <span className="adm-etq verde" role="status">{salvo}</span> : null}

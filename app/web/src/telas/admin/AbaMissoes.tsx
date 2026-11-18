@@ -14,6 +14,8 @@ import { navegar } from '../../rotas.ts';
 import { edicoes } from '../../servicos/edicoes.ts';
 import { AvisoVerificador, CampoEditavel, quemEdita, salvarVerificando, useVersaoEdicoes } from './edicao-comum.tsx';
 import { useCriancas } from './useCriancas.ts';
+import { TrocarItem, type TipoTroca } from './TrocarItem.tsx';
+import { TrocarImagem } from './Gerenciador.tsx';
 
 const TIPO_ATIVIDADE: Record<string, string> = {
   escolher: 'Escolher', palmas: 'Palmas', montar: 'Montar palavra', ditado: 'Ditado', falar: 'Falar', espelho: 'Espelho do Som', letra: 'Apresentar a letra',
@@ -167,9 +169,9 @@ function EditorCena({ fase, cena }: { fase: Fase; cena: Cena }) {
       {a && (a.tipo === 'montar' || a.tipo === 'palmas') ? (
         <CampoEditavel alvo={{ colecao: 'fases', item: fase.id, caminho: [...pre, 'atividade', 'palavras'] }} tipo="lista" rotulo="Palavras (separadas por vírgula)" testid="campo-palavras" />
       ) : null}
-      {a && ['sintese', 'caixas', 'parMinimo', 'troca', 'frase', 'ditado'].includes(a.tipo) ? (
-        <p className="adm-nota">As palavras desta atividade ({TIPO_ATIVIDADE[a.tipo]}) levam o som de cada letra e as letras móveis: trocar aqui ainda não dá (fica para a próxima versão). Os textos e as falas, sim.</p>
-      ) : null}
+      {a && (a.tipo === 'sintese' || a.tipo === 'caixas' || a.tipo === 'parMinimo' || a.tipo === 'troca' || a.tipo === 'frase')
+        ? (a.itens as unknown[]).map((it, i) => <TrocarItem key={`${a.tipo}-${i}`} fase={fase} cena={cena} tipo={a.tipo as TipoTroca} indice={i} item={it} />) : null}
+      {a?.tipo === 'ditado' ? <TrocarItem fase={fase} cena={cena} tipo="ditado" item={a} /> : null}
       <h3 className="adm-sub">Falas e textos da cena</h3>
       {textos.length ? textos.map((t) => (
         <CampoEditavel key={t.caminho.join('/')} alvo={{ colecao: 'fases', item: fase.id, caminho: t.caminho }} rotulo={t.onde.replace(`${fase.id} › `, '')} quem={t.tipo === 'fala' ? t.quem : undefined} multilinha={t.texto.length > 50} />
@@ -239,7 +241,8 @@ function TrocarPalavra({ fase, cena, indice, item }: { fase: Fase; cena: Cena; i
         <button className="btn adm-btn pri" disabled={!nova || semFigura || igualOutra || !r?.ok} onClick={() => void salvar()} data-testid="salvar-palavra"><Icone nome="check" />Trocar</button>
         {reg ? <button className="btn adm-btn" onClick={() => void edicoes.voltarAoOriginal(reg.chave)} data-testid="original-palavra"><Icone nome="lixeira" />Voltar ao original</button> : null}
       </div>
-      {semFigura ? <p className="adm-bloqueio" role="alert" data-testid="sem-figura">"{nova}" não tem figura: a criança lê e toca na figura. Escolha uma palavra com figura (ou peça a arte nova).</p> : null}
+      {semFigura ? <p className="adm-bloqueio" role="alert" data-testid="sem-figura">"{nova}" não tem figura: a criança lê e toca na figura. Suba a figura aqui embaixo (ou escolha outra palavra).</p> : null}
+      {semFigura ? <TrocarImagem caminho={`figuras/${nova.normalize('NFD').replace(/[\u0300-\u036f]/g, '')}.webp`} /> : null}
       {igualOutra ? <p className="adm-bloqueio" role="alert">"{nova}" já é uma das outras opções deste item.</p> : null}
       {nova && !semFigura && !igualOutra ? <AvisoVerificador r={r} aoPronuncia={() => setRodada((x) => x + 1)} /> : null}
       {BANCO[nova] && r?.ok ? <p className="adm-nota">Pronúncia anotada: {BANCO[nova].sons}</p> : null}

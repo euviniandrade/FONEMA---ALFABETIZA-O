@@ -5,7 +5,7 @@
  * Regra: nenhum emoji como ícone — só os ícones 3D de assets/arte/icones, as figuras 3D ou estes SVGs.
  */
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ButtonHTMLAttributes, type CSSProperties, type ReactNode } from 'react';
-import { asset, modoTeste } from '../servicos/ambiente.ts';
+import { asset, figuraExiste, modoTeste } from '../servicos/ambiente.ts';
 
 /* ------------------------------------------------------------------ ícones */
 const ICONES_3D = new Set(['som', 'tartaruga', 'contraste', 'engrenagem', 'cadeado', 'mapa', 'lojinha', 'album', 'casa', 'play', 'voltar', 'familia']);
@@ -79,7 +79,7 @@ const POR_EMOJI: Record<string, string> = {
 /** Caminho da figura 3D para uma palavra (ou para o emoji provisório do conteúdo); `null` se não houver arte. */
 export function caminhoFigura(emoji?: string, palavra?: string): string | null {
   const p = palavra ? semAcento(palavra) : '';
-  const porPalavra = palavra ? POR_PALAVRA[palavra.toLowerCase()] ?? POR_PALAVRA[p] ?? (TEM.has(p) ? p : undefined) : undefined;
+  const porPalavra = palavra ? POR_PALAVRA[palavra.toLowerCase()] ?? POR_PALAVRA[p] ?? (TEM.has(p) || figuraExiste(p) ? p : undefined) : undefined;
   const e = emoji ? POR_EMOJI[emoji] ?? POR_EMOJI[emoji.replace(/️/g, '')] : undefined;
   const nome = porPalavra ?? e;
   if (!nome) return null;
