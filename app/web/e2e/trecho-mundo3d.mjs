@@ -51,7 +51,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   console.log(`    qualidade ${q.q}, ${q.fps.toFixed(1)} quadros/s`);
   const CLIQUE = { noWaitAfter: true, force: true, timeout: 60000 }; // a página do mundo fica ocupada desenhando; o botão "Entrar" pulsa
   const canvas = fr.locator('#palco canvas');
-  await canvas.focus();
+  await canvas.focus({ timeout: 180000 }); // a vila nova pesa: sem placa de vídeo um quadro leva segundos
   // O navegador de teste (e o CI) desenha sem placa de vídeo: ~1 quadro/s. Por isso a entrada é de verdade (teclas, mouse,
   // toque), mas o tempo do jogo avança por `simular(s)` (passos fixos, sem desenhar): o teste não depende do FPS.
   const simular = (seg, f = frame) => f.evaluate((t) => window.FONEMA_PASSEIO.simular(t), seg);
@@ -97,7 +97,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   ok((await frame.evaluate(() => window.FONEMA_PASSEIO.camera.dist)) > d0, 'a roda do mouse afasta a câmera');
 
   // pular (espaço)
-  await canvas.focus();
+  await canvas.focus({ timeout: 180000 }); // a vila nova pesa: sem placa de vídeo um quadro leva segundos
   await pg.keyboard.press('Space');
   ok((await simular(0.15)).noAr, 'espaço pula');
   ok(!(await simular(1.5)).noAr, 'e o boneco volta ao chão');
@@ -111,7 +111,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(0, -17, Math.PI));
   await frame.evaluate(() => { const p = window.FONEMA_PASSEIO; const c = p.camera; p.girarCamera(0 - c.giro); });
   await simular(0.1);
-  await canvas.focus();
+  await canvas.focus({ timeout: 180000 }); // a vila nova pesa: sem placa de vídeo um quadro leva segundos
   const pz = await segurar('ArrowUp', 4); // anda até onde der
   ok(pz.z > -25.5, `a parede da escola segura o boneco (parou em z = ${pz.z.toFixed(1)})`);
 
@@ -145,7 +145,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   if (capturas) { await pg.waitForTimeout(400); await pg.screenshot({ path: `${capturas}/mundo3d-04-porta-coreto.png` }); }
 
   // FPS (rAF dentro do iframe, 3 s andando)
-  await canvas.focus();
+  await canvas.focus({ timeout: 180000 }); // a vila nova pesa: sem placa de vídeo um quadro leva segundos
   await pg.keyboard.down('ArrowLeft');
   const fps = await frame.evaluate(() => new Promise((r) => { let n = 0; const t0 = performance.now(); const f = () => { n++; if (performance.now() - t0 < 3000) requestAnimationFrame(f); else r(n / ((performance.now() - t0) / 1000)); }; requestAnimationFrame(f); }));
   await pg.keyboard.up('ArrowLeft');
