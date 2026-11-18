@@ -153,7 +153,7 @@ html,body{overflow-x:clip}
   .tela-sessao .mec-espelho .espelho-centro{padding:6px 12px;gap:12px;min-height:0}
   .tela-sessao .mec-espelho .letra-surge{font-size:56px}
   .tela-sessao .mec-espelho .ancora{font-size:20px}.tela-sessao .mec-espelho .ancora .fig{width:48px;height:48px}
-  .tela-sessao .mec-espelho .espelho-embed{height:max(290px,calc(100svh - 520px))}
+  .tela-sessao .mec-espelho .espelho-boca.espelho-embed{height:max(290px,calc(100svh - 520px))}
   .tela-sessao .mec-espelho .espelho-centro{max-height:76px}
 }
 
