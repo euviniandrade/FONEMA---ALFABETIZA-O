@@ -24,7 +24,7 @@ export const ID_MEMORIA = 'memoria-sons';
 export const NOME_MEMORIA = 'Memória dos Sons';
 
 const NIVEIS: { nivel: NivelMemoria; nome: string; treina: string; capa: ('fig' | 'letra' | 'som' | 'verso')[] }[] = [
-  { nivel: 1, nome: 'Olhar e lembrar', treina: '3 pares. Olhe e ouça antes de virar.', capa: ['fig', 'letra'] },
+  { nivel: 1, nome: 'Olhar e lembrar', treina: '2 ou 3 pares. Olhe e ouça antes de virar.', capa: ['fig', 'letra'] },
   { nivel: 2, nome: 'Memória', treina: '3 ou 4 pares de cena e letra.', capa: ['verso', 'verso'] },
   { nivel: 3, nome: 'Memória grande', treina: '5 ou 6 pares. Sons mais parecidos.', capa: ['verso', 'verso', 'verso'] },
   { nivel: 4, nome: 'Só ouvindo', treina: 'Carta de som e carta de letra, sem figura.', capa: ['som', 'letra'] }
