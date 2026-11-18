@@ -365,7 +365,7 @@ export function criarPasseio(mundo, h = {}) {
     desejada.copy(alvoCam).addScaledVector(_d, cam.distReal);
     desejada.y = Math.max(desejada.y, colisao.altura(desejada.x, desejada.z) + lerp(1.25, 0.35, sub));
     if (sub > 0.5) desejada.y = Math.min(desejada.y, colisao.NIVEL_AGUA - 0.15); // fica embaixo d'água junto do boneco
-    const submersa = camera.position.y < colisao.NIVEL_AGUA && sub > 0.3;
+    const submersa = camera.position.y < colisao.NIVEL_AGUA - 0.02 && colisao.agua(camera.position.x, camera.position.z) > 0; // a câmera está mesmo dentro d'água
     if (submersa !== camSub) { camSub = submersa; h.aoSubmerso?.(submersa); }
     if (encaixar) { encaixar = false; cam.distReal = livre; desejada.copy(alvoCam).addScaledVector(_d, livre); camera.position.copy(desejada); }
     else camera.position.lerp(desejada, menos ? 1 - Math.exp(-dt * 6) : 1 - Math.exp(-dt * 14));
