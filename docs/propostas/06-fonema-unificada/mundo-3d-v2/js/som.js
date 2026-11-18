@@ -106,7 +106,7 @@ export function criarSom({ menos = false, chave = 'fonema.passeio.som' } = {}) {
     const abafa = ctx.createBiquadFilter(); abafa.type = 'lowpass'; abafa.frequency.value = 18000; abafa.Q.value = 0.5;
     const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 3;
     master.connect(abafa); abafa.connect(comp); comp.connect(ctx.destination);
-    const musica = ctx.createGain(); musica.gain.value = menos ? 0.32 : 0.5; musica.connect(master);
+    const musica = ctx.createGain(); musica.gain.value = menos ? 0.45 : 0.7; musica.connect(master);
     const eco = reverb(ctx), ecoG = ctx.createGain(); ecoG.gain.value = 0.3; eco.connect(ecoG); ecoG.connect(musica);
     const amb = ctx.createGain(); amb.gain.value = 0.55; amb.connect(master);
     const fonte = (lp) => { const s = ctx.createBufferSource(); s.buffer = buf; s.loop = true; s.loopStart = 0; s.connect(lp); s.start(0, Math.random() * 1.5); return s; };
@@ -162,7 +162,7 @@ export function criarSom({ menos = false, chave = 'fonema.passeio.som' } = {}) {
     if (!ctx) return;
     const t = ctx.currentTime, k = rapido ? 0.05 : 0.6;
     N.master.gain.setTargetAtTime(ligado ? 0.55 : 0, t, rapido ? 0.05 : 0.4);
-    N.musica.gain.setTargetAtTime((menos ? 0.32 : 0.5) * (alvo.falando ? 0.3 : 1) * (alvo.sub ? 0.65 : 1), t, k);
+    N.musica.gain.setTargetAtTime((menos ? 0.45 : 0.7) * (alvo.falando ? 0.3 : 1) * (alvo.sub ? 0.65 : 1), t, k);
     N.amb.gain.setTargetAtTime(alvo.falando ? 0.3 : 0.55, t, k);
     N.aguaG.gain.setTargetAtTime(alvo.sub ? 0.0 : alvo.rio * 0.22, t, k);
     N.ventoG.gain.setTargetAtTime(alvo.sub ? 0 : 0.05 + alvo.vento * 0.16, t, k);
@@ -226,7 +226,7 @@ export function criarSom({ menos = false, chave = 'fonema.passeio.som' } = {}) {
  */
 export async function medirTrilha(seg = 22, { menos = false } = {}) {
   const sr = 22050, ctx = new OfflineAudioContext(2, Math.ceil(sr * seg), sr);
-  const g = ctx.createGain(); g.gain.value = 0.55 * (menos ? 0.32 : 0.5); g.connect(ctx.destination);
+  const g = ctx.createGain(); g.gain.value = 0.55 * (menos ? 0.45 : 0.7); g.connect(ctx.destination);
   const eco = reverb(ctx), eg = ctx.createGain(); eg.gain.value = 0.3; eco.connect(eg); eg.connect(g);
   const I = instrumentos(ctx, g, eco), buf = ruido(ctx);
   for (let n = 0, t = 0.05; t < seg; n++, t += COMPASSO) compasso(I, t, n + 16, { menos, buf });
