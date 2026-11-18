@@ -320,6 +320,7 @@ export function criarPasseio(mundo, h = {}) {
       const ud = m.userData, aberto = estadoLugar[ud.lugar.id].aberto;
       ud.placa.position.y = ud.lugar.alto + (menos ? 0 : Math.sin(t * 1.6 + m.position.x) * 0.08);
       ud.anel.material.emissiveIntensity = aberto ? 1.3 + (menos ? 0 : Math.sin(t * 3) * 0.5) : 0.2;
+      ud.placa.visible = perto?.id !== ud.lugar.id; // de perto quem mostra o nome é o HUD (a placa ficaria enorme)
       const s = perto?.id === ud.lugar.id ? 1.15 : 1; ud.anel.scale.setScalar(lerp(ud.anel.scale.x, s, 0.15));
     }
     if (destinoMarca.visible) { destinoMarca.userData.t += dt; destinoMarca.scale.setScalar(1 + (menos ? 0 : Math.sin(destinoMarca.userData.t * 6) * 0.12)); }

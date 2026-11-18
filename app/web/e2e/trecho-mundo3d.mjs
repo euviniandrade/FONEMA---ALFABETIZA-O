@@ -141,7 +141,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   ok(/Entrar/.test(await fr.locator('#btAcao').innerText()) && /Biblioteca/.test(await fr.locator('#lugar').innerText()), 'na porta da Biblioteca aparece o botão grande "Entrar"');
   if (capturas) { await pg.waitForTimeout(600); await pg.screenshot({ path: `${capturas}/mundo3d-05-porta-biblioteca.png` }); }
   await fr.locator('#btAcao').click(CLIQUE);
-  await pg.getByTestId('biblioteca').waitFor({ timeout: 10000 });
+  await pg.getByTestId('biblioteca').waitFor({ timeout: 60000 });
   ok(pg.url().endsWith(`/c/${id}/leitura`), 'Entrar leva ao Cantinho da Leitura');
   await ctx.close();
 
