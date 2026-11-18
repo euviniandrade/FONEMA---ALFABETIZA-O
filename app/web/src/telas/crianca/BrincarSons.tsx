@@ -21,6 +21,7 @@ import { JOGOS_DA_VILA, rotaDoJogoDaVila, situacaoDosJogosDaVila } from './jogos
 import { Capa, JOGOS_FONICOS, JOGO_FONICO_POR_ID, TelaJogoFonico } from '../../mecanicas/jogos/JogoFonico.tsx';
 import { CapaMemoria } from './MemoriaDosSons.tsx';
 import { Falta, SeloNovo, ehNovo, marcarVistoAqui, useMissoesAteAbrir } from '../../componentes/Desbloqueio.tsx';
+import { CartaoCaca } from './caca/CartaoCaca.tsx'; // fila nº 25
 import '../../estilos-biblioteca.css';
 
 /** Figura da capa de cada jogo. */
@@ -144,6 +145,7 @@ export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?:
                   </button>
                 );
               })()}
+              <CartaoCaca criancaId={criancaId} progresso={progresso} k={JOGOS_FONICOS.length + JOGOS_DA_VILA.length + 1} faltaMissoes={missoes['jogo:caca']} />
             </div>
             <h2 className="brincar-secao">Brincadeiras de escutar</h2>
             <div className="brincar-grade">

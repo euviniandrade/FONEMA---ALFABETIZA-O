@@ -66,7 +66,7 @@ export function Falta({ texto, n, barra, compacto }: { texto?: string; n?: numbe
 }
 
 const ICONE_DO_GRUPO: Record<string, string> = { jogos: 'estrela', leitura: 'caderno', lojinha: 'lojinha' };
-const FIGURA_DO_JOGO: Record<string, string> = { 'jogo:corre-som': 'bola', 'jogo:come-som': 'uva', 'jogo:memoria': 'estrela', 'jogo:estrada-pares': 'vaca', 'jogo:carteiro': 'mala', 'jogo:casa-som': 'pia' };
+const FIGURA_DO_JOGO: Record<string, string> = { 'jogo:corre-som': 'bola', 'jogo:come-som': 'uva', 'jogo:memoria': 'estrela', 'jogo:estrada-pares': 'vaca', 'jogo:carteiro': 'mala', 'jogo:casa-som': 'pia', 'jogo:caca': 'mapa' };
 
 /** Painel "Abriu!" do fim da missão: cada coisa nova com animação; tocar leva lá. */
 export function PainelAbriu({ ids, sexo, criancaId, ir }: { ids: string[]; sexo?: string; criancaId: string; ir: (rota: string) => void }) {

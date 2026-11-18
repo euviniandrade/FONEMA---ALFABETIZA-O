@@ -21,6 +21,7 @@ import { niveisDaMemoria } from './memoria-sons.ts';
 import { carteiroLiberado, casaLiberada, variacoesDaEstrada } from './jogos-vila.ts';
 import { estadoFluencia, frasesEstudadas, palavrasParaEscrever, textoLiberado, FLUENCIA_MIN_RESPOSTAS, FLUENCIA_PRECISAO_MIN, FLUENCIA_MIN_PALAVRAS } from './biblioteca.ts';
 import { estadoDosCampos } from './fichas.ts';
+import { niveisDaCaca } from './caca-tesouro.ts';
 
 export type GrupoExtra = 'jogos' | 'leitura' | 'lojinha';
 
@@ -84,6 +85,11 @@ export function catalogoDeExtras(p: Progresso, opts: { rapido?: boolean } = {}):
   out.push({ id: 'jogo:carteiro', grupo: 'jogos', nome: 'Carteiro da Vila', rota: 'jogo/carteiro', aberto: car.liberada, ...(car.liberada ? {} : { falta: car.motivo }) });
   const casa = casaLiberada(p);
   out.push({ id: 'jogo:casa-som', grupo: 'jogos', nome: 'Casa do Som', rota: 'jogo/casa-som', aberto: casa.liberada, ...(casa.liberada ? {} : { falta: casa.motivo }) });
+
+  // ---------------- Caça ao tesouro no passeio 3D (fila nº 25): abre com o 1º som (aquecimento) e cresce ----------------
+  const caca = niveisDaCaca(p, temSomPublicado);
+  out.push({ id: 'jogo:caca', grupo: 'jogos', nome: 'Caça ao Tesouro', rota: 'mundo/caca', aberto: caca[0].aberto, ...(caca[0].aberto ? {} : { falta: caca[0].falta }) });
+  out.push({ id: 'jogo:caca:2', grupo: 'jogos', nome: 'Caça ao Tesouro: Letras da palavra', rota: 'mundo/caca', pai: 'jogo:caca', aberto: caca[1].aberto, ...(caca[1].aberto ? {} : { falta: caca[1].falta }) });
 
   // ---------------- Cantinho da Leitura ----------------
   for (const h of HISTORIAS) out.push({ id: `leitura:historia:${h.id}`, grupo: 'leitura', nome: h.titulo, rota: `leitura/historia-${h.id}`, aberto: true });
