@@ -6,7 +6,7 @@ import { FASE_POR_ID, HABILIDADE_POR_ID, REGIAO_POR_ID, SURPRESAS } from '@fonem
 import type { Atividade, Cena, ConfigPlataforma, Fase, Surpresa } from '@fonema/conteudo';
 import type { ConquistaGanha, Demonstracao, Progresso, Tentativa } from './estado.ts';
 import { avaliarDominio, dominadaDeVerdade, novaHabilidade, palavrasDaFase, paraProva, proporcao, registrarTentativa, tiposDeAtividadeDaFase, tiposDeAtividadeDoConteudo } from './dominio.ts';
-import { TIPO_POR_MECANICA, acertoSozinho, ehAvaliada, normalizarTentativa } from './tentativas.ts';
+import { TIPO_POR_MECANICA, acertoSozinho, normalizarTentativa, valeParaDominio } from './tentativas.ts';
 import { agendarRevisao, resultadoRevisao } from './revisao.ts';
 import { creditarEmBloco } from './moedinhas.ts';
 import { concluirFase, fasesConcluidas, missaoInicialFeita, regiaoConcluida } from './sequencia.ts';
@@ -70,7 +70,7 @@ export function aplicarAtividade(p: Progresso, r: ResultadoAtividade, cfg: Confi
     let h = habilidades[t.habilidade] ?? novaHabilidade();
     h = registrarTentativa(h, t);
     // a revisão espaçada só anda com resposta conferida (qualquer mecânica avaliada, não só o Escolher)
-    if (t.revisao && h.dominadaEm && ehAvaliada(t)) h = resultadoRevisao(h, t.acertou && !t.comAjuda, agora, cfg.revisao.intervalosDias);
+    if (t.revisao && h.dominadaEm && valeParaDominio(t)) h = resultadoRevisao(h, t.acertou && !t.comAjuda, agora, cfg.revisao.intervalosDias);
     habilidades[t.habilidade] = h;
   }
   const a = r.cena.atividade;

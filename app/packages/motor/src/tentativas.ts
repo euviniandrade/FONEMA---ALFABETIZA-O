@@ -81,9 +81,34 @@ export function ehAvaliada(t: Pick<Tentativa, 'tipo' | 'mecanica' | 'cena'>): bo
   return tipoDaTentativa(t) === 'avaliada';
 }
 
-/** Acerto que vale como evidência: avaliado, certo e sem ajuda. */
+/* ------------------------------ D035: Corre-Som em corrida (a pista não para antes da escolha) ------------------------------ */
+
+/** Formato gravado nas passagens do Corre-Som em corrida (D035). */
+export const FORMATO_CORRIDA = 'corrida';
+/** [DP] D035: acerto que vem logo depois de tantos erros SEGUIDOS na corrida é tratado como chute (não conta). */
+export const ERROS_SEGUIDOS_CHUTE = 2;
+
+/**
+ * D035 [DP] (decisão do dono, 18/11: "automático, rápido… ela tem que identificar"; e do projeto: sem pausa antes da escolha a
+ * passagem pesa menos). Uma passagem da corrida NÃO entra no domínio quando:
+ *  (a) a criança não mexeu (não trocou de pista nem tocou numa pista enquanto o arco vinha): é ficar parada, não escolher; ou
+ *  (b) é um acerto isolado logo depois de 2 erros seguidos: padrão de chute (06 §1, erro E-CHU, [DP]).
+ * Acerto em sequência e erro com escolha contam normalmente. Tudo continua gravado (painel, confusões, tempo).
+ */
+export function chuteDeCorrida(t: Pick<Tentativa, 'formato' | 'corrida' | 'acertou'>): boolean {
+  if (t.formato !== FORMATO_CORRIDA || !t.corrida) return false;
+  if (!t.corrida.mexeu) return true;
+  return t.acertou && t.corrida.errosSeguidos >= ERROS_SEGUIDOS_CHUTE;
+}
+
+/** Conta para o domínio (firmeza, nº de tentativas, últimas certas, provas)? Avaliada e, na corrida, não é chute (D035). */
+export function valeParaDominio(t: Pick<Tentativa, 'tipo' | 'mecanica' | 'cena' | 'formato' | 'corrida' | 'acertou'>): boolean {
+  return ehAvaliada(t) && !chuteDeCorrida(t);
+}
+
+/** Acerto que vale como evidência: avaliado, certo e sem ajuda (e, na corrida, não é chute: D035). */
 export function acertoSozinho(t: Tentativa): boolean {
-  return ehAvaliada(t) && t.acertou && !t.comAjuda;
+  return valeParaDominio(t) && t.acertou && !t.comAjuda;
 }
 
 /** Junta o detalhe a uma tentativa (sem apagar o que já existe). */

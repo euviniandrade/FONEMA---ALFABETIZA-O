@@ -12,7 +12,7 @@
 import { FASES } from '@fonema/conteudo';
 import type { ConfigPlataforma, Fase } from '@fonema/conteudo';
 import type { EstadoHabilidade, Tentativa } from './estado.ts';
-import { TIPO_POR_MECANICA, acertoSozinho, ehAvaliada } from './tentativas.ts';
+import { TIPO_POR_MECANICA, acertoSozinho, valeParaDominio } from './tentativas.ts';
 import { categoriaDoAlvo } from './confusao.ts';
 
 export const BKT = { p0: 0.15, transicao: 0.2, chute: 0.25, deslize: 0.1 };
@@ -39,12 +39,12 @@ export function novaHabilidade(): EstadoHabilidade {
 
 /** Guarda a tentativa. Só a AVALIADA mexe na firmeza; exposição e autorrelato ficam como participação. */
 export function registrarTentativa(h: EstadoHabilidade, t: Tentativa): EstadoHabilidade {
-  return { ...h, tentativas: [...h.tentativas, t], p: ehAvaliada(t) ? atualizarP(h.p, t.acertou, t.comAjuda) : h.p };
+  return { ...h, tentativas: [...h.tentativas, t], p: valeParaDominio(t) ? atualizarP(h.p, t.acertou, t.comAjuda) : h.p };
 }
 
 /** Firmeza recalculada do zero, só com as tentativas avaliadas (migração de dados antigos). */
 export function recalcularP(tentativas: Tentativa[]): number {
-  return tentativas.filter(ehAvaliada).reduce((p, t) => atualizarP(p, t.acertou, t.comAjuda), BKT.p0);
+  return tentativas.filter(valeParaDominio).reduce((p, t) => atualizarP(p, t.acertou, t.comAjuda), BKT.p0);
 }
 
 /* ------------------------------ critério 5 de docs/pedagogia/06 §2: variedade ------------------------------ */
@@ -168,7 +168,7 @@ export function criterioPares(ts: Tentativa[], cfg: ConfigPlataforma['dominio'])
  */
 export function avaliarDominio(h: EstadoHabilidade | undefined, cfg: ConfigPlataforma['dominio'], exigePseudo: boolean, habilidade?: string): AvaliacaoDominio {
   const todas = h?.tentativas ?? [];
-  const ts = todas.filter(ehAvaliada);
+  const ts = todas.filter(valeParaDominio);
   const p = h?.p ?? BKT.p0;
   const sessoes = new Set(ts.map((t) => t.sessao)).size;
   const ultimas = ts.slice(-cfg.ultimas);
@@ -226,5 +226,5 @@ export function proporcao(tentativas: Tentativa[]): number {
 
 /** As tentativas que valem numa prova: só as avaliadas (exposição e autorrelato nunca entram). */
 export function paraProva<T extends Tentativa>(tentativas: T[]): T[] {
-  return tentativas.filter(ehAvaliada);
+  return tentativas.filter(valeParaDominio);
 }

@@ -88,6 +88,12 @@ export interface DetalheTentativa {
    * `mecanica`, define o TIPO DE ATIVIDADE para o critério "mais de um tipo de atividade" (docs/pedagogia/06 §2, item 5).
    */
   formato?: string;
+  /**
+   * D035 (Corre-Som em corrida, `formato: 'corrida'`): como estava a corrida ANTES desta passagem pelo arco. A sequência cruza
+   * letras (habilidades diferentes), por isso fica gravada na própria tentativa. `mexeu`: a criança trocou de pista ou tocou numa
+   * pista enquanto este arco vinha (sem isso, passar no arco é ficar parada, não é escolha). Ver tentativas.ts › chuteDeCorrida.
+   */
+  corrida?: { acertosSeguidos: number; errosSeguidos: number; mexeu: boolean; nivel?: number };
 }
 
 /** Escada de ajuda (docs/pedagogia/06 §4). A ordem importa: é da menor para a maior. */

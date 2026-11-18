@@ -147,13 +147,14 @@ function parecidos(a: SomEnsinado, b: SomEnsinado): boolean {
  * Dois distratores para o alvo, entre os sons ensinados: um PARECIDO quando existe (R7), o outro distante; nunca dois
  * distratores parecidos entre si (o item testaria outra coisa). `filtro` restringe quem pode ser distrator (ex.: tem figura).
  */
-function distratores(alvo: SomEnsinado, sons: SomEnsinado[], r: () => number, filtro: (s: SomEnsinado) => boolean = () => true): SomEnsinado[] {
+function distratores(alvo: SomEnsinado, sons: SomEnsinado[], r: () => number, filtro: (s: SomEnsinado) => boolean = () => true, comParecido = true): SomEnsinado[] {
   const outros = misturar(sons.filter((s) => s.som !== alvo.som && filtro(s)), r);
-  const parecido = outros.find((s) => parecidos(alvo, s));
+  // D035 (corrida, nível 1): sem distrator parecido quando dá (`comParecido: false`); não muda o sorteio do padrão
+  const parecido = comParecido ? outros.find((s) => parecidos(alvo, s)) : undefined;
   const out: SomEnsinado[] = parecido ? [parecido] : [];
   for (const s of outros) {
     if (out.length >= 2) break;
-    if (out.includes(s) || out.some((y) => parecidos(y, s))) continue;
+    if (out.includes(s) || out.some((y) => parecidos(y, s)) || (!comParecido && parecidos(alvo, s))) continue;
     out.push(s);
   }
   for (const s of outros) { if (out.length >= 2) break; if (!out.includes(s)) out.push(s); }
@@ -253,6 +254,8 @@ export interface PedidoRodada {
   /** Número de escolhas (padrão: ESCOLHAS_POR_RODADA). */
   n?: number;
   temSom?: (fonema: string) => boolean;
+  /** D035: distrator PARECIDO quando existe (R7; padrão). `false` = distratores distantes (corrida, nível 1). */
+  parecidos?: boolean;
 }
 
 /** Ordem dos alvos: cada som ensinado entra uma vez antes de repetir (rodada variada, R6), sem o mesmo alvo duas vezes seguidas. */
@@ -280,7 +283,7 @@ export function montarRodada(p: Progresso, jogo: JogoFonicoId, pedido: PedidoRod
 
   if (variacao === 'letra') {
     return alvos(sons, n, r).map((alvo) => {
-      const { opcoes, pos } = posicionarCerta(opLetra(alvo), distratores(alvo, sons, r).map(opLetra), r, ant);
+      const { opcoes, pos } = posicionarCerta(opLetra(alvo), distratores(alvo, sons, r, undefined, pedido.parecidos ?? true).map(opLetra), r, ant);
       return { correta: alvo.letra, somAlvo: alvo.som, opcoes, posicaoCerta: pos, habilidade: habilidadeDoSom(p, alvo.letra), formato: 'som-letra' as const, categoria: 'grafema' as const };
     });
   }
@@ -305,7 +308,7 @@ export function montarRodada(p: Progresso, jogo: JogoFonicoId, pedido: PedidoRod
     const apoio = aquecimento ? sonsDeApoio(sons) : [];
     return alvos(comFigura, n, r).map((alvo) => {
       const certa = opFigura(figuraDe(alvo), alvo.som);
-      let ds = distratores(alvo, comFigura, r, temFig);
+      let ds = distratores(alvo, comFigura, r, temFig, pedido.parecidos ?? true);
       if (ds.length < 2) {
         const extra = misturar(apoio.filter((s) => s.som !== alvo.som && !parecidos(alvo, s) && !ds.some((d) => d.som === s.som || parecidos(d, s))), r);
         ds = [...ds, ...extra].slice(0, 2);
