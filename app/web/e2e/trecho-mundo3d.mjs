@@ -135,7 +135,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   ok(fps >= minimo, `FPS andando: ${fps.toFixed(1)} quadros/s, qualidade ${await frame.evaluate(() => window.FONEMA_MUNDO.qualidade)} (mínimo aceito aqui: ${minimo})`);
 
   // chegar numa porta andando (ir até lá) e entrar: Biblioteca → Cantinho da Leitura
-  await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(-10.5, -4.5, -Math.PI / 2));
+  await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(-13.6, -4.6, -Math.PI / 2));
   await frame.evaluate(() => window.FONEMA_PASSEIO.irPara(-15.4, -5));
   await fr.locator('#btAcao.on:not(.trancado)').waitFor({ timeout: 40000 });
   ok(/Entrar/.test(await fr.locator('#btAcao').innerText()) && /Biblioteca/.test(await fr.locator('#lugar').innerText()), 'na porta da Biblioteca aparece o botão grande "Entrar"');
