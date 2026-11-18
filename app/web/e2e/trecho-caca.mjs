@@ -67,7 +67,7 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
   await cap('01-mapa');
 
   const juiz = () => pg.evaluate(() => window.FONEMA_CACA_JUIZ);
-  const esperarJuiz = (fn, arg) => pg.waitForFunction(fn, arg, { timeout: 180000, polling: 200 });
+  const esperarJuiz = (fn, arg) => pg.waitForFunction(fn, arg, { timeout: 180000, polling: 200 }).catch(async (e) => { console.log('    juiz:', JSON.stringify(await pg.evaluate(() => window.FONEMA_CACA_JUIZ)), 'baús:', JSON.stringify(await frame.evaluate(() => window.FONEMA_CACA.baus.map((b) => [b.id, b.estado])))); throw e; });
   const simular = (s) => frame.evaluate((t) => window.FONEMA_PASSEIO.simular(t), s);
   const baus = () => frame.evaluate(() => window.FONEMA_CACA.baus);
   /** Leva o boneco para perto do baú e manda andar até ele (o boneco para no círculo e o baú responde). */

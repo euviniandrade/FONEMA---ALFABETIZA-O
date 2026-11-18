@@ -38,12 +38,12 @@ const maiorAjuda = (a: NivelAjuda | undefined, b: NivelAjuda): NivelAjuda => {
 };
 
 export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, criancaId: string, abrirDireto = false) {
-  const { crianca, progresso } = useCrianca(criancaId);
+  const { crianca, progresso, recarregar } = useCrianca(criancaId);
   const reg = useRegistroLivre(criancaId);
   const sons = useSonsComClipe();
   const temSom = sons ? (f: string) => sons.has(f) : undefined;
-  const d = useRef({ crianca, progresso, reg, temSom });
-  d.current = { crianca, progresso, reg, temSom };
+  const d = useRef({ crianca, progresso, reg, temSom, recarregar });
+  d.current = { crianca, progresso, reg, temSom, recarregar };
   const pronta = useRef(false);
   const abriuMenu = useRef(false);
   const rodada = useRef(0);
@@ -64,6 +64,8 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
     const pend = pendentes.current; pendentes.current = null;
     if (!pend) return;
     await d.current.reg.salvar(pend.cena, pend.ts, fimNivel ? (x) => ({ ...x, jogos: [...x.jogos, { id: idJogoCaca(fimNivel.nivel), em: Date.now(), acertos: fimNivel.acertos, total: fimNivel.total }] }) : (x) => x);
+    // o registro grava pelo seu próprio estado: relê o progresso aqui (abre o nível seguinte e o barco)
+    await d.current.recarregar();
   };
   const parar = () => {
     rodada.current++;
@@ -91,7 +93,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
         if (d.current.temSom) { mandarNiveis(abrirDireto && !abriuMenu.current); abriuMenu.current = true; }
         return;
       }
-      if (m.tipo === 'fonema:caca-comecar') { parar(); void jogar(Number(m.detalhe?.nivel) as NivelCaca); return; }
+      if (m.tipo === 'fonema:caca-comecar') { parar(); void jogar(Number(m.detalhe?.nivel) as NivelCaca).catch((err) => console.warn('[caca] a rodada parou', err)); return; }
       if (m.tipo === 'fonema:caca-sair') { parar(); mandarNiveis(false); return; }
       if (m.tipo === 'fonema:caca-ouvir') { atual.current?.ouvir(); return; }
       if (m.tipo === 'fonema:caca-dica') { atual.current?.dica(); return; }
@@ -163,6 +165,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
           const bau = visiveis.find((b) => b.id === id);
           if (!bau) { enviar('fonema:caca-bau', { id, estado: 'fechado' }); continue; }
           respostas.push(bau.letra ?? bau.som);
+          if (modoTeste()) console.info('[caca] baú', id, certos.includes(id) ? 'certo' : 'errado');
           if (certos.includes(id)) {
             enviar('fonema:caca-bau', { id, estado: 'certo', ...(nivel === 2 ? { voa: ps.indice } : {}) });
             enviar('fonema:caca-seta', { id: null });
@@ -182,6 +185,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
           else { mostrarCerto(); await diz({ quem: 'sofia', texto: FALAS.erro2 }); }
           if (!vivo()) return;
           if (erros === 1) await tocarSom(ps.somAlvo, 1);
+          if (modoTeste()) console.info('[caca] correção feita');
         }
       } else {
         /* -------- níveis 3 e 4: charada até o lugar, depois a letra do som -------- */

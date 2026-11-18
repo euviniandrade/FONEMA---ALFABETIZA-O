@@ -343,7 +343,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
         if (d < RAIO && vel < VEL_PARADO && !barco.ativo) b.parado += dt; else b.parado = 0;
         chegou = b.parado > PARADO;
       }
-      if (chegou) { b.espera = true; b.parado = 0; avisar('fonema:caca-chegou', { id }); }
+      if (chegou) { b.espera = true; b.parado = 0; console.info('[caca] chegou', id); avisar('fonema:caca-chegou', { id }); }
     }
     // moedinhas de enfeite
     for (let i = moedas.length - 1; i >= 0; i--) {
