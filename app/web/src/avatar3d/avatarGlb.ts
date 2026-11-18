@@ -14,6 +14,7 @@
 import * as THREE from 'three';
 import { lerGLB } from '../componentes/glb-comum.ts';
 import { PASTA_MODELOS3D, carregarAvatares, type InfoAvatar } from './avatares.ts';
+import { criarPenteado } from './cabelos.ts';
 import { ALTURA_BONECO, modeloPadrao, type Aparencia } from './modelo.ts';
 
 interface Base {
@@ -72,6 +73,117 @@ function carregarBase(chave: string): Promise<Base | null> {
   return p;
 }
 
+/* ------------------------------------------------------------------ cabeça com o cabelo do modelo rente */
+
+/** Crânio aproximado (elipsoide, no espaço da cena): onde as peças de cabelo (cabelos.ts) se apoiam. */
+export interface Cranio { centro: THREE.Vector3; raios: THREE.Vector3; /** raio vertical abaixo do centro (nuca) */ baixo: number }
+
+interface Pescoco { x: number; z: number; rx: number; rz: number; y0: number; y1: number }
+interface Raspado { geometria: THREE.BufferGeometry; cranio: Cranio; pescoco: Pescoco | null }
+const raspados = new WeakMap<THREE.BufferGeometry, Raspado>();
+
+/**
+ * Quando a criança escolhe outro penteado, o cabelo pintado no modelo (canal B da máscara; a sobrancelha fica de fora)
+ * é "cortado rente": cada vértice de cabelo que passa do crânio é puxado para a superfície dele. O cabelo comprido da
+ * menina vira um corte bem curto, sem buraco na cabeça e sem emenda na testa (os vértices perto da pele quase não
+ * mexem). A peça de cabelo nova vai por cima. `t` leva do espaço da malha para o da cena.
+ */
+function cabeloRente(g: THREE.BufferGeometry, mascara: ImageData, mapa: THREE.Texture | null | undefined, t: THREE.Matrix4, olhoY: number): Raspado {
+  let r = raspados.get(g);
+  if (r) return r;
+  const uv = g.getAttribute('uv'), pos = g.getAttribute('position'), nor = g.getAttribute('normal');
+  const L = mascara.width, A = mascara.height, m = mascara.data;
+  // UVs quantizados (meshopt) vêm com a transformação de textura no mapa original
+  const ox = mapa?.offset.x ?? 0, oy = mapa?.offset.y ?? 0, rx = mapa?.repeat.x ?? 1, ry = mapa?.repeat.y ?? 1;
+  const n = pos.count;
+  const cena = new Float32Array(n * 3);
+  const cabelo = new Uint8Array(n);
+  const v = new THREE.Vector3();
+  const min = new THREE.Vector3(Infinity, Infinity, Infinity), max = new THREE.Vector3(-Infinity, -Infinity, -Infinity);
+  for (let i = 0; i < n; i++) {
+    v.fromBufferAttribute(pos, i).applyMatrix4(t);
+    cena[i * 3] = v.x; cena[i * 3 + 1] = v.y; cena[i * 3 + 2] = v.z;
+    if (!uv) continue;
+    const x = Math.min(L - 1, Math.max(0, Math.floor((uv.getX(i) * rx + ox) * L)));
+    const y = Math.min(A - 1, Math.max(0, Math.floor((uv.getY(i) * ry + oy) * A)));
+    if (m[(y * L + x) * 4 + 2] > 127) {
+      cabelo[i] = 1;
+      if (v.y > olhoY) { min.min(v); max.max(v); }
+    }
+  }
+  // elipsoide do cabelo acima dos olhos; o crânio fica um pouco por dentro (o cabelo tem volume)
+  const centro = new THREE.Vector3((min.x + max.x) / 2, olhoY, (min.z + max.z) / 2 - 0.004);
+  const raios = new THREE.Vector3((max.x - min.x) / 2, max.y - olhoY, (max.z - min.z) / 2);
+  const k = new THREE.Vector3(Math.min(0.93, 0.158 / raios.x), 0.9, 0.92);
+  const cranio: Cranio = { centro, raios: raios.clone().multiply(k), baixo: Math.min(raios.y * 0.9, 0.1) };
+  const inv = t.clone().invert();
+  const nt = new THREE.Matrix3().getNormalMatrix(inv); // normais da cena de volta para a malha
+  const novaPos = new Float32Array(n * 3), novaNor = new Float32Array(n * 3);
+  const levantado = new Uint8Array(n);
+  const d = new THREE.Vector3(), nn = new THREE.Vector3();
+  for (let i = 0; i < n; i++) {
+    v.set(cena[i * 3], cena[i * 3 + 1], cena[i * 3 + 2]);
+    if (nor) nn.fromBufferAttribute(nor, i); else nn.set(0, 1, 0);
+    const linhaNuca = centro.y - 0.7 * cranio.baixo;
+    // abaixo da linha da nuca o cabelo comprido não se mexe: os triângulos só de cabelo dali saem da malha (abaixo)
+    if (cabelo[i] && v.y < linhaNuca) levantado[i] = 1;
+    if (cabelo[i] && !levantado[i]) {
+      // abaixo do centro o crânio é mais baixo (nuca): o cabelo comprido sobe até ela
+      const rr = v.y < centro.y ? new THREE.Vector3(cranio.raios.x, cranio.baixo, cranio.raios.z) : cranio.raios.clone();
+      // nas têmporas e na frente da orelha o cabelo comprido vai para dentro (senão vira uma aba saindo do rosto)
+      const frente = (v.z - centro.z) / Math.max(1e-6, Math.hypot(v.x - centro.x, v.z - centro.z));
+      if (frente > 0.15 && v.y < centro.y + 0.45 * cranio.raios.y) rr.multiplyScalar(1 - 0.16 * Math.min(1, (frente - 0.15) / 0.35));
+      d.subVectors(v, centro).divide(rr);
+      const rho = d.length();
+      // na nuca, até o que estava por dentro vai para a superfície (sem pontas soltas penduradas no pescoço)
+      if (rho > 1 || (v.y < centro.y - 0.5 * cranio.baixo && frente < 0.3)) {
+        v.copy(centro).addScaledVector(d.divideScalar(rho).multiply(rr), 1);
+        // normal do elipsoide (gradiente), já no espaço da malha
+        nn.copy(d).divide(rr).normalize().applyMatrix3(nt).normalize();
+      }
+      v.applyMatrix4(inv);
+    } else v.fromBufferAttribute(pos, i);
+    novaPos[i * 3] = v.x; novaPos[i * 3 + 1] = v.y; novaPos[i * 3 + 2] = v.z;
+    novaNor[i * 3] = nn.x; novaNor[i * 3 + 1] = nn.y; novaNor[i * 3 + 2] = nn.z;
+  }
+  const geo = g.clone();
+  geo.setAttribute('position', new THREE.BufferAttribute(novaPos, 3));
+  geo.setAttribute('normal', new THREE.BufferAttribute(novaNor, 3));
+  // o "colarinho" de pele cobre o pescoço onde o cabelo comprido saiu
+  if (g.index && levantado.some((x) => x)) {
+    const ix = g.index, fica: number[] = [];
+    for (let i = 0; i < ix.count; i += 3) {
+      const a = ix.getX(i), b = ix.getX(i + 1), c = ix.getX(i + 2);
+      // triângulo só de cabelo com algum vértice abaixo da nuca: é o cabelo comprido pendurado (sai);
+      // os que misturam cabelo e pele/roupa ficam (gola, pescoço)
+      if ((levantado[a] || levantado[b] || levantado[c]) && cabelo[a] && cabelo[b] && cabelo[c]) continue;
+      fica.push(a, b, c);
+    }
+    geo.setIndex(fica);
+  }
+  geo.computeBoundingBox(); geo.computeBoundingSphere();
+  // pescoço: a textura da nuca (que o cabelo comprido escondia) não tem pele pintada direito; com cabelo curto um
+  // "colarinho" de pele cobre a parte de trás dele (avatarGlb › criarBonecoGlb)
+  const y1 = centro.y - 0.7 * cranio.baixo, y0 = y1 - 0.11;
+  // largura do pescoço logo abaixo da nuca (pela pele dos lados; a parte de trás é cabelo e foi puxada para cima)
+  let xMin = Infinity, xMax = -Infinity;
+  for (let i = 0; i < n; i++) {
+    const y = cena[i * 3 + 1];
+    if (cabelo[i] || y < y1 - 0.07 || y > y1 - 0.01) continue;
+    const x = cena[i * 3], z = cena[i * 3 + 2];
+    if (Math.abs(z - centro.z) > 0.03 || Math.abs(x - centro.x) > 0.09) continue;
+    xMin = Math.min(xMin, x); xMax = Math.max(xMax, x);
+  }
+  const rxP = (xMax - xMin) / 2;
+  // só quando o cabelo do modelo descia abaixo da nuca (a menina): no menino a nuca já tem pele
+  let comprido = 0;
+  for (let i = 0; i < n; i++) if (cabelo[i] && cena[i * 3 + 1] < y1 - 0.05) comprido++;
+  const pescoco = rxP > 0.02 && comprido > 50 ? { x: (xMin + xMax) / 2, z: centro.z + 0.005, rx: rxP, rz: rxP * 0.95, y0, y1 } : null;
+  r = { geometria: geo, cranio, pescoco };
+  raspados.set(g, r);
+  return r;
+}
+
 /* ------------------------------------------------------------------ recoloração da textura */
 
 const PARA_LINEAR = new Float32Array(256);
@@ -96,7 +208,7 @@ function tom(t: number, razao: number): number {
 }
 
 /** Recompõe a textura de cor com as cores escolhidas. Região sem cor escolhida fica como no original. */
-export function recolorir(base: Pick<Base, 'cor' | 'mascara' | 'info'>, a: Pick<Aparencia, 'pele' | 'olhos' | 'cabelo' | 'camisa' | 'calca' | 'calcado'>): ImageData {
+export function recolorir(base: Pick<Base, 'cor' | 'mascara' | 'info'>, a: Pick<Aparencia, 'pele' | 'olhos' | 'cabelo' | 'camisa' | 'calca' | 'calcado' | 'penteado'>): ImageData {
   const { cor, mascara, info } = base;
   const src = cor.data, msk = mascara.data;
   const out = new ImageData(new Uint8ClampedArray(src), cor.width, cor.height);
@@ -109,9 +221,17 @@ export function recolorir(base: Pick<Base, 'cor' | 'mascara' | 'info'>, a: Pick<
   const branco = PARA_LINEAR[Math.round(info.medias.roupa[0])];
   const roupa = [null, null, null, null, a.camisa ? linearDe(a.camisa) : null, a.calca ? linearDe(a.calca) : null, a.calcado ? linearDe(a.calcado) : null];
   // pele escura: o original é claro, então o sombreado "cabe" inteiro; só limitamos o brilho para não estourar
+  const nuca = a.penteado ? (pele ?? mPele) : null;
   for (let i = 0; i < d.length; i += 4) {
     const regiao = msk[i];
-    if (regiao === 0) continue;
+    if (regiao === 0) {
+      // com cabelo curto aparece a nuca que o cabelo comprido escondia (sem cor de pele na textura): vira pele
+      if (nuca && msk[i + 2] === 128) {
+        const k = Math.min(1, lum(PARA_LINEAR[src[i]], PARA_LINEAR[src[i + 1]], PARA_LINEAR[src[i + 2]]) / branco) * 0.92;
+        d[i] = srgb(nuca[0] * k); d[i + 1] = srgb(nuca[1] * k); d[i + 2] = srgb(nuca[2] * k);
+      }
+      continue;
+    }
     const r = PARA_LINEAR[src[i]], g = PARA_LINEAR[src[i + 1]], b = PARA_LINEAR[src[i + 2]];
     if (regiao === 1) {
       if (!pele) continue;
@@ -146,7 +266,7 @@ const texturas = new Map<string, THREE.CanvasTexture>();
 const MAX_TEXTURAS = 10;
 
 function texturaRecolorida(chave: string, base: Base, a: Aparencia): THREE.CanvasTexture {
-  const k = `${chave}|${a.pele}|${a.olhos}|${a.cabelo}|${a.camisa}|${a.calca}|${a.calcado}`;
+  const k = `${chave}|${a.pele}|${a.olhos}|${a.cabelo}|${a.camisa}|${a.calca}|${a.calcado}|${a.penteado ? 1 : 0}`;
   let t = texturas.get(k);
   if (t) { texturas.delete(k); texturas.set(k, t); return t; }
   const c = document.createElement('canvas');
@@ -171,7 +291,12 @@ export interface BonecoGlb {
   /** Âncoras já no espaço da cena (metros, pés no chão, frente +Z). */
   olhos: { centro: THREE.Vector3; raioIris: number; raioOlho: number }[];
   cabeca: THREE.Vector3;
+  /** Crânio (só quando o penteado é peça separada). */
+  cranio: Cranio | null;
 }
+
+/** Cor do cabelo de cada modelo, para a peça de cabelo combinar quando a criança não escolheu cor. */
+const COR_PADRAO_CABELO = { f: '#3A2A20', m: '#2E221C' } as const;
 
 /** Monta o boneco de verdade com as cores escolhidas, ou `null` se o modelo não existe / não carregou. */
 export async function criarBonecoGlb(a: Aparencia): Promise<BonecoGlb | null> {
@@ -179,6 +304,7 @@ export async function criarBonecoGlb(a: Aparencia): Promise<BonecoGlb | null> {
   let base = await carregarBase(chave);
   if (!base && chave !== modeloPadrao(a.sexo)) { chave = modeloPadrao(a.sexo); base = await carregarBase(chave); }
   if (!base) return null;
+  const tirarCabelo = !!a.penteado;
   const mapa = texturaRecolorida(chave, base, a);
   const original = (base.malhas[0].material as THREE.MeshStandardMaterial).map;
   if (original) { mapa.offset.copy(original.offset); mapa.repeat.copy(original.repeat); mapa.rotation = original.rotation; mapa.channel = original.channel; }
@@ -186,8 +312,14 @@ export async function criarBonecoGlb(a: Aparencia): Promise<BonecoGlb | null> {
   grupo.name = `avatar-${chave}`;
   const interno = new THREE.Group();
   interno.applyMatrix4(base.matriz);
+  const olhoY = base.info.olhos.reduce((s, o) => s + new THREE.Vector3(...o.centro).applyMatrix4(base.matriz).y, 0) / base.info.olhos.length;
+  let cranio: Cranio | null = null;
+  let pescoco: Pescoco | null = null;
   for (const m of base.malhas) {
-    const copia = new THREE.Mesh(m.geometry, undefined);
+    const t = base.matriz.clone().multiply(m.matrixWorld);
+    const rente = tirarCabelo ? cabeloRente(m.geometry, base.mascara, original, t, olhoY) : null;
+    if (rente) { cranio = rente.cranio; pescoco = rente.pescoco; }
+    const copia = new THREE.Mesh(rente ? rente.geometria : m.geometry, undefined);
     copia.applyMatrix4(m.matrixWorld);
     const mat = (m.material as THREE.MeshStandardMaterial).clone();
     mat.map = mapa;
@@ -203,7 +335,22 @@ export async function criarBonecoGlb(a: Aparencia): Promise<BonecoGlb | null> {
   const escala = ALTURA_BONECO / (base.info.caixa.max[1] - base.info.caixa.min[1]);
   const ponto = (p: [number, number, number]) => new THREE.Vector3(p[0], p[1], p[2]).applyMatrix4(base.matriz);
   const olhos = base.info.olhos.map((o) => ({ centro: ponto(o.centro), raioIris: o.raioIris * escala, raioOlho: o.raioOlho * escala })).sort((x, y) => x.centro.x - y.centro.x);
-  return { grupo, olhos, cabeca: ponto(base.info.cabeca.centro) };
+  const boneco: BonecoGlb = { grupo, olhos, cabeca: ponto(base.info.cabeca.centro), cranio };
+  if (a.penteado && cranio) {
+    const peca = criarPenteado(a.penteado, { sexo: a.sexo, cranio, olhos, cor: a.cabelo ?? COR_PADRAO_CABELO[a.sexo] });
+    if (peca) grupo.add(peca);
+    if (pescoco && pescoco.rx > 0.02) {
+      // colarinho de pele atrás do pescoço (meia volta, um tico maior que o pescoço)
+      const cor = a.pele ? new THREE.Color(a.pele) : new THREE.Color().setRGB(...linearDeMedia(base.info.medias.pele), THREE.LinearSRGBColorSpace);
+      const geo = new THREE.CylinderGeometry(1, 1.08, pescoco.y1 - pescoco.y0 + 0.03, 32, 1, true, Math.PI * 0.55, Math.PI * 0.9);
+      const pele = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: cor.multiplyScalar(0.93), roughness: 0.75 }));
+      pele.name = 'nuca';
+      pele.scale.set(pescoco.rx * 1.12, 1, pescoco.rz * 1.05);
+      pele.position.set(pescoco.x, (pescoco.y0 + pescoco.y1) / 2 - 0.005, pescoco.z);
+      grupo.add(pele);
+    }
+  }
+  return boneco;
 }
 
 /* ------------------------------------------------------------------ acessibilidade sobre o modelo */

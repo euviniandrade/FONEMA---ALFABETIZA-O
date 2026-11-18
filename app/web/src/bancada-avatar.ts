@@ -9,7 +9,7 @@ import { Boneco, Cena } from './avatar3d/motor3d.ts';
 import { AVATAR_PADRAO } from '@fonema/motor';
 import type { Genero } from '@fonema/conteudo';
 
-interface Opcoes { sexo: Genero; pele?: string | null; olhos?: string | null; corCabelo?: string | null; cabelo?: string | null; vista?: 'frente' | 'lado' | 'costas' | 'tres-quartos' | 'rosto' | 'olho' | 'busto'; largura?: number; altura?: number; acessibilidade?: string[] }
+interface Opcoes { sexo: Genero; pele?: string | null; olhos?: string | null; corCabelo?: string | null; cabelo?: string | null; penteado?: string | null; vista?: 'frente' | 'lado' | 'costas' | 'tres-quartos' | 'rosto' | 'olho' | 'busto' | 'busto-lado' | 'busto-costas'; largura?: number; altura?: number; acessibilidade?: string[] }
 
 const canvas = document.createElement('canvas');
 document.getElementById('raiz')!.append(canvas);
@@ -18,11 +18,12 @@ const cena = new Cena(canvas, { sombras: false, ambiente: true });
 async function desenharAvatar(o: Opcoes): Promise<string> {
   const largura = o.largura ?? 400, altura = o.altura ?? 520;
   const a = resolverAparencia({ ...AVATAR_PADRAO, pele: o.pele ?? null, olhos: o.olhos ?? null, corCabelo: o.corCabelo ?? null, cabelo: o.cabelo ?? null, acessibilidade: o.acessibilidade ?? [], pronto: true }, o.sexo);
+  if (o.penteado !== undefined) a.penteado = o.penteado;
   const boneco = new Boneco();
   await boneco.aplicar(a);
   boneco.parado();
   const vista = o.vista ?? 'frente';
-  boneco.raiz.rotation.y = { frente: 0, lado: Math.PI / 2, costas: Math.PI, 'tres-quartos': 0.6, rosto: 0.15, olho: 0, busto: 0.28 }[vista];
+  boneco.raiz.rotation.y = { frente: 0, lado: Math.PI / 2, costas: Math.PI, 'tres-quartos': 0.6, rosto: 0.15, olho: 0, busto: 0.28, 'busto-lado': Math.PI / 2, 'busto-costas': Math.PI * 0.85 }[vista];
   cena.cena.add(boneco.raiz);
   cena.renderizador.setPixelRatio(1);
   cena.renderizador.setSize(largura, altura, false);
@@ -33,7 +34,7 @@ async function desenharAvatar(o: Opcoes): Promise<string> {
     cena.camera.position.set(0, alvo.y + 0.01, perto);
     cena.camera.lookAt(alvo);
     cena.camera.updateProjectionMatrix();
-  } else cena.enquadrar(vista === 'busto' ? 'busto' : 'corpo', largura / altura);
+  } else cena.enquadrar(vista.startsWith('busto') ? 'busto' : 'corpo', largura / altura);
   cena.desenhar();
   const url = canvas.toDataURL('image/png');
   cena.cena.remove(boneco.raiz);

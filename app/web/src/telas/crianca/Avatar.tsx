@@ -21,7 +21,7 @@ export function useModelosExistentes(): Set<string> | null {
   useEffect(() => { let vivo = true; modelosExistentes().then((s) => { if (vivo) setExistem(s); }); return () => { vivo = false; }; }, []);
   return existem;
 }
-export const cabeloExiste = (peca: PecaAvatar, existem: Set<string> | null): boolean => peca.categoria !== 'cabelo' || !!peca.padrao || (!!peca.modelo && !!existem?.has(peca.modelo));
+export const cabeloExiste = (peca: PecaAvatar, existem: Set<string> | null): boolean => peca.categoria !== 'cabelo' || !!peca.padrao || !!peca.penteado || (!!peca.modelo && !!existem?.has(peca.modelo));
 
 /**
  * "Meu boneco" (D029 §1 e §7): criador de personagem em 3D. O boneco COMEÇA no padrão completo (modelo de verdade,

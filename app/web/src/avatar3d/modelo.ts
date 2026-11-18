@@ -9,6 +9,8 @@ export interface Aparencia {
   sexo: Genero;
   /** Chave do modelo 3D pedido em avatares.json (ex.: "menina-padrao", "menino-topete"). Se o arquivo não existir, vale o padrão do sexo. */
   modelo: string;
+  /** Penteado feito em peça separada (avatar3d/cabelos.ts) no lugar do cabelo do modelo. `null` = o cabelo do modelo. */
+  penteado?: string | null;
   /** Cores escolhidas (hex). `null` = como o modelo já vem. */
   pele: string | null;
   olhos: string | null;
@@ -32,6 +34,7 @@ export function resolverAparencia(avatar: AvatarCrianca, sexo: Genero): Aparenci
   return {
     sexo,
     modelo: cabelo && (cabelo.sexo === sexo || cabelo.sexo === 'ambos') && cabelo.modelo ? cabelo.modelo : modeloPadrao(sexo),
+    penteado: cabelo && (cabelo.sexo === sexo || cabelo.sexo === 'ambos') && cabelo.penteado ? cabelo.penteado : null,
     pele: cor('pele'), olhos: cor('olhos'), cabelo: cor('corCabelo'),
     camisa: cor('camisa'), calca: cor('calca'), calcado: cor('calcado'),
     acessibilidade: [...avatar.acessibilidade].sort()

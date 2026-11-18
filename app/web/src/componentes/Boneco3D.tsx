@@ -11,9 +11,9 @@ import '../estilos-avatar.css';
  */
 export function Boneco2D({ aparencia: a, tipo = 'busto', className = '' }: { aparencia: Aparencia; tipo?: 'busto' | 'corpo'; className?: string }) {
   const pele = a.pele ?? PADRAO.pele, cab = a.cabelo ?? PADRAO.cabelo, olhos = a.olhos ?? PADRAO.olhos;
-  const m = a.modelo;
-  const volumoso = /black|cacheado|crespo/.test(m);
-  const longo = a.sexo === 'f' && !/coque|rabo|black/.test(m);
+  const m = a.penteado ?? a.modelo;
+  const volumoso = /black|cacheado|crespo|puffs|twists/.test(m);
+  const longo = a.sexo === 'f' && !/coque|rabo|black|puffs|curto|raspado/.test(m);
   const camisa = a.camisa ?? PADRAO.roupa, calca = a.calca ?? PADRAO.roupa, sapato = a.calcado ?? PADRAO.roupa;
   const corpo = tipo === 'corpo';
   return (

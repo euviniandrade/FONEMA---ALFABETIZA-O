@@ -45,7 +45,12 @@ describe('catálogo do avatar 3D (D029 §1 e §7)', () => {
     expect(m.every((p) => p.sexo === 'm' && p.modelo!.startsWith('menino-'))).toBe(true);
     for (const cat of ['pele', 'olhos', 'corCabelo', 'camisa', 'calca', 'calcado'] as const) expect(pecasPara(cat, 'f')).toEqual(pecasPara(cat, 'm'));
     expect(PECAS_AVATAR.every((p) => ['m', 'f', 'ambos'].includes(p.sexo))).toBe(true);
-    expect(new Set(CABELOS.map((c) => c.modelo)).size).toBe(CABELOS.length);
+    // cada tipo de cabelo é um penteado diferente (ou o cabelo do próprio modelo, no padrão)
+    for (const sexo of ['m', 'f'] as const) {
+      const lista = CABELOS.filter((c) => c.sexo === sexo);
+      expect(new Set(lista.map((c) => c.penteado ?? 'modelo')).size).toBe(lista.length);
+      expect(lista.length, `cabelos de ${sexo}`).toBeGreaterThanOrEqual(9);
+    }
   });
 
   it('cada passo tem ao menos três opções liberadas de graça (ou o padrão) para cada sexo', () => {

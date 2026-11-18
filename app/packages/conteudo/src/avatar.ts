@@ -29,6 +29,8 @@ export interface PecaAvatar {
   padrao?: boolean;
   /** Cabelos: chave do modelo 3D em avatares.json (ex.: "menina-coque"). */
   modelo?: string;
+  /** Cabelos em peça separada, encaixada na cabeça do modelo padrão (web/src/avatar3d/cabelos.ts): id do penteado. */
+  penteado?: string;
   /**
    * Fase que precisa estar aberta para a peça destrancar. Ausente = liberada desde o começo. D034: as peças especiais abrem
    * uma a uma nas primeiras missões da jornada (antes esperavam letras que, com a ordem alternada de D031, vinham muito depois).
@@ -67,21 +69,37 @@ export const CORES_CABELO: PecaAvatar[] = [
 ];
 
 /**
- * Tipos de cabelo: cada um é um modelo 3D inteiro. A tela só mostra os que já têm arquivo em avatares.json;
- * enquanto só existir o padrão, o passo "tipo de cabelo" nem aparece.
+ * Tipos de cabelo (pedido do dono de 18/11: "não tem vários tipos de cabelo"). O padrão de cada sexo é o cabelo do
+ * próprio modelo 3D; os outros são PEÇAS de cabelo montadas em código e encaixadas na cabeça do modelo
+ * (web/src/avatar3d/cabelos.ts: o cabelo do modelo é cortado rente e a peça vai por cima). Cobrem a diversidade
+ * brasileira: liso (curto, no ombro, comprido, com franja), ondulado, cacheado, crespo (black power, curtinho, puffs),
+ * tranças e twists, rabo de cavalo, coque, topete e raspado. A cor vem da escolha "cor do cabelo".
  */
+const cab = (id: string, nome: string, sexo: Genero, penteado: string, extra: Partial<PecaAvatar> = {}) =>
+  p('cabelo', id, nome, sexo, { modelo: sexo === 'f' ? 'menina-padrao' : 'menino-padrao', penteado, ...extra });
 export const CABELOS: PecaAvatar[] = [
   p('cabelo', 'f-padrao', 'Liso no ombro', 'f', { modelo: 'menina-padrao', padrao: true }),
-  p('cabelo', 'f-cacheado', 'Cacheado', 'f', { modelo: 'menina-cacheado' }),
-  p('cabelo', 'f-black', 'Black power', 'f', { modelo: 'menina-black' }),
-  p('cabelo', 'f-trancas', 'Tranças', 'f', { modelo: 'menina-trancas' }),
-  p('cabelo', 'f-rabo', 'Rabo de cavalo', 'f', { modelo: 'menina-rabo' }),
-  p('cabelo', 'f-coque', 'Coque', 'f', { modelo: 'menina-coque', fase: 'TF-03', preco: 8 }),
+  cab('f-liso-comprido', 'Liso comprido', 'f', 'liso-comprido'),
+  cab('f-franja', 'Liso com franja', 'f', 'franja'),
+  cab('f-curto', 'Liso curtinho', 'f', 'liso-curto'),
+  cab('f-ondulado', 'Ondulado', 'f', 'ondulado'),
+  cab('f-cacheado', 'Cacheado', 'f', 'cacheado'),
+  cab('f-black', 'Black power', 'f', 'black'),
+  cab('f-crespo', 'Crespo curtinho', 'f', 'black-pequeno'),
+  cab('f-puffs', 'Puffs crespos', 'f', 'puffs'),
+  cab('f-trancas', 'Tranças', 'f', 'trancas'),
+  cab('f-rabo', 'Rabo de cavalo', 'f', 'rabo'),
+  cab('f-coque', 'Coque', 'f', 'coque', { fase: 'TF-03', preco: 8 }),
   p('cabelo', 'm-padrao', 'Liso curto', 'm', { modelo: 'menino-padrao', padrao: true }),
-  p('cabelo', 'm-cacheado', 'Cacheado', 'm', { modelo: 'menino-cacheado' }),
-  p('cabelo', 'm-crespo', 'Crespo', 'm', { modelo: 'menino-crespo' }),
-  p('cabelo', 'm-franja', 'Franja', 'm', { modelo: 'menino-franja' }),
-  p('cabelo', 'm-topete', 'Topete', 'm', { modelo: 'menino-topete', fase: 'TF-03', preco: 8 })
+  cab('m-raspado', 'Raspadinho', 'm', 'raspado'),
+  cab('m-franja', 'Franja', 'm', 'franja-curta'),
+  cab('m-liso', 'Liso repartido', 'm', 'liso-curto'),
+  cab('m-ondulado', 'Ondulado', 'm', 'ondulado-curto'),
+  cab('m-cacheado', 'Cacheado', 'm', 'cacheado-curto'),
+  cab('m-crespo', 'Crespo curtinho', 'm', 'black-pequeno'),
+  cab('m-black', 'Black power', 'm', 'black'),
+  cab('m-twists', 'Twists', 'm', 'twists'),
+  cab('m-topete', 'Topete', 'm', 'topete', { fase: 'TF-03', preco: 8 })
 ];
 
 const MARINHO = '#22407A', CEU = '#8CC4EA', IPE = '#F1B434', MATA = '#2F8F5B', TERRA = '#C4673F', JEANS = '#4A6FA5', CINZA = '#8E97A6', MADEIRA = '#9A6A3E', GRAFITE = '#33373F';

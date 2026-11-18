@@ -310,6 +310,19 @@ def segmentar(nome, pos, uv, idx, cor, conferir=None):
     masc = np.zeros((LADO, LADO, 3), np.uint8)
     masc[..., 0] = regiao
     masc[..., 1] = peso
+    # B = 255: cabelo de verdade (não a sobrancelha). O app tira esses triângulos quando a criança escolhe outro penteado
+    # (a peça de cabelo nova cobre a cabeça). Sobrancelha = cabelo logo acima dos olhos, na frente do rosto.
+    frente_rosto = np.percentile(coord_frente[coberto & cabeca], 97)
+    sobrancelha = ((alt > alt_olhos + 0.6 * raio_olho / escala) & (alt < alt_olhos + 3.4 * raio_olho / escala)
+                   & (coord_frente > frente_rosto - 2.6 * raio_olho) & (np.abs(coord_lado) < meia_distancia + 2.2 * raio_olho))
+    masc[..., 2] = np.where((regiao == REGIOES['cabelo']) & ~sobrancelha, 255, 0).astype(np.uint8)
+    # B = 128: pescoço/nuca escondidos pelo cabelo comprido (a textura ali não tem cor de pele); com cabelo curto viram pele
+    atras = coord_frente < np.median(coord_frente[coberto & cabeca]) + 0.01 * escala
+    nuca = coberto & (alt > alt_gola - 0.045) & (alt < alt_olhos) & ~zona_olho & ~azul & atras & ((regiao == 0) | ((regiao == REGIOES["camisa"]) & (np.abs(coord_lado) < 0.1 * escala)))
+    nuca = ndimage.binary_dilation(nuca, iterations=2) & coberto & ((regiao == 0) | nuca) & ~azul
+    masc[..., 2][nuca] = 128
+    regiao[nuca & (regiao == REGIOES['camisa'])] = 0  # é pescoço, não camiseta
+    masc[..., 0] = regiao
 
     if conferir:
         conferir.mkdir(parents=True, exist_ok=True)
