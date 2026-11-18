@@ -32,25 +32,29 @@ async function jogarRodada(pg, { errar = false, tirar = async () => {} } = {}) {
   let errou = !errar;
   for (let passo = 0; passo < 900; passo++) {
     if (await pg.getByTestId('jogo-fim').isVisible().catch(() => false)) return true;
+    // D035: fim da corrida do Corre-Som (Brincar: tela de resultado; fase: "Continuar" volta para a sessão)
+    const continuar = pg.getByTestId('corrida-continuar');
+    if (await continuar.isVisible().catch(() => false)) { await tirar('corre-fim-fase'); await continuar.click().catch(() => {}); await pg.waitForTimeout(150); continue; }
+    if (await pg.getByTestId('corrida-fim').isVisible().catch(() => false)) return true;
     const corre = pg.getByTestId('corre-som');
     const come = pg.getByTestId('come-som');
     const ehCorre = await corre.isVisible().catch(() => false);
     const ehCome = !ehCorre && await come.isVisible().catch(() => false);
     if (!ehCorre && !ehCome) return true; // desafio da fase: a cena acabou e a sessão seguiu
     if (ehCorre) {
-      const fase = await corre.getAttribute('data-fase').catch(() => '');
-      const demo = await corre.getAttribute('data-demo').catch(() => null);
-      if (fase === 'escolher' && !demo) {
+      // corrida (D035): a pista não para; o arco que vem é o da vez (data-decidir). Troca para a pista e espera ele passar.
+      const decidir = await corre.getAttribute('data-decidir').catch(() => null);
+      if (decidir) {
+        const antes = Number(await corre.getAttribute('data-passados').catch(() => '0'));
         await tirar('corre-escolher');
-        const alvo = errou ? '.cs-pista[data-correta="1"]' : '.cs-pista:not([data-correta])';
-        await pg.locator(alvo).first().click({ timeout: 2000 }).catch(() => {});
-        // só conta o toque que a tela aceitou (a fase sai de "escolher")
-        const aceito = await pg.waitForFunction(() => document.querySelector('[data-testid=corre-som]')?.getAttribute('data-fase') !== 'escolher', null, { timeout: 1500 }).then(() => true, () => false);
-        if (!errou && aceito) { errou = true; await pg.waitForTimeout(300); await tirar('corre-correcao'); }
-        await pg.waitForTimeout(120);
+        const alvo = errou ? '.cs-pista[data-correta="1"]' : '.cs-pista[data-opcao]:not([data-correta])';
+        await pg.locator(alvo).first().click({ timeout: 1500 }).catch(() => {});
+        const passou = await pg.waitForFunction((n) => { const e = document.querySelector('[data-testid=corre-som]'); return !e || Number(e.getAttribute('data-passados')) > n || e.getAttribute('data-fase') === 'fim'; }, antes, { timeout: 6000 }).then(() => true, () => false);
+        if (!errou && passou) { errou = true; await tirar('corre-correcao'); }
         continue;
       }
-      if (fase === 'correndo' || fase === 'chegando') await tirar('corre-correndo');
+      const fase = await corre.getAttribute('data-fase').catch(() => '');
+      if (fase === 'correndo' || fase === 'largada') await tirar('corre-correndo');
     } else {
       const livre = await come.getAttribute('data-livre').catch(() => null);
       const demo = await come.getAttribute('data-demo').catch(() => null);
@@ -122,19 +126,29 @@ export async function trechoJogos(browser, h) {
   await pg.getByTestId('corre-som').waitFor();
   const letrasNaTela = new Set();
   const tirarCorre = async (k) => {
+    if (k === 'corre-fim-fase') return;
     if (k === 'corre-escolher') for (const x of await pg.locator('.cs-pista[data-opcao]').evaluateAll((es) => es.map((e) => e.dataset.opcao))) letrasNaTela.add(x);
     await cap('')(k === 'corre-escolher' ? '03-corre-escolher' : k === 'corre-correcao' ? '04-corre-correcao' : '03b-corre-correndo');
   };
-  ok(await jogarRodada(pg, { errar: true, tirar: tirarCorre }), 'Corre-Som (letras): rodada inteira jogada, com um erro corrigido');
+  ok(await jogarRodada(pg, { errar: true, tirar: tirarCorre }), 'Corre-Som (letras): corrida inteira jogada sem parar, com um erro');
   await cap('')('05-corre-fim');
+  const fimC = pg.getByTestId('corrida-fim');
+  const pontos = Number(await fimC.getAttribute('data-pontos').catch(() => '-1'));
+  const estrelas = Number(await fimC.getAttribute('data-estrelas').catch(() => '-1'));
+  ok(pontos > 0 && estrelas >= 1, `fim da corrida: pontos e estrelas (${pontos} pontos, ${estrelas} estrelas)`);
+  ok(await fimC.getByTestId('corrida-erros').isVisible().catch(() => false), 'fim da corrida: a letra errada aparece com o som de cada uma (correção contrastiva no fim)');
+  ok(await pg.getByTestId('corrida-proximo').isVisible().catch(() => false) === (estrelas >= 2), 'bateu a meta (2 estrelas) = "Próximo nível"');
   ok([...letrasNaTela].every((l) => 'AEIOUMF'.includes(l)), `só letras já ensinadas nas pistas (${[...letrasNaTela].join(' ')})`);
   let p = await lerProgresso(pg, id);
   const tc = tentativasDo(p, 'corre-som');
-  ok(tc.length === 6, `Corre-Som: 6 escolhas gravadas (${tc.length})`);
-  ok(tc.every((t) => t.tipo === 'avaliada' && t.contexto === 'livre' && t.nOpcoes === 3 && typeof t.tempoMs === 'number' && t.posicaoCerta !== undefined && t.posicaoEscolhida !== undefined && t.alvo && t.escolhido && t.formato === 'som-letra'),
-    'cada escolha: avaliada, contexto livre, alvo, escolhido, tempo, 3 opções e posições');
-  ok(tc.some((t) => t.respostas.length === 2 && t.comAjuda && t.escolhido !== t.alvo), `o item errado ficou "com ajuda" e com a escolha errada registrada (matriz de confusão) ${JSON.stringify(tc.map((t) => [t.alvo, t.respostas, t.comAjuda]))}`);
-  ok(p.moedinhas.saldo === antes.moedinhas.saldo, 'moedinhas da pista são enfeite: o porquinho não muda (regra 4)');
+  ok(tc.length === 8, `Corre-Som: cada passagem pelo arco gravada (${tc.length} de 8 no modo de teste)`);
+  ok(tc.every((t) => t.tipo === 'avaliada' && t.contexto === 'livre' && t.nOpcoes === 3 && typeof t.tempoMs === 'number' && t.posicaoCerta !== undefined && t.posicaoEscolhida !== undefined && t.alvo && t.escolhido && t.formato === 'corrida' && t.corrida && t.corrida.nivel === 1),
+    'cada passagem: avaliada, formato corrida, contexto livre, alvo, escolhido, tempo, 3 opções, posições e o estado da corrida');
+  ok(tc.some((t) => !t.acertou && t.escolhido !== t.alvo && t.respostas.length === 1), `a passagem errada ficou errada, com a escolha registrada (matriz de confusão) ${JSON.stringify(tc.map((t) => [t.alvo, t.escolhido, t.acertou]))}`);
+  ok(tc.filter((t) => t.corrida?.mexeu).length === tc.length, 'toda passagem teve escolha (a criança tocou a pista): conta para o domínio');
+  const ganhou = p.moedinhas.saldo - antes.moedinhas.saldo;
+  const mostrou = Number((await pg.getByTestId('corrida-moedinhas').innerText().catch(() => '+0')).replace(/\D+/g, '') || 0);
+  ok(ganhou >= 0 && ganhou <= 3 && ganhou === mostrou, `moedinhas da Lojinha pela corrida: entre 0 e 3, iguais às mostradas (${ganhou})`);
 
   // ---- Bichinho Come-Som, começo ----
   await pg.goto(BASE + `#/c/${id}/brincar/come-som`);

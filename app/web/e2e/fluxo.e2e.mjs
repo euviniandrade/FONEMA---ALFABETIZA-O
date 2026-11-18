@@ -306,7 +306,13 @@ async function jogarSessao(page, capturar = {}) {
     const corre = page.getByTestId('corre-som');
     if (await corre.isVisible().catch(() => false)) {
       await tirar('corre-som');
-      if (await corre.getAttribute('data-fase').catch(() => '') === 'escolher' && !(await corre.getAttribute('data-demo').catch(() => null))) await page.locator('.cs-pista[data-correta="1"]').first().click({ timeout: 2000 }).catch(() => {});
+      // D035: corrida sem parar; o arco da vez vem com data-decidir; no fim da fase, "Continuar"
+      if (await page.getByTestId('corrida-continuar').isVisible().catch(() => false)) await page.getByTestId('corrida-continuar').click({ timeout: 2000 }).catch(() => {});
+      else if (await corre.getAttribute('data-decidir').catch(() => null)) {
+        const n = Number(await corre.getAttribute('data-passados').catch(() => '0'));
+        await page.locator('.cs-pista[data-correta="1"]').first().click({ timeout: 2000 }).catch(() => {});
+        await page.waitForFunction((x) => { const e = document.querySelector('[data-testid=corre-som]'); return !e || Number(e.getAttribute('data-passados')) > x || e.getAttribute('data-fase') === 'fim'; }, n, { timeout: 6000 }).catch(() => {});
+      }
       await page.waitForTimeout(100);
       continue;
     }
