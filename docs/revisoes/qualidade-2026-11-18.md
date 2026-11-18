@@ -61,7 +61,7 @@ lado, todas as respostas inteiras sem rolar e sem nada por cima, "Voltar para a 
   cabide) e "Passear 3D" (vilinha); no tutorial, cada brincadeira com a figura 3D da capa. Troféu: arte nova sem texto
   (`modelos3d/trofeu.webp`); o modelo 3D antigo tem "MESTRE LEITOR" EM RELEVO na malha (apagar a pintura não basta), então o troféu
   conquistado abre o selo em 360° até haver um troféu 3D sem texto (pode ser feito na Área do administrador › Foto → 3D com a arte
-  nova). ⏸ a moeda-fantasma do porquinho no tutorial.
+  nova). A moeda-fantasma do porquinho no tutorial também saiu (a 2ª moedinha não fica parada antes de voar).
 - ✅ **24** Caminho da leitura: etapas futuras com cor, nome legível e cadeado pequeno.
 - ✅ **25** Tutorial: a mãozinha aponta o "Brincar" de cima, sem cobrir a palavra; no último passo só o "Vamos!".
 - ✅ **26** Vila no computador: os selos do "Última missão" sem o nome vazando; um botão grande só para a missão (o "Continuar" do

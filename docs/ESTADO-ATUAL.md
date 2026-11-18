@@ -9,6 +9,31 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Caça ao tesouro das palavras no passeio 3D (fila do dono nº 25; 18/11; NÃO publicado ainda):** pedido do dono: "um caça ao
+tesouro das palavras… desbravar na água, pegar o barco… um circulozinho… dicas tipo charada… vários níveis… ensinando a usar cada cenário".
+- **Onde:** ícone 🗺️ no passeio (canto de cima, à direita) e cartão "Caça ao Tesouro" em Brincar → Jogos (só aparece com 3D; abre
+  `#/c/:id/mundo/caca`, direto no mapa da caça). Regras puras: `packages/motor/src/caca-tesouro.ts` (+ teste); falas e lugares:
+  `packages/conteudo/src/caca-tesouro.ts`; juiz no app: `web/src/telas/crianca/caca/useCacaTesouro.ts`; desenho: `mundo-3d-v2/js/caca-tesouro.js`
+  e `js/barco.js` (arquivos novos). Ganchos mínimos combinados: `passeio.js` ganhou `noQuadro(f)` e `usarVeiculo(v)` (linhas novas);
+  `passeio.html` 2 linhas (import e porta do barco); `Passeio3D.tsx` 1 hook + o barco abre com a chave; `App.tsx` passa `caca`.
+- **Níveis (D034: abre cedo e cresce):** (1) Caça aos sons: som puro de letra já ensinada, 3 baús com letras em pontos SORTEADOS da praça,
+  é preciso PARAR no círculo (passar correndo não responde); com 1–2 sons é aquecimento com figuras (exposição). (2) Letras da palavra:
+  palavra do Carteiro (verificador) em que cada letra faz o som de sempre (MALA sim, BOLA/DEDO não); a cada som a letra voa para a faixa;
+  ≥ 3 baús sempre; no fim lê e escolhe a figura entre 3 (formato `caca-palavra`). (3) Charadas da vila (abre depois do nível 1): charada
+  falada leva ao lugar (padaria, biblioteca, coreto, horta, campinho, escola, casa da Sofia, píer); o lugar é apresentado na 1ª vez (texto);
+  o baú abre com 3 letras e o som. Terminar dá a **chave do barquinho**. (4) Na água: beira rasa, fundo do rio (mergulho), debaixo da ponte
+  e outra margem (de barco).
+- **Barco:** porta do píer embarca (tutorial curto na 1ª vez, falado); setinhas/joystick/tocar remam; só anda no rio (para na margem);
+  "⚓ Descer do barco" só perto do píer. Não está à venda na Lojinha (a chave vem da caça).
+- **Registro:** escolha da letra e leitura final = avaliadas (`mecanica 'caca-tesouro'`, alvo, escolhido, tempo, nOpcoes, contexto 'livre');
+  achar o lugar = exposição; 2ª dica (seta/brilho) = `resposta-mostrada`. Grava no fim da rodada ou ao sair. Moedinhas do caminho são enfeite.
+- **Voz:** 20 falas novas da Sofia (charadas e instruções), 764 caracteres; auditoria: as 20 "ok"; bocas regeradas.
+- **Verificado:** typecheck, lint, `npm test` 445/445 (12 novos da caça); E2E `--caca` (trecho-caca.mjs, também no completo e no
+  `--sem-jornada`): RESULTADO_CACA
+- **Falta / limites:** ninguém jogou num aparelho de verdade; o barco anda em linha reta para onde se toca (numa curva do rio ele para
+  na margem e é preciso tocar de novo); as charadas são só de lugar (não de bilhete escrito: o "Bilhete do Tesouro" da pesquisa 47 G9
+  fica para quando houver frases decodificáveis prontas); trilha/peças da Lojinha não mudaram.
+
 **Revisão de qualidade 18/11 — frente de SOM, ESPERA e LÓGICA (fila do dono nº 23; 18/11; NÃO publicado ainda):** item a item em
 `docs/revisoes/qualidade-2026-11-18.md` ("Situação dos itens — frente de som, espera e lógica").
 - **Fila única de áudio** (`app/web/src/servicos/canal-audio.ts`, usada por `voz.ts`, `sons-letras.ts` e `sons-emendados.ts`): nunca
@@ -53,7 +78,10 @@ item a item está em `docs/revisoes/qualidade-2026-11-18.md` ("Situação dos it
   e Casa do Som (sala sem a dupla); troféu com arte sem texto (o 3D com "MESTRE LEITOR" em relevo não abre mais; o selo abre em 360°
   até haver um 3D sem texto, pela Foto → 3D); selo de letra com a letra no verso; balão sem retrato 2D onde a dupla 3D aparece; vila
   no computador com um botão só para a missão; "Ler sozinho" trancado sem o texto; painel guia com "Próxima: …".
-- **Falta (desta frente):** troféu 3D novo sem texto; moeda-fantasma do porquinho no tutorial; demonstração longa e os dois botões de
+  Verificado na 2ª volta: lint, typecheck e `npm test` (445 de 445); `--telas` 390×844 no commit `2faf93f` (44 telas, 0 problemas) e
+  1850×980 no `fbbde7f` (47 telas, 0 problemas; depois disso só mudou CSS de celular e a moedinha do tutorial). Capturas novas em
+  `app/docs/capturas/v11-telas-*` (Espelho no celular com as duas vistas, Corre-Som, Estrada, Casa do Som, chegada).
+- **Falta (desta frente):** troféu 3D novo sem texto; demonstração longa e os dois botões de
   som do Corre-Som no celular. Do avatar: boneco "todo branco" e o cinza carregando na Lojinha.
 
 **Avatar: olhos e tipos de cabelo; "robô" foto → 3D (fila do dono nº 20 e 19; 18/11; NÃO publicado ainda):**
