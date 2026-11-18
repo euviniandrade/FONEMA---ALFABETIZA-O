@@ -29,7 +29,10 @@ export interface PecaAvatar {
   padrao?: boolean;
   /** Cabelos: chave do modelo 3D em avatares.json (ex.: "menina-coque"). */
   modelo?: string;
-  /** Fase que precisa estar aberta para a peça destrancar. Ausente = liberada desde o começo. */
+  /**
+   * Fase que precisa estar aberta para a peça destrancar. Ausente = liberada desde o começo. D034: as peças especiais abrem
+   * uma a uma nas primeiras missões da jornada (antes esperavam letras que, com a ordem alternada de D031, vinham muito depois).
+   */
   fase?: string;
   /** Preço em moedinhas. 0 = grátis. */
   preco: number;
@@ -73,12 +76,12 @@ export const CABELOS: PecaAvatar[] = [
   p('cabelo', 'f-black', 'Black power', 'f', { modelo: 'menina-black' }),
   p('cabelo', 'f-trancas', 'Tranças', 'f', { modelo: 'menina-trancas' }),
   p('cabelo', 'f-rabo', 'Rabo de cavalo', 'f', { modelo: 'menina-rabo' }),
-  p('cabelo', 'f-coque', 'Coque', 'f', { modelo: 'menina-coque', fase: 'AL-D', preco: 8 }),
+  p('cabelo', 'f-coque', 'Coque', 'f', { modelo: 'menina-coque', fase: 'TF-03', preco: 8 }),
   p('cabelo', 'm-padrao', 'Liso curto', 'm', { modelo: 'menino-padrao', padrao: true }),
   p('cabelo', 'm-cacheado', 'Cacheado', 'm', { modelo: 'menino-cacheado' }),
   p('cabelo', 'm-crespo', 'Crespo', 'm', { modelo: 'menino-crespo' }),
   p('cabelo', 'm-franja', 'Franja', 'm', { modelo: 'menino-franja' }),
-  p('cabelo', 'm-topete', 'Topete', 'm', { modelo: 'menino-topete', fase: 'AL-D', preco: 8 })
+  p('cabelo', 'm-topete', 'Topete', 'm', { modelo: 'menino-topete', fase: 'TF-03', preco: 8 })
 ];
 
 const MARINHO = '#22407A', CEU = '#8CC4EA', IPE = '#F1B434', MATA = '#2F8F5B', TERRA = '#C4673F', JEANS = '#4A6FA5', CINZA = '#8E97A6', MADEIRA = '#9A6A3E', GRAFITE = '#33373F';
@@ -88,28 +91,28 @@ export const CAMISAS: PecaAvatar[] = [
   p('camisa', 'branca', 'Branca', 'ambos', { cor: '#FFFFFF', padrao: true }),
   p('camisa', 'ceu', 'Azul-clara', 'ambos', { cor: CEU }),
   p('camisa', 'ipe', 'Amarela', 'ambos', { cor: IPE }),
-  p('camisa', 'mata', 'Verde', 'ambos', { cor: MATA, fase: 'AL-B', preco: 4 }),
-  p('camisa', 'terra', 'Terracota', 'ambos', { cor: TERRA, fase: 'AL-C', preco: 6 }),
-  p('camisa', 'madeira', 'Cor de madeira', 'ambos', { cor: MADEIRA, fase: 'AL-F', preco: 10 })
+  p('camisa', 'mata', 'Verde', 'ambos', { cor: MATA, fase: 'TF-01', preco: 4 }),
+  p('camisa', 'terra', 'Terracota', 'ambos', { cor: TERRA, fase: 'AL-I', preco: 6 }),
+  p('camisa', 'madeira', 'Cor de madeira', 'ambos', { cor: MADEIRA, fase: 'AL-U', preco: 10 })
 ];
 
 export const CALCAS: PecaAvatar[] = [
   p('calca', 'branca', 'Branca', 'ambos', { cor: '#FFFFFF', padrao: true }),
   p('calca', 'marinho', 'Azul-marinho', 'ambos', { cor: MARINHO }),
   p('calca', 'jeans', 'Jeans', 'ambos', { cor: JEANS }),
-  p('calca', 'mata', 'Verde', 'ambos', { cor: MATA, fase: 'AL-C', preco: 6 }),
-  p('calca', 'cinza', 'Cinza', 'ambos', { cor: CINZA, fase: 'AL-D', preco: 5 }),
-  p('calca', 'terra', 'Terracota', 'ambos', { cor: TERRA, fase: 'AL-G', preco: 8 })
+  p('calca', 'mata', 'Verde', 'ambos', { cor: MATA, fase: 'AL-O', preco: 6 }),
+  p('calca', 'cinza', 'Cinza', 'ambos', { cor: CINZA, fase: 'TF-02', preco: 5 }),
+  p('calca', 'terra', 'Terracota', 'ambos', { cor: TERRA, fase: 'TF-05', preco: 8 })
 ];
 
 export const CALCADOS: PecaAvatar[] = [
   p('calcado', 'branco', 'Branco', 'ambos', { cor: '#FFFFFF', padrao: true }),
   p('calcado', 'marinho', 'Azul-marinho', 'ambos', { cor: MARINHO }),
   p('calcado', 'ceu', 'Azul-claro', 'ambos', { cor: CEU }),
-  p('calcado', 'ipe', 'Amarelo', 'ambos', { cor: IPE, fase: 'AL-B', preco: 4 }),
-  p('calcado', 'terra', 'Terracota', 'ambos', { cor: TERRA, fase: 'AL-F', preco: 10 }),
-  p('calcado', 'grafite', 'Grafite', 'ambos', { cor: GRAFITE, fase: 'AL-I', preco: 12 }),
-  p('calcado', 'mata', 'Verde', 'ambos', { cor: MATA, fase: 'AL-L', preco: 14 })
+  p('calcado', 'ipe', 'Amarelo', 'ambos', { cor: IPE, fase: 'AL-E', preco: 4 }),
+  p('calcado', 'terra', 'Terracota', 'ambos', { cor: TERRA, fase: 'TF-04', preco: 10 }),
+  p('calcado', 'grafite', 'Grafite', 'ambos', { cor: GRAFITE, fase: 'TF-06', preco: 12 }),
+  p('calcado', 'mata', 'Verde', 'ambos', { cor: MATA, fase: 'AL-RV1', preco: 14 })
 ];
 
 /**

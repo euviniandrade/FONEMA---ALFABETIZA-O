@@ -10,6 +10,7 @@ import { TIPO_POR_MECANICA, acertoSozinho, ehAvaliada, normalizarTentativa } fro
 import { agendarRevisao, resultadoRevisao } from './revisao.ts';
 import { creditarEmBloco } from './moedinhas.ts';
 import { concluirFase, fasesConcluidas, missaoInicialFeita, regiaoConcluida } from './sequencia.ts';
+import { anotarNovidades, extrasQueAbriram } from './desbloqueio.ts';
 import { avaliarConquistas } from './conquistas.ts';
 import { calcularNivel } from './nivel.ts';
 import { resultadoProvaRelampago } from './trilha-expressa.ts';
@@ -104,6 +105,8 @@ export interface RelatorioSessao {
   tituloNovo?: string;
   termometroAntes: number;
   termometroDepois: number;
+  /** D034: extras que abriram nesta missão (jogos, leitura, peças da Lojinha), para o "Abriu!" do ritual. */
+  abriu?: string[];
 }
 
 /**
@@ -205,6 +208,10 @@ export function fecharSessao(
     };
   }
 
+  // 5b. D034: o que abriu nesta missão (jogos, leitura, peças) → "Abriu!" no ritual e selo "Novo!" até a criança visitar
+  const abriu = extrasQueAbriram(p0, p);
+  p = anotarNovidades(p, abriu);
+
   // 6. D032: resumo da última missão para o painel guia (estrelinhas e selos; não mexe no domínio)
   p = { ...p, ultimaMissao: resumoDaMissao({ faseId: fase.id, atividades: args.atividades, tentativas: args.tentativasDaSessao, selos: ac.novas.map((g) => g.id), faseConcluida }, agora) };
 
@@ -228,7 +235,8 @@ export function fecharSessao(
       nivelDepois: depois.nivel,
       tituloNovo: depois.titulo && depois.titulo !== antes.titulo ? depois.titulo : undefined,
       termometroAntes,
-      termometroDepois: p.termometro
+      termometroDepois: p.termometro,
+      abriu
     }
   };
 }

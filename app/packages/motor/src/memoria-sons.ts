@@ -27,13 +27,14 @@
  */
 import { CENAS_DO_SOM, LETRA_POR_ID, PARES_DE_VOZ, SONS_PARECIDOS, faseDaLetra, parConfuso } from '@fonema/conteudo';
 import type { CategoriaAlvo, Progresso, Tentativa, TipoTentativa, NivelAjuda } from './estado.ts';
-import { geradorJogo, habilidadeDoSom, sonsEnsinados, type SomEnsinado } from './jogos-fonicos.ts';
+import { geradorJogo, habilidadeDoSom, sonsEnsinados, type OpcoesSons, type SomEnsinado } from './jogos-fonicos.ts';
 
 export type NivelMemoria = 1 | 2 | 3 | 4;
 export const NIVEIS_MEMORIA: NivelMemoria[] = [1, 2, 3, 4];
 
 /** Pares por nível [DP] (pesquisa 46: 3–6 por rodada para 4–7 anos). [mínimo, máximo] */
-export const PARES_DO_NIVEL: Record<NivelMemoria, [number, number]> = { 1: [3, 3], 2: [3, 4], 3: [5, 6], 4: [3, 4] };
+/** D034: o nível 1 (só olhar e lembrar, tudo exposição) abre com 2 pares, para abrir cedo e crescer com a trilha. */
+export const PARES_DO_NIVEL: Record<NivelMemoria, [number, number]> = { 1: [2, 3], 2: [3, 4], 3: [5, 6], 4: [3, 4] };
 
 /**
  * Letras que podem fazer o MESMO som no PB (nunca juntas numa rodada) [DP, conservador]: C/K/Q (/k/), S/Z/X (S entre vogais = /z/;
@@ -58,8 +59,8 @@ export interface RodadaMemoria {
 }
 
 /** Sons que podem entrar no jogo: ensinados, com som real e clipe, e com cena do som. */
-export function sonsDaMemoria(p: Progresso, temSom?: (f: string) => boolean): SomEnsinado[] {
-  return sonsEnsinados(p, temSom).filter((s) => !!CENAS_DO_SOM[s.letra] && !!LETRA_POR_ID[s.letra]);
+export function sonsDaMemoria(p: Progresso, temSom?: (f: string) => boolean, opts: OpcoesSons = {}): SomEnsinado[] {
+  return sonsEnsinados(p, temSom, opts).filter((s) => !!CENAS_DO_SOM[s.letra] && !!LETRA_POR_ID[s.letra]);
 }
 
 /** Sons parecidos (par confundível, par de voz ou grupo de sons parecidos): ficam fora dos níveis 1, 2 e 4. */
@@ -124,7 +125,8 @@ export function montarMemoria(p: Progresso, pedido: PedidoMemoria): RodadaMemori
   const { nivel, semente, temSom, incluir } = pedido;
   if (!niveisDaMemoria(p, temSom).find((n) => n.nivel === nivel)?.liberado) return null;
   const r = geradorJogo(semente || 1);
-  const sons = sonsDaMemoria(p, temSom);
+  // desafio dentro da fase (`incluir`): sem os sons duvidosos da auditoria (D034 só os põe nos jogos livres)
+  const sons = sonsDaMemoria(p, temSom, incluir ? { duvidosos: false } : {});
   const [min, max] = PARES_DO_NIVEL[nivel];
   let escolhidos: SomEnsinado[] = [];
   for (let t = 0; t < 12 && escolhidos.length < max; t++) {
@@ -149,7 +151,7 @@ export function montarMemoria(p: Progresso, pedido: PedidoMemoria): RodadaMemori
 export function desafioMemoria(p: Progresso, faseId: string, temSom?: (f: string) => boolean): { letra: string; nivel: NivelMemoria } | null {
   const m = /^AL-([A-Z])$/.exec(faseId);
   if (!m || faseId !== faseDaLetra(m[1]) || p.fases[faseId]?.estado !== 'concluida') return null;
-  if (!sonsDaMemoria(p, temSom).some((s) => s.letra === m[1])) return null;
+  if (!sonsDaMemoria(p, temSom, { duvidosos: false }).some((s) => s.letra === m[1])) return null;
   if (!niveisDaMemoria(p, temSom).find((n) => n.nivel === 2)?.liberado) return null;
   return { letra: m[1], nivel: 2 };
 }

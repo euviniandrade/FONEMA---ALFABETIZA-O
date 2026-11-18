@@ -18,20 +18,26 @@ function concluidas(ids: string[], base: Progresso = progressoInicial('c1', T0))
 const ALFA = (ls: string) => [...ls].map((l) => `AL-${l}`).filter((id) => FASE_POR_ID[id]);
 
 describe('Memória dos Sons: o que entra', () => {
-  it('sem fase concluída nada abre; com A, E, I só abre quando há 3 sons não parecidos (E e I fazem o mesmo som no fim)', () => {
+  it('sem fase concluída nada abre; D034: o nível 1 (só olhar) abre com 2 sons; o 2 só com 3 sons não parecidos (E e I fazem o mesmo som no fim)', () => {
     const zero = progressoInicial('c1', T0);
     expect(niveisDaMemoria(zero).every((n) => !n.liberado)).toBe(true);
     expect(montarMemoria(zero, { nivel: 2, semente: 3 })).toBeNull();
-    expect(niveisDaMemoria(concluidas(ALFA('AEI')))[0].liberado).toBe(false);
-    expect(niveisDaMemoria(concluidas(ALFA('AEIOU')))[0].liberado).toBe(true);
+    expect(niveisDaMemoria(concluidas(ALFA('A')))[0].liberado).toBe(false);
+    expect(niveisDaMemoria(concluidas(ALFA('AE')))[0].liberado).toBe(true);
+    expect(montarMemoria(concluidas(ALFA('AE')), { nivel: 1, semente: 3 })!.pares).toHaveLength(2);
+    expect(niveisDaMemoria(concluidas(ALFA('AEI')))[1].liberado).toBe(false);
+    expect(niveisDaMemoria(concluidas(ALFA('AEIOU')))[1].liberado).toBe(true);
   });
 
-  it('só letras já vistas, com som real e sem os sons duvidosos; cada carta de cena é a cena do som da letra', () => {
+  it('só letras já vistas, com som real; D034: os duvidosos só no jogo livre (no desafio da fase, não); cada carta de cena é a cena do som da letra', () => {
     const p = concluidas(ALFA('ABCDEFGHIJKLMNOPQRSTUVWXYZ'));
     const vistas = letrasComSomVisto(p);
     const sons = sonsDaMemoria(p);
     expect(sons.every((s) => vistas.includes(s.letra))).toBe(true);
-    for (const x of ['H', 'K', 'W', 'Y', 'L', 'V', 'P', 'T', 'B', 'C', 'D', 'G', 'J', 'R']) expect(sons.map((s) => s.letra)).not.toContain(x);
+    for (const x of ['H', 'K', 'W', 'Y']) expect(sons.map((s) => s.letra)).not.toContain(x);
+    expect(sons.map((s) => s.letra)).toContain('L');
+    const doDesafio = sonsDaMemoria(p, undefined, { duvidosos: false }).map((s) => s.letra);
+    for (const x of ['H', 'K', 'W', 'Y', 'L', 'V', 'P', 'T', 'B', 'C', 'D', 'G', 'J', 'R']) expect(doDesafio).not.toContain(x);
     const r = montarMemoria(p, { nivel: 3, semente: 5 })!;
     for (const c of r.cenas) expect(c.cena).toBe(CENAS_DO_SOM[c.letra]);
   });

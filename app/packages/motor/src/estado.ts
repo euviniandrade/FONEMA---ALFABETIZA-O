@@ -205,6 +205,8 @@ export interface Progresso {
   ultimaMissao?: ResumoMissao;
   /** D032 §4: jogos da vila (jogos-vila.ts): casinha decorada e cor do carro/barco. Brincadeira: nada aqui conta como domínio. */
   jogosVila?: DadosJogosVila;
+  /** D034: extras que ABRIRAM e a criança ainda não visitou (selo "Novo!"; desbloqueio.ts). Ausente = nada novo. */
+  novidades?: string[];
 }
 
 /** Casa do Som e garagem (jogos-vila.ts). Só enfeite e brincadeira (regra 4): nunca entra no domínio. */

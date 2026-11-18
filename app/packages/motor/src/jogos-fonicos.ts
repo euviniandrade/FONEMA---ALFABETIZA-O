@@ -50,6 +50,11 @@ export interface ItemJogo {
   categoria: CategoriaAlvo;
   /** Dito depois do acerto ("Isso! Esse é o som do B."), quando o item veio de uma fase. */
   apoio?: Fala;
+  /**
+   * D034: rodada de AQUECIMENTO (menos de 3 sons ensinados): o som pedido é sempre um som já ensinado, mas as outras figuras
+   * começam/terminam com sons ainda não ensinados (só ouvidos: 05 §3). Grava como EXPOSIÇÃO (regra 4), não como domínio.
+   */
+  aquecimento?: boolean;
 }
 
 /** Quantas escolhas por rodada [DP] (pedido: 6 a 10; rodadas curtas, pesquisa 47 §5.1). */
@@ -98,18 +103,32 @@ export function posicionarCerta<T>(certa: T, outras: T[], r: () => number, anter
 export interface SomEnsinado { letra: string; som: string }
 
 /**
- * Sons que a criança JÁ estudou numa fase concluída (Trilha A–Z, Trilha dos Sons, vogais, Vale do M-L-F), um por som:
- * só letras do som real (sem H, K, W, Y; 04 R9), sem os sons duvidosos da auditoria (SONS_DUVIDOSOS) e só fonemas com clipe
- * (`temSom`, quando informado).
+ * D034 (desbloqueio progressivo): nos jogos LIVRES (Brincar) os sons "duvidosos" da auditoria entram, porque o clipe tocado é o
+ * MESMO que a trilha já usa na apresentação e na correção desses sons (tf.ts › SILABA_DO_SOM: o item que conta na trilha usa a
+ * sílaba; o som puro é o mesmo clipe). Nos desafios dentro da fase continuam de fora (`duvidosos: false`). Desligar aqui volta ao
+ * comportamento anterior.
  */
-export function sonsEnsinados(p: Progresso, temSom?: (fonema: string) => boolean): SomEnsinado[] {
+export const DUVIDOSOS_NOS_JOGOS_LIVRES = true;
+
+export interface OpcoesSons {
+  /** Incluir os sons "duvidosos" da auditoria (padrão: `DUVIDOSOS_NOS_JOGOS_LIVRES`; desafio dentro da fase: false). */
+  duvidosos?: boolean;
+}
+
+/**
+ * Sons que a criança JÁ estudou numa fase concluída (Trilha A–Z, Trilha dos Sons, vogais, Vale do M-L-F), um por som:
+ * só letras do som real (sem H, K, W, Y; 04 R9), só fonemas com clipe (`temSom`, quando informado) e, fora dos jogos livres,
+ * sem os sons duvidosos da auditoria (SONS_DUVIDOSOS).
+ */
+export function sonsEnsinados(p: Progresso, temSom?: (fonema: string) => boolean, opts: OpcoesSons = {}): SomEnsinado[] {
+  const comDuvidosos = opts.duvidosos ?? DUVIDOSOS_NOS_JOGOS_LIVRES;
   const out: SomEnsinado[] = [];
   for (const letra of letrasComSomVisto(p)) {
     const l = LETRA_POR_ID[letra];
     if (!l?.fonema || !usaSomReal(l)) continue;
     // som "duvidoso" na auditoria (L, V, J e os de estouro): na trilha ele nunca é o único estímulo de item que conta
-    // (a Sofia fala a sílaba); no jogo o estímulo é só o som, então eles ficam de fora até a gravação conferida [DP]
-    if (SONS_DUVIDOSOS.some((d) => LETRA_POR_ID[d]?.fonema === l.fonema)) continue;
+    // (a Sofia fala a sílaba); no desafio dentro da fase ele fica de fora até a gravação conferida [DP]
+    if (!comDuvidosos && SONS_DUVIDOSOS.some((d) => LETRA_POR_ID[d]?.fonema === l.fonema)) continue;
     if (temSom && !temSom(l.fonema)) continue;
     if (out.some((x) => x.som === l.fonema)) continue;
     out.push({ letra, som: l.fonema });
@@ -185,28 +204,45 @@ const opLetra = (s: SomEnsinado): OpcaoJogo => ({ id: s.letra, letra: s.letra, s
 
 /* ------------------------------------------------------------ variações liberadas ------------------------------------------------------------ */
 
-export interface EstadoJogo { variacao: VariacaoJogo; liberada: boolean; motivo?: string }
+export interface EstadoJogo { variacao: VariacaoJogo; liberada: boolean; motivo?: string; /** D034: abre já, com menos de 3 sons (rodada de aquecimento, não conta). */ aquecimento?: boolean; /** Sons que já entram (para a barrinha). */ sons?: number }
+
+/** D034: variações de escuta (figura falada) abrem com 1 som ensinado; com menos de 3 é aquecimento (não conta). */
+export const MINIMO_DE_SONS_ESCUTA = 1;
 
 /**
- * Variações abertas pelo que já foi ensinado (pedido do dono: "variações que dependem do que já foi ensinado"):
- *  - Corre-Som "letra": 3 sons ensinados; "figura": 3 sons ensinados com figura.
- *  - Bichinho "inicio": 3 sons ensinados com figura; "fim": as vogais A, I e U ensinadas (os três sons finais).
+ * Variações abertas pelo que já foi ensinado (pedido do dono: "variações que dependem do que já foi ensinado"; D034: "liberar
+ * conforme ele for realizando"):
+ *  - Corre-Som "letra": 3 sons ensinados (as 3 placas são letras: só letra ensinada aparece, regra 2).
+ *  - Corre-Som "figura" e Bichinho "inicio": 1 som ensinado com figura (com 1 ou 2, rodada de aquecimento: as figuras são só ouvidas).
+ *  - Bichinho "fim": 1 das vogais A, I, U ensinada (com as 3, conta; antes, aquecimento).
  */
 export function variacoesDoJogo(p: Progresso, jogo: JogoFonicoId, temSom?: (fonema: string) => boolean): EstadoJogo[] {
   const sons = sonsEnsinados(p, temSom);
   const comFigura = sons.filter((s) => figurasQueComecam(s.letra).length > 0);
   const finais = Object.keys(SONS_FINAIS).filter((s) => sons.some((x) => x.som === s));
   const falta = (n: number) => `Faltam ${n} som${n > 1 ? 's' : ''} da trilha para abrir.`;
+  const escuta = (variacao: VariacaoJogo, n: number, completo: number): EstadoJogo => n >= MINIMO_DE_SONS_ESCUTA
+    ? { variacao, liberada: true, sons: n, ...(n < completo ? { aquecimento: true } : {}) }
+    : { variacao, liberada: false, sons: n, motivo: variacao === 'fim' ? 'Abre quando a vogal A, I ou U for ensinada.' : falta(MINIMO_DE_SONS_ESCUTA - n) };
   if (jogo === 'corre-som') {
     return [
-      { variacao: 'letra', liberada: sons.length >= MINIMO_DE_SONS, ...(sons.length < MINIMO_DE_SONS ? { motivo: falta(MINIMO_DE_SONS - sons.length) } : {}) },
-      { variacao: 'figura', liberada: comFigura.length >= MINIMO_DE_SONS, ...(comFigura.length < MINIMO_DE_SONS ? { motivo: falta(MINIMO_DE_SONS - comFigura.length) } : {}) }
+      { variacao: 'letra', liberada: sons.length >= MINIMO_DE_SONS, sons: sons.length, ...(sons.length < MINIMO_DE_SONS ? { motivo: falta(MINIMO_DE_SONS - sons.length) } : {}) },
+      escuta('figura', comFigura.length, MINIMO_DE_SONS)
     ];
   }
-  return [
-    { variacao: 'inicio', liberada: comFigura.length >= MINIMO_DE_SONS, ...(comFigura.length < MINIMO_DE_SONS ? { motivo: falta(MINIMO_DE_SONS - comFigura.length) } : {}) },
-    { variacao: 'fim', liberada: finais.length === 3, ...(finais.length < 3 ? { motivo: 'Abre quando as vogais A, I e U forem ensinadas.' } : {}) }
-  ];
+  return [escuta('inicio', comFigura.length, MINIMO_DE_SONS), escuta('fim', finais.length, 3)];
+}
+
+/**
+ * D034: letras "de apoio" para as figuras distratoras do aquecimento (menos de 3 sons ensinados). Só som claro no começo da
+ * palavra falada (sem C, G, X, H, K, Q, R, W, Y, que mudam de som). A figura é só OUVIDA (05 §3); a letra nunca aparece.
+ */
+const LETRAS_DE_APOIO = ['M', 'F', 'S', 'N', 'V', 'L', 'J', 'P', 'T', 'B', 'D', 'Z', 'A', 'E', 'I', 'O', 'U'];
+function sonsDeApoio(ensinados: SomEnsinado[]): SomEnsinado[] {
+  return LETRAS_DE_APOIO
+    .filter((l) => !ensinados.some((s) => s.letra === l || s.som === LETRA_POR_ID[l]?.fonema))
+    .filter((l) => !!LETRA_POR_ID[l]?.fonema && figurasQueComecam(l).length > 0)
+    .map((l) => ({ letra: l, som: LETRA_POR_ID[l].fonema! }));
 }
 
 /* ------------------------------------------------------------ rodadas ------------------------------------------------------------ */
@@ -264,11 +300,19 @@ export function montarRodada(p: Progresso, jogo: JogoFonicoId, pedido: PedidoRod
       usadas.add(w);
       return w;
     };
+    // D034: com menos de 3 sons, aquecimento: o som pedido é ensinado; as outras figuras vêm de sons de apoio (só ouvidas)
+    const aquecimento = comFigura.length < MINIMO_DE_SONS;
+    const apoio = aquecimento ? sonsDeApoio(sons) : [];
     return alvos(comFigura, n, r).map((alvo) => {
       const certa = opFigura(figuraDe(alvo), alvo.som);
-      const outras = distratores(alvo, comFigura, r, temFig).map((s) => opFigura(figuraDe(s), s.som));
+      let ds = distratores(alvo, comFigura, r, temFig);
+      if (ds.length < 2) {
+        const extra = misturar(apoio.filter((s) => s.som !== alvo.som && !parecidos(alvo, s) && !ds.some((d) => d.som === s.som || parecidos(d, s))), r);
+        ds = [...ds, ...extra].slice(0, 2);
+      }
+      const outras = ds.map((s) => opFigura(figuraDe(s), s.som));
       const { opcoes, pos } = posicionarCerta(certa, outras, r, ant);
-      return { correta: certa.id, somAlvo: alvo.som, opcoes, posicaoCerta: pos, habilidade: HABILIDADE_SOM_INICIAL, formato: 'som-figura' as const, categoria: 'fonema' as const };
+      return { correta: certa.id, somAlvo: alvo.som, opcoes, posicaoCerta: pos, habilidade: HABILIDADE_SOM_INICIAL, formato: 'som-figura' as const, categoria: 'fonema' as const, ...(aquecimento ? { aquecimento: true } : {}) };
     });
   }
 
@@ -282,11 +326,14 @@ export function montarRodada(p: Progresso, jogo: JogoFonicoId, pedido: PedidoRod
     usadas.add(f.palavra);
     return f.palavra;
   };
-  return alvos(finais, n, r).map((som) => {
+  // D034: só os finais já ensinados são PEDIDOS; as outras figuras terminam com os outros finais (só ouvidas). Com menos de 3, aquecimento.
+  const pedidos = finais.filter((f) => sons.some((x) => x.som === f));
+  const aquecimento = pedidos.length < finais.length;
+  return alvos(pedidos, n, r).map((som) => {
     const certa = opFigura(figuraQueTermina(som), som);
     const outras = finais.filter((s) => s !== som).map((s) => opFigura(figuraQueTermina(s), s));
     const { opcoes, pos } = posicionarCerta(certa, outras, r, ant);
-    return { correta: certa.id, somAlvo: som, opcoes, posicaoCerta: pos, habilidade: HABILIDADE_SOM_FINAL, formato: 'som-final' as const, categoria: 'fonema' as const };
+    return { correta: certa.id, somAlvo: som, opcoes, posicaoCerta: pos, habilidade: HABILIDADE_SOM_FINAL, formato: 'som-final' as const, categoria: 'fonema' as const, ...(aquecimento ? { aquecimento: true } : {}) };
   });
 }
 

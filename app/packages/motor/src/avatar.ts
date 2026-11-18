@@ -3,7 +3,7 @@
  * a migração dos avatares antigos (recorte `avatar.base` e boneco de peças v2) e das crianças salvas sem sexo definido.
  */
 import {
-  ACESSIBILIDADE, CABELOS, FASE_POR_ID, idCompraAvatar, pecaAvatar, pecaPadrao, pecasPara,
+  ACESSIBILIDADE, CABELOS, FASES, FASE_POR_ID, idCompraAvatar, pecaAvatar, pecaPadrao, pecasPara,
   type CategoriaAvatar, type Genero, type PassoAvatar, type PecaAvatar
 } from '@fonema/conteudo';
 import type { AvatarCrianca, Crianca, Progresso } from './estado.ts';
@@ -105,7 +105,7 @@ export type EstadoPeca =
   | { estado: 'tem' }
   | { estado: 'pode'; preco: number }
   | { estado: 'faltam'; preco: number; faltam: number }
-  | { estado: 'fase'; fase: string; rotuloFase: string; preco: number };
+  | { estado: 'fase'; fase: string; rotuloFase: string; preco: number; /** D034: missões da jornada até a fase abrir (1 = a próxima). */ faltamMissoes?: number };
 
 /** A fase já está ao alcance da criança (aberta, concluída ou liberada pelo nível inicial)? */
 function faseAlcancada(p: Progresso, faseId: string): boolean {
@@ -121,7 +121,8 @@ export function estadoPeca(peca: PecaAvatar, p: Progresso): EstadoPeca {
   if (p.itens.includes(idCompraAvatar(peca))) return { estado: 'tem' };
   if (!peca.fase && peca.preco === 0) return { estado: 'livre' };
   if (peca.fase && !faseAlcancada(p, peca.fase)) {
-    return { estado: 'fase', fase: peca.fase, rotuloFase: FASE_POR_ID[peca.fase]?.titulo ?? peca.fase, preco: peca.preco };
+    const n = FASES.findIndex((f) => f.id === peca.fase) - FASES.findIndex((f) => f.id === p.faseAtual);
+    return { estado: 'fase', fase: peca.fase, rotuloFase: FASE_POR_ID[peca.fase]?.titulo ?? peca.fase, preco: peca.preco, ...(n >= 1 ? { faltamMissoes: n } : {}) };
   }
   if (peca.preco === 0) return { estado: 'livre' };
   const faltam = peca.preco - p.moedinhas.saldo;
@@ -134,7 +135,11 @@ export const pecaUsavel = (peca: PecaAvatar, p: Progresso): boolean => ['livre',
 export function rotuloCadeado(e: EstadoPeca): string {
   const moedas = (n: number) => `${n} ${n === 1 ? 'moeda' : 'moedas'}`;
   switch (e.estado) {
-    case 'fase': return e.preco ? `Abre na ${e.rotuloFase} · ${moedas(e.preco)}` : `Abre na ${e.rotuloFase}`;
+    case 'fase': {
+      // D034: diz quantas missões faltam ("Abre na próxima missão"), mais claro que o nome de uma fase lá na frente
+      const quando = e.faltamMissoes ? (e.faltamMissoes === 1 ? 'Abre na próxima missão' : `Abre em ${e.faltamMissoes} missões`) : `Abre na ${e.rotuloFase}`;
+      return e.preco ? `${quando} · ${moedas(e.preco)}` : quando;
+    }
     case 'faltam': return `${moedas(e.preco)} · faltam ${e.faltam}`;
     case 'pode': return moedas(e.preco);
     case 'tem': return 'É seu';

@@ -63,12 +63,14 @@ describe('cadeados: fase E moedinhas', () => {
     const p = comMoedas(progressoInicial('c1', 0), 99);
     const e = estadoPeca(madeira, p);
     expect(e.estado).toBe('fase');
-    expect(rotuloCadeado(e)).toBe('Abre na Letra F · 10 moedas');
+    // D034: a camiseta cor de madeira abre com a fase AL-U (8 missões depois da primeira); o cadeado diz quantas faltam
+    expect(rotuloCadeado(e)).toBe('Abre em 8 missões · 10 moedas');
+    expect(rotuloCadeado({ ...e, faltamMissoes: 1 } as typeof e)).toBe('Abre na próxima missão · 10 moedas');
     expect(() => comprarPeca(p, madeira)).toThrow();
   });
 
   it('com a fase aberta e sem moedas: "faltam"; com moedas: pode trocar, desconta e passa a ser da criança', () => {
-    const terra = pecaAvatar('camisa', 'terra')!; // Letra C · 6
+    const terra = pecaAvatar('camisa', 'terra')!; // D034: abre com a fase AL-I · 6
     const p = ateLetra('C');
     expect(estadoPeca(terra, comMoedas(p, 2))).toEqual({ estado: 'faltam', preco: 6, faltam: 4 });
     expect(estadoPeca(terra, comMoedas(p, 6)).estado).toBe('pode');
@@ -90,7 +92,7 @@ describe('cadeados: fase E moedinhas', () => {
       const v = proximasPecas(p, sexo, 6, (peca) => peca.categoria !== 'cabelo');
       expect(v.length).toBe(6);
       expect(v.every((x) => x.estado.estado === 'fase' && x.peca.categoria !== 'cabelo')).toBe(true);
-      expect(v[0].peca.fase).toBe('AL-I'); // D031: a primeira letra com peça, na ordem da jornada (A, E, I…)
+      expect(v[0].peca.fase).toBe('TF-01'); // D034: a primeira peça especial abre já na 2ª missão da jornada
     }
     expect(proximasPecas(p, 'f', 20).some((x) => x.peca.id === 'f-coque')).toBe(true);
     expect(CAMISAS.some((c) => c.fase)).toBe(true);

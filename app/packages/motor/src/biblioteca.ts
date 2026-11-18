@@ -12,7 +12,7 @@
  * Números marcados [DP] são decisão do projeto, a calibrar com uso real.
  */
 import { FASES_TF, HABILIDADE_POR_ID, TEXTOS_DECODIFICAVEIS, UNIDADE_DA_REVISAO_TF, numeroDaUnidade, verificarPalavra } from '@fonema/conteudo';
-import type { Cena, ConfigPlataforma, EntradaBanco, TextoDecodificavel } from '@fonema/conteudo';
+import type { AtividadeFrase, Cena, ConfigPlataforma, EntradaBanco, TextoDecodificavel } from '@fonema/conteudo';
 import type { ConquistaGanha, Demonstracao, Progresso, Tentativa } from './estado.ts';
 import { aplicarAtividade } from './jornada.ts';
 import { avaliarDominio } from './dominio.ts';
@@ -112,6 +112,17 @@ export function unidadeConcluida(p: Progresso): number {
 
 export const textoLiberado = (p: Progresso, t: TextoDecodificavel) => t.liberaCom.some((id) => p.fases[id]?.estado === 'concluida');
 export const textosLiberados = (p: Progresso) => TEXTOS_DECODIFICAVEIS.filter((t) => textoLiberado(p, t));
+
+/** Frases decodificáveis já estudadas: as das lições concluídas da Trilha dos Sons e as dos textos já liberados (eco e coro). */
+export function frasesEstudadas(p: Progresso): string[] {
+  const out: string[] = [];
+  for (const f of FASES_TF) {
+    if (p.fases[f.id]?.estado !== 'concluida') continue;
+    for (const c of f.cenas) if (c.atividade?.tipo === 'frase') for (const i of (c.atividade as AtividadeFrase).itens) out.push(i.frase);
+  }
+  for (const t of TEXTOS_DECODIFICAVEIS) if (textoLiberado(p, t)) out.push(...t.linhas.map((l) => l.texto).filter((x) => x.split(/\s+/).length >= 3));
+  return [...new Set(out)];
+}
 
 /* ------------------------------------------------------------ fluência ------------------------------------------------------------ */
 

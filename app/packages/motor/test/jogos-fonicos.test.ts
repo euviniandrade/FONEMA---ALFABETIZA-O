@@ -33,11 +33,41 @@ describe('jogos fônicos: só o que a criança já estudou', () => {
     expect(variacoesDoJogo(concluidas(ALFA('AEI')), 'corre-som')[0]).toMatchObject({ liberada: true });
   });
 
-  it('H, K, W e Y não entram (sem som real); sons duvidosos (C, V, P…) também não; cada som uma vez', () => {
+  it('H, K, W e Y não entram (sem som real); D034: nos jogos livres os sons duvidosos (C, V, P…) entram, no desafio da fase não; cada som uma vez', () => {
     const p = concluidas(ALFA('ACHKQWYMVPS'));
     const s = sonsEnsinados(p);
-    expect(s.map((x) => x.letra)).toEqual(['A', 'M', 'S']);
+    expect(s.map((x) => x.letra)).toEqual(['A', 'C', 'M', 'P', 'S', 'V']);
     expect(new Set(s.map((x) => x.som)).size).toBe(s.length);
+    expect(sonsEnsinados(p, undefined, { duvidosos: false }).map((x) => x.letra)).toEqual(['A', 'M', 'S']);
+  });
+
+  it('D034: com 1 ou 2 sons, Corre-Som "figura" e Bichinho abrem em AQUECIMENTO (o pedido é som ensinado; as outras figuras só se ouvem; não conta)', () => {
+    for (const g of ['A', 'AE']) {
+      const p = concluidas(ALFA(g));
+      const ens = sonsEnsinados(p).map((x) => x.som);
+      expect(variacoesDoJogo(p, 'corre-som')).toMatchObject([{ variacao: 'letra', liberada: false }, { variacao: 'figura', liberada: true, aquecimento: true }]);
+      expect(variacoesDoJogo(p, 'come-som')[0]).toMatchObject({ liberada: true, aquecimento: true });
+      for (const [jogo, variacao] of [['corre-som', 'figura'], ['come-som', 'inicio']] as const) {
+        for (let s = 1; s < 25; s++) {
+          const rodada = montarRodada(p, jogo, { variacao, semente: s });
+          expect(rodada.length).toBe(6);
+          for (const i of rodada) {
+            expect(i.aquecimento).toBe(true);
+            expect(ens).toContain(i.somAlvo);
+            expect(i.opcoes).toHaveLength(3);
+            expect(i.opcoes.filter((o) => o.som === i.somAlvo)).toHaveLength(1);
+            expect(new Set(i.opcoes.map((o) => o.som)).size).toBe(3);
+            for (const o of i.opcoes) {
+              expect(o.letra).toBeUndefined();
+              expect(fonemasDasLetras(o.id)[0]).toBe(o.som);
+              expect(MANIFESTO[`sofia|${o.falar}`], `voz de ${o.falar}`).toBeTruthy();
+            }
+          }
+        }
+      }
+    }
+    // com 3 sons ou mais, a rodada volta a contar (sem aquecimento)
+    expect(montarRodada(concluidas(ALFA('AEIOU')), 'come-som', { variacao: 'inicio', semente: 2 }).every((i) => !i.aquecimento)).toBe(true);
   });
 
   it('sem clipe do som (temSom), o som não entra (regra 1: nunca o nome da letra no lugar)', () => {
@@ -96,8 +126,15 @@ describe('jogos fônicos: só o que a criança já estudou', () => {
     }
   });
 
-  it('Bichinho "fim": só abre com A, I e U ensinados; cada figura termina com um som diferente (a, i, u)', () => {
-    expect(variacoesDoJogo(concluidas(ALFA('AEIO')), 'come-som')[1].liberada).toBe(false);
+  it('Bichinho "fim": abre com A, I ou U (aquecimento só pede os ensinados) e conta com os três; cada figura termina com um som diferente (a, i, u)', () => {
+    expect(variacoesDoJogo(concluidas(ALFA('EO')), 'come-som')[1].liberada).toBe(false);
+    const parcial = concluidas(ALFA('AEIO'));
+    expect(variacoesDoJogo(parcial, 'come-som')[1]).toMatchObject({ liberada: true, aquecimento: true });
+    for (const i of montarRodada(parcial, 'come-som', { variacao: 'fim', semente: 4 })) {
+      expect(['a', 'i']).toContain(i.somAlvo);
+      expect(i.aquecimento).toBe(true);
+      expect(new Set(i.opcoes.map((o) => o.som))).toEqual(new Set(['a', 'i', 'u']));
+    }
     const p = concluidas(ALFA('AEIOU'));
     expect(variacoesDoJogo(p, 'come-som')[1].liberada).toBe(true);
     for (let s = 1; s < 30; s++) {

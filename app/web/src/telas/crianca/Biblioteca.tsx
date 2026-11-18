@@ -9,9 +9,9 @@
  * o resumo do adulto (`Progresso.biblioteca`).
  */
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
-import { BANCO, FALAS_BIBLIOTECA as B, FASES_TF, HISTORIAS, HISTORIA_POR_ID, TEXTOS_DECODIFICAVEIS, TEXTO_POR_ID, nomeDaFigura, type AtividadeFrase } from '@fonema/conteudo';
+import { BANCO, FALAS_BIBLIOTECA as B, HISTORIAS, HISTORIA_POR_ID, TEXTOS_DECODIFICAVEIS, TEXTO_POR_ID, nomeDaFigura } from '@fonema/conteudo';
 import {
-  anotarBiblioteca, dadosBiblioteca, estadoDosCampos, estadoFluencia, palavrasParaEscrever, registrarLivre, resumoFluencia, textoLiberado, type DadosBiblioteca,
+  anotarBiblioteca, dadosBiblioteca, estadoDosCampos, frasesEstudadas, estadoFluencia, palavrasParaEscrever, registrarLivre, resumoFluencia, textoLiberado, type DadosBiblioteca,
   type Tentativa
 } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
@@ -49,17 +49,6 @@ export function useRegistroLivre(criancaId: string) {
       await repo.registrarEvento({ id: novoId('ev'), criancaId, em: agora, tipo: 'atividade', cena: cena.id, habilidade: tentativas[0].habilidade, texto: cena.titulo, acertos, total: tentativas.length });
     }
   };
-}
-
-/** Frases decodificáveis já estudadas: as das lições concluídas da Trilha dos Sons e as dos textos já liberados. */
-function frasesEstudadas(p: Parameters<typeof dadosBiblioteca>[0]): string[] {
-  const out: string[] = [];
-  for (const f of FASES_TF) {
-    if (p.fases[f.id]?.estado !== 'concluida') continue;
-    for (const c of f.cenas) if (c.atividade?.tipo === 'frase') for (const i of (c.atividade as AtividadeFrase).itens) out.push(i.frase);
-  }
-  for (const t of TEXTOS_DECODIFICAVEIS) if (textoLiberado(p, t)) out.push(...t.linhas.map((l) => l.texto).filter((x) => x.split(/\s+/).length >= 3));
-  return [...new Set(out)];
 }
 
 export function Biblioteca({ criancaId, sub }: { criancaId: string; sub?: string }) {
