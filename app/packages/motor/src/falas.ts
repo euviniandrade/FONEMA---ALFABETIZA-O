@@ -28,3 +28,20 @@ export function renderFala(texto: string, ctx: ContextoFala): string {
 
 /** Palavras que não podem aparecer numa fala neutra (teste de concordância). */
 export const MARCAS_DE_GENERO = /\b(pronto|pronta|bem-vindo|bem-vinda|curioso|curiosa|orgulhoso|orgulhosa|sozinho|sozinha|alfabetizado|alfabetizada)\b/i;
+
+/**
+ * Fila do dono nº 27 (2): a mesma fala SEM o nome da criança ("Agora é a sua vez, [NOME]!" → "Agora é a sua vez!").
+ * Usada pela voz (servicos/voz.ts) depois que o nome já foi dito na atividade, e pelo extrator (scripts/extrair-falas.ts)
+ * para gravar a variante sem nome das falas mais repetidas. Mesma função nos dois lados: a chave do clipe bate.
+ *   "Isso, [NOME]! Você…"   → "Isso! Você…"      "[NOME], olha…" → "Olha…"
+ *   "Você, [NOME], consegue" → "Você consegue"
+ */
+export function semNome(texto: string): string {
+  let t = texto
+    .replace(/^\s*\[NOME\]\s*[,!]?\s*/, '') // no começo: "[NOME], olha" → "olha"
+    .replace(/\s*,\s*\[NOME\]\s*,\s*/g, ' ') // no meio, entre vírgulas
+    .replace(/[\s,]*\[NOME\]\s*([!?.…]|$)/g, '$1') // no fim da frase: ", [NOME]!" → "!"
+    .replace(/\s*\[NOME\]\s*/g, ' '); // qualquer outro lugar
+  t = t.replace(/\s{2,}/g, ' ').trim();
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}

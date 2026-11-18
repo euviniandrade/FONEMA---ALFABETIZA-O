@@ -89,6 +89,8 @@ export function interromper(motivo: MotivoParar = 'pedido'): void {
 export const numeroDeInterrupcoes = () => interrupcoes;
 /** Há algo tocando agora? */
 export const canalOcupado = () => atual !== null;
+// o passeio 3D (iframe do mesmo site, mundo3d/js/som.js) lê isto para abaixar a trilha enquanto a dupla fala
+if (typeof window !== 'undefined') Object.assign(window, { FONEMA_CANAL_OCUPADO: canalOcupado });
 
 /** Adaptador para um elemento de áudio do navegador: fade no volume e pausa. */
 export function tocandoDoElemento(el: { duration: number; currentTime: number; paused: boolean; ended: boolean; volume: number; pause(): void }, aoCortar?: () => void): Tocando {

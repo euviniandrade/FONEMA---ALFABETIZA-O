@@ -14,6 +14,8 @@ import { fonemasDaSequencia, sonsLetras } from './sons-letras.ts';
 import { tocarAteOFim } from './midia.ts';
 import { interromper, ocupar, tocandoDoElemento, vez, type MotivoParar } from './canal-audio.ts';
 import { anotarTocado, idFala, idNome, substituicoes } from './substituicoes.ts';
+import { semNome } from '@fonema/motor';
+import { ControleNome } from './nome-falado.ts';
 export { noMaximo, tocarAteOFim } from './midia.ts';
 
 /** `rate` e `pitchExtra` são ignorados (ficaram só para não quebrar chamadas antigas): a voz nunca é esticada. */
@@ -133,6 +135,10 @@ export class ProvedorPreGerado implements ProvedorVoz {
   private arqNomes: Record<string, Record<string, string>> = {};
   private geracao = 0;
   nome = '';
+  /** Fila nº 27 (2): o nome é dito no máximo uma vez, no começo de cada atividade (servicos/nome-falado.ts). */
+  controleNome = new ControleNome();
+  /** Quantas vezes o clipe do nome tocou nesta página (E2E: window.__fonemaNomeDito). */
+  vezesNome = 0;
   pronto: Promise<void>;
   nomesDe(voz: 'sofia' | 'tales'): string[] { return this.nomes[voz] ?? []; }
   constructor(private reserva: ProvedorVoz) {
@@ -160,18 +166,30 @@ export class ProvedorPreGerado implements ProvedorVoz {
   }
   /** Lista de arquivos para uma fala, ou null se faltar algum trecho. */
   arquivos(texto: string, quem: string): string[] | null {
-    return this.plano(texto, quem)?.map((p) => p.arquivo) ?? null;
+    const com = this.plano(texto, quem);
+    if (!com) return null;
+    // a variante sem o nome também fica no aparelho (é a que toca depois que o nome já foi dito)
+    const sem = this.plano(texto, quem, false) ?? [];
+    return [...new Set([...com, ...sem].map((p) => p.arquivo))];
   }
   /**
    * Trechos da fala em ordem, com a pausa extra depois de cada um. `id` = id lógico do trecho (substituicoes.ts):
    * se o administrador trocou o áudio neste aparelho, toca o substituto; um trecho sem clipe oficial mas com
    * substituto também toca (arquivo "substituto:<id>").
    */
-  plano(texto: string, quem: string): { arquivo: string; pausaMs: number; id: string }[] | null {
+  plano(texto: string, quem: string, comNome = true): { arquivo: string; pausaMs: number; id: string }[] | null {
     if (!this.falas) return null;
     const v = { voz: vozDe(quem) };
     const partes = this.nome ? texto.split(this.nome) : [texto];
-    const temNome = this.nome && this.temNomeNaVoz(v.voz, this.nome);
+    if (!comNome && partes.length > 1) {
+      // fila nº 27 (2): o nome já foi dito nesta atividade. 1º a variante gravada sem o nome ("Agora é a sua vez!")…
+      const k = chaveTrecho(semNome(partes.join('[NOME]')));
+      const id = idFala(v.voz, k);
+      const arq = this.falas[`${v.voz}|${k}`];
+      if (k && (arq || substituicoes.tem(id))) return [{ arquivo: arq ? `./audio/falas/${arq}` : `substituto:${id}`, pausaMs: 0, id }];
+      // …senão os mesmos trechos, sem o clipe do nome (abaixo)
+    }
+    const temNome = comNome && this.nome && this.temNomeNaVoz(v.voz, this.nome);
     const out: { arquivo: string; pausaMs: number; id: string }[] = [];
     for (let i = 0; i < partes.length; i++) {
       if (i > 0 && temNome) out.push({ arquivo: this.arquivoDoNome(v.voz, this.nome), pausaMs: chaveTrecho(partes[i]) ? PAUSA_DEPOIS_DO_NOME_MS : 0, id: idNome(v.voz, chaveNome(this.nome)) });
@@ -192,9 +210,13 @@ export class ProvedorPreGerado implements ProvedorVoz {
   async falar(texto: string, o: OpcoesFala = {}): Promise<void> {
     await this.pronto;
     const quem = o.quem ?? 'sofia';
-    const plano = this.plano(texto, quem);
+    const plano = this.plano(texto, quem, this.controleNome.podeDizer());
+    const ehNome = (p: { id: string }) => p.id.startsWith('nome:');
     if (modoTeste()) {
-      for (const p of plano ?? []) anotarTocado({ id: p.id, origem: substituicoes.tem(p.id) ? 'substituto' : 'original' });
+      for (const p of plano ?? []) {
+        anotarTocado({ id: p.id, origem: substituicoes.tem(p.id) ? 'substituto' : 'original' });
+        if (ehNome(p)) this.disseNome();
+      }
       return this.reserva.falar(texto, o);
     }
     if (!plano) {
@@ -213,6 +235,7 @@ export class ProvedorPreGerado implements ProvedorVoz {
       // substituto: sem boca pré-calculada (o PersonagemVivo acompanha o texto)
       const arquivo = urls[i].substituto ? `substituto:${plano[i].id}` : plano[i].arquivo.replace(/^\.\//, '');
       const tocou = await this.tocarNoCanal(el, g, () => {
+        if (ehNome(plano[i])) this.disseNome();
         anotarTocado({ id: plano[i].id, origem: urls[i].substituto ? 'substituto' : 'original', url: urls[i].url });
         avisar('fonema:fala', { quem, voz: vozDe(quem), texto, audio: el, arquivo, inicio: performance.now(), trecho: i, trechos: els.length });
       });
@@ -238,6 +261,11 @@ export class ProvedorPreGerado implements ProvedorVoz {
     } finally {
       liberar();
     }
+  }
+  private disseNome() {
+    this.controleNome.disse();
+    this.vezesNome++;
+    try { (window as any).__fonemaNomeDito = this.vezesNome; } catch { /* sem janela (teste) */ }
   }
   /** Interrompe a fala: o clipe que está quase no fim termina sozinho; o resto some com fade (sem estalo). */
   parar(motivo: MotivoParar = 'pedido') {
@@ -280,6 +308,8 @@ class Voz {
   private provedor: ProvedorVoz = this.pre;
   /** Nome (na pronúncia escolhida) da criança desta tela, para encaixar o clipe do nome. */
   definirNome(nome: string) { this.pre.nome = nome; }
+  /** Fila nº 27 (2): começou uma atividade, prova ou jogo; o nome pode ser dito uma vez, no começo. */
+  novaAtividade() { this.pre.controleNome.novaAtividade(); }
   private fila: Promise<void> = Promise.resolve();
   configurar(o: { ligada?: boolean; velocidade?: number; provedor?: 'navegador' | 'pre-gerada' }) {
     if (o.ligada !== undefined) this.ligada = o.ligada;

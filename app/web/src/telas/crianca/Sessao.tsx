@@ -58,6 +58,9 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
   useEffect(() => () => voz.parar(), []);
 
   const etapa = sessao?.etapas[idx];
+  // fila nº 27 (2): cada atividade da lição é uma atividade nova para a regra do nome (dito no máximo uma vez, no começo)
+  const cenaAtual = etapa?.cena?.id ?? etapa?.tipo;
+  useEffect(() => { if (cenaAtual) voz.novaAtividade(); }, [cenaAtual]);
 
   const fecharRitual = useCallback(async () => {
     if (!sessao || !prog.current || relatorio || fechando.current) return;

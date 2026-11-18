@@ -1,11 +1,15 @@
 /**
  * CORRE-SOM · a pista em 3D (three.js, carregada sob demanda). Visual do projeto (D025: animação 3D fofa, luz quente):
  * rua de 3 pistas no meio de um campo com árvores redondas, flores e cerquinhas; o boneco da criança (avatar 3D, D029)
- * corre de costas para a câmera; arcos coloridos com uma placa (letra ou figura) em cada pista; moedinhas de enfeite e
+ * corre de costas para a câmera; arcos coloridos com uma placa (letra "Aa" ou figura) em cada pista; moedinhas e
  * almofadas fofas para pular. Nada de trem, cidade ou marca de outro jogo (regra 9).
  *
- * Quem decide o jogo é a tela (CorreSom.tsx): esta classe só anima e avisa quando cada movimento terminou (Promises).
- * "Menos movimento": a rua não corre; os arcos aparecem já parados e o boneco só troca de pista.
+ * D035 (corrida contínua, pedido do dono 18/11): a pista NUNCA para. Os arcos vêm em sequência (`portal`) e passar por um
+ * arco é escolher a pista em que o boneco está. Quem decide o jogo é a tela (CorreSom.tsx): esta classe só anima e avisa
+ * (Promises) quando cada arco passou pelo boneco. Moedinhas e almofadas surgem entre os arcos.
+ * Desempenho: placas guardadas por letra/figura (sem refazer textura), geometrias dos arcos compartilhadas e QUALIDADE
+ * ADAPTATIVA (a resolução baixa quando os quadros ficam lentos e volta quando sobra folga).
+ * "Menos movimento": a rua não corre; cada arco aparece parado na frente do boneco e passa no tempo do nível.
  */
 import * as THREE from 'three';
 import { Boneco } from '../../avatar3d/motor3d.ts';
@@ -38,19 +42,7 @@ function texturaRua(): THREE.CanvasTexture {
   c.width = 256; c.height = 256;
   const g = c.getContext('2d')!;
   g.fillStyle = '#e9d9bf'; g.fillRect(0, 0, 256, 256);
-  for (let k = 0; k < 220; k++) { g.fillStyle = `rgba(150,120,90,${0.05 + Math.random() * 0.06})`; g.fillRect(Math.random() * 256, Math.random() * 256, 3, 3); }
-  g.fillStyle = '#c9a77c'; g.fillRect(0, 0, 10, 256); g.fillRect(246, 0, 10, 256);
-  g.fillStyle = '#ffffff';
-  for (const x of [256 / 3, (256 * 2) / 3]) g.fillRect(x - 4, 20, 8, 110);
-  const t = new THREE.CanvasTexture(c);
-  t.wrapS = t.wrapT = THREE.RepeatWrapping;
-  t.repeat.set(1, 18);
-  t.colorSpace = THREE.SRGBColorSpace;
-  t.anisotropy = 4;
-  return t;
-}
-
-/** Placa redonda do arco: letra grande (fonte escolar) ou figura. */
+  for (let k = 0; k < 220; k++) { g.fillStyle = `rgba(150,120,90,${0.05 + Math.random/** Placa redonda do arco: letra grande (fonte escolar, "Aa") ou figura. */
 function texturaPlaca(p: PlacaArco, cor: number): { tex: THREE.CanvasTexture; pronta: Promise<void> } {
   const c = document.createElement('canvas');
   c.width = c.height = 256;
@@ -70,10 +62,25 @@ function texturaPlaca(p: PlacaArco, cor: number): { tex: THREE.CanvasTexture; pr
     const escrever = () => {
       fundo();
       g.fillStyle = '#22407a';
-      g.font = `700 ${p.letra!.length > 1 ? 120 : 170}px Andika, Fredoka, sans-serif`;
+      g.font = `700 ${p.letra!.length > 1 ? 112 : 170}px Andika, Fredoka, sans-serif`;
       g.textAlign = 'center'; g.textBaseline = 'middle';
-      g.fillText(p.letra!, 128, p.letra === p.letra!.toLowerCase() ? 118 : 136);
+      g.fillText(p.letra!, 128, 134);
       tex.needsUpdate = true;
+    };
+    escrever();
+    pronta = document.fonts?.load?.('700 100px Andika').then(() => escrever(), () => undefined) ?? Promise.resolve();
+  } else if (p.imagem) {
+    pronta = new Promise((ok) => {
+      const img = new Image();
+      img.onload = () => { fundo(); g.drawImage(img, 36, 36, 184, 184); tex.needsUpdate = true; ok(); };
+      img.onerror = () => ok();
+      img.src = p.imagem!;
+    });
+  }
+  return { tex, pronta };
+}
+
+rue;
     };
     escrever();
     pronta = document.fonts?.load?.('700 100px Andika').then(() => escrever(), () => undefined) ?? Promise.resolve();

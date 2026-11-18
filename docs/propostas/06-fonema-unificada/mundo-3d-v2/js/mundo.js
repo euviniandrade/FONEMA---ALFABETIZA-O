@@ -370,7 +370,7 @@ export async function criarMundo(container, opts = {}) {
     if (som && (somT += dt) > 0.25) {
       somT = 0; const x = controls.target.x, z = controls.target.z;
       const dr = v.distRio(x, z), dP = Math.hypot(x, z - 1), alto = clamp((camera.position.y - controls.target.y - 6) / 25, 0, 1);
-      som.atualizar({ rio: 1 - smooth(clamp((dr - 6) / 26, 0, 1)), praca: 0.35 + 0.65 * (1 - smooth(clamp((dP - 18) / 50, 0, 1))), vento: Math.max(alto, smooth(clamp((dP - 60) / 40, 0, 1))), sub: submersoAgora, falando: !!document.querySelector('#cartao.aberto') });
+      som.atualizar({ rio: 1 - smooth(clamp((dr - 6) / 26, 0, 1)), praca: 0.35 + 0.65 * (1 - smooth(clamp((dP - 18) / 50, 0, 1))), vento: Math.max(alto, smooth(clamp((dP - 60) / 40, 0, 1))), sub: submersoAgora, falando: !!document.querySelector('#cartao.aberto'), caca: !!window.FONEMA_CACA?.emCaca || document.body.classList.contains('no-barco') });
     }
   }
   async function montarSom() {

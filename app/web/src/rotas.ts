@@ -15,10 +15,12 @@ export function navegar(caminho: string) {
 export function useRota(): string[] {
   const [r, setR] = useState(lerRota);
   useEffect(() => {
+    voz.novaAtividade();
     let antes = location.hash;
     const f = () => {
       // trocou de tela: a fala da tela anterior (e a fila dela) é cancelada antes de a nova tela começar a falar
-      if (location.hash !== antes) { antes = location.hash; voz.parar(); }
+      // fila nº 27 (2): tela nova = atividade nova (o nome da criança pode ser dito uma vez, no começo)
+      if (location.hash !== antes) { antes = location.hash; voz.parar(); voz.novaAtividade(); }
       setR(lerRota());
       window.scrollTo(0, 0);
     };

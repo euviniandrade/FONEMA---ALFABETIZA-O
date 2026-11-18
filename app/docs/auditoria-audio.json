@@ -49671,6 +49671,40 @@
   "gravidade": "ok"
  },
  {
+  "tipo": "fala",
+  "voz": "sofia",
+  "chave": "Sua missão de hoje está na Escola. Siga as moedinhas!",
+  "arquivo": "falas/sofia-1tmp87d-m1.mp3",
+  "esperado": "Sua missão de hoje está na Escola. Siga as moedinhas!",
+  "sinal": {
+   "dur": 3.504,
+   "silencio_ini_ms": 100,
+   "silencio_fim_ms": 121,
+   "ponta_ini_db": -180.0,
+   "ponta_fim_db": -180.0,
+   "pico_db": -2.1,
+   "rms_fala_db": -17.4,
+   "lufs": -17.2,
+   "ms_por_caractere": 78,
+   "estourados": 0,
+   "achatados": 0,
+   "queda_fim_ms": 45,
+   "subida_ini_ms": 129,
+   "problemas": [],
+   "desvio_volume_db": -0.1
+  },
+  "fonte": "falas/sofia-1tmp87d.mp3",
+  "sha": "70ac7adb68e4d3df",
+  "fonte_problemas": [],
+  "ouvido": "Sua missão de hoje está na escola. Siga as moedinhas",
+  "transcritores": [
+   "scribe"
+  ],
+  "distancia": 0.0,
+  "conteudo": [],
+  "gravidade": "ok"
+ },
+ {
   "tipo": "nome",
   "voz": "sofia",
   "chave": "helena",
