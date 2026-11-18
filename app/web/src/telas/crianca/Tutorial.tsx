@@ -16,7 +16,7 @@ import { PASSOS_TUTORIAL, estadoDoCaminho, marcarTutorial, missaoDeHoje, passoPa
 import { useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { AvatarMini, Carregando } from '../../componentes/basicos.tsx';
-import { Icone } from '../../componentes/ui.tsx';
+import { Figura, Icone } from '../../componentes/ui.tsx';
 import { PersonagemVivo, temBustoVivo } from '../../componentes/PersonagemVivo.tsx';
 import { BarraMissao, CaminhoEtapas } from '../../componentes/Guia.tsx';
 import { asset, modoTeste } from '../../servicos/ambiente.ts';
@@ -36,6 +36,8 @@ const FALAS_DO_PASSO: Fala[][] = [
   [F.barra1, F.barra2]
 ];
 const NOME_PASSO = ['O mundo', 'O caminho', 'Como mexer', 'O que você ganha', 'Os jogos', 'A primeira missão'];
+/** Revisão 18/11 (item 23): no passo do Brincar, cada brincadeira com a figura 3D da capa dela (como no Brincar), não ícone chapado. */
+const FIGURA_JOGO: Record<string, string> = { comprida: 'formiga', escondida: 'sapato', rimas: 'rato', intruso: 'vela', comeco: 'sapo', palmas: 'abacaxi' };
 const FIGURA_PASSO = ['arte/icones/mapa.webp', 'figuras/estrela.webp', 'figuras/dedo.webp', 'recompensas/moeda.webp', 'figuras/pandeiro.webp', 'modelos3d/bau.webp'];
 
 type Mexer = 'tocar' | 'arrastar' | 'botoes' | 'pronto';
@@ -134,7 +136,7 @@ export function Tutorial({ criancaId, deNovo }: { criancaId: string; deNovo: boo
   return (
     <div className={`tela-tutorial passo-${passo}`} data-testid="tutorial" data-passo={passo}>
       <div className="tut-fundo" aria-hidden="true">
-        {passo === 0 ? <div className="tut-camera"><img src={asset('arte/mapa-arquipelago.webp')} alt="" draggable={false} /></div> : <img className="tut-paisagem" src={asset('arte/hero-paisagem.webp')} alt="" draggable={false} />}
+        {passo === 0 ? <div className="tut-camera"><img src={asset('arte/mapa-arquipelago.webp')} alt="" draggable={false} /></div> : <img className="tut-paisagem" src={asset('arte/paisagem-sem-dupla.webp')} alt="" draggable={false} />}
       </div>
 
       <header className="tut-topo">
@@ -310,7 +312,7 @@ function PassoJogos() {
       </div>
       <ul className="tut-jogos-lista" aria-label="Alguns jogos">
         {JOGOS_ESCUTA.slice(0, 6).map((j, i) => (
-          <li key={j.id} className={`cor-${j.cor}`} style={{ ['--i' as string]: i }}><Icone nome={j.icone} /><span>{j.nome}</span></li>
+          <li key={j.id} className={`cor-${j.cor}`} style={{ ['--i' as string]: i }}>{FIGURA_JOGO[j.id] ? <Figura palavra={FIGURA_JOGO[j.id]} /> : <Icone nome={j.icone} />}<span>{j.nome}</span></li>
         ))}
       </ul>
     </section>

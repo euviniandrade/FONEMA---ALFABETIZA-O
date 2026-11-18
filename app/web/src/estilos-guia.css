@@ -108,7 +108,7 @@
 @media (min-width:900px){
   .tela-vila:has(.guia-vila) .mapa-nav{left:336px!important}
   .tela-vila>aside.guia-vila{position:absolute;z-index:4;left:0;top:0;bottom:0;width:336px;padding:96px 14px 0 16px;overflow:hidden;background:linear-gradient(180deg,#CFE6F7 0%,#E6F3FC 45%,#F6EEDC 100%);box-shadow:inset -10px 0 18px -12px rgba(12,26,64,.35)}
-  .guia-vila::before{content:"";position:absolute;inset:0;background:url(/assets/arte/hero-paisagem.webp) 30% 60%/cover;opacity:.32;filter:blur(10px);pointer-events:none;z-index:-1}
+  .guia-vila::before{content:"";position:absolute;inset:0;background:url(/assets/arte/paisagem-sem-dupla.webp) 30% 60%/cover;opacity:.32;filter:blur(10px);pointer-events:none;z-index:-1}
   .guia-vila .guia-corpo{padding:10px;gap:8px;max-height:calc(100dvh - 96px - 128px);overflow:auto;scrollbar-width:thin}
 }
 @media (min-width:900px) and (max-height:820px){

@@ -159,10 +159,14 @@ export async function trechoTelas(browser, h) {
     if (!roupaNaTela) problemas.push(`lojinha${suf}: nenhuma roupa na primeira tela`);
 
     // lições da Trilha dos Sons com 3+ respostas (som novo, som inicial, síntese, caixas, pares mínimos, frase)
+    // (cada lição tem um prazo: o objetivo aqui é medir as telas, não terminar a lição; ao estourar, o gancho interrompe o jogador)
     for (const f of ['TF-01', 'TF-07', 'TF-09', 'TF-17']) {
       await pg.goto(BASE + `#/c/${id}/sons`);
       await pg.goto(BASE + `#/c/${id}/sessao/${f}`);
-      await jogarSessao(pg, { gancho: gancho(f.toLowerCase()) });
+      const prazo = Date.now() + 120000;
+      const g = gancho(f.toLowerCase());
+      await jogarSessao(pg, { gancho: async (p, cena) => { if (Date.now() > prazo) throw new Error('prazo'); await g(p, cena); } })
+        .catch((e) => { if (String(e?.message) !== 'prazo') throw e; console.log(`  (${f}: prazo de 2 min para medir; lição não terminada)`); });
     }
 
     // jogos da vila e jogos fônicos: a tela do jogo, já com as opções

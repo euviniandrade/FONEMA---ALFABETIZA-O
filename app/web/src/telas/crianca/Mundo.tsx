@@ -29,7 +29,7 @@ export function Chegada({ criancaId }: { criancaId: string }) {
   if (!crianca || !progresso) return <Carregando />;
   return (
     <div className="tela-chegada">
-      <Fundo cena="arte/hero-paisagem" desfoque={6} tom="claro" />
+      <Fundo cena="arte/paisagem-sem-dupla" desfoque={6} tom="claro" />
       <Topo crianca={crianca} titulo="Vila das Letras" />
       <main className="palco chegada">
         {/* D029/D025: a dupla em 3D de verdade (arrastar gira); quem fala com a boca é o busto do balão */}

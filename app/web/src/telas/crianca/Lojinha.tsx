@@ -119,7 +119,7 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
           </div>
 
           <div className="abas loja-abas" role="tablist" aria-label="Seções da Lojinha">
-            <button role="tab" aria-selected={aba === 'boneco'} className={`btn ${aba === 'boneco' ? 'pri' : ''}`} onClick={() => setAba('boneco')} data-aba="boneco"><Icone nome="pessoa" />Meu boneco</button>
+            <button role="tab" aria-selected={aba === 'boneco'} className={`btn ${aba === 'boneco' ? 'pri' : ''}`} onClick={() => setAba('boneco')} data-aba="boneco"><Icone nome="boneco" />Meu boneco</button>
             <button role="tab" aria-selected={aba === 'acessibilidade'} className={`btn ${aba === 'acessibilidade' ? 'pri' : ''}`} onClick={() => { setAba('acessibilidade'); setProvando(null); }} data-aba="acessibilidade"><Icone nome="olho" />Acessibilidade</button>
             <button role="tab" aria-selected={aba === 'utensilios'} className={`btn ${aba === 'utensilios' ? 'pri' : ''}`} onClick={() => { setAba('utensilios'); setProvando(null); }} data-aba="utensilios"><Icone nome="lojinha" />Utensílios</button>
           </div>

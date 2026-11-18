@@ -123,7 +123,7 @@ export function Alunos() {
   };
   return (
     <div className="tela-fluxo tela-alunos" data-testid="alunos">
-      <Fundo cena="arte/hero-paisagem" desfoque={16} tom="claro" />
+      <Fundo cena="arte/paisagem-sem-dupla" desfoque={16} tom="claro" />
       <Topo voltar="" titulo="Alunos" />
       <main className="alunos-palco">
         {lista.length ? (
@@ -333,7 +333,7 @@ export function TelaPin({ contas, tipo, aoEntrar, titulo, sub, voltar = '' }: { 
   const arte = tipo === 'professor' ? <img src={asset('arte/icones/album.webp')} alt="" /> : tipo === 'responsavel' ? <span className="porta-par"><img src={asset('figuras/mamae.webp')} alt="" /><img src={asset('figuras/papai.webp')} alt="" /></span> : <img src={asset('arte/icones/cadeado.webp')} alt="" />;
   return (
     <div className="tela-fluxo tela-pin" data-testid="tela-pin">
-      <Fundo cena="arte/hero-paisagem" desfoque={16} tom="escuro" />
+      <Fundo cena="arte/paisagem-sem-dupla" desfoque={16} tom="escuro" />
       <Topo voltar={voltar} titulo={tipo ? NOME_AREA[tipo] : 'Área dos adultos'} />
       <main className="pin-palco">
         <section className="cartao pin-cartao">

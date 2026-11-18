@@ -69,7 +69,7 @@ export function DocaVila({ criancaId, progresso, faseId, mundo3d }: { criancaId:
         {RECURSOS.brincar ? <BotaoDoca onClick={() => { marcarVistoAqui(criancaId, 'som'); ir(`${c}/brincar`); }} figura={<img className="ic ic3d" src={asset('figuras/pandeiro.webp')} alt="" draggable={false} />} rotulo="Brincar" testid="ir-brincar" ponto="brincar" novo={ehNovo(progresso, criancaId, 'jogo') || ehNovo(progresso, criancaId, 'som')} /> : null}
         {lojinha
           ? <BotaoDoca onClick={() => { marcarVistoAqui(criancaId, 'peca'); ir(`${c}/lojinha`); }} figura={<Icone nome="lojinha" />} rotulo="Lojinha" testid="ir-lojinha" ponto="lojinha" novo={ehNovo(progresso, criancaId, 'peca')} />
-          : <BotaoDoca onClick={() => { marcarVistoAqui(criancaId, 'peca'); ir(`${c}/avatar`); }} figura={<Icone nome="casa" />} rotulo="Meu boneco" testid="ir-boneco" ponto="boneco" novo={ehNovo(progresso, criancaId, 'peca')} />}
+          : <BotaoDoca onClick={() => { marcarVistoAqui(criancaId, 'peca'); ir(`${c}/avatar`); }} figura={<Icone nome="boneco" />} rotulo="Meu boneco" testid="ir-boneco" ponto="boneco" novo={ehNovo(progresso, criancaId, 'peca')} />}
         <button className={`doca2-btn doca2-mais ${temTreino ? 'com-treino' : ''}`} onClick={abrir} aria-haspopup="dialog" aria-expanded={aberto} data-testid="ir-mais">
           <span className="doca2-fig"><Mosaico /></span>
           <span className="doca2-rotulo">Mais</span>
@@ -110,8 +110,8 @@ function PainelMais({ c, criancaId, progresso, lojinha, mundo3d, fechar }: { c: 
           {item(`${c}/sons`, <img className="ic ic3d" src={asset('arte/icones/som.webp')} alt="" draggable={false} />, 'Sons', 'sons')}
           {item(`${c}/album`, <img className="ic ic3d" src={asset('arte/icones/album.webp')} alt="" draggable={false} />, 'Álbum', 'album')}
           {item(`${c}/mapa`, <img className="ic ic3d" src={asset('arte/icones/mapa.webp')} alt="" draggable={false} />, 'Ilhas', 'ilhas')}
-          {lojinha ? item(`${c}/avatar`, <img className="ic ic3d" src={asset('arte/icones/casa.webp')} alt="" draggable={false} />, 'Meu boneco', 'boneco') : null}
-          {mundo3d && RECURSOS.mundo3d ? item(`${c}/mundo`, <Icone nome="cubo" />, 'Passear 3D', 'mundo3d') : null}
+          {lojinha ? item(`${c}/avatar`, <Icone nome="boneco" />, 'Meu boneco', 'boneco') : null}
+          {mundo3d && RECURSOS.mundo3d ? item(`${c}/mundo`, <Icone nome="passeio" />, 'Passear 3D', 'mundo3d') : null}
         </div>
       </div>
     </div>,

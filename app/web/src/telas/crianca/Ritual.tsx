@@ -81,7 +81,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
   const idade = new Date().getFullYear() - crianca.anoNascimento;
   return (
     <div className="tela-ritual" data-testid="ritual">
-      <Fundo cena="arte/hero-paisagem" desfoque={10} tom="claro" />
+      <Fundo cena="arte/paisagem-sem-dupla" desfoque={10} tom="claro" />
       {relatorio.conquistasNovas.length || relatorio.faseConcluida ? <div className="confete" aria-hidden="true">{Array.from({ length: 26 }, (_, i) => <i key={i} style={{ left: `${(i * 41 + 7) % 100}%`, animationDuration: `${3.5 + (i % 5) * 0.7}s`, animationDelay: `${(i % 9) * 0.25}s` }} />)}</div> : null}
       <Topo crianca={crianca} moedinhas={saldoAgora} titulo="Fim da missão de hoje" />
       <main className="palco ritual">
