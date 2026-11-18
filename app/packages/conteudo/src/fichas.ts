@@ -39,7 +39,7 @@ export interface CampoSemantico {
 export const CAMPOS_SEMANTICOS: CampoSemantico[] = [
   {
     id: 'animais', titulo: 'Animais', capa: 'macaco',
-    palavras: ['pato', 'sapo', 'tatu', 'gato', 'galo', 'vaca', 'macaco', 'lobo', 'foca', 'mula', 'lula', 'panda', 'rato', 'peixe', 'leão', 'zebra', 'abelha', 'jacaré', 'cobra', 'elefante', 'formiga', 'ovelha', 'urso']
+    palavras: ['pato', 'sapo', 'tatu', 'gato', 'galo', 'vaca', 'macaco', 'lobo', 'foca', 'mula', 'lula', 'panda', 'rato', 'peixe', 'leão', 'zebra', 'abelha', 'jacaré', 'cobra', 'elefante', 'formiga', 'ovelha']
   },
   {
     id: 'comidas', titulo: 'Comidas', capa: 'pipoca',
@@ -49,7 +49,7 @@ export const CAMPOS_SEMANTICOS: CampoSemantico[] = [
     id: 'casa', titulo: 'Coisas da casa', capa: 'panela',
     palavras: ['pia', 'mala', 'lupa', 'tapete', 'copo', 'vela', 'janela', 'panela', 'caneca', 'sacola', 'casa', 'mesa', 'chave', 'porta', 'xícara']
   },
-  { id: 'brinquedos', titulo: 'Brinquedos', capa: 'boneca', palavras: ['dado', 'bola', 'boneca', 'peteca', 'ioiô', 'pandeiro', 'tambor', 'carrinho'] },
+  { id: 'brinquedos', titulo: 'Brinquedos', capa: 'boneca', palavras: ['dado', 'bola', 'boneca', 'peteca', 'ioiô', 'pandeiro', 'tambor', 'carrinho', 'urso'] },
   { id: 'familia', titulo: 'Família e corpo', capa: 'vovo-f', palavras: ['papai', 'dedo', 'pé', 'vovó', 'vovô', 'mamãe', 'mão', 'olho', 'unha'] },
   { id: 'natureza', titulo: 'Natureza', capa: 'lua', palavras: ['lua', 'fogo', 'sol', 'nuvem', 'chuva', 'folha', 'estrela', 'ilha', 'concha', 'poça'] }
 ];

@@ -104,9 +104,9 @@
 .ficha-boca-legenda{position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);white-space:nowrap;padding:3px 10px;border-radius:99px;background:var(--marinho,#16285A);color:#fff;font-family:var(--f-adulto);font-size:13px}
 
 @media (max-width:560px){
-  .ficha-palavra{gap:3px}
-  .ficha-letra{font-size:clamp(30px,10vw,52px)}
-  .ficha-palavra .boquinha{width:clamp(36px,10.5vw,58px)}
+  .ficha-palavra{gap:8px}
+  .ficha-letra{font-size:min(60px,calc((100vw - 110px) / var(--n,4) - 6px))}
+  .ficha-palavra .boquinha{width:min(66px,calc((100vw - 110px) / var(--n,4) - 8px));box-shadow:0 0 0 2px #fff,0 0 0 4px #E7D7B6,0 6px 10px -5px rgba(60,35,10,.45)}
   .ficha-opcoes{gap:10px}
   .ficha-nivel{min-height:96px}
   .ficha-campo{min-height:170px}

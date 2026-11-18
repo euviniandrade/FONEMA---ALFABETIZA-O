@@ -12,7 +12,7 @@
  * brilha (ajuda máxima: conta como "com ajuda", R4). Posição da certa sorteada (R5). Nada de nome de letra (regra 1) nem de
  * sílaba (regra 6): a peça é a letra.
  */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { BANCO, DESCRICAO_DA_BOCA, FALAS, FALAS_FICHAS as F, classeDaBoca, comSons, pedacosDaPalavra } from '@fonema/conteudo';
 import {
   FORMATO_DO_MODO, FORMATO_LER_JUNTO, HABILIDADE_DO_MODO, rodadaDaFicha, rodadaDeBocas, type Crianca, type ModoFicha, type ParBoca, type Progresso, type Tentativa
@@ -201,7 +201,7 @@ export function FichaEscolha({ progresso, campo, modo, crianca, sessao, contexto
         {etapa === 'feito' ? (
           <div className="ficha-revela" aria-live="polite"><Figura palavra={item.palavra} className="ficha-fig-grande" /><Brilho ativo /></div>
         ) : null}
-        <div className="ficha-palavra" role="group" aria-label={escrita ? 'A palavra, letra por letra' : modo === 'bocas-palavra' ? 'As boquinhas da palavra' : 'Os sons da palavra'}>
+        <div className="ficha-palavra" style={{ ['--n' as string]: ps.length } as CSSProperties} role="group" aria-label={escrita ? 'A palavra, letra por letra' : modo === 'bocas-palavra' ? 'As boquinhas da palavra' : 'Os sons da palavra'}>
           {ps.map((p, j) => (
             <div key={j} className={`ficha-pedaco ${ativo === j ? 'acesa' : ''} ${j < lidos ? 'lida' : ''} ${p.fonema ? '' : 'calada'}`} data-pedaco={j}>
               {modo === 'ler' || modo === 'bocas-palavra' ? <Boquinha fonema={p.fonema} falando={ativo === j} fixa={modo === 'bocas-palavra'} destaque={ativo === j} /> : null}
