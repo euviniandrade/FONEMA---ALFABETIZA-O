@@ -4,7 +4,7 @@
  * bloqueada se quebrar a regra 2 (palavra com som que a criança ainda não aprendeu). Nada é apagado: as cenas
  * desligadas e o original ficam guardados; os IDs não mudam (o progresso salvo continua valendo).
  */
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   BANCO, CONTEUDO_EDITAVEL, FASE_POR_ID, REGIAO_POR_ID, textosDoItem, verificarEdicao,
   type AtividadeEscolher, type Cena, type Edicao, type Fase, type ItemEscolha, type ResultadoVerificacao
@@ -29,6 +29,8 @@ export function AbaMissoes({ sub }: { sub?: string }) {
   const b = busca.trim().toLowerCase();
   const lista = ids.map((id, i) => ({ id, i, f: FASE_POR_ID[id] })).filter((x) => x.f && (!b || `${x.id} ${x.f.titulo}`.toLowerCase().includes(b)));
   const aqui = sub && FASE_POR_ID[sub] ? sub : undefined;
+  // a missão aberta fica à vista na lista da jornada
+  useEffect(() => { if (aqui) document.querySelector(`.adm-fase-btn[data-fase="${aqui}"]`)?.scrollIntoView({ block: 'nearest' }); }, [aqui]);
   return (
     <section className="adm-cartao adm-missoes" data-testid="aba-missoes">
       <div className="adm-cab"><h1>Missões</h1><span className="adm-nota">A jornada inteira, na ordem em que a criança faz ({ids.length} missões).</span></div>

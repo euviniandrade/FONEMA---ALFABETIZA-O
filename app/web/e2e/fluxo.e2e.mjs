@@ -20,6 +20,7 @@ import { trechoJogos2 } from './trecho-jogos2.mjs';
 import { trechoMemoria } from './trecho-memoria.mjs';
 import { trechoMundo3d } from './trecho-mundo3d.mjs';
 import { trechoAdmin } from './trecho-admin.mjs';
+import { trechoGerenciador } from './trecho-gerenciador.mjs';
 import { trechoTutorial } from './trecho-tutorial.mjs';
 import { trechoFichas } from './trecho-fichas.mjs';
 import { trechoDesbloqueio } from './trecho-desbloqueio.mjs';
@@ -699,6 +700,14 @@ async function main() {
     if (errosA.length) throw new Error(`erros na página:\n${errosA.join('\n')}`);
     return;
   }
+  if (process.argv.includes('--gerenciador') || process.argv.includes('--capturas-gerenciador')) {
+    const errosG = [];
+    const capturas = process.argv.includes('--capturas-gerenciador') ? (process.env.CAPTURAS_GERENCIADOR ?? DIR_CAP) : undefined;
+    try { await trechoGerenciador(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosG, capturas }); }
+    finally { await browser.close(); servidor?.kill(); }
+    if (errosG.length) throw new Error(`erros na página:\n${errosG.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--mundo3d') || process.argv.includes('--capturas-mundo3d')) {
     const errosM = [];
     const capM = process.argv.includes('--capturas-mundo3d') ? DIR_CAP : undefined;
@@ -1197,6 +1206,7 @@ async function main() {
   await trechoMemoria(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
+  await trechoGerenciador(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoTutorial(browser, { BASE, ok, passarPorteira, cadastrar, erros, dirCap: DIR_CAP });
 
   if (CAPTURAS_AL) {
