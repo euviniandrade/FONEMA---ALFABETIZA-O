@@ -37,6 +37,18 @@ export function sorteio(semente: number): () => number {
   return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
 }
 const novaSemente = () => (modoTeste() ? 7 : 1 + Math.floor(Math.random() * 2147483000));
+/**
+ * A rodada de uma ficha é sorteada UMA vez e fica guardada até a ficha acabar (revisão 18/11, item 2): se a tela for
+ * montada de novo no meio (recarga do progresso, volta do aparelho), a palavra mostrada na abertura é a mesma que é lida.
+ * "De novo" (nova rodada) e o fim da ficha sorteiam outra.
+ */
+const SEMENTES = new Map<string, number>();
+function sementeDaRodada(chave: string): number {
+  let s = SEMENTES.get(chave);
+  if (s === undefined) { s = novaSemente(); SEMENTES.set(chave, s); }
+  return s;
+}
+const esquecerRodada = (chave: string) => SEMENTES.delete(chave);
 
 /** Pedaços com o índice de letra de cada um (para casar os sons emendados, que vêm por letra). */
 function pedacos(w: string) {
@@ -49,7 +61,8 @@ function pedacos(w: string) {
 export function FichaEscolha({ progresso, campo, modo, crianca, sessao, contexto, onFim }: {
   progresso: Progresso; campo: string; modo: Exclude<ModoFicha, 'bocas'>; crianca: Crianca; sessao: string; contexto: Contexto; onFim: (r: ResultadoFicha) => void;
 }) {
-  const itens = useMemo(() => rodadaDaFicha(progresso, campo, modo, sorteio(novaSemente())), []); // eslint-disable-line react-hooks/exhaustive-deps
+  const chave = `${crianca.id}|${campo}|${modo}`;
+  const itens = useMemo(() => rodadaDaFicha(progresso, campo, modo, sorteio(sementeDaRodada(chave))), []); // eslint-disable-line react-hooks/exhaustive-deps
   const [k, setK] = useState(0);
   const item = itens[k];
   const ps = useMemo(() => (item ? pedacos(item.palavra) : []), [item]);
@@ -161,6 +174,7 @@ export function FichaEscolha({ progresso, campo, modo, crianca, sessao, contexto
       await espera(900);
       if (!vivo.current) return;
       if (k + 1 < itens.length) { setK(k + 1); return; }
+      esquecerRodada(chave);
       const ts = tents.current;
       const av = ts.filter((t) => t.tipo === 'avaliada');
       onFim({ tentativas: ts, acertos: av.filter((t) => t.acertou && !t.comAjuda).length, total: av.length });
@@ -219,7 +233,7 @@ export function FichaEscolha({ progresso, campo, modo, crianca, sessao, contexto
             <button className="ouvir" aria-label={modo === 'bocas-palavra' ? 'Ver as boquinhas de novo' : 'Ouvir os sons de novo'} disabled={ocupado} onClick={() => void ouvirDeNovo()} data-testid="ficha-de-novo">
               <Icone nome={modo === 'bocas-palavra' ? 'olho' : 'som'} />
             </button>
-            <span className="dica-ouvir">{modo === 'bocas-palavra' ? F.qualPalavraBoca : F.oQueFicou}</span>
+            {/* a pergunta já está no balão da Sofia: aqui só o botão (revisão 18/11, item 3) */}
           </div>
         </>
       ) : null}
@@ -243,7 +257,8 @@ export function FichaEscolha({ progresso, campo, modo, crianca, sessao, contexto
 export function FichaBocas({ progresso, campo, crianca, sessao, contexto, onFim }: {
   progresso: Progresso; campo: string; crianca: Crianca; sessao: string; contexto: Contexto; onFim: (r: ResultadoFicha) => void;
 }) {
-  const semente = useMemo(novaSemente, []);
+  const chave = `${crianca.id}|${campo}|bocas`;
+  const semente = useMemo(() => sementeDaRodada(chave), []); // eslint-disable-line react-hooks/exhaustive-deps
   const rodada = useMemo(() => rodadaDeBocas(progresso, campo, sorteio(semente)), []); // eslint-disable-line react-hooks/exhaustive-deps
   const pares = useMemo(() => rodada?.pares ?? [], [rodada]);
   const letras = useMemo(() => [...pares].sort((a, b) => a.letra.localeCompare(b.letra)), [pares]);
@@ -307,6 +322,7 @@ export function FichaBocas({ progresso, campo, crianca, sessao, contexto, onFim 
         await voz.falar(textoVoz(FALAS.acertos[3], crianca), { quem: 'sofia' });
         await espera(700);
         const av = tents.current.filter((t) => t.tipo === 'avaliada');
+        esquecerRodada(chave);
         if (vivo.current) onFim({ tentativas: tents.current, acertos: av.filter((t) => t.acertou && !t.comAjuda).length, total: av.length });
       }
       return;

@@ -1,0 +1,66 @@
+/* Revisão de qualidade 18/11 (itens 8, 11, 12, 15, 28): telas que cabem sem rolar e sem escorregar para o lado.
+   Arquivo próprio para não brigar com os estilos das mecânicas; carregado por último no main.tsx. */
+
+/* nada escorrega para o lado em nenhuma tela (a criança não sabe "voltar" a página que andou de lado) */
+html,body{overflow-x:clip}
+#root,.pagina{max-width:100vw;overflow-x:clip}
+
+/* ---------- celular: a lição inteira cabe na tela (todas as respostas à vista sem rolar) ---------- */
+@media (max-width:560px){
+  .tela-sessao .palco{padding:4px 10px 12px;justify-content:flex-start}
+  .tela-sessao .cartao.atividade{padding:12px 12px 10px}
+  .tela-sessao .titulo-cena{font-size:12px;padding:4px 12px;margin:0 0 6px;max-width:calc(100% - 64px)}
+  .tela-sessao .balao{margin-bottom:6px}
+  .tela-sessao .balao .rosto{width:48px!important;height:48px!important}
+  .tela-sessao .balao p{font-size:17px;line-height:1.25}
+  .tela-sessao .balao-texto{padding:8px 12px 10px}
+  .tela-sessao .balao .ouvir{width:48px;height:48px;margin-top:-26px}.tela-sessao .balao .ouvir .ic{width:32px;height:32px}
+  .tela-sessao .progressinho{margin:0 0 6px}
+  .tela-sessao .pergunta{margin:2px 0 8px;gap:10px}
+  .tela-sessao .pergunta .ouvir{width:64px;height:64px}.tela-sessao .pergunta .ouvir .ic{width:46px;height:46px}
+  /* a frase "Toque no alto-falante…" é para quem lê: no celular fica só o alto-falante grande */
+  .tela-sessao .dica-ouvir{display:none}
+  /* três respostas lado a lado; quatro em 2×2 menores */
+  .tela-sessao .opcoes.n3{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .tela-sessao .opcoes.n3 .opcao{min-height:112px;padding:8px 4px}
+  .tela-sessao .opcoes.n3 .opcao .fig{width:84px;height:84px}
+  .tela-sessao .opcoes.n3 .opcao .letra{font-size:64px}
+  .tela-sessao .opcoes.n3 .opcao .rot{font-size:16px}
+  .tela-sessao .opcoes.n3 .opcao-ouvir{width:38px;height:38px;right:-4px;top:-8px}.tela-sessao .opcoes.n3 .opcao-ouvir .ic{width:28px;height:28px}
+  .tela-sessao .opcoes.n4{gap:10px}
+  .tela-sessao .opcoes.n4 .opcao{min-height:112px}
+  .tela-sessao .opcoes.n4 .opcao .fig{width:84px;height:84px}
+  .tela-sessao .opcoes.n4 .opcao .letra{font-size:64px}
+  .tela-sessao .opcao.opcao-som{min-height:104px}
+  .tela-sessao .opcoes.n3 .som-botao{width:68px;height:68px}.tela-sessao .opcoes.n3 .som-botao .ic{width:62px;height:62px}
+  /* "Dar comida ao Bolota"/"Jogar no Corre-Som": vira um botão redondo no canto do título (a criança não lê o texto) */
+  .tela-sessao .mec-escolher>.jogo-desafio{position:absolute;top:-46px;right:-2px;margin:0;min-height:0;padding:4px;width:auto;font-size:0;gap:0}
+  .tela-sessao .mec-escolher>.jogo-desafio .rot{display:none}
+  .tela-sessao .mec-escolher>.jogo-desafio .jogo-desafio-ic{width:40px;height:40px}
+  /* Espelho do Som: as duas vistas lado a lado, acima do rodapé fixo */
+  .tela-sessao .mec-espelho .espelho-palco{grid-template-columns:1fr 1fr}
+}
+
+/* ---------- Lojinha no celular: roupas logo abaixo do boneco; porquinho pequeno ---------- */
+@media (max-width:560px){
+  .tela-lojinha .palco.loja{gap:8px;padding-top:2px}
+  .tela-lojinha .loja-boneco{height:230px}
+  /* o saldo já está no topo: o porquinho grande e a frase para o adulto saem do celular */
+  .tela-lojinha .loja-cab{margin-bottom:8px;gap:4px}
+  .tela-lojinha .loja-cab>.cofrinho{display:none}
+  .tela-lojinha .loja-cab p{display:none}
+  .tela-lojinha .loja-cab h1{font-size:24px;margin:0}
+  .tela-lojinha .loja-painel{padding:12px 12px 16px}
+  .tela-lojinha .loja-abas{flex-wrap:nowrap;gap:6px;margin-bottom:8px}
+  .tela-lojinha .loja-abas .btn{flex:1 1 0;min-width:0;min-height:52px;padding:0 6px;font-size:13px;gap:4px}
+  .tela-lojinha .loja-abas .btn .ic{width:24px;height:24px}
+  .tela-lojinha .loja-cats{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-bottom:10px;padding-bottom:2px}
+  .tela-lojinha .loja-cats .pilula{flex:0 0 auto;min-height:46px;font-size:15px;padding:0 14px}
+  .tela-lojinha .grade-pecas{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tela-lojinha .item-loja{min-width:0}
+}
+
+/* ---------- Fim da missão ---------- */
+.ritual-moedas p .soma{display:inline-block;animation:somaPula .5s var(--mola) both}
+@keyframes somaPula{from{transform:scale(.4);opacity:0}}
+.ritual-elogio{font-family:var(--f-titulo);font-weight:600;color:var(--marinho);font-size:20px;margin:6px 0 0}

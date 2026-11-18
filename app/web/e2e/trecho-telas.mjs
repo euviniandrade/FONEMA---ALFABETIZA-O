@@ -92,7 +92,7 @@ export async function trechoTelas(browser, h) {
   const problemas = [];
   let medidas = 0;
   let comRespostas = 0;
-  for (const [w, alt, suf, movel] of [[390, 844, '-celular', true], [1850, 980, '', false]]) {
+  for (const [w, alt, suf, movel] of [[390, 844, '-celular', true], [1850, 980, '', false]].filter(([w]) => !process.env.TELAS_LARGURA || String(w) === process.env.TELAS_LARGURA)) {
     const ctx = await browser.newContext({ viewport: { width: w, height: alt }, locale: 'pt-BR', serviceWorkers: 'block', ...(movel ? { deviceScaleFactor: 2, isMobile: true, hasTouch: true } : {}) });
     await ctx.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { /* sem armazenamento */ } });
     const pg = await ctx.newPage();
@@ -104,9 +104,12 @@ export async function trechoTelas(browser, h) {
       medidas++;
       if (m.nRespostas) comRespostas++;
       const onde = `${nome}${suf}`;
+      const antes = problemas.length;
       if (m.rolaLado > 0 || m.largura > m.vw + 1) problemas.push(`${onde}: página rola para o lado (${m.largura}px em ${m.vw}px) ${m.vazam.join(', ')}`);
       for (const e of m.escondidas) problemas.push(`${onde}: escondido ${e}`);
       for (const a of m.adulto) problemas.push(`${onde}: ${a}`);
+      console.log(`  · ${onde}: ${m.nRespostas} respostas${m.escondidas.length || m.adulto.length || m.rolaLado > 0 || m.largura > m.vw + 1 ? ' ✗' : ' ok'}`);
+      for (const p of problemas.slice(antes)) console.log(`      ✗ ${p}`);
       if (dirCap && !vistas.has(nome)) {
         vistas.add(nome);
         await pg.screenshot({ path: resolve(dirCap, `v11-telas-${nome}${suf}.png`) });

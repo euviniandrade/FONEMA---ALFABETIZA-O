@@ -30,3 +30,23 @@ export function ehDeterminista<T>(arr: T[], semente: number): T[] {
   }
   return a;
 }
+
+/**
+ * Revisão 18/11 (item 11): a criança não lê símbolos de fonética. Nos títulos mostrados na tela da criança, "/a/" vira
+ * "do A" ("O som /a/" → "O som do A"; "Qual letra faz /fff/?" → "Qual letra faz o som do F?"). A VOZ continua usando o
+ * texto original (os clipes gravados são achados pelo texto).
+ */
+const LETRA_DO_SOM: Record<string, string> = { k: 'C', ss: 'S', rr: 'RR' };
+export function semFonetica(t: string): string {
+  if (!t || !t.includes('/')) return t;
+  const letra = (som: string) => {
+    const s = som.toLowerCase().replace(/(.)\1+/g, '$1');
+    return LETRA_DO_SOM[s] ?? s.toUpperCase();
+  };
+  return t
+    .replace(/\bfaz \/([^/\s]{1,4})\//gi, (_, s) => `faz o som do ${letra(s)}`)
+    .replace(/\b(som|sons) \/([^/\s]{1,4})\/ e \/([^/\s]{1,4})\//gi, (_, p, a, b) => `${p} do ${letra(a)} e do ${letra(b)}`)
+    .replace(/\b(som|Som) \/([^/\s]{1,4})\//g, (_, p, s) => `${p} do ${letra(s)}`)
+    .replace(/: \/([^/\s]{1,4})\//g, (_, s) => `: ${letra(s)}`)
+    .replace(/\/([^/\s]{1,4})\//g, (_, s) => letra(s));
+}

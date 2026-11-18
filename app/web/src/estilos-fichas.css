@@ -62,11 +62,14 @@
 .ficha-pedaco{display:grid;justify-items:center;gap:clamp(6px,1vw,12px);min-width:0;flex:0 1 auto;transition:transform .25s var(--mola)}
 .ficha-letra{font-family:var(--f-leitura);font-weight:700;font-size:clamp(40px,8vw,108px);line-height:1;color:var(--marinho);padding:2px clamp(2px,.6vw,8px);border-radius:14px;transition:background .25s,color .25s,box-shadow .25s}
 .ficha-pedaco.acesa .ficha-letra{background:linear-gradient(180deg,#FFF3C4,#FFC93F);box-shadow:0 0 0 4px #fff,0 0 26px 8px rgba(255,201,63,.7)}
-.ficha-pedaco.lida .ficha-letra{color:var(--folha2,#2E9B5E)}
+/* lida = já soou (azul neutro); verde só depois do acerto (.revelada): verde quer dizer "acertou" no app inteiro (revisão 18/11, item 3) */
+.ficha-pedaco.lida .ficha-letra{color:#2F6FD6}
+.ficha-folha.revelada .ficha-pedaco .ficha-letra{color:var(--folha2,#2E9B5E)}
 .ficha-pedaco.calada .ficha-letra{color:#9AA4B8}
 .ficha-bolinha{display:block;width:clamp(34px,6vw,64px);height:clamp(34px,6vw,64px);border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#C9D8F2);box-shadow:0 6px 0 #9FB3D6}
 .ficha-pedaco.acesa .ficha-bolinha{background:radial-gradient(circle at 35% 30%,#FFF3C4,#FFC93F);box-shadow:0 6px 0 var(--ipe-esc,#B57A00),0 0 26px 8px rgba(255,201,63,.7);transform:scale(1.15)}
-.ficha-pedaco.lida .ficha-bolinha{background:radial-gradient(circle at 35% 30%,#fff,#9FE0B8)}
+.ficha-pedaco.lida .ficha-bolinha{background:radial-gradient(circle at 35% 30%,#fff,#9CC2F5)}
+.ficha-folha.revelada .ficha-pedaco .ficha-bolinha{background:radial-gradient(circle at 35% 30%,#fff,#9FE0B8)}
 .ficha-bolinha.vazia{opacity:.25}
 .modo-bocas-palavra .ficha-pedaco .boquinha{width:clamp(56px,11vw,120px)}
 .ficha-revela{position:relative;display:grid;place-items:center;margin-bottom:10px;animation:revela .7s var(--mola) both}

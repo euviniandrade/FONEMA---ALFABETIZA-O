@@ -9,6 +9,7 @@ import './estilos-entrada.css';
 import './estilos-recompensas.css';
 import './estilos-mecanicas.css';
 import './estilos-avaliacao.css';
+import './estilos-telas.css';
 
 const repo = criarRepositorio();
 // pede ao navegador para não apagar os dados deste aparelho quando faltar espaço (o progresso só existe aqui)
