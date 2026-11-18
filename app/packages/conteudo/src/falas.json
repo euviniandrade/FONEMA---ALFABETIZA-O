@@ -672,6 +672,12 @@
   "origem": "alfabeto: palavras"
  },
  {
+  "id": "s-1bvhafa",
+  "voz": "sofia",
+  "texto": "O que o Bolota disse?",
+  "origem": "sem nome (fila 27)"
+ },
+ {
   "id": "s-1bye8hv",
   "voz": "sofia",
   "texto": "Wagner",
@@ -3822,6 +3828,12 @@
   "origem": "bolota-chuva"
  },
  {
+  "id": "s-2cqsg0",
+  "voz": "sofia",
+  "texto": "Você conseguiu!",
+  "origem": "sem nome (fila 27)"
+ },
+ {
   "id": "s-2dswlv",
   "voz": "sofia",
   "texto": "Devagar: mmm-aaa, MA. Lll-aaa, LA. MALA!",
@@ -4188,6 +4200,12 @@
   "origem": "caca"
  },
  {
+  "id": "s-60wkpt",
+  "voz": "sofia",
+  "texto": "Vamos fazer juntos?",
+  "origem": "sem nome (fila 27)"
+ },
+ {
   "id": "s-66n4h1",
   "voz": "sofia",
   "texto": "Procure na água rasinha do rio.",
@@ -4252,6 +4270,12 @@
   "voz": "sofia",
   "texto": "Palavras que rimam terminam com o mesmo som. Escute!",
   "origem": "rimas"
+ },
+ {
+  "id": "s-7wc2a8",
+  "voz": "sofia",
+  "texto": "Que letra faz este som?",
+  "origem": "sem nome (fila 27)"
  },
  {
   "id": "s-7wcok",
@@ -4758,6 +4782,12 @@
   "origem": "TF-07-C2"
  },
  {
+  "id": "s-febgmi",
+  "voz": "sofia",
+  "texto": "Qual rima?",
+  "origem": "sem nome (fila 27)"
+ },
+ {
   "id": "s-ff5ofq",
   "voz": "sofia",
   "texto": "S, de sapo.",
@@ -4768,6 +4798,12 @@
   "voz": "sofia",
   "texto": "concha",
   "origem": "figuras"
+ },
+ {
+  "id": "s-fkfjyg",
+  "voz": "sofia",
+  "texto": "Olha a minha boca antes de responder.",
+  "origem": "sem nome (fila 27)"
  },
  {
   "id": "s-fo3mps",
@@ -5016,16 +5052,34 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-jw1frq",
+  "voz": "sofia",
+  "texto": "Agora é a sua vez!",
+  "origem": "sem nome (fila 27)"
+ },
+ {
   "id": "s-k722nb",
   "voz": "sofia",
   "texto": "Quando chove, a minha casa é o meu abrigo.",
   "origem": "bolota-chuva"
  },
  {
+  "id": "s-kc657y",
+  "voz": "sofia",
+  "texto": "Junta comigo!",
+  "origem": "sem nome (fila 27)"
+ },
+ {
   "id": "s-kkzzib",
   "voz": "sofia",
   "texto": "Você conseguiu, [NOME]!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-kw8ej7",
+  "voz": "sofia",
+  "texto": "Lê a pedra e toca a figura.",
+  "origem": "sem nome (fila 27)"
  },
  {
   "id": "s-l2kpxj",
@@ -5106,16 +5160,16 @@
   "origem": "comeco"
  },
  {
-  "id": "s-m2l5a1",
-  "voz": "sofia",
-  "texto": "Oi, [NOME]! Que bom que você voltou, curiosa!",
-  "origem": "telas (E2E)"
- },
- {
   "id": "s-m2lpus",
   "voz": "sofia",
   "texto": "Oi, [NOME]! Hoje tem um segredo das letras!",
   "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-m8vpws",
+  "voz": "sofia",
+  "texto": "Olha que lindo! Você ganhou uma conquista nova!",
+  "origem": "sem nome (fila 27)"
  },
  {
   "id": "s-mcqsp",
@@ -5308,6 +5362,12 @@
   "voz": "sofia",
   "texto": "sacola",
   "origem": "escondida"
+ },
+ {
+  "id": "s-q2uis4",
+  "voz": "sofia",
+  "texto": "Uma palma para cada pedacinho!",
+  "origem": "sem nome (fila 27)"
  },
  {
   "id": "s-q68e7d",
@@ -5692,6 +5752,12 @@
   "voz": "sofia",
   "texto": "Essa cena faz este som:",
   "origem": "falas fônicas (D030)"
+ },
+ {
+  "id": "s-soegj2",
+  "voz": "sofia",
+  "texto": "É a vovó ou o vovô?",
+  "origem": "sem nome (fila 27)"
  },
  {
   "id": "s-t3d6f",
@@ -6336,6 +6402,12 @@
   "origem": "AL-FESTA-C4b"
  },
  {
+  "id": "t-1a6ju2",
+  "voz": "tales",
+  "texto": "Fala o som desta letra!",
+  "origem": "sem nome (fila 27)"
+ },
+ {
   "id": "t-1a7pp7p",
   "voz": "tales",
   "texto": "Andar 1! Qual letra, [NOME]?",
@@ -6388,6 +6460,12 @@
   "voz": "tales",
   "texto": "Tem uma vovó e um vovô na ilha… e os dois têm O no nome!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1cqq90x",
+  "voz": "tales",
+  "texto": "Rima ou não rima?",
+  "origem": "sem nome (fila 27)"
  },
  {
   "id": "t-1cwxii0",
@@ -6868,6 +6946,12 @@
   "voz": "tales",
   "texto": "Sapo… mala",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-1palqgb",
+  "voz": "tales",
+  "texto": "Agora é a sua vez!",
+  "origem": "sem nome (fila 27)"
  },
  {
   "id": "t-1pg7wom",
@@ -7440,6 +7524,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-j6bf8n",
+  "voz": "tales",
+  "texto": "Letra por letra! Agora é a sua vez!",
+  "origem": "sem nome (fila 27)"
+ },
+ {
   "id": "t-jfwfuo",
   "voz": "tales",
   "texto": "Qual figura começa com esta letra?",
@@ -7468,6 +7558,12 @@
   "voz": "tales",
   "texto": "Mão… pão",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-lxokwt",
+  "voz": "tales",
+  "texto": "Qual começa com o som?",
+  "origem": "sem nome (fila 27)"
  },
  {
   "id": "t-m1yrpt",
@@ -7656,6 +7752,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "t-qs0d95",
+  "voz": "tales",
+  "texto": "Escolhe do seu jeito!",
+  "origem": "sem nome (fila 27)"
+ },
+ {
   "id": "t-r0ozh4",
   "voz": "tales",
   "texto": "E lá na frente tem mais lugares trancados, esperando por você!",
@@ -7800,6 +7902,12 @@
   "origem": "TF-09-C2"
  },
  {
+  "id": "t-y49e48",
+  "voz": "tales",
+  "texto": "O eco falou! Qual letra?",
+  "origem": "sem nome (fila 27)"
+ },
+ {
   "id": "t-yddfon",
   "voz": "tales",
   "texto": "Tira da areia o que não é da praia, para a tartaruga voltar!",
@@ -7816,6 +7924,12 @@
   "voz": "tales",
   "texto": "Ouviu isso, [NOME]? Alguma coisa rolou no arbusto… Amanhã a gente descobre quem é!",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "t-ykgnjm",
+  "voz": "tales",
+  "texto": "Olha só o que chegou para você!",
+  "origem": "sem nome (fila 27)"
  },
  {
   "id": "t-ym257j",

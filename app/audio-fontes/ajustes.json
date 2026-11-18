@@ -221,6 +221,14 @@
   "sofia|O som /u/ da letra U": {
    "versao": 2,
    "texto": "O som do U, uuuu, da letra U."
+  },
+  "sofia|abacaxi": {
+   "versao": 1,
+   "texto": "Abacachi."
+  },
+  "tales|abacaxi": {
+   "versao": 1,
+   "texto": "Abacachi."
   }
  },
  "nomes": {

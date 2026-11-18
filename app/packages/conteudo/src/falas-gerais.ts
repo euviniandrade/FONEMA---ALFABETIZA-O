@@ -16,6 +16,34 @@ export const FALAS = {
    * "Que bom que você voltou, curioso/curiosa" que tocava a cada volta à vila ("fica cansativo"). Voltar de uma tela não fala nada.
    */
   saudacao: { quem: 'sofia', texto: 'Oi, [NOME]!' } as Fala,
+  /**
+   * Fila nº 27 (2): falas com o nome NO FIM que se repetem dentro de uma atividade (rodada a rodada). Depois que o nome já foi
+   * dito, a voz toca a variante gravada SEM o nome (semNome, @fonema/motor): "Agora é a sua vez!" em vez de
+   * "Agora é a sua vez," com a voz pendurada. As outras falas com nome tocam os mesmos trechos sem o clipe do nome.
+   * O extrator (scripts/extrair-falas.ts) grava a forma sem nome destas; a lista de pendentes está em app/docs/falas-pendentes.md.
+   */
+  comVarianteSemNome: [
+    { quem: 'sofia', texto: 'Agora é a sua vez, [NOME]!' },
+    { quem: 'sofia', texto: 'Vamos fazer juntos, [NOME]?' },
+    { quem: 'sofia', texto: 'Você conseguiu, [NOME]!' },
+    { quem: 'sofia', texto: 'Que letra faz este som, [NOME]?' },
+    { quem: 'sofia', texto: 'Qual rima, [NOME]?' },
+    { quem: 'sofia', texto: 'Junta comigo, [NOME]!' },
+    { quem: 'sofia', texto: 'Uma palma para cada pedacinho, [NOME]!' },
+    { quem: 'sofia', texto: 'Olha que lindo! Você ganhou uma conquista nova, [NOME]!' },
+    { quem: 'sofia', texto: 'É a vovó ou o vovô, [NOME]?' },
+    { quem: 'sofia', texto: 'O que o Bolota disse, [NOME]?' },
+    { quem: 'sofia', texto: 'Olha a minha boca antes de responder, [NOME].' },
+    { quem: 'sofia', texto: 'Lê a pedra e toca a figura, [NOME].' },
+    { quem: 'tales', texto: 'Agora é a sua vez, [NOME]!' },
+    { quem: 'tales', texto: 'Letra por letra! Agora é a sua vez, [NOME]!' },
+    { quem: 'tales', texto: 'Qual começa com o som, [NOME]?' },
+    { quem: 'tales', texto: 'Rima ou não rima, [NOME]?' },
+    { quem: 'tales', texto: 'Fala o som desta letra, [NOME]!' },
+    { quem: 'tales', texto: 'Olha só o que chegou para você, [NOME]!' },
+    { quem: 'tales', texto: 'Escolhe do seu jeito, [NOME]!' },
+    { quem: 'tales', texto: 'O eco falou! Qual letra, [NOME]?' }
+  ] as Fala[],
   avatar: { quem: 'tales', texto: 'Vamos montar o seu boneco, [NOME]! Qual é a cor da sua pele?' } as Fala,
   avatarSexo: { quem: 'sofia', texto: 'O boneco é menino ou menina?' } as Fala,
   avatarLojinha: { quem: 'tales', texto: 'Olha a Lojinha! A cada letra abrem coisas novas para o seu boneco.' } as Fala,

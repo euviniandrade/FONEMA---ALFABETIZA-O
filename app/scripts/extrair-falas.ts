@@ -7,7 +7,7 @@
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { ALFABETO, NOMES_COMUNS, FASES, FALAS, FALAS_TRILHA_SONS, SILABA_DO_SOM, FALAS_ALFABETO, FALAS_FONICAS, VOZES_DAS_FALAS_FONICAS, FALAS_DOS_PARES, FALA_ESPELHO_BD, FALAS_DAS_TELAS, FALAS_TUTORIAL, PASSOS_AVATAR, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
-import { concordar, silabas } from '@fonema/motor';
+import { concordar, semNome, silabas } from '@fonema/motor';
 import { FALAS_CACA, LUGARES_CACA } from '@fonema/conteudo';
 import { FALAS_BIBLIOTECA, FALAS_ESCUTA, FALAS_HISTORIA, FALAS_TEXTO, HISTORIAS, JOGOS_ESCUTA, TEXTOS_DECODIFICAVEIS, nomeDaFigura, textoCorrido } from '@fonema/conteudo';
 
@@ -56,6 +56,8 @@ for (const f of FASES) {
 }
 FALAS.chegada.forEach((f) => addF(f, 'chegada'));
 addF(FALAS.saudacao, 'saudacao');
+// fila nº 27 (2): variante SEM o nome das falas repetidas (a voz toca esta depois que o nome já foi dito na atividade)
+FALAS.comVarianteSemNome.forEach((f) => add(f.quem, semNome(f.texto), 'sem nome (fila 27)'));
 addF(FALAS.avatar, 'avatar'); addF(FALAS.avatarPronto, 'avatar'); addF(FALAS.avatarSexo, 'avatar'); addF(FALAS.avatarLojinha, 'avatar');
 PASSOS_AVATAR.forEach((p) => add('tales', p.pergunta, 'avatar'));
 FALAS_DAS_TELAS.forEach((f) => addF(f, 'telas'));
