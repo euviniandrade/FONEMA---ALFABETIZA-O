@@ -66,14 +66,21 @@ item a item está em `docs/revisoes/qualidade-2026-11-18.md` ("Situação dos it
   passeio articulado). O caminho (a) image-to-3D grátis ficou bloqueado aqui: `*.hf.space` (API dos Spaces) e `us.aws.cdn.hf.co`
   (pesos de modelos) dão 403 no proxy; Higgsfield não foi usado. Catálogo em `conteudo/src/avatar.ts › CABELOS` (`penteado`); o passo
   "Penteado" e a aba Cabelo da Lojinha aparecem sozinhos. Coque e topete seguem com cadeado (D034).
-- **Limites honestos:** o "cortado rente" da menina às vezes deixa dois tufinhos escuros junto ao queixo e a franja original dela aparece
-  por baixo de alguns penteados (vista de lado, uma pontinha na testa); o liso repartido e a franja de menino ficam parecidos; as
-  peças são estilizadas (não esculpidas como o cabelo original). Ninguém viu num celular de verdade. Bancada: `web/bancada-avatar.html`.
+- **Corrigido depois (18/11, tarde):** sem tufinhos escuros junto ao queixo da menina; a franja original não aparece mais
+  por baixo dos penteados (só fica a sobrancelha pintada rente à pele; na menina, cuja sobrancelha some debaixo da franja,
+  o app desenha sobrancelhas novas inteiras); "liso repartido" (varrido de lado, testa à mostra) e "franja" do menino ficaram
+  bem diferentes; topete alto. **Limites que ficam:** fiapo escuro fino junto ao olho esquerdo da menina visto bem de perto;
+  as peças são estilizadas (não esculpidas como o cabelo original); ninguém viu num celular de verdade.
 - **Foto → 3D:** Admin › Foto → 3D (`telas/admin/foto3d/`): aviso LGPD, só abre a foto com a confirmação "não é pessoa" e recusa foto
   com rosto quando o navegador sabe procurar (FaceDetector); tira o fundo, faz um **relevo inflado** (grátis, na hora, gira 360° — não
   inventa o verso) e coloca no lugar do troféu/baú/porquinho ou como modelo novo em `modelos3d/itens/` (vai no pacote do Publicar).
-  "Pedir o 3D completo" baixa um pedido para `app/scripts/foto-para-3d.ts` (TRELLIS/Hunyuan3D por Space grátis; **não testado contra o
-  serviço**, hosts bloqueados aqui). Modelo novo ainda precisa de uma linha no catálogo para virar peça da Lojinha/objeto do passeio.
+  "Pedir o 3D completo" baixa um pedido para `app/scripts/foto-para-3d.ts` (TRELLIS/Hunyuan3D por Space grátis; o dono
+  autorizou enviar fotos de OBJETOS). Testado em 18/11 com a figura da bola: API conferida e script refeito (usa
+  `gradio_client`), mas os Spaces **recusaram por cota** (ZeroGPU sem conta); o Hunyuan3D-2 está com a textura quebrada no
+  Space. Para funcionar: conta grátis no Hugging Face e `HF_TOKEN`. Nenhum GLB "completo" foi gerado ainda; por isso não deu
+  para avaliar se serve para esculpir cabelos (e cabelo gerado assim vem com cor fixa e como sólido fechado: teria de aceitar as
+  7 cores e encaixar no crânio sem cobrir o rosto). Modelo novo ainda precisa de uma linha no catálogo para virar peça da
+  Lojinha/objeto do passeio.
   Passo a passo: `app/docs/como-transformar-foto-em-3d.md`.
 - **Verificado:** typecheck, lint, testes (novos: `relevo.test.ts`, `foto-para-3d.test.ts`, catálogo de cabelos), build, E2E `--foto3d`
   (7 ✓) e folha `docs/propostas/06-fonema-unificada/avatar-3d/folha-v2.jpg` (olhada). `--sem-jornada` (cópia separada, porta 4620,
@@ -123,7 +130,8 @@ animação antiga sacudia o corpo inteiro; no rio, o corpo deitado ficava abaixo
   305 KB, só juntas e giros, sem malha do manequim). Reaplicada no esqueleto de cada boneco pela DIREÇÃO dos ossos (serve para cabeção
   e braço curto); a cabeça fica quase de pé. Parado, andar → trotar → correr misturados pela velocidade, na cadência medida pelo pé
   da captura (o pé de apoio não escorrega), pulo (no ar e chegada), conversar (os bonecos da vila gesticulam), nadar (crawl) e boiar.
-  Tchau = braço direito levantado abanando, por cima da pose. Velocidades do passeio passaram a ser de criança: 1,5 / 2,6 / 3,7 m/s.
+  Tchau = braço direito levantado abanando, por cima da pose. Caminho que funcionou: (a) auto-rig no navegador + captura CC0;
+  o Blender (`pip install bpy`) baixava, mas não foi preciso. Velocidades do passeio passaram a ser de criança: 1,5 / 2,6 / 3,7 m/s.
 - **Água:** com até 0,5 m a criança anda com a água pela cintura (braços um pouco abertos); mais fundo, nada: a cabeça é medida a
   cada quadro e fica fora d'água (nunca some). Meio do rio continua bloqueado ("Aqui é fundo!"). **Mergulhar:** na água funda o botão
   Pular vira "🤿 Mergulhar" (Espaço também); o boneco desce ~0,5 m por 4,2 s (ou até tocar "🫧 Subir") e volta para respirar; a câmera
@@ -133,13 +141,20 @@ animação antiga sacudia o corpo inteiro; no rio, o corpo deitado ficava abaixo
   passeio.js, colisao.js, npcs.js e o HUD de nadar/mergulhar ficam com a frente do boneco.
 - **Também:** silhueta clarinha do boneco quando algo fica na frente (varal de livros, poste, árvore, água funda); o 1º degrau do coreto
   virou piso (o boneco pisa nele em vez de afundar); com o cartão de conversa ou de porta aberto, a imagem sobe para o boneco aparecer acima.
-- **Verificado (18/11, cópia separada, porta 4610, build do commit):** lint, typecheck (passou depois que a frente do gerenciador corrigiu
-  o dela), `npm test` (410 de 411; a que falhou é `d030 › a jornada inteira anda`, que estourou o tempo com a máquina a carga 20, fora
-  desta frente) e E2E `--mundo3d`/`--capturas-mundo3d` todo verde, com checagens novas: 13 ossos + captura carregada, silhueta, cabeça
-  sobe e desce só 4 cm andando, no rio 24 amostras nadando sempre com a cabeça fora, Mergulhar desce 0,44 m e volta, Tchau levanta o
-  braço (osso). Capturas olhadas quadro a quadro: `app/docs/capturas/mundo3d-0*.png` (08 nadando, 09 mergulho), sequências
-  `mundo3d-seq-trotar-correr.png`, `mundo3d-seq-pulo-tchau-nado-mergulho.png` e poses de todos os bonecos
-  `mundo3d-poses-captura-lado.png`/`-3q.png`. `--sem-jornada`: RESULTADO_SJ
+- **Verificado (18/11, cópia separada, porta 4610):** `npm run typecheck` e lint verdes no e194c84; `npm test` 410 de 411 (a que
+  falhou, `d030 › a jornada inteira anda`, estourou o tempo com a máquina a carga 20, fora desta frente). E2E `--sem-jornada` inteiro
+  "E2E OK" (377 ✓, 0 ✗) no f3db046. E2E `--mundo3d` verde (33 ✓) no e194c84, já com o mundo novo da outra frente: 13 ossos +
+  captura carregada, silhueta, cabeça sobe e desce só 4 cm andando, 24 amostras nadando sempre com a cabeça fora, Mergulhar desce
+  ~0,5 m e volta, Tchau levanta o braço (osso). **Pé que não escorrega, medido:** com o pé no chão ele anda 2 a 7% da velocidade do
+  corpo (0,6 a 3,7 m/s). **Custo:** a animação de 6 bonecos gasta ~0,6 ms por quadro (CPU); o peso está no desenho.
+  **Alerta de desempenho:** com o mundo novo o Chromium de teste (sem placa de vídeo) caiu de 0,9–1,4 para 0,2–0,6 quadro/s; o E2E do
+  passeio agora espera até 4 min pelo iframe. Num aparelho de verdade ninguém mediu.
+  Capturas olhadas quadro a quadro: `app/docs/capturas/mundo3d-0*.png` (08 nadando, 09 mergulho com plantas e bolhas), sequências
+  `mundo3d-seq-trotar-correr.png`, `mundo3d-seq-pulo-tchau-nado-mergulho.png`, poses de todos os bonecos
+  `mundo3d-poses-captura-lado.png`/`-3q.png`; coreto (boneco em pé no 1º degrau) e varal olhados em cópia separada.
+- **Embaixo d'água (pedido do coordenador):** placas, anéis das portas, balões e marcador de destino somem com a câmera submersa e
+  voltam ao subir; o passeio informa a posição do corpo ao mundo (`mundo.pe`) e, mergulhando, o cardume mais perto nada em volta da
+  criança (`submerso.js`, mudança pequena combinada com a frente do mundo: perto da criança submersa os peixes só se afastam a menos de ~0,8 m).
 - **Falta / limites:** ninguém jogou num celular de verdade; o tchau da Sofia/Tales e o pulo deles esticam um pedaço da roupa; o fundo
   do rio no mergulho é a areia comum (o cenário submerso é da outra frente); no "menos movimento" a captura toca igual (só a câmera fica calma).
 
