@@ -11,7 +11,7 @@ import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
 import { DocaVila } from './DocaVila.tsx';
 import { PainelGuia } from '../../componentes/Guia.tsx';
 import { Dupla3DGiravel } from '../../componentes/Personagem3D.tsx';
-import { falar, falarVarias, textoTela } from '../../util.ts';
+import { falar, falarVarias, semFonetica, textoTela } from '../../util.ts';
 
 function nivelDe(p: Progresso) {
   return calcularNivel(p.desafios, missaoInicialFeita(p), fasesConcluidas(p));
@@ -123,7 +123,7 @@ export function Vila({ criancaId }: { criancaId: string }) {
       conteudo: (
         <div className="pino trancado" style={{ ['--o' as string]: 6 + i }} role="img" aria-label={`Depois: ${f.titulo} (ainda trancada)`}>
           <span className="pino-bolha"><Icone nome="cadeado" /></span>
-          <span className="pino-rotulo">Depois: {f.titulo}</span>
+          <span className="pino-rotulo">Depois: {semFonetica(f.titulo)}</span>
         </div>
       )
     })),
@@ -133,7 +133,7 @@ export function Vila({ criancaId }: { criancaId: string }) {
         <button className="pino missao" onClick={() => navegar(`c/${criancaId}/fase/${fase.id}`)} data-ponto="missao" aria-label={`Missão de hoje: ${fase.titulo}`}>
           {/* estrela: a Sofia diz "Toque na estrela para a missão de hoje" */}
           <span className="pino-bolha"><Icone nome="estrela" /></span>
-          <span className="pino-rotulo">{fase.titulo}<small>Missão de hoje</small></span>
+          <span className="pino-rotulo">{semFonetica(fase.titulo)}<small>Missão de hoje</small></span>
         </button>
       )
     }
@@ -276,7 +276,7 @@ export function Regiao({ criancaId, regiaoId }: { criancaId: string; regiaoId: s
                 <li key={fid} className={`fase-no ${liberada ? 'liberada' : e} ${atual ? 'atual' : ''}`}>
                   <button className="fase-btn" disabled={e === 'bloqueada'} onClick={() => navegar(`c/${criancaId}/fase/${fid}`)} data-fase={fid}>
                     <span className="fase-num">{e === 'concluida' ? <Icone nome="check" /> : e === 'bloqueada' ? <Icone nome="cadeado" /> : i + 1}</span>
-                    <span><b>{f.titulo}</b><small>{e === 'bloqueada' ? `Depois: ${f.objetivo.toLowerCase()}` : f.objetivo}</small></span>
+                    <span><b>{semFonetica(f.titulo)}</b><small>{e === 'bloqueada' ? `Depois: ${f.objetivo.toLowerCase()}` : f.objetivo}</small></span>
                     {liberada ? <em className="etiqueta">Aberta para revisar</em> : faseEmExpressa(progresso, fid) && e === 'aberta' ? <em className="etiqueta-expressa"><Icone nome="raio" />Expressa</em> : atual ? <em className="etiqueta"><Icone nome="tocar" />Agora</em> : null}
                   </button>
                 </li>
@@ -313,9 +313,10 @@ export function EntradaFase({ criancaId, faseId }: { criancaId: string; faseId: 
           <div className="entrada-capa" style={{ backgroundImage: `url(${asset(`cenas/${cena}.webp`)})` }}>
             <div className="entrada-cab">
               <div>
-                <p className="sobre">{REGIAO_POR_ID[fase.regiao].nome.split(' · ')[0]} · {fase.sessoesPrevistas}</p>
-                <h1 className="t">{fase.titulo}</h1>
-                <p className="objetivo"><Icone nome="alvo" />{fase.objetivo}</p>
+                <p className="sobre">{REGIAO_POR_ID[fase.regiao].nome.split(' · ')[0]}</p>
+                <h1 className="t">{semFonetica(fase.titulo)}</h1>
+                {/* revisão 18/11 (item 11): o objetivo é texto de adulto (fica na Área da Família); a criança ouve a fala de novo */}
+                <button className="ouvir entrada-ouvir" onClick={() => falar(fase.falaEntrada ?? { quem: 'sofia', texto: `${fase.titulo}. ${fase.objetivo}.` }, crianca)} aria-label="Ouvir de novo" data-testid="entrada-ouvir"><Icone nome="som" /></button>
               </div>
               <button className="btn enorme ipe brilha" onClick={() => navegar(`c/${criancaId}/sessao/${faseId}`)} data-testid="comecar-missao">
                 <Icone nome="play" />{concluida ? 'Brincar de novo' : expressa ? 'Começar (Expressa)' : 'Começar'}
@@ -342,7 +343,6 @@ export function EntradaFase({ criancaId, faseId }: { criancaId: string; faseId: 
               </>
             ) : null}
             {config.lojinha.naEntradaDaFase ? <div className="linha-botoes"><button className="btn" onClick={() => navegar(`c/${criancaId}/lojinha`)}><Icone nome="lojinha" />Lojinha</button></div> : null}
-            <p className="nota-mic">Em casa (para o adulto): {fase.emCasa}</p>
           </div>
         </section>
       </main>

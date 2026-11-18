@@ -28,6 +28,7 @@ import { Frase } from '../../mecanicas/Frase.tsx';
 import type { ResultadoMecanica } from '../../mecanicas/comum.tsx';
 import { Ritual } from './Ritual.tsx';
 import { BarraMissao } from '../../componentes/Guia.tsx';
+import { semFonetica } from '../../util.ts';
 
 /** Nome de MÉTODO de cada cena: só para o adulto e os documentos (fica em data-metodo); a criança vê pontinhos e o título da atividade. */
 const NOME_CENA: Record<string, string> = { C1: 'Revisão', C2: 'Eu faço', C3: 'Nós fazemos', C4: 'Você faz', C5: 'Desafio', C6: 'Pausa', C7: 'Projeto', C8: 'Ensinar', C9: 'Fim' };
@@ -129,7 +130,7 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
   return (
     <div className={`tela-sessao ${limpo ? 'fundo-limpo' : ''}`} data-etapa={etapa.tipo} data-cena={etapa.cena?.id}>
       {!limpo ? <Fundo cena={cenaDe(cenario)} desfoque={18} tom="calmo" /> : null}
-      <Topo crianca={crianca} voltar={`c/${criancaId}/vila`} titulo={fase.titulo}>
+      <Topo crianca={crianca} voltar={`c/${criancaId}/vila`} titulo={semFonetica(fase.titulo)}>
         {/* D032: barrinha da missão bem visível — um pontinho por passo (check = feito, estrela = agora); o nome do método fica só em data-metodo */}
         <div className="trilha-missao vidro" data-testid="trilha-missao">
           <BarraMissao passos={cenas.length} feitos={posCena} agora={etapa.tipo === 'cena' ? posCena : undefined} rotulo={`Missão: passo ${Math.min(posCena + 1, cenas.length)} de ${cenas.length}`} />
@@ -142,10 +143,10 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
         {etapa.tipo === 'acolhida' ? (
           <section className="cartao acolhida">
             {sessao.expressa ? <p className="etiqueta"><Icone nome="raio" />Trilha Expressa: você já sabe muita coisa! Vamos em ritmo rápido.</p> : null}
-            <h1 className="t">{fase.titulo}</h1>
+            <h1 className="t">{semFonetica(fase.titulo)}</h1>
             <Balao fala={fase.acolhida} crianca={crianca} auto destaque />
             <ol className="trilha-dia">
-              {cenas.map((e, k) => <li key={e.cena!.id} data-metodo={NOME_CENA[e.cena!.tipo]}><i>{k + 1}</i><span>{e.cena!.titulo}</span></li>)}
+              {cenas.map((e, k) => <li key={e.cena!.id} data-metodo={NOME_CENA[e.cena!.tipo]}><i>{k + 1}</i><span>{semFonetica(e.cena!.titulo)}</span></li>)}
             </ol>
             <button className="btn enorme ipe brilha" onClick={avancar} data-testid="comecar-sessao"><Icone nome="play" />Vamos!</button>
           </section>
@@ -153,7 +154,7 @@ export function Sessao({ criancaId, faseId }: { criancaId: string; faseId: strin
           <AssisteEFaz key={etapa.cena.id} roteiro={etapa.cena.assiste.roteiro} imagem={etapa.cena.assiste.imagem} video={etapa.cena.assiste.video} audio={etapa.cena.assiste.audio} crianca={crianca} onFim={() => setAssistiu(true)} />
         ) : etapa.cena?.atividade ? (
           <section className="cartao atividade" key={etapa.cena.id}>
-            <h2 className="titulo-cena t">{etapa.cena.titulo}</h2>
+            <h2 className="titulo-cena t">{semFonetica(etapa.cena.titulo)}</h2>
             {renderAtividade(etapa.cena.atividade)}
           </section>
         ) : (

@@ -12,7 +12,7 @@ import { calcularNivel, estadoDoCaminho, fasesConcluidas, infoNome, missaoDeHoje
 import { navegar } from '../rotas.ts';
 import { asset } from '../servicos/ambiente.ts';
 import { efeitos } from '../servicos/efeitos.ts';
-import { falar, textoTela } from '../util.ts';
+import { falar, semFonetica, textoTela } from '../util.ts';
 import { AvatarMini } from './basicos.tsx';
 import { Icone } from './ui.tsx';
 import { Selo } from './recompensas.tsx';
@@ -146,7 +146,7 @@ export function PainelGuia({ crianca, progresso, onde }: { crianca: Crianca; pro
 
         <section className="guia-bloco guia-missao" aria-label="Missão de hoje">
           <h3 className="guia-rotulo">{missao.feitaHoje ? 'Missão de hoje: feita!' : 'Missão de hoje'}</h3>
-          <p className="guia-fase">{fase?.titulo}</p>
+          <p className="guia-fase">{semFonetica(fase?.titulo ?? '')}</p>
           <BarraMissao passos={missao.passos} feitos={missao.feitaHoje ? missao.passos : 0} agora={missao.feitaHoje ? undefined : 0} rotulo={missao.feitaHoje ? 'Missão de hoje feita' : `Missão de hoje: ${missao.passos} passos`} />
           <button className="btn enorme ipe brilha guia-continuar" onClick={continuar} data-testid="guia-continuar"><Icone nome="play" />{progresso.sessoesFeitas ? 'Continuar' : 'Começar'}</button>
         </section>
