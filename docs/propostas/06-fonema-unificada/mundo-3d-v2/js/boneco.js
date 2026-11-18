@@ -68,13 +68,27 @@ const SOMBRA_TEX = radialTex('rgba(20,28,40,0.55)', 'rgba(20,28,40,0)');
 const MAO_TEX = canvasTex(128, 128, (g) => { g.font = '96px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('👋', 64, 70); });
 const BALAO_TEX = canvasTex(128, 128, (g) => { g.fillStyle = 'rgba(255,248,236,0.96)'; g.beginPath(); g.arc(64, 58, 50, 0, 7); g.fill(); g.beginPath(); g.moveTo(52, 100); g.lineTo(64, 124); g.lineTo(76, 100); g.fill(); g.font = '60px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('💬', 64, 60); });
 
-/** Silhueta clarinha que aparece quando algo fica na frente do boneco (varal, poste, árvore, degrau, água funda). */
+/**
+ * Silhueta clarinha que aparece quando algo DE FORA fica na frente do boneco (varal, poste, árvore, outro boneco).
+ * Fila nº 28 ("parece um fantasminha, partes brancas; ao girar fica transparente"): antes ela acendia também onde o
+ * próprio corpo se cobre (o cabelo de trás aparecia por cima do rosto, a perna de trás por cima da da frente) e as
+ * mechas empilhavam até ficar branco. Agora usa o STENCIL: o corpo (desenhado depois do resto do cenário opaco) marca
+ * os pixels em que aparece; a silhueta só entra onde o corpo NÃO apareceu e marca o pixel na primeira camada (nada empilha).
+ * A grama é desenhada depois do corpo (renderOrder) e não conta como "algo na frente".
+ */
+const ST_REF = 1;
 function materialSilhueta() {
-  const m = new THREE.MeshBasicMaterial({ color: '#FFF1C9', transparent: true, opacity: 0.42, depthWrite: false, depthFunc: THREE.GreaterDepth, fog: false });
-  // empurra a silhueta 0,35 m para perto da câmera: assim um braço na frente da barriga (o próprio corpo) não acende
-  m.onBeforeCompile = (sh) => { sh.vertexShader = sh.vertexShader.replace('#include <project_vertex>', '#include <project_vertex>\n  mvPosition.z += 0.35; gl_Position = projectionMatrix * mvPosition;'); };
-  m.customProgramCacheKey = () => 'silhueta-boneco';
+  const m = new THREE.MeshBasicMaterial({ color: '#FFF1C9', transparent: true, opacity: 0.3, depthWrite: false, depthFunc: THREE.GreaterDepth, fog: false,
+    stencilWrite: true, stencilRef: ST_REF, stencilFunc: THREE.NotEqualStencilFunc, stencilZPass: THREE.ReplaceStencilOp });
+  // folga de 12 cm para perto da câmera: sola encostada no chão e roupa encostada num banco não acendem
+  m.onBeforeCompile = (sh) => { sh.vertexShader = sh.vertexShader.replace('#include <project_vertex>', '#include <project_vertex>\n  mvPosition.z += 0.12; gl_Position = projectionMatrix * mvPosition;'); };
+  m.customProgramCacheKey = () => 'silhueta-boneco-2';
   return m;
+}
+/** O corpo de quem tem silhueta marca no stencil onde aparece (e vem depois do cenário opaco). */
+function marcarCorpo(malha) {
+  Object.assign(malha.material, { stencilWrite: true, stencilRef: ST_REF, stencilFunc: THREE.AlwaysStencilFunc, stencilZPass: THREE.ReplaceStencilOp });
+  malha.renderOrder = 3;
 }
 
 /**
@@ -125,6 +139,7 @@ export class Boneco {
     if (this.rig && this.comSilhueta) {
       const mat = materialSilhueta();
       for (const sk of this.rig.malhas) {
+        marcarCorpo(sk);
         const s = new THREE.SkinnedMesh(sk.geometry, mat);
         s.position.copy(sk.position); s.quaternion.copy(sk.quaternion); s.scale.copy(sk.scale);
         s.renderOrder = 5; s.frustumCulled = false; s.castShadow = false;

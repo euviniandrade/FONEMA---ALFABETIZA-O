@@ -83,7 +83,7 @@ export async function criarMundo(container, opts = {}) {
   const canvas = document.createElement('canvas');
   canvas.style.cssText = 'display:block;width:100%;height:100%;touch-action:none;outline:none';
   container.appendChild(canvas);
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: Q.msaa === 0, powerPreference: 'high-performance', preserveDrawingBuffer: !!o.captura });
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: Q.msaa === 0, powerPreference: 'high-performance', preserveDrawingBuffer: !!o.captura, stencil: true }); // stencil: silhueta do boneco só quando algo de fora o cobre (boneco.js)
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
   renderer.shadowMap.enabled = Q.sombra > 0; renderer.shadowMap.type = THREE.PCFShadowMap;
@@ -181,7 +181,7 @@ export async function criarMundo(container, opts = {}) {
     if (composer) { composer.dispose(); composer = null; }
     const w = container.clientWidth || 1280, h = container.clientHeight || 800;
     if (!Q.bloom && !Q.ao) { renderer.toneMapping = THREE.ACESFilmicToneMapping; return; }
-    const rt = new THREE.WebGLRenderTarget(w, h, { type: THREE.HalfFloatType, samples: Q.msaa });
+    const rt = new THREE.WebGLRenderTarget(w, h, { type: THREE.HalfFloatType, samples: Q.msaa, stencilBuffer: true });
     composer = new EffectComposer(renderer, rt);
     composer.setPixelRatio(renderer.getPixelRatio()); composer.setSize(w, h);
     passes.render = new RenderPass(scene, camera); composer.addPass(passes.render);

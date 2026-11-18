@@ -107,7 +107,7 @@ export function criarGuia({ mundo, passeio, avisar }) {
   }
   function desenharMini(px) {
     const g = cvMini.getContext('2d'), S = 240, Z = 3.0; // zoom: o minimapa mostra ~40 m em volta
-    const rot = passeio.camera.giro - Math.PI; // a frente da câmera fica para cima
+    const rot = passeio.camera.giro; // gira o mapa para a frente da câmera ficar para cima
     g.save(); g.clearRect(0, 0, S, S); g.fillStyle = '#4A8046'; g.fillRect(0, 0, S, S);
     g.translate(S / 2, S / 2); g.rotate(rot); g.scale(Z, Z);
     const [u, v] = paraMapa(px.x, px.z, S); g.translate(-u, -v);

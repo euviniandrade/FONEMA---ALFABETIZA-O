@@ -33,7 +33,7 @@ export const LUGARES = [
 const PARTIDA = { x: 0, z: 19.5, giro: Math.PI }; // na entrada da praça, de frente para o coreto (a Sofia passeia ali)
 const ALTURA = 1.5; // a criança no mundo (m)
 // velocidades de criança (m/s): a passada das pernas acompanha (js/boneco.js), então o pé não escorrega
-const ANDAR = 1.5, CORRER = 3.7, TECLADO = 2.6, PULO = 6.4, GRAVIDADE = 20;
+const ANDAR = 1.3, CORRER = 3.7, TECLADO = 2.6, PULO = 6.4, GRAVIDADE = 20;
 const NADA = 0.5; // água mais funda que isto (m) = nada; mais rasa = anda com a água pela cintura (o boneco de 1,5 m tem a virilha a 0,4 m)
 
 export function criarPasseio(mundo, h = {}) {
@@ -45,6 +45,8 @@ export function criarPasseio(mundo, h = {}) {
   const colisao = criarColisao(vila);
   const grupo = new THREE.Group(); grupo.name = 'passeio'; scene.add(grupo);
   camera.far = 900; camera.near = 0.15; camera.updateProjectionMatrix();
+  // a grama de perto vem depois do boneco: folhinha na frente do pé não acende a silhueta (js/boneco.js, stencil)
+  if (mundo.grama?.malha) mundo.grama.malha.renderOrder = 4;
 
   // ---------- a criança ----------
   const eu = new Boneco({ altura: ALTURA, nome: 'crianca', menosMovimento: menos, silhueta: true });
