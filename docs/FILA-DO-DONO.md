@@ -9,23 +9,23 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 ## Em andamento / na fila
 | # | Pedido (data) | Estado | Onde |
 |---|---|---|---|
-| 1 | Tutorial de boas-vindas: panorama, como mexer, tudo o que tem, o que vai aprender e em que ordem, o que ganha; levar à 1ª missão (17/11) | ✅ pronto no repositório (falta publicar) | D032 §1 |
-| 2 | Painel guia ao lado: nível, desempenho, próxima fase, barra da missão, "você está aqui" (17/11) | ✅ pronto no repositório (painel não cobre mais a letra A; falta publicar) | D032 §2 |
-| 3 | Mundo 3D em 3ª pessoa com o próprio boneco: andar (mouse, toque, setinhas), câmera, pular, tchau, entrar em lugares, área limitada, outros bonecos (17/11) | ✅ pronto no repositório (6 portas, rio raso, barco trancado; falta publicar e medir em aparelho real) | D032 §3 |
+| 1 | Tutorial de boas-vindas: panorama, como mexer, tudo o que tem, o que vai aprender e em que ordem, o que ganha; levar à 1ª missão (17/11) | ✅ no ar 18/11 () | D032 §1 |
+| 2 | Painel guia ao lado: nível, desempenho, próxima fase, barra da missão, "você está aqui" (17/11) | ✅ no ar 18/11 (painel não cobre mais a letra A) | D032 §2 |
+| 3 | Mundo 3D em 3ª pessoa com o próprio boneco: andar (mouse, toque, setinhas), câmera, pular, tchau, entrar em lugares, área limitada, outros bonecos (17/11) | ✅ no ar 18/11 (6 portas, rio raso, barco trancado;  e medir em aparelho real) | D032 §3 |
 | 4 | Nadar no rio, barco, carro, "construir uma vida", profissões (17/11) | ⏳ (parte nos jogos 3–5; mundo 3D preparado) | D032 §3 |
 | 5 | Pesquisa dos jogos mais jogados e adaptação à fonética (17/11) | ✅ pesquisa 47 | docs/pesquisa/47 |
-| 6 | Jogos: Corre-Som e Bichinho Come-Som (17/11) | ✅ pronto no repositório (falta publicar; jogos livres usam só sons aprovados até a gravação conferida) | pesquisa 47 |
-| 7 | Jogos: Estrada e Rio dos Pares, Carteiro da Vila, Casa do Som (17/11) | ✅ pronto no repositório (falta publicar; testar o botão de desafio no fim da missão e o arrastar no celular real) | pesquisa 47 |
-| 8 | Jogos primeiro dentro dos desafios; depois livres no Parque de Jogos, mostrando os tipos de jogo (17/11) | 🔧 | D032 §4 |
-| 9 | Página do administrador (login do dono, aba à parte; admin da escola; configurar o site) (17/11) | ✅ pronto no repositório (#/admin; falta publicar) | D032 §5 |
-| 10 | Áudios: texto ao lado de cada áudio (letra, palavra, sílaba, frase), subir/gravar áudio que entra no lugar certo; "Gravar o alfabeto" com a Agatha (17/11) | ✅ pronto no repositório (1.708 áudios listados; pacote .zip + importador; falta publicar) | app/docs/como-trocar-audios.md |
-| 11 | Lições depois da TF-22 (é/ó, vogais misturadas, nasais, R…) (17/11, "faça tudo") | 🔧 | pedagogia/01 |
+| 6 | Jogos: Corre-Som e Bichinho Come-Som (17/11) | ✅ no ar 18/11 (jogos livres usam só sons aprovados até a gravação conferida) | pesquisa 47 |
+| 7 | Jogos: Estrada e Rio dos Pares, Carteiro da Vila, Casa do Som (17/11) | ✅ no ar 18/11 (testar o botão de desafio no fim da missão e o arrastar no celular real) | pesquisa 47 |
+| 8 | Jogos primeiro dentro dos desafios; depois livres no Parque de Jogos, mostrando os tipos de jogo (17/11) | ✅ no ar 18/11 (desafios no fim das missões; Brincar → Jogos) | D032 §4 |
+| 9 | Página do administrador (login do dono, aba à parte; admin da escola; configurar o site) (17/11) | ✅ no ar 18/11 (#/admin) | D032 §5 |
+| 10 | Áudios: texto ao lado de cada áudio (letra, palavra, sílaba, frase), subir/gravar áudio que entra no lugar certo; "Gravar o alfabeto" com a Agatha (17/11) | ✅ no ar 18/11 (1.708 áudios listados; pacote .zip + importador) | app/docs/como-trocar-audios.md |
+| 11 | Lições depois da TF-22 (é/ó, vogais misturadas, nasais, R…) (17/11, "faça tudo") | ✅ no ar 18/11: TF-23, 24, 25 com voz; ⏸ TF-26 a 32 e TF-R4 escritas, esperando sons puros (nasais, R fraco) — entram sozinhas quando os sons forem publicados | pedagogia/01 |
 | 12 | Testes automáticos no GitHub (recomendação aceita) (17/11) | ✅ criado; 1ª execução completa a confirmar | .github/workflows/ci.yml |
-| 13 | Sofia nas cenas do som segurando coisas / fazendo a ação (médico "aaa", silêncio "xiii"…) (17/11) | ✅ pronto no repositório: A, E, I/Y, L, V e X trocadas (falta publicar). Ó, Ã e R fraco prontos como proposta para as lições TF; O, U, N, M, F, H, S, Z, J e É não saíram bons e ficaram como estavam | docs/propostas/06-fonema-unificada/cenas-do-som-sofia |
-| 14 | Fichas de leitura por campo semântico, boquinha em cima de cada letra, 4 níveis (17/11) | ✅ pronto no repositório (6 campos; falta publicar; posições da boca a validar com fonoaudióloga) | D033 |
+| 13 | Sofia nas cenas do som segurando coisas / fazendo a ação (médico "aaa", silêncio "xiii"…) (17/11) | ✅ no ar 18/11: A, E, I/Y, L, V e X trocadas (falta publicar). Ó, Ã e R fraco prontos como proposta para as lições TF; O, U, N, M, F, H, S, Z, J e É não saíram bons e ficaram como estavam | docs/propostas/06-fonema-unificada/cenas-do-som-sofia |
+| 14 | Fichas de leitura por campo semântico, boquinha em cima de cada letra, 4 níveis (17/11) | ✅ no ar 18/11 (6 campos; posições da boca a validar com fonoaudióloga) | D033 |
 | 15 | Mais agentes para ir mais rápido e com mais qualidade (17/11) | ✅ em uso | — |
-| 16 | Revisão final de qualidade de tudo o que entrou nesta rodada + teste completo + publicar (17/11) | ⏳ | — |
-| 17 | "Amei a ideia das figuras e o som do outro lado, manda ver" (17/11): jogo da memória de cartas — de um lado a figura (cena da Sofia fazendo o som), do outro a letra; a carta TOCA o som ao virar; achar os pares letra × cena (ideia da pesquisa 46) | ✅ pronto no repositório (falta publicar): **Memória dos Sons** em Brincar › Jogos (4 níveis) e como desafio no fim das fases da Trilha A–Z; a cena toca o som puro ao virar | docs/pesquisa/46; motor/src/memoria-sons.ts |
+| 16 | Revisão final de qualidade de tudo o que entrou nesta rodada + teste completo + publicar (17/11) | ✅ no ar 18/11 (E2E completo 396 ✓, sem-jornada 324 ✓, 375 testes) | — |
+| 17 | "Amei a ideia das figuras e o som do outro lado, manda ver" (17/11): jogo da memória de cartas — de um lado a figura (cena da Sofia fazendo o som), do outro a letra; a carta TOCA o som ao virar; achar os pares letra × cena (ideia da pesquisa 46) | ✅ no ar 18/11 (): **Memória dos Sons** em Brincar › Jogos (4 níveis) e como desafio no fim das fases da Trilha A–Z; a cena toca o som puro ao virar | docs/pesquisa/46; motor/src/memoria-sons.ts |
 
 ## Aguardando o dono
 | # | Pedido | O que falta |
