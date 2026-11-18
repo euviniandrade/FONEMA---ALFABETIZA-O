@@ -14,7 +14,7 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 | 3 | Mundo 3D em 3ª pessoa com o próprio boneco: andar (mouse, toque, setinhas), câmera, pular, tchau, entrar em lugares, área limitada, outros bonecos (17/11) | 🔧 | D032 §3 |
 | 4 | Nadar no rio, barco, carro, "construir uma vida", profissões (17/11) | ⏳ (parte nos jogos 3–5; mundo 3D preparado) | D032 §3 |
 | 5 | Pesquisa dos jogos mais jogados e adaptação à fonética (17/11) | ✅ pesquisa 47 | docs/pesquisa/47 |
-| 6 | Jogos: Corre-Som e Bichinho Come-Som (17/11) | 🔧 | pesquisa 47 |
+| 6 | Jogos: Corre-Som e Bichinho Come-Som (17/11) | ✅ pronto no repositório (falta publicar; jogos livres usam só sons aprovados até a gravação conferida) | pesquisa 47 |
 | 7 | Jogos: Estrada e Rio dos Pares, Carteiro da Vila, Casa do Som (17/11) | ✅ pronto no repositório (falta publicar; testar o botão de desafio no fim da missão e o arrastar no celular real) | pesquisa 47 |
 | 8 | Jogos primeiro dentro dos desafios; depois livres no Parque de Jogos, mostrando os tipos de jogo (17/11) | 🔧 | D032 §4 |
 | 9 | Página do administrador (login do dono, aba à parte; admin da escola; configurar o site) (17/11) | ✅ pronto no repositório (#/admin; falta publicar) | D032 §5 |
