@@ -30,7 +30,7 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 | 19 | "Robô": enviar uma foto e ele transforma em 3D e coloca na plataforma (18/11) | 🔧 (pesquisa de caminho grátis; sem servidor) | — |
 | 20 | Personagens do aluno: vários tipos de cabelo; cor dos olhos ruim/desconfigurada (18/11) | 🔧 | D029 |
 | 21 | Passeio 3D: o boneco não anda (fica pulando) e não nada (some no mar) (18/11) | 🔧 | D032 §3 |
-| 22 | Tarefas e funções bloqueadas mesmo depois de terminar a atividade: liberar conforme for fazendo, para não cansar nem desanimar (18/11) | 🔧 | — |
+| 22 | Tarefas e funções bloqueadas mesmo depois de terminar a atividade: liberar conforme for fazendo, para não cansar nem desanimar (18/11) | 🔧 pronto no ramo, NÃO publicado (18/11): cada uma das 11 primeiras missões abre algo novo (jogos de som já na 1ª, Memória na 3ª, uma peça da Lojinha por missão); painel **"Abriu!"** no fim da missão e selo **"Novo!"**; todo cadeado diz quantas missões faltam (bolinhas) ou mostra a barrinha; sons L, V, J, P, T, B, C, D, G entram nos jogos livres; portas Casa e Coreto do passeio sempre abertas. A trilha continua por domínio | D034; motor/src/desbloqueio.ts |
 | 23 | "Tem muita coisa ruim ainda": revisão geral de qualidade olhando o app como usuário (18/11) | 🔧 | — |
 | 24 | Passeio com qualidade de jogo grande (18/11): andar e correr com naturalidade (nada robótico), nadar batendo os braços, mergulhar e ver peixinhos, mundo 3D bonito e mais realista, divertido e encantado, com trilha sonora e sons de ambiente; imersivo e "viciante no bom sentido". Dono ofereceu um conector do Blender se ajudar | 🔧 | D032 §3 |
 

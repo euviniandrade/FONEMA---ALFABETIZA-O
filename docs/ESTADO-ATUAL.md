@@ -1,6 +1,6 @@
 # FONEMA — Estado atual e passagem de bastão
 
-Atualizado em 2026-11-17 (seção 0: Trilha dos Sons, blocos 4 e 5). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
+Atualizado em 2026-11-18 (seção 0: desbloqueio progressivo, D034). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
 Tudo o que foi feito está neste repositório, no ramo `claude/eager-brahmagupta-3d2lhr` (commit e push a cada mudança). Nada depende
 da memória da conversa anterior.
 
@@ -8,6 +8,26 @@ da memória da conversa anterior.
 
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
+
+**Desbloqueio progressivo (D034, fila do dono nº 22; 18/11; NÃO publicado ainda):** queixa do dono: "as tarefas e funções estão
+bloqueadas mesmo quando o aluno terminou uma atividade". Antes, nas 4 primeiras missões nada abria fora da trilha; os jogos de som
+abriam na 5ª, a Memória na 7ª, as peças da Lojinha esperavam letras 35 missões à frente, os sons L, V, J, P, T, B, C, D, G nunca
+entravam nos jogos, e os cadeados não diziam quanto faltava. Tabela completa dos cadeados (antes) em `docs/decisoes/034-…`.
+- **Agora:** catálogo único dos extras (`motor/src/desbloqueio.ts`: aberto, o que falta, quantas missões faltam). Cada uma das 11
+  primeiras missões abre algo (teste). 1ª missão: Corre-Som "Figuras" e Bichinho (começa/termina) com o som do A, em **aquecimento**
+  (menos de 3 sons: as outras figuras são só ouvidas; grava EXPOSIÇÃO, regra 4) + 1ª peça. 3ª: Memória nível 1 (2 pares). 5ª:
+  Corre-Som "Letras". Peças da Lojinha: uma por missão nas 11 primeiras (`conteudo/src/avatar.ts`; o cadeado diz "Abre na próxima
+  missão"/"Abre em 3 missões"). Sons duvidosos entram nos jogos **livres** (mesmo clipe da trilha; desafio da fase continua sem).
+  Jogos de ler/escrever, textos, fichas, eco/coro e escrita continuam pela regra 2, mas dizem quantas missões faltam (bolinhas);
+  fluência continua ≥ 95% (ABC), com barrinha. Passeio: Casa e Coreto sempre abertos (antes da escrita/fluência levam ao "Meu
+  boneco" e às palmas). **"Abriu!"** no fim da missão (Tales: "Olha só o que chegou para você…", fala já gravada) e selo **"Novo!"**
+  na barra (Brincar, Leitura, Lojinha) e nos cartões até visitar ("visto" fica no aparelho). A trilha não mudou (domínio, D021).
+- **Bugs:** não achei "concluiu e não destrancou" nem "só destrava ao recarregar" (o E2E novo navega sem recarregar). O problema
+  era de critério: cadeados longe demais (peças) ou mudos.
+- **Verificado:** typecheck, lint, testes (novo `motor/test/desbloqueio.test.ts`), E2E `node web/e2e/fluxo.e2e.mjs --desbloqueio`
+  (trecho `web/e2e/trecho-desbloqueio.mjs`, também no completo e no `--sem-jornada`; joga Letra A → som /a/ → Letra E como criança
+  nova) e capturas `--capturas-desbloqueio` (`app/docs/capturas/v13-desbloqueio-*`, 1850×980 e 390×844, olhadas). Resultado do
+  `--sem-jornada` e do completo: ver a fila nº 22. Falas novas sugeridas (sem voz): `app/docs/falas-pendentes.md` §1h.
 
 **Passeio 3D em terceira pessoa (D032 item 3; 17–18/11; NÃO publicado ainda):** o botão "Passear 3D" (no "Mais") abre
 `public/mundo3d/passeio.html` (fonte: `docs/propostas/06-fonema-unificada/mundo-3d-v2`, copiado no build; fora do precache).
