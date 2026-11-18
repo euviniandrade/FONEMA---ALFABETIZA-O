@@ -5,7 +5,7 @@
  * "Visto" fica no aparelho (localStorage), não no progresso: assim tocar num cartão não disputa gravação com o jogo que abre em
  * seguida (o progresso guarda só o que abriu: `Progresso.novidades`, preenchido por `fecharSessao`).
  */
-import { useMemo, type CSSProperties } from 'react';
+import { useEffect, useMemo, useRef, type CSSProperties } from 'react';
 import { abriuParaMostrar, missoesAteAbrir, textoMissoes, type Extra, type Progresso } from '@fonema/motor';
 import { Figura, Icone } from './ui.tsx';
 import '../estilos-desbloqueio.css';
@@ -71,9 +71,12 @@ const FIGURA_DO_JOGO: Record<string, string> = { 'jogo:corre-som': 'bola', 'jogo
 /** Painel "Abriu!" do fim da missão: cada coisa nova com animação; tocar leva lá. */
 export function PainelAbriu({ ids, sexo, criancaId, ir }: { ids: string[]; sexo?: string; criancaId: string; ir: (rota: string) => void }) {
   const itens = abriuParaMostrar(ids, sexo).slice(0, 6);
+  const caixa = useRef<HTMLDivElement>(null);
+  // aparece à vista (no celular o ritual é comprido)
+  useEffect(() => { caixa.current?.scrollIntoView?.({ behavior: 'smooth', block: 'center' }); }, []);
   if (!itens.length) return null;
   return (
-    <div className="abriu-d34" data-testid="abriu" role="status">
+    <div className="abriu-d34" data-testid="abriu" role="status" ref={caixa}>
       <h2 className="t"><Icone nome="estrela" />Abriu!</h2>
       <div className="abriu-grade">
         {itens.map((x, k) => {

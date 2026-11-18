@@ -80,6 +80,8 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
           <h1 className="t">{relatorio.faseConcluida ? `Fase concluída: ${fase.titulo}!` : 'Missão de hoje feita!'}</h1>
           <Balao fala={{ quem: 'sofia', texto: FALAS.ritual.recap }} crianca={crianca} />
           <p className="ritual-desafios">Hoje: <b>{relatorio.atividades}</b> desafios feitos</p>
+          {/* D034: o que abriu fica logo no alto (no celular, o resto do ritual vem embaixo) */}
+          {passo >= 2 && abriu.length ? <PainelAbriu ids={relatorio.abriu ?? []} sexo={crianca.genero} criancaId={crianca.id} ir={navegar} /> : null}
           <div className="ritual-grade">
             <div className="ritual-moedas">
               <Cofrinho saldo={saldoAntes + (passo >= 1 ? relatorio.moedinhas : 0)} animar={moedasAnim} tamanho={250} />
@@ -107,7 +109,6 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
               ) : null}
             </div>
           </div>
-          {passo >= 2 && abriu.length ? <PainelAbriu ids={relatorio.abriu ?? []} sexo={crianca.genero} criancaId={crianca.id} ir={navegar} /> : null}
           {relatorio.chefe ? (
             <p className={`ritual-chefe ${relatorio.chefe.passou ? 'ok' : ''}`}>
               <Icone nome={relatorio.chefe.passou ? 'estrela' : 'coracao'} />{relatorio.chefe.passou ? `Você venceu! (${Math.round(relatorio.chefe.leitura * 100)}% de acertos)` : 'Quase! Vamos treinar mais um pouquinho; o desafio continua lá, e nada se perde.'}
