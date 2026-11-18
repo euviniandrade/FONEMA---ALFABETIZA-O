@@ -9,6 +9,30 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Revisão de qualidade 18/11 — frente de SOM, ESPERA e LÓGICA (fila do dono nº 23; 18/11; NÃO publicado ainda):** item a item em
+`docs/revisoes/qualidade-2026-11-18.md` ("Situação dos itens — frente de som, espera e lógica").
+- **Fila única de áudio** (`app/web/src/servicos/canal-audio.ts`, usada por `voz.ts`, `sons-letras.ts` e `sons-emendados.ts`): nunca
+  duas falas/sons juntos. Um áudio novo espera o anterior acabar; se a criança tocou na tela há ≤ 0,9 s, o anterior sai com fade de
+  90 ms (som ou fim de frase com menos de 1 s termina inteiro). `voz.parar()` explícito sempre corta (com fade). `voz.cadeia()`:
+  enunciado → estímulo que fica velho quando a criança responde no meio (usada no Escolher). Pausa de 450 ms entre sons comparados
+  (`PAUSA_ENTRE_SONS_MS` em `mecanicas/contraste.ts`). Teste: `servicos/canal-audio.test.ts`.
+- **Botões:** `componentes/BotaoOuvindo.tsx` = "Ouvindo…" com ondinha (cor normal, `aria-disabled`) onde escutar é a atividade
+  (Letra, Espelho, Som novo, página e fim da história, Assiste e Faz). Libera assim que o som da letra tocou inteiro uma vez; tocar
+  corta a fala. "Ouvir o som"/"Ver de novo"/"Ouvir de novo" nunca apagados e recomeçam limpo.
+- **Fichas:** rodada guardada até o fim (a abertura mostra a palavra que é lida; a causa exata do MACACO→LOBO não foi reproduzida,
+  o sorteio ficou à prova de remontagem); azul = lida, verde só no acerto. **Histórias:** `mostraCapa` (a capa aparece na pergunta
+  que cita a capa); a bola certa é `figuras/bola-vermelha.webp` (nova). **Jogos:** a demonstração é limpa antes de "Agora é com você!"
+  (Estrada, Carteiro, Corre-Som, Come-Som, jogos de escuta). **Escolher:** figuras pré-carregadas.
+- **Lições de vogal TF-01…05 [DP]:** sem "Som novo" (a fase da letra, logo antes, já apresenta o som) e as perguntas som → letra e
+  som → figura viram Corre-Som e Bichinho Come-Som (`comoJogo` na atividade; mesmos itens e registro). O Corre-Som cai na reserva
+  2D se a pista 3D não ficar pronta em 8 s. Consoantes não mudaram.
+- **Verificado (cópia separada, porta 4660, build do commit f2132c3):** typecheck e lint completos; `npm test` 433/433 (com a máquina
+  a carga ~30, 3 testes longos estouram os 5 s padrão; com `--testTimeout=60000` passam todos); E2E `--voz-real` com checagens novas
+  (25 áudios, 0 sobreposição > 50 ms, pausa 475/479 ms entre sons comparados, "Eu fiz o som!" nunca apagado, "Já conheci!" em 21 s
+  em vez de 37 s). `--sem-jornada`: RESULTADO_SOM_SJ. Completo: RESULTADO_SOM_COMPLETO.
+- **Falta:** desenho da boquinha parada das fichas; falas novas (Memória "Vire duas cartas…", chegada de quem já lê, um narrador por
+  jogo de escuta, ponte antes do Corre-Som das vogais) em `app/docs/falas-pendentes.md` §1i; ninguém ouviu num aparelho de verdade.
+
 **Revisão de qualidade 18/11 — frente das telas e do visual (fila do dono nº 23; 18/11; NÃO publicado ainda):** o que foi feito
 item a item está em `docs/revisoes/qualidade-2026-11-18.md` ("Situação dos itens — frente das telas e do visual").
 - **Estilos novos num arquivo só:** `app/web/src/estilos-telas.css` (carregado por último no `main.tsx`): lição que cabe no celular
