@@ -49,7 +49,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   const pos = () => frame.evaluate(() => window.FONEMA_PASSEIO.posicao);
   const q = await frame.evaluate(() => ({ q: window.FONEMA_MUNDO.qualidade, fps: window.FONEMA_MUNDO.info.fps }));
   console.log(`    qualidade ${q.q}, ${q.fps.toFixed(1)} quadros/s`);
-  const CLIQUE = { noWaitAfter: true, timeout: 60000 }; // a página do mundo fica ocupada desenhando
+  const CLIQUE = { noWaitAfter: true, force: true, timeout: 60000 }; // a página do mundo fica ocupada desenhando; o botão "Entrar" pulsa
   const canvas = fr.locator('#palco canvas');
   await canvas.focus();
   // o navegador de teste desenha sem placa de vídeo (poucos quadros por segundo): as conferências esperam o
