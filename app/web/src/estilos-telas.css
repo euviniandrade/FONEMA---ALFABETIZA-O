@@ -153,7 +153,8 @@ html,body{overflow-x:clip}
   .tela-sessao .mec-espelho .espelho-centro{padding:6px 12px;gap:12px;min-height:0}
   .tela-sessao .mec-espelho .letra-surge{font-size:56px}
   .tela-sessao .mec-espelho .ancora{font-size:20px}.tela-sessao .mec-espelho .ancora .fig{width:48px;height:48px}
-  .tela-sessao .mec-espelho .espelho-embed{height:max(300px,calc(100svh - 440px))}
+  .tela-sessao .mec-espelho .espelho-embed{height:max(290px,calc(100svh - 520px))}
+  .tela-sessao .mec-espelho .espelho-centro{max-height:76px}
 }
 
 /* ---------- Um estilo por tela (item 21): onde a Sofia e o Tales 3D já estão na tela, o balão não repete o retrato 2D
@@ -172,3 +173,9 @@ html,body{overflow-x:clip}
 /* ---------- Estrada e Rio dos Pares (item 22): campo pintado (visto de cima) no lugar da grama lisa ---------- */
 .jogo-estrada .ep-cena{background:linear-gradient(180deg,#bfe6ff 0 14%,transparent 14%),url(/assets/arte/jogos/campo-estrada.webp) center 60%/cover,#8fd06f}
 .mec.jogo-estrada.barco .ep-cena{background:linear-gradient(180deg,#bfe6ff 0 14%,transparent 14%),url(/assets/arte/jogos/campo-estrada.webp) center 60%/cover,#7cc66a}
+
+/* ---------- Casa do Som no celular: as letras móveis numa fileira só e o "Pronto!" à vista ---------- */
+@media (max-width:560px){
+  .mec .cs-bandeja{gap:6px;flex-wrap:nowrap}
+  .mec .cs-bandeja .peca{width:clamp(44px,12.5vw,58px);height:clamp(52px,14vw,64px);font-size:30px;border-radius:13px}
+}
