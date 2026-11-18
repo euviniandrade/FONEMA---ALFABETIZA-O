@@ -5,8 +5,8 @@
  */
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { FALAS_BIBLIOTECA as B, JOGOS_ESCUTA, JOGO_ESCUTA_POR_ID, RECURSOS, type AtividadePalmas } from '@fonema/conteudo';
-import { dadosBiblioteca, memoriaAberta, variacoesDoJogo } from '@fonema/motor';
-import { useCrianca } from '../../contexto.tsx';
+import { creditarEmBloco, dadosBiblioteca, memoriaAberta, moedinhasDaCorrida, variacoesDoJogo } from '@fonema/motor';
+import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Carregando, Topo } from '../../componentes/basicos.tsx';
 import { Figura, Fundo, Icone } from '../../componentes/ui.tsx';
@@ -30,6 +30,7 @@ const CAPA: Record<string, string[]> = { comprida: ['sol', 'formiga'], escondida
 export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?: string }) {
   const { crianca, progresso } = useCrianca(criancaId);
   const reg = useRegistroLivre(criancaId);
+  const { config } = useApp();
   const [rodada, setRodada] = useState(0);
   const [fim, setFim] = useState<{ acertos: number; total: number } | null>(null);
   const jogo = jogoId ? JOGO_ESCUTA_POR_ID[jogoId] : undefined;
@@ -55,8 +56,15 @@ export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?:
         <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/brincar`} titulo="Brincar com sons" />
         <main className="palco">
           <TelaJogoFonico jogo={jogoFonico} crianca={crianca} progresso={progresso} sessao={reg.sessao} onVoltar={() => navegar(`c/${criancaId}/brincar`)}
-            onSalvar={(v, r) => reg.salvar({ id: `livre-${jogoFonico.id}`, titulo: `${jogoFonico.nome} (${jogoFonico.variacoes.find((x) => x.id === v)?.nome ?? v})` }, r.tentativas,
-              (x) => ({ ...x, jogos: [...x.jogos, { id: jogoFonico.id, em: Date.now(), acertos: r.tentativas.filter((t) => t.acertou && !t.comAjuda).length, total: r.tentativas.length }] }))} />
+            onSalvar={async (v, r) => {
+              // D035: corrida do Corre-Som dá moedinhas da Lojinha pelas estrelas (teto por corrida e o teto do dia, D002)
+              let creditado = 0;
+              const moedas = r.corrida ? moedinhasDaCorrida(r.corrida.estrelas) : 0;
+              await reg.salvar({ id: `livre-${jogoFonico.id}`, titulo: `${jogoFonico.nome} (${jogoFonico.variacoes.find((x) => x.id === v)?.nome ?? v})` }, r.tentativas,
+                (x) => ({ ...x, jogos: [...x.jogos, { id: jogoFonico.id, em: Date.now(), acertos: r.tentativas.filter((t) => t.acertou && !t.comAjuda).length, total: r.tentativas.length }] }),
+                (p) => { if (!moedas) return p; const c = creditarEmBloco(p, { atividades: moedas, marcos: 0, regioes: 0 }, config.moedinhas, Date.now()); creditado = c.creditado; return c.progresso; });
+              return creditado;
+            }} />
         </main>
       </div>
     );

@@ -1,7 +1,8 @@
 // FONEMA · Mundo 3D v2 — natureza: árvores, flores, capim e bichinhos, com INSTANCING
 // (uma draw call por tipo, centenas de cópias). Copas com vento e brilho de borda.
 import * as THREE from 'three';
-import { G, M, rng, canopyGeo, blobGeo, addWind, addRim, mergeGeos, Lote } from './kit.js';
+import { G, M, rng, canopyGeo, blobGeo, sombrearCopa, addWind, addRim, mergeGeos, Lote } from './kit.js';
+import { addTranslucido } from './materiais.js';
 
 const _m = new THREE.Matrix4(), _c = new THREE.Color();
 
@@ -24,12 +25,12 @@ export const VERDES = ['#4FA25A', '#5DB060', '#3F8F4F', '#6CBB5E', '#46985A', '#
 
 /** Floresta/arvoredo: troncos e 3 formatos de copa instanciados. */
 export function criarArvores(U, q) {
-  const folha = addRim(addWind(new THREE.MeshStandardMaterial({ roughness: 0.82, color: '#fff' }), U, 0.022, 2.0), '#FFF0B8', 0.32, 2.4);
+  const folha = addTranslucido(addRim(addWind(new THREE.MeshStandardMaterial({ roughness: 0.82, color: '#fff', vertexColors: true }), U, 0.022, 2.0), '#FFF0B8', 0.32, 2.4), U);
   const tronco = new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.9 });
   const trunkGeo = new THREE.CylinderGeometry(0.28, 0.42, 1, 9).translate(0, 0.5, 0);
   const copas = [0, 1, 2].map((i) => new Instancias(canopyGeo(10 + i * 3, 5 + i, 1), folha));
   const troncos = new Instancias(trunkGeo, tronco);
-  const longe = new Instancias(blobGeo(77, 1, 0.22), folha); // LOD: copa de 1 bolha para árvores distantes
+  const longe = new Instancias(sombrearCopa(blobGeo(77, 1, 0.22).clone(), { k: 0.5 }), folha); // LOD: copa de 1 bolha para árvores distantes
   const r = rng(77);
   return {
     folha,
@@ -60,7 +61,7 @@ export function ipe(ctx, x, y, z, s = 1, seed = 1, cor = '#F5C033', cor2 = '#F9D
   for (let i = 0; i < 7; i++) {
     const a = i / 7 * Math.PI * 2 + r(), rr = i ? 1.9 * s : 0;
     const sc = (i ? 2.6 : 3.4) * s * (0.85 + r() * 0.3);
-    Fo.add(blobGeo(seed * 5 + i, 3, 0.28), i % 3 === 0 ? cor2 : cor, M(x + Math.cos(a) * rr, y + 5.6 * s + (i ? -0.3 + r() * 0.9 : 0.6), z + Math.sin(a) * rr, 0, r() * 6, 0, sc, sc * 0.82, sc), { grad: 0.35 });
+    Fo.add(blobGeo(seed * 5 + i, 3, 0.28, 1, 0.6), i % 3 === 0 ? cor2 : cor, M(x + Math.cos(a) * rr, y + 5.6 * s + (i ? -0.3 + r() * 0.9 : 0.6), z + Math.sin(a) * rr, 0, r() * 6, 0, sc, sc * 0.82, sc), { grad: 0.35 });
   }
   // flores caídas
   for (let i = 0; i < 70; i++) { const a = r() * Math.PI * 2, d = Math.sqrt(r()) * 4.2 * s; ctx.petalas.push({ m: M(x + Math.cos(a) * d, y + 0.04, z + Math.sin(a) * d, 0, r() * 6, 0, 0.16 + r() * 0.1), c: r() < 0.5 ? cor : cor2 }); }

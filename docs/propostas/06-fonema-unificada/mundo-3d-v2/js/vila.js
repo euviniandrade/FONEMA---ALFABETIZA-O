@@ -3,11 +3,11 @@
 // ipês-amarelos, mata nas colinas, horta, campinho, rio com reflexo, cais e barquinho, ponte,
 // varais de livros, postes, bancos, flores, pássaros, borboletas, Sofia, Tales, Bolota e Zum-Zum.
 import * as THREE from 'three';
-import { Lote, rbox, G, M, F, rng, fbm, smooth, lerp, clamp, canvasTex, placaTex, addRim, addWind, matStd, blobGeo, radialTex } from './kit.js';
+import { Lote, rbox, G, M, F, rng, fbm, smooth, lerp, clamp, canvasTex, placaTex, addRim, addWind, matStd, blobGeo, sombrearCopa, radialTex } from './kit.js';
 import { P, CASAS, casa, poste, banco, coreto, escola, biblioteca, padaria, cerca } from './predios.js';
 import { Instancias, criarArvores, ipe, coqueiro, bananeira, criarBichinhos } from './natureza.js';
 import { criarRio } from './agua.js';
-import { addDetalheChao, addDetalheSuperficie, addCausticas, DETALHE } from './materiais.js';
+import { addDetalheChao, addDetalheSuperficie, addCausticas, addTranslucido, DETALHE } from './materiais.js';
 import { criarSprite, criarBolota, criarZumZum, criarPortal, rotulo } from './personagens.js';
 
 // ---------- rio e relevo ----------
@@ -152,7 +152,7 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   const r = rng(2024);
   const matCorpo = addDetalheSuperficie(addRim(matStd(), '#FFE4BE', 0.22, 3.0), U, P);
   DETALHE.nivel.value = NIVEL_AGUA;
-  const matFolha = addRim(addWind(matStd({ roughness: 0.82 }), U, 0.018, 2.5), '#FFF2B0', 0.3, 2.4);
+  const matFolha = addTranslucido(addRim(addWind(matStd({ roughness: 0.82 }), U, 0.018, 2.5), '#FFF2B0', 0.3, 2.4), U, 0.35);
   const matJanela = matStd({ roughness: 0.25, metalness: 0.1, emissive: new THREE.Color('#FFB866'), emissiveIntensity: 0 });
   const matLuz = matStd({ emissive: new THREE.Color('#FFD08A'), emissiveIntensity: 0.15, roughness: 0.3 });
   const ctx = { C: new Lote(1), J: new Lote(2), Fo: new Lote(3), Lz: new Lote(4), flores: [], arbustos: [], petalas: [] };
@@ -360,8 +360,16 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   if (capim.l.length) grupo.add(capim.build());
   const flor = new Instancias(florGeo(), new THREE.MeshStandardMaterial({ color: '#fff', vertexColors: true, roughness: 0.6, emissive: '#fff', emissiveIntensity: 0.05, side: THREE.DoubleSide }), { cast: false });
   ctx.flores.forEach((f) => flor.add(f.m, f.c)); grupo.add(flor.build());
-  const matArb = addRim(addWind(new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.85 }), U, 0.02, 0), '#FFF2B0', 0.28, 2.4);
-  const arb = new Instancias(blobGeo(8, 1, 0.3), matArb); ctx.arbustos.forEach((f) => arb.add(f.m, f.c)); grupo.add(arb.build());
+  const matArb = addTranslucido(addRim(addWind(new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.85, vertexColors: true }), U, 0.02, 0), '#FFF2B0', 0.28, 2.4), U, 0.45);
+  // arbustos fofos: no médio/alto, bolha mais redonda (silhueta sem quinas); no baixo, a de sempre. As duas ficam prontas e a
+  // troca de qualidade ao vivo só mostra uma ou outra (o "baixo" nunca desenha a mais pesada).
+  const arbGeo = (d) => sombrearCopa(blobGeo(8, d, 0.24, 1, 0.5).clone(), { k: 0.55, ao: 0.42, cy: -0.1 });
+  const arbBaixo = new Instancias(arbGeo(1), matArb), arbFofo = new Instancias(arbGeo(2), matArb);
+  ctx.arbustos.forEach((f) => { arbBaixo.add(f.m, f.c); arbFofo.add(f.m, f.c); });
+  const arbMalhas = [arbBaixo.build(), q === 'baixo' ? null : arbFofo.build()];
+  for (const m of arbMalhas) if (m) grupo.add(m);
+  const qualidadeArbustos = (n) => { const fofo = n !== 'baixo' && !!arbMalhas[1]; arbMalhas[0].visible = !fofo; if (arbMalhas[1]) arbMalhas[1].visible = fofo; };
+  qualidadeArbustos(q);
   const pet = new Instancias(new THREE.CircleGeometry(0.5, 6).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.8 }), { cast: false }); ctx.petalas.forEach((f) => pet.add(f.m, f.c)); grupo.add(pet.build());
 
   // ---------- placas (palavras decodificáveis, Andika) ----------
@@ -414,6 +422,8 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   const tint = new THREE.Color();
   return {
     grupo, POIS, portais, rio, altura,
+    /** Troca ao vivo de qualidade (o mundo chama): o que tem versão leve e pesada. */
+    qualidade(n) { qualidadeArbustos(n); },
     // grama de perto (js/grama.js) e o fundo do rio (js/submerso.js)
     chao: { tex: chaoTex, ext: EXT, geo: gIn, seg: segIn }, RIO_PTS, fundoRio, terreno,
     // para o passeio (colisão e água): peças dos lotes, troncos, arbustos, rio e barquinho

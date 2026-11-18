@@ -78,8 +78,8 @@ export const hipRoof = (w, h, d, over = 0.3) => memo(`hip${w},${h},${d},${over}`
   g.scale(w + over * 2, h, d + over * 2); g.translate(0, h / 2, 0); return g;
 });
 /** "Nuvem" orgânica para copas, arbustos e nuvens: icosfera deformada por ruído, normais suaves. */
-export function blobGeo(seed = 1, detail = 3, amp = 0.18, sq = 1) {
-  return memo(`blob${seed},${detail},${amp},${sq}`, () => {
+export function blobGeo(seed = 1, detail = 3, amp = 0.18, sq = 1, fofo = 0) {
+  return memo(`blob${seed},${detail},${amp},${sq},${fofo}`, () => {
     let g = new THREE.IcosahedronGeometry(0.5, detail);
     g.deleteAttribute('normal'); g.deleteAttribute('uv');
     g = mergeVertices(g);
@@ -91,6 +91,8 @@ export function blobGeo(seed = 1, detail = 3, amp = 0.18, sq = 1) {
       p.setXYZ(i, v.x * k, v.y * k * sq, v.z * k);
     }
     g.computeVertexNormals();
+    // fofo > 0: a luz "contorna" a bolha como se fosse lisa (normais puxadas para a esfera) — some o facetado de poliedro
+    if (fofo > 0) { const n = g.attributes.normal; for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i); v.y /= sq || 1; v.normalize(); const nx = lerp(n.getX(i), v.x, fofo), ny = lerp(n.getY(i), v.y, fofo), nz = lerp(n.getZ(i), v.z, fofo), l = Math.hypot(nx, ny, nz) || 1; n.setXYZ(i, nx / l, ny / l, nz / l); } }
     return g;
   });
 }
@@ -105,8 +107,28 @@ export function canopyGeo(seed = 1, n = 5, detail = 2) {
       g.applyMatrix4(M(Math.cos(a) * rr, i === 0 ? 0.08 : -0.06 + r() * 0.22, Math.sin(a) * rr, 0, r() * 6, 0, s));
       parts.push(g);
     }
-    return mergeGeos(parts);
+    return sombrearCopa(mergeGeos(parts));
   });
+}
+/**
+ * Copa/arbusto "de filme": normais puxadas para fora a partir do centro da copa (a luz desliza pela copa inteira, como
+ * uma nuvem de folhas, em vez de cada bolha ter seu próprio lado escuro) e oclusão de ambiente ASSADA na cor do vértice
+ * (por baixo e no miolo é mais escuro; nas pontas de cima, mais claro). Custo zero por quadro. Muda a geometria (em cache).
+ */
+export function sombrearCopa(g, { k = 0.62, ao = 0.5, cy = -0.02 } = {}) {
+  const p = g.attributes.position, n = g.attributes.normal, cor = new Float32Array(p.count * 3), v = new THREE.Vector3();
+  let rMax = 1e-3; for (let i = 0; i < p.count; i++) rMax = Math.max(rMax, Math.hypot(p.getX(i), p.getY(i) - cy, p.getZ(i)));
+  for (let i = 0; i < p.count; i++) {
+    v.set(p.getX(i), p.getY(i) - cy, p.getZ(i)); const dist = v.length() / rMax; v.normalize();
+    const nx = lerp(n.getX(i), v.x, k), ny = lerp(n.getY(i), v.y, k), nz = lerp(n.getZ(i), v.z, k), l = Math.hypot(nx, ny, nz) || 1;
+    n.setXYZ(i, nx / l, ny / l, nz / l);
+    const alto = smooth(clamp(v.y * 0.5 + 0.5, 0, 1)), fora = smooth(clamp((dist - 0.55) / 0.45, 0, 1));
+    const f = (1 - ao) + ao * (0.35 * alto + 0.65 * fora) * (0.85 + 0.15 * alto);
+    const pinta = 0.94 + 0.12 * noise2(p.getX(i) * 7.1 + p.getZ(i) * 3.3, p.getY(i) * 6.7); // tons de folha
+    cor[i * 3] = f * pinta; cor[i * 3 + 1] = f * pinta * (1.0 + 0.04 * alto); cor[i * 3 + 2] = f * pinta * 0.97;
+  }
+  g.setAttribute('color', new THREE.BufferAttribute(cor, 3));
+  return g;
 }
 export function mergeGeos(list) {
   let nv = 0, ni = 0;

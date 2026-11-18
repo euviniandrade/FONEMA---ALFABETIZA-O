@@ -12,7 +12,7 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNod
 import { BANCO, FALAS_BIBLIOTECA as B, HISTORIAS, HISTORIA_POR_ID, TEXTOS_DECODIFICAVEIS, TEXTO_POR_ID, nomeDaFigura } from '@fonema/conteudo';
 import {
   anotarBiblioteca, catalogoDeExtras, dadosBiblioteca, estadoDosCampos, frasesEstudadas, estadoFluencia, palavrasParaEscrever, registrarLivre, resumoFluencia, textoLiberado, type DadosBiblioteca,
-  type Tentativa
+  type Progresso, type Tentativa
 } from '@fonema/motor';
 import { Falta, SeloNovo, ehNovo, marcarVistoAqui, useMissoesAteAbrir } from '../../componentes/Desbloqueio.tsx';
 import { useApp, useCrianca } from '../../contexto.tsx';
@@ -39,13 +39,14 @@ export function useRegistroLivre(criancaId: string) {
   const sessao = useRef(novoId('livre'));
   return {
     sessao: sessao.current,
-    salvar: async (cena: { id: string; titulo: string }, tentativas: Tentativa[], resumo: (d: DadosBiblioteca) => DadosBiblioteca) => {
+    /** `ajustar`: mudança extra no mesmo salvamento (D035: moedinhas da corrida do Corre-Som, pelo teto do dia). */
+    salvar: async (cena: { id: string; titulo: string }, tentativas: Tentativa[], resumo: (d: DadosBiblioteca) => DadosBiblioteca, ajustar: (p: Progresso) => Progresso = (p) => p) => {
       if (!progresso) return;
       const agora = Date.now();
-      if (!tentativas.length) { await salvarProgresso(anotarBiblioteca(progresso, resumo)); return; }
+      if (!tentativas.length) { await salvarProgresso(ajustar(anotarBiblioteca(progresso, resumo))); return; }
       const demonstracoes = await repo.listarDemonstracoes(criancaId);
       const r = registrarLivre(progresso, { sessao: sessao.current, cena, tentativas, cfg: config, agora, demonstracoes }, resumo);
-      await salvarProgresso(r.progresso);
+      await salvarProgresso(ajustar(r.progresso));
       const acertos = tentativas.filter((t) => t.acertou && !t.comAjuda).length;
       await repo.registrarEvento({ id: novoId('ev'), criancaId, em: agora, tipo: 'atividade', cena: cena.id, habilidade: tentativas[0].habilidade, texto: cena.titulo, acertos, total: tentativas.length });
     }

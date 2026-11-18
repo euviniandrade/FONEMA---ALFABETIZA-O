@@ -30,18 +30,18 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { carregarFontes, clamp, lerp, easeInOut, smooth } from './kit.js';
-import { criarCeu, criarNuvens } from './ceu.js';
+import { criarCeu, criarNuvens, criarMorros, criarPolen } from './ceu.js';
 import { criarVila, POIS, FASES_R0 } from './vila.js';
 import { criarArquipelago, REGIOES } from './arquipelago.js';
 import { criarGrama } from './grama.js';
 import { criarSubmerso } from './submerso.js';
-import { DETALHE } from './materiais.js';
+import { DETALHE, LUZ } from './materiais.js';
 
 export { POIS, FASES_R0, REGIOES };
 
 export const QUALIDADES = {
-  alto: { dpr: 2, sombra: 2048, ao: true, bloom: true, msaa: 4, nuvens: 16 },
-  medio: { dpr: 1.5, sombra: 1024, ao: false, bloom: true, msaa: 2, nuvens: 11 },
+  alto: { dpr: 2, sombra: 2048, ao: true, bloom: true, msaa: 4, nuvens: 22 },
+  medio: { dpr: 1.5, sombra: 1024, ao: false, bloom: true, msaa: 2, nuvens: 14 },
   baixo: { dpr: 1, sombra: 0, ao: false, bloom: false, msaa: 0, nuvens: 6 },
 };
 
@@ -99,7 +99,17 @@ export async function criarMundo(container, opts = {}) {
   const _aplicar = ceu.aplicar; ceu.aplicar = (h, r) => { _aplicar(h, r); scene.fog.density *= nevoaMul; };
   ceu.aplicar(hora, renderer);
   ceu.ambiente(renderer, scene);
-  const nuvens = criarNuvens(scene, Q.nuvens, 430, [55, 110]);
+  const nuvens = criarNuvens(scene, QUALIDADES.alto.nuvens, 430, [55, 110]);
+  // morros em camadas no horizonte e pólen no ar (só médio/alto; a troca ao vivo de qualidade liga/desliga)
+  const morros = criarMorros(scene), polen = criarPolen(scene, nivel === 'alto' ? 160 : 90);
+  polen.pts.layers.set(1);
+  const ceuQualidade = (n) => {
+    const q = QUALIDADES[n]; nuvens.meshes.forEach((m, i) => { m.userData.q = i < q.nuvens; m.visible = m.userData.q && !submersoAgora; });
+    const vila = cenaAtual === 'vila';
+    morros.grupo.visible = vila && n !== 'baixo' && !submersoAgora; polen.pts.visible = vila && n !== 'baixo' && !submersoAgora;
+  };
+  const _aplicar2 = ceu.aplicar; ceu.aplicar = (h, r) => { _aplicar2(h, r); morros.cores(ceu.U.horiz.value, scene.fog.color); LUZ.solDir.value.copy(ceu.sun.userData.dir); LUZ.solCor.value.copy(ceu.sun.color); };
+  ceu.aplicar(hora, renderer);
 
   // ---------- cenas ----------
   const estados = {};
@@ -130,6 +140,7 @@ export async function criarMundo(container, opts = {}) {
     if (C) scene.remove(C.grupo);
     C = c; cenaAtual = nome; scene.add(C.grupo);
     if (nome === 'vila') montarExtras(c); else definirSubmerso(false);
+    ceuQualidade(nivel);
     nevoaMul = nome === 'vila' ? 1 : 0.32; ceu.aplicar(hora, renderer);
     C.grupo.traverse((m) => { if (m.isSprite || m.isPoints || m.userData.camada1) m.layers.set(1); });
     const L = LIMITES[nome];
@@ -330,7 +341,8 @@ export async function criarMundo(container, opts = {}) {
   veuAgua.style.cssText = 'position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s;background:radial-gradient(ellipse at 50% 30%, rgba(120,220,230,0.10), rgba(20,90,120,0.28) 70%, rgba(10,50,80,0.5));mix-blend-mode:multiply';
   function qualidadeExtras(n) {
     DETALHE.on.value = n === 'baixo' ? 0 : 1; DETALHE.caus.value = n === 'baixo' ? 0 : 1;
-    grama?.qualidade(n); sub?.qualidade(n);
+    ceuQualidade(n);
+    grama?.qualidade(n); sub?.qualidade(n); cenas.vila?.qualidade?.(n);
   }
   function montarExtras(v) {
     if (grama || !v) return;
@@ -343,8 +355,9 @@ export async function criarMundo(container, opts = {}) {
   function definirSubmerso(on) {
     if (on === submersoAgora) return;
     submersoAgora = on; sub?.definirSubmerso(on);
-    if (on) { scene.background = corAgua; ceu.dome.visible = false; nuvens.meshes.forEach((m) => { m.visible = false; }); }
-    else { scene.background = null; ceu.dome.visible = true; nuvens.meshes.forEach((m) => { m.visible = true; }); ceu.aplicar(hora, renderer); }
+    if (on) { scene.background = corAgua; ceu.dome.visible = false; }
+    else { scene.background = null; ceu.dome.visible = true; ceu.aplicar(hora, renderer); }
+    ceuQualidade(nivel);
     // a página do passeio já tem o seu véu azul (#submerso): aí o véu daqui não entra (não escurece duas vezes)
     veuAgua.style.opacity = on && !document.querySelector('#submerso') ? '1' : '0';
     emitir('fonema:mundo-submerso', { submerso: on });
@@ -402,6 +415,7 @@ export async function criarMundo(container, opts = {}) {
     if (camera.position.y < chao) camera.position.y = chao;
     const dist = camera.position.distanceTo(controls.target);
     ceu.seguir(controls.target, clamp(dist * 0.85, 22, cenaAtual === 'vila' ? 110 : 260));
+    morros.seguir(camera.position); polen.tick(t, camera.position, renderer.getPixelRatio());
     if (passes.grade) passes.grade.uniforms.uTilt.value = o.tiltShift ? clamp((dist - 30) / 120, 0, 1) * 0.9 : 0;
     // nome do lugar mais próximo (HUD)
     if (cenaAtual === 'vila' && !voo) { let best = 0, bd = 1e9; POIS.forEach((p, i) => { const d = Math.hypot(p.alvo[0] - controls.target.x, p.alvo[2] - controls.target.z); if (d < bd) { bd = d; best = i; } }); if (best !== ultimoLugar && bd < 14) { ultimoLugar = best; const p = POIS[best]; emitir('fonema:lugar', { id: p.id, nome: p.nome, icone: p.icone }); } }

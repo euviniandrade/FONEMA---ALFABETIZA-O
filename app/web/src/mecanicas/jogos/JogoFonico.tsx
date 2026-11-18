@@ -7,13 +7,14 @@
  */
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { FALAS_ALFABETO, FALAS_FONICAS, LETRA_POR_ID, type AtividadeEscolher, type Fala } from '@fonema/conteudo';
-import { ESCOLHAS_POR_RODADA, desafioDaCena, montarRodada, variacoesDoJogo, type Crianca, type JogoFonicoId, type Progresso, type VariacaoJogo } from '@fonema/motor';
+import { ESCOLHAS_POR_RODADA, NIVEL_MAXIMO, desafioDaCena, montarOndas, montarRodada, proximoNivel, variacoesDoJogo, type Crianca, type JogoFonicoId, type Progresso, type VariacaoJogo } from '@fonema/motor';
 import { Figura, Icone } from '../../componentes/ui.tsx';
 import { voz } from '../../servicos/voz.ts';
 import { sementeDaTentativa, sortearItens } from '../comum.tsx';
 import { ComeSom } from './ComeSom.tsx';
 import { Falta, useMissoesAteAbrir } from '../../componentes/Desbloqueio.tsx';
-import { CorreSom, type ResultadoJogo } from './CorreSom.tsx';
+import { CorreSom, type ResultadoJogo, type ResumoCorrida } from './CorreSom.tsx';
+import { ResultadoCorrida } from './CorridaResultado.tsx';
 import './estilos-jogos.css';
 
 export interface InfoJogo {
@@ -47,6 +48,12 @@ export const JOGO_FONICO_POR_ID: Record<string, InfoJogo> = Object.fromEntries(J
 const chaveDemo = (c: string, j: string, v: string) => `fonema-demo-jogo:${c}:${j}:${v}`;
 const jaViu = (c: string, j: string, v: string) => { try { return localStorage.getItem(chaveDemo(c, j, v)) === '1'; } catch { return true; } };
 const marcarVisto = (c: string, j: string, v: string) => { try { localStorage.setItem(chaveDemo(c, j, v), '1'); } catch { /* sem armazenamento */ } };
+/** D035: nível da corrida do Corre-Som, por criança e variação (sobe ao bater a meta; guardado no aparelho). */
+const chaveNivel = (c: string, v: string) => `fonema-corre-nivel:${c}:${v}`;
+const nivelGuardado = (c: string, v: string) => { try { return Math.max(1, Math.min(NIVEL_MAXIMO, Number(localStorage.getItem(chaveNivel(c, v))) || 1)); } catch { return 1; } };
+const guardarNivel = (c: string, v: string, n: number) => { try { localStorage.setItem(chaveNivel(c, v), String(n)); } catch { /* sem armazenamento */ } };
+/** Ondas de sobra para a corrida inteira (o tempo é que acaba). */
+const ONDAS_POR_CORRIDA = 40;
 
 /** Quais sons têm clipe (só eles viram estímulo: regra 1). */
 export function useSonsComClipe(): Set<string> | null {
@@ -93,26 +100,49 @@ export function JogoNaFase({ desafio, atividade, crianca, sessao, cenaId, revisa
 
 export function TelaJogoFonico({ jogo, crianca, progresso, sessao, onSalvar, onVoltar }: {
   jogo: InfoJogo; crianca: Crianca; progresso: Progresso; sessao: string;
-  onSalvar: (variacao: VariacaoJogo, r: ResultadoJogo) => Promise<void>; onVoltar: () => void;
+  /** Devolve as moedinhas da Lojinha creditadas (D035: corrida com estrelas). */
+  onSalvar: (variacao: VariacaoJogo, r: ResultadoJogo) => Promise<number | void>; onVoltar: () => void;
 }) {
   const sons = useSonsComClipe();
   const [variacao, setVariacao] = useState<VariacaoJogo | null>(null);
   const [rodada, setRodada] = useState(0);
-  const [fim, setFim] = useState<{ acertos: number; total: number } | null>(null);
+  const [fim, setFim] = useState<{ acertos: number; total: number; corrida?: ResumoCorrida; moedinhas?: number } | null>(null);
+  const corrida = jogo.id === 'corre-som';
+  const [nivel, setNivel] = useState(1);
+  // D035: a pista 3D começa a carregar já na escolha da variação (sem "esperando a pista" na largada)
+  useEffect(() => { if (corrida) void import('./corre-som-3d.ts').catch(() => undefined); }, [corrida]);
+  useEffect(() => { if (variacao && corrida) setNivel(nivelGuardado(crianca.id, variacao)); }, [variacao, corrida, crianca.id]);
   const temSom = useMemo(() => (sons ? (f: string) => sons.has(f) : undefined), [sons]);
   const estados = useMemo(() => (temSom ? variacoesDoJogo(progresso, jogo.id, temSom) : []), [progresso, jogo.id, temSom]);
   const plano = useMemo(() => {
     if (!variacao || !temSom) return null;
     const demo = !jaViu(crianca.id, jogo.id, variacao);
+    if (corrida) {
+      const n = nivelGuardado(crianca.id, variacao);
+      const ondas = montarOndas(progresso, variacao as 'letra' | 'figura', n, { semente: sementeDaTentativa() || 1 + rodada, temSom, ondas: ONDAS_POR_CORRIDA + 1 });
+      if (!ondas.length) return null;
+      return demo ? { demo: ondas[0].arcos[0], itens: ondas.slice(1).flatMap((o) => o.arcos), ondas: ondas.slice(1), nivel: n } : { demo: null, itens: ondas.flatMap((o) => o.arcos), ondas, nivel: n };
+    }
     const itens = montarRodada(progresso, jogo.id, { variacao, semente: sementeDaTentativa() || 1 + rodada, temSom, n: ESCOLHAS_POR_RODADA[jogo.id] + (demo ? 1 : 0) });
     if (!itens.length) return null;
-    return demo ? { demo: itens[0], itens: itens.slice(1) } : { demo: null, itens };
+    return demo ? { demo: itens[0], itens: itens.slice(1), ondas: undefined, nivel: undefined } : { demo: null, itens, ondas: undefined, nivel: undefined };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [variacao, temSom, rodada]);
+  }, [variacao, temSom, rodada, nivel]);
   const info = jogo.variacoes.find((v) => v.id === variacao);
   const missoes = useMissoesAteAbrir(progresso);
 
   if (!sons) return <div className="jogo-carregando"><span className="carregando-bola" aria-hidden="true" /></div>;
+
+  if (fim?.corrida && info && variacao) {
+    const c = fim.corrida;
+    const sobe = c.bateuMeta && (c.nivel ?? 1) < NIVEL_MAXIMO;
+    return (
+      <ResultadoCorrida resumo={c} moedinhas={fim.moedinhas}
+        onProximo={sobe ? () => { setFim(null); setNivel(nivelGuardado(crianca.id, variacao)); setRodada((r) => r + 1); } : undefined}
+        onDeNovo={() => { setFim(null); setRodada((r) => r + 1); }}
+        onOutra={() => { setFim(null); setVariacao(null); }} />
+    );
+  }
 
   if (fim && info) {
     return (
@@ -131,10 +161,13 @@ export function TelaJogoFonico({ jogo, crianca, progresso, sessao, onSalvar, onV
   if (variacao && plano && info) {
     const props = {
       itens: plano.itens, demo: plano.demo, crianca, sessao, cena: `livre-${jogo.id}`, contexto: 'livre' as const, enunciado: info.enunciado,
+      ...(plano.ondas ? { ondas: plano.ondas, nivel: plano.nivel } : {}),
       onFim: async (r: ResultadoJogo) => {
         if (plano.demo) marcarVisto(crianca.id, jogo.id, variacao);
-        await onSalvar(variacao, r);
-        setFim({ acertos: r.tentativas.filter((t) => t.acertou && !t.comAjuda).length, total: r.tentativas.length });
+        // D035: bateu a meta = o próximo nível abre (nunca desce)
+        if (r.corrida?.nivel) guardarNivel(crianca.id, variacao, proximoNivel(r.corrida.nivel, r.corrida.pontos));
+        const moedinhas = await onSalvar(variacao, r);
+        setFim({ acertos: r.tentativas.filter((t) => t.acertou && !t.comAjuda).length, total: r.tentativas.length, corrida: r.corrida, moedinhas: moedinhas || 0 });
       }
     };
     return (

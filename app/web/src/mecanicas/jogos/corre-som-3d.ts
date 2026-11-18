@@ -15,16 +15,18 @@ import * as THREE from 'three';
 import { Boneco } from '../../avatar3d/motor3d.ts';
 import type { Aparencia } from '../../avatar3d/modelo.ts';
 import { asset } from '../../servicos/ambiente.ts';
+import type { MarcaArco, MotorCorrida, PlacaArco, PortalCorrida } from './corrida-motor.ts';
 
-export interface PlacaArco { letra?: string; imagem?: string }
-export type MarcaArco = 'tentado' | 'modelo' | 'certo' | null;
+export type { MarcaArco, PlacaArco } from './corrida-motor.ts';
 
 const PISTAS = [-1.35, 0, 1.35];
-const Z_PARADA = -3.6; // onde os arcos param, à frente do boneco
-const Z_SURGE = -30;
-const V_CORRIDA = 6.5;
+const Z_PARADA = -3.6; // "menos movimento": onde o arco fica parado, à frente do boneco
+const Z_SURGE = -26; // = DISTANCIA_ARCO do motor (corre-som-corrida.ts)
+const ESPACO = 12; // = ESPACO_ENTRE_ARCOS
 const CORES_ARCO = [0xff8a65, 0xffc93c, 0x5ec2e8];
 const CEU = 0xbfe6ff;
+const PR_MAX = 1.75;
+const PR_MIN = 0.75;
 
 function texturaRadial(cor: string): THREE.CanvasTexture {
   const c = document.createElement('canvas');
@@ -42,7 +44,19 @@ function texturaRua(): THREE.CanvasTexture {
   c.width = 256; c.height = 256;
   const g = c.getContext('2d')!;
   g.fillStyle = '#e9d9bf'; g.fillRect(0, 0, 256, 256);
-  for (let k = 0; k < 220; k++) { g.fillStyle = `rgba(150,120,90,${0.05 + Math.random/** Placa redonda do arco: letra grande (fonte escolar, "Aa") ou figura. */
+  for (let k = 0; k < 220; k++) { g.fillStyle = `rgba(150,120,90,${0.05 + Math.random() * 0.06})`; g.fillRect(Math.random() * 256, Math.random() * 256, 3, 3); }
+  g.fillStyle = '#c9a77c'; g.fillRect(0, 0, 10, 256); g.fillRect(246, 0, 10, 256);
+  g.fillStyle = '#ffffff';
+  for (const x of [256 / 3, (256 * 2) / 3]) g.fillRect(x - 4, 20, 8, 110);
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(1, 18);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 4;
+  return t;
+}
+
+/** Placa redonda do arco: letra grande (fonte escolar, "Aa") ou figura. */
 function texturaPlaca(p: PlacaArco, cor: number): { tex: THREE.CanvasTexture; pronta: Promise<void> } {
   const c = document.createElement('canvas');
   c.width = c.height = 256;
@@ -80,25 +94,14 @@ function texturaPlaca(p: PlacaArco, cor: number): { tex: THREE.CanvasTexture; pr
   return { tex, pronta };
 }
 
-rue;
-    };
-    escrever();
-    pronta = document.fonts?.load?.('700 100px Andika').then(() => escrever(), () => undefined) ?? Promise.resolve();
-  } else if (p.imagem) {
-    pronta = new Promise((ok) => {
-      const img = new Image();
-      img.onload = () => { fundo(); g.drawImage(img, 36, 36, 184, 184); tex.needsUpdate = true; ok(); };
-      img.onerror = () => ok();
-      img.src = p.imagem!;
-    });
-  }
-  return { tex, pronta };
+interface Arco { grupo: THREE.Group; mat: THREE.MeshStandardMaterial; placa: THREE.Mesh; brilho: THREE.Mesh }
+interface Portal {
+  raiz: THREE.Group; arcos: Arco[]; z: number; marca: MarcaArco; passou: boolean; longe: boolean; fim: number;
+  aoPassar: (k: number) => void; aoLonge: () => void;
 }
+interface Coisa { obj: THREE.Object3D; tipo: 'moeda' | 'almofada'; pista: number; pega: boolean; pulou?: boolean }
 
-interface Arco { grupo: THREE.Group; mat: THREE.MeshStandardMaterial; placa: THREE.Mesh; brilho: THREE.Mesh; marca: MarcaArco; acesa: boolean }
-interface Coisa { obj: THREE.Object3D; tipo: 'moeda' | 'almofada'; pista: number; pega: boolean }
-
-export class PistaCorreSom {
+export class PistaCorreSom implements MotorCorrida {
   private readonly r: THREE.WebGLRenderer;
   private readonly cena = new THREE.Scene();
   private readonly camera = new THREE.PerspectiveCamera(50, 1, 0.1, 140);
@@ -110,8 +113,7 @@ export class PistaCorreSom {
   private readonly rua: THREE.Mesh;
   private readonly texRua: THREE.CanvasTexture;
   private readonly enfeites: THREE.Object3D[] = [];
-  private arcos: Arco[] = [];
-  private zArcos = Z_SURGE;
+  private portais: Portal[] = [];
   private coisas: Coisa[] = [];
   private faixaChegada: THREE.Group | null = null;
   private confete: THREE.Points | null = null;
@@ -128,7 +130,21 @@ export class PistaCorreSom {
   private dancando = false;
   private esperas: { cond: () => boolean; ok: () => void }[] = [];
   private readonly obs: ResizeObserver;
+  // peças reaproveitadas (sem engasgo a cada arco)
+  private readonly geoPoste = new THREE.CylinderGeometry(0.09, 0.11, 1.3, 14);
+  private readonly geoMeia = new THREE.TorusGeometry(0.56, 0.1, 12, 30, Math.PI);
+  private readonly geoPlaca = new THREE.CircleGeometry(0.64, 40);
+  private readonly geoBrilho = new THREE.CircleGeometry(0.95, 40);
+  private readonly geoMoeda = new THREE.CylinderGeometry(0.22, 0.22, 0.06, 20);
+  private readonly matMoeda = new THREE.MeshStandardMaterial({ color: 0xffc93c, metalness: 0.3, roughness: 0.35, emissive: 0x7a4a00, emissiveIntensity: 0.25 });
+  private readonly texBrilho = texturaRadial('rgba(255,236,140,1)');
+  private readonly placas = new Map<string, { tex: THREE.CanvasTexture; pronta: Promise<void> }>();
+  // qualidade adaptativa
+  private pr = PR_MAX;
+  private medida = { quadros: 0, tempo: 0, folga: 0 };
+  private fpsMedido = 60;
   aoMoeda: (() => void) | null = null;
+  aoPulo: (() => void) | null = null;
   aoTropeco: (() => void) | null = null;
 
   constructor(private readonly canvas: HTMLCanvasElement, private menosMovimento: boolean) {
@@ -180,6 +196,7 @@ export class PistaCorreSom {
     this.obs.observe(canvas);
     this.ajustar();
     document.addEventListener('visibilitychange', this.agendar);
+    this.pr = Math.min(window.devicePixelRatio || 1, PR_MAX);
     this.agendar();
   }
 
@@ -224,7 +241,7 @@ export class PistaCorreSom {
   private ajustar = () => {
     const l = this.canvas.clientWidth, a = this.canvas.clientHeight;
     if (!l || !a) return;
-    this.r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+    this.r.setPixelRatio(this.pr);
     this.r.setSize(l, a, false);
     const aspecto = l / a;
     this.camera.aspect = aspecto;
@@ -249,13 +266,14 @@ export class PistaCorreSom {
 
   /** Posição (0–1 da largura) de cada pista na tela, na altura dos arcos parados: para a tela pôr as áreas de toque. */
   colunasNaTela(): number[] {
-    return PISTAS.map((x) => { const v = new THREE.Vector3(x, 1, Z_PARADA).project(this.camera); return (v.x + 1) / 2; });
+    return PISTAS.map((x) => { const v = new THREE.Vector3(x, 2.45, Z_PARADA).project(this.camera); return (v.x + 1) / 2; });
   }
 
   get pista() { return this.pistaAlvo; }
   irParaPista(k: number) { this.pistaAlvo = Math.max(0, Math.min(2, k)); }
-  moverPista(d: number) { this.irParaPista(this.pistaAlvo + d); }
   pular() { if (this.pulo < 0 && !this.menosMovimento) this.pulo = 0; }
+  /** Média de quadros por segundo do último segundo medido e a escala de resolução em uso (para o teste e o painel). */
+  get desempenho() { return { fps: this.fpsMedido, resolucao: this.pr }; }
 
   /** Espera uma condição do laço de animação (sem relógio próprio: pausa junto com a aba). */
   private ate(cond: () => boolean): Promise<void> {
@@ -263,22 +281,58 @@ export class PistaCorreSom {
   }
   private segundos(s: number) { const fim = this.t + s; return this.ate(() => this.t >= fim); }
 
-  /** Corre um trecho com moedinhas de enfeite e, às vezes, uma almofada para pular (sem castigo: só um tropeço fofo). */
-  async correr(s: number, extras: { moedas: boolean; almofada: boolean }) {
-    if (this.menosMovimento) return;
-    this.vAlvo = V_CORRIDA;
-    if (extras.moedas) {
-      const p = Math.floor(Math.random() * 3);
-      for (let k = 0; k < 5; k++) this.porCoisa('moeda', p, -14 - k * 1.6);
-    }
-    if (extras.almofada) this.porCoisa('almofada', this.pistaAlvo, -22);
-    await this.segundos(s);
+  iniciarCorrida(v: number) { this.dancando = false; this.vAlvo = this.menosMovimento ? 0 : v; }
+  pararCorrida() { this.vAlvo = 0; }
+
+  private placa(p: PlacaArco, cor: number) {
+    const chave = `${p.letra ?? ''}|${p.imagem ?? ''}|${cor}`;
+    let x = this.placas.get(chave);
+    if (!x) { x = texturaPlaca(p, cor); this.placas.set(chave, x); }
+    return x;
+  }
+
+  /** Lança um arco (3 placas) agora; entre os arcos surgem moedinhas e, às vezes, uma almofada para pular. */
+  portal(placas: PlacaArco[], tempoMs: number): PortalCorrida {
+    const raiz = new THREE.Group();
+    const arcos: Arco[] = placas.map((p, k) => {
+      const grupo = new THREE.Group();
+      const mat = new THREE.MeshStandardMaterial({ color: CORES_ARCO[k], roughness: 0.55, emissive: 0x000000 });
+      for (const s of [-1, 1]) { const m = new THREE.Mesh(this.geoPoste, mat); m.position.set(s * 0.56, 0.65, 0); grupo.add(m); }
+      const meia = new THREE.Mesh(this.geoMeia, mat); meia.position.y = 1.3; grupo.add(meia);
+      const placa = new THREE.Mesh(this.geoPlaca, new THREE.MeshBasicMaterial({ map: this.placa(p, CORES_ARCO[k]).tex, transparent: true }));
+      placa.position.set(0, 2.45, 0.02);
+      const brilho = new THREE.Mesh(this.geoBrilho, new THREE.MeshBasicMaterial({ map: this.texBrilho, transparent: true, depthWrite: false, opacity: 0 }));
+      brilho.position.set(0, 2.45, -0.02);
+      grupo.add(brilho, placa);
+      grupo.position.x = PISTAS[k];
+      raiz.add(grupo);
+      return { grupo, mat, placa, brilho };
+    });
+    let aoPassar: (k: number) => void = () => {};
+    let aoLonge: () => void = () => {};
+    const passou = new Promise<number>((ok) => { aoPassar = ok; });
+    const longe = new Promise<void>((ok) => { aoLonge = ok; });
+    const parado = this.menosMovimento;
+    const pt: Portal = { raiz, arcos, z: parado ? Z_PARADA : Z_SURGE, marca: null, passou: false, longe: false, fim: parado ? this.t + tempoMs / 1000 : Infinity, aoPassar, aoLonge };
+    raiz.position.z = pt.z;
+    this.cena.add(raiz);
+    this.portais.push(pt);
+    if (!parado) this.porExtras();
+    this.agendar();
+    return { passou, longe, marcar: (m) => { pt.marca = m; } };
+  }
+
+  /** Moedinhas numa pista sorteada entre este arco e o anterior; às vezes uma almofada noutra pista. */
+  private porExtras() {
+    const p = Math.floor(Math.random() * 3);
+    for (let k = 0; k < 4; k++) this.porCoisa('moeda', p, Z_SURGE + 3.5 + k * 1.4);
+    if (Math.random() < 0.4) this.porCoisa('almofada', (p + 1 + Math.floor(Math.random() * 2)) % 3, Z_SURGE + 6);
   }
 
   private porCoisa(tipo: Coisa['tipo'], pista: number, z: number) {
     let obj: THREE.Object3D;
     if (tipo === 'moeda') {
-      const m = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.06, 20), new THREE.MeshStandardMaterial({ color: 0xffc93c, metalness: 0.3, roughness: 0.35, emissive: 0x7a4a00, emissiveIntensity: 0.25 }));
+      const m = new THREE.Mesh(this.geoMoeda, this.matMoeda);
       m.rotation.x = Math.PI / 2;
       const g = new THREE.Group(); g.add(m); g.position.y = 0.55;
       obj = g;
@@ -298,78 +352,18 @@ export class PistaCorreSom {
     this.coisas.push({ obj, tipo, pista, pega: false });
   }
 
-  /** Traz os 3 arcos com as placas e desacelera até parar na frente do boneco (a escolha nunca é feita com pressa). */
-  async mostrarArcos(placas: PlacaArco[]) {
-    this.tirarArcos();
-    const prontas: Promise<void>[] = [];
-    this.arcos = placas.map((p, k) => {
-      const grupo = new THREE.Group();
-      const mat = new THREE.MeshStandardMaterial({ color: CORES_ARCO[k], roughness: 0.55, emissive: 0x000000 });
-      const poste = new THREE.CylinderGeometry(0.09, 0.11, 1.3, 14);
-      for (const s of [-1, 1]) { const m = new THREE.Mesh(poste, mat); m.position.set(s * 0.56, 0.65, 0); grupo.add(m); }
-      const meia = new THREE.Mesh(new THREE.TorusGeometry(0.56, 0.1, 12, 30, Math.PI), mat);
-      meia.position.y = 1.3; grupo.add(meia);
-      const { tex, pronta } = texturaPlaca(p, CORES_ARCO[k]);
-      prontas.push(pronta);
-      const placa = new THREE.Mesh(new THREE.CircleGeometry(0.64, 40), new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
-      placa.position.set(0, 2.45, 0.02);
-      const brilho = new THREE.Mesh(new THREE.CircleGeometry(0.95, 40), new THREE.MeshBasicMaterial({ map: texturaRadial('rgba(255,236,140,1)'), transparent: true, depthWrite: false, opacity: 0 }));
-      brilho.position.set(0, 2.45, -0.02);
-      grupo.add(brilho, placa);
-      grupo.position.x = PISTAS[k];
-      this.cena.add(grupo);
-      return { grupo, mat, placa, brilho, marca: null, acesa: false };
-    });
-    await Promise.all(prontas);
-    if (this.menosMovimento) { this.zArcos = Z_PARADA; this.velocidade = this.vAlvo = 0; this.posicionarArcos(); return; }
-    this.zArcos = Z_SURGE;
-    this.posicionarArcos();
-    this.vAlvo = -1; // modo "chegando": a velocidade segue a distância que falta
-    await this.ate(() => this.zArcos >= Z_PARADA - 0.02);
-    this.zArcos = Z_PARADA; this.vAlvo = 0; this.velocidade = 0;
-  }
-
-  private posicionarArcos() { for (const a of this.arcos) a.grupo.position.z = this.zArcos; }
-
-  /** Acende uma placa (enquanto a guia diz o nome da figura) ou apaga todas (null). */
-  acender(k: number | null) { this.arcos.forEach((a, i) => { a.acesa = i === k; }); }
-  marcar(k: number, m: MarcaArco) { const a = this.arcos[k]; if (a) a.marca = m; }
-
-  /** O boneco vai para a pista escolhida e passa pelo arco dela. */
-  async passar(k: number) {
-    this.irParaPista(k);
-    await this.ate(() => Math.abs(this.x - PISTAS[this.pistaAlvo]) < 0.05);
-    if (this.menosMovimento) {
-      this.zArcos = Z_PARADA; await this.segundos(0.15); return;
+  private tirarPortal(pt: Portal) {
+    this.cena.remove(pt.raiz);
+    for (const a of pt.arcos) {
+      a.mat.dispose();
+      (a.placa.material as THREE.Material).dispose(); // a textura fica guardada (reuso)
+      (a.brilho.material as THREE.Material).dispose();
     }
-    this.vAlvo = 4.2;
-    await this.ate(() => this.zArcos > 1.2);
-    this.vAlvo = 0;
-    await this.ate(() => this.velocidade < 0.3);
   }
 
-  /** Depois de um erro: os arcos voltam para a frente do boneco, com a mesma ordem (o arco tentado fica apagadinho). */
-  async voltarAosArcos() {
-    if (this.menosMovimento) { this.zArcos = Z_PARADA; this.posicionarArcos(); return; }
-    for (const a of this.arcos) a.grupo.visible = false;
-    this.zArcos = Z_PARADA - 6;
-    this.posicionarArcos();
-    for (const a of this.arcos) a.grupo.visible = true;
-    this.vAlvo = -1;
-    await this.ate(() => this.zArcos >= Z_PARADA - 0.02);
-    this.zArcos = Z_PARADA; this.vAlvo = 0; this.velocidade = 0;
-  }
-
-  tirarArcos() {
-    for (const a of this.arcos) { this.cena.remove(a.grupo); a.grupo.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh) { m.geometry.dispose(); const mt = m.material as THREE.MeshBasicMaterial; mt.map?.dispose(); mt.dispose(); } }); }
-    this.arcos = [];
-  }
-
-  /** Estrelinhas saindo do arco certo. */
-  festejar(k: number) {
-    const a = this.arcos[k];
-    const base = a ? new THREE.Vector3(a.grupo.position.x, 1.8, a.grupo.position.z) : new THREE.Vector3(PISTAS[this.pistaAlvo], 1.6, -1);
-    this.soltarConfete(base, 70);
+  /** Estrelinhas saindo do arco que o boneco acabou de passar. */
+  festejar() {
+    this.soltarConfete(new THREE.Vector3(PISTAS[this.pistaAlvo], 1.8, -0.6), 60);
   }
 
   private soltarConfete(base: THREE.Vector3, n: number) {
@@ -393,7 +387,8 @@ export class PistaCorreSom {
 
   /** Fim da rodada: faixa de chegada, confete e o boneco vira para a criança. Sem placar, sem "perdeu". */
   async chegada() {
-    this.tirarArcos();
+    for (const pt of this.portais) this.tirarPortal(pt);
+    this.portais = [];
     const g = new THREE.Group();
     const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.6 });
     for (const s of [-1, 1]) { const m = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 2.6, 14), mat); m.position.set(s * 2.25, 1.3, 0); g.add(m); }
@@ -406,7 +401,7 @@ export class PistaCorreSom {
     this.cena.add(g);
     if (this.menosMovimento) { g.position.z = -1.5; this.dancando = true; return; }
     g.position.z = -16;
-    this.vAlvo = V_CORRIDA * 0.7;
+    this.vAlvo = 4.5;
     await this.ate(() => (this.faixaChegada?.position.z ?? 1) > 0.5);
     this.vAlvo = 0;
     this.soltarConfete(new THREE.Vector3(0, 2.2, -0.5), 140);
@@ -421,6 +416,26 @@ export class PistaCorreSom {
     this.quadro = requestAnimationFrame(this.passo);
   };
 
+  /**
+   * Qualidade adaptativa: a cada segundo mede os quadros; abaixo de 50 qps baixa a resolução (até 0,75), acima de 57 qps por
+   * 3 s seguidos sobe de volta (até 1,75 ou a da tela). Sem engasgo: só muda o tamanho do desenho.
+   */
+  private medirQualidade(dt: number) {
+    const m = this.medida;
+    m.quadros++; m.tempo += dt;
+    if (m.tempo < 1) return;
+    this.fpsMedido = Math.round(m.quadros / m.tempo);
+    m.quadros = 0; m.tempo = 0;
+    const teto = Math.min(window.devicePixelRatio || 1, PR_MAX);
+    let novo = this.pr;
+    if (this.fpsMedido < 50 && this.pr > PR_MIN) { novo = Math.max(PR_MIN, this.pr - 0.25); m.folga = 0; }
+    else if (this.fpsMedido >= 57 && this.pr < teto) { if (++m.folga >= 3) { novo = Math.min(teto, this.pr + 0.25); m.folga = 0; } }
+    else m.folga = 0;
+    if (novo !== this.pr) { this.pr = novo; this.ajustar(); }
+    this.canvas.dataset.fps = String(this.fpsMedido);
+    this.canvas.dataset.resolucao = String(this.pr);
+  }
+
   private passo = (agora: number) => {
     this.quadro = 0;
     if (!this.vivo) return;
@@ -428,16 +443,14 @@ export class PistaCorreSom {
     this.anterior = agora;
     this.t += dt;
 
-    // velocidade: corrida, chegada (segue a distância até a parada) ou passagem
-    if (this.vAlvo < 0) this.velocidade = Math.max(0.35, Math.min(V_CORRIDA, (Z_PARADA - this.zArcos) * 1.5));
-    else this.velocidade += (this.vAlvo - this.velocidade) * Math.min(1, dt * 3);
+    // velocidade: a corrida (constante) ou a chegada
+    this.velocidade += (this.vAlvo - this.velocidade) * Math.min(1, dt * 3);
     if (this.vAlvo === 0 && this.velocidade < 0.05) this.velocidade = 0;
     const dz = this.velocidade * dt;
 
     if (dz) {
       this.texRua.offset.y += dz / (120 / 18);
       for (const e of this.enfeites) { e.position.z += dz; if (e.position.z > 8) e.position.z -= 28 * 3.4; }
-      if (this.arcos.length) { this.zArcos += dz; this.posicionarArcos(); }
       if (this.faixaChegada) this.faixaChegada.position.z += dz;
       for (const c of this.coisas) c.obj.position.z += dz;
     }
@@ -467,22 +480,31 @@ export class PistaCorreSom {
       if (!c.pega && c.obj.position.z > -0.35 && c.obj.position.z < 0.45 && Math.abs(PISTAS[c.pista] - this.x) < 0.6) {
         if (c.tipo === 'moeda') { c.pega = true; c.obj.visible = false; this.aoMoeda?.(); }
         else if (y < 0.35) { c.pega = true; this.tropeco = 0; this.aoTropeco?.(); }
+        else { c.pega = true; c.pulou = true; this.aoPulo?.(); }
       }
-      if (c.tipo === 'almofada' && c.pega && c.obj.visible) { c.obj.scale.y = Math.max(0.2, c.obj.scale.y - dt * 3); }
+      if (c.tipo === 'almofada' && c.pega && !c.pulou && c.obj.visible) { c.obj.scale.y = Math.max(0.2, c.obj.scale.y - dt * 3); }
     }
     this.coisas = this.coisas.filter((c) => { if (c.obj.position.z > 7) { this.cena.remove(c.obj); return false; } return true; });
 
-    // arcos: acesa (a guia está dizendo o nome), modelo (brilha: ajuda máxima), tentado (apagadinho), certo
-    for (const a of this.arcos) {
-      const pulsar = 0.5 + 0.5 * Math.sin(this.t * 6);
-      const m = a.brilho.material as THREE.MeshBasicMaterial;
-      m.opacity = a.marca === 'certo' ? 1 : a.marca === 'modelo' ? 0.55 + 0.45 * pulsar : a.acesa ? 0.9 : 0;
-      a.mat.emissive.setHex(a.marca === 'modelo' || a.marca === 'certo' ? 0x6a4a00 : 0x000000);
-      a.mat.color.setHex(a.marca === 'tentado' ? 0xc9c3ba : CORES_ARCO[this.arcos.indexOf(a)]);
-      (a.placa.material as THREE.MeshBasicMaterial).opacity = a.marca === 'tentado' ? 0.55 : 1;
-      const s = a.acesa && !this.menosMovimento ? 1.08 + 0.04 * pulsar : 1;
-      a.placa.scale.setScalar(s);
+    // arcos: andam com a rua; passou pelo boneco (z ≥ 0) = escolheu a pista em que está; marca certo (brilho) ou tentado
+    const pulsar = 0.5 + 0.5 * Math.sin(this.t * 6);
+    for (const pt of this.portais) {
+      if (this.menosMovimento) { if (!pt.passou && this.t >= pt.fim) pt.z = 0.01; }
+      else pt.z += dz;
+      pt.raiz.position.z = pt.z;
+      if (!pt.longe && (pt.z - Z_SURGE >= ESPACO || pt.passou)) { pt.longe = true; pt.aoLonge(); }
+      if (!pt.passou && pt.z >= 0) { pt.passou = true; pt.fim = this.t + 0.6; pt.aoPassar(this.pistaAlvo); }
+      pt.arcos.forEach((a, k) => {
+        const minha = k === this.pistaAlvo;
+        const m = pt.marca && minha ? pt.marca : null;
+        (a.brilho.material as THREE.MeshBasicMaterial).opacity = m === 'certo' ? 1 : m === 'modelo' ? 0.55 + 0.45 * pulsar : 0;
+        a.mat.emissive.setHex(m === 'certo' ? 0x6a4a00 : 0x000000);
+        a.mat.color.setHex(m === 'tentado' ? 0xc9c3ba : CORES_ARCO[k]);
+        (a.placa.material as THREE.MeshBasicMaterial).opacity = m === 'tentado' ? 0.55 : 1;
+      });
+      if (this.menosMovimento && pt.passou) pt.raiz.visible = this.t < pt.fim;
     }
+    this.portais = this.portais.filter((pt) => { const sai = pt.passou && (this.menosMovimento ? this.t >= pt.fim : pt.z > 7); if (sai) this.tirarPortal(pt); return !sai; });
 
     // confete
     if (this.confete) {
@@ -496,6 +518,7 @@ export class PistaCorreSom {
     }
 
     this.r.render(this.cena, this.camera);
+    this.medirQualidade(dt);
     this.esperas = this.esperas.filter((e) => { if (e.cond()) { e.ok(); return false; } return true; });
     this.agendar();
   };
@@ -507,7 +530,10 @@ export class PistaCorreSom {
     document.removeEventListener('visibilitychange', this.agendar);
     for (const e of this.esperas) e.ok();
     this.esperas = [];
-    this.tirarArcos();
+    for (const pt of this.portais) { pt.aoPassar(this.pistaAlvo); this.tirarPortal(pt); }
+    this.portais = [];
+    for (const x of this.placas.values()) x.tex.dispose();
+    this.texBrilho.dispose();
     this.boneco.descartar();
     this.cena.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh) { m.geometry.dispose(); const mt = m.material as THREE.Material; mt.dispose(); } });
     this.texRua.dispose();

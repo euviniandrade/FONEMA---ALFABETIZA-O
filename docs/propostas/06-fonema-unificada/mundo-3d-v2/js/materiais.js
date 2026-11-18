@@ -151,3 +151,23 @@ export function addCausticas(mat, U) {
       ${CAUSTICA_FRAG}`);
   });
 }
+
+/** Sol (direção no mundo e cor), atualizado pelo mundo a cada quadro: serve à luz que atravessa as folhas. */
+export const LUZ = { solDir: { value: new THREE.Vector3(0.5, 0.7, 0.4).normalize() }, solCor: { value: new THREE.Color('#FFE9C4') } };
+
+/**
+ * Folhas com "luz atravessando" (subsurface de mentirinha): olhando para o lado do sol, a borda da copa acende num
+ * verde-amarelado quente, como folha contra a luz nos filmes de animação. No "baixo" nem entra no programa.
+ */
+export function addTranslucido(mat, U, forca = 0.55) {
+  return encadear(mat, 'transl1', (sh) => {
+    sh.uniforms.uSolDirT = LUZ.solDir; sh.uniforms.uSolCorT = LUZ.solCor;
+    sh.fragmentShader = 'uniform vec3 uSolDirT, uSolCorT;\n' + sh.fragmentShader.replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+      { vec3 Ls = normalize((viewMatrix * vec4(uSolDirT, 0.0)).xyz);
+        vec3 Vv = normalize(vViewPosition);
+        float contra = pow(clamp(dot(-Vv, Ls), 0.0, 1.0), 3.0);
+        float borda = 1.0 - clamp(dot(normalize(normal), Vv), 0.0, 1.0);
+        float atras = 1.0 - clamp(dot(normalize(normal), Ls), 0.0, 1.0);
+        totalEmissiveRadiance += diffuseColor.rgb * uSolCorT * vec3(1.05, 1.1, 0.7) * contra * (0.35 + 0.65 * borda) * atras * ${forca.toFixed(2)}; }`);
+  });
+}

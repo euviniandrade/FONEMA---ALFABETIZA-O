@@ -123,3 +123,75 @@
 html.menos-movimento .cm-bolota-img,html.menos-movimento .cs-maozinha,html.menos-movimento .cm-bolha.pulsando,html.menos-movimento .cm-prato.modelo{animation:none!important}
 html.menos-movimento .cm-prato-caixa.voando{transform:none;opacity:.5}
 @media (prefers-reduced-motion:reduce){.cm-bolota-img,.cs-maozinha,.cm-bolha.pulsando,.cm-prato.modelo{animation:none!important}.cm-prato-caixa.voando{transform:none;opacity:.5}}
+
+/* ---------- Corre-Som em corrida (D035): placar, tempo, meta, contagem, +N/−N, ✖ com a letra certa no canto, reserva 2D ---------- */
+.cs-placar{display:flex;align-items:center;gap:10px;margin:0 0 6px;flex-wrap:nowrap}
+.cs-pontos{display:inline-flex;align-items:center;gap:6px;min-height:52px;padding:4px 16px 4px 8px;border-radius:var(--r-pilula);background:#fff;
+  box-shadow:0 4px 0 #e7c35a;font-family:var(--f-titulo);color:var(--marinho)}
+.cs-pontos .ic{width:34px;height:34px;color:#ffb400}
+.cs-pontos b{font-size:30px;line-height:1;min-width:2ch;text-align:right}
+.cs-pontos small{font-size:16px;opacity:.6}
+.cs-multi{font-family:var(--f-titulo);font-size:24px;font-weight:700;color:#fff;background:#ff8a65;border-radius:14px;padding:4px 10px;animation:pulsa 1s ease-in-out infinite}
+.cs-tempo{display:inline-flex;align-items:center;gap:6px;margin-left:auto;font-family:var(--f-titulo);font-size:24px;font-weight:700;color:var(--marinho);
+  background:#fff;border-radius:var(--r-pilula);padding:4px 14px 4px 6px;min-height:52px}
+.cs-tempo .ic{width:32px;height:32px}
+.cs-tempo.pouco{color:#c2410c;animation:pulsa .9s ease-in-out infinite}
+.cs-meta{height:10px;border-radius:999px;background:rgba(255,255,255,.7);overflow:hidden;margin:0 0 8px}
+.cs-meta i{display:block;height:100%;background:linear-gradient(90deg,#ffc93c,#ff8a65);border-radius:inherit;transition:width .3s}
+.jogo-corre.corrida .cs-pista{background:transparent}
+.cs-contagem{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-titulo);font-size:min(30vw,160px);font-weight:800;color:#fff;
+  text-shadow:0 6px 0 rgba(12,26,64,.35);pointer-events:none;animation:csConta .5s ease-out both}
+@keyframes csConta{from{transform:scale(1.6);opacity:0}to{transform:scale(1);opacity:1}}
+.cs-flutuantes{position:absolute;left:50%;bottom:30%;pointer-events:none}
+.cs-flutua{position:absolute;left:0;transform:translateX(-50%);font-family:var(--f-titulo);font-size:40px;font-weight:800;white-space:nowrap;
+  text-shadow:0 3px 0 rgba(12,26,64,.35);animation:csSobe .9s ease-out both}
+.cs-flutua.mais{color:#ffd23f}.cs-flutua.moeda{color:#fff;font-size:28px}.cs-flutua.menos{color:#ff5a4f}
+@keyframes csSobe{from{transform:translate(-50%,0);opacity:1}to{transform:translate(-50%,-90px);opacity:0}}
+.cs-xis{position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:18px;background:rgba(255,255,255,.95);
+  box-shadow:0 6px 18px rgba(12,26,64,.3);pointer-events:none;animation:csConta .25s ease-out both}
+.cs-xis-marca{font-size:44px;line-height:1;color:#e5484d;font-weight:900}
+.cs-xis-certa{display:grid;place-items:center;min-width:72px;height:72px;border-radius:14px;background:#e9f9ee;box-shadow:inset 0 0 0 4px #37A862}
+.cs-xis-certa b{font-family:var(--f-leitura);font-size:44px;color:#22407a}
+.cs-xis-certa .fig{width:60px;height:auto}
+/* reserva 2D: arcos descem do horizonte e crescem até o boneco */
+.cs2-camada{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.cs2-portal{position:absolute;left:0;right:0;top:0;height:100%;transform-origin:50% 0}
+.cs2-arco{position:absolute;top:0;width:min(28%,170px);aspect-ratio:1/1.1;transform:translateX(-50%);display:grid;place-items:center;border:12px solid var(--cor);border-bottom:0;
+  border-radius:999px 999px 18px 18px;background:rgba(255,250,240,.95);box-shadow:0 10px 0 rgba(12,26,64,.15)}
+.cs2-arco img{width:70%;height:auto}
+.cs2-arco .cs-letra{font-size:clamp(34px,7vw,64px)}
+.cs2-arco.certo{box-shadow:0 0 0 6px #FFD652,0 0 34px 12px rgba(255,214,82,.8)}
+.cs2-arco.tentado{filter:grayscale(.85) opacity(.6)}
+.cs2-moeda{position:absolute;top:0;width:34px;height:34px;margin-left:-17px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff3b0,#ffc93c 55%,#d99a00);box-shadow:0 3px 0 #b07c00;transform-origin:50% 0}
+.cs2-boneco{position:absolute;bottom:6%;width:62px;height:86px;transform:translateX(-50%);transition:left .18s ease-out}
+.cs2-boneco::before{content:'';position:absolute;left:50%;top:0;width:38px;height:38px;margin-left:-19px;border-radius:50%;background:#f2c29b;box-shadow:inset 0 10px 0 #5a3a22}
+.cs2-boneco::after{content:'';position:absolute;left:50%;top:36px;width:50px;height:50px;margin-left:-25px;border-radius:20px 20px 12px 12px;background:#5ec2e8}
+.cs2-boneco.pula{animation:cs2Pula .55s ease-out}
+.cs2-boneco.festa{animation:cs2Pula .5s ease-out 2}
+@keyframes cs2Pula{50%{transform:translate(-50%,-50px)}}
+.cs2-camada.correndo~.cs-pistas{background:repeating-linear-gradient(180deg,transparent 0 40px,rgba(255,255,255,.06) 40px 80px)}
+/* fim da corrida */
+.corrida-fim{text-align:center;display:grid;gap:10px;justify-items:center}
+.cr-pontos{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-titulo);color:var(--marinho)}
+.cr-pontos .ic{width:48px;height:48px;color:#ffb400}
+.cr-pontos b{font-size:56px;line-height:1}
+.cr-pontos span{font-size:22px}
+.cr-estrelas{display:flex;gap:10px}
+.cr-estrelas span .ic{width:54px;height:54px;color:#d5dbe3}
+.cr-estrelas span.cheia .ic{color:#ffb400;filter:drop-shadow(0 3px 0 #d08a00)}
+.cr-meta,.cr-numeros,.cr-lojinha{margin:0;font-size:18px}
+.cr-lojinha{font-weight:700;color:#8a5a00}
+.cr-erros{display:grid;gap:8px;width:100%;max-width:520px}
+.cr-erros p{margin:0;font-weight:700}
+.cr-erro{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.cr-rot{font-size:17px}
+.cr-opcao{display:inline-flex;align-items:center;gap:6px;min-height:64px;min-width:64px;padding:6px 12px;border:0;border-radius:16px;background:#fff;box-shadow:0 4px 0 #c9d6e3;cursor:pointer}
+.cr-opcao .cs-letra{font-size:40px}
+.cr-opcao .fig{width:52px;height:auto}
+.cr-opcao .ic{width:30px;height:30px}
+@media (max-width:640px){
+  .cs-pontos b{font-size:24px}.cs-tempo{font-size:20px}
+  .cr-pontos b{font-size:44px}
+}
+html.menos-movimento .cs-multi,html.menos-movimento .cs-tempo.pouco,html.menos-movimento .cs-flutua,html.menos-movimento .cs-contagem{animation:none!important}
+@media (prefers-reduced-motion:reduce){.cs-multi,.cs-tempo.pouco,.cs-flutua,.cs-contagem,.cs2-boneco{animation:none!important}}
