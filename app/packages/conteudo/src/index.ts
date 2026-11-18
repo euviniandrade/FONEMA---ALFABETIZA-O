@@ -25,3 +25,4 @@ export * from './caminho.ts';
 export * from './textos-tela.ts';
 export * from './personagens.ts';
 export * from './edicao/index.ts';
+export * from './caca-tesouro.ts';

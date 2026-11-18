@@ -25,6 +25,8 @@ export const TIPO_POR_MECANICA: Partial<Record<string, TipoTentativa>> = {
   'casa-som': 'avaliada',
   // Memória dos Sons: o par fechado com decisão é avaliado; o palpite e o nível 1 gravam tipo 'exposicao' na própria tentativa
   'memoria-sons': 'avaliada',
+  // Caça ao tesouro (fila nº 25): escolha da letra pelo som e leitura final são avaliadas; achar o lugar grava 'exposicao' na tentativa
+  'caca-tesouro': 'avaliada',
   letra: 'exposicao',
   espelho: 'exposicao',
   tracar: 'exposicao',

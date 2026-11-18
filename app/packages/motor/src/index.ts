@@ -30,3 +30,4 @@ export * from './jogos-vila.ts';
 export * from './memoria-sons.ts';
 export * from './fichas.ts';
 export * from './desbloqueio.ts';
+export * from './caca-tesouro.ts';
