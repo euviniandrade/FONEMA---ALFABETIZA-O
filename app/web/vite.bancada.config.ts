@@ -7,5 +7,5 @@ import { resolve } from 'node:path';
 export default defineConfig({
   base: './',
   plugins: [react()],
-  build: { rollupOptions: { input: [resolve(__dirname, 'bancada-vivo.html'), resolve(__dirname, 'bancada-tracado.html')] } }
+  build: { rollupOptions: { input: [resolve(__dirname, 'bancada-vivo.html'), resolve(__dirname, 'bancada-tracado.html'), resolve(__dirname, 'bancada-avatar.html')] } }
 });

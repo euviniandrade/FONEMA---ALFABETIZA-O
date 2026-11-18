@@ -51,7 +51,7 @@ export const PELES: PecaAvatar[] = [
 
 export const OLHOS: PecaAvatar[] = [
   p('olhos', 'castanho-escuro', 'Castanho-escuro', 'ambos', { cor: '#3E2414', padrao: true }),
-  ...[['castanho', 'Castanho', '#7A4A22'], ['mel', 'Mel', '#A8742C'], ['preto', 'Preto', '#17100C'], ['verde', 'Verde', '#4F7F4A'], ['azul', 'Azul', '#3F78B5'], ['cinza', 'Cinza', '#6F7F8C']]
+  ...[['castanho', 'Castanho-claro', '#7A4A22'], ['mel', 'Mel', '#A8742C'], ['preto', 'Preto', '#17100C'], ['verde', 'Verde', '#4F7F4A'], ['azul', 'Azul', '#3F78B5'], ['cinza', 'Cinza', '#6F7F8C']]
     .map(([id, nome, cor]) => p('olhos', id, nome, 'ambos', { cor }))
 ];
 

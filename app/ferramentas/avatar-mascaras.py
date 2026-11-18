@@ -7,7 +7,7 @@ criança mudar as cores sem trocar de modelo, este script descobre, texel por te
 cada ponto da textura pertence e grava:
 
   <saida>/<nome>.mascara.png   R = região (0 nada · 1 pele · 2 cabelo/sobrancelha · 3 íris · 4 camiseta · 5 calça · 6 calçado)
-                               G = peso (0–255); na íris, G = distância ao centro da íris (0 centro · 255 borda)
+                               G = peso (0–255); na íris, G = quanto o texel é íris (borda suave com o branco e a pupila)
   <saida>/<nome>.cor.webp      textura de cor original, já em 1024 px (é a que o app recolore)
   <saida>/avatares.json        lista dos modelos + médias de cor de cada região + âncoras (olhos, cabeça, frente)
 
@@ -19,7 +19,7 @@ Uso (na raiz do repositório):
   python3 app/ferramentas/avatar-mascaras.py                # todos os avatar-*.glb de docs/.../padrao/modelos
   python3 app/ferramentas/avatar-mascaras.py --conferir DIR  # grava também imagens de conferência em DIR
 
-Depende de: numpy, Pillow, pygltflib  (pip install numpy pillow pygltflib)
+Depende de: numpy, scipy, Pillow, pygltflib  (pip install numpy scipy pillow pygltflib)
 """
 import argparse
 import colorsys
@@ -30,6 +30,8 @@ import sys
 from pathlib import Path
 
 import numpy as np
+from scipy import ndimage
+from scipy.spatial import cKDTree
 from PIL import Image, ImageFilter
 import pygltflib
 
@@ -151,6 +153,9 @@ def segmentar(nome, pos, uv, idx, cor, conferir=None):
     lado = np.array([frente[1], -frente[0]])               # +lado = esquerda do boneco
     coord_lado = mapa[..., 0] * lado[0] + mapa[..., 2] * lado[1]
     coord_frente = mapa[..., 0] * frente[0] + mapa[..., 2] * frente[1]
+    branco_olho = coberto & (S < 0.16) & (V > 0.72)
+    perto_do_branco = ndimage.binary_dilation(branco_olho, iterations=12)
+    perto_da_pele = ndimage.binary_dilation(coberto & pele_cor & (V > 0.62), iterations=2)
     olhos = []
     zona_olho = np.zeros((LADO, LADO), bool)
     iris = np.zeros((LADO, LADO), bool)
@@ -170,9 +175,41 @@ def segmentar(nome, pos, uv, idx, cor, conferir=None):
         c_iris = np.median(mapa[nucleo], axis=0)
         di = np.linalg.norm(mapa - c_iris, axis=-1)
         r_iris = np.percentile(di[nucleo & (di < raio)], 88)
-        disco = coberto & (di <= r_iris * 1.04) & ~((S < 0.2) & (V > 0.62))  # tira o branco e o brilho
+        # Íris pela COR do texel (a textura pinta o olho em várias ilhas, e o disco 3D não bate com a pintura):
+        # dentro do olho, o castanho da íris é quente, saturado e de valor médio. Ficam de fora o branco do olho, o
+        # brilho, a pupila e a linha dos cílios (quase pretos) e a pele em volta. G = quanto do texel é íris (borda suave).
+        # só dentro da abertura do olho (a linha dos cílios e a sobrancelha ficam na borda e acima dela)
+        # perto do olho em 3D, e na TEXTURA encostado no branco do olho e longe da pele (a pintura da íris é cercada
+        # pelo branco; sobrancelha e cílios encostam na pele)
+        perto_iris = coberto & (d < raio * 1.3) & perto_do_branco & ~perto_da_pele
+        w = (np.clip((S - 0.12) / 0.1, 0, 1) * np.clip((0.72 - V) / 0.14, 0, 1) * np.clip((V - 0.16) / 0.04, 0, 1)
+             * (((H < 40) | (H > 330)).astype(float)))
+        disco = perto_iris & (w > 0.04) & ~pele_cor
+        # pedaços soltos (sobra de cílio, canto do olho) com poucos texels não são íris
+        rot, n = ndimage.label(disco)
+        if n:
+            tam = ndimage.sum(np.ones_like(rot), rot, range(1, n + 1))
+            disco &= np.isin(rot, 1 + np.nonzero(tam >= 12)[0])
+        # a pintura da íris vem picada em várias ilhas da textura: cresce o que achou para os pedaços vizinhos (na textura
+        # e, através das costuras, no espaço 3D), aceitando o castanho mais escuro do anel de dentro
+        frouxo = coberto & (d < raio * 1.3) & (S > 0.1) & (V > 0.14) & (V < 0.62) & ~pele_cor & ~perto_da_pele & ((H < 40) | (H > 330))
+        for _ in range(4):
+            if not disco.any():
+                break
+            arvore = cKDTree(mapa[disco])
+            ys, xs = np.nonzero(frouxo & ~disco)
+            if not len(ys):
+                break
+            dist, _ = arvore.query(mapa[ys, xs], distance_upper_bound=0.006 * escala)
+            junto = np.zeros_like(disco)
+            junto[ys[dist < np.inf], xs[dist < np.inf]] = True
+            novo = frouxo & ~disco & (ndimage.binary_dilation(disco, iterations=2) | junto)
+            if not novo.any():
+                break
+            disco |= novo
+            w = np.where(novo, np.maximum(w, np.clip((V - 0.14) / 0.04, 0, 1)), w)
         iris |= disco
-        raio_norm[disco] = np.clip(di[disco] / (r_iris * 1.04), 0, 1)
+        raio_norm[disco] = w[disco]
         zona_olho |= coberto & (d < raio * 1.45)
         olhos.append({'centro': c_iris.tolist(), 'raioIris': float(r_iris), 'raioOlho': float(raio)})
     altura_olhos = np.mean([o['centro'][1] for o in olhos])
@@ -233,7 +270,7 @@ def segmentar(nome, pos, uv, idx, cor, conferir=None):
     regiao[letra_larga & (S > 0.1)] = 0
     regiao[letra] = 0
     peso[regiao > 0] = 255
-    peso[iris] = np.round(raio_norm[iris] * 255).astype(np.uint8)
+    peso[iris] = np.round(raio_norm[iris] * 255).astype(np.uint8)  # na íris, G = quanto o texel é íris (0–255)
 
     # ---- preenche a folga em volta de cada ilha da textura (os filtros da placa leem texels vizinhos)
     for _ in range(10):

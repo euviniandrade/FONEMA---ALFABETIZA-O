@@ -7,7 +7,8 @@
  *  - roupa branca × cor (multiplicação em luz linear: dobras e sombras continuam lá);
  *  - pele: troca de tom preservando o sombreado, o corado das bochechas e a boca (razão canal a canal, em luz linear);
  *  - cabelo e sobrancelhas: troca de tom pela luminância (mechas e brilho continuam);
- *  - íris: cor nova com pupila, degradê e contorno; o brilho e o branco do olho não mudam.
+ *  - íris: só o castanho pintado da íris troca de cor, seguindo o claro-escuro original; pupila, brilho, cílios e
+ *    o branco do olho não mudam.
  * A letra "A", os cílios, o branco dos olhos e a sola do tênis ficam fora da máscara: nunca mudam.
  */
 import * as THREE from 'three';
@@ -103,7 +104,8 @@ export function recolorir(base: Pick<Base, 'cor' | 'mascara' | 'info'>, a: Pick<
   const pele = a.pele ? linearDe(a.pele) : null, mPele = linearDeMedia(info.medias.pele);
   const cabelo = a.cabelo ? linearDe(a.cabelo) : null, mCabelo = linearDeMedia(info.medias.cabelo);
   const lCabelo = Math.max(0.004, lum(mCabelo[0], mCabelo[1], mCabelo[2]));
-  const iris = a.olhos ? linearDe(a.olhos) : null;
+  const iris = a.olhos ? linearDe(a.olhos) : null, mIris = linearDeMedia(info.medias.iris);
+  const lIris = Math.max(0.004, lum(mIris[0], mIris[1], mIris[2]));
   const branco = PARA_LINEAR[Math.round(info.medias.roupa[0])];
   const roupa = [null, null, null, null, a.camisa ? linearDe(a.camisa) : null, a.calca ? linearDe(a.calca) : null, a.calcado ? linearDe(a.calcado) : null];
   // pele escura: o original é claro, então o sombreado "cabe" inteiro; só limitamos o brilho para não estourar
@@ -123,10 +125,11 @@ export function recolorir(base: Pick<Base, 'cor' | 'mascara' | 'info'>, a: Pick<
       d[i] = srgb(cabelo[0] * k); d[i + 1] = srgb(cabelo[1] * k); d[i + 2] = srgb(cabelo[2] * k);
     } else if (regiao === 3) {
       if (!iris) continue;
-      const raio = msk[i + 1] / 255; // 0 = centro da íris · 1 = borda
-      if (raio < 0.4) { d[i] = 14; d[i + 1] = 10; d[i + 2] = 9; continue; } // pupila
-      const k = (raio > 0.88 ? 0.5 : 1.25 - 0.5 * raio) * (raio < 0.46 ? 0.6 : 1);
-      d[i] = srgb(iris[0] * k); d[i + 1] = srgb(iris[1] * k); d[i + 2] = srgb(iris[2] * k);
+      // a máscara marca só o castanho pintado da íris (G = quanto o texel é íris); pupila, cílios, brilho e o branco
+      // do olho ficam fora e não mudam. A cor nova segue o claro-escuro da íris original (anel, degradê, contorno).
+      const w = msk[i + 1] / 255;
+      const k = Math.min(1.6, Math.pow(lum(r, g, b) / lIris, 0.75));
+      d[i] = srgb(r + (iris[0] * k - r) * w); d[i + 1] = srgb(g + (iris[1] * k - g) * w); d[i + 2] = srgb(b + (iris[2] * k - b) * w);
     } else {
       const t = roupa[regiao];
       if (!t) continue;

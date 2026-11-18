@@ -155,7 +155,7 @@ function texturaSombra(): THREE.CanvasTexture {
   return new THREE.CanvasTexture(c);
 }
 
-class Cena {
+export class Cena {
   readonly cena = new THREE.Scene();
   readonly camera = new THREE.PerspectiveCamera(26, 1, 0.1, 20);
   readonly renderizador: THREE.WebGLRenderer;
