@@ -102,18 +102,26 @@ animação antiga sacudia o corpo inteiro; no rio, o corpo deitado ficava abaixo
   aparelho + `midias/` + áudios). `npx tsx scripts/importar-pacote.ts pacote.zip [--seco]` (aceita também o pacote antigo, só de
   áudios): confere, junta às publicadas, aplica e roda o verificador (barra = nada gravado), grava publicadas.json e as figuras
   em `web/public/assets/<caminho>`, roda `npm test` (falhou = desfaz) e então passa os áudios ao importador antigo (mantido).
-- **Limites honestos:** trocar palavras de síntese, caixas, pares mínimos, troca-letras, frases e ditado ainda NÃO (levam o
-  som de cada letra e as letras móveis): nelas só textos e falas. Palavra nova num item "leia e toque" precisa ter figura
-  (figura nova com nome novo não é reconhecida pela tela). Nome do personagem muda nos rótulos (`NOMES_PERSONAGEM`), não dentro
-  das falas. Edição de fala compartilhada feita dentro de uma fase vale só para aquela fase. Listas derivadas na carga
-  (ex.: as etapas do caminho do tutorial) não acompanham fase nova. Tudo vale no aparelho até o pacote ser aplicado.
+- **2ª rodada (pedido do coordenador, 18/11):** trocar palavras de síntese, caixas, pares mínimos, troca-letras, frases e
+  ditado (`edicao/itens.ts`: o item novo é montado com `comSons` do banco, como em tf.ts; par = UM som de diferença, 3ª
+  opção obrigatória, `habilidadeDoPar` e habilidade existente; troca acha ação/posição/letra/som; tela `TrocarItem.tsx`);
+  palavra sem figura ganha figura na hora (`figuraExiste` em ambiente.ts entra em `caminhoFigura`: figura subida no aparelho
+  ou já publicada, lida da lista do build); nome do personagem dentro das falas (buscar e substituir com antes → depois e
+  áudio desatualizado); fala igual em vários lugares: "só aqui" ou "em todos"; fase nova entra nas etapas do caminho
+  (`ETAPAS_DO_CAMINHO.ate` refeito pela coleção de fases); "Voltar tudo ao original" no Histórico.
+- **Limites honestos:** a 3ª leitura do troca-letras é tirada das antigas (não editável à parte); o progresso de quem já
+  passou do ponto onde entra uma fase nova só se reorganiza na próxima migração do progresso; mudar fala compartilhada
+  "em todos" grava uma edição por lugar (aparecem todas no Histórico). Tudo vale no aparelho até o pacote ser aplicado.
 - **Verificado (18/11, cópia separada, porta 4630):** typecheck, lint, 411 testes (novos: `conteudo/test/edicao.test.ts` 17,
   `web/src/servicos/edicoes.test.ts` 4, `scripts/importar-pacote.test.ts` 7), importador real na cópia (`--seco` com palavra boa
   e com PATO barrada; aplicação de verdade rodando `npm test`), E2E **`node web/e2e/fluxo.e2e.mjs --gerenciador`** (20 checagens:
   fala da TF-10 editada + áudio desatualizado; PATO bloqueada com o motivo; "lulu" sem figura recusada; LAMA aceita; cenas
   desligadas; na lição da criança a fala nova e LAMA; preço da Lojinha; frase com R bloqueada no texto; figura da uva trocada
   por webp recortado; histórico; pacote com edições e figura; desfazer e voltar tudo ao original) e `--admin` (23 ✓), de novo
-  no commit e194c84. O trecho está ligado ao completo e ao `--sem-jornada`, mas o `--sem-jornada` INTEIRO não terminou: com
+  no commit e194c84; na 2ª rodada, `--gerenciador` de novo com 35 checagens (+ figura nova e pronúncia de LULU, frase com P
+  barrada e trocada, síntese com 2 opções recusada e trocada, fala igual mudada em 15 lugares, nome "Bolota" → "Bolinha" em
+  28 textos, voltar tudo) e 433 testes (novo `conteudo/test/edicao-itens.test.ts`) com `--testTimeout=60000` (sem ele, 3
+  testes do motor estouram 5 s por causa da carga: load 30 na máquina). O trecho está ligado ao completo e ao `--sem-jornada`, mas o `--sem-jornada` INTEIRO não terminou: com
   ~10 E2E de outras frentes rodando juntos na máquina, estourou o limite de 1 h (e outro agente escreveu no mesmo arquivo de
   log). Pela mesma carga, 1 teste do motor (d030, "toda fase de domínio é alcançável") estourou os 5 s (antes levava 2,8 s; não
   é desta frente). Capturas `--capturas-gerenciador` (1850×980 e 390×844) olhadas; 6 em `app/docs/capturas/v13-gerenciador-*`.

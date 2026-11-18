@@ -75,24 +75,35 @@ Aba **Missões**: a jornada inteira, na ordem em que a criança faz. Toque numa 
   criança, mas não é apagada: é só ligar de novo).
 - **Editar esta cena**: mostra uma **pré-visualização** (o que a criança vê e ouve) e os campos da cena:
   - **Palavra para ler**: escreva a palavra nova e toque em **Trocar**. A figura certa muda junto. O verificador confere
-    na hora (ex.: na TF-10, "lama" passa; "pato" é bloqueada porque o som do P só vem na TF-16). A palavra precisa ter
-    figura.
+    na hora (ex.: na TF-10, "lama" passa; "pato" é bloqueada porque o som do P só vem na TF-16). Palavra sem figura: o
+    quadro de **subir a figura** aparece ali mesmo (a imagem é recortada no tamanho das figuras do app).
+  - **Juntar os sons**: a palavra que os sons formam e pelo menos 2 outras opções (3 no total).
+  - **Caixas de sons**: a palavra (as letras para montar vêm sozinhas, com uma a mais).
+  - **Pares mínimos**: a palavra certa, a outra do par (precisa mudar UM som só, como faca × vaca) e a 3ª opção. A
+    habilidade do par (o que aparece no painel) acompanha os sons que mudam; par de sons ainda sem habilidade é recusado.
+    No "ouvir e tocar a figura", as três precisam de figura.
+  - **Troca-letras**: a palavra de antes e a nova (uma letra trocada ou uma a mais); a letra, o som e as opções vêm sozinhos.
+  - **Frases**: a frase, a resposta certa e as 3 figuras da pergunta.
+  - **Ditado**: as palavras, com vírgula (as letras para montar se ajustam).
   - **Palavras** (montar, palmas): separadas por vírgula.
-  - As falas da cena (enunciado, dicas, roteiro da dupla).
-  - Juntar os sons, caixas de sons, pares mínimos, troca-letras e frases levam o som de cada letra: nessas, por enquanto,
-    só os textos e as falas mudam por aqui.
+  - Em todas: os sons de cada letra saem do banco de palavras; palavra nova pede a **pronúncia** antes; som ainda não
+    ensinado é **bloqueado**.
+  - As falas da cena (enunciado, dicas, roteiro da dupla). Se a mesma fala aparece em outras missões (ex.: "Leia a
+    palavra e toque na figura."), aparece a escolha **só aqui** ou **em todos**.
 - **Abrir a lição (aba nova)**: escolha uma criança do aparelho e veja a missão como ela vê (a missão precisa estar aberta
   para ela).
 - **Criar fase nova a partir desta**: copia a missão inteira com outro nome. Escolha **rascunho** (fora da jornada, só você
   abre) ou **na jornada, logo depois desta** (quem já passou dali vai encontrar a fase nova como a próxima). Depois, edite
-  a fase nova como qualquer outra. "Apagar esta fase nova" tira a fase (nada do progresso some).
+  a fase nova como qualquer outra. "Apagar esta fase nova" tira a fase (nada do progresso some). A fase nova aparece
+  também no caminho do tutorial e do painel guia (na mesma etapa da fase de onde foi copiada).
 - **Voltar esta missão ao original**: tira todas as mudanças da missão.
 
 ## 6. Personagens e prêmios
 
 Aba **Personagens e prêmios**:
 - **Personagens**: nome, cor, quem é, fala de apresentação e as figuras/modelo 3D (toque em "trocar" ao lado de cada
-  figura). As falas que dizem o nome ("Eu sou a Sofia") mudam em Textos e falas.
+  figura). **Trocar o nome nas falas**: escreva o nome novo, veja cada fala com o antes → depois, desmarque o que não
+  deve mudar e toque em Trocar. As falas mudadas ficam com o áudio desatualizado (regrave em Textos e falas ou Áudios).
 - **Peças da Lojinha**: nome, preço em moedinhas, a frase "Por que guardar?" e a figura.
 - **Prêmios surpresa**: nome, nível em que chegam e figura.
 - **Selos e conquistas**: nome, desenho do selo (emoji ou letra) e a dica do cadeado.
@@ -120,7 +131,7 @@ pasta modelos3d) entram como vieram. **Voltar ao original** desfaz.
 ## 10. Histórico (desfazer)
 
 Aba **Histórico**: tudo o que foi mudado neste aparelho, do mais novo para o mais velho, com quem mudou e quando. Cada
-item tem **Desfazer** (volta um passo) e **Voltar ao original**. Se o conteúdo do repositório mudou e uma edição antiga
+item tem **Desfazer** (volta um passo) e **Voltar ao original**; **Voltar tudo ao original** limpa tudo deste aparelho. Se o conteúdo do repositório mudou e uma edição antiga
 perdeu o lugar, ela aparece em "Edições sem efeito" (nada quebra).
 
 ## 11. Transformar foto em 3D
