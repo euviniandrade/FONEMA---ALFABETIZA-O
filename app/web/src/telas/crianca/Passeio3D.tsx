@@ -19,6 +19,8 @@ import { mundo3dDisponivel, asset } from '../../servicos/ambiente.ts';
 import { voz } from '../../servicos/voz.ts';
 import { falarVarias, textoTela } from '../../util.ts';
 import { aparenciaDe, temWebGL, type Aparencia } from '../../avatar3d/index.ts';
+import { barcoLiberado } from '@fonema/motor';
+import { useCacaNoPasseio } from './caca/useCacaTesouro.ts'; // caça ao tesouro (fila nº 25)
 
 interface EstadoLugar { aberto: boolean; falta?: string; fala?: Fala }
 
@@ -46,7 +48,8 @@ export function lugaresDoPasseio(p: Progresso): Record<string, EstadoLugar> {
     // D034: Casa e Coreto sempre abertos (destino muda com o que já abriu; ver destinosDoPasseio). `escrita` e `flu` ficam para o rótulo.
     casa: { aberto: true, ...(escrita ? {} : { falta: 'Escrever do seu jeito abre depois do som do M; por enquanto, a casa é do seu boneco.' }) },
     coreto: { aberto: true, ...(flu.liberada ? {} : { falta: 'Ler mais ligeiro abre quando você ler quase sem errar; por enquanto, tem palmas no coreto.' }) },
-    barco: { aberto: false, falta: 'Em breve na Lojinha!' }
+    // fila nº 25: o barquinho abre com a chave ganha na Caça ao tesouro (Charadas da vila); quem embarca é a página (js/barco.js)
+    barco: barcoLiberado(p) ? { aberto: true } : { aberto: false, falta: 'Abre com a chave da Caça ao tesouro: faça as Charadas da vila (botão do mapa).' }
   };
 }
 
@@ -62,13 +65,14 @@ const PERSONAGENS: { id: string; arquivo: string; giro: number }[] = [
   { id: 'bolota', arquivo: 'bolota.glb', giro: -Math.PI / 2 }
 ];
 
-export function Passeio3D({ criancaId }: { criancaId: string }) {
+export function Passeio3D({ criancaId, caca = false }: { criancaId: string; caca?: boolean }) {
   const { crianca, progresso } = useCrianca(criancaId);
   const { prefs } = useApp();
   const [ok, setOk] = useState<boolean | null>(null);
   const ref = useRef<HTMLIFrameElement>(null);
   const dados = useRef<{ crianca?: Crianca; progresso?: Progresso }>({});
   dados.current = { crianca, progresso };
+  useCacaNoPasseio(ref, criancaId, caca); // fila nº 25: caça ao tesouro (abre o mapa direto quando veio do Brincar)
 
   useEffect(() => { mundo3dDisponivel().then(setOk); }, []);
   useEffect(() => { if (ok === false) navegar(`c/${criancaId}/vila`); }, [ok, criancaId]);

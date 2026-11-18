@@ -136,7 +136,7 @@ function telaCrianca(cid: string, t: string | undefined, arg: string) {
     case 'brincar': return <BrincarSons criancaId={cid} jogoId={arg} />;
     case 'jogo': return <JogosVila key={arg ?? ''} criancaId={cid} jogoId={arg} />;
     case 'memoria': return <MemoriaDosSons key={arg ?? ''} criancaId={cid} faseId={arg || undefined} />;
-    case 'mundo': return <Mundo3D criancaId={cid} />;
+    case 'mundo': return <Mundo3D criancaId={cid} caca={arg === 'caca'} />;
     default: return <Vila criancaId={cid} />;
   }
 }

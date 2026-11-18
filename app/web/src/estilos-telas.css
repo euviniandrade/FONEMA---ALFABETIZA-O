@@ -146,3 +146,12 @@ html,body{overflow-x:clip}
 
 /* painel guia: "Próxima:" antes do nome da próxima missão quando a de hoje já foi feita */
 .guia-proxima{margin-top:6px}.guia-proxima small{font-family:var(--f-titulo);font-weight:600;font-size:13px;color:var(--cinza);text-transform:uppercase;letter-spacing:.4px;margin-right:4px}
+
+/* ---------- Espelho do Som no celular (item 8): as duas vistas ("De frente" e "Por dentro") cabem acima do rodapé fixo ---------- */
+@media (max-width:560px){
+  .tela-sessao .mec-espelho .espelho-palco{gap:8px;margin:4px 0 6px}
+  .tela-sessao .mec-espelho .espelho-centro{padding:6px 12px;gap:12px;min-height:0}
+  .tela-sessao .mec-espelho .letra-surge{font-size:56px}
+  .tela-sessao .mec-espelho .ancora{font-size:20px}.tela-sessao .mec-espelho .ancora .fig{width:48px;height:48px}
+  .tela-sessao .mec-espelho .espelho-embed{height:max(300px,calc(100svh - 440px))}
+}

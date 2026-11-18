@@ -210,11 +210,12 @@ export class PistaCorreSom {
     this.r.setSize(l, a, false);
     const aspecto = l / a;
     this.camera.aspect = aspecto;
-    // celular em pé: câmera mais alta e mais aberta, para as 3 pistas caberem
+    // celular em pé: câmera mais perto e mais fechada (revisão 18/11, item 13): os arcos parados ocupam ~metade da largura, as
+    // letras ficam grandes e cada pista ganha uma faixa de toque larga (as faixas seguem a posição dos arcos na tela)
     const retrato = aspecto < 0.9;
-    this.camera.fov = retrato ? 64 : 48;
-    this.camera.position.set(0, retrato ? 3.3 : 2.5, retrato ? 5.6 : 4.4);
-    this.camera.lookAt(0, retrato ? 0.9 : 1.05, -5);
+    this.camera.fov = retrato ? 50 : 48;
+    this.camera.position.set(0, retrato ? 3.0 : 2.5, retrato ? 4.6 : 4.4);
+    this.camera.lookAt(0, retrato ? 1.1 : 1.05, -5);
     this.camera.updateProjectionMatrix();
   };
 

@@ -198,6 +198,7 @@ if (!temWebGL()) {
     },
     aoEntrando(l) { cartao.fechar(); $('#btAcao').classList.remove('on'); },
     aoEntrar(l) {
+      if (window.FONEMA_CACA?.aoEntrar(l)) return; // porta do barquinho: embarca (js/caca-tesouro.js)
       $('#veu').classList.add('on');
       setTimeout(() => {
         if (EMBED) avisar('fonema:entrar', { id: l.id });
@@ -225,6 +226,8 @@ if (!temWebGL()) {
     aoToque() { esconderDica(); },
   });
   window.FONEMA_PASSEIO = passeio;
+  // caça ao tesouro e barquinho (fila do dono nº 25): arquivos próprios; aqui só o gancho
+  import('./js/caca-tesouro.js').then((m) => m.ligarCaca({ mundo, passeio, avisar })).catch((e) => console.warn('[passeio] caça não montou', e));
   if (app.lugares) passeio.definirLugares(app.lugares);
   aplicarBonecos();
 
