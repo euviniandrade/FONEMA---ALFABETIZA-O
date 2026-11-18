@@ -15,6 +15,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   const ctx = await browser.newContext({ viewport: largo, locale: 'pt-BR', serviceWorkers: 'block' });
   await ctx.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { /* sem armazenamento */ } });
   const pg = await ctx.newPage();
+  pg.setDefaultTimeout(180000); // sem placa de vídeo, com a vila nova, um quadro do passeio leva segundos e o iframe demora a responder
   pg.on('pageerror', (e) => erros.push(String(e)));
   pg.on('console', (m) => { if (/passeio|npcs|avatar3d|glb/.test(m.text())) console.log(`    [console ${m.type()}] ${m.text().slice(0, 240)}`); });
   await pg.goto(BASE + '#/adulto/cadastro');
@@ -171,6 +172,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR', serviceWorkers: 'block' });
   await cel.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { /* sem armazenamento */ } });
   const pc = await cel.newPage();
+  pc.setDefaultTimeout(180000);
   pc.on('pageerror', (e) => erros.push(String(e)));
   await pc.goto(BASE + '#/adulto/cadastro');
   await passarPorteira(pc);
