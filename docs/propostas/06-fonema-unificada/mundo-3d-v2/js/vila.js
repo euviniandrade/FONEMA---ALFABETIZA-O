@@ -22,7 +22,7 @@ export function altura(x, z) {
   h += (fbm(x * 0.06, z * 0.06, 3) - 0.5) * 0.9 * smooth(clamp((r - 36) / 30, 0, 1));
   if (x > 40) h += smooth(clamp((x - 62) / 40, 0, 1)) * 9 * fbm(x * 0.03, z * 0.03, 3);
   const d = distRio(x, z);
-  const banco = smooth(clamp((d - RIO_W / 2 + 1.5) / 7, 0, 1));
+  const banco = smooth(clamp((d - RIO_W / 2 + 1.5) / 4.3, 0, 1)); // o barranco sai da água a ~7,4 m do meio (perto de onde a colisão para de ver água)
   h = lerp(-1.7, h, banco);
   // o meio do rio é mais fundo (dá para mergulhar e ver os peixinhos); a beirinha continua rasa
   h -= 1.9 * smooth(clamp(1 - d / 4.6, 0, 1));
@@ -176,7 +176,7 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   const anel = new THREE.Mesh(gOut, addCausticas(new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95 }), U)); anel.receiveShadow = true; grupo.add(anel);
 
   // ---------- rio ----------
-  const rio = criarRio({ curva: RIO2D, largura: RIO_W + 7, y: NIVEL_AGUA, U, reflexo: passeio ? q === 'alto' : q !== 'baixo', resolucao: q === 'alto' ? 1024 : 512 });
+  const rio = criarRio({ curva: RIO2D, largura: RIO_W + 4, y: NIVEL_AGUA, U, reflexo: passeio ? q === 'alto' : q !== 'baixo', resolucao: q === 'alto' ? 1024 : 512 });
   grupo.add(rio);
 
   // ---------- praça ----------
@@ -354,7 +354,7 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   for (let i = 0; i < (q === 'baixo' ? 120 : 320); i++) { const a = r() * 7, d = 15 + r() * 60, x = Math.cos(a) * d, z = Math.sin(a) * d + 4; if (!livre(x, z) && r() < 0.8) continue; ctx.arbustos.push({ m: M(x, altura(x, z) + 0.2, z, 0, r() * 6, 0, 1 + r() * 1.3, 0.8 + r() * 0.6, 1 + r() * 1.3), c: ['#5AA858', '#4E9A50', '#69B45C'][i % 3] }); }
   for (const c of casas) for (const s of [-1, 1]) ctx.arbustos.push({ m: c.L(s * (c.w / 2 + 0.6), 0.4, c.d / 2 - 0.4, 0, 0, 0, 1.3, 1.0, 1.1), c: '#4E9A50' });
   // flores silvestres e capim
-  for (let i = 0; i < (q === 'baixo' ? 500 : 1800); i++) { const a = r() * 7, d = 14 + r() * 62, x = Math.cos(a) * d, z = Math.sin(a) * d + 4; if (distRio(x, z) < RIO_W / 2 + 1) continue; const cc = r(); ctx.flores.push({ m: M(x, altura(x, z) + 0.14, z, 0, 0, 0, 0.13 + r() * 0.08), c: cc < 0.4 ? '#FFFFFF' : cc < 0.75 ? P.ipe : '#B9A6E8' }); }
+  for (let i = 0; i < (q === 'baixo' ? 500 : 1800); i++) { const a = r() * 7, d = 14 + r() * 62, x = Math.cos(a) * d, z = Math.sin(a) * d + 4; if (distRio(x, z) < RIO_W / 2 + 1.8) continue; const cc = r(); ctx.flores.push({ m: M(x, altura(x, z) + 0.14, z, 0, 0, 0, 0.13 + r() * 0.08), c: cc < 0.4 ? '#FFFFFF' : cc < 0.75 ? P.ipe : '#B9A6E8' }); }
   const capim = new Instancias(new THREE.ConeGeometry(0.035, 0.5, 3).translate(0, 0.25, 0), addWind(new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.9 }), U, 0.18, -1), { cast: false });
   if (q !== 'baixo') for (let i = 0; i < 2600; i++) { const a = r() * 7, d = 14 + r() * 66, x = Math.cos(a) * d, z = Math.sin(a) * d + 4; if (!livre(x, z) && r() < 0.9) continue; const h = altura(x, z); for (let k = 0; k < 3; k++) capim.add(M(x + (r() - 0.5) * 0.3, h, z + (r() - 0.5) * 0.3, (r() - 0.5) * 0.5, r() * 6, (r() - 0.5) * 0.5, 1, 0.6 + r() * 0.9, 1), r() < 0.5 ? '#6DB451' : '#86C35E'); }
   if (capim.l.length) grupo.add(capim.build());
