@@ -80,6 +80,8 @@ html,body{overflow-x:clip}
   .tela-ritual .ritual-botoes{position:static;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;margin:14px 0 0;padding:0}
   .tela-ritual .ritual-botoes [data-testid=voltar-vila]{position:fixed;left:16px;right:16px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:40;box-shadow:0 10px 30px rgba(0,0,0,.25)}
   .tela-ritual .ritual-cartao{padding-bottom:110px}
+  /* a animação de entrada do palco (transform) mantida no fim faria o 'fixed' ficar preso ao palco: no fim ela solta */
+  .tela-ritual .palco{animation-fill-mode:backwards}
 }
 
 /* entrada da fase: o botão de ouvir de novo no lugar do texto do objetivo */
