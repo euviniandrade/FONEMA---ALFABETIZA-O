@@ -8,9 +8,16 @@
 //  - coxa, canela, braço e antebraço são girados para apontar na MESMA DIREÇÃO que o osso da captura (assim o braço
 //    curto do boneco faz o mesmo gesto do braço comprido do manequim);
 //  - o quadril sobe e desce como na captura, na escala da perna do boneco.
-// Locomoção: andar, trotar e correr se misturam pela velocidade e tocam na cadência que faz o pé de apoio ficar parado
-// no chão (a velocidade natural de cada animação foi medida pelo pé). Também: parado, conversar, pulo (no ar e chegada),
-// nadar e boiar.
+// Locomoção (refeita na fila nº 28, "parece que está pulando"): o "Jog" da biblioteca é um trote de adulto com o quadril
+// subindo e descendo 1/4 da perna e muito tempo com os dois pés no ar; num boneco de perna curta, tocado na passada de
+// adulto, virava salto. Agora só ANDAR e CORRER (Walk e Sprint), com:
+//  - CADÊNCIA DE CRIANÇA (passos por segundo) escolhida pela velocidade, e a passada encolhida para caber nela (a
+//    distância à frente/atrás do quadril dos pés e joelhos é multiplicada por `s`), então o pé de apoio não escorrega;
+//  - os dois ciclos alinhados pelo instante em que o pé esquerdo pisa (o Sprint começa noutro ponto);
+//  - PÉ NO CHÃO: o quadril é posto na altura em que o pé mais baixo (sola: calcanhar ou ponta) toca o chão — o pé
+//    ganhou osso próprio (js/esqueleto.js) e fica com a sola na inclinação da captura (chapado no apoio);
+//  - o tempo no ar da corrida é reduzido (o pé mais baixo sobe só 35% do que subia na captura).
+// Também: parado, conversar, pulo (no ar e chegada), nadar e boiar.
 import * as THREE from 'three';
 
 let DADOS = null, pedido = null;
@@ -24,8 +31,12 @@ export const animacoesProntas = () => !!DADOS;
 function prepararDados(d) {
   const J = d.juntas.length, G = d.giros.length;
   const ij = Object.fromEntries(d.juntas.map((k, i) => [k, i])), ig = Object.fromEntries(d.giros.map((k, i) => [k, i]));
-  for (const c of Object.values(d.clipes)) { c.P = Float32Array.from(c.P); c.R = Float32Array.from(c.R); c.dist = c.vel * c.duracao; }
+  for (const c of Object.values(d.clipes)) { c.P = Float32Array.from(c.P); c.R = Float32Array.from(c.R); c.dist = c.vel * c.duracao; c.off = 0; }
   const rep = { P: Float32Array.from(d.repouso.P), R: Float32Array.from(d.repouso.R) };
+  // fase em que o pé esquerdo está mais à frente (= vai pisar): Walk e Sprint passam a pisar no mesmo instante do ciclo
+  const pisada = (c) => { const k = ij.peE * 3 + 2, q = ij.quadril * 3 + 2, np = J * 3; let m = -1e9, a = 0; for (let f = 0; f < c.quadros; f++) { const z = c.P[f * np + k] - c.P[f * np + q]; if (z > m) { m = z; a = f; } } return a / c.quadros; };
+  const base = pisada(d.clipes.andar);
+  for (const nm of ['trotar', 'correr']) d.clipes[nm].off = pisada(d.clipes[nm]) - base;
   return { ...d, J, G, ij, ig, rep };
 }
 
@@ -36,7 +47,7 @@ class Quadro {
   /** Soma o clipe `c` no instante `u` (0..1 do ciclo) com peso `w`. */
   somar(c, u, w) {
     if (w <= 1e-4) return;
-    const n = c.quadros, f = c.loop ? (((u % 1) + 1) % 1) * n : Math.min(n - 1.001, Math.max(0, u) * (n - 1));
+    const n = c.quadros; u += c.off || 0; const f = c.loop ? (((u % 1) + 1) % 1) * n : Math.min(n - 1.001, Math.max(0, u) * (n - 1));
     const a = Math.floor(f), b = c.loop ? (a + 1) % n : Math.min(n - 1, a + 1), t = f - a;
     const P = this.P, R = this.R, np = P.length, nr = R.length;
     for (let i = 0; i < np; i++) P[i] += w * (c.P[a * np + i] * (1 - t) + c.P[b * np + i] * t);
@@ -58,37 +69,51 @@ class Quadro {
   }
 }
 
-const _e = new THREE.Euler(), _q = new THREE.Quaternion(), _q2 = new THREE.Quaternion(), _qi = new THREE.Quaternion(), _a = new THREE.Vector3(), _b = new THREE.Vector3(), _c = new THREE.Vector3();
+const _m = new THREE.Matrix4(), _e = new THREE.Euler(), _q = new THREE.Quaternion(), _q2 = new THREE.Quaternion(), _qi = new THREE.Quaternion(), _a = new THREE.Vector3(), _b = new THREE.Vector3(), _c = new THREE.Vector3();
 
 /**
  * Animador de um boneco com esqueleto automático. `rig` = articular(...). `k` = escala do modelo (metros por unidade).
  * A cada quadro: animador.passo(dt, estado) e depois animador.aplicar() mexe os ossos.
  */
+// Cadência (ciclos de 2 passos por segundo) de criança por velocidade (m/s), e a faixa em que andar vira correr.
+// Referência de ordem de grandeza: criança pequena anda com ~2,2–2,8 passos/s e corre com ~3–3,4 passos/s (decisão do
+// projeto a partir da proporção do boneco; não é medida de laboratório).
+const CAD_ANDAR = (v) => 0.92 + 0.3 * v, CAD_CORRER = (v) => 1.28 + 0.1 * v;
+const CORRE_DE = 1.55, CORRE_ATE = 2.15; // m/s
+const S_MIN = 0.45, S_MAX = 1.25; // encolhe/estica a passada
+const NO_AR = 0.35; // quanto do tempo no ar da corrida fica
+
 export class Animador {
   constructor(rig, k) {
     this.rig = rig; this.k = k;
     this.fase = 0; this.tParado = 0; this.tAr = 0; this.tCai = 9; this.tNado = 0; this.tFala = 0;
-    this.pLoc = 0; this.pAr = 0; this.pCai = 0; this.pNado = 0; this.pFala = 0; this.pMover = 0;
-    this.q = null;
-    // direções de descanso dos ossos do boneco (espaço do modelo; todos os ossos começam sem rotação)
+    this.pLoc = 0; this.pAr = 0; this.pCai = 0; this.pNado = 0; this.pFala = 0; this.pMover = 0; this.pCorre = 0;
+    this.s = 1; this.q = null; this.altQuadril = 0;
     const O = rig.ossos, M = rig.medidas;
     const dir = (a, b) => _a.copy(b).sub(a).normalize().clone();
     // posição de descanso no espaço do modelo: soma das posições locais (nenhum osso tem rotação em descanso)
     const pw = (b) => { const v = new THREE.Vector3(); for (let o = b; o && o.isBone; o = o.parent) v.add(o.userData.rep); return v; };
+    this.pw = pw;
     this.repDir = {};
     for (const L of ['E', 'D']) {
       const s = L === 'E' ? 1 : -1, l = M.lados[s];
       this.repDir['coxa' + L] = dir(pw(O['coxa' + L]), pw(O['canela' + L]));
-      this.repDir['canela' + L] = new THREE.Vector3(0, -1, 0);
+      this.repDir['canela' + L] = O['pe' + L] ? dir(pw(O['canela' + L]), pw(O['pe' + L])) : new THREE.Vector3(0, -1, 0);
       this.repDir['braco' + L] = dir(pw(O['braco' + L]), pw(O['antebraco' + L]));
       const cot = pw(O['antebraco' + L]);
       const mao = new THREE.Vector3(M.cx + s * (l ? l.borda(l.mao) + 0.02 * M.H : 0.2 * M.H), l ? l.mao : M.virilha, cot.z);
       this.repDir['antebraco' + L] = dir(cot, mao);
-      // quanto o braço do boneco fica aberto em descanso (cabeção e barriga redonda): a captura é somada a isso
       const d = this.repDir['braco' + L];
       this.abre = this.abre || {}; this.abre[L] = Math.max(0, Math.atan2(Math.abs(d.x), -d.y) - 0.1);
     }
     this.perna = M.perna * k; // m
+    // sola do sapato: pontos no espaço do osso do pé (calcanhar e ponta), para achar o ponto mais baixo a cada quadro
+    this.sola = {};
+    if (O.peE && M.sapato) for (const L of ['E', 'D']) {
+      const p0 = pw(O['pe' + L]);
+      this.sola[L] = [new THREE.Vector3(0, -p0.y, M.sapato.calcanhar[L] - p0.z), new THREE.Vector3(0, -p0.y, M.sapato.ponta[L] - p0.z)];
+    }
+    this.repPe = null; // direção pé→ponta na pose de descanso da captura (fica pronta quando as animações chegam)
   }
 
   /**
@@ -98,7 +123,6 @@ export class Animador {
     const D = DADOS; if (!D) return false;
     const C = D.clipes, kf = (r) => 1 - Math.exp(-dt * r);
     const v = e.vel || 0;
-    // pesos de estado (suaves)
     this.pAr += ((e.noAr ? 1 : 0) - this.pAr) * kf(e.noAr ? 12 : 16);
     this.pNado += ((e.nadando ? 1 : 0) - this.pNado) * kf(5);
     this.pMover += ((v > 0.12 ? 1 : 0) - this.pMover) * kf(8);
@@ -106,22 +130,29 @@ export class Animador {
     if (e.pousou) this.tCai = 0;
     this.tCai += dt;
     this.pCai = e.noAr ? 0 : Math.max(0, 1 - this.tCai / 0.55);
-    // locomoção: andar → trotar → correr pela velocidade (medida na perna do boneco)
+    // andar ↔ correr pela velocidade (suave, sem ir e voltar)
+    const tc = Math.min(1, Math.max(0, (v - CORRE_DE) / (CORRE_ATE - CORRE_DE)));
+    this.pCorre += (tc * tc * (3 - 2 * tc) - this.pCorre) * kf(6);
+    const wA = 1 - this.pCorre, wC = this.pCorre;
     const L = Math.max(0.2, this.perna);
-    const vAndar = C.andar.vel * L, vTrotar = C.trotar.vel * L, vCorrer = C.correr.vel * L;
-    let wA, wT, wC;
-    if (v <= vAndar * 1.6) { wA = 1; wT = 0; wC = 0; }
-    else if (v <= vTrotar) { const t = (v - vAndar * 1.6) / Math.max(1e-3, vTrotar - vAndar * 1.6); wA = 1 - t; wT = t; wC = 0; }
-    else { const t = Math.min(1, (v - vTrotar) / Math.max(1e-3, vCorrer - vTrotar)); wA = 0; wT = 1 - t; wC = t; }
-    const dist = (wA * C.andar.dist + wT * C.trotar.dist + wC * C.correr.dist) * L; // metros por ciclo
-    if (v > 0.03) this.fase += (dt * v) / Math.max(0.05, dist);
+    const vv = Math.max(0.3, v);
+    const cad = wA * CAD_ANDAR(vv) + wC * CAD_CORRER(vv);
+    const dist = (wA * C.andar.dist + wC * C.correr.dist) * L; // metros por ciclo com a passada inteira
+    let s = vv / Math.max(1e-3, cad * dist);
+    s = Math.min(S_MAX, Math.max(S_MIN, s));
+    this.s += (s - this.s) * kf(10);
+    // a cadência final sai da passada escolhida: o pé de apoio anda para trás na velocidade do corpo (não escorrega)
+    if (v > 0.03) this.fase += (dt * v) / Math.max(0.05, this.s * dist);
     this.tParado += dt; this.tAr += e.noAr ? dt : -this.tAr; this.tNado += dt; this.tFala += dt;
-    // monta o quadro
-    if (!this.q) { this.q = new Quadro(D.J, D.G); }
+    if (!this.q) { this.q = new Quadro(D.J, D.G); this.qL = new Quadro(D.J, D.G); }
     const q = this.q; q.zerar();
     const chao = (1 - this.pAr) * (1 - this.pNado), noAr = this.pAr * (1 - this.pNado);
     const wMov = chao * this.pMover * (1 - this.pCai * 0.6), wPar = chao * (1 - this.pMover) * (1 - this.pCai * 0.6);
-    q.somar(C.andar, this.fase, wMov * wA); q.somar(C.trotar, this.fase, wMov * wT); q.somar(C.correr, this.fase, wMov * wC);
+    // locomoção num quadro à parte: a passada é encolhida antes de entrar na mistura
+    const ql = this.qL; ql.zerar();
+    ql.somar(C.andar, this.fase, wA); ql.somar(C.correr, this.fase, wC); ql.fechar();
+    this.encolher(ql, this.s);
+    if (wMov > 1e-4) { for (let i = 0; i < q.P.length; i++) q.P[i] += wMov * ql.P[i]; for (let i = 0; i < q.R.length; i++) q.R[i] += wMov * ql.R[i]; q.peso += wMov; }
     q.somar(C.parado, this.tParado / C.parado.duracao, wPar * (1 - this.pFala));
     q.somar(C.falar, this.tFala / C.falar.duracao, wPar * this.pFala);
     q.somar(C.puloCai, 0.18 + (this.tCai / 0.55) * 0.3, chao * this.pCai * 0.6);
@@ -131,46 +162,82 @@ export class Animador {
     q.somar(C.boiar, this.tNado / C.boiar.duracao, this.pNado * (1 - nadaMov));
     if (q.peso < 1e-3) q.somar(C.parado, this.tParado / C.parado.duracao, 1);
     q.fechar();
+    // quanto do ponto mais baixo do pé a captura levanta (corrida: tempo no ar), já reduzido
+    this.chaoPeso = chao * (1 - this.pAr);
     return true;
   }
 
-  /** Mexe os ossos para o quadro atual. Devolve a subida do quadril (m) para quem quiser usar. */
+  /** Encolhe a passada: joelhos, pés e mãos ficam mais perto do quadril/ombro na direção da frente (z). */
+  encolher(ql, s) {
+    const D = DADOS, P = ql.P, ij = D.ij;
+    const zq = P[ij.quadril * 3 + 2];
+    for (const L of ['E', 'D']) {
+      const iz = (nm) => ij[nm + L] * 3 + 2;
+      const pe0 = P[iz('pe')];
+      for (const nm of ['joelho', 'pe']) P[iz(nm)] = zq + (P[iz(nm)] - zq) * s;
+      P[iz('ponta')] += P[iz('pe')] - pe0; // o pé não encolhe: a ponta acompanha o tornozelo
+      const sb = Math.min(1, 0.35 + 0.65 * s), zo = P[iz('ombro')];
+      for (const nm of ['cotovelo', 'mao']) P[iz(nm)] = zo + (P[iz(nm)] - zo) * sb;
+    }
+  }
+
+  /** Mexe os ossos para o quadro atual. */
   aplicar() {
     const D = DADOS, q = this.q; if (!D || !q) return 0;
     const O = this.rig.ossos, P = q.P, R = q.R, ij = D.ij, ig = D.ig, rep = D.rep;
     for (const nm in O) { const b = O[nm]; b.quaternion.identity(); b.position.copy(b.userData.rep); }
-    // giros do tronco (mundo do modelo): W = R(t) · R(descanso)⁻¹
     const W = {};
     const giro = (nome) => { const g = ig[nome] * 4; _q.set(R[g], R[g + 1], R[g + 2], R[g + 3]); _qi.set(rep.R[g], rep.R[g + 1], rep.R[g + 2], rep.R[g + 3]).invert(); return _q.clone().multiply(_qi); };
     W.quadril = giro('quadril'); W.tronco = giro('tronco'); W.peito = giro('peito'); W.cabeca = giro('cabeca');
-    // cabeção de desenho: a cabeça fica quase de pé (gira para os lados como na captura, mas inclina só um pouco),
-    // senão o rosto fica olhando para o chão
     _e.setFromQuaternion(W.cabeca, 'YXZ'); _e.x *= 0.3; _e.z *= 0.4; W.cabeca.setFromEuler(_e);
     const local = (osso, Wpai, Wosso) => { O[osso].quaternion.copy(_q2.copy(Wpai).invert().multiply(Wosso)); };
     local('quadril', new THREE.Quaternion(), W.quadril);
     local('tronco', W.quadril, W.tronco);
     local('peito', W.tronco, W.peito);
     local('cabeca', W.peito, W.cabeca);
-    const pj = (nome, out) => { const i = ij[nome] * 3; return out.set(P[i], P[i + 1], P[i + 2]); };
-    const membro = (osso, Wpai, de, ate, abre = 0, ladoS = 1) => {
+    const pj = (nome, out, ref = P) => { const i = ij[nome] * 3; return out.set(ref[i], ref[i + 1], ref[i + 2]); };
+    const membro = (osso, Wpai, de, ate, abre = 0, ladoS = 1, repAlvo = null) => {
       const alvo = pj(ate, _b).sub(pj(de, _c)).normalize();
       if (abre) { _q.setFromAxisAngle(_a.set(0, 0, 1).applyQuaternion(W.peito), ladoS * abre); alvo.applyQuaternion(_q); }
-      const atual = _a.copy(this.repDir[osso]).applyQuaternion(Wpai);
+      const atual = _a.copy(repAlvo || this.repDir[osso]).applyQuaternion(Wpai);
       const Wo = new THREE.Quaternion().setFromUnitVectors(atual, alvo).multiply(Wpai);
       local(osso, Wpai, Wo);
       return Wo;
     };
+    if (!this.repPe) { this.repPe = {}; for (const L of ['E', 'D']) this.repPe[L] = pj('ponta' + L, new THREE.Vector3(), rep.P).sub(pj('pe' + L, new THREE.Vector3(), rep.P)).normalize(); }
     for (const [L, s] of [['E', 1], ['D', -1]]) {
       const Wc = membro('coxa' + L, W.quadril, 'coxa' + L, 'joelho' + L);
-      membro('canela' + L, Wc, 'joelho' + L, 'pe' + L);
+      const Wk = membro('canela' + L, Wc, 'joelho' + L, 'pe' + L);
+      if (O['pe' + L]) membro('pe' + L, Wk, 'pe' + L, 'ponta' + L, 0, 1, this.repPe[L]);
       const Wb = membro('braco' + L, W.peito, 'ombro' + L, 'cotovelo' + L, this.abre[L] * (1 - 0.6 * this.pNado), s);
       membro('antebraco' + L, Wb, 'cotovelo' + L, 'mao' + L);
     }
-    // quadril sobe e desce (e balança de lado) como na captura, na escala da perna do boneco
     const i = ij.quadril * 3, esc = this.rig.medidas.perna;
-    const dy = (P[i + 1] - rep.P[i + 1]) * esc, dx = (P[i] - rep.P[i]) * esc;
-    // (o sobe-e-desce vai pela metade: num boneco de cabeção ele parece pulo — queixa do dono, fila nº 21)
-    O.quadril.position.x += dx * 0.6; O.quadril.position.y += dy * 0.5;
+    const dx = (P[i] - rep.P[i]) * esc;
+    O.quadril.position.x += dx * 0.6;
+    // PÉ NO CHÃO: o quadril vai para a altura em que a sola mais baixa fica onde a captura a põe (no apoio, no chão;
+    // no ar da corrida, só um pouco acima). No ar do pulo e nadando, segue a captura como antes.
+    let dy = (P[i + 1] - rep.P[i + 1]) * esc * 0.5;
+    const pc = this.chaoPeso ?? 0;
+    if (pc > 0.01 && this.sola.E) {
+      const baixo = this.pontoBaixo(); // altura (modelo) da sola mais baixa com o quadril no lugar de descanso
+      let alvo = 1e9;
+      for (const L of ['E', 'D']) for (const nm of ['pe', 'ponta']) alvo = Math.min(alvo, P[ij[nm + L] * 3 + 1] - rep.P[ij[nm + L] * 3 + 1]);
+      alvo = Math.max(0, alvo) * esc * NO_AR;
+      dy = dy * (1 - pc) + (alvo - baixo) * pc;
+    }
+    O.quadril.position.y += dy;
+    this.altQuadril = dy * this.k;
     return dy * this.k;
+  }
+
+  /** Sola mais baixa (calcanhar ou ponta dos dois pés), no espaço do modelo, com a pose atual e o quadril parado. */
+  pontoBaixo() {
+    const O = this.rig.ossos, raiz = O.raiz;
+    raiz.updateMatrixWorld(true);
+    _m.copy(raiz.parent.matrixWorld).invert();
+    let m = 1e9;
+    for (const L of ['E', 'D']) for (const p of this.sola[L]) { const y = _b.copy(p).applyMatrix4(O['pe' + L].matrixWorld).applyMatrix4(_m).y; if (y < m) m = y; }
+    return m;
   }
 }

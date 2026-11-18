@@ -140,7 +140,8 @@ export function medir(P) {
   return { H, cx, zc: zs / n, virilha, temPernas, pernaX, lados, axila: axilaM, pescoco };
 }
 
-const NOMES = ['raiz', 'quadril', 'tronco', 'peito', 'cabeca', 'coxaE', 'canelaE', 'coxaD', 'canelaD', 'bracoE', 'antebracoE', 'bracoD', 'antebracoD'];
+const TODOS = Array.from({ length: 15 }, (_, i) => i);
+const NOMES = ['raiz', 'quadril', 'tronco', 'peito', 'cabeca', 'coxaE', 'canelaE', 'coxaD', 'canelaD', 'bracoE', 'antebracoE', 'bracoD', 'antebracoD', 'peE', 'peD'];
 
 /**
  * Dá esqueleto ao grupo (troca cada Mesh por uma SkinnedMesh com o mesmo material). Devolve { ossos, medidas, malhas }.
@@ -161,9 +162,20 @@ export function articular(grupo) {
   abs.tronco = [cx, quadrilY + 0.08 * H, zc];
   abs.peito = [cx, md.axila, zc];
   abs.cabeca = [cx, md.pescoco, zc];
+  // tornozelo: o sapato é a parte de baixo da canela; o pé (osso novo, fila nº 28) gira à parte para a sola ficar no chão
+  const tornozelo = Math.min(0.075 * H, virilha * 0.3);
+  const pes = {};
+  for (const s of [1, -1]) {
+    // frente e calcanhar do sapato deste lado (vértices abaixo do tornozelo)
+    let z0 = 1e9, z1 = -1e9, n = 0;
+    for (let i = 0; i < P.length / 3; i++) { const y = P[i * 3 + 1], x = P[i * 3]; if (y < tornozelo && (x - cx) * s > 0) { z0 = Math.min(z0, P[i * 3 + 2]); z1 = Math.max(z1, P[i * 3 + 2]); n++; } }
+    pes[s] = n > 10 ? { z0, z1 } : { z0: zc - 0.05 * H, z1: zc + 0.08 * H };
+  }
   for (const [s, L] of [[1, 'E'], [-1, 'D']]) {
     abs['coxa' + L] = [cx + s * pernaX, virilha + 0.03 * H, zc];
     abs['canela' + L] = [cx + s * pernaX, virilha * 0.5, zc];
+    // o tornozelo fica um pouco atrás do meio do sapato (o pé aponta para a frente)
+    abs['pe' + L] = [cx + s * pernaX, tornozelo, pes[s].z0 + (pes[s].z1 - pes[s].z0) * 0.32];
     const l = lados[s];
     const ombroY = l ? l.axila + 0.07 * H : md.axila + 0.06 * H;
     const ombroX = l ? l.borda(l.axila) + 0.035 * H : 0.17 * H;
@@ -173,7 +185,7 @@ export function articular(grupo) {
     const cotY = (ombroY + maoY) / 2 + 0.02 * H;
     abs['antebraco' + L] = [cx + s * (l ? l.borda(cotY) + 0.03 * H : ombroX + 0.02 * H), cotY, zA];
   }
-  const pai = { quadril: 'raiz', tronco: 'quadril', peito: 'tronco', cabeca: 'peito', coxaE: 'quadril', canelaE: 'coxaE', coxaD: 'quadril', canelaD: 'coxaD', bracoE: 'peito', antebracoE: 'bracoE', bracoD: 'peito', antebracoD: 'bracoD' };
+  const pai = { quadril: 'raiz', tronco: 'quadril', peito: 'tronco', cabeca: 'peito', coxaE: 'quadril', canelaE: 'coxaE', coxaD: 'quadril', canelaD: 'coxaD', bracoE: 'peito', antebracoE: 'bracoE', bracoD: 'peito', antebracoD: 'bracoD', peE: 'canelaE', peD: 'canelaD' };
   o.raiz.position.set(...abs.raiz);
   for (const nm of NOMES.slice(1)) {
     const p = abs[pai[nm]], a = abs[nm];
@@ -219,7 +231,8 @@ export function articular(grupo) {
       if (wp > 0) {
         const kn = abs.canelaE[1];
         const fc = sst(kn + 0.03 * H, kn - 0.03 * H, y);
-        for (const [LL, f] of [['E', lado], ['D', 1 - lado]]) { w[I['canela' + LL]] += wp * f * fc; w[I['coxa' + LL]] += wp * f * (1 - fc); }
+        const fp = sst(tornozelo + 0.012 * H, tornozelo - 0.012 * H, y); // sapato = pé
+        for (const [LL, f] of [['E', lado], ['D', 1 - lado]]) { w[I['pe' + LL]] += wp * f * fc * fp; w[I['canela' + LL]] += wp * f * fc * (1 - fp); w[I['coxa' + LL]] += wp * f * (1 - fc); }
       }
       if (resto > 1e-4) {
         const fCab = sst(md.pescoco - 0.03 * H, md.pescoco + 0.03 * H, y);
@@ -230,7 +243,7 @@ export function articular(grupo) {
       }
       gBraco[i] = wb; gLado[i] = wp * (lado - 0.5) * 2;
       // 4 maiores
-      const ord = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].sort((a, b) => w[b] - w[a]).slice(0, 4);
+      const ord = TODOS.slice().sort((a, b) => w[b] - w[a]).slice(0, 4);
       let soma = 0; for (const j of ord) soma += w[j];
       if (soma < 1e-6) { si[i * 4] = I.quadril; sw[i * 4] = 1; continue; }
       ord.forEach((j, q) => { si[i * 4 + q] = j; sw[i * 4 + q] = w[j] / soma; });
@@ -270,5 +283,8 @@ export function articular(grupo) {
   for (const b of ossos) b.userData.rep = b.position.clone();
   // comprimento da perna (do quadril ao chão) e do braço, no espaço do modelo
   const perna = abs.coxaE[1], braco = Math.max(0.1 * H, abs.bracoE[1] - (lados[1]?.mao ?? virilha));
-  return { ossos: o, esqueleto, malhas: trocadas, medidas: { ...md, perna, braco } };
+  // pé: ponta e calcanhar do sapato no espaço do modelo (descanso), para pôr a sola no chão (js/animacoes.js)
+  const sapato = { tornozelo, ponta: {}, calcanhar: {} };
+  for (const [s, L] of [[1, 'E'], [-1, 'D']]) { sapato.ponta[L] = pes[s].z1; sapato.calcanhar[L] = pes[s].z0; }
+  return { ossos: o, esqueleto, malhas: trocadas, medidas: { ...md, perna, braco, sapato } };
 }
