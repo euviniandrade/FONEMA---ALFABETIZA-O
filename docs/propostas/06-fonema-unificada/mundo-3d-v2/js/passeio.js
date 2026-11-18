@@ -123,7 +123,7 @@ export function criarPasseio(mundo, h = {}) {
     const r = cliente(), x = e.clientX - r.left, y = e.clientY - r.top;
     let tipo = 'mouse';
     if (e.pointerType !== 'mouse') tipo = x < r.width * 0.45 && y > r.height * 0.3 && ![...ptrs.values()].some((p) => p.tipo === 'joy') ? 'joy' : 'cam';
-    ptrs.set(e.pointerId, { tipo, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, t0: performance.now(), mov: 0 });
+    ptrs.set(e.pointerId, { tipo, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, t0: e.timeStamp, mov: 0 }); // hora do evento (aparelho lento: o desenho entre o toque e a soltura não conta)
     try { canvas.setPointerCapture(e.pointerId); } catch { /* ok */ }
     if (tipo === 'joy') { joy.ativo = true; joy.cx = e.clientX; joy.cy = e.clientY; mostrarJoy(e.clientX, e.clientY, 0, 0); }
     const cams = [...ptrs.values()].filter((p) => p.tipo === 'cam');
@@ -147,7 +147,7 @@ export function criarPasseio(mundo, h = {}) {
     ptrs.delete(e.pointerId);
     if (p.tipo === 'joy') { joy.ativo = false; joy.x = joy.y = 0; esconderJoy(); }
     if (ptrs.size < 2) pinca = null;
-    if (e.type === 'pointerup' && p.mov < 10 && performance.now() - p.t0 < 450) tocar(e.clientX, e.clientY);
+    if (e.type === 'pointerup' && p.mov < 10 && e.timeStamp - p.t0 < 450) tocar(e.clientX, e.clientY);
   };
   canvas.addEventListener('pointerup', soltar);
   canvas.addEventListener('pointercancel', soltar);
