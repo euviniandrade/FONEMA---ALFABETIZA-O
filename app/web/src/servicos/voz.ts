@@ -11,7 +11,8 @@ import { LEITURAS_EM_SONS, type Personagem } from '@fonema/conteudo';
 import { pararSons, tocarSonsEmendados } from '../mecanicas/sons-emendados.ts';
 import { modoTeste } from './ambiente.ts';
 import { fonemasDaSequencia, sonsLetras } from './sons-letras.ts';
-import { noMaximo, tocarAteOFim } from './midia.ts';
+import { tocarAteOFim } from './midia.ts';
+import { interromper, ocupar, tocandoDoElemento, vez, type MotivoParar } from './canal-audio.ts';
 import { anotarTocado, idFala, idNome, substituicoes } from './substituicoes.ts';
 export { noMaximo, tocarAteOFim } from './midia.ts';
 
@@ -20,7 +21,7 @@ export interface OpcoesFala { quem?: Personagem; rate?: number; pitchExtra?: num
 
 export interface ProvedorVoz {
   falar(texto: string, o?: OpcoesFala): Promise<void>;
-  parar(): void;
+  parar(motivo?: MotivoParar): void;
 }
 
 /**
@@ -110,14 +111,8 @@ function avisar(tipo: 'fonema:fala' | 'fonema:fala-fim', detail: Record<string, 
   try { window.dispatchEvent(new CustomEvent(tipo, { detail })); } catch { /* sem janela (teste) */ }
 }
 
-/** Fala em andamento menor que isto é deixada terminar (nunca cortar uma sílaba, um som ou o fim de uma frase). */
-const DEIXA_TERMINAR_S = 1.0;
-/** Ao interromper uma fala longa, o volume desce nesse tempo (sem estalo). */
-const FADE_MS = 90;
 /** Respiro extra depois do nome da criança, quando a frase continua ("Oi, Mariana! | Eu sou a Sofia."). */
 const PAUSA_DEPOIS_DO_NOME_MS = 140;
-/** Uma fala nova nunca espera mais que isto pelo fim da anterior (fade de 90 ms ou o último segundo do clipe). */
-const ESPERA_CAUDA_MS = DEIXA_TERMINAR_S * 1000 + 300;
 
 /**
  * Vozes OFICIAIS pré-geradas (ElevenLabs: "Sofia — FONEMA" e "Tales — FONEMA").
@@ -128,17 +123,14 @@ const ESPERA_CAUDA_MS = DEIXA_TERMINAR_S * 1000 + 300;
  *  - todos os trechos da fala são CARREGADOS antes de o primeiro tocar; cada um toca até o fim ('ended');
  *  - os clipes já vêm masterizados (silêncio de 80 ms nas pontas, fade, volume igual): a emenda não estala;
  *  - a voz da Sofia e do Tales nunca é esticada (sem playbackRate para "falar devagar"): a fala lenta é gravada lenta;
- *  - uma fala nova não corta o finzinho da anterior: se falta menos de 1 s, espera terminar; senão, baixa o volume e para.
+ *  - uma fala nova não corta o finzinho da anterior: se falta menos de 1 s, espera terminar; senão, baixa o volume e para;
+ *  - todo clipe passa pelo CANAL ÚNICO (servicos/canal-audio.ts): só começa quando o áudio anterior (fala ou som de letra)
+ *    acabou de verdade. Nunca há duas falas/sons ao mesmo tempo.
  */
 export class ProvedorPreGerado implements ProvedorVoz {
   private falas: Record<string, string> | null = null;
   private nomes: Record<string, string[]> = { sofia: [], tales: [] };
   private arqNomes: Record<string, Record<string, string>> = {};
-  private atual: HTMLAudioElement | null = null;
-  /** Termina quando a fala anterior acabou de verdade (fim natural do clipe ou fim do fade). */
-  private cauda: Promise<unknown> = Promise.resolve();
-  /** Encerra a espera do clipe atual (fala cancelada). */
-  private soltar: (() => void) | null = null;
   private geracao = 0;
   nome = '';
   pronto: Promise<void>;
@@ -211,68 +203,59 @@ export class ProvedorPreGerado implements ProvedorVoz {
       return this.reserva.falar(texto, o);
     }
     const g = ++this.geracao;
-    // carrega TODOS os trechos antes de começar (e espera o finzinho da fala anterior, com limite)
+    // carrega TODOS os trechos antes de começar
     const urls = await Promise.all(plano.map((p) => this.urlDoTrecho(p)));
-    const [els] = await Promise.all([Promise.all(urls.map((u) => carregar(u.url))), noMaximo(this.cauda, ESPERA_CAUDA_MS)]);
+    const els = await Promise.all(urls.map((u) => carregar(u.url)));
     for (let i = 0; i < els.length; i++) {
       if (g !== this.geracao) return;
       const el = els[i];
-      this.atual = el;
       el.playbackRate = 1; // D029 §5: nunca mudar tom nem velocidade
       // substituto: sem boca pré-calculada (o PersonagemVivo acompanha o texto)
       const arquivo = urls[i].substituto ? `substituto:${plano[i].id}` : plano[i].arquivo.replace(/^\.\//, '');
-      anotarTocado({ id: plano[i].id, origem: urls[i].substituto ? 'substituto' : 'original', url: urls[i].url });
-      avisar('fonema:fala', { quem, voz: vozDe(quem), texto, audio: el, arquivo, inicio: performance.now(), trecho: i, trechos: els.length });
-      const { fim, soltar } = tocarAteOFim(el);
-      this.soltar = soltar;
-      this.cauda = fim;
-      await fim;
-      if (this.atual === el) this.atual = null;
+      const tocou = await this.tocarNoCanal(el, g, () => {
+        anotarTocado({ id: plano[i].id, origem: urls[i].substituto ? 'substituto' : 'original', url: urls[i].url });
+        avisar('fonema:fala', { quem, voz: vozDe(quem), texto, audio: el, arquivo, inicio: performance.now(), trecho: i, trechos: els.length });
+      });
+      if (!tocou) return;
       if (g !== this.geracao || i === els.length - 1) avisar('fonema:fala-fim', { quem });
       if (plano[i].pausaMs && g === this.geracao) await new Promise((r) => setTimeout(r, plano[i].pausaMs));
     }
   }
-  /** Interrompe a fala: o clipe que está quase no fim termina sozinho; o resto some com fade (sem estalo). */
-  parar() {
-    this.geracao++;
-    const el = this.atual;
-    this.atual = null;
-    // a fala seguinte espera o finzinho desta só até o limite (o fade ou o último segundo do clipe)
-    this.cauda = noMaximo(this.cauda, ESPERA_CAUDA_MS);
-    const soltar = this.soltar;
-    this.soltar = null;
-    if (el && (el.paused || el.ended)) soltar?.();
-    if (el && !el.paused && !el.ended) {
-      const resta = (el.duration - el.currentTime) / (el.playbackRate || 1);
-      if (!(resta <= DEIXA_TERMINAR_S)) {
-        const v0 = el.volume;
-        const t0 = performance.now();
-        const passo = () => {
-          const k = (performance.now() - t0) / FADE_MS;
-          if (k >= 1 || el.paused) { el.pause(); soltar?.(); return; }
-          el.volume = v0 * (1 - k) * (1 - k);
-          setTimeout(passo, 15);
-        };
-        passo();
-      }
+  /**
+   * Espera a vez no canal único, toca o clipe até o fim e solta a vez. Devolve false se a fala ficou velha
+   * enquanto esperava (alguém pediu outra coisa): aí nada toca.
+   */
+  private async tocarNoCanal(el: HTMLAudioElement, g: number, aoComecar: () => void): Promise<boolean> {
+    const liberar = await vez();
+    try {
+      if (g !== this.geracao) return false;
+      aoComecar();
+      const { fim, soltar } = tocarAteOFim(el);
+      const desocupar = ocupar(tocandoDoElemento(el, soltar));
+      await fim;
+      desocupar();
+      return true;
+    } finally {
+      liberar();
     }
+  }
+  /** Interrompe a fala: o clipe que está quase no fim termina sozinho; o resto some com fade (sem estalo). */
+  parar(motivo: MotivoParar = 'pedido') {
+    this.geracao++;
+    interromper(motivo);
     this.reserva.parar();
   }
   /** Toca um clipe solto (nome no cadastro) até o fim. Com `id`, toca o substituto do administrador se houver. */
   async tocarArquivo(caminho: string, id?: string): Promise<void> {
     const g = ++this.geracao;
     const sub = id ? await substituicoes.url(id) : null;
-    const [el] = await Promise.all([(sub ? Promise.resolve(sub) : urlDoAudio(caminho)).then(carregar), noMaximo(this.cauda, ESPERA_CAUDA_MS)]);
+    const el = await carregar(sub ?? (await urlDoAudio(caminho)));
     if (g !== this.geracao) return;
-    this.atual = el;
     const quem = /nomes\/(sofia|tales)\//.exec(caminho)?.[1] ?? 'sofia';
-    avisar('fonema:fala', { quem, voz: quem, texto: '', audio: el, arquivo: sub && id ? `substituto:${id}` : caminho.replace(/^\.\//, ''), inicio: performance.now(), trecho: 0, trechos: 1 });
-    const { fim, soltar } = tocarAteOFim(el);
-    this.soltar = soltar;
-    this.cauda = fim;
-    await fim;
-    if (this.atual === el) this.atual = null;
-    avisar('fonema:fala-fim', { quem });
+    const tocou = await this.tocarNoCanal(el, g, () => {
+      avisar('fonema:fala', { quem, voz: quem, texto: '', audio: el, arquivo: sub && id ? `substituto:${id}` : caminho.replace(/^\.\//, ''), inicio: performance.now(), trecho: 0, trechos: 1 });
+    });
+    if (tocou) avisar('fonema:fala-fim', { quem });
   }
 }
 
@@ -302,9 +285,12 @@ class Voz {
     if (o.ligada !== undefined) this.ligada = o.ligada;
     // `velocidade` e `provedor: 'navegador'` não têm mais efeito (D029 §5): só as vozes oficiais, em 1×
   }
-  /** Fala agora (interrompe o que estava falando). */
+  /**
+   * Fala agora. O que estava tocando: se a criança acabou de tocar na tela, sai com fade; senão, a fala nova espera
+   * acabar (canal único, servicos/canal-audio.ts). Nunca duas ao mesmo tempo.
+   */
   falar(texto: string, o?: OpcoesFala): Promise<void> {
-    this.parar();
+    this.parar('novo');
     coletar(texto, o?.quem, this.pre.nome);
     if (!this.ligada) return Promise.resolve();
     this.fila = this.dizer(texto, o);
@@ -314,21 +300,23 @@ class Voz {
    * Som isolado ("mmm", "/ssss/") ou sequência de sons ("sss… ooo… lll"): toca o SOM REAL da letra quando todos
    * existem (Estúdio de sons ou public/audio/sons). Senão, a fala gravada da dupla (ou silêncio, se não houver).
    */
-  private async dizer(texto: string, o?: OpcoesFala): Promise<void> {
+  private async dizer(texto: string, o?: OpcoesFala, t = this.turno): Promise<void> {
     const seq = fonemasDaSequencia(texto);
-    if (seq && !modoTeste() && (await sonsLetras.temTodos(seq))) { await sonsLetras.tocarSequencia(seq); return; }
+    if (seq && !modoTeste() && (await sonsLetras.temTodos(seq))) { if (t === this.turno) await sonsLetras.tocarSequencia(seq); return; }
     // leitura da Trilha dos Sons ainda sem clipe de voz ("lupé", "anta"…): os sons puros emendados, ligeiro (ponte até a
     // gravação; nunca voz do navegador nem nome de letra). Lista e sons em @fonema/conteudo › LEITURAS_EM_SONS.
     const sons = LEITURAS_EM_SONS[texto.trim()];
     if (sons) {
       await this.pre.pronto;
       if (!this.pre.temTrecho(texto, o?.quem ?? 'sofia') && (await sonsLetras.temTodos(sons.filter((x): x is string => !!x)))) {
+        if (t !== this.turno) return;
         this.emendando = true;
         await tocarSonsEmendados(sons, 'rapido');
         this.emendando = false;
         return;
       }
     }
+    if (t !== this.turno) return; // alguém pediu outra coisa enquanto este esperava
     return this.provedor.falar(texto, o);
   }
   /**
@@ -336,9 +324,10 @@ class Voz {
    * aí a tela usa a fala antiga da dupla ("M, de macaco.").
    */
   async somReal(fonema: string, vezes = 1): Promise<boolean> {
-    this.parar();
+    this.parar('novo');
+    const t = this.turno;
     if (!(await sonsLetras.tem(fonema))) return false;
-    if (!this.ligada) return true;
+    if (!this.ligada || t !== this.turno) return true;
     const p = (async () => { await sonsLetras.tocarSequencia(Array.from({ length: vezes }, () => fonema), 450); })();
     this.fila = p;
     await p;
@@ -360,7 +349,7 @@ class Voz {
   }
   /** Toca o nome na voz OFICIAL da Sofia ou do Tales (cadastro). Devolve false se o nome ainda não tem gravação. */
   async ouvirNome(nome: string, quem: 'sofia' | 'tales'): Promise<boolean> {
-    this.parar();
+    this.parar('novo');
     await this.pre.pronto;
     if (!this.pre.temNomeNaVoz(quem, nome)) return false;
     if (!this.ligada || modoTeste()) return true;
@@ -373,19 +362,51 @@ class Voz {
   }
   /** Fala uma sequência de falas, uma depois da outra. */
   async sequencia(falas: { texto: string; quem?: Personagem }[], aoMudar?: (i: number) => void): Promise<void> {
-    this.parar();
+    this.parar('novo');
     const t = this.turno;
     for (let i = 0; i < falas.length; i++) {
       if (t !== this.turno) return; // alguém parou a voz (outra fala, troca de tela): a fila acaba aqui
       aoMudar?.(i);
       coletar(falas[i].texto, falas[i].quem, this.pre.nome);
-      if (this.ligada) await this.dizer(falas[i].texto, { quem: falas[i].quem });
+      if (this.ligada) await this.dizer(falas[i].texto, { quem: falas[i].quem }, t);
       else await new Promise((r) => setTimeout(r, modoTeste() ? 10 : 1400));
     }
   }
   /** Muda a cada parar(): uma sequência em andamento sabe que foi cancelada. */
   private turno = 0;
-  parar() { this.turno++; this.provedor.parar(); sonsLetras.parar(); if (this.emendando) { this.emendando = false; pararSons(); } }
+  /**
+   * Para a voz e os sons. `'pedido'` (padrão: botão, troca de tela) corta na hora, com fade; `'novo'` é o parar
+   * implícito de quem vai tocar algo novo (só corta se a criança tocou na tela há pouco; ver servicos/canal-audio.ts).
+   */
+  parar(motivo: MotivoParar = 'pedido') {
+    this.turno++;
+    this.provedor.parar(motivo);
+    sonsLetras.parar(motivo);
+    if (this.emendando) { this.emendando = false; pararSons(motivo); }
+  }
+  /**
+   * Uma CADEIA de falas/sons de uma tela (ex.: enunciado → som-estímulo). Se qualquer outra fala, som ou parada
+   * acontecer no meio (a criança respondeu, tocou em "ouvir"), a cadeia fica velha e o resto dela não toca: o
+   * estímulo antigo nunca entra por cima da correção. `ativa()` diz se ela ainda vale.
+   */
+  cadeia() {
+    let meu = this.turno;
+    const ativa = () => meu === this.turno;
+    const passo = async <T,>(f: () => Promise<T>, pulo: T): Promise<T> => {
+      if (!ativa()) return pulo;
+      const p = f();
+      meu = this.turno; // f() já parou o anterior (síncrono): o turno novo é desta cadeia
+      const r = await p;
+      return r;
+    };
+    return {
+      ativa,
+      falar: (texto: string, o?: OpcoesFala) => passo(() => this.falar(texto, o), undefined),
+      somReal: (fonema: string, vezes = 1) => passo(() => this.somReal(fonema, vezes), false),
+      /** Para coisas fora da voz (sons emendados, espera): roda só se a cadeia ainda vale. */
+      se: <T,>(f: () => Promise<T>, pulo: T) => passo(f, pulo)
+    };
+  }
   /** Uma leitura sem clipe está tocando em sons emendados (só ela é parada por `parar`). */
   private emendando = false;
 }

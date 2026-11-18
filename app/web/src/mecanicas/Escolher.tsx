@@ -7,7 +7,7 @@ import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
 import { falar, textoVoz } from '../util.ts';
-import { explicarContraste, temFrasesDoPar } from './contraste.ts';
+import { PAUSA_ENTRE_SONS_MS, explicarContraste, temFrasesDoPar } from './contraste.ts';
 import { Progressinho, embaralhar, sementeDaTentativa, sortearItens, tentativa, type PropsMecanica } from './comum.tsx';
 import { JogoNaFase, useDesafioDaCena } from './jogos/JogoFonico.tsx';
 
@@ -64,10 +64,10 @@ function EscolherClassico({ atividade, crianca, sessao, cenaId, revisao, onFim, 
 
   const quemOuvir = item?.quem ?? atividade.enunciado.quem;
   /** O estímulo do item: o som real da letra (2 vezes) quando existe; senão a fala gravada. */
-  const tocarItem = async (vezes = 2) => {
-    if (item?.somAlvo && (await voz.temSomReal(item.somAlvo))) { await voz.somReal(item.somAlvo, vezes); return; }
-    if (item?.ouvir) return voz.falar(textoVoz(item.ouvir, crianca), { quem: quemOuvir });
-    if (item?.mostrar && i === 0) return falar(atividade.enunciado, crianca);
+  const tocarItem = async (vezes = 2, c = voz.cadeia()) => {
+    if (item?.somAlvo && (await voz.temSomReal(item.somAlvo))) { await c.somReal(item.somAlvo, vezes); return; }
+    if (item?.ouvir) return c.falar(textoVoz(item.ouvir, crianca), { quem: quemOuvir });
+    if (item?.mostrar && i === 0) return c.se(() => falar(atividade.enunciado, crianca), undefined);
   };
 
   useEffect(() => {
@@ -77,9 +77,11 @@ function EscolherClassico({ atividade, crianca, sessao, cenaId, revisao, onFim, 
   useEffect(() => {
     let atual = true;
     respostas.current = [];
+    // cadeia: se a criança responder (ou tocar em "ouvir") no meio do enunciado, o estímulo antigo não toca por cima
+    const c = voz.cadeia();
     (async () => {
-      if (i === 0) await falar(atividade.enunciado, crianca);
-      if (atual && (item?.somAlvo || item?.ouvir)) await tocarItem();
+      if (i === 0) await c.se(() => falar(atividade.enunciado, crianca), undefined);
+      if (atual && c.ativa() && (item?.somAlvo || item?.ouvir)) await tocarItem(2, c);
       if (atual) inicio.current = Date.now();
     })();
     return () => { atual = false; };
@@ -118,7 +120,7 @@ function EscolherClassico({ atividade, crianca, sessao, cenaId, revisao, onFim, 
     else { if (o.falar) await voz.falar(o.falar, { quem: 'sofia' }); await diz(F.figuraComeca); }
     if (!vivo.current) return true;
     await voz.somReal(o.som, 1);
-    await espera(250);
+    await espera(PAUSA_ENTRE_SONS_MS);
     // 2. o que muda / o som certo
     if (contraste === 'voz' || (contraste === 'boca' && temFrasesDoPar(o.som, somCerto))) {
       // par confundível: o som de cada um, com o que muda ("O P não tem voz:" + som; "O B tem voz:" + som)
@@ -126,7 +128,7 @@ function EscolherClassico({ atividade, crianca, sessao, cenaId, revisao, onFim, 
     } else {
       await diz(certa.botaoDeSom ? F.somDaLetra : item.formato === 'figura-letra' ? F.palavraComeca : item.formato === 'fonema-falta' ? F.somQueFalta : F.euPedi);
       await voz.somReal(somCerto, 1);
-      await espera(200);
+      await espera(PAUSA_ENTRE_SONS_MS);
       if (contraste) await explicarContraste(o.som, somCerto, contraste);
     }
     if (!vivo.current) return true;

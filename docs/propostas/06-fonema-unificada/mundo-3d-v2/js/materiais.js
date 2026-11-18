@@ -27,6 +27,8 @@ export const GLSL_RUIDO = /* glsl */`
     float a = m_vor(p * 0.85 + w, t * 0.9), b = m_vor(p * 1.35 - w * 1.3 + 7.1, t * 1.15 + 2.0);
     return a * 0.65 + b * 0.55 + a * b * 0.8;
   }
+`;
+export const GLSL_RELEVO = /* glsl */`
   vec3 m_relevo(vec3 surfPos, vec3 surfNorm, float h, float forca){
     vec3 sx = dFdx(surfPos), sy = dFdy(surfPos);
     vec2 dh = vec2(dFdx(h), dFdy(h)) * forca;
@@ -53,7 +55,7 @@ const VERT_WP = (sh) => {
       vWP = (modelMatrix * wpp).xyz; }`);
 };
 const uniDet = (sh, U) => { sh.uniforms.uDet = DETALHE.on; sh.uniforms.uCausF = DETALHE.caus; sh.uniforms.uNivel = DETALHE.nivel; sh.uniforms.uTempo = U.time; };
-const PARS_FRAG = 'varying vec3 vWP; uniform float uDet, uCausF, uNivel, uTempo;\n' + GLSL_RUIDO;
+const PARS_FRAG = 'varying vec3 vWP; uniform float uDet, uCausF, uNivel, uTempo;\n' + GLSL_RUIDO + GLSL_RELEVO;
 
 /** Trecho de fragmento: cáusticas e cor de água em quem está abaixo do nível do rio. Usa vWP e diffuseColor. */
 const CAUSTICA_FRAG = /* glsl */`

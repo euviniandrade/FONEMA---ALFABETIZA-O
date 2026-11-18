@@ -6,7 +6,7 @@ import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
 import { falar, textoVoz } from '../util.ts';
-import { explicarContraste } from './contraste.ts';
+import { PAUSA_ENTRE_SONS_MS, explicarContraste } from './contraste.ts';
 import { embaralhar, sementeDaTentativa, sortearItens, tentativa, type PropsMecanica } from './comum.tsx';
 
 type Lado = 'letra' | 'cena';
@@ -80,8 +80,8 @@ export function Ligar({ atividade, crianca, sessao, cenaId, revisao, onFim }: Pr
     if (!a || !b || !(await voz.temSomReal(a)) || !(await voz.temSomReal(b))) { await diz(FALAS.erro1); return; }
     const contraste = contrasteDosSons(a, b);
     setAviso(contraste === 'voz' ? 'Um som tem voz e o outro não. Escute os dois e tente de novo.' : 'São dois sons diferentes. Escute os dois e tente de novo.');
-    await diz(F.letraFaz); await voz.somReal(a, 1); await espera(200);
-    await diz(F.cenaFaz); await voz.somReal(b, 1); await espera(200);
+    await diz(F.letraFaz); await voz.somReal(a, 1); await espera(PAUSA_ENTRE_SONS_MS);
+    await diz(F.cenaFaz); await voz.somReal(b, 1); await espera(PAUSA_ENTRE_SONS_MS);
     if (contraste) await explicarContraste(a, b, contraste);
     await diz(F.tentaDeNovo);
   };

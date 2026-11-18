@@ -62,9 +62,11 @@ export function Carteiro({ itens, demo, crianca, sessao, cena, contexto, onFim }
         efeitos.acerto();
         await voar(demo.posicaoCerta, true);
         await voz.falar(demo.palavra, { quem: 'sofia' });
+        if (!ok()) return;
+        // a vez da criança começa limpa: nada da demonstração fica marcado (revisão 18/11, item 6)
+        setMarcas({}); setCarta(null); setApontada(-1); setEmDemo(false);
         await diz(FALAS_ESCUTA.voceFaz);
         if (!ok()) return;
-        setEmDemo(false);
       }
       for (let k = 0; k < itens.length; k++) {
         const it = itens[k];

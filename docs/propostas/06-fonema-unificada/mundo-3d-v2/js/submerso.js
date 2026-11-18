@@ -102,17 +102,20 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
     const k0 = matPlanta.customProgramCacheKey(); matPlanta.customProgramCacheKey = () => k0 + 'plantaSub'; }
   const plantas = new THREE.InstancedMesh(fita, matPlanta, QM.plantas);
   const VERDES = ['#4E9A47', '#5DAA4E', '#3F8A52', '#6FB65A', '#7DBE5C', '#4C8F6E'];
-  { let i = 0;
-    while (i < QM.plantas) {
+  { let i = 0, tent = 0;
+    while (i < QM.plantas && tent < QM.plantas * 8) {
       const sC = lerp(s0, s1, r()), uC = (r() * 2 - 1) * 4.3, nT = 6 + Math.floor(r() * 14);
-      for (let k = 0; k < nT && i < QM.plantas; k++, i++) {
+      for (let k = 0; k < nT && i < QM.plantas; k++) {
+        tent++;
         const s = sC + (r() - 0.5) * 1.6, u = clamp(uC + (r() - 0.5) * 1.2, -4.5, 4.5);
         const p = mundoDe(s, u, fundoRio(u) - 0.05), H = Math.min(prof(u) - 0.3, 0.45 + r() * 1.5);
-        if (proibido(p.x, p.z) || H < 0.25) { k--; i--; continue; }
+        if (proibido(p.x, p.z) || H < 0.25) continue;
+        i++;
         _o.position.copy(p); _o.rotation.set((r() - 0.5) * 0.25, r() * 6, (r() - 0.5) * 0.25); _o.scale.set(0.7 + r() * 0.9, H, 1); _o.updateMatrix();
-        plantas.setMatrixAt(i, _o.matrix); plantas.setColorAt(i, new THREE.Color(VERDES[(i * 7) % VERDES.length]));
+        plantas.setMatrixAt(i - 1, _o.matrix); plantas.setColorAt(i - 1, new THREE.Color(VERDES[(i * 7) % VERDES.length]));
       }
     }
+    plantas.userData.n = i;
   }
   plantas.frustumCulled = false; plantas.receiveShadow = true; grupo.add(plantas);
 
@@ -206,7 +209,7 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
   let Qn = Q_SUB[q] || Q_SUB.medio;
   function qualidade(nq) {
     Qn = Q_SUB[nq] || Q_SUB.medio; q = nq;
-    plantas.count = Qn.plantas; pedras.count = Qn.pedras;
+    plantas.count = Math.min(Qn.plantas, plantas.userData.n); pedras.count = Qn.pedras;
     peixes.count = Math.min(NMAX, Qn.cardumes * QM.peixes);
     raios.count = Qn.raios * 2;
     geoP.setDrawRange(0, Qn.part);

@@ -9,6 +9,7 @@
  */
 import { sonsLetras } from '../servicos/sons-letras.ts';
 import { modoTeste } from '../servicos/ambiente.ts';
+import { interromper, ocupar, vez, type MotivoParar } from '../servicos/canal-audio.ts';
 
 export type Ritmo = 'separado' | 'lento' | 'medio' | 'rapido';
 /** Duração do miolo de um som contínuo em cada ritmo (ms) e a pausa entre sons (só no "separado"). */
@@ -20,11 +21,9 @@ const RAMPA = 0.04;
 
 let ctx: AudioContext | null = null;
 const buffers = new Map<string, Promise<AudioBuffer | null>>();
-let ativos: AudioBufferSourceNode[] = [];
+/** Timers que acendem a letra na tela (cancelados ao parar). */
 let timers: number[] = [];
 let geracao = 0;
-/** Promessas em espera: soltas quando os sons param (nada fica pendurado). */
-let soltar: (() => void)[] = [];
 
 function contexto(): AudioContext | null {
   if (typeof window === 'undefined') return null;
@@ -51,15 +50,15 @@ export async function temSons(fonemas: (string | null)[]): Promise<boolean> {
   return sonsLetras.temTodos(fonemas.filter((f): f is string => !!f));
 }
 
-export function pararSons() {
+/**
+ * Para os sons emendados. O que está tocando sai pelo canal único (servicos/canal-audio.ts): o finzinho termina sozinho,
+ * o resto desce o volume e para; nenhuma letra acende mais.
+ */
+export function pararSons(motivo: MotivoParar = 'pedido') {
   geracao++;
-  for (const s of ativos) { try { s.stop(); } catch { /* já parou */ } }
-  ativos = [];
+  interromper(motivo);
   for (const t of timers) clearTimeout(t);
   timers = [];
-  const s = soltar;
-  soltar = [];
-  s.forEach((f) => f());
 }
 
 /**
@@ -67,7 +66,7 @@ export function pararSons() {
  * Letras caladas (`null`) são puladas. Devolve false se algum som não existe ou se foi interrompido.
  */
 export async function tocarSonsEmendados(fonemas: (string | null)[], ritmo: Ritmo, aoSom?: (i: number) => void): Promise<boolean> {
-  pararSons();
+  pararSons('novo');
   const g = geracao;
   const idx = fonemas.map((f, i) => (f ? i : -1)).filter((i) => i >= 0);
   if (modoTeste()) {
@@ -78,28 +77,56 @@ export async function tocarSonsEmendados(fonemas: (string | null)[], ritmo: Ritm
   if (!c) return false;
   const bufs = await Promise.all(idx.map((i) => buffer(fonemas[i]!)));
   if (g !== geracao || bufs.some((b) => !b)) return false;
+  // canal único (servicos/canal-audio.ts): só começa quando a fala ou o som anterior acabou
+  const liberar = await vez();
+  try {
+    if (g !== geracao) return false;
+    return await emendar(c, g, idx, fonemas, bufs as AudioBuffer[], ritmo, aoSom);
+  } finally {
+    liberar();
+  }
+}
+
+async function emendar(c: AudioContext, g: number, idx: number[], fonemas: (string | null)[], bufs: AudioBuffer[], ritmo: Ritmo, aoSom?: (i: number) => void): Promise<boolean> {
   let t = c.currentTime + 0.06;
   const inicio = t;
+  const fontes: AudioBufferSourceNode[] = [];
+  const saida = c.createGain(); // volume do lote inteiro (fade ao interromper)
+  saida.connect(c.destination);
   bufs.forEach((b, k) => {
     const i = idx[k];
     const f = fonemas[i]!;
     const estouro = ESTOURO.has(f);
-    const total = b!.duration;
+    const total = b.duration;
     const dur = estouro ? total : Math.min(total, MIOLO[ritmo] / 1000);
     const desde = estouro ? 0 : Math.max(0, (total - dur) / 2);
     const src = c.createBufferSource();
-    src.buffer = b!;
+    src.buffer = b;
     const ganho = c.createGain();
     ganho.gain.setValueAtTime(0, t);
     ganho.gain.linearRampToValueAtTime(1, t + (estouro ? 0.005 : RAMPA));
     ganho.gain.setValueAtTime(1, t + Math.max(RAMPA, dur - RAMPA));
     ganho.gain.linearRampToValueAtTime(0, t + dur);
-    src.connect(ganho).connect(c.destination);
+    src.connect(ganho).connect(saida);
     src.start(t, desde, dur);
-    ativos.push(src);
+    fontes.push(src);
     timers.push(window.setTimeout(() => { if (g === geracao) aoSom?.(i); }, (t - inicio) * 1000 + 40));
     t += dur + PAUSA[ritmo] / 1000 - (PAUSA[ritmo] || estouro ? 0 : SOBREPOE);
   });
-  await new Promise<void>((r) => { soltar.push(r); timers.push(window.setTimeout(r, (t - inicio) * 1000 + 120)); });
+  const fimS = t;
+  let acabar: () => void = () => {};
+  const fim = new Promise<void>((r) => { acabar = r; setTimeout(r, (fimS - inicio) * 1000 + 120); });
+  const desocupar = ocupar({
+    restaMs: () => Math.max(0, (fimS - c.currentTime) * 1000),
+    cortar: (ms) => {
+      // o volume do lote desce em `ms` e os sons param; só então a vez passa adiante
+      const agora = c.currentTime;
+      try { saida.gain.setValueAtTime(saida.gain.value, agora); saida.gain.linearRampToValueAtTime(0, agora + ms / 1000); } catch { /* sem rampa */ }
+      for (const s of fontes) { try { s.stop(agora + ms / 1000 + 0.01); } catch { /* já parou */ } }
+      setTimeout(acabar, ms + 20);
+    }
+  });
+  await fim;
+  desocupar();
   return g === geracao;
 }

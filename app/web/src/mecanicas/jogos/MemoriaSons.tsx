@@ -8,6 +8,7 @@
  * gravados). Depois de 2 erros com decisão no mesmo som, a letra certa brilha (vale "com ajuda").
  * Moedinhas que pulam no par são só enfeite (nenhuma é dada). Sem cronômetro, sem ranking. "Menos movimento": sem giro 3D.
  */
+import { PAUSA_ENTRE_SONS_MS } from '../contraste.ts';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { FALAS, FALAS_ESCUTA, FALAS_FONICAS, type Fala } from '@fonema/conteudo';
 import type { CartaMemoria, Crianca, JogadaMemoria, RodadaMemoria, Tentativa } from '@fonema/motor';
@@ -124,7 +125,7 @@ export function MemoriaSons({ rodada, crianca, sessao, cena, contexto, onFim }: 
       erros.current[alvo] = (erros.current[alvo] ?? 0) + 1;
       await diz({ quem: 'sofia', texto: F.letraFaz });
       await tocar(cLetra, 1);
-      await espera(rapido ? 10 : 200);
+      await espera(rapido ? 10 : PAUSA_ENTRE_SONS_MS);
       await diz({ quem: 'sofia', texto: F.cenaFaz });
       await tocar(cCena, 1);
     } else {

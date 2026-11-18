@@ -5,6 +5,12 @@ import { voz } from '../servicos/voz.ts';
 const F = FALAS_FONICAS;
 const sofia = (texto: string) => voz.falar(texto, { quem: 'sofia' });
 
+/**
+ * Respiro entre dois sons comparados na correção ("este é /e/… e este é /b/"): longo o bastante para a criança
+ * ouvir que são DOIS sons separados (revisão 18/11, item 1).
+ */
+export const PAUSA_ENTRE_SONS_MS = 450;
+
 /** Há frase completa para este par (p/b, t/d, f/v, s/z, m/n)? */
 export const temFrasesDoPar = (a: string, b: string) => !!FALAS_DOS_PARES[a] && !!FALAS_DOS_PARES[b] && !!contrasteDosSons(a, b);
 
@@ -22,13 +28,13 @@ export async function explicarContraste(a: string, b: string, contraste: Contras
   const par = contraste === 'voz' ? surdoESonoro(a, b) : null;
   const ordem = par ?? [a, b];
   if (temFrasesDoPar(a, b)) {
-    for (const x of ordem) { await sofia(FALAS_DOS_PARES[x].como); await voz.somReal(x, 1); await espera(200); }
+    for (const x of ordem) { await sofia(FALAS_DOS_PARES[x].como); await voz.somReal(x, 1); await espera(PAUSA_ENTRE_SONS_MS); }
     if (par) await sofia(F.maoNoPescoco);
     return;
   }
   if (par) {
-    await sofia(F.semVoz); await voz.somReal(par[0], 1); await espera(200);
-    await sofia(F.comVoz); await voz.somReal(par[1], 1); await espera(200);
+    await sofia(F.semVoz); await voz.somReal(par[0], 1); await espera(PAUSA_ENTRE_SONS_MS);
+    await sofia(F.comVoz); await voz.somReal(par[1], 1); await espera(PAUSA_ENTRE_SONS_MS);
     await sofia(F.maoNoPescoco);
   } else if (contraste === 'boca') await sofia(F.bocaMuda);
 }

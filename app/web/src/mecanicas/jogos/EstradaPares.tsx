@@ -70,9 +70,12 @@ export function EstradaPares({ itens, demo, crianca, sessao, cena, contexto, onF
         setMarcas({ [demo.posicaoCerta]: 'certo' });
         efeitos.acerto();
         await irPara(demo.posicaoCerta);
+        await espera(modoTeste() ? 20 : 500);
+        if (!ok()) return;
+        // revisão 18/11 item 6: a vez da criança começa LIMPA (sem a placa verde da demonstração, carro no começo da estrada)
+        setMarcas({}); setDestino(null); setEtapa('andando'); setEmDemo(false);
         await diz(FALAS_ESCUTA.voceFaz);
         if (!ok()) return;
-        setEmDemo(false);
       }
       for (let k = 0; k < itens.length; k++) {
         const it = itens[k];

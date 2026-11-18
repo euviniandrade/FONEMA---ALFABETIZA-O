@@ -120,6 +120,14 @@ O `index.html` repassa todos os eventos acima para o `parent` como `{ tipo: 'fon
 
 > ⚠️ FPS em tablet real **não foi medido** aqui: as capturas usam WebGL por software (SwiftShader). Próximo passo: rodar `?q=medio` num tablet Android de 3–4 GB e ajustar o número de árvores/sombra do nível médio.
 
+### Visual de jogo, mergulho e som (18/11, fila do dono nº 24)
+
+- **Por qualidade:** `alto` = grama 42 mil folhas (tapete de 30 m), 4 cardumes × 16 peixes, 620 plantas, 12 raios de luz; `médio` = 16 mil folhas (22 m), 3 × 12 peixes, 360 plantas, 8 raios; `baixo` = sem grama de perto, sem acabamento procedural nem cáusticas (o mesmo programa, um uniforme pula o trecho), 2 × 9 peixes, sem raios. O medidor que desce a qualidade também desce tudo isso.
+- **Rio:** o meio ficou mais fundo (3,2 m de água; a beirinha rasa não mudou). A água é transparente na beira (vê-se areia, pedras e peixes), espelho no meio, brilho do sol nas ondinhas, espuma que vai e volta na margem; de baixo, a "janela" clara da superfície.
+- **Embaixo d'água** (automático quando a câmera passa da superfície do rio, ou `mundo.submerso(true/false)`): névoa verde-azulada, fundo da cena na cor da água, ondulação leve na imagem (médio/alto), raios de luz, partículas, bolhas saindo do boneco, peixes que se espalham quando ele chega perto e som abafado.
+- **Som:** só no passeio, carregado depois que o mundo aparece (`import()`), começa no primeiro toque. Trilha original de 16 compassos em Dó maior (melodia e acordes escritos em `js/som.js`, decisão do projeto: nada de música de terceiros), ambiente por lugar (passarinhos, água, vento, abafado no mergulho). `medirTrilha(seg)` grava sem som e devolve pico/volume para teste.
+- **Tudo fora do precache** (a pasta `mundo3d/` inteira já é ignorada pelo service worker).
+
 ## 6. Capturas e vídeo
 
 Geradas com Playwright + Chromium (SwiftShader), 1280×800 com `deviceScaleFactor: 2` (2560×1600):
@@ -160,6 +168,10 @@ python3 ferramentas/recortar.py           # refaz os recortes dos personagens
 | `js/natureza.js` | árvores instanciadas com LOD, ipê, coqueiro, bananeira, pássaros e borboletas |
 | `js/personagens.js` | sprites 3D recortados, Bolota, Zum-Zum, rótulos e portais de missão |
 | `js/ceu.js` · `js/agua.js` | céu em degradê com sol, luz/IBL, nuvens, dia/entardecer · rio com reflexo e mar com espuma |
+| `js/materiais.js` | acabamento procedural: grama/cascalho com relevo fino no chão, telha em fiadas, veio de madeira, reboco; cáusticas no fundo do rio (18/11) |
+| `js/grama.js` | grama de perto: até 42 mil folhinhas numa malha só, tapete que acompanha a criança, vento em rajadas, deita onde o boneco pisa (18/11) |
+| `js/submerso.js` | fundo do rio: cardumes (boids), tartaruga, plantas que balançam, pedras, aguapés com flores; raios de luz, partículas e bolhas quando a câmera mergulha (18/11) |
+| `js/som.js` | trilha original e sons de ambiente sintetizados (Web Audio, sem arquivos), botão 🔊/🔇 e tecla M (18/11) |
 | `js/kit.js` | `Lote` (junta peças numa malha), caixas arredondadas, bolhas orgânicas, vento, luz de borda, placas |
 | `ferramentas/` | `capturar.js`, `video.js`, `recortar.py` |
 

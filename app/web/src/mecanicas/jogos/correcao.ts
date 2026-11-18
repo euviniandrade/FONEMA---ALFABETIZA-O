@@ -11,7 +11,7 @@ import type { Crianca } from '@fonema/motor';
 import type { ItemJogo, OpcaoJogo } from '@fonema/motor';
 import { espera } from '../../servicos/ambiente.ts';
 import { voz } from '../../servicos/voz.ts';
-import { explicarContraste, temFrasesDoPar } from '../contraste.ts';
+import { PAUSA_ENTRE_SONS_MS, explicarContraste, temFrasesDoPar } from '../contraste.ts';
 
 const F = FALAS_FONICAS;
 
@@ -34,14 +34,14 @@ export async function corrigirEscolha(item: ItemJogo, escolhida: OpcaoJogo, diz:
   else { await dizerFigura(escolhida); await diz(F.voceEscolheu); }
   if (!vivo()) return;
   await voz.somReal(escolhida.som, 1);
-  await espera(250);
+  await espera(PAUSA_ENTRE_SONS_MS);
   if (!vivo()) return;
   // 2. o que muda / o som pedido
   if (contraste === 'voz' || (contraste === 'boca' && temFrasesDoPar(escolhida.som, certo))) await explicarContraste(escolhida.som, certo, contraste);
   else {
     await diz(F.euPedi);
     await voz.somReal(certo, 1);
-    await espera(200);
+    await espera(PAUSA_ENTRE_SONS_MS);
     if (contraste) await explicarContraste(escolhida.som, certo, contraste);
   }
   if (!vivo()) return;

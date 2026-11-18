@@ -15,6 +15,7 @@
  */
 import { modoTeste } from './ambiente.ts';
 import { tocarAteOFim } from './midia.ts';
+import { interromper, ocupar, tocandoDoElemento, vez, type MotivoParar } from './canal-audio.ts';
 import { anotarTocado, idSom, substituicoes } from './substituicoes.ts';
 
 export interface SomPublicado {
@@ -98,8 +99,6 @@ class SonsLetras {
   private mapa: Promise<MapaSons | null> | null = null;
   private fonte: FonteGravacoes | null = null;
   private urls = new Map<string, string | null>();
-  private atual: HTMLAudioElement | null = null;
-  private soltar: (() => void) | null = null;
   private geracao = 0;
 
   /** Liga o repositório do aparelho (gravações do adulto). Chamado uma vez pelo app. */
@@ -137,34 +136,36 @@ class SonsLetras {
   /** Toca o som de um fonema até o fim. Devolve false se não há som (ou se foi interrompido). */
   async tocar(fonema: string): Promise<boolean> {
     const g = ++this.geracao;
-    this.silenciar();
+    interromper('novo');
     const o = await this.origem(fonema);
     if (!o || g !== this.geracao) return false;
     anotarTocado({ id: idSom(fonema), origem: o.origem, url: o.url });
     if (modoTeste()) { await new Promise((r) => setTimeout(r, 20)); return true; }
     return this.tocarUrl(o.url, fonema, o.origem, g);
   }
-  private tocarUrl(url: string, fonema: string, origem: string, g: number): Promise<boolean> {
-    return new Promise((resolve) => {
-      const el = new Audio(url);
-      el.preload = 'auto';
-      this.atual = el;
+  /** Espera a vez no canal único (servicos/canal-audio.ts) e toca o som até o fim. */
+  private async tocarUrl(url: string, fonema: string, origem: string, g: number): Promise<boolean> {
+    const el = new Audio(url);
+    el.preload = 'auto';
+    const liberar = await vez();
+    try {
+      if (g !== this.geracao) return false;
       avisar('fonema:som', { fonema, origem, audio: el, inicio: performance.now() });
       // a promessa sempre termina: fim, erro, pausa, play recusado, vigia ou tempo-limite (servicos/midia.ts)
       const { fim, soltar } = tocarAteOFim(el);
-      this.soltar = soltar;
-      void fim.then((ok) => {
-        if (this.atual === el) this.atual = null;
-        if (this.soltar === soltar) this.soltar = null;
-        avisar('fonema:som-fim', { fonema });
-        resolve(ok && g === this.geracao);
-      });
-    });
+      const desocupar = ocupar(tocandoDoElemento(el, soltar));
+      const ok = await fim;
+      desocupar();
+      avisar('fonema:som-fim', { fonema });
+      return ok && g === this.geracao;
+    } finally {
+      liberar();
+    }
   }
   /** Sons em sequência, com um respiro entre eles ("sss… ooo… lll"). */
   async tocarSequencia(fonemas: string[], pausaMs = 350): Promise<boolean> {
     const g = ++this.geracao;
-    this.silenciar();
+    interromper('novo');
     for (let i = 0; i < fonemas.length; i++) {
       const o = await this.origem(fonemas[i]);
       if (!o || g !== this.geracao) return false;
@@ -175,13 +176,8 @@ class SonsLetras {
     }
     return true;
   }
-  private silenciar() {
-    const el = this.atual; this.atual = null;
-    const soltar = this.soltar; this.soltar = null;
-    if (el && !el.paused) { try { el.pause(); } catch { /* nada */ } }
-    soltar?.();
-  }
-  parar() { this.geracao++; this.silenciar(); }
+  /** Para os sons: o que está tocando termina limpo (canal único); os próximos da sequência não tocam. */
+  parar(motivo: MotivoParar = 'pedido') { this.geracao++; interromper(motivo); }
 }
 
 export const sonsLetras = new SonsLetras();

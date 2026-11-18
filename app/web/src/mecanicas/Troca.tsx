@@ -6,7 +6,7 @@ import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
 import { falar, textoVoz } from '../util.ts';
-import { explicarContraste } from './contraste.ts';
+import { PAUSA_ENTRE_SONS_MS, explicarContraste } from './contraste.ts';
 import { Progressinho, embaralhar, sementeDaTentativa, type PropsMecanica } from './comum.tsx';
 import { OpcoesTF, registro } from './tf-comum.tsx';
 
@@ -87,6 +87,7 @@ export function Troca({ atividade, crianca, sessao, cenaId, revisao, onFim }: Pr
     if (respostas.current.length === 1 && o.som && o.som !== item.som) {
       await diz('Essa letra faz este som:');
       await voz.somReal(o.som, 1);
+      await espera(PAUSA_ENTRE_SONS_MS);
       const c = contrasteDosSons(o.som, item.som);
       if (c) await explicarContraste(o.som, item.som, c);
       else { await diz('Eu pedi este som:'); await somPedido(); }

@@ -160,9 +160,11 @@ export function CorreSom({ itens, crianca, sessao, cena, contexto, enunciado, de
         irPara(demo.posicaoCerta);
         marcar(demo.posicaoCerta, 'certo'); pista.current?.festejar(demo.posicaoCerta); efeitos.acerto();
         await espera(400);
+        if (!ok()) return;
+        // a vez da criança começa limpa: o arco da demonstração não fica marcado (revisão 18/11, item 6)
+        marcar(demo.posicaoCerta, null); setMarcas({}); setAcesa(null); pista.current?.acender(null); setEmDemo(false);
         await diz(FALAS_ESCUTA.voceFaz);
         if (!ok()) return;
-        setEmDemo(false);
       }
       for (let k = 0; k < itens.length; k++) {
         const it = itens[k];

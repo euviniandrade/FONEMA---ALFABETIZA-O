@@ -85,9 +85,11 @@ export function ComeSom({ itens, crianca, sessao, cena, contexto, enunciado, dem
         if (!ok()) return;
         setMarcas({ [demo.posicaoCerta]: 'certo' });
         await levar(demo.posicaoCerta, true);
+        if (!ok()) return;
+        // a vez da criança começa limpa: nada da demonstração fica marcado (revisão 18/11, item 6)
+        setMarcas({}); setAcesa(null); setEmDemo(false);
         await diz(FALAS_ESCUTA.voceFaz);
         if (!ok()) return;
-        setEmDemo(false);
       }
       for (let k = 0; k < itens.length; k++) {
         const it = itens[k];

@@ -6,7 +6,7 @@ import { efeitos } from '../servicos/efeitos.ts';
 import { espera, modoTeste } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
 import { ehDeterminista, falar, textoVoz } from '../util.ts';
-import { explicarContraste } from './contraste.ts';
+import { PAUSA_ENTRE_SONS_MS, explicarContraste } from './contraste.ts';
 import { Progressinho, type PropsMecanica } from './comum.tsx';
 import { pararSons, tocarSonsEmendados } from './sons-emendados.ts';
 import { registro } from './tf-comum.tsx';
@@ -162,7 +162,7 @@ export function Caixas({ atividade, crianca, sessao, cenaId, revisao, onFim }: P
     } else if (somCerto && somDela && somDela !== somCerto) {
       await diz('Essa letra faz este som:');
       await voz.somReal(somDela, 1);
-      await espera(200);
+      await espera(PAUSA_ENTRE_SONS_MS);
       const c = contrasteDosSons(somDela, somCerto);
       if (c) await explicarContraste(somDela, somCerto, c);
       else { await diz('Eu pedi este som:'); setAcesa(pos); await voz.somReal(somCerto, 1); }
