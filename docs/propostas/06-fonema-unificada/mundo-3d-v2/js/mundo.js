@@ -339,7 +339,7 @@ export async function criarMundo(container, opts = {}) {
     qualidadeExtras(nivel);
   }
   const pe = () => peExterno ? _pe.set(peExterno.x, peExterno.y, peExterno.z) : _pe.copy(controls.target).setY(controls.target.y - 0.9);
-  function noRio(x, z) { const v = cenas.vila; return !!v && v.distRio(x, z) < v.RIO_W / 2 + 0.6; }
+  function noRio(x, z) { const v = cenas.vila; return !!v && v.distRio(x, z) < v.RIO_W / 2 + 3.2; }
   function definirSubmerso(on) {
     if (on === submersoAgora) return;
     submersoAgora = on; sub?.definirSubmerso(on);

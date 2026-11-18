@@ -81,7 +81,7 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
 
   // ---------- pedras e plantas do fundo ----------
   const matPedra = addCausticas(new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.92 }), U);
-  const pedras = new THREE.InstancedMesh(blobGeo(41, 1, 0.38), matPedra, QM.pedras);
+  const pedras = new THREE.InstancedMesh(blobGeo(41, 2, 0.32), matPedra, QM.pedras);
   const CORES_PEDRA = ['#8C8577', '#7A7468', '#A59C8A', '#6B6E62', '#958B78'];
   for (let i = 0; i < QM.pedras; i++) {
     const s = lerp(s0, s1, r()), u = (r() * 2 - 1) * (r() < 0.7 ? 4.4 : 2.5), sc = 0.12 + Math.pow(r(), 2.2) * 0.75;
@@ -155,7 +155,7 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
   const cardumes = [], bichos = [];
   for (let c = 0; c < QM.cardumes; c++) {
     const sc = lerp(s0 + 8, s1 - 8, (c + 0.5) / QM.cardumes);
-    const cd = { s: sc, u: 0, y: NIVEL - prof(0) * 0.55, vs: (r() < 0.5 ? -1 : 1) * 0.5, fase: r() * 10, cor: CORES_PEIXE[c % CORES_PEIXE.length], tam: 0.8 + r() * 0.5 };
+    const cd = { s: sc, u: 0, y: NIVEL - prof(0) * 0.55, vs: (r() < 0.5 ? -1 : 1) * 0.5, fase: r() * 10, cor: CORES_PEIXE[c % CORES_PEIXE.length], tam: 0.6 + r() * 0.35 };
     cardumes.push(cd);
     for (let k = 0; k < QM.peixes; k++) {
       const b = { c, s: cd.s + (r() - 0.5) * 2, u: (r() - 0.5) * 2, y: cd.y + (r() - 0.5) * 0.6, vs: cd.vs, vu: 0, vy: 0, tam: cd.tam * (0.75 + r() * 0.5) };

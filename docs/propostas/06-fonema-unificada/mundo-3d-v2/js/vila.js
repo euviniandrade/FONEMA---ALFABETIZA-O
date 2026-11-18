@@ -172,7 +172,7 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   const anel = new THREE.Mesh(gOut, addCausticas(new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95 }), U)); anel.receiveShadow = true; grupo.add(anel);
 
   // ---------- rio ----------
-  const rio = criarRio({ curva: RIO2D, largura: RIO_W, y: NIVEL_AGUA, U, reflexo: passeio ? q === 'alto' : q !== 'baixo', resolucao: q === 'alto' ? 1024 : 512 });
+  const rio = criarRio({ curva: RIO2D, largura: RIO_W + 7, y: NIVEL_AGUA, U, reflexo: passeio ? q === 'alto' : q !== 'baixo', resolucao: q === 'alto' ? 1024 : 512 });
   grupo.add(rio);
 
   // ---------- praça ----------
