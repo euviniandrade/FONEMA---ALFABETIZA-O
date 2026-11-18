@@ -36,7 +36,7 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
 **Revisão de qualidade 18/11 — frente das telas e do visual (fila do dono nº 23; 18/11; NÃO publicado ainda):** o que foi feito
 item a item está em `docs/revisoes/qualidade-2026-11-18.md` ("Situação dos itens — frente das telas e do visual").
 - **Estilos novos num arquivo só:** `app/web/src/estilos-telas.css` (carregado por último no `main.tsx`): lição que cabe no celular
-  (3 respostas lado a lado), Lojinha compacta no celular, nada rola para o lado (`overflow-x:clip`), fim da missão com a fileira de
+  (3 respostas lado a lado em toda tela com 3 opções), Lojinha compacta no celular, nada rola para o lado (`overflow-x:clip`), fim da missão com a fileira de
   botões presa embaixo, placas do Corre-Som, casinhas do Carteiro, balão do Come-Som, caminho da leitura, zero sem risco etc.
 - **Texto de adulto fora da tela da criança:** `semFonetica()` (`app/web/src/util.ts`) mostra "O som do A" no lugar de "O som /a/"
   só na TELA (a voz usa o texto original, que acha o clipe gravado). Entrada da fase sem "domínio", objetivo e "Em casa".
@@ -47,8 +47,8 @@ item a item está em `docs/revisoes/qualidade-2026-11-18.md` ("Situação dos it
 - **Checagem automática nova:** `app/web/e2e/trecho-telas.mjs` (`--telas`, `--capturas-telas`; também no fim do E2E completo e do
   `--sem-jornada`): em 390×844 e 1850×980 mede chegada, Letra A cena a cena, fim da missão, vila, Lojinha, álbum, Brincar, Leitura,
   as duas trilhas, mapa, entradas de fase, lições TF-01/07/09/17 (2 min cada) e os 5 jogos. Variável `TELAS_LARGURA=390` roda só um tamanho.
-- **Verificado:** RESULTADO_TELAS
-- **Falta (desta frente):** cenário pintado da Estrada, do Corre-Som e da Casa do Som; troféu "MESTRE LEITOR"; medalha 3D genérica
+- **Verificado:** lint, typecheck e `npm test` (433 de 433) passaram; `--telas` na cópia separada (porta 4670, build do commit `c25476e`): 44 telas medidas em 390×844 e 44 em 1850×980 (29 com botões de resposta cada), 0 problemas. Capturas olhadas: `app/docs/capturas/v11-telas-*.png`. O `--sem-jornada` inteiro NÃO terminou aqui: com a máquina carregada ele passou 98 checagens sem nenhum ✗ e foi interrompido de fora dentro da Trilha dos Sons, antes de chegar ao trecho das telas; a prova da checagem nova são as rodadas `--telas` acima. Ninguém olhou num celular de verdade
+- **Falta (desta frente):** Corre-Som (arcos mais abertos/áreas de toque iguais; a tentativa foi desfeita), Espelho do Som lado a lado no celular, cenário pintado da Estrada, do Corre-Som e da Casa do Som; troféu "MESTRE LEITOR"; medalha 3D genérica
   do celular; retrato 2D da Sofia no balão ao lado da dupla 3D; três botões para a mesma missão na vila. Do avatar: boneco "todo branco"
   e o cinza carregando na Lojinha.
 
