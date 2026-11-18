@@ -57,7 +57,9 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
   const mandarNiveis = (abrir: boolean) => {
     const { progresso: p, temSom: ts } = d.current;
     if (!p || !ts) return;
-    enviar('fonema:caca-niveis', { niveis: niveisDaCaca(p, ts), abrir, barco: barcoLiberado(p), falaBarco: FALAS_CACA.barco });
+    const niveis = niveisDaCaca(p, ts);
+    if (modoTeste()) console.info('[caca] níveis', niveis.map((n) => `${n.nivel}:${n.aberto ? 1 : 0}`).join(' '));
+    enviar('fonema:caca-niveis', { niveis, abrir, barco: barcoLiberado(p), falaBarco: FALAS_CACA.barco });
   };
   /** Grava o que a rodada juntou (uma vez). `fimNivel` anota a rodada feita (é o que abre o nível seguinte e o barco). */
   const gravar = async (fimNivel?: { nivel: NivelCaca; acertos: number; total: number }) => {

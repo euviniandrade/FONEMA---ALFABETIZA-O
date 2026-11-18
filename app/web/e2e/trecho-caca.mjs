@@ -116,7 +116,8 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
   ok(ts[0].respostas.length === 2 && ts[0].escolhido !== ts[0].alvo && ts[0].comAjuda === true && ts[0].nivelAjuda === 'resposta-mostrada', `o 1º item guarda o erro e a seta como ajuda (escolhido ${ts[0].escolhido}, alvo ${ts[0].alvo})`);
 
   /* ============================== nível 2: letras de uma palavra ============================== */
-  await frame.waitForFunction(() => window.FONEMA_CACA.niveis.find((n) => n.nivel === 3)?.aberto, null, { timeout: 60000, polling: 300 });
+  await frame.waitForFunction(() => window.FONEMA_CACA.niveis.find((n) => n.nivel === 3)?.aberto, null, { timeout: 60000, polling: 300 })
+    .catch(async (e) => { console.log('    níveis:', JSON.stringify(await frame.evaluate(() => window.FONEMA_CACA.niveis)), 'jogos:', JSON.stringify((await lerProgresso(pg, id)).biblioteca?.jogos)); throw e; });
   ok(true, 'depois da caça aos sons, as charadas abrem');
   await fr.getByTestId('caca-mapa').click(CLIQUE);
   await fr.getByTestId('caca-nivel-2').click(CLIQUE);
