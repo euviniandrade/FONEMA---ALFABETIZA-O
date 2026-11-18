@@ -165,7 +165,8 @@ export async function trechoJogos(browser, h) {
       gancho: async (page, cena) => {
         const oferta = page.getByTestId('oferecer-jogo');
         // a cena pode montar entre o gancho e o clique na resposta: nas duas cenas que viram jogo, espera a oferta aparecer
-        if (/^AL-A-C(2b|3|3b|4)$/.test(cena) && jogados.size < 2) await oferta.waitFor({ timeout: 1500 }).catch(() => {});
+        // (o data-cena às vezes ainda mostra a cena anterior): enquanto faltar um jogo, espera a oferta um pouco em cada passo
+        if (jogados.size < 2 && !/-C5/.test(cena)) await oferta.waitFor({ timeout: 2500 }).catch(() => {});
         if (!(await oferta.isVisible().catch(() => false))) return;
         const jogo = await oferta.getAttribute('data-jogo');
         if (jogados.has(jogo)) return;
