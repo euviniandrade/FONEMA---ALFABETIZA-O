@@ -239,6 +239,9 @@ export function criarPasseio(mundo, h = {}) {
   }
   function fimConversa() { npcs.fimConversa(conversa); conversa = null; }
   const bloqueado = () => !!entrando || !!h.pausado?.();
+  // ---------- ganchos da caça ao tesouro (js/caca-tesouro.js, js/barco.js): quem mais roda a cada quadro e quem move o boneco ----------
+  const aoQuadro = []; // f(dt, t, pos) depois de cada passo (também no simular() dos testes)
+  let veiculo = null, veiculoY = 0; // { mover(dt, ix, iz, vMax) → { x, y, z, giro } }: enquanto existe, ele leva o boneco (barco)
 
   // ---------- quadro ----------
   const _f = new THREE.Vector3(), _d = new THREE.Vector3();
@@ -277,7 +280,8 @@ export function criarPasseio(mundo, h = {}) {
     }
     if (bloqueado() || conversa) { ix = iz = 0; vMax = 0; }
     const il = Math.hypot(ix, iz); if (il > 1e-4) { ix /= il; iz /= il; }
-    const naAgua = colisao.agua(pos.x, pos.z);
+    if (veiculo) { const v = veiculo.mover(dt, ix, iz, il > 1e-4 ? vMax : 0); pos.x = v.x; pos.z = v.z; veiculoY = v.y; giro = v.giro; ix = iz = 0; velX = velZ = 0; }
+    const naAgua = veiculo ? 0 : colisao.agua(pos.x, pos.z);
     if (naAgua > 0.25) vMax *= 0.6;
     // aceleração suave
     const ac = 1 - Math.exp(-dt * (il > 1e-4 ? 9 : 12));
@@ -312,6 +316,7 @@ export function criarPasseio(mundo, h = {}) {
     }
     // sobe e desce suave (entrar na água, subir um degrau)
     pos.y = Math.abs(base - pos.y) > 1.2 ? base : lerp(pos.y, base, 1 - Math.exp(-dt * (nadando ? 5 : 16)));
+    if (veiculo) pos.y = veiculoY;
     eu.raiz.position.set(pos.x, pos.y + yPe, pos.z);
     eu.raiz.rotation.y = giro;
     eu.tick(dt, { vel, correr: CORRER, noAr, vy, nadando, vau: nadando ? 0 : clamp(naAgua / NADA, 0, 1), mergulho, fundura });
@@ -378,6 +383,7 @@ export function criarPasseio(mundo, h = {}) {
     if (camSub) for (const n of npcs.lista) n.boneco.balao.visible = false;
     // o fundo do rio (submerso.js) sabe onde está o corpo da criança: os peixinhos nadam em volta no mergulho
     pePeixes.x = pos.x; pePeixes.z = pos.z; pePeixes.y = nadando ? (eu.cabecaY() ?? pos.y) - 0.35 : pos.y;
+    for (const f of aoQuadro) f(dt, t, pos);
   }
   let subAntes = false;
   const pePeixes = { x: 0, y: 0, z: 0 };
@@ -436,6 +442,11 @@ export function criarPasseio(mundo, h = {}) {
      * Assim o teste confere o que acontece (andou, pulou, chegou na porta) sem depender de quantos quadros por segundo saem.
      */
     simular(seg, passo = 0.05) { const n = Math.round(seg / passo); for (let k = 0; k < n; k++) { tSim += passo; tick(passo, tSim, passo); } return { x: pos.x, z: pos.z, noAr }; },
+    /** Caça ao tesouro: função chamada a cada passo (chegada nos baús); devolve quem a desliga. */
+    noQuadro(f) { aoQuadro.push(f); return () => { const i = aoQuadro.indexOf(f); if (i >= 0) aoQuadro.splice(i, 1); }; },
+    /** Barco (js/barco.js): enquanto há veículo, ele move o boneco (sem nadar nem colisão de terra); null = volta a andar. */
+    usarVeiculo(v) { veiculo = v; velX = velZ = 0; destino = null; destinoMarca.visible = false; },
+    get veiculo() { return veiculo; },
     teleportar(x, z, g = giro) { pos.x = x; pos.z = z; giro = g; velX = velZ = 0; destino = null; encaixar = true; },
   };
 }
