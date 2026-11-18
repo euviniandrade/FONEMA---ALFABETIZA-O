@@ -1,0 +1,9 @@
+/* Botão "Ouvindo…" (componentes/BotaoOuvindo.tsx): cor normal, ondinha animada; nunca o verde lavado de botão morto */
+.btn.btn-ouvindo{cursor:default}
+.btn.btn-ouvindo:hover,.btn.btn-ouvindo:active{transform:none;filter:none}
+.ouvindo-onda{display:inline-flex;align-items:center;gap:4px;height:28px}
+.ouvindo-onda i{display:block;width:5px;height:10px;border-radius:3px;background:currentColor;animation:ouvindoOnda 1s ease-in-out infinite}
+.ouvindo-onda i:nth-child(2){animation-delay:.15s}.ouvindo-onda i:nth-child(3){animation-delay:.3s}.ouvindo-onda i:nth-child(4){animation-delay:.45s}
+@keyframes ouvindoOnda{0%,100%{height:8px}50%{height:26px}}
+.menos-movimento .ouvindo-onda i{animation:none;height:16px}
+@media (prefers-reduced-motion:reduce){.ouvindo-onda i{animation:none;height:16px}}

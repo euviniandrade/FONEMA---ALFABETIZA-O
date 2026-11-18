@@ -7,6 +7,7 @@ import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
 import { useDestravar } from '../servicos/destravar.ts';
+import { BotaoOuvindo } from '../componentes/BotaoOuvindo.tsx';
 import { falar, textoVoz } from '../util.ts';
 import { tentativa, type PropsMecanica } from './comum.tsx';
 import '../estilos-trilha-sons.css';
@@ -30,6 +31,9 @@ export function SomNovo({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
   const [destaque, setDestaque] = useState(false);
   const [feito, setFeito] = useState(false);
   const vivo = useRef(true);
+  const rodada = useRef(0);
+  /** Já ouviu a apresentação inteira uma vez: "Ver de novo" não tranca o Continuar. */
+  const jaViu = useRef(false);
   const inicio = useRef(Date.now());
   const cena = a.cena ?? CENAS_DO_SOM[a.letra];
   const solto = useDestravar(passo !== 'pronto' && !feito);
@@ -49,44 +53,52 @@ export function SomNovo({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
   };
 
   const apresentar = async () => {
+    // "Ver de novo" recomeça do zero: a apresentação anterior para (nunca duas ao mesmo tempo)
+    const r = ++rodada.current;
+    voz.parar();
+    const ok = () => vivo.current && r === rodada.current;
     setPasso('inicio'); setParte(-1); setPalavra(-1); setDestaque(false);
     await falar(a.enunciado, crianca);
-    if (!vivo.current) return;
+    if (!ok()) return;
     if (a.regra) {
-      for (let p = 0; p < a.regra.partes.length && vivo.current; p++) {
+      for (let p = 0; p < a.regra.partes.length && ok(); p++) {
         const pt = a.regra.partes[p];
         setParte(p); setPalavra(-1); setDestaque(false);
-        if (!(await diz(pt.explica))) return;
-        for (let k = 0; k < pt.palavras.length && vivo.current; k++) {
+        if (!(await diz(pt.explica)) || !ok()) return;
+        for (let k = 0; k < pt.palavras.length && ok(); k++) {
           setPalavra(k); setDestaque(false);
           await voz.falar(pt.palavras[k].palavra.toLowerCase(), { quem: 'sofia' });
           await espera(250);
           setDestaque(true);
           if (pt.palavras[k].som) { setFalando(true); await voz.somReal(pt.palavras[k].som!, 1); setFalando(false); }
           await espera(700);
+          if (!ok()) return;
           await voz.falar(pt.palavras[k].palavra.toLowerCase(), { quem: 'sofia' });
           await espera(350);
         }
       }
       if (a.regra.fecha && !(await diz(a.regra.fecha))) return;
-      if (vivo.current) setPasso('pronto');
+      if (ok()) { setPasso('pronto'); jaViu.current = true; }
       return;
     }
-    if (a.brincadeira) { setPasso('brincadeira'); if (!(await diz(a.brincadeira))) return; }
+    if (a.brincadeira) { setPasso('brincadeira'); if (!(await diz(a.brincadeira)) || !ok()) return; }
     setPasso('som');
     await som(3);
     await espera(300);
-    if (a.repita) { setPasso('repita'); if (!(await diz(a.repita))) return; await som(1); }
+    if (!ok()) return;
+    if (a.repita) { setPasso('repita'); if (!(await diz(a.repita)) || !ok()) return; await som(1); }
+    if (!ok()) return;
     setPasso('vez');
     await espera(1800); // a vez da criança fazer o som
-    if (!vivo.current) return;
+    if (!ok()) return;
     setPasso('letra');
     efeitos.acerto();
-    if (!(await diz(a.revela))) return;
+    if (!(await diz(a.revela)) || !ok()) return;
     await som(1);
     await espera(250);
-    if (!(await diz(a.apoio))) return;
-    setPasso('pronto');
+    if (!ok()) return;
+    if (!(await diz(a.apoio)) || !ok()) return;
+    if (ok()) { setPasso('pronto'); jaViu.current = true; }
   };
 
   useEffect(() => {
@@ -139,9 +151,10 @@ export function SomNovo({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
         </div>
       )}
       <div className="linha-botoes centro">
-        <button className="btn" onClick={() => { if (passo === 'pronto') void som(2); }} disabled={passo !== 'pronto'}><Icone nome="som" />Ouvir o som</button>
-        <button className="btn" onClick={() => void apresentar()} disabled={passo !== 'pronto'}><Icone nome="voltar" />Ver de novo</button>
-        <button className="btn grande verde" onClick={continuar} disabled={(passo !== 'pronto' && !solto) || feito} data-testid="som-novo-continuar"><Icone nome="seta" />Continuar</button>
+        {/* nunca apagados (revisão 18/11, item 7): tocar corta a fala com fade e toca o som / recomeça */}
+        <button className="btn" onClick={async () => { efeitos.toque(); rodada.current++; await som(2); if (vivo.current) { jaViu.current = true; setPasso('pronto'); } }}><Icone nome="som" />Ouvir o som</button>
+        <button className="btn" onClick={() => { efeitos.toque(); void apresentar(); }}><Icone nome="voltar" />Ver de novo</button>
+        <BotaoOuvindo ouvindo={passo !== 'pronto' && !solto && !jaViu.current && !feito} onClick={continuar} disabled={feito} testId="som-novo-continuar"><Icone nome="seta" />Continuar</BotaoOuvindo>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
 import { useDestravar } from '../servicos/destravar.ts';
+import { BotaoOuvindo } from '../componentes/BotaoOuvindo.tsx';
 import { falar, textoVoz } from '../util.ts';
 import { tentativa, type PropsMecanica } from './comum.tsx';
 
@@ -30,6 +31,7 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
   const [feito, setFeito] = useState(false);
   const [palavra, setPalavra] = useState(-1);
   const vivo = useRef(true);
+  const rodada = useRef(0);
   const inicio = useRef(Date.now());
   // rede de segurança: se a voz ficar muda por alguns segundos antes do fim, o botão libera assim mesmo
   const solto = useDestravar(!pronto && !feito);
@@ -50,34 +52,42 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
    * segundo som, quando a letra tem dois. Sem som real para a letra (ou H), fica a apresentação antiga.
    */
   const apresentar = async () => {
+    // "Ouvir de novo" recomeça do zero: a apresentação anterior para (nunca duas ao mesmo tempo)
+    const r = ++rodada.current;
+    voz.parar();
+    const ok = () => vivo.current && r === rodada.current;
     setPasso(-1); setPalavra(-1);
     const fs = atividade.falas;
     const temSom = !!l.fonema && (await voz.temSomReal(l.fonema));
     await falar(atividade.enunciado, crianca);
-    if (!(await diz(fs[0], 0))) return;
-    if (!(await diz(fs[1], 1))) return;
-    if (atividade.brincadeira && (temSom || !l.fonema)) { if (!(await diz(atividade.brincadeira, 10))) return; }
+    if (!ok()) return;
+    if (!(await diz(fs[0], 0)) || !ok()) return;
+    if (!(await diz(fs[1], 1)) || !ok()) return;
+    if (atividade.brincadeira && (temSom || !l.fonema)) { if (!(await diz(atividade.brincadeira, 10)) || !ok()) return; }
     if (temSom && l.fonema) {
       setPasso(11);
       await voz.somReal(l.fonema, l.tipo === 'vogal' ? 2 : 3);
       await espera(350);
-      if (!(await diz(atividade.repita, 12))) return;
+      if (!ok()) return;
+      if (!(await diz(atividade.repita, 12)) || !ok()) return;
       setPasso(11);
       await voz.somReal(l.fonema, 1);
+      if (!ok()) return;
       setPasso(13);
       await espera(1800); // a vez da criança
-      if (!vivo.current) return;
+      if (!ok()) return;
     }
-    if (!(await diz(fs[2], 2))) return;
+    if (!(await diz(fs[2], 2)) || !ok()) return;
     // as três palavras, uma a uma, na voz da Sofia (só as que têm clipe)
-    for (let k = 1; k < l.palavras.length && vivo.current; k++) {
+    for (let k = 1; k < l.palavras.length && ok(); k++) {
       setPalavra(k);
+      if (!ok()) return;
       if (!PALAVRAS_SEM_VOZ.includes(l.palavras[k]) && voz.temTodas([l.palavras[k]], 'sofia')) await voz.falar(l.palavras[k], { quem: 'sofia' }); else await espera(700);
       await espera(200);
     }
-    if (fs[3] && !(await diz(fs[3], 3))) return;
+    if (!ok() || (fs[3] && (!(await diz(fs[3], 3)) || !ok()))) return;
     if (l.segundoFonema && (await voz.temSomReal(l.segundoFonema))) { setPasso(14); await voz.somReal(l.segundoFonema, 2); await espera(300); }
-    if (vivo.current) { setPasso(99); setPronto(true); }
+    if (ok()) { setPasso(99); setPronto(true); }
   };
 
   useEffect(() => {
@@ -130,8 +140,9 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
       </div>
       {nota ? <p className={`letra-nota ${passo >= 3 ? 'visivel' : ''}`}>{l.segundoSom ? <Figura palavra={l.segundoSom.palavra} className="letra-nota-fig" /> : <Icone nome={nota.icone} />}<span>{nota.texto}</span></p> : null}
       <div className="linha-botoes">
-        <button className="btn" onClick={apresentar}><Icone nome="som" />Ouvir de novo</button>
-        <button className="btn grande verde" onClick={continuar} disabled={!(pronto || solto) || feito} data-testid="conheci-a-letra"><Icone nome="check" />Já conheci!</button>
+        <button className="btn" onClick={() => { efeitos.toque(); void apresentar(); }}><Icone nome="som" />Ouvir de novo</button>
+        {/* escutar a letra É a atividade: enquanto a dupla apresenta, "Ouvindo…" animado (não um botão apagado) */}
+        <BotaoOuvindo ouvindo={!(pronto || solto) && !feito} onClick={continuar} disabled={feito} testId="conheci-a-letra"><Icone nome="check" />Já conheci!</BotaoOuvindo>
       </div>
       {feito ? <Brilho ativo /> : null}
     </div>
