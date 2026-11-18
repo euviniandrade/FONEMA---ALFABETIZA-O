@@ -9,6 +9,21 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Corre-Som em corrida (fila do dono nº 27, ponto 3; D035; 18/11; NÃO publicado ainda):** pedido do dono: "não pode ficar parando…
+xizinho e perde ponto… tempo, objetivo e premiação… elevando o nível… letras Aa". Decisão: `docs/decisoes/035-corre-som-corrida.md`.
+- **Jogo:** a pista não para; ondas de arcos; o som puro toca 1 vez por onda e só depois os arcos valem; passou = escolheu.
+  Certo: brilho + "+N"; errado: ✖, −5 e a letra certa 1 s no canto. Pontos [DP]: moedinha +1, pulo/sequência +2, letra +10 × sequência,
+  errada −5 (nunca abaixo de 0). Brincar: tempo + meta por nível (5 níveis, 60 s/meta 80 → 45 s/meta 200), estrelas 1–3, selo, até 3
+  moedinhas da Lojinha (teto do dia), tela do fim com os sons errados. Na fase (desafio, revisão, TF-01…05): sem relógio, "Continuar".
+- **Código:** motor `packages/motor/src/corre-som-corrida.ts` (+ regra do chute em `tentativas.ts`); tela `web/src/mecanicas/jogos/CorreSom.tsx`,
+  `corre-som-3d.ts` (placas guardadas, qualidade adaptativa), `corre-som-2d.ts` (reserva), `CorridaResultado.tsx`; letra Aa: `componentes/LetraAa.tsx`.
+- **Registro:** cada passagem = tentativa avaliada `formato: 'corrida'` com o estado da corrida; não contam: passar sem mexer e acerto
+  isolado após 2 erros seguidos; depois de um ✖, os arcos da mesma onda valem "com ajuda". Pontos/estrelas nunca contam (regra 4).
+- **Verificado:** `npm test` 481/481 (19 novos, inclusive "TF-01 ainda conclui"), lint e typecheck. E2E `--jogos` adaptado: na 1ª rodada
+  o clique do teste esperava o botão "estável" e o arco passava antes (máquina com carga ~25); corrigido com clique forçado; o resultado
+  da nova rodada, o `--sem-jornada` e o `--capturas-corrida` (PC e celular, mede qps) AINDA NÃO foram conferidos.
+- **Falta:** rodar/olhar `--capturas-corrida` e `--sem-jornada`; 60 qps não medido num celular; números a calibrar com crianças.
+
 **Caça ao tesouro das palavras no passeio 3D (fila do dono nº 25; 18/11; NÃO publicado ainda):** pedido do dono: "um caça ao
 tesouro das palavras… desbravar na água, pegar o barco… um circulozinho… dicas tipo charada… vários níveis… ensinando a usar cada cenário".
 - **Onde:** ícone 🗺️ no passeio (canto de cima, à direita) e cartão "Caça ao Tesouro" em Brincar → Jogos (só aparece com 3D; abre
