@@ -19,6 +19,7 @@ import { trechoJogos } from './trecho-jogos.mjs';
 import { trechoJogos2 } from './trecho-jogos2.mjs';
 import { trechoMemoria } from './trecho-memoria.mjs';
 import { trechoMundo3d } from './trecho-mundo3d.mjs';
+import { trechoCaca } from './trecho-caca.mjs';
 import { trechoAdmin } from './trecho-admin.mjs';
 import { trechoGerenciador } from './trecho-gerenciador.mjs';
 import { trechoFoto3d } from './trecho-foto3d.mjs';
@@ -743,6 +744,18 @@ async function main() {
     if (errosM.length) throw new Error(`erros na página:\n${errosM.join('\n')}`);
     return;
   }
+  if (process.argv.includes('--caca') || process.argv.includes('--capturas-caca')) {
+    // fila nº 25: caça ao tesouro no passeio 3D (trecho-caca.mjs); --capturas-caca: 1850×980 e 390×844
+    const errosK2 = [];
+    const capK = process.argv.includes('--capturas-caca') ? (process.env.CAPTURAS_CACA ?? DIR_CAP) : undefined;
+    if (capK) mkdirSync(capK, { recursive: true });
+    try {
+      if (!capK || process.env.CACA_LARGURA !== '390') await trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosK2, capturas: capK });
+      if (capK && process.env.CACA_LARGURA !== '1850') await trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosK2, capturas: capK, largura: 390, altura: 844, suf: '-celular' });
+    } finally { await browser.close(); servidor?.kill(); }
+    if (errosK2.length) throw new Error(`erros na página:\n${errosK2.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--fichas') || process.argv.includes('--capturas-fichas')) {
     const errosF = [];
     const hF = { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosF, dirCap: DIR_CAP };
@@ -1252,6 +1265,7 @@ async function main() {
   await trechoFichas(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, dirCap: DIR_CAP });
   await trechoMemoria(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
+  await trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoGerenciador(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoFoto3d(browser, { BASE, ok, erros });

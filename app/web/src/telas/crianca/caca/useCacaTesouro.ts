@@ -27,6 +27,8 @@ import { useSonsComClipe } from '../../../mecanicas/jogos/JogoFonico.tsx';
 import { useRegistroLivre } from '../Biblioteca.tsx';
 
 interface Msg { tipo: string; detalhe?: Record<string, unknown> }
+/** Para os testes (E2E): o que o juiz espera agora. Não entrega nada à criança (fica na janela do app, fora da tela). */
+const juiz = (x: Record<string, unknown> | null) => { (window as unknown as { FONEMA_CACA_JUIZ?: unknown }).FONEMA_CACA_JUIZ = x; };
 const urlFigura = (w: string) => { const c = caminhoFigura(undefined, w); return c ? new URL(c, location.href).href : ''; };
 
 /** Ordem da escada de ajuda (a maior vale). */
@@ -143,6 +145,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
           ouvir: () => { ouviu++; void tocarSom(ps.somAlvo, 1); },
           dica: () => { dicas++; if (dicas === 1) { ajuda = maiorAjuda(ajuda, 'repetiu'); void tocarSom(ps.somAlvo, 2); } else mostrarCerto(); }
         };
+        juiz({ nivel, k, modo: 'andar', certos, somAlvo: ps.somAlvo });
         await tocarSom(ps.somAlvo, 2);
         const inicio = Date.now();
         for (;;) {
@@ -183,6 +186,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
           ouvir: () => { void diz(lugar.charada); },
           dica: () => { dicas++; if (dicas === 1) { ajudaLugar = 'repetiu'; void diz(lugar.charada); } else { ajudaLugar = 'caminho'; enviar('fonema:caca-seta', { id: ps.baus[0].id }); } }
         };
+        juiz({ nivel, k, modo: 'lugar', bau: ps.baus[0].id, lugar: lugar.id, posicaoCerta: ps.posicaoCerta });
         await diz(lugar.charada);
         const inicioLugar = Date.now();
         const chegou = await esperar(['fonema:caca-chegou']);
@@ -202,6 +206,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
           ouvir: () => { ouviu++; void tocarSom(ps.somAlvo, 1); },
           dica: () => { dicas++; if (dicas === 1) { ajuda = maiorAjuda(ajuda, 'repetiu'); void tocarSom(ps.somAlvo, 2); } else mostrarCerto(); }
         };
+        juiz({ nivel, k, modo: 'escolher', posicaoCerta: ps.posicaoCerta });
         await diz(FALAS_CACA.qualLetra);
         await tocarSom(ps.somAlvo, 2);
         const inicio = Date.now();
@@ -253,6 +258,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
         ouvir: () => { void diz(FALAS_CACA.lerPalavra); },
         dica: () => { dicas++; if (dicas === 1) { ajuda = maiorAjuda(ajuda, 'caminho'); void (async () => { for (const s of w.sons) { if (!vivo()) return; await tocarSom(s, 1); await espera(250); } })(); } else mostrarCerto(); }
       };
+      juiz({ nivel, modo: 'palavra', posicaoCerta: w.posicaoCerta, palavra: w.texto });
       await diz(FALAS_CACA.lerPalavra);
       const inicio = Date.now();
       let posEscolhida: number | undefined;
@@ -288,6 +294,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
     await diz(FALAS_ESCUTA.muitoBem);
     if (ganhouBarco) await diz(FALAS_CACA.chave);
     await gravar({ nivel, acertos, total });
+    juiz({ nivel, fim: true, acertos, total });
     enviar('fonema:caca-faixa', { letras: null });
   }
 }
