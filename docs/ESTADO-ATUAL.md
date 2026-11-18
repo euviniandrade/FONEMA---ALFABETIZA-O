@@ -112,8 +112,11 @@ animação antiga sacudia o corpo inteiro; no rio, o corpo deitado ficava abaixo
   e com PATO barrada; aplicação de verdade rodando `npm test`), E2E **`node web/e2e/fluxo.e2e.mjs --gerenciador`** (20 checagens:
   fala da TF-10 editada + áudio desatualizado; PATO bloqueada com o motivo; "lulu" sem figura recusada; LAMA aceita; cenas
   desligadas; na lição da criança a fala nova e LAMA; preço da Lojinha; frase com R bloqueada no texto; figura da uva trocada
-  por webp recortado; histórico; pacote com edições e figura; desfazer e voltar tudo ao original). Também no completo e no
-  `--sem-jornada`. Capturas `--capturas-gerenciador` (1850×980 e 390×844) olhadas. SEM_JORNADA_AQUI
+  por webp recortado; histórico; pacote com edições e figura; desfazer e voltar tudo ao original) e `--admin` (23 ✓), de novo
+  no commit e194c84. O trecho está ligado ao completo e ao `--sem-jornada`, mas o `--sem-jornada` INTEIRO não terminou: com
+  ~10 E2E de outras frentes rodando juntos na máquina, estourou o limite de 1 h (e outro agente escreveu no mesmo arquivo de
+  log). Pela mesma carga, 1 teste do motor (d030, "toda fase de domínio é alcançável") estourou os 5 s (antes levava 2,8 s; não
+  é desta frente). Capturas `--capturas-gerenciador` (1850×980 e 390×844) olhadas; 6 em `app/docs/capturas/v13-gerenciador-*`.
 
 **Desbloqueio progressivo (D034, fila do dono nº 22; 18/11; NÃO publicado ainda):** queixa do dono: "as tarefas e funções estão
 bloqueadas mesmo quando o aluno terminou uma atividade". Antes, nas 4 primeiras missões nada abria fora da trilha; os jogos de som
