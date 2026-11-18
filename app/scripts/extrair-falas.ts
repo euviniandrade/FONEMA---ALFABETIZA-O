@@ -8,6 +8,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { ALFABETO, NOMES_COMUNS, FASES, FALAS, FALAS_TRILHA_SONS, SILABA_DO_SOM, FALAS_ALFABETO, FALAS_FONICAS, VOZES_DAS_FALAS_FONICAS, FALAS_DOS_PARES, FALA_ESPELHO_BD, FALAS_DAS_TELAS, FALAS_TUTORIAL, PASSOS_AVATAR, CONQUISTA_POR_ID, FIGURAS, PALAVRAS_R2A, ITENS_LOJA, SONS, type Fala } from '@fonema/conteudo';
 import { concordar, silabas } from '@fonema/motor';
+import { FALAS_CACA, LUGARES_CACA } from '@fonema/conteudo';
 import { FALAS_BIBLIOTECA, FALAS_ESCUTA, FALAS_HISTORIA, FALAS_TEXTO, HISTORIAS, JOGOS_ESCUTA, TEXTOS_DECODIFICAVEIS, nomeDaFigura, textoCorrido } from '@fonema/conteudo';
 
 const VOZ: Record<string, 'sofia' | 'tales'> = { sofia: 'sofia', tales: 'tales', bolota: 'tales', davi: 'tales', 'dona-cida': 'sofia', pescadora: 'sofia', 'guarda-parque': 'tales', 'zum-zum': 'tales' };
@@ -60,6 +61,9 @@ PASSOS_AVATAR.forEach((p) => add('tales', p.pergunta, 'avatar'));
 FALAS_DAS_TELAS.forEach((f) => addF(f, 'telas'));
 // D032: tutorial "A grande aventura" (e o botão "Você está aqui" do painel guia, que reusa as falas das etapas)
 Object.values(FALAS_TUTORIAL).forEach((f) => addF(f, 'tutorial'));
+// fila nº 25: caça ao tesouro no passeio 3D (falas e charadas dos lugares)
+Object.values(FALAS_CACA).forEach((f) => addF(f, 'caca'));
+LUGARES_CACA.forEach((l) => addF(l.charada, 'caca'));
 add('sofia', 'Continue a trilha para descobrir!', 'telas');
 Object.values(FALAS_DOS_PARES).forEach((p) => { add('sofia', p.tocou, 'pares (D030)'); add('sofia', p.como, 'pares (D030)'); });
 add('sofia', FALA_ESPELHO_BD, 'pares (D030)'); addF(FALAS.suaVez, 'geral');

@@ -21,7 +21,6 @@ export const FALAS_CACA = {
   agua: s('Agora os tesouros estão na água!'),
   chave: s('Você ganhou a chave do barquinho!'),
   barco: s('Arraste o dedo ou use as setinhas para remar. Para descer, volte ao píer.'),
-  outroBau: s('Esse baú não. Procure outro!'),
   leDeNovo: s('Olhe as letras de novo, som por som.')
 } as const;
 

@@ -179,6 +179,11 @@
 0.2,
 0.7
 ],
+"05a0b137c763994f": [
+"Você ganhou a chave do barquinho",
+0.1,
+1.84
+],
 "05a740028b74193d": [
 "Fernando",
 0.1,
@@ -429,6 +434,11 @@ null
 0.18,
 0.76
 ],
+"0df37946fa7887d9": [
+"Vá de barco até o outro lado do rio",
+0.1,
+1.94
+],
 "0e1b7a80fad56bfe": [
 "Ana Lu",
 0.16,
@@ -574,6 +584,11 @@ null
 0.24,
 0.98
 ],
+"12d5a3a98f653323": [
+"Agora os tesouros estão na água",
+0.08,
+1.68
+],
 "12d9eed6ec3f4d2f": [
 "Essa figura começa com este som",
 0.2,
@@ -588,6 +603,11 @@ null
 "Qual som falta nesta palavra?",
 0.1,
 1.48
+],
+"13bb2fd1a9088758": [
+"Procure onde as verduras crescem",
+0.1,
+1.64
 ],
 "13f421fb23460c4c": [
 "Pé. O sorriso abre. É",
@@ -903,6 +923,11 @@ null
 "Mola! Monta e o gol vale",
 0.08,
 3.26
+],
+"20c76eabf608fdca": [
+"Escute o som e ache o baú com a figura que começa assim",
+0.08,
+3.3
 ],
 "20ddd7e4da3c59b6": [
 "Fim! Dividir deixou o piquenique ainda mais gostoso",
@@ -1234,6 +1259,11 @@ null
 0.06,
 1.14
 ],
+"2d1568a3442f1232": [
+"Escute o som e ache o baú com a letra desse som",
+0.1,
+2.52
+],
 "2d2e19a3597a1a45": [
 "U, uva",
 0.12,
@@ -1298,6 +1328,11 @@ null
 "O som do U, uru da letra U",
 0.08,
 1.58
+],
+"2f61ae929f84cb07": [
+"Escute a charada e encontre o baú",
+0.08,
+1.9
 ],
 "2fa90b9a1b8c0308": [
 "Faz de conta que você liga o motor de um carrinho",
@@ -1483,6 +1518,11 @@ null
 "Pedro",
 0.08,
 0.58
+],
+"37ca8fcc7e094ee7": [
+"Procure onde a bola rola",
+0.1,
+1.18
 ],
 "37cef7824dc9de18": [
 "Faz de conta que você esqueceu o lanche em casa",
@@ -2209,6 +2249,11 @@ null
 0.1,
 0.74
 ],
+"505a83b084726e3f": [
+"Procure no fundo do rio. Mergulhe",
+0.08,
+1.98
+],
 "505c12274442e911": [
 "Bupe",
 0.08,
@@ -2668,6 +2713,11 @@ null
 "M de macaco",
 0.12,
 1.0
+],
+"5ba4037ff132a93d": [
+"Procure onde os livros moram",
+0.08,
+1.5
 ],
 "5bd9b973538ff973": [
 "Isso, esse é o som do O",
@@ -3174,6 +3224,11 @@ null
 0.08,
 0.68
 ],
+"6c0e4d6765282373": [
+"Arraste o dedo ou use as setinhas para remar. Para descer, volte ao pier",
+0.1,
+4.28
+],
 "6c209f47a4d5b755": [
 "Agatha",
 0.08,
@@ -3423,6 +3478,11 @@ null
 "Falar M de macaco, tocar o M e juntar MA",
 0.1,
 4.16
+],
+"75174ccfe94d59f2": [
+"Procure perto de onde as crianças aprendem",
+0.08,
+2.12
 ],
 "752607fc94247bda": [
 "É, Agatha",
@@ -3694,10 +3754,20 @@ null
 0.1,
 1.22
 ],
+"7d5f425d4484004b": [
+"Procure perto de onde se compra pão",
+0.1,
+1.92
+],
 "7d905257e69e604a": [
 "Breno",
 0.1,
 0.56
+],
+"7ddd225a56f7f0be": [
+"Procure na água rasinha do rio",
+0.08,
+1.62
 ],
 "7e0aca90febba92b": [
 "Vencer a cachoeira dos sons",
@@ -3773,6 +3843,16 @@ null
 "O Paçoca quer a baaa, naaa, na",
 0.06,
 4.84
+],
+"7fcbc1025d914422": [
+"Procure perto de onde o Barquinho dorme",
+0.1,
+2.0
+],
+"7ff028a0ca8f8626": [
+"Ache as letras da palavra, um som de cada vez",
+0.08,
+2.4
 ],
 "80a03bf860e3723f": [
 "Você. O sorriso fecha um pouquinho. É!",
@@ -3913,6 +3993,11 @@ null
 "Conhecer a letra Q",
 0.1,
 1.14
+],
+"860f0e9a4a752eea": [
+"Procure perto da casa da Sofia",
+0.08,
+1.74
 ],
 "863f4e6977692a79": [
 "Agora leia você em voz alta",
@@ -6694,6 +6779,11 @@ null
 0.1,
 2.98
 ],
+"e699421a8d8fcaf2": [
+"Olhe as letras de novo, som por som",
+0.06,
+1.94
+],
 "e70491a673c43543": [
 "Júlia",
 0.1,
@@ -6703,6 +6793,11 @@ null
 "Amanhã tem outra letra",
 0.08,
 1.2
+],
+"e76ca402b1c3ab96": [
+"Vá de barco até debaixo da ponte",
+0.1,
+1.72
 ],
 "e78842eb8f631144": [
 "Ihhh!",
@@ -6893,6 +6988,11 @@ null
 "Eloá",
 0.08,
 0.6
+],
+"ec17ea6d1cef7712": [
+"Procure perto de onde a banda toca",
+0.1,
+1.86
 ],
 "ec3270143c702af1": [
 "Letra B",

@@ -48,6 +48,8 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
   const abriuMenu = useRef(false);
   const rodada = useRef(0);
   const esperando = useRef<{ tipos: string[]; res: (m: Msg | null) => void } | null>(null);
+  /** Chegadas/escolhas que vieram antes de o juiz estar esperando (a criança anda enquanto a Sofia fala). */
+  const fila = useRef<Msg[]>([]);
   const atual = useRef<{ ouvir: () => void; dica: () => void } | null>(null);
   const pendentes = useRef<{ cena: { id: string; titulo: string }; ts: Tentativa[] } | null>(null);
 
@@ -95,6 +97,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
       if (m.tipo === 'fonema:caca-dica') { atual.current?.dica(); return; }
       const w = esperando.current;
       if (w && w.tipos.includes(m.tipo)) { esperando.current = null; w.res(m); }
+      else if (m.tipo === 'fonema:caca-chegou' || m.tipo === 'fonema:caca-escolha') fila.current.push(m);
     };
     window.addEventListener('message', ouvir);
     return () => window.removeEventListener('message', ouvir);
@@ -113,7 +116,12 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
     const tentativas: Tentativa[] = [];
     pendentes.current = { cena, ts: tentativas };
     const diz = (f: Fala | string) => (vivo() ? falar(typeof f === 'string' ? { quem: 'sofia', texto: f } : f, c) : Promise.resolve());
-    const esperar = (tipos: string[]) => new Promise<Msg | null>((res) => { esperando.current = { tipos, res }; });
+    fila.current = [];
+    const esperar = (tipos: string[]) => new Promise<Msg | null>((res) => {
+      const i = fila.current.findIndex((m) => tipos.includes(m.tipo));
+      if (i >= 0) { res(fila.current.splice(i, 1)[0]); return; }
+      esperando.current = { tipos, res };
+    });
     const base = (ps: PassoCaca) => ({ habilidade: ps.habilidade, sessao: rg.sessao, cena: cena.id, mecanica: 'caca-tesouro' as const, categoria: ps.categoria });
     const comoItem = (ps: PassoCaca): ItemJogo => ({ correta: ps.alvo, somAlvo: ps.somAlvo, opcoes: ps.opcoes ?? [], posicaoCerta: ps.posicaoCerta ?? 0, habilidade: ps.habilidade, formato: ps.formato === 'som-figura' ? 'som-figura' : 'som-letra', categoria: ps.categoria });
     const comoOpcao = (b: BauCaca): OpcaoJogo => ({ id: b.letra ?? b.figura ?? b.id, ...(b.letra ? { letra: b.letra } : { figura: b.figura, falar: b.figura }), som: b.som });
@@ -153,7 +161,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
           if (!m || !vivo()) return;
           const id = String(m.detalhe?.id ?? '');
           const bau = visiveis.find((b) => b.id === id);
-          if (!bau) continue;
+          if (!bau) { enviar('fonema:caca-bau', { id, estado: 'fechado' }); continue; }
           respostas.push(bau.letra ?? bau.som);
           if (certos.includes(id)) {
             enviar('fonema:caca-bau', { id, estado: 'certo', ...(nivel === 2 ? { voa: ps.indice } : {}) });

@@ -6,6 +6,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1064qds",
+  "voz": "sofia",
+  "texto": "Escute a charada e encontre o baú.",
+  "origem": "caca"
+ },
+ {
   "id": "s-109cr5o",
   "voz": "sofia",
   "texto": "A palavra começa com este som:",
@@ -27,7 +33,7 @@
   "id": "s-10qey9r",
   "voz": "sofia",
   "texto": "U, de uva.",
-  "origem": "TF-05-C2"
+  "origem": "AL-U-C2b"
  },
  {
   "id": "s-10qls62",
@@ -106,6 +112,12 @@
   "voz": "sofia",
   "texto": "A vovó viu a bola.",
   "origem": "TF-24-C5f"
+ },
+ {
+  "id": "s-11j86qj",
+  "voz": "sofia",
+  "texto": "Arraste o dedo ou use as setinhas para remar. Para descer, volte ao píer.",
+  "origem": "caca"
  },
  {
   "id": "s-11n5xas",
@@ -198,6 +210,12 @@
   "origem": "bolo-tia"
  },
  {
+  "id": "s-143pkp3",
+  "voz": "sofia",
+  "texto": "Procure onde as verduras crescem.",
+  "origem": "caca"
+ },
+ {
   "id": "s-144yigd",
   "voz": "sofia",
   "texto": "Amanhã tem outra letra!",
@@ -226,6 +244,12 @@
   "voz": "sofia",
   "texto": "hipopótamo",
   "origem": "comprida"
+ },
+ {
+  "id": "s-14qnq8k",
+  "voz": "sofia",
+  "texto": "Procure onde os livros moram.",
+  "origem": "caca"
  },
  {
   "id": "s-14sg8q3",
@@ -552,6 +576,12 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-1ahx66h",
+  "voz": "sofia",
+  "texto": "Agora os tesouros estão na água!",
+  "origem": "caca"
+ },
+ {
   "id": "s-1ajlhp",
   "voz": "sofia",
   "texto": "Juntar consoante e vogal: MA, LO, FU",
@@ -640,6 +670,12 @@
   "voz": "sofia",
   "texto": "Wagner",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1bzu7pg",
+  "voz": "sofia",
+  "texto": "Procure perto de onde a banda toca.",
+  "origem": "caca"
  },
  {
   "id": "s-1c6z85m",
@@ -1143,7 +1179,7 @@
   "id": "s-1jtlc75",
   "voz": "sofia",
   "texto": "Faz de conta que você ganhou um troféu!",
-  "origem": "TF-02-C2"
+  "origem": "AL-E-C2"
  },
  {
   "id": "s-1judxrb",
@@ -1356,6 +1392,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1ocl6jg",
+  "voz": "sofia",
+  "texto": "Procure perto de onde se compra pão.",
+  "origem": "caca"
+ },
+ {
   "id": "s-1oja6tu",
   "voz": "sofia",
   "texto": "Escute o som novo.",
@@ -1455,7 +1497,7 @@
   "id": "s-1q7todt",
   "voz": "sofia",
   "texto": "O, de ovo.",
-  "origem": "TF-04-C2"
+  "origem": "AL-O-C2b"
  },
  {
   "id": "s-1q81nh8",
@@ -1881,7 +1923,7 @@
   "id": "s-1qncf0t",
   "voz": "sofia",
   "texto": "I, de ilha.",
-  "origem": "TF-03-C2"
+  "origem": "AL-I-C2b"
  },
  {
   "id": "s-1qrpdds",
@@ -3642,6 +3684,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1wenpkd",
+  "voz": "sofia",
+  "texto": "Escute o som e ache o baú com a letra desse som.",
+  "origem": "caca"
+ },
+ {
   "id": "s-1wmpa17",
   "voz": "sofia",
   "texto": "A cachoeira tem pedras com sílabas, [NOME]. Uma pedra de cada vez.",
@@ -4128,6 +4176,18 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-5zw7d7",
+  "voz": "sofia",
+  "texto": "Vá de barco até debaixo da ponte.",
+  "origem": "caca"
+ },
+ {
+  "id": "s-66n4h1",
+  "voz": "sofia",
+  "texto": "Procure na água rasinha do rio.",
+  "origem": "caca"
+ },
+ {
   "id": "s-6j8kw1",
   "voz": "sofia",
   "texto": "Conte os pedaços comigo.",
@@ -4144,6 +4204,12 @@
   "voz": "sofia",
   "texto": "formiga",
   "origem": "comprida"
+ },
+ {
+  "id": "s-75fa9o",
+  "voz": "sofia",
+  "texto": "Olhe as letras de novo, som por som.",
+  "origem": "caca"
  },
  {
   "id": "s-75h53n",
@@ -4299,7 +4365,7 @@
   "id": "s-9uxkcu",
   "voz": "sofia",
   "texto": "Faz de conta que você chama um amigo lá longe.",
-  "origem": "TF-04-C2"
+  "origem": "AL-O-C2"
  },
  {
   "id": "s-a5a82h",
@@ -4342,6 +4408,12 @@
   "voz": "sofia",
   "texto": "Agora desenhe a letra com o dedo.",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-alv07y",
+  "voz": "sofia",
+  "texto": "Escute o som e ache o baú com a figura que começa assim.",
+  "origem": "caca"
  },
  {
   "id": "s-anyyj",
@@ -4632,6 +4704,12 @@
   "origem": "bolota-chuva"
  },
  {
+  "id": "s-ev7trn",
+  "voz": "sofia",
+  "texto": "Ache as letras da palavra, um som de cada vez.",
+  "origem": "caca"
+ },
+ {
   "id": "s-eveijx",
   "voz": "sofia",
   "texto": "Junta comigo, [NOME]!",
@@ -4845,7 +4923,7 @@
   "id": "s-ievpp9",
   "voz": "sofia",
   "texto": "Faz de conta que você está no médico: abre bem a boca!",
-  "origem": "TF-01-C2"
+  "origem": "AL-A-C2"
  },
  {
   "id": "s-ihviqb",
@@ -4962,6 +5040,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-lh8kbc",
+  "voz": "sofia",
+  "texto": "Procure onde a bola rola.",
+  "origem": "caca"
+ },
+ {
   "id": "s-lhkva0",
   "voz": "sofia",
   "texto": "As moedinhas vão para o porquinho!",
@@ -5038,6 +5122,12 @@
   "voz": "sofia",
   "texto": "Hora da história! Esta se chama: O piquenique da Fia.",
   "origem": "piquenique-fia"
+ },
+ {
+  "id": "s-md9g0v",
+  "voz": "sofia",
+  "texto": "Procure perto de onde o barquinho dorme.",
+  "origem": "caca"
  },
  {
   "id": "s-mkjlaw",
@@ -5130,6 +5220,12 @@
   "origem": "comeco"
  },
  {
+  "id": "s-o3th40",
+  "voz": "sofia",
+  "texto": "Procure perto de onde as crianças aprendem.",
+  "origem": "caca"
+ },
+ {
   "id": "s-o5hr71",
   "voz": "sofia",
   "texto": "peteca",
@@ -5158,6 +5254,12 @@
   "voz": "sofia",
   "texto": "quadro",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-onwlcn",
+  "voz": "sofia",
+  "texto": "Vá de barco até o outro lado do rio.",
+  "origem": "caca"
  },
  {
   "id": "s-opcfcq",
@@ -5206,6 +5308,12 @@
   "voz": "sofia",
   "texto": "sacola",
   "origem": "escondida"
+ },
+ {
+  "id": "s-q68e7d",
+  "voz": "sofia",
+  "texto": "Procure no fundo do rio. Mergulhe!",
+  "origem": "caca"
  },
  {
   "id": "s-q9jpe",
@@ -5598,6 +5706,12 @@
   "origem": "TF-25-C4b"
  },
  {
+  "id": "s-t8z23b",
+  "voz": "sofia",
+  "texto": "Procure perto da casa da Sofia.",
+  "origem": "caca"
+ },
+ {
   "id": "s-tb8y1h",
   "voz": "sofia",
   "texto": "Ajuda a Dona Cida a bordar, [NOME]? Um carretel para cada pedacinho.",
@@ -5800,6 +5914,12 @@
   "voz": "sofia",
   "texto": "Abelha",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-xypusm",
+  "voz": "sofia",
+  "texto": "Você ganhou a chave do barquinho!",
+  "origem": "caca"
  },
  {
   "id": "s-y5a2vg",
