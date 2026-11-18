@@ -68,6 +68,39 @@ lado, todas as respostas inteiras sem rolar e sem nada por cima, "Voltar para a 
 - ✅ (achados extras da frente de desbloqueio) Os textos de "Ler sozinho" trancados não mostram mais as primeiras linhas; no painel
   guia, com a missão de hoje feita, a barra cheia fica sob "Missão de hoje: feita!" e o nome embaixo vem como "Próxima: …".
 
+## Situação dos itens — frente de som, espera e lógica (18/11, à tarde)
+
+Conferido por testes unitários novos (`web/src/servicos/canal-audio.test.ts`, histórias, lições de vogal) e pelo E2E com **voz real**
+(`node web/e2e/fluxo.e2e.mjs --voz-real`, trecho `web/e2e/trecho-voz-real.mjs`): a criança erra 250 ms depois de o som-estímulo começar
+e um medidor anota cada áudio que soa de verdade (elementos `<audio>` e Web Audio). Resultado: **29 áudios, nenhuma sobreposição
+maior que 50 ms**; pausa de 669 e 925 ms depois de cada som comparado; "Eu fiz o som!" nunca apagado.
+
+- ✅ **1** Vozes se atropelando: **fila única de áudio** (`web/src/servicos/canal-audio.ts`). Toda fala, som de letra e som emendado
+  espera o anterior acabar de verdade. Se a criança tocou na tela há pouco (≤ 0,9 s), o que tocava sai com fade de 90 ms (um som ou o
+  fim de frase de menos de 1 s termina inteiro: a correção espera o som da escolha); sem toque, o novo espera (a pergunta não
+  atropela a Sofia). "Cadeia" de falas (`voz.cadeia()`): quando a criança responde no meio do enunciado, o estímulo antigo não entra
+  por cima da correção (era a causa do registro `sofia-f7nnu8` + `e-fechado` + `b.mp3`). Pausa de 450 ms entre os sons comparados em
+  todas as correções (Escolher, jogos, Caixas, Troca, Ligar, Memória). "Ver de novo"/"Ouvir de novo" recomeçam limpo (não rodam duas
+  apresentações juntas).
+- ✅ **2** Fichas: a rodada é sorteada uma vez e guardada até a ficha acabar; a palavra da abertura é a que é lida.
+- ✅ **3** (parte) Fichas: letras já lidas em azul; verde só depois do acerto; a pergunta não aparece duas vezes. ⏸ desenho da boquinha
+  parada (visual).
+- ✅ **4** História: a pergunta "Olhe a capa…" mostra a capa junto das opções (campo `mostraCapa`; teste: pergunta que cita a capa tem
+  que mostrá-la). Revisadas as 8 perguntas e 6 de vocabulário das duas histórias contra as páginas.
+- ✅ **5** História: a resposta certa é a bola **vermelha** da história (figura nova `figuras/bola-vermelha.webp`, feita a partir das
+  cores da página 1; diz "bola", clipe já gravado). Notado e mantido: a uva da Fia é um cacho na figura e uma uva só na página.
+- ✅ **6** Estrada dos Pares: a vez da criança começa limpa (sem a placa verde da demonstração, carro no começo da estrada). Mesmo
+  padrão corrigido no Carteiro, Corre-Som, Come-Som e nos jogos de escuta. Memória e Casa do Som não têm demonstração com resposta marcada.
+- ✅ **7** Botões apagados: onde ESCUTAR é a atividade ("Já conheci!", "Eu fiz o som!", "Continuar" do Som novo, "Virar a página",
+  "Terminar" da história, "Agora é a minha vez!"), o botão fica com a cor normal, uma ondinha animada e "Ouvindo…"
+  (`componentes/BotaoOuvindo.tsx`). "Ouvir o som", "Ver de novo" e "Ouvir de novo" nunca ficam apagados: tocar corta a fala com fade.
+  ⏸ "Pronto, desenhei!" continua esperando o desenho (não é a voz).
+- ✅ **10** Lições de vogal (TF-01…05): não repetem o "Som novo" (a fase da letra, logo antes, já apresenta o som) e fazem as mesmas
+  perguntas como **Corre-Som** e **Bichinho Come-Som** (mesmos itens e registro; `comoJogo`). Letra = conhecer e traçar; lição = o som
+  em jogo. Verificador e testes passam (o teste do roteiro foi ajustado e registra a decisão) [DP].
+- ✅ **32** Figuras das respostas pré-carregadas; as opções só aparecem quando as figuras do item estão prontas (máx. 2,5 s).
+- ⏸ **14** e **17** (falas novas) e a troca de narrador do **16**: pedem voz nova; registradas em `app/docs/falas-pendentes.md` §1i.
+
 ## Lista priorizada
 
 Esforço: **P** = pequeno (horas), **M** = médio (1–2 dias), **G** = grande (semana ou arte nova).

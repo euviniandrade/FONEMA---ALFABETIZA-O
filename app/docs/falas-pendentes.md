@@ -157,6 +157,10 @@ Usadas as falas já gravadas; o que faria falta (o balão mostra o texto; nada n
 - Memória dos Sons (item 14 da revisão): a fala do Tales "Ligue cada letra à cena que faz o som dela." não combina com cartas
   viradas. Sugerida para gravar: **"Vire duas cartas: a cena e a letra do mesmo som."** (Tales). Até lá fica a fala antiga.
 - Botão "Ouvindo…" (botões de avanço enquanto a dupla fala): só texto e ondinha, sem voz (de propósito).
+- Chegada de quem "já lê palavras" (item 17): hoje a Sofia pergunta "Você está pronto para conhecer as letras?". Sugerida para gravar:
+  **"Você já lê! Vamos ler juntos?"** (Sofia).
+- Brincadeiras de escutar (item 16): o Tales apresenta e a Sofia conduz. Um narrador por jogo pede regravar as molduras
+  (`FALAS_ESCUTA`: "Olha como eu faço.", "Agora é com você!", "Escute de novo, devagar."…) também na voz do Tales.
 - Lições de vogal (TF-01…05) começam direto no Corre-Som e no Bichinho Come-Som, com os enunciados já gravados. Faria falta uma
   ponte curta antes do 1º jogo: **"Agora vamos brincar com o som que você conheceu!"** (Sofia).
 
