@@ -75,7 +75,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
   $('#topoDir')?.appendChild(btMapa);
   const barra = el('div', { id: 'cacaBarra', className: 'hud' });
   barra.append(
-    bt('🔊', '', () => avisar('fonema:caca-ouvir'), 'redondo', 'caca-ouvir'),
+    bt('👂', '', () => avisar('fonema:caca-ouvir'), 'redondo', 'caca-ouvir'),
     bt('💡', '', () => avisar('fonema:caca-dica'), 'redondo', 'caca-dica'),
     bt('✖️', '', () => sair(), 'redondo', 'caca-sair'));
   barra.children[0].setAttribute('aria-label', 'Ouvir de novo'); barra.children[1].setAttribute('aria-label', 'Dica'); barra.children[2].setAttribute('aria-label', 'Sair da caça');
@@ -83,7 +83,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
   const aviso = el('div', { id: 'cacaAviso', className: 'hud', role: 'status' });
   const painel = el('div', { id: 'cacaPainel', role: 'dialog' }); painel.dataset.testid = 'caca-painel';
   const menu = el('div', { id: 'cacaMenu', role: 'dialog' }); menu.dataset.testid = 'caca-menu';
-  const moedasEl = el('div', { id: 'cacaMoedas', className: 'hud' });
+  const moedasEl = el('div', { id: 'cacaMoedas', className: 'hud', textContent: '🪙 0' });
   const btDescer = bt('⚓', 'Descer do barco', () => descer(), '', 'barco-descer'); btDescer.id = 'btDescer';
   document.body.append(barra, faixa, aviso, painel, menu, moedasEl, btDescer);
   let toastT = 0;
@@ -107,7 +107,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
       im.src = b.figura;
     }
     const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: true, fog: false, toneMapped: false }));
-    s.scale.set(1.25, 1.25, 1); s.renderOrder = 6; return s;
+    s.scale.set(1.9, 1.9, 1); s.renderOrder = 6; return s;
   }
   /** Ponto alcançável: se cair numa parede, procura o lugar livre mais perto (até 5 m). */
   function livreMaisPerto(x, z) {
@@ -141,7 +141,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
     anel.rotation.x = Math.PI / 2; anel.position.y = 0.05; g.add(anel);
     const disco = new THREE.Mesh(new THREE.CircleGeometry(RAIO, 32).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: brilho, color: '#FFD66B', transparent: true, opacity: 0.55, depthWrite: false, fog: false }));
     disco.position.y = 0.06; g.add(disco);
-    const sinal = placa(def); sinal.position.y = 1.7; g.add(sinal);
+    const sinal = placa(def); sinal.position.y = 2.1; g.add(sinal);
     // fundo do rio: bolhinhas na superfície mostram onde mergulhar
     let bolhas = null;
     if (modo === 'mergulho') { bolhas = new THREE.Mesh(new THREE.RingGeometry(0.4, 0.75, 24).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#E8FBFF', transparent: true, opacity: 0.7, depthWrite: false })); bolhas.position.set(x, N + 0.03, z); grupo.add(bolhas); }
@@ -241,7 +241,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
   const _v = new THREE.Vector3();
   function voar(b, i) {
     const slot = faixa.children[i]; if (!slot) return;
-    _v.copy(b.g.position); _v.y += 1.7; _v.project(mundo.camera);
+    _v.copy(b.g.position); _v.y += 2.1; _v.project(mundo.camera);
     const r = mundo.renderer.domElement.getBoundingClientRect();
     const sx = r.left + (_v.x * 0.5 + 0.5) * r.width, sy = r.top + (-_v.y * 0.5 + 0.5) * r.height;
     const t = slot.getBoundingClientRect();
@@ -335,7 +335,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
     const st = passeio.posicao;
     for (const [id, b] of baus) {
       // animação: placa boiando, tampa abrindo, tremida do errado, sumir
-      b.sinal.position.y = 1.7 + (menos ? 0 : Math.sin(tAnim * 2 + b.g.position.x) * 0.1);
+      b.sinal.position.y = 2.1 + (menos ? 0 : Math.sin(tAnim * 2 + b.g.position.x) * 0.1);
       if (b.abre > 0 && b.abre < 1) { b.abre = Math.min(1, b.abre + dt * 2.5); b.tampa.rotation.x = -1.9 * b.abre; b.sinal.position.y += b.abre * 0.6; }
       if (b.treme > 0) { b.treme -= dt; b.g.rotation.y = Math.sin(b.treme * 40) * 0.12 * b.treme; }
       if (b.some > 0) { b.some -= dt * 1.5; b.g.scale.setScalar(Math.max(0.01, b.some)); if (b.some <= 0) { grupo.remove(b.g); if (b.bolhas) grupo.remove(b.bolhas); baus.delete(id); continue; } }

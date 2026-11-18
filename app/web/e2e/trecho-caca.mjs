@@ -74,6 +74,8 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
   const irAoBau = async (b) => {
     await frame.evaluate(([x, z]) => { const p = window.FONEMA_PASSEIO; const c = p.colisao; let px = x - 2.2, pz = z; for (const [dx, dz] of [[-2.2, 0], [2.2, 0], [0, 2.2], [0, -2.2], [-1.6, 1.6], [1.6, -1.6]]) { if (!c.livre(x + dx, z + dz, 0.3)) { px = x + dx; pz = z + dz; break; } } p.teleportar(px, pz); p.irPara(x, z); }, [b.x, b.z]);
     await simular(4);
+    // um boneco da vila (ou um canto) pode atrapalhar o caminho: se não chegou, encosta no baú e espera parado
+    await frame.evaluate(([x, z]) => { const p = window.FONEMA_PASSEIO; if (Math.hypot(p.posicao.x - x, p.posicao.z - z) > 1) { p.teleportar(x + 0.3, z); p.simular(1.5); } }, [b.x, b.z]);
   };
   const estadoBau = (bid) => frame.evaluate((i) => window.FONEMA_CACA.baus.find((b) => b.id === i)?.estado ?? 'sumiu', bid);
 
