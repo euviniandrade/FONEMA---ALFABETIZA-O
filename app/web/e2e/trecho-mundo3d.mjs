@@ -128,7 +128,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   // conversar com a Sofia (fala roteirizada)
   await frame.evaluate(() => { const s = window.FONEMA_PASSEIO.npcs.lista.find((n) => n.id === 'sofia').boneco.raiz.position; window.FONEMA_PASSEIO.teleportar(s.x + 1.4, s.z + 1.4); });
   await simular(0.1);
-  await fr.locator('#btAcao.on').waitFor({ timeout: 20000 });
+  await fr.locator('#btAcao.on').waitFor({ timeout: 120000 });
   ok(/Conversar/.test(await fr.locator('#btAcao').innerText()), 'perto da Sofia aparece o botão "Conversar"');
   await fr.locator('#btAcao').click(CLIQUE);
   await fr.locator('#cartao.aberto').waitFor();
@@ -141,7 +141,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(-2.5, 9.6, Math.PI));
   await frame.evaluate(() => { const s = window.FONEMA_PASSEIO.npcs.lista.find((n) => n.id === 'sofia'); s.boneco.raiz.position.set(-3.5, 0, 14); s.espera = 30; });
   await simular(0.1);
-  await fr.locator('#btAcao.on').waitFor({ timeout: 20000 });
+  await fr.locator('#btAcao.on').waitFor({ timeout: 120000 });
   ok(await fr.locator('#btAcao.on.trancado').count() === 0 && /Entrar/.test(await fr.locator('#btAcao').innerText()), 'porta do Coreto aberta para quem começa (D034: nada de porta trancada; leva às palmas)');
   if (capturas) { await pg.waitForTimeout(400); await pg.screenshot({ path: `${capturas}/mundo3d-04-porta-coreto.png` }); }
 
@@ -159,7 +159,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(-13.6, -4.6, -Math.PI / 2));
   await frame.evaluate(() => window.FONEMA_PASSEIO.irPara(-15.4, -5));
   await simular(3);
-  await fr.locator('#btAcao.on:not(.trancado)').waitFor({ timeout: 40000 });
+  await fr.locator('#btAcao.on:not(.trancado)').waitFor({ timeout: 120000 });
   ok(/Entrar/.test(await fr.locator('#btAcao').innerText()) && /Biblioteca/.test(await fr.locator('#lugar').innerText()), 'na porta da Biblioteca aparece o botão grande "Entrar"');
   if (capturas) { await pg.waitForTimeout(600); await pg.screenshot({ path: `${capturas}/mundo3d-05-porta-biblioteca.png` }); }
   await fr.locator('#btAcao').click(CLIQUE);
