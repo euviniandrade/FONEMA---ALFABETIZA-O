@@ -1003,7 +1003,10 @@ async function main() {
   ok(await page.locator('[data-testid="loja-boneco"] [data-peca="mata"]:not([data-estado="fase"])').count() >= 1, 'Lojinha: a camiseta verde abriu com a 1ª missão (sem cadeado de fase)');
   ok(await page.locator('[data-testid="loja-boneco"] [data-peca="madeira"][data-estado="fase"]').count() === 1, 'Lojinha: a camiseta cor de madeira ainda espera (cadeado de fase, mesmo com moedinhas)');
   ok(await page.locator('[data-testid="loja-boneco"] [data-peca="ipe"]').innerText().then((t) => /Usando/.test(t)), 'Lojinha: a cor escolhida na personalização aparece como "Usando"');
-  ok(await page.locator('[data-cat="cabelo"]').count() === 0, 'Lojinha: sem aba de cabelos enquanto só existe o modelo padrão');
+  ok(await page.locator('[data-cat="cabelo"]').count() === 1, 'Lojinha: aba de cabelos (penteados em peça 3D)');
+  await page.locator('[data-cat="cabelo"]').click();
+  ok(await page.locator('[data-testid="loja-boneco"] [data-peca]').count() >= 9, 'Lojinha: 9 penteados ou mais para este sexo');
+  await page.locator('[data-cat="camisa"]').click();
   await page.locator('[data-aba="acessibilidade"]').click();
   ok(await page.locator('[data-testid="loja-acessibilidade"] [data-acess]').count() === 2 && await page.locator('[data-testid="loja-acessibilidade"] [aria-checked="true"]').count() === 0, 'Acessibilidade: óculos e pintura no rosto, grátis e desligados de entrada (cadeira e aparelho aguardam modelo próprio)');
   const saldoAntesDosOculos = (await page.getByTestId('moedinhas').first().innerText()).match(/\d+/)[0];
