@@ -313,20 +313,6 @@ export function CorreSom({ itens, crianca, sessao, cena, contexto, enunciado, de
             );
           })}
         </div>
-        {/* placas grandes com a letra (ou a figura) de cada pista, perto do boneco, desde o começo do item: o arco lá no fundo fica pequeno */}
-        {comWebGL && pronta && fase !== 'fim' ? (
-          <div className="cs-placas" aria-hidden="true">
-            {[0, 1, 2].map((k) => {
-              const o = item.opcoes[k];
-              if (!o) return null;
-              return (
-                <span key={k} className={`cs-placa ${marcas[k] ?? ''} ${acesa === k ? 'acesa' : ''} ${aqui === k ? 'aqui' : ''}`} style={{ left: `${(k * 2 + 1) / 6 * 100}%`, ['--cor' as string]: ['#ff8a65', '#ffc93c', '#5ec2e8'][k] } as CSSProperties}>
-                  {o.letra ? <b className="cs-letra">{o.letra}</b> : <Figura palavra={o.figura ?? o.id} />}
-                </span>
-              );
-            })}
-          </div>
-        ) : null}
         {ehFigura && escolhendo ? (
           <div className="cs-nomes">
             {[0, 1, 2].map((k) => (

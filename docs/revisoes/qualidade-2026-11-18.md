@@ -25,6 +25,47 @@ do próprio Chromium sem placa de vídeo.
 
 ---
 
+## Situação dos itens — frente das telas e do visual (18/11, à tarde)
+
+Feito e conferido pela checagem automática nova (`app/web/e2e/trecho-telas.mjs`: em 390×844 e 1850×980, nenhuma rolagem para o
+lado, todas as respostas inteiras sem rolar e sem nada por cima, "Voltar para a vila" à vista no fim da missão, nada de "/a/",
+"domínio", "para o adulto" ou "+0 moedinhas" na tela da criança) e por capturas olhadas uma a uma.
+
+- ✅ **8** Celular: as 3 respostas lado a lado (cartões que crescem com a altura da tela; 4 respostas em 2×2 menores); a frase
+  "Toque no alto-falante…" sai do celular; Espelho do Som com as duas vistas lado a lado.
+- ✅ **11** Entrada da fase sem "(o avanço é por domínio)", sem o objetivo escrito e sem "Em casa (para o adulto)" (continua na Área
+  da Família); no lugar, o botão de ouvir a fala de novo. Títulos na tela da criança sem barras de fonética: "O som /a/" aparece
+  "O som do A" (a voz continua com o texto original); vale para sessão, vila, alfinetes, painel guia, álbum e selos.
+- ✅ **12** Fim da missão: sem moedas no dia, some a linha e aparece um elogio (nunca "+0"); as moedinhas voam logo no começo e o
+  contador sobe de uma em uma na hora; "Próximo objetivo" só quando é outra missão de verdade (e com o título sem fonética); a
+  fileira de botões fica presa embaixo no computador (com "Tchau! Voltar para a vila" primeiro) e o "Voltar" fica preso embaixo no
+  celular. ⏸ falta: a medalha 3D genérica do celular.
+- ✅ **13** Corre-Som: placa grande com a letra (ou figura) de cada pista, perto do boneco, desde o começo; as três áreas de toque
+  com a mesma largura. ⏸ falta: o boneco "todo branco" (é a roupa inicial do avatar — frente do avatar), a demonstração longa e os
+  dois botões de som do celular.
+- ✅ **15** O convite "Dar comida ao Bolota" mostra o Bolota; no celular vira um botão redondo no canto, sem texto. ⏸ fala ao aparecer.
+- ✅ **16** (parte) Palmas: as lâmpadas acendem sem a sílaba escrita. A troca de narrador é da frente de som.
+- ✅ **18** (parte) "Falta 1 som" (singular). Cadeado e fala são da frente de desbloqueio.
+- ✅ **21** (parte) Fundos borrados sem a Sofia e o Tales quando a dupla já está na frente: arte nova só de cenário
+  (`arte/paisagem-sem-dupla.webp`) na chegada, fim da missão, tutorial, alunos, PIN e painel guia. ⏸ o retrato 2D no balão ao lado
+  da dupla 3D.
+- ✅ **22** (parte) Carteiro: três casinhas pintadas novas (`arte/jogos/casa-carteiro-1..3.webp`, olhadas uma a uma, com a placa em
+  branco onde entra a figura) numa rua da vila pintada (`arte/jogos/rua-vila.webp`). ⏸ Estrada, Corre-Som e Casa do Som continuam
+  com o cenário antigo.
+- ✅ **23** (parte) Barraca da Lojinha sem "SHOP" (placa com duas moedinhas); ícones 3D novos para "Meu boneco" (camiseta no
+  cabide) e "Passear 3D" (vilinha); no tutorial, cada brincadeira com a figura 3D da capa. ⏸ troféu "MESTRE LEITOR" e a
+  moeda-fantasma do porquinho.
+- ✅ **24** Caminho da leitura: etapas futuras com cor, nome legível e cadeado pequeno.
+- ✅ **25** Tutorial: a mãozinha aponta o "Brincar" de cima, sem cobrir a palavra; no último passo só o "Vamos!".
+- ✅ **26** (parte) Vila no computador: os selos do "Última missão" sem o nome vazando. ⏸ três botões para a mesma missão.
+- ✅ **27** (parte) Vila no celular: sem rótulos cortados na borda (no celular os alfinetes mostram só a figura, menos a missão).
+- ✅ **28** (parte) Lojinha no celular: roupas logo abaixo do boneco (porquinho grande e frase do adulto saem; abas numa linha;
+  tipos de peça numa fileira); nenhuma tela rola para o lado. O carregamento cinza do boneco é da frente do avatar.
+- ✅ **31** "A letra A": o cartão do exemplo aparece apagado desde o começo e acende com a fala.
+- ✅ **33** Estrada: as cores à venda aparecem (uma classe "loja" colidia com o layout da Lojinha). ⏸ fala de apresentação.
+- ✅ **34** Come-Som: o pedido é um balão de fala saindo da boca do Bolota.
+- ✅ **37** Números sem o zero cortado (os algarismos vêm da Andika).
+
 ## Lista priorizada
 
 Esforço: **P** = pequeno (horas), **M** = médio (1–2 dias), **G** = grande (semana ou arte nova).

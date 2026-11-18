@@ -9,6 +9,25 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Revisão de qualidade 18/11 — frente das telas e do visual (fila do dono nº 23; 18/11; NÃO publicado ainda):** o que foi feito
+item a item está em `docs/revisoes/qualidade-2026-11-18.md` ("Situação dos itens — frente das telas e do visual").
+- **Estilos novos num arquivo só:** `app/web/src/estilos-telas.css` (carregado por último no `main.tsx`): lição que cabe no celular
+  (3 respostas lado a lado), Lojinha compacta no celular, nada rola para o lado (`overflow-x:clip`), fim da missão com a fileira de
+  botões presa embaixo, placas do Corre-Som, casinhas do Carteiro, balão do Come-Som, caminho da leitura, zero sem risco etc.
+- **Texto de adulto fora da tela da criança:** `semFonetica()` (`app/web/src/util.ts`) mostra "O som do A" no lugar de "O som /a/"
+  só na TELA (a voz usa o texto original, que acha o clipe gravado). Entrada da fase sem "domínio", objetivo e "Em casa".
+- **Fim da missão** (`Ritual.tsx`): nunca "+0" (elogio no lugar), contador somando na hora, "Próximo objetivo" só se for outra missão.
+- **Arte nova (gerada pela MiniMax e olhada uma a uma):** `arte/jogos/casa-carteiro-1..3.webp`, `arte/jogos/rua-vila.webp`,
+  `arte/paisagem-sem-dupla.webp` (fundo só de cenário onde a dupla já aparece na frente), `arte/icones/boneco.webp` e
+  `arte/icones/passeio.webp`; `arte/icones/lojinha.webp` sem "SHOP" (texto apagado e duas moedinhas na placa).
+- **Checagem automática nova:** `app/web/e2e/trecho-telas.mjs` (`--telas`, `--capturas-telas`; também no fim do E2E completo e do
+  `--sem-jornada`): em 390×844 e 1850×980 mede chegada, Letra A cena a cena, fim da missão, vila, Lojinha, álbum, Brincar, Leitura,
+  as duas trilhas, mapa, entradas de fase, lições TF-01/07/09/17 (2 min cada) e os 5 jogos. Variável `TELAS_LARGURA=390` roda só um tamanho.
+- **Verificado:** RESULTADO_TELAS
+- **Falta (desta frente):** cenário pintado da Estrada, do Corre-Som e da Casa do Som; troféu "MESTRE LEITOR"; medalha 3D genérica
+  do celular; retrato 2D da Sofia no balão ao lado da dupla 3D; três botões para a mesma missão na vila. Do avatar: boneco "todo branco"
+  e o cinza carregando na Lojinha.
+
 **Avatar: olhos e tipos de cabelo; "robô" foto → 3D (fila do dono nº 20 e 19; 18/11; NÃO publicado ainda):**
 - **Olhos:** a máscara da íris estava errada (pegava parte do branco do olho e deixava pedaços castanhos). Refeita pela COR da textura
   (`app/ferramentas/avatar-mascaras.py`: castanho da íris perto do branco do olho, longe da pele, crescendo pelas costuras da textura);
