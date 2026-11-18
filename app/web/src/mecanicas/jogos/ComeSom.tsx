@@ -118,7 +118,9 @@ export function ComeSom({ itens, crianca, sessao, cena, contexto, enunciado, dem
                 distratores: it.opcoes.filter((_, j) => j !== it.posicaoCerta).map((x) => idDoRegistro(it, x)), inicio, posicaoCerta: it.posicaoCerta, posicaoEscolhida: posEscolhida,
                 nOpcoes: it.opcoes.length, ouviuDeNovo: ouviu.current, revisao: contexto === 'revisao', ...(erros === 0 && repetiu.current ? { ajuda: 'repetiu' as const } : {})
               }),
-              formato: it.formato, contexto
+              formato: it.formato, contexto,
+              // D034: rodada de aquecimento (menos de 3 sons ensinados) não conta como domínio (regra 4)
+              ...(it.aquecimento ? { tipo: 'exposicao' as const } : {})
             });
             if (erros > 0) tentouDeNovo++;
             await dizerFigura(o);

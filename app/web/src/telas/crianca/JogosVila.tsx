@@ -26,6 +26,7 @@ import { Carteiro } from '../../mecanicas/jogos/Carteiro.tsx';
 import { CasaDoSom, CasinhaDoSom } from '../../mecanicas/jogos/CasaDoSom.tsx';
 import { Veiculo, corDoVeiculo } from '../../mecanicas/jogos/vila-comum.tsx';
 import { JOGOS_DA_VILA, rotaDoJogoDaVila, situacaoDosJogosDaVila } from './jogos-vila-cartoes.ts';
+import { Falta, useMissoesAteAbrir } from '../../componentes/Desbloqueio.tsx';
 import '../../mecanicas/jogos/estilos-jogos-vila.css';
 
 export { JOGOS_DA_VILA, rotaDoJogoDaVila, situacaoDosJogosDaVila };
@@ -70,6 +71,7 @@ export function JogosVila({ criancaId, jogoId }: { criancaId: string; jogoId?: s
   const [novo, setNovo] = useState<string | undefined>();
   useEffect(() => { setJogando(null); setFim(null); }, [jogoId]);
   useEffect(() => () => voz.parar(), []);
+  const missoes = useMissoesAteAbrir(progresso);
 
   // a rodada é sorteada UMA vez por partida (semente nova a cada "jogar")
   const partida = useMemo(() => {
@@ -118,7 +120,7 @@ export function JogosVila({ criancaId, jogoId }: { criancaId: string; jogoId?: s
                     onClick={() => { if (s.aberto) navegar(rotaDoJogoDaVila(criancaId, j.id)); else { efeitos.suave(); } }} aria-disabled={!s.aberto} data-testid={`jogo-${j.id}`}>
                     <span className="jv-capa" aria-hidden="true">{j.id === 'estrada-pares' ? <Veiculo tipo="carro" cor={cor} /> : null}{j.capa.map((f) => <Figura key={f} palavra={f} />)}</span>
                     <b>{j.nome}</b>
-                    <small>{s.aberto ? j.treina : s.motivo}</small>
+                    {s.aberto ? <small>{j.treina}</small> : <Falta texto={s.motivo} n={missoes[`jogo:${j.id}`]} compacto />}
                     {!s.aberto ? <span className="jv-cadeado"><Icone nome="cadeado" /></span> : vezes ? <span className="biblio-selo"><Icone nome="check" />{vezes}×</span> : null}
                   </button>
                 );
@@ -147,7 +149,7 @@ export function JogosVila({ criancaId, jogoId }: { criancaId: string; jogoId?: s
                 <p>{fim.total ? `Você acertou ${fim.acertos} de ${fim.total} de primeira.` : FALAS_ESCUTA.muitoBem.texto}</p>
               </div>
             ) : <h1 className="t jv-titulo">{jogo.nome}</h1>}
-            {!sit[jogo.id].aberto && !faseId ? <p className="jv-motivo">{sit[jogo.id].motivo}</p> : null}
+            {!sit[jogo.id].aberto && !faseId ? <div className="jv-motivo"><Falta texto={sit[jogo.id].motivo} n={missoes[`jogo:${jogo.id}`]} /></div> : null}
 
             {jogo.id === 'estrada-pares' ? (
               <EscolhaEstrada progresso={progresso} veiculo={veiculo} setVeiculo={setVeiculo} cor={cor} faseId={faseId} jogar={jogar}

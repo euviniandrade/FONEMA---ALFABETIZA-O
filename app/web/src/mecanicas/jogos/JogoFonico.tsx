@@ -12,6 +12,7 @@ import { Figura, Icone } from '../../componentes/ui.tsx';
 import { voz } from '../../servicos/voz.ts';
 import { sementeDaTentativa, sortearItens } from '../comum.tsx';
 import { ComeSom } from './ComeSom.tsx';
+import { Falta, useMissoesAteAbrir } from '../../componentes/Desbloqueio.tsx';
 import { CorreSom, type ResultadoJogo } from './CorreSom.tsx';
 import './estilos-jogos.css';
 
@@ -109,6 +110,7 @@ export function TelaJogoFonico({ jogo, crianca, progresso, sessao, onSalvar, onV
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variacao, temSom, rodada]);
   const info = jogo.variacoes.find((v) => v.id === variacao);
+  const missoes = useMissoesAteAbrir(progresso);
 
   if (!sons) return <div className="jogo-carregando"><span className="carregando-bola" aria-hidden="true" /></div>;
 
@@ -161,7 +163,8 @@ export function TelaJogoFonico({ jogo, crianca, progresso, sessao, onSalvar, onV
               disabled={!aberta} onClick={() => setVariacao(v.id)} data-testid={`variacao-${v.id}`}>
               <Capa itens={v.capa} />
               <b>{v.nome}</b>
-              <small>{aberta ? v.treina : e?.motivo ?? 'Ainda trancado.'}</small>
+              {aberta ? <small>{v.treina}</small> : <Falta texto={e?.motivo} n={missoes[`jogo:${jogo.id}:${v.id}`]} compacto />}
+              {aberta && e?.aquecimento ? <span className="etiqueta-aquecimento" data-testid="aquecimento">Para aquecer: ganha mais sons a cada missão</span> : null}
               {!aberta ? <span className="jogo-cadeado" aria-hidden="true"><Icone nome="cadeado" /></span> : null}
             </button>
           );

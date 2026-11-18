@@ -14,6 +14,7 @@ import { voz } from '../../servicos/voz.ts';
 import { sementeDaTentativa } from '../../mecanicas/comum.tsx';
 import { useSonsComClipe } from '../../mecanicas/jogos/JogoFonico.tsx';
 import { MemoriaSons, type ResultadoMemoria } from '../../mecanicas/jogos/MemoriaSons.tsx';
+import { Falta, useMissoesAteAbrir } from '../../componentes/Desbloqueio.tsx';
 import { useRegistroLivre } from './Biblioteca.tsx';
 import '../../estilos-biblioteca.css';
 import '../../mecanicas/jogos/estilos-jogos.css';
@@ -50,6 +51,7 @@ export function MemoriaDosSons({ criancaId, faseId }: { criancaId: string; faseI
   const [rodadaN, setRodadaN] = useState(0);
   const [fim, setFim] = useState<{ acertos: number; avaliadas: number; pares: number } | null>(null);
   useEffect(() => () => voz.parar(), []);
+  const missoes = useMissoesAteAbrir(progresso);
   const temSom = useMemo(() => (sons ? (f: string) => sons.has(f) : undefined), [sons]);
   const desafio = useMemo(() => (progresso && faseId && temSom ? desafioMemoria(progresso, faseId, temSom) : null), [progresso, faseId, temSom]);
   const nivelAtual = desafio ? desafio.nivel : nivel;
@@ -116,7 +118,7 @@ export function MemoriaDosSons({ criancaId, faseId }: { criancaId: string; faseI
                     <span className="mem-nivel-num">{v.nivel}</span>
                     <CapaMemoria itens={v.capa} />
                     <b>{v.nome}</b>
-                    <small>{aberto ? v.treina : e?.motivo ?? 'Ainda trancado.'}</small>
+                    {aberto ? <small>{v.treina}</small> : <Falta texto={e?.motivo} n={missoes[`jogo:memoria:${v.nivel}`]} compacto />}
                     {!aberto ? <span className="jogo-cadeado" aria-hidden="true"><Icone nome="cadeado" /></span> : null}
                   </button>
                 );

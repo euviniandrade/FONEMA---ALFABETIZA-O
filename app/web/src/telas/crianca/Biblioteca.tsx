@@ -11,9 +11,10 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { BANCO, FALAS_BIBLIOTECA as B, HISTORIAS, HISTORIA_POR_ID, TEXTOS_DECODIFICAVEIS, TEXTO_POR_ID, nomeDaFigura } from '@fonema/conteudo';
 import {
-  anotarBiblioteca, dadosBiblioteca, estadoDosCampos, frasesEstudadas, estadoFluencia, palavrasParaEscrever, registrarLivre, resumoFluencia, textoLiberado, type DadosBiblioteca,
+  anotarBiblioteca, catalogoDeExtras, dadosBiblioteca, estadoDosCampos, frasesEstudadas, estadoFluencia, palavrasParaEscrever, registrarLivre, resumoFluencia, textoLiberado, type DadosBiblioteca,
   type Tentativa
 } from '@fonema/motor';
+import { Falta, SeloNovo, ehNovo, marcarVistoAqui, useMissoesAteAbrir } from '../../componentes/Desbloqueio.tsx';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Carregando, Topo } from '../../componentes/basicos.tsx';
@@ -165,7 +166,11 @@ function Menu({ criancaId, d, flu, frases, escrever, progresso }: {
   criancaId: string; d: DadosBiblioteca; flu: ReturnType<typeof estadoFluencia>; frases: number; escrever: boolean; progresso: Parameters<typeof textoLiberado>[0];
 }) {
   const { crianca } = useCrianca(criancaId);
-  const ir = (s: string) => navegar(`c/${criancaId}/leitura/${s}`);
+  /** D034: tocar tira o "Novo!" (id do catálogo de desbloqueio) e vai. */
+  const ir = (s: string, id?: string) => { if (id) marcarVistoAqui(criancaId, id); navegar(`c/${criancaId}/leitura/${s}`); };
+  const missoes = useMissoesAteAbrir(progresso);
+  const fluExtra = catalogoDeExtras(progresso).find((x) => x.id === 'leitura:fluencia');
+  const novo = (id: string) => ehNovo(progresso, criancaId, id);
   let k = 0;
   const estilo = () => ({ ['--k' as string]: k++ } as CSSProperties);
   return (
@@ -198,11 +203,11 @@ function Menu({ criancaId, d, flu, frases, escrever, progresso }: {
           const aberto = textoLiberado(progresso, t);
           const lido = d.textos.some((x) => x.id === t.id);
           return (
-            <button key={t.id} className={`biblio-texto ${aberto ? '' : 'trancado'}`} style={estilo()} disabled={!aberto} onClick={() => ir(`texto-${t.id}`)} data-testid={`texto-${t.id}`}>
+            <button key={t.id} className={`biblio-texto ${aberto ? '' : 'trancado'}`} style={estilo()} disabled={!aberto} onClick={() => ir(`texto-${t.id}`, `leitura:texto:${t.id}`)} data-testid={`texto-${t.id}`}>
               <span className="biblio-bloco">Bloco {t.bloco}</span>
               <b className="biblio-texto-titulo">{t.titulo}</b>
               <span className="biblio-texto-linhas" aria-hidden="true">{t.linhas.slice(0, 2).map((l) => l.texto).join(' ')}…</span>
-              {aberto ? (lido ? <span className="biblio-selo"><Icone nome="check" />lido</span> : null) : <span className="biblio-cadeado"><Icone nome="cadeado" />abre no fim do bloco {t.bloco}</span>}
+              {aberto ? (novo(`leitura:texto:${t.id}`) && !lido ? <SeloNovo /> : lido ? <span className="biblio-selo"><Icone nome="check" />lido</span> : null) : <span className="biblio-cadeado"><Falta texto={`Abre no fim do bloco ${t.bloco}`} n={missoes[`leitura:texto:${t.id}`]} compacto /></span>}
             </button>
           );
         })}
@@ -215,9 +220,10 @@ function Menu({ criancaId, d, flu, frases, escrever, progresso }: {
           const cs = estadoDosCampos(progresso);
           const n = cs.reduce((s, c) => s + c.legiveis.length, 0);
           return (
-            <button className={`biblio-pratica fichas ${n ? '' : 'trancado'}`} style={estilo()} disabled={!n} onClick={() => ir('fichas')} data-testid="ir-fichas">
+            <button className={`biblio-pratica fichas ${n ? '' : 'trancado'}`} style={estilo()} disabled={!n} onClick={() => ir('fichas', 'leitura:fichas')} data-testid="ir-fichas">
               <span className="biblio-pratica-icone"><Icone nome="boca" /></span>
-              <b>Fichas de leitura</b><small>{n ? `${n} palavras para ler em ${cs.filter((c) => c.legiveis.length).length} temas` : 'Abre quando você aprender os sons de uma palavra'}</small>
+              <b>Fichas de leitura</b>{n ? <small>{`${n} palavras para ler em ${cs.filter((c) => c.legiveis.length).length} temas`}</small> : <Falta texto="Abre quando você aprender os sons de uma palavra" n={missoes['leitura:fichas']} compacto />}
+              {n && novo('leitura:fichas') ? <SeloNovo /> : null}
             </button>
           );
         })()}
@@ -228,20 +234,20 @@ function Menu({ criancaId, d, flu, frases, escrever, progresso }: {
         <button className={`biblio-pratica flu ${flu.liberada ? '' : 'trancado'}`} style={estilo()} disabled={!flu.liberada} onClick={() => ir('fluencia')} data-testid="ir-fluencia">
           <span className="biblio-pratica-icone"><Icone nome="raio" /></span>
           <b>Ler mais ligeiro</b>
-          <small>{flu.liberada ? `Lista ${flu.lista + 1} · ${flu.palavras.length} palavras que você já leu` : flu.motivo === 'precisao' ? 'Abre quando você ler as palavras da trilha quase sem errar' : 'Abre quando você já tiver lido mais palavras'}</small>
+          {flu.liberada ? <small>{`Lista ${flu.lista + 1} · ${flu.palavras.length} palavras que você já leu`}</small> : <Falta texto={fluExtra?.falta} barra={fluExtra?.barra} compacto />}
           {d.fluencia.length ? <CaminhoFluencia leituras={d.fluencia} /> : null}
         </button>
-        <button className={`biblio-pratica eco ${frases ? '' : 'trancado'}`} style={estilo()} disabled={!frases} onClick={() => ir('eco')} data-testid="ir-eco">
+        <button className={`biblio-pratica eco ${frases ? '' : 'trancado'}`} style={estilo()} disabled={!frases} onClick={() => ir('eco', 'leitura:eco')} data-testid="ir-eco">
           <span className="biblio-pratica-icone"><Icone nome="som" /></span>
-          <b>Ler em eco</b><small>{frases ? 'A Sofia lê, depois você lê igual' : 'Abre com a primeira frase da trilha'}</small>
+          <b>Ler em eco</b>{frases ? <small>A Sofia lê, depois você lê igual</small> : <Falta texto="Abre com a primeira frase da trilha" n={missoes['leitura:eco']} compacto />}{frases && novo('leitura:eco') ? <SeloNovo /> : null}
         </button>
-        <button className={`biblio-pratica coro ${frases ? '' : 'trancado'}`} style={estilo()} disabled={!frases} onClick={() => ir('coro')} data-testid="ir-coro">
+        <button className={`biblio-pratica coro ${frases ? '' : 'trancado'}`} style={estilo()} disabled={!frases} onClick={() => ir('coro', 'leitura:coro')} data-testid="ir-coro">
           <span className="biblio-pratica-icone"><Icone nome="nota" /></span>
-          <b>Ler em coro</b><small>{frases ? 'Você e a Sofia leem juntos' : 'Abre com a primeira frase da trilha'}</small>
+          <b>Ler em coro</b>{frases ? <small>Você e a Sofia leem juntos</small> : <Falta texto="Abre com a primeira frase da trilha" n={missoes['leitura:coro']} compacto />}{frases && novo('leitura:coro') ? <SeloNovo /> : null}
         </button>
-        <button className={`biblio-pratica esc ${escrever ? '' : 'trancado'}`} style={estilo()} disabled={!escrever} onClick={() => ir('escrita')} data-testid="ir-escrita">
+        <button className={`biblio-pratica esc ${escrever ? '' : 'trancado'}`} style={estilo()} disabled={!escrever} onClick={() => ir('escrita', 'leitura:escrita')} data-testid="ir-escrita">
           <span className="biblio-pratica-icone"><Icone nome="caderno" /></span>
-          <b>Escrever do meu jeito</b><small>{escrever ? 'Escreva e compare com a Sofia' : 'Abre depois do som do M'}</small>
+          <b>Escrever do meu jeito</b>{escrever ? <small>Escreva e compare com a Sofia</small> : <Falta texto="Abre depois do som do M" n={missoes['leitura:escrita']} compacto />}{escrever && novo('leitura:escrita') ? <SeloNovo /> : null}
         </button>
       </div>
     </section>

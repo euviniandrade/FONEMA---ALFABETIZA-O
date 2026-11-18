@@ -14,6 +14,7 @@ import { Icone } from '../../componentes/ui.tsx';
 import { asset } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
 import { BotaoTreino } from './Treino.tsx';
+import { SeloNovo, ehNovo, marcarVistoAqui } from '../../componentes/Desbloqueio.tsx';
 import '../../estilos-doca.css';
 
 const ir = (rota: string) => { efeitos.toque(); navegar(rota); };
@@ -39,11 +40,13 @@ function Mosaico() {
   );
 }
 
-function BotaoDoca({ onClick, figura, rotulo, testid, ponto, cor }: { onClick: () => void; figura: ReactNode; rotulo: string; testid?: string; ponto?: string; cor?: string }) {
+function BotaoDoca({ onClick, figura, rotulo, testid, ponto, cor, novo }: { onClick: () => void; figura: ReactNode; rotulo: string; testid?: string; ponto?: string; cor?: string; novo?: boolean }) {
   return (
-    <button className={`doca2-btn ${cor ?? ''}`} onClick={onClick} data-testid={testid} data-ponto={ponto}>
+    <button className={`doca2-btn ${cor ?? ''}`} onClick={onClick} data-testid={testid} data-ponto={ponto} data-novo={novo ? '1' : undefined}>
       <span className="doca2-fig">{figura}</span>
       <span className="doca2-rotulo">{rotulo}</span>
+      {/* D034: algo abriu lá dentro e a criança ainda não visitou */}
+      {novo ? <SeloNovo /> : null}
     </button>
   );
 }
@@ -62,11 +65,11 @@ export function DocaVila({ criancaId, progresso, faseId, mundo3d }: { criancaId:
     <>
       <nav className="hud-doca doca2 vidro" aria-label="Lugares da vila">
         <button className="btn ipe doca-missao doca2-missao brilha" onClick={() => ir(`${c}/fase/${faseId}`)} data-testid="ir-missao"><Icone nome="play" />Missão</button>
-        {RECURSOS.leitura ? <BotaoDoca onClick={() => ir(`${c}/leitura`)} figura={<Livrinho />} rotulo="Leitura" testid="ir-leitura" ponto="leitura" /> : null}
-        {RECURSOS.brincar ? <BotaoDoca onClick={() => ir(`${c}/brincar`)} figura={<img className="ic ic3d" src={asset('figuras/pandeiro.webp')} alt="" draggable={false} />} rotulo="Brincar" testid="ir-brincar" ponto="brincar" /> : null}
+        {RECURSOS.leitura ? <BotaoDoca onClick={() => ir(`${c}/leitura`)} figura={<Livrinho />} rotulo="Leitura" testid="ir-leitura" ponto="leitura" novo={ehNovo(progresso, criancaId, 'leitura')} /> : null}
+        {RECURSOS.brincar ? <BotaoDoca onClick={() => { marcarVistoAqui(criancaId, 'som'); ir(`${c}/brincar`); }} figura={<img className="ic ic3d" src={asset('figuras/pandeiro.webp')} alt="" draggable={false} />} rotulo="Brincar" testid="ir-brincar" ponto="brincar" novo={ehNovo(progresso, criancaId, 'jogo') || ehNovo(progresso, criancaId, 'som')} /> : null}
         {lojinha
-          ? <BotaoDoca onClick={() => ir(`${c}/lojinha`)} figura={<Icone nome="lojinha" />} rotulo="Lojinha" testid="ir-lojinha" ponto="lojinha" />
-          : <BotaoDoca onClick={() => ir(`${c}/avatar`)} figura={<Icone nome="casa" />} rotulo="Meu boneco" testid="ir-boneco" ponto="boneco" />}
+          ? <BotaoDoca onClick={() => { marcarVistoAqui(criancaId, 'peca'); ir(`${c}/lojinha`); }} figura={<Icone nome="lojinha" />} rotulo="Lojinha" testid="ir-lojinha" ponto="lojinha" novo={ehNovo(progresso, criancaId, 'peca')} />
+          : <BotaoDoca onClick={() => { marcarVistoAqui(criancaId, 'peca'); ir(`${c}/avatar`); }} figura={<Icone nome="casa" />} rotulo="Meu boneco" testid="ir-boneco" ponto="boneco" novo={ehNovo(progresso, criancaId, 'peca')} />}
         <button className={`doca2-btn doca2-mais ${temTreino ? 'com-treino' : ''}`} onClick={abrir} aria-haspopup="dialog" aria-expanded={aberto} data-testid="ir-mais">
           <span className="doca2-fig"><Mosaico /></span>
           <span className="doca2-rotulo">Mais</span>

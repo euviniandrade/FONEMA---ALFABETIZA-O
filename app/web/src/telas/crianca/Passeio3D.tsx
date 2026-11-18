@@ -10,7 +10,7 @@
  * Cada porta leva a algo que JÁ existe no app; as trancadas dizem o que falta (mesmas regras e falas do Cantinho).
  */
 import { useEffect, useRef, useState } from 'react';
-import { BANCO, FALAS_BIBLIOTECA as B, type Fala } from '@fonema/conteudo';
+import { BANCO, type Fala } from '@fonema/conteudo';
 import { estadoFluencia, palavrasParaEscrever, type Crianca, type Progresso } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
@@ -30,8 +30,10 @@ export function destinosDoPasseio(criancaId: string, p: Progresso): Record<strin
     biblioteca: `${c}/leitura`,
     campinho: `${c}/brincar`,
     padaria: `${c}/lojinha`,
-    casa: `${c}/leitura/escrita`,
-    coreto: `${c}/leitura/fluencia`
+    // D034: a porta nunca fica trancada: enquanto a escrita/fluência não abrem, a Casa leva ao "Meu boneco" (a casa da criança no
+    // mapa da vila) e o Coreto às palmas (brincadeira de escutar com música); depois levam à escrita e à fluência, como antes
+    casa: palavrasParaEscrever(p, BANCO).length ? `${c}/leitura/escrita` : `${c}/avatar`,
+    coreto: estadoFluencia(p, BANCO).liberada ? `${c}/leitura/fluencia` : `${c}/brincar/palmas`
   };
 }
 
@@ -41,12 +43,9 @@ export function lugaresDoPasseio(p: Progresso): Record<string, EstadoLugar> {
   const escrita = palavrasParaEscrever(p, BANCO).length > 0;
   return {
     escola: { aberto: true }, biblioteca: { aberto: true }, campinho: { aberto: true }, padaria: { aberto: true },
-    casa: escrita ? { aberto: true } : { aberto: false, falta: 'Abre depois do som do M, na Trilha dos Sons.', fala: B.escTrancada },
-    coreto: flu.liberada ? { aberto: true } : {
-      aberto: false,
-      falta: flu.motivo === 'precisao' ? 'Abre quando você ler as palavras da trilha quase sem errar.' : 'Abre quando você já tiver lido mais palavras.',
-      fala: B.fluTrancada
-    },
+    // D034: Casa e Coreto sempre abertos (destino muda com o que já abriu; ver destinosDoPasseio). `escrita` e `flu` ficam para o rótulo.
+    casa: { aberto: true, ...(escrita ? {} : { falta: 'Escrever do seu jeito abre depois do som do M; por enquanto, a casa é do seu boneco.' }) },
+    coreto: { aberto: true, ...(flu.liberada ? {} : { falta: 'Ler mais ligeiro abre quando você ler quase sem errar; por enquanto, tem palmas no coreto.' }) },
     barco: { aberto: false, falta: 'Em breve na Lojinha!' }
   };
 }

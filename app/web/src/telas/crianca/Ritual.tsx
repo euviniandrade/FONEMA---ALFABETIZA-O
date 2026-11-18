@@ -1,7 +1,7 @@
 import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { useEffect, useMemo, useState } from 'react';
 import { CAMPO_POR_ID, CONQUISTA_POR_ID, FASE_POR_ID, FALAS, type Fase } from '@fonema/conteudo';
-import { calcularNivel, campoDoDesafio, desafioDaFase, desafioMemoria, fasesConcluidas, missaoInicialFeita, infoNome, situacaoSondagem, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
+import { abriuParaMostrar, calcularNivel, campoDoDesafio, desafioDaFase, desafioMemoria, fasesConcluidas, missaoInicialFeita, infoNome, situacaoSondagem, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Topo } from '../../componentes/basicos.tsx';
@@ -11,6 +11,7 @@ import { efeitos } from '../../servicos/efeitos.ts';
 import { voz } from '../../servicos/voz.ts';
 import { textoTela, textoVoz } from '../../util.ts';
 import { BotaoTreino } from './Treino.tsx';
+import { PainelAbriu } from '../../componentes/Desbloqueio.tsx';
 
 const NOME_DESAFIO = { 'estrada-pares': 'Desafio: Estrada dos Pares', carteiro: 'Desafio: Carteiro da Vila', 'casa-som': 'Desafio: Casa do Som' } as const;
 
@@ -31,6 +32,8 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
   const ficha = useMemo(() => campoDoDesafio(progresso, fase.id), [progresso, fase.id]);
   // fila do dono nº 17: Memória dos Sons como desafio opcional no fim das fases da Trilha A–Z (memoria-sons.ts)
   const memoria = useMemo(() => desafioMemoria(progresso, fase.id), [progresso, fase.id]);
+  // D034: extras que abriram nesta missão (jogos, leitura, peças da Lojinha)
+  const abriu = useMemo(() => abriuParaMostrar(relatorio.abriu ?? [], crianca.genero), [relatorio.abriu, crianca.genero]);
 
   useEffect(() => {
     let vivo = true;
@@ -51,7 +54,8 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
         efeitos.conquista();
         await f(FALAS.conquista);
       }
-      if (relatorio.surpresas.length) await f(FALAS.surpresa, 'tales');
+      // D034: o que abriu nesta missão (jogo, leitura, peça) aparece no painel "Abriu!"; o Tales anuncia com a fala já gravada
+      if (relatorio.surpresas.length || abriu.length) await f(FALAS.surpresa, 'tales');
       if (relatorio.faseConcluida && fase.uau) await f(fase.uau, 'tales');
       if (relatorio.chefe && !relatorio.chefe.passou) await f('Vamos treinar mais um pouquinho e tentar de novo outro dia. Nada se perde!');
       if (!vivo) return;
@@ -103,6 +107,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
               ) : null}
             </div>
           </div>
+          {passo >= 2 && abriu.length ? <PainelAbriu ids={relatorio.abriu ?? []} sexo={crianca.genero} criancaId={crianca.id} ir={navegar} /> : null}
           {relatorio.chefe ? (
             <p className={`ritual-chefe ${relatorio.chefe.passou ? 'ok' : ''}`}>
               <Icone nome={relatorio.chefe.passou ? 'estrela' : 'coracao'} />{relatorio.chefe.passou ? `Você venceu! (${Math.round(relatorio.chefe.leitura * 100)}% de acertos)` : 'Quase! Vamos treinar mais um pouquinho; o desafio continua lá, e nada se perde.'}
