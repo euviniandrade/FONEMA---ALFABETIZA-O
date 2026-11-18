@@ -52,7 +52,10 @@ item a item está em `docs/revisoes/qualidade-2026-11-18.md` ("Situação dos it
   serviço**, hosts bloqueados aqui). Modelo novo ainda precisa de uma linha no catálogo para virar peça da Lojinha/objeto do passeio.
   Passo a passo: `app/docs/como-transformar-foto-em-3d.md`.
 - **Verificado:** typecheck, lint, testes (novos: `relevo.test.ts`, `foto-para-3d.test.ts`, catálogo de cabelos), build, E2E `--foto3d`
-  (7 ✓) e folha `docs/propostas/06-fonema-unificada/avatar-3d/folha-v2.jpg` (olhada). `--sem-jornada`: ver o relatório do agente.
+  (7 ✓) e folha `docs/propostas/06-fonema-unificada/avatar-3d/folha-v2.jpg` (olhada). `--sem-jornada` (cópia separada, porta 4620,
+  máquina com carga ~25): 129 ✓ incluindo o passo Penteado e a aba de cabelos da Lojinha; parou no trecho C (cópia dos dados) por
+  "navegação interrompida" com a máquina sobrecarregada. Rodado sozinho (`--copia`), o trecho passou inteiro. Os trechos depois do C
+  não rodaram nesta verificação.
 
 **Passeio 3D: o MUNDO com cara de jogo, fundo do rio e trilha sonora (fila do dono nº 24, parte do mundo; 18/11; NÃO publicado ainda):**
 fonte em `docs/propostas/06-fonema-unificada/mundo-3d-v2` (copiada no build para `public/mundo3d`, fora do precache). Arquivos novos:
