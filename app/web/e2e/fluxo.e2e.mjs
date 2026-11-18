@@ -1094,6 +1094,8 @@ async function main() {
       'AL-A TF-01 AL-E TF-02 AL-I TF-03 AL-O TF-04 AL-U TF-05 TF-06 AL-RV1',
       'AL-M TF-07 AL-F TF-08 AL-V TF-09 AL-L TF-10 AL-S TF-11 TF-12 AL-N TF-13 AL-Z TF-14 AL-J TF-15 TF-R2 AL-RV2',
       'AL-P TF-16 AL-T TF-17 AL-B TF-18 AL-C TF-19 AL-D TF-20 AL-G TF-21 TF-22 TF-R3 AL-RV3',
+      // 17/11: bloco 4 da Trilha dos Sons (é/ó, ê/ô, ã); TF-26 em diante esperam sons puros (fora da jornada)
+      'TF-23 TF-24 TF-25',
       'AL-R AL-H AL-X AL-Q AL-K AL-Y AL-W AL-FESTA'
     ].join(' ').split(' ');
     const FASES = [...LETRAS_E_SONS, 'R1-F02', 'R1-F03', 'R1-F06', 'R1-F07', 'R2a-F01', 'R2a-F02', 'R2a-F03', 'R2a-F04', 'R2a-F05', 'R0-F01'];
