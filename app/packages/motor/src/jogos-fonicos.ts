@@ -220,7 +220,7 @@ export function variacoesDoJogo(p: Progresso, jogo: JogoFonicoId, temSom?: (fone
   const sons = sonsEnsinados(p, temSom);
   const comFigura = sons.filter((s) => figurasQueComecam(s.letra).length > 0);
   const finais = Object.keys(SONS_FINAIS).filter((s) => sons.some((x) => x.som === s));
-  const falta = (n: number) => `Faltam ${n} som${n > 1 ? 's' : ''} da trilha para abrir.`;
+  const falta = (n: number) => `${n > 1 ? 'Faltam' : 'Falta'} ${n} som${n > 1 ? 's' : ''} da trilha para abrir.`;
   const escuta = (variacao: VariacaoJogo, n: number, completo: number): EstadoJogo => n >= MINIMO_DE_SONS_ESCUTA
     ? { variacao, liberada: true, sons: n, ...(n < completo ? { aquecimento: true } : {}) }
     : { variacao, liberada: false, sons: n, motivo: variacao === 'fim' ? 'Abre quando a vogal A, I ou U for ensinada.' : falta(MINIMO_DE_SONS_ESCUTA - n) };

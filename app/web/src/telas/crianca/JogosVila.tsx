@@ -201,7 +201,7 @@ function EscolhaEstrada({ progresso, veiculo, setVeiculo, cor, faseId, jogar, pi
           const tem = corLiberada(progresso, c.id);
           const pode = podeComprar(progresso, c.preco).pode;
           return (
-            <button key={c.id} className={`jv-cor ${atual === c.id ? 'sel' : ''} ${tem ? '' : 'loja'}`} style={{ ['--cor' as string]: c.cor } as CSSProperties}
+            <button key={c.id} className={`jv-cor ${atual === c.id ? 'sel' : ''} ${tem ? '' : 'a-venda'}`} style={{ ['--cor' as string]: c.cor } as CSSProperties}
               onClick={() => { if (tem) { efeitos.toque(); pintar(c.id); } else if (pode) { efeitos.acerto(); comprarCor(c.id, c.preco); } else efeitos.suave(); }}
               aria-label={tem ? `Pintar de ${c.nome}` : `${c.nome}: ${c.preco} moedinhas${pode ? '' : ' (ainda faltam moedinhas)'}`} data-cor={c.id}>
               <i />{tem ? null : <small><Icone nome="lojinha" />{c.preco}</small>}

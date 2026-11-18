@@ -22,13 +22,13 @@ html,body{overflow-x:clip}
   .tela-sessao .dica-ouvir{display:none}
   /* três respostas lado a lado; quatro em 2×2 menores */
   .tela-sessao .opcoes.n3{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-  .tela-sessao .opcoes.n3 .opcao{min-height:112px;padding:8px 4px}
-  .tela-sessao .opcoes.n3 .opcao .fig{width:84px;height:84px}
+  .tela-sessao .opcoes.n3 .opcao{min-height:clamp(112px,17vh,156px);padding:8px 4px}
+  .tela-sessao .opcoes.n3 .opcao .fig{width:clamp(80px,12.5vh,112px);height:clamp(80px,12.5vh,112px)}
   .tela-sessao .opcoes.n3 .opcao .letra{font-size:64px}
   .tela-sessao .opcoes.n3 .opcao .rot{font-size:16px}
   .tela-sessao .opcoes.n3 .opcao-ouvir{width:38px;height:38px;right:-4px;top:-8px}.tela-sessao .opcoes.n3 .opcao-ouvir .ic{width:28px;height:28px}
   .tela-sessao .opcoes.n4{gap:10px}
-  .tela-sessao .opcoes.n4 .opcao{min-height:112px}
+  .tela-sessao .opcoes.n4 .opcao{min-height:clamp(112px,15vh,140px)}
   .tela-sessao .opcoes.n4 .opcao .fig{width:84px;height:84px}
   .tela-sessao .opcoes.n4 .opcao .letra{font-size:64px}
   .tela-sessao .opcao.opcao-som{min-height:104px}
@@ -36,7 +36,11 @@ html,body{overflow-x:clip}
   /* "Dar comida ao Bolota"/"Jogar no Corre-Som": vira um botão redondo no canto do título (a criança não lê o texto) */
   .tela-sessao .mec-escolher>.jogo-desafio{position:absolute;top:-46px;right:-2px;margin:0;min-height:0;padding:4px;width:auto;font-size:0;gap:0}
   .tela-sessao .mec-escolher>.jogo-desafio .rot{display:none}
-  .tela-sessao .mec-escolher>.jogo-desafio .jogo-desafio-ic{width:40px;height:40px}
+  .tela-sessao .mec-escolher>.jogo-desafio .jogo-desafio-ic{width:44px;height:44px}
+  .tela-sessao .mec-escolher>.jogo-desafio .jogo-desafio-ic .ic{width:26px;height:26px}
+  /* "Dar comida ao Bolota": o próprio Bolota no botão (a criança reconhece o bichinho, não lê o texto) */
+  .tela-sessao .mec-escolher>.jogo-desafio.come .jogo-desafio-ic{background:#FFF3D0 url(/assets/vivos/corpo/bolota-parado.webp) center 30%/120% auto no-repeat;box-shadow:inset 0 0 0 3px #37A862}
+  .tela-sessao .mec-escolher>.jogo-desafio.come .jogo-desafio-ic .ic{display:none}
   /* Espelho do Som: as duas vistas lado a lado, acima do rodapé fixo */
   .tela-sessao .mec-espelho .espelho-palco{grid-template-columns:1fr 1fr}
 }
@@ -108,3 +112,44 @@ html.menos-movimento .cs-placa{animation:none!important;transition:none}
 
 /* ---------- Tutorial (item 23): cada brincadeira com a figura 3D da capa ---------- */
 .tut-jogos-lista li .fig{width:52px;height:52px;flex:none;object-fit:contain;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fff,var(--ceu));padding:4px}
+
+/* ---------- Números sem o zero cortado (item 37): a Atkinson desenha o 0 com risco ("Ø"); os algarismos vêm da Andika ---------- */
+@font-face{font-family:Algarismos;src:url(/assets/fontes/andika-latin-400-normal.woff2) format('woff2');font-weight:400;font-display:swap;unicode-range:U+0030-0039}
+@font-face{font-family:Algarismos;src:url(/assets/fontes/andika-latin-700-normal.woff2) format('woff2');font-weight:700;font-display:swap;unicode-range:U+0030-0039}
+:root{--f-adulto:Algarismos,Atkinson,system-ui,sans-serif}
+
+/* ---------- Tutorial (item 25): a mãozinha aponta o "Brincar" de cima, sem cobrir a palavra ---------- */
+.tut-mao-aponta{right:-36px;bottom:auto;top:-38px;rotate:35deg}
+
+/* ---------- Caminho da leitura (item 24): etapas futuras com cor e cadeado pequeno, não "lavadas" ---------- */
+.etapa.trancada .etapa-disco{background:radial-gradient(circle at 35% 28%,#fff,#E4EDF7)}
+.etapa.trancada .etapa-img{filter:grayscale(.3) drop-shadow(0 3px 3px rgba(12,26,64,.25))}
+.etapa.trancada .etapa-nome{color:var(--marinho2)}
+.revelando .caminho .etapa{opacity:.8}
+
+/* ---------- Bichinho Come-Som (item 34): o pedido é um balão de fala saindo da boca do Bolota, não um quadradinho solto ---------- */
+.jogo-come .cm-bolota .cm-bolha{top:-34px;right:-58px;width:92px;height:84px;border-radius:46px;background:#fff;box-shadow:0 6px 0 #C9DCEE,0 14px 20px -10px rgba(12,26,64,.4);border:3px solid #E4EEF8}
+.jogo-come .cm-bolota .cm-bolha::after{content:"";position:absolute;left:4px;bottom:-14px;width:30px;height:26px;background:#fff;clip-path:polygon(0 100%,30% 0,100% 20%);filter:drop-shadow(0 3px 0 #C9DCEE)}
+.jogo-come .cm-bolota .cm-bolha .ic{width:48px;height:48px}
+.jogo-come .cm-bolota .cm-bolha-ondas,.jogo-come .cm-bolota .cm-bolha-ondas i{border-radius:46px}
+@media (max-width:560px){.jogo-come .cm-bolota .cm-bolha{right:-40px;width:76px;height:70px}.jogo-come .cm-bolota .cm-bolha .ic{width:40px;height:40px}}
+
+/* item 15: o convite do Bolota mostra o Bolota (no computador, com o texto ao lado; no celular, só ele) */
+.mec-escolher>.jogo-desafio.come .jogo-desafio-ic{width:52px;height:52px;background:#FFF3D0 url(/assets/vivos/corpo/bolota-parado.webp) center 30%/120% auto no-repeat;box-shadow:inset 0 0 0 3px #37A862}
+.mec-escolher>.jogo-desafio.come .jogo-desafio-ic .ic{display:none}
+
+/* ---------- Vila no celular (item 27): os rótulos dos alfinetes cortavam na borda ("orpo"); no celular fica só a figura
+   (a criança reconhece pelo desenho), menos na missão de hoje ---------- */
+@media (max-width:560px){
+  .pino:not(.missao) .pino-rotulo{display:none}
+}
+
+/* ---------- Vila no computador (item 26): os selos pequenos do "Última missão" sem o nome escrito vazando do cartão ---------- */
+.guia-selo .selo-nome{display:none}
+.guia-selo{overflow:hidden}
+
+/* ---------- "A letra A" (item 31): a metade direita não fica vazia no começo; o cartão do exemplo aparece apagado e acende com a fala ---------- */
+.letra-exemplo[aria-hidden="true"]:not(.visivel){opacity:.38;transform:scale(.94);filter:grayscale(.6)}
+
+/* ---------- Palmas (item 16; regra 6): a sílaba vale na escuta; as lâmpadas acendem sem a sílaba escrita ---------- */
+.lampadas .lampada small{display:none}

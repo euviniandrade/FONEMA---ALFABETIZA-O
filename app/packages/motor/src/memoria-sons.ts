@@ -107,7 +107,7 @@ export function niveisDaMemoria(p: Progresso, temSom?: (f: string) => boolean): 
   return NIVEIS_MEMORIA.map((nivel) => {
     const tem = semParecidosNo(nivel) ? semPar : comPar;
     const min = PARES_DO_NIVEL[nivel][0];
-    return tem >= min ? { nivel, liberado: true } : { nivel, liberado: false, motivo: `Faltam ${min - tem} som${min - tem > 1 ? 's' : ''} da trilha para abrir.` };
+    return tem >= min ? { nivel, liberado: true } : { nivel, liberado: false, motivo: `${min - tem > 1 ? 'Faltam' : 'Falta'} ${min - tem} som${min - tem > 1 ? 's' : ''} da trilha para abrir.` };
   });
 }
 export const memoriaAberta = (p: Progresso, temSom?: (f: string) => boolean) => niveisDaMemoria(p, temSom).some((n) => n.liberado);

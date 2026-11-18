@@ -169,8 +169,9 @@ export function Tutorial({ criancaId, deNovo }: { criancaId: string; deNovo: boo
         </div>
         <div className="tut-nav">
           <button className="tut-seta voltar" onClick={() => ir(passo - 1)} disabled={passo === 0} aria-label="Voltar um passo" data-testid="tutorial-voltar"><img src={asset('arte/icones/voltar.webp')} alt="" draggable={false} /></button>
+          {/* revisão 18/11 (item 25): no último passo o único botão de seguir é o "Vamos!" do meio (dois botões iguais confundiam) */}
           {ultimo
-            ? <button className="tut-seta seguir vai" onClick={() => void terminar()} aria-label={primeiraVez ? 'Ir para a primeira missão' : 'Continuar a missão'} data-testid="tutorial-fim"><Icone nome="play" /></button>
+            ? null
             : <button className={`tut-seta seguir ${pronto && (falou || modoTeste()) ? 'vai' : ''}`} onClick={() => ir(passo + 1)} aria-label="Seguir" data-testid="tutorial-seguir"><Icone nome="seta" /></button>}
         </div>
       </footer>
