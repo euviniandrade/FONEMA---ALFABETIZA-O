@@ -29,7 +29,7 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
 - **Verificado (cópia separada, porta 4660, build do commit f2132c3):** typecheck e lint completos; `npm test` 433/433 (com a máquina
   a carga ~30, 3 testes longos estouram os 5 s padrão; com `--testTimeout=60000` passam todos); E2E `--voz-real` com checagens novas
   (25 áudios, 0 sobreposição > 50 ms, pausa 475/479 ms entre sons comparados, "Eu fiz o som!" nunca apagado, "Já conheci!" em 21 s
-  em vez de 37 s). `--sem-jornada`: **E2E OK** (405 checagens, mesmo build). Completo: RESULTADO_SOM_COMPLETO.
+  em vez de 37 s). `--sem-jornada`: **E2E OK** (405 checagens, mesmo build). Completo: ainda rodando quando a frente fechou — 135 checagens verdes, sem nenhuma falha, já passando da TF-01 (concluída por domínio só com os jogos) e da jornada até a letra Q; o resultado final fica com o teste completo do coordenador.
 - **Falta:** desenho da boquinha parada das fichas; falas novas (Memória "Vire duas cartas…", chegada de quem já lê, um narrador por
   jogo de escuta, ponte antes do Corre-Som das vogais) em `app/docs/falas-pendentes.md` §1i; ninguém ouviu num aparelho de verdade.
 
