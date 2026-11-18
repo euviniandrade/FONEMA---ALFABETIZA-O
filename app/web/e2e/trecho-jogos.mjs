@@ -36,7 +36,7 @@ async function jogarRodada(pg, { errar = false, tirar = async () => {} } = {}) {
     if (await vez.count().catch(() => 0)) {
       const antes = Number(await vez.getAttribute('data-passados').catch(() => '0'));
       const alvo = errou ? '.cs-pista[data-correta="1"]' : '.cs-pista[data-opcao]:not([data-correta])';
-      await pg.locator(alvo).first().click({ timeout: 1500 }).catch(() => {});
+      await pg.locator(alvo).first().click({ timeout: 1500, force: true }).catch(() => {});
       await tirar('corre-escolher');
       const passou = await pg.waitForFunction((n) => { const e = document.querySelector('[data-testid=corre-som]'); return !e || Number(e.getAttribute('data-passados')) > n || e.getAttribute('data-fase') === 'fim'; }, antes, { timeout: 8000 }).then(() => true, () => false);
       if (!errou && passou) { errou = true; await tirar('corre-correcao'); }
@@ -59,7 +59,7 @@ async function jogarRodada(pg, { errar = false, tirar = async () => {} } = {}) {
         const antes = Number(await corre.getAttribute('data-passados').catch(() => '0'));
         await tirar('corre-escolher');
         const alvo = errou ? '.cs-pista[data-correta="1"]' : '.cs-pista[data-opcao]:not([data-correta])';
-        await pg.locator(alvo).first().click({ timeout: 1500 }).catch(() => {});
+        await pg.locator(alvo).first().click({ timeout: 1500, force: true }).catch(() => {});
         const passou = await pg.waitForFunction((n) => { const e = document.querySelector('[data-testid=corre-som]'); return !e || Number(e.getAttribute('data-passados')) > n || e.getAttribute('data-fase') === 'fim'; }, antes, { timeout: 6000 }).then(() => true, () => false);
         if (!errou && passou) { errou = true; await tirar('corre-correcao'); }
         continue;
@@ -254,7 +254,7 @@ export async function capturasCorrida(browser, h) {
       const antes = Number(await corre.getAttribute('data-passados').catch(() => '0'));
       if (n < 16 && antes % 2 === 0) await foto('arco');
       const alvo = !errou && antes === 2 ? '.cs-pista[data-opcao]:not([data-correta])' : '.cs-pista[data-correta="1"]';
-      await pg.locator(alvo).first().click({ timeout: 1500 }).catch(() => {});
+      await pg.locator(alvo).first().click({ timeout: 1500, force: true }).catch(() => {});
       if (alvo.includes('not')) errou = true;
       await pg.waitForFunction((x) => { const e = document.querySelector('[data-testid=corre-som]'); return !e || Number(e.getAttribute('data-passados')) > x; }, antes, { timeout: 8000 }).catch(() => {});
       if (n < 18) { await pg.waitForTimeout(120); await foto(antes === 2 ? 'errou' : 'passou'); }

@@ -312,7 +312,7 @@ async function jogarSessao(page, capturar = {}) {
       if (await page.getByTestId('corrida-continuar').isVisible().catch(() => false)) await page.getByTestId('corrida-continuar').click({ timeout: 2000 }).catch(() => {});
       else if (await corre.getAttribute('data-decidir').catch(() => null)) {
         const n = Number(await corre.getAttribute('data-passados').catch(() => '0'));
-        await page.locator('.cs-pista[data-correta="1"]').first().click({ timeout: 2000 }).catch(() => {});
+        await page.locator('.cs-pista[data-correta="1"]').first().click({ timeout: 2000, force: true }).catch(() => {});
         await page.waitForFunction((x) => { const e = document.querySelector('[data-testid=corre-som]'); return !e || Number(e.getAttribute('data-passados')) > x || e.getAttribute('data-fase') === 'fim'; }, n, { timeout: 6000 }).catch(() => {});
       }
       await page.waitForTimeout(100);
