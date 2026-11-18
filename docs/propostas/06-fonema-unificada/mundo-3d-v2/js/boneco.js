@@ -187,7 +187,8 @@ export class Boneco {
     } else this.mao.visible = false;
 
     // ---- com captura de movimento (js/animacoes.js) ----
-    if (this.anim && this.anim.passo(dt, { vel: v, noAr, nadando, falando, pousou: this.pousou })) {
+    // no mergulho o corpo fica deitado nadando, mesmo parado
+    if (this.anim && this.anim.passo(dt, { vel: mergulho && nadando ? Math.max(v, 0.6) : v, noAr, nadando, falando, pousou: this.pousou })) {
       this.pousou = false;
       this.mergulho = lerp(this.mergulho || 0, mergulho, kf(3));
       this.pivo.position.y = 0; this.pivo.scale.set(1, 1, 1);
@@ -200,7 +201,7 @@ export class Boneco {
         this.corpo.position.y = 0;
         this.raiz.updateMatrixWorld(true);
         const cab = this.rig.ossos.cabeca.getWorldPosition(_cab).y - this.raiz.getWorldPosition(_raiz).y;
-        const alvo = lerp(this.altura * 0.05, -fundura, this.mergulho) + Math.sin(this.t * 2.4) * 0.025 * mm * (1 - this.mergulho);
+        const alvo = lerp(this.altura * 0.09, -fundura, this.mergulho) + Math.sin(this.t * 2.4) * 0.025 * mm * (1 - this.mergulho);
         this.boia = lerp(this.boia ?? 0, alvo - cab, this.boia === undefined ? 1 : kf(10));
         this.corpo.position.y = this.boia * this.agua;
       } else { this.corpo.position.y = 0; this.boia = undefined; }

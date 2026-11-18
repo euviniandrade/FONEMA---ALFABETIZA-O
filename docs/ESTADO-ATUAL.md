@@ -9,6 +9,86 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Passeio 3D: andar, nadar e mergulhar (fila do dono nº 21 e 24; 18/11; NÃO publicado ainda):** queixa do dono: "o personagem não
+anda, ele fica pulando, e ele não nada, ele some no mar". Causa: os modelos (Tripo) são uma malha inteira sem esqueleto e a
+animação antiga sacudia o corpo inteiro; no rio, o corpo deitado ficava abaixo da linha d'água.
+- **Esqueleto automático** (`mundo-3d-v2/js/esqueleto.js`), feito no navegador ao receber cada boneco (nenhum arquivo do avatar foi
+  mexido nem criado; o recolor por máscaras continua igual): lê a malha em fatias, acha a virilha (vão entre as pernas), a axila e a
+  borda do braço (vão entre braço e tronco, fatia a fatia) e dá pesos suaves para 13 ossos (quadril, tronco, peito, cabeça, coxa,
+  canela, braço e antebraço de cada lado). Triângulos que "colam" a mão no quadril ou uma perna na outra são desfeitos (viravam fita
+  esticada). Sem pernas separadas (Bolota) = gingado em código. Funciona no avatar da criança (menina e menino), Sofia, Tales e
+  crianças da vila; ficou imperfeito na Sofia e no Tales só no tchau e no pulo (um pedaço da calça estica perto da mão).
+- **Animação de captura de movimento** (`js/animacoes.js`): Universal Animation Library (Standard) de **Quaternius, CC0 1.0**
+  (licença e origem em `mundo-3d-v2/assets/animacoes/LEIAME.md`; preparo em `ferramentas/animacoes-ual.mjs` → `assets/animacoes/ual.json`,
+  305 KB, só juntas e giros, sem malha do manequim). Reaplicada no esqueleto de cada boneco pela DIREÇÃO dos ossos (serve para cabeção
+  e braço curto); a cabeça fica quase de pé. Parado, andar → trotar → correr misturados pela velocidade, na cadência medida pelo pé
+  da captura (o pé de apoio não escorrega), pulo (no ar e chegada), conversar (os bonecos da vila gesticulam), nadar (crawl) e boiar.
+  Tchau = braço direito levantado abanando, por cima da pose. Velocidades do passeio passaram a ser de criança: 1,5 / 2,6 / 3,7 m/s.
+- **Água:** com até 0,5 m a criança anda com a água pela cintura (braços um pouco abertos); mais fundo, nada: a cabeça é medida a
+  cada quadro e fica fora d'água (nunca some). Meio do rio continua bloqueado ("Aqui é fundo!"). **Mergulhar:** na água funda o botão
+  Pular vira "🤿 Mergulhar" (Espaço também); o boneco desce ~0,5 m por 4,2 s (ou até tocar "🫧 Subir") e volta para respirar; a câmera
+  desce junto e, embaixo d'água, a página põe um véu azul (`body.submerso`, evento `fonema:submerso` na janela e `fonema:mergulho` para o app).
+  **Combinado com a frente "mundo bonito/embaixo d'água/trilha":** ela faz o cenário submerso (peixes, plantas, luz, névoa) em
+  `vila.js`/`agua.js`/arquivos novos e pode ouvir `fonema:submerso` ou ler `FONEMA_PASSEIO.posicao.cameraSubmersa`; boneco.js,
+  passeio.js, colisao.js, npcs.js e o HUD de nadar/mergulhar ficam com a frente do boneco.
+- **Também:** silhueta clarinha do boneco quando algo fica na frente (varal de livros, poste, árvore, água funda); o 1º degrau do coreto
+  virou piso (o boneco pisa nele em vez de afundar); com o cartão de conversa ou de porta aberto, a imagem sobe para o boneco aparecer acima.
+- **Verificado (18/11, cópia separada, porta 4610, build do commit):** lint, typecheck (passou depois que a frente do gerenciador corrigiu
+  o dela), `npm test` (410 de 411; a que falhou é `d030 › a jornada inteira anda`, que estourou o tempo com a máquina a carga 20, fora
+  desta frente) e E2E `--mundo3d`/`--capturas-mundo3d` todo verde, com checagens novas: 13 ossos + captura carregada, silhueta, cabeça
+  sobe e desce só 4 cm andando, no rio 24 amostras nadando sempre com a cabeça fora, Mergulhar desce 0,44 m e volta, Tchau levanta o
+  braço (osso). Capturas olhadas quadro a quadro: `app/docs/capturas/mundo3d-0*.png` (08 nadando, 09 mergulho), sequências
+  `mundo3d-seq-trotar-correr.png`, `mundo3d-seq-pulo-tchau-nado-mergulho.png` e poses de todos os bonecos
+  `mundo3d-poses-captura-lado.png`/`-3q.png`. `--sem-jornada`: RESULTADO_SJ
+- **Falta / limites:** ninguém jogou num celular de verdade; o tchau da Sofia/Tales e o pulo deles esticam um pedaço da roupa; o fundo
+  do rio no mergulho é a areia comum (o cenário submerso é da outra frente); no "menos movimento" a captura toca igual (só a câmera fica calma).
+
+**Gerenciador de conteúdo (fila do dono nº 18: "editar tudo"; 18/11; NÃO publicado ainda):** a Área do administrador
+(`#/admin`) virou um gerenciador. Passo a passo para o dono: `app/docs/como-editar-a-plataforma.md` (era como-trocar-audios.md).
+- **Camada de edições** (`packages/conteudo/src/edicao/`): o conteúdo continua sendo os dados do repositório; as edições
+  (sobreposições) são aplicadas NOS PRÓPRIOS OBJETOS (`FASES`, `FASE_POR_ID`, `ITENS_LOJA`…), no lugar, então nenhuma tela
+  precisou mudar para ler o conteúdo editado. Cada item tocado guarda o original (reaplicar = restaurar + aplicar; idempotente).
+  IDs não mudam (progresso salvo vale); "desligar cena" só tira da lista em uso; fase nova ganha id novo (`TF-10-n1`) e entra
+  logo depois do modelo na jornada ou como rascunho (só no `FASE_POR_ID`). Caminho por id de cena (`['cenas','@TF-10-C4a',…]`).
+  Coleções: fases, regiões, personagens (registro novo `personagens.ts`), lojinha, surpresas, conquistas, histórias, textos,
+  fichas, jogos de escuta, banco de palavras, falas gerais/tutorial/biblioteca/história/texto/escuta/fichas, textos de tela e
+  recursos (registro novo `textos-tela.ts`). FALAS_TRILHA_SONS e FALAS_ALFABETO NÃO são coleção (são copiadas para as fases na
+  carga): essas falas se editam dentro de cada fase.
+- **Publicadas** (`edicao/publicadas.json`) são aplicadas na carga do conteúdo (app, motor, testes e scripts veem igual); as do
+  aparelho (IndexedDB "fonema-admin" v2, lojas `edicoes` e `midias`; `web/src/servicos/edicoes.ts`) por cima, em `main.tsx`
+  antes da 1ª tela (limite 1,5 s). Figuras/modelos trocados: `asset()` (ambiente.ts) devolve o blob: do aparelho.
+- **Verificador AO VIVO** (`edicao/verificar.ts`): a edição é simulada numa cópia e passa pelo mesmo `verificarFase`/
+  `verificarTexto` dos testes; erro NOVO (que o original não tinha) = **bloqueada**, com o motivo em linguagem simples
+  ("'pato' tem o som de 'P', que a criança só aprende na lição TF-16"). Palavra fora do banco abre o **assistente de
+  pronúncia** (`edicao/pronuncia.ts`: E/O aberto ou fechado? O/E do fim soa U/I? sílaba forte no fim?) e a anotação entra no
+  banco como edição. [DP] as regras comuns das outras letras (C/G antes de E/I, S entre vogais = Z, R no começo = forte).
+- **Abas novas**: Textos e falas (3 mil textos, busca, áudio desatualizado → gravar/subir ali mesmo), Missões (jornada em
+  ordem; título/falas; cenas ↑↓, ligar/desligar; trocar a palavra de item "leia e toque na figura" junto com a opção certa;
+  palavras de montar/palmas; criar fase a partir de modelo; pré-visualização; abrir a lição de uma criança), Personagens e
+  prêmios (nome, cor, apresentação, figuras/modelo; Lojinha: nome, preço, frase, figura; surpresas; selos), Histórias e
+  leitura (textos para ler com verificador, histórias, fichas), Imagens (377 arquivos; recorte/redimensionamento no navegador
+  para o tamanho e o webp da original; .glb entra como veio), Histórico (desfazer um passo / voltar ao original; edições sem
+  lugar listadas), Foto → 3D (espaço; COMBINADO com a frente do avatar: o arquivo `web/src/telas/admin/foto3d/FerramentaFoto3D.tsx`
+  exportando `FerramentaFoto3D` é carregado sozinho por `import.meta.glob`; o .glb resultante entra pela troca de modelo) e, em
+  Site, recursos liga/desliga (Passear 3D, Brincar, Leitura, Jogos: `RECURSOS`, lidos em DocaVila e BrincarSons) e os textos da
+  entrada (`TEXTOS_TELA`, lidos em Entrada.tsx).
+- **Publicar**: "Gerar pacote com tudo" (`web/src/servicos/pacote.ts`, formato `fonema-pacote` v2: edições sem o histórico do
+  aparelho + `midias/` + áudios). `npx tsx scripts/importar-pacote.ts pacote.zip [--seco]` (aceita também o pacote antigo, só de
+  áudios): confere, junta às publicadas, aplica e roda o verificador (barra = nada gravado), grava publicadas.json e as figuras
+  em `web/public/assets/<caminho>`, roda `npm test` (falhou = desfaz) e então passa os áudios ao importador antigo (mantido).
+- **Limites honestos:** trocar palavras de síntese, caixas, pares mínimos, troca-letras, frases e ditado ainda NÃO (levam o
+  som de cada letra e as letras móveis): nelas só textos e falas. Palavra nova num item "leia e toque" precisa ter figura
+  (figura nova com nome novo não é reconhecida pela tela). Nome do personagem muda nos rótulos (`NOMES_PERSONAGEM`), não dentro
+  das falas. Edição de fala compartilhada feita dentro de uma fase vale só para aquela fase. Listas derivadas na carga
+  (ex.: as etapas do caminho do tutorial) não acompanham fase nova. Tudo vale no aparelho até o pacote ser aplicado.
+- **Verificado (18/11, cópia separada, porta 4630):** typecheck, lint, 411 testes (novos: `conteudo/test/edicao.test.ts` 17,
+  `web/src/servicos/edicoes.test.ts` 4, `scripts/importar-pacote.test.ts` 7), importador real na cópia (`--seco` com palavra boa
+  e com PATO barrada; aplicação de verdade rodando `npm test`), E2E **`node web/e2e/fluxo.e2e.mjs --gerenciador`** (20 checagens:
+  fala da TF-10 editada + áudio desatualizado; PATO bloqueada com o motivo; "lulu" sem figura recusada; LAMA aceita; cenas
+  desligadas; na lição da criança a fala nova e LAMA; preço da Lojinha; frase com R bloqueada no texto; figura da uva trocada
+  por webp recortado; histórico; pacote com edições e figura; desfazer e voltar tudo ao original). Também no completo e no
+  `--sem-jornada`. Capturas `--capturas-gerenciador` (1850×980 e 390×844) olhadas. SEM_JORNADA_AQUI
+
 **Desbloqueio progressivo (D034, fila do dono nº 22; 18/11; NÃO publicado ainda):** queixa do dono: "as tarefas e funções estão
 bloqueadas mesmo quando o aluno terminou uma atividade". Antes, nas 4 primeiras missões nada abria fora da trilha; os jogos de som
 abriam na 5ª, a Memória na 7ª, as peças da Lojinha esperavam letras 35 missões à frente, os sons L, V, J, P, T, B, C, D, G nunca
@@ -37,9 +117,8 @@ entravam nos jogos, e os cadeados não diziam quanto faltava. Tabela completa do
 - **Controles:** PC = setinhas/WASD (Shift corre), arrastar gira, roda = zoom, espaço pula, T acena, Enter entra. Celular/tablet =
   dedo à esquerda vira joystick onde encosta, dedo à direita gira, pinça = zoom, botões Pular (92–104 px), Tchau (76–84 px) e
   Entrar/Conversar. Tocar/clicar no chão, numa porta ou num boneco = o boneco vai sozinho. Botão 🦅 "ver do alto" e ❔ "como mexer".
-- **Animação procedural** (os GLB são malha inteira, sem esqueleto): passos com quique e balanço, inclina ao correr, respira parado,
-  pulo com antecipação e "amassadinho" na queda, tchau = pulinhos virado para a câmera + mãozinha 👋 flutuando, nado deitado na beira.
-  **Com modelos riggados** (esqueleto + clipes andar/correr/pular/acenar) daria braços e pernas de verdade e o aceno com a mão.
+- **Animação:** desde 18/11 o boneco tem esqueleto e animação de captura de movimento (ver o bloco "Passeio 3D: andar, nadar e
+  mergulhar" no topo desta seção). A animação antiga em código ficou só como reserva enquanto a captura carrega.
 - **Área:** colisão por grade montada das peças da vila (`js/colisao.js`): prédios, muros, cercas, bancos, postes, troncos, arbustos.
   Cerca de madeira baixa no limite (a mata fica do lado de fora, com aviso "A mata fica para outro dia!", só visual). Rio: beirinha
   rasa onde o boneco nada; meio fundo bloqueado. Barquinho com cadeado "Em breve na Lojinha".

@@ -169,7 +169,8 @@ export class Animador {
     // quadril sobe e desce (e balança de lado) como na captura, na escala da perna do boneco
     const i = ij.quadril * 3, esc = this.rig.medidas.perna;
     const dy = (P[i + 1] - rep.P[i + 1]) * esc, dx = (P[i] - rep.P[i]) * esc;
-    O.quadril.position.x += dx * 0.6; O.quadril.position.y += dy;
+    // (o sobe-e-desce vai pela metade: num boneco de cabeção ele parece pulo — queixa do dono, fila nº 21)
+    O.quadril.position.x += dx * 0.6; O.quadril.position.y += dy * 0.5;
     return dy * this.k;
   }
 }
