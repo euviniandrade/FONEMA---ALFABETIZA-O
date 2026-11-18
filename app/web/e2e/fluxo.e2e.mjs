@@ -22,6 +22,7 @@ import { trechoMundo3d } from './trecho-mundo3d.mjs';
 import { trechoAdmin } from './trecho-admin.mjs';
 import { trechoTutorial } from './trecho-tutorial.mjs';
 import { trechoFichas } from './trecho-fichas.mjs';
+import { trechoDesbloqueio } from './trecho-desbloqueio.mjs';
 
 const aqui = dirname(fileURLToPath(import.meta.url));
 const CAPTURAS_V2 = process.argv.includes('--capturas-v2');
@@ -743,6 +744,18 @@ async function main() {
     if (errosJ2.length) throw new Error(`erros na página:\n${errosJ2.join('\n')}`);
     return;
   }
+  if (process.argv.includes('--desbloqueio') || process.argv.includes('--capturas-desbloqueio')) {
+    const errosD = [];
+    const hD = { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros: errosD, dirCap: DIR_CAP };
+    if (process.argv.includes('--capturas-desbloqueio')) {
+      mkdirSync(DIR_CAP, { recursive: true });
+      await trechoDesbloqueio(browser, { ...hD, w: 1850, h: 980, capturar: true });
+      await trechoDesbloqueio(browser, { ...hD, w: 390, h: 844, suf: '-celular', movel: true, capturar: true });
+    } else await trechoDesbloqueio(browser, hD);
+    await browser.close(); servidor?.kill();
+    if (errosD.length) throw new Error(`erros na página:\n${errosD.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--jogos') || process.argv.includes('--capturas-jogos')) {
     const errosJ = [];
     const h = { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros: errosJ, dirCap: DIR_CAP };
@@ -1178,6 +1191,7 @@ async function main() {
   await trechoVozReal(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoCopia(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoJogos(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros, dirCap: DIR_CAP });
+  await trechoDesbloqueio(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros, dirCap: DIR_CAP });
   await trechoJogos2(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, dirCap: DIR_CAP });
   await trechoFichas(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, dirCap: DIR_CAP });
   await trechoMemoria(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });

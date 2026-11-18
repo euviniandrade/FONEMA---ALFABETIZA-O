@@ -32,7 +32,9 @@ export const LUGARES = [
 
 const PARTIDA = { x: 0, z: 19.5, giro: Math.PI }; // na entrada da praça, de frente para o coreto (a Sofia passeia ali)
 const ALTURA = 1.5; // a criança no mundo (m)
-const ANDAR = 3.2, CORRER = 5.8, TECLADO = 4.2, PULO = 6.4, GRAVIDADE = 20;
+// velocidades de criança (m/s): a passada das pernas acompanha (js/boneco.js), então o pé não escorrega
+const ANDAR = 2.6, CORRER = 5.0, TECLADO = 3.4, PULO = 6.4, GRAVIDADE = 20;
+const NADA = 0.62; // água mais funda que isto (m) = nada; mais rasa = anda com a água pela cintura
 
 export function criarPasseio(mundo, h = {}) {
   const { scene, camera, renderer } = mundo;
@@ -45,7 +47,7 @@ export function criarPasseio(mundo, h = {}) {
   camera.far = 900; camera.near = 0.15; camera.updateProjectionMatrix();
 
   // ---------- a criança ----------
-  const eu = new Boneco({ altura: ALTURA, nome: 'crianca', menosMovimento: menos });
+  const eu = new Boneco({ altura: ALTURA, nome: 'crianca', menosMovimento: menos, silhueta: true });
   eu.usarModelo(bonecoReserva(h.cores || {}), 1.1);
   grupo.add(eu.raiz);
   const pos = new THREE.Vector3(PARTIDA.x, colisao.altura(PARTIDA.x, PARTIDA.z), PARTIDA.z);
@@ -289,18 +291,19 @@ export function criarPasseio(mundo, h = {}) {
     if (acenando > 0) { acenando -= dt; if (vel < 0.3) giro = girarPara(giro, cam.giro, dt * 6); }
     // altura: chão, água e pulo
     const chao = colisao.altura(pos.x, pos.z);
-    const nada = naAgua > 0.62;
+    const nada = naAgua > NADA;
     if (nada !== nadando) { nadando = nada; if (nada) h.aoAviso?.('agua'); }
-    const base = nadando ? colisao.NIVEL_AGUA - ALTURA * 0.62 : chao;
+    // nadando: o ponto em que o corpo deita fica na superfície (costas e cabeça para fora); andando: pés no chão (ou no degrau)
+    const base = nadando ? colisao.NIVEL_AGUA - eu.alturaNado + 0.05 : Math.max(chao, colisao.piso(pos.x, pos.z));
     if (noAr) {
       vy -= GRAVIDADE * dt; yPe += vy * dt;
       if (yPe <= 0) { eu.pousar(vy); yPe = 0; vy = 0; noAr = false; }
     }
-    pos.y = lerp(pos.y, base, nadando ? 1 - Math.exp(-dt * 5) : 1) ;
-    if (!nadando) pos.y = base;
+    // sobe e desce suave (entrar na água, subir um degrau)
+    pos.y = Math.abs(base - pos.y) > 1.2 ? base : lerp(pos.y, base, 1 - Math.exp(-dt * (nadando ? 5 : 16)));
     eu.raiz.position.set(pos.x, pos.y + yPe, pos.z);
     eu.raiz.rotation.y = giro;
-    eu.tick(dt, { vel, correr: CORRER, noAr, vy, nadando });
+    eu.tick(dt, { vel, correr: CORRER, noAr, vy, nadando, vau: nadando ? 0 : clamp(naAgua / NADA, 0, 1) });
     eu.sombraEm(yPe, nadando || naAgua > 0.05);
     if (vel > 0.2 || noAr) tempoParado = 0; else tempoParado += dt;
 
@@ -350,6 +353,25 @@ export function criarPasseio(mundo, h = {}) {
     else camera.position.lerp(desejada, menos ? 1 - Math.exp(-dt * 6) : 1 - Math.exp(-dt * 14));
     camera.lookAt(alvoCam);
     mundo.controls.target.copy(alvoCam);
+    enquadrar(dt);
+  }
+
+  // ---------- cartão aberto (conversa, porta trancada): a imagem sobe para o boneco não ficar atrás dele ----------
+  let limiteCartao = null, desloca = 0;
+  const _pe = new THREE.Vector3();
+  function enquadrar(dt) {
+    const w = canvas.clientWidth || 1, hh = canvas.clientHeight || 1;
+    let alvo = 0;
+    if (limiteCartao != null) {
+      camera.updateMatrixWorld();
+      // os pés do boneco na tela (sem o deslocamento atual)
+      _pe.set(pos.x, pos.y + yPe, pos.z).project(camera);
+      const yTela = (-_pe.y * 0.5 + 0.5) * hh + desloca;
+      alvo = clamp(yTela - (limiteCartao - 18), 0, hh * 0.42);
+    }
+    desloca = lerp(desloca, alvo, 1 - Math.exp(-dt * 8));
+    if (desloca > 0.5) camera.setViewOffset(w, hh, 0, desloca, w, hh);
+    else if (camera.view?.enabled) { desloca = 0; camera.clearViewOffset(); }
   }
 
   let tSim = 1000;
@@ -369,6 +391,8 @@ export function criarPasseio(mundo, h = {}) {
     definirLugares(estados) { for (const [id, st] of Object.entries(estados || {})) if (estadoLugar[id]) estadoLugar[id] = { ...estadoLugar[id], ...st }; remontarMarcas(); perto = null; },
     pular, acenar, interagir, conversar, fimConversa,
     cancelarEntrada() { entrando = null; },
+    /** Há um cartão na tela começando em `yTopo` px (do topo da página): a imagem sobe para o boneco aparecer acima dele. null = sem cartão. */
+    reservarEmbaixo(yTopo) { limiteCartao = yTopo; },
     /** Joystick/teclas vindos de fora (testes, botões da página). */
     teclar(k, on) { if (on) teclas.add(k); else teclas.delete(k); },
     girarCamera(da) { cam.giro += da; arrastouEm = performance.now(); },

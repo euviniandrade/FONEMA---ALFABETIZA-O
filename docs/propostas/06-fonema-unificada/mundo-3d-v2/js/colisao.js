@@ -17,6 +17,7 @@ export function criarColisao(vila, { celula = 0.25, ext = 90, corpo = [0.45, 1.6
   const N = Math.round((ext * 2) / celula);
   const bloq = new Uint8Array(N * N); // 1 = obstáculo
   const topo = new Float32Array(N * N).fill(-99); // altura do que está em cima (câmera)
+  const piso = new Float32Array(N * N).fill(-99); // degrau baixo (até 0,45 m) em que o boneco pisa por cima (escada do coreto)
   const altura = vila.altura;
   const ci = (x) => Math.floor((x + ext) / celula);
   const cx = (i) => -ext + (i + 0.5) * celula;
@@ -35,7 +36,9 @@ export function criarColisao(vila, { celula = 0.25, ext = 90, corpo = [0.45, 1.6
     const bloqueia = !soTopo && y0 < g + corpo[1] && y1 > g + corpo[0];
     // câmera: só o que desce até perto do chão (paredes, muros, troncos); fio e varal (pegada enganosa) ficam de fora
     const cobre = y1 > g + corpo[0] && y0 < g + 2.5;
-    if (!bloqueia && !cobre) return;
+    // degrau: peça baixa e larga, encostada no chão (não vale para fio, vareta, flor)
+    const degrau = !soTopo && y1 <= g + corpo[0] && y1 > g + 0.08 && y0 < g + 0.12 && Math.min(x1 - x0, z1 - z0) > 0.5 && Math.max(x1 - x0, z1 - z0) < 6;
+    if (!bloqueia && !cobre && !degrau) return;
     _m.copy(m).invert();
     const e = _m.elements, yT = clamp(g + 1.0, y0, y1);
     const i0 = Math.max(0, ci(x0)), i1 = Math.min(N - 1, ci(x1)), j0 = Math.max(0, ci(z0)), j1 = Math.min(N - 1, ci(z1));
@@ -53,6 +56,7 @@ export function criarColisao(vila, { celula = 0.25, ext = 90, corpo = [0.45, 1.6
         const c = j * N + i;
         if (bloqueia) bloq[c] = 1;
         if (cobre && y1 > topo[c]) topo[c] = y1;
+        if (degrau && y1 > piso[c]) piso[c] = y1;
       }
     }
   }
@@ -97,6 +101,8 @@ export function criarColisao(vila, { celula = 0.25, ext = 90, corpo = [0.45, 1.6
     },
     /** Altura do que cobre o ponto (telhado, copa) ou -99. */
     topo(x, z) { const c = idx(x, z); return c < 0 ? -99 : topo[c]; },
+    /** Topo do degrau baixo em (x, z) (o boneco pisa nele) ou -99. */
+    piso(x, z) { const c = idx(x, z); return c < 0 ? -99 : piso[c]; },
     bloqueado(x, z) { const c = idx(x, z); return c < 0 || bloq[c] === 1; },
     /** Para depurar: imagem da grade (vermelho = bloqueado). */
     imagem() {

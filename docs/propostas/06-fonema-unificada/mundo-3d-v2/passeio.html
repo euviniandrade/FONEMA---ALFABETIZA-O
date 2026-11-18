@@ -160,8 +160,13 @@ if (!temWebGL()) {
   const mundo = await criarMundo($('#palco'), { cena: 'vila', passeio: true, qualidade: P.get('q') || 'auto', dprMax: movel ? 1.25 : 1.75, hora: Number(P.get('hora') || 0) });
   window.FONEMA_MUNDO = mundo;
   const cartao = {
-    abrir(ic, tit, txt, botoes = []) { $('#cIc').textContent = ic; $('#cTit').textContent = tit; $('#cTxt').textContent = txt; const a = $('#cAcoes'); a.innerHTML = ''; botoes.forEach((b) => a.appendChild(b)); $('#cartao').classList.add('aberto'); },
-    fechar() { $('#cartao').classList.remove('aberto'); },
+    abrir(ic, tit, txt, botoes = []) {
+      $('#cIc').textContent = ic; $('#cTit').textContent = tit; $('#cTxt').textContent = txt; const a = $('#cAcoes'); a.innerHTML = ''; botoes.forEach((b) => a.appendChild(b)); $('#cartao').classList.add('aberto');
+      // o cartão não pode cobrir o boneco: a câmera sobe a imagem (topo do cartão já na posição final, sem a animação de 30 px)
+      const r = $('#cartao').getBoundingClientRect(), pr = $('#palco').getBoundingClientRect();
+      passeio?.reservarEmbaixo(r.top - 30 - pr.top);
+    },
+    fechar() { $('#cartao').classList.remove('aberto'); passeio?.reservarEmbaixo(null); },
   };
   passeio = criarPasseio(mundo, {
     menosMovimento: app.menos,
