@@ -8,10 +8,10 @@ import { addCausticas } from './materiais.js';
 
 const Q_SUB = {
   alto: { cardumes: 4, peixes: 16, plantas: 620, pedras: 150, raios: 12, part: 320 },
-  medio: { cardumes: 3, peixes: 12, plantas: 360, pedras: 100, raios: 8, part: 200 },
+  medio: { cardumes: 3, peixes: 12, plantas: 360, pedras: 100, raios: 10, part: 200 },
   baixo: { cardumes: 2, peixes: 9, plantas: 160, pedras: 60, raios: 0, part: 90 },
 };
-const CORES_PEIXE = [['#B9D3E2', '#F2B33D'], ['#F4A340', '#F7D36A'], ['#9FC7A8', '#E8E8D8'], ['#D8C4F0', '#9FD0EA']];
+const CORES_PEIXE = [['#B9D3E2', '#F2B33D'], ['#FF8A3D', '#FFD166'], ['#5BC0EB', '#FDE74C'], ['#9FC7A8', '#E8E8D8'], ['#F28FB0', '#FFE3A3']];
 
 /** Rio "esticado": ponto, tangente e lado a partir do comprimento s. */
 function canal(pts) {
@@ -82,7 +82,7 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
   // ---------- pedras e plantas do fundo ----------
   const matPedra = addCausticas(new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.92 }), U);
   const pedras = new THREE.InstancedMesh(blobGeo(41, 2, 0.32), matPedra, QM.pedras);
-  const CORES_PEDRA = ['#8C8577', '#7A7468', '#A59C8A', '#6B6E62', '#958B78'];
+  const CORES_PEDRA = ['#8C8577', '#7A7468', '#A59C8A', '#6B6E62', '#958B78', '#B0805A', '#C9A36A', '#8E9AA8'];
   for (let i = 0; i < QM.pedras; i++) {
     const s = lerp(s0, s1, r()), u = (r() * 2 - 1) * (r() < 0.7 ? 4.4 : 2.5), sc = 0.12 + Math.pow(r(), 2.2) * 0.75;
     const p = mundoDe(s, u, fundoRio(u) + sc * 0.12);
@@ -90,6 +90,21 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
     pedras.setMatrixAt(i, _o.matrix); pedras.setColorAt(i, new THREE.Color(CORES_PEDRA[i % CORES_PEDRA.length]));
   }
   pedras.receiveShadow = true; pedras.castShadow = false; pedras.computeBoundingSphere(); grupo.add(pedras);
+
+  // ---------- caramujos/conchinhas de rio e almofadas de musgo no fundo (rio de água doce: sem estrela-do-mar nem coral) ----------
+  const conchaGeo = (() => { const L = new Lote(12);
+    for (let k = 0; k < 4; k++) L.add(G.sphLo, '#FFFFFF', M(0, 0.05 + k * 0.045, -k * 0.02, 0, 0, 0, 0.22 - k * 0.045, 0.16 - k * 0.03, 0.22 - k * 0.045), { top: '#E9D8C0', jit: 0 });
+    L.add(G.sphLo, '#F4E3CF', M(0, 0.03, 0.1, 0, 0, 0, 0.12, 0.07, 0.1), { jit: 0 }); return L.geometry(); })();
+  const NCON = 90, conchas = new THREE.InstancedMesh(conchaGeo, addCausticas(new THREE.MeshStandardMaterial({ color: '#fff', vertexColors: true, roughness: 0.45 }), U), NCON);
+  const CORES_CONCHA = ['#F6D7B0', '#E8B4A0', '#F2E6D0', '#D9A86C', '#F7C8C8'];
+  const NMUS = 110, musgo = new THREE.InstancedMesh(blobGeo(57, 1, 0.3, 0.6), addCausticas(new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.95 }), U), NMUS);
+  const CORES_MUSGO = ['#4F8F3A', '#6FA84A', '#3E7D4A', '#8BB85A', '#5C9C6E'];
+  for (let i = 0; i < Math.max(NCON, NMUS); i++) {
+    const s = lerp(s0, s1, r()), u = (r() * 2 - 1) * 4.3, p = mundoDe(s, u, fundoRio(u));
+    if (i < NCON) { const sc = 0.25 + r() * 0.3; _o.position.copy(p).setY(p.y + 0.01); _o.rotation.set(0, r() * 6, 0); _o.scale.setScalar(sc); _o.updateMatrix(); conchas.setMatrixAt(i, _o.matrix); conchas.setColorAt(i, new THREE.Color(CORES_CONCHA[i % CORES_CONCHA.length])); }
+    if (i < NMUS) { const sc = 0.25 + Math.pow(r(), 1.5) * 0.6; _o.position.copy(mundoDe(s + 3, -u * 0.9, fundoRio(u * 0.9) - sc * 0.05)); _o.rotation.set(0, r() * 6, 0); _o.scale.set(sc * 1.4, sc * 0.55, sc * 1.4); _o.updateMatrix(); musgo.setMatrixAt(i, _o.matrix); musgo.setColorAt(i, new THREE.Color(CORES_MUSGO[i % CORES_MUSGO.length])); }
+  }
+  conchas.computeBoundingSphere(); musgo.computeBoundingSphere(); musgo.receiveShadow = true; grupo.add(conchas, musgo);
 
   const fita = new THREE.PlaneGeometry(0.07, 1, 1, 6).translate(0, 0.5, 0);
   const matPlanta = addCausticas(new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.75, side: THREE.DoubleSide }), U);
@@ -186,7 +201,7 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
       void main(){ float lado = 1.0 - abs(vUv.x - 0.5) * 2.0; float a = pow(lado, 2.2) * smoothstep(0.0, 0.85, vUv.y) * smoothstep(1.0, 0.92, vUv.y);
         a *= 0.55 + 0.45 * sin(vUv.x * 9.0 + uTime * 0.8) * sin(vUv.x * 4.0 - uTime * 0.5);
         a *= smoothstep(16.0, 4.0, vDist) * smoothstep(0.3, 1.5, vDist) * uForca;
-        gl_FragColor = vec4(uCor * a * 0.22, 1.0); }`,
+        gl_FragColor = vec4(uCor * a * 0.3, 1.0); }`,
   });
   const raios = new THREE.InstancedMesh(new THREE.PlaneGeometry(0.9, 1, 1, 1).translate(0, 0.5, 0), matRaio, QM.raios * 2);
   raios.frustumCulled = false; raios.visible = false; raios.renderOrder = 3; raios.userData.camada1 = true; grupo.add(raios);
@@ -223,8 +238,11 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
     const nPeixes = peixes.count;
     for (const cd of cardumes) { // o cardume passeia rio acima e abaixo, de um lado para o outro e em alturas diferentes
       cd.s += cd.vs * dt; if (cd.s < s0 + 6) cd.vs = Math.abs(cd.vs); if (cd.s > s1 - 6) cd.vs = -Math.abs(cd.vs);
-      cd.u = Math.sin(t * 0.13 + cd.fase) * 2.6;
-      cd.y = NIVEL - prof(cd.u) * (0.45 + 0.2 * Math.sin(t * 0.21 + cd.fase));
+      if (cd.fixo > 0) { cd.fixo -= dt; cd.s -= cd.vs * dt * 0.7; } // recém-chegado na frente da câmera: fica por ali uns segundos
+      else {
+        cd.u = lerp(cd.u, Math.sin(t * 0.13 + cd.fase) * 2.6, Math.min(1, dt * 0.5));
+        cd.y = lerp(cd.y, NIVEL - prof(cd.u) * (0.45 + 0.2 * Math.sin(t * 0.21 + cd.fase)), Math.min(1, dt * 0.5));
+      }
     }
     // mergulho (frente do boneco, 18/11): com a criança embaixo d'água, o cardume mais perto vem nadar em volta dela
     if (fugir && submerso) {
@@ -311,12 +329,28 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
     }
   }
 
-  let visivel = true, submerso = false, forcaRaios = 0;
+  let visivel = true, submerso = false, forcaRaios = 0, acabouDeEntrar = false;
+  // ao mergulhar, dois cardumes aparecem já nadando na frente da câmera (a criança SEMPRE vê peixinhos na descida)
+  const _fr = new THREE.Vector3();
+  function cardumesNaFrente(camera) {
+    camera.getWorldDirection(_fr); _fr.y = 0; if (_fr.lengthSq() < 1e-6) _fr.set(0, 0, 1); _fr.normalize();
+    const ordem = cardumes.map((cd, i) => i).filter((i) => i * QM.peixes < peixes.count);
+    ordem.slice(0, 2).forEach((ci, k) => {
+      const alvo = camera.position.clone().addScaledVector(_fr, 2.4 + k * 1.6);
+      const pc = C.paraCanal(alvo.x, alvo.z), cd = cardumes[ci];
+      cd.s = clamp(pc.s + (k ? 1.2 : -0.6), s0 + 6, s1 - 6); cd.u = clamp(pc.u + (k ? -0.8 : 0.6), -3.6, 3.6);
+      cd.y = clamp(camera.position.y - 0.2 + k * 0.3, fundoRio(cd.u) + 0.4, NIVEL - 0.35); cd.fixo = 10;
+      for (let j = ci * QM.peixes; j < (ci + 1) * QM.peixes && j < peixes.count; j++) {
+        const b = bichos[j]; b.s = cd.s + (r() - 0.5) * 1.4; b.u = cd.u + (r() - 0.5) * 1.0; b.y = cd.y + (r() - 0.5) * 0.4;
+        b.vs = (r() < 0.5 ? -1 : 1) * 0.5; b.vu = (r() - 0.5) * 0.2; b.vy = 0;
+      }
+    });
+  }
   return {
     grupo, nivel: NIVEL, canal: C,
     qualidade,
     /** Liga/desliga o que só existe com a câmera dentro d'água. */
-    definirSubmerso(on) { submerso = on; part.visible = on; bol.visible = on; },
+    definirSubmerso(on) { if (on && !submerso) acabouDeEntrar = true; submerso = on; part.visible = on; bol.visible = on; },
     /** dentro do rio? (x, z) -> distância lateral ao meio (m) e s; útil para o mergulho */
     noCanal: (x, z) => C.paraCanal(x, z),
     tick(dt, t, camera, pe) {
@@ -326,6 +360,7 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
       if (perto !== visivel) { visivel = perto; grupo.visible = perto; }
       if (!visivel) return;
       if (pe) { const pp = C.paraCanal(pe.x, pe.z); fugir = Math.abs(pp.u) < RIO_W / 2 + 0.5 && pe.y < NIVEL + 0.4 ? { s: pp.s, u: pp.u, y: pe.y } : null; } else fugir = null;
+      if (acabouDeEntrar) { acabouDeEntrar = false; cardumesNaFrente(camera); }
       passoPeixes(Math.min(dt, 0.05), t); passoTartaruga(Math.min(dt, 0.05), t);
       // aguapés boiando
       aguapes.position.y = Math.sin(t * 1.1) * 0.012; flores.position.y = aguapes.position.y;

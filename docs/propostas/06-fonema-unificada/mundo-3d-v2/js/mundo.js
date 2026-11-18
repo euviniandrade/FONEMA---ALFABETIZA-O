@@ -325,7 +325,7 @@ export async function criarMundo(container, opts = {}) {
   // ---------- grama de perto, fundo do rio, mergulho e som ----------
   let grama = null, sub = null, som = null, menos = !!o.menosMovimento;
   let modoSub = 'auto', submersoAgora = false, peExterno = null, somT = 0;
-  const _pe = new THREE.Vector3(), corAgua = new THREE.Color('#2F8FA6'), corAguaFundo = new THREE.Color('#1D6E86');
+  const _pe = new THREE.Vector3(), corAgua = new THREE.Color('#3BA3B8'), corAguaFundo = new THREE.Color('#237A93');
   const veuAgua = document.createElement('div');
   veuAgua.style.cssText = 'position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s;background:radial-gradient(ellipse at 50% 30%, rgba(120,220,230,0.10), rgba(20,90,120,0.28) 70%, rgba(10,50,80,0.5));mix-blend-mode:multiply';
   function qualidadeExtras(n) {
@@ -361,7 +361,7 @@ export async function criarMundo(container, opts = {}) {
     sub?.tick(dt, t, camera, p);
     if (submersoAgora) {
       const fundo = clamp((v.NIVEL_AGUA - camera.position.y) / 3, 0, 1);
-      scene.fog.color.copy(corAgua).lerp(corAguaFundo, fundo); scene.fog.density = 0.085 + fundo * 0.05; scene.background = scene.fog.color;
+      scene.fog.color.copy(corAgua).lerp(corAguaFundo, fundo); scene.fog.density = 0.07 + fundo * 0.04; scene.background = scene.fog.color;
     }
     if (passes.grade) { passes.grade.uniforms.uAgua.value = lerp(passes.grade.uniforms.uAgua.value, submersoAgora ? 1 : 0, Math.min(1, dt * 6)); passes.grade.uniforms.uT.value = t; }
     // reflexo do sol no rio acompanha a hora
