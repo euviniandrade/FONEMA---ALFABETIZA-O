@@ -112,9 +112,19 @@ fonte em `docs/propostas/06-fonema-unificada/mundo-3d-v2` (copiada no build para
 - **Qualidade:** no "baixo" (celular fraco e navegador de teste) não há grama de perto, acabamento nem cáusticas — o acabamento nem entra
   no programa (medido: mesmo custo de antes, ~2,3 s/quadro nos dois no Chromium sem placa de vídeo). Peso novo: 55 KB de código (~20 KB
   comprimido), nenhum arquivo de mídia.
-- **Verificado (cópia separada, porta 4650):** typecheck, lint, 424 testes, build, E2E `--mundo3d` verde (33 ✓); `--sem-jornada`: ver o
-  relatório. Capturas antes/depois olhadas (praça, rio, embaixo d'água). **Não testado:** aparelho real (FPS do médio/alto num celular de
-  verdade), o som num alto-falante.
+- **Peixinhos no mergulho (pedido do dono, conferido em captura):** ao descer, dois cardumes aparecem nadando na frente da câmera e ficam
+  por perto ~10 s (laranja/amarelo, azul, prateado com rabo amarelo, rosa; com um pouco de luz própria para a cor não sumir na água);
+  com a criança embaixo d'água o cardume mais perto ainda vem nadar em volta dela (ajuste da frente do boneco no mesmo arquivo). Fundo:
+  conchinhas/caramujos de rio, almofadas de musgo, pedras de várias cores, plantas, aguapés. **Decisão do projeto:** é rio de água doce,
+  então nada de estrela-do-mar nem coral. O barranco ficou mais curto: a água visível acaba ~7,4 m do meio, perto de onde a colisão para
+  de ver água (o nado da beirinha vai até ~6,3 m do meio; o E2E do nado continua verde).
+- **Verificado (cópia separada, porta 4650):** typecheck, lint, 424 testes (com tempo maior: com a máquina carregada, 2 testes do motor
+  passaram de 5 s), build, E2E `--mundo3d` verde (35 ✓, último build). Som: depois de uma tecla o áudio fica "running" e a trilha agenda
+  compassos; `medirTrilha` re-renderizada: pico -15,5 dB, volume médio -31,7 dB. Custo no "baixo" medido igual ao de antes (~2,3 s/quadro
+  nos dois no Chromium sem placa). `--sem-jornada` **não terminou**: o navegador fechou no trecho 7 (D031, antes do passeio), com a máquina
+  em carga ~38 em 4 núcleos (vários E2E de outras frentes); não é do mundo e não foi repetido. Capturas antes/depois olhadas:
+  `app/docs/capturas/mundo3d-arte-{antes,depois}-*.jpg` (praça, rio, embaixo d'água; 1850×980 alto e 390×844 médio). **Não testado:**
+  aparelho real (FPS do médio/alto), o som num alto-falante (ninguém ouviu, só medido).
 
 **Passeio 3D: andar, nadar e mergulhar (fila do dono nº 21 e 24; 18/11; NÃO publicado ainda):** queixa do dono: "o personagem não
 anda, ele fica pulando, e ele não nada, ele some no mar". Causa: os modelos (Tripo) são uma malha inteira sem esqueleto e a
