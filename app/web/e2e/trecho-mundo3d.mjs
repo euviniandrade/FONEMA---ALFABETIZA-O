@@ -59,6 +59,24 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   const dist = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
   const segurar = async (tecla, seg) => { await pg.keyboard.down(tecla); await simular(seg); await pg.keyboard.up(tecla); return pos(); };
 
+  // esqueleto e animação de captura de movimento chegaram; andar NÃO é pular (o boneco não quica inteiro)
+  const rig = await frame.evaluate(async () => { const b = window.FONEMA_PASSEIO.boneco; for (let i = 0; i < 100 && !(b.anim && window.FONEMA_PASSEIO.boneco.anim.q); i++) { window.FONEMA_PASSEIO.simular(0.05); await new Promise((r) => setTimeout(r, 100)); } return { ossos: b.rig ? Object.keys(b.rig.ossos).length : 0, captura: !!(b.anim && b.anim.q), silhueta: b.silhuetas.length }; });
+  ok(rig.ossos >= 13 && rig.captura, `o boneco tem esqueleto (${rig.ossos} ossos) e animação de captura de movimento`);
+  ok(rig.silhueta > 0, 'silhueta clarinha do boneco quando algo fica na frente');
+  const quique = await frame.evaluate(() => { const p = window.FONEMA_PASSEIO, b = p.boneco; p.teleportar(0, 40, Math.PI); p.teclar('arrowup', true); p.simular(0.6); let a = 1e9, z = -1e9; const v = new b.raiz.position.constructor(); for (let i = 0; i < 40; i++) { p.simular(0.025); const y = b.rig.ossos.cabeca.getWorldPosition(v).y - b.raiz.position.y; a = Math.min(a, y); z = Math.max(z, y); } p.teclar('arrowup', false); p.simular(0.5); return { sobeDesce: z - a, noAr: p.posicao.noAr }; });
+  ok(quique.sobeDesce < 0.09 && !quique.noAr, `andando, a cabeça sobe e desce só ${(quique.sobeDesce * 100).toFixed(1)} cm (passada, sem pulo)`);
+  // nadar no rio: nunca some — a cabeça fica fora d'água; e mergulhar (Pular vira Mergulhar) desce e volta
+  const agua = await frame.evaluate(() => { const p = window.FONEMA_PASSEIO, b = p.boneco, N = p.colisao.NIVEL_AGUA; p.teleportar(36, 20, Math.PI / 2); p.teclar('arrowup', true); const r = []; for (let i = 0; i < 24; i++) { p.simular(0.25); r.push({ nada: p.posicao.nadando, cab: b.cabecaY() - N, x: p.posicao.x }); } p.teclar('arrowup', false); p.simular(1); return { r, nada: p.posicao.nadando, cab: b.cabecaY() - N, N }; });
+  const nadando = agua.r.filter((x) => x.nada);
+  ok(nadando.length > 2 && nadando.every((x) => x.cab > 0), `no rio o boneco nada com a cabeça fora d'água (${nadando.length} amostras, cabeça ${Math.min(...nadando.map((x) => x.cab)).toFixed(2)} m acima ou mais)`);
+  ok(agua.r.every((x) => x.cab > -0.3 || !x.nada), 'nunca some na água');
+  if (capturas) { await pg.waitForTimeout(800); await pg.screenshot({ path: `${capturas}/mundo3d-08-nadando.png` }); }
+  await fr.getByTestId('passeio-pular').click(CLIQUE);
+  const mergulho = await frame.evaluate(() => { const p = window.FONEMA_PASSEIO, b = p.boneco, N = p.colisao.NIVEL_AGUA; const m = p.posicao.mergulhando; p.simular(1.8); const fundo = b.cabecaY() - N; p.simular(4); return { m, fundo, volta: b.cabecaY() - N, ainda: p.posicao.mergulhando }; });
+  ok(mergulho.m && mergulho.fundo < -0.2 && mergulho.volta > 0 && !mergulho.ainda, `Mergulhar: a cabeça desce ${(-mergulho.fundo).toFixed(2)} m e volta para respirar`);
+  if (capturas) { await frame.evaluate(() => { window.FONEMA_PASSEIO.mergulhar(true); window.FONEMA_PASSEIO.simular(1.6); }); await pg.waitForTimeout(900); await pg.screenshot({ path: `${capturas}/mundo3d-09-mergulho.png` }); await frame.evaluate(() => window.FONEMA_PASSEIO.mergulhar(false)); }
+  await frame.evaluate(() => { const p = window.FONEMA_PASSEIO; p.teleportar(0, 19.5, Math.PI); p.girarCamera(0 - p.camera.giro); p.simular(0.5); });
+
   // andar com o teclado
   const p0 = await pos();
   const p1 = await segurar('ArrowUp', 1.2);
@@ -86,7 +104,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   // tchau (botão grande)
   await fr.getByTestId('passeio-tchau').click(CLIQUE);
   await simular(0.2);
-  ok(await ate(() => window.FONEMA_MUNDO.scene.getObjectByName('boneco-crianca').children.some((c) => c.isSprite && c.visible)), 'Tchau: o boneco acena (mãozinha aparece)');
+  ok(await ate(() => { const b = window.FONEMA_PASSEIO.boneco; if (!b.rig) return b.mao.visible; const r = b.rig.ossos; return r.antebracoD.getWorldPosition(new r.peito.position.constructor()).y > r.bracoD.getWorldPosition(new r.peito.position.constructor()).y - 0.05; }), 'Tchau: o boneco levanta o braço e acena (esqueleto de verdade)');
   if (capturas) { await pg.waitForTimeout(150); await pg.screenshot({ path: `${capturas}/mundo3d-02-tchau.png` }); }
 
   // parede: andando contra a escola, não atravessa

@@ -115,7 +115,7 @@ export function criarNpcs({ grupo, colisao, menosMovimento = false }) {
       const chao = colisao.altura(p.x, p.z);
       p.y = chao + (n.pulo ? n.pulo.y : 0);
       b.raiz.rotation.y = girarPara(b.raiz.rotation.y, n.giro, dt * 6);
-      b.tick(dt, { vel: n.vel, correr: 3.5, noAr, vy });
+      b.tick(dt, { vel: n.vel, correr: 3.5, noAr, vy, falando: n.estado === 'conversando' });
       b.sombraEm(n.pulo ? n.pulo.y : 0, false);
       // longe da câmera: sem sombra projetada (desempenho)
       const longe = Math.hypot(jogador.x - p.x, jogador.z - p.z) > 26;

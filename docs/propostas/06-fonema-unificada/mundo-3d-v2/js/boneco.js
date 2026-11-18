@@ -11,7 +11,11 @@
 import * as THREE from 'three';
 import { addRim, radialTex, canvasTex, clamp, lerp } from './kit.js';
 import { articular } from './esqueleto.js';
+import { Animador, carregarAnimacoes, animacoesProntas } from './animacoes.js';
 
+carregarAnimacoes();
+
+const _cab = new THREE.Vector3(), _raiz = new THREE.Vector3(), _e = new THREE.Euler(), _qt = new THREE.Quaternion();
 const sst = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 
 /** Monta o grupo de malhas de um pacote vindo do app. */
@@ -117,6 +121,7 @@ export class Boneco {
     this.corpo.add(grupo);
     this.rig = null;
     try { this.rig = articular(grupo); } catch (e) { console.warn('[boneco] sem esqueleto', this.nome, e); }
+    this.anim = this.rig && this.rig.medidas.temPernas ? new Animador(this.rig, k) : null; // bicho sem pernas: gingado em código
     if (this.rig && this.comSilhueta) {
       const mat = materialSilhueta();
       for (const sk of this.rig.malhas) {
@@ -138,15 +143,20 @@ export class Boneco {
   /** Pulo: antecipação (amassa) — quem chama aplica a velocidade para cima. */
   impulso() { this.amassaV -= 5; }
   /** Pousou depois de uma queda com velocidade vy (negativa). */
-  pousar(vy) { this.amassaV += clamp(-vy, 0, 12) * 0.6; }
+  pousar(vy) { this.amassaV += clamp(-vy, 0, 12) * 0.6; this.pousou = true; }
   /** Altura (acima dos pés) do ponto em que o corpo gira para deitar na água: quem nada põe este ponto na superfície. */
   get alturaNado() { return this.altura * 0.52; }
+  /** Onde fica a raiz em relação à superfície quando nada: com captura, na superfície (a cabeça é posta para fora
+   *  medindo o osso); sem ela, abaixo, para o corpo deitado ficar na linha d'água. */
+  get baseNado() { return this.anim && animacoesProntas() ? 0 : -this.alturaNado + 0.05; }
+  /** Altura (no mundo) da cabeça, ou null. */
+  cabecaY() { return this.rig ? this.rig.ossos.cabeca.getWorldPosition(_cab).y : null; }
 
   /**
    * vel: velocidade no chão (m/s) · correr: velocidade de corrida (referência) · noAr: está pulando/caindo ·
    * vy: velocidade vertical · nadando: na água funda · vau: 0..1 água rasa (até a cintura).
    */
-  tick(dt, { vel = 0, correr = 5, noAr = false, vy = 0, nadando = false, vau = 0 } = {}) {
+  tick(dt, { vel = 0, correr = 5, noAr = false, vy = 0, nadando = false, vau = 0, falando = false, mergulho = 0, fundura = this.altura * 0.72 } = {}) {
     this.t += dt;
     const mm = this.menos ? 0.5 : 1;
     const kf = (r) => 1 - Math.exp(-dt * r);
@@ -176,7 +186,28 @@ export class Boneco {
       this.mao.material.opacity = clamp(this.tchau * 3, 0, 1);
     } else this.mao.visible = false;
 
-    // ---- corpo inteiro: só inclina (nada de quicar) ----
+    // ---- com captura de movimento (js/animacoes.js) ----
+    if (this.anim && this.anim.passo(dt, { vel: v, noAr, nadando, falando, pousou: this.pousou })) {
+      this.pousou = false;
+      this.mergulho = lerp(this.mergulho || 0, mergulho, kf(3));
+      this.pivo.position.y = 0; this.pivo.scale.set(1, 1, 1);
+      // mergulho: o corpo aponta para baixo na descida e volta a ficar reto lá embaixo
+      this.pivo.rotation.set(this.mergulho * 0.35 * this.agua, 0, 0, 'YXZ');
+      this.anim.aplicar();
+      this.posarTchau(tch, kt);
+      // na água: a cabeça fica fora (ou, no mergulho, bem embaixo) — mede onde a cabeça ficou e ajusta o corpo
+      if (this.agua > 0.01) {
+        this.corpo.position.y = 0;
+        this.raiz.updateMatrixWorld(true);
+        const cab = this.rig.ossos.cabeca.getWorldPosition(_cab).y - this.raiz.getWorldPosition(_raiz).y;
+        const alvo = lerp(this.altura * 0.05, -fundura, this.mergulho) + Math.sin(this.t * 2.4) * 0.025 * mm * (1 - this.mergulho);
+        this.boia = lerp(this.boia ?? 0, alvo - cab, this.boia === undefined ? 1 : kf(10));
+        this.corpo.position.y = this.boia * this.agua;
+      } else { this.corpo.position.y = 0; this.boia = undefined; }
+      return;
+    }
+
+    // ---- sem captura (ainda carregando): corpo inteiro só inclina (nada de quicar) ----
     const hp = this.agua * this.alturaNado;
     const deitado = this.agua * (1.22 + 0.12 * Math.sin(this.t * 2.2) * mm);
     let incl = 0.035 * a * (1 - this.agua) + deitado;
@@ -231,15 +262,18 @@ export class Boneco {
         bz = lerp(bz, sd * (0.18 + 0.12 * Math.max(0, Math.sin(g))), this.agua);
         ax = lerp(ax, -0.25 - 0.35 * Math.max(0, Math.sin(g)), this.agua);
       }
-      // tchau: braço direito (lado D) levantado, antebraço abanando
-      if (sd < 0 && tch > 0) {
-        bx = lerp(bx, -0.35, tch); bz = lerp(bz, -1.25, tch);
-        ax = lerp(ax, -0.2, tch);
-        O['antebraco' + L2].rotation.z = lerp(0, -1.35 + Math.sin(kt * Math.PI * 5.5) * 0.45, tch);
-      }
       O['braco' + L2].rotation.x = bx; O['braco' + L2].rotation.z = bz; O['antebraco' + L2].rotation.x = ax;
     }
-    if (tch > 0) { O.peito.rotation.z = -0.06 * tch; O.cabeca.rotation.z = 0.08 * tch * Math.sin(kt * 4); }
+    this.posarTchau(tch, kt);
+  }
+
+  /** Tchau por cima da pose: braço direito (lado D) levantado e antebraço abanando. */
+  posarTchau(tch, kt) {
+    if (!(tch > 0) || !this.rig) return;
+    const O = this.rig.ossos;
+    _e.set(-0.25, 0, -1.5); _qt.setFromEuler(_e); O.bracoD.quaternion.slerp(_qt, tch);
+    _e.set(-0.2, 0, -1.2 + Math.sin(kt * Math.PI * 5.5) * 0.45); _qt.setFromEuler(_e); O.antebracoD.quaternion.slerp(_qt, tch);
+    _e.set(0, 0, -0.06 * tch); _qt.setFromEuler(_e); O.peito.quaternion.multiply(_qt);
   }
 
   /** Atualiza a sombra de contato: `altPe` = quanto os pés estão acima do chão. */

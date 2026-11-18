@@ -33,7 +33,7 @@ export const LUGARES = [
 const PARTIDA = { x: 0, z: 19.5, giro: Math.PI }; // na entrada da praça, de frente para o coreto (a Sofia passeia ali)
 const ALTURA = 1.5; // a criança no mundo (m)
 // velocidades de criança (m/s): a passada das pernas acompanha (js/boneco.js), então o pé não escorrega
-const ANDAR = 2.6, CORRER = 5.0, TECLADO = 3.4, PULO = 6.4, GRAVIDADE = 20;
+const ANDAR = 1.5, CORRER = 3.7, TECLADO = 2.6, PULO = 6.4, GRAVIDADE = 20;
 const NADA = 0.62; // água mais funda que isto (m) = nada; mais rasa = anda com a água pela cintura
 
 export function criarPasseio(mundo, h = {}) {
@@ -204,9 +204,17 @@ export function criarPasseio(mundo, h = {}) {
 
   // ---------- ações ----------
   function pular() {
-    if (noAr || nadando || bloqueado()) return;
+    if (nadando) { mergulhar(); return; } // na água funda o botão Pular vira Mergulhar
+    if (noAr || bloqueado()) return;
     vy = PULO; noAr = true; eu.impulso(); pulou = true;
     npcs.puloPerto(pos.x, pos.z);
+  }
+  // ---------- mergulho: na água funda, desce ~4 s (a câmera vai junto) e volta para respirar ----------
+  let mergulho = 0, mergulhoT = 0;
+  function mergulhar(on = !mergulho) {
+    if (bloqueado() || (on && !nadando)) return;
+    mergulho = on ? 1 : 0; mergulhoT = on ? 4.2 : 0;
+    h.aoMergulho?.(!!mergulho);
   }
   let acenando = 0;
   function acenar() {
@@ -234,6 +242,7 @@ export function criarPasseio(mundo, h = {}) {
 
   // ---------- quadro ----------
   const _f = new THREE.Vector3(), _d = new THREE.Vector3();
+  let sub = 0, camSub = false; // 0..1: quanto a câmera acompanha o mergulho · câmera embaixo d'água
   let avisoT = 0, tempoParado = 0, travado = 0, encaixar = false;
   function aviso(tipo) { if (performance.now() - avisoT > 2600) { avisoT = performance.now(); h.aoAviso?.(tipo); } }
 
@@ -292,9 +301,11 @@ export function criarPasseio(mundo, h = {}) {
     // altura: chão, água e pulo
     const chao = colisao.altura(pos.x, pos.z);
     const nada = naAgua > NADA;
-    if (nada !== nadando) { nadando = nada; if (nada) h.aoAviso?.('agua'); }
+    if (nada !== nadando) { nadando = nada; if (nada) h.aoAviso?.('agua'); h.aoNadando?.(nadando); if (!nada && mergulho) mergulhar(false); }
+    if (mergulho && (mergulhoT -= dt) <= 0) mergulhar(false);
+    const fundura = clamp(naAgua - 0.35, 0.3, ALTURA * 0.72); // até onde a cabeça desce sem bater no fundo
     // nadando: o ponto em que o corpo deita fica na superfície (costas e cabeça para fora); andando: pés no chão (ou no degrau)
-    const base = nadando ? colisao.NIVEL_AGUA - eu.alturaNado + 0.05 : Math.max(chao, colisao.piso(pos.x, pos.z));
+    const base = nadando ? colisao.NIVEL_AGUA + eu.baseNado : Math.max(chao, colisao.piso(pos.x, pos.z));
     if (noAr) {
       vy -= GRAVIDADE * dt; yPe += vy * dt;
       if (yPe <= 0) { eu.pousar(vy); yPe = 0; vy = 0; noAr = false; }
@@ -303,7 +314,8 @@ export function criarPasseio(mundo, h = {}) {
     pos.y = Math.abs(base - pos.y) > 1.2 ? base : lerp(pos.y, base, 1 - Math.exp(-dt * (nadando ? 5 : 16)));
     eu.raiz.position.set(pos.x, pos.y + yPe, pos.z);
     eu.raiz.rotation.y = giro;
-    eu.tick(dt, { vel, correr: CORRER, noAr, vy, nadando, vau: nadando ? 0 : clamp(naAgua / NADA, 0, 1) });
+    eu.tick(dt, { vel, correr: CORRER, noAr, vy, nadando, vau: nadando ? 0 : clamp(naAgua / NADA, 0, 1), mergulho, fundura });
+    sub = lerp(sub, mergulho && nadando ? 1 : 0, 1 - Math.exp(-dt * 2.5));
     eu.sombraEm(yPe, nadando || naAgua > 0.05);
     if (vel > 0.2 || noAr) tempoParado = 0; else tempoParado += dt;
 
@@ -336,8 +348,10 @@ export function criarPasseio(mundo, h = {}) {
       const atras = giro + Math.PI; let dif = atras - cam.giro; while (dif > Math.PI) dif -= Math.PI * 2; while (dif < -Math.PI) dif += Math.PI * 2;
       if (Math.abs(dif) < 1.9) cam.giro += dif * clamp(dt * 0.9 * (vel / CORRER + 0.3), 0, 1);
     }
-    const distAlvo = cam.alto ? 34 : cam.dist, inclAlvo = cam.alto ? 0.95 : cam.incl;
+    const distAlvo = cam.alto ? 34 : lerp(cam.dist, 3.6, sub), inclAlvo = cam.alto ? 0.95 : lerp(cam.incl, 0.12, sub);
     alvoCam.set(pos.x, pos.y + yPe * 0.35 + ALTURA * (cam.alto ? 0.2 : 0.82), pos.z);
+    // mergulhando: a câmera desce atrás do boneco, embaixo d'água
+    if (sub > 0.01) alvoCam.y = lerp(alvoCam.y, eu.cabecaY() ?? alvoCam.y, sub);
     const ci = Math.cos(inclAlvo), si = Math.sin(inclAlvo);
     _d.set(Math.sin(cam.giro) * ci, si, Math.cos(cam.giro) * ci);
     // não atravessa prédios: anda do alvo para trás e para antes de entrar em algo mais alto que a câmera
@@ -348,7 +362,10 @@ export function criarPasseio(mundo, h = {}) {
     }
     cam.distReal = livre < cam.distReal ? lerp(cam.distReal, livre, 1 - Math.exp(-dt * 18)) : lerp(cam.distReal, livre, 1 - Math.exp(-dt * (cam.alto ? 2.5 : 4)));
     desejada.copy(alvoCam).addScaledVector(_d, cam.distReal);
-    desejada.y = Math.max(desejada.y, colisao.altura(desejada.x, desejada.z) + 1.25);
+    desejada.y = Math.max(desejada.y, colisao.altura(desejada.x, desejada.z) + lerp(1.25, 0.35, sub));
+    if (sub > 0.5) desejada.y = Math.min(desejada.y, colisao.NIVEL_AGUA - 0.15); // fica embaixo d'água junto do boneco
+    const submersa = camera.position.y < colisao.NIVEL_AGUA && sub > 0.3;
+    if (submersa !== camSub) { camSub = submersa; h.aoSubmerso?.(submersa); }
     if (encaixar) { encaixar = false; cam.distReal = livre; desejada.copy(alvoCam).addScaledVector(_d, livre); camera.position.copy(desejada); }
     else camera.position.lerp(desejada, menos ? 1 - Math.exp(-dt * 6) : 1 - Math.exp(-dt * 14));
     camera.lookAt(alvoCam);
@@ -382,10 +399,13 @@ export function criarPasseio(mundo, h = {}) {
 
   return {
     colisao, npcs, rotasRuins, LUGARES,
-    get posicao() { return { x: pos.x, y: pos.y, z: pos.z, giro, nadando, noAr }; },
+    get posicao() { return { x: pos.x, y: pos.y, z: pos.z, giro, nadando, noAr, mergulhando: !!mergulho, cameraSubmersa: camSub }; },
+    mergulhar,
     get camera() { return { ...cam }; },
     get perto() { return perto; },
     usarAvatar(pacote) { eu.usarModelo(malhaDoPacote(pacote), pacote.altura || 1.1); },
+    /** O boneco da criança (testes: ossos, cabeça, silhueta). */
+    get boneco() { return eu; },
     usarModeloNpc(id, pacote) { npcs.usarModelo(id, malhaDoPacote(pacote), pacote.altura || 1.1); },
     /** Estado das portas vindo do app: { id: { aberto, falta } }. */
     definirLugares(estados) { for (const [id, st] of Object.entries(estados || {})) if (estadoLugar[id]) estadoLugar[id] = { ...estadoLugar[id], ...st }; remontarMarcas(); perto = null; },

@@ -85,12 +85,17 @@
     #cartao h3 { font-size: 24px; }
     #cartao p { font-size: 19px; }
   }
+  /* embaixo d'água (mergulho): véu azul por cima do 3D; o cenário submerso (peixes, plantas, luz) é da frente do mundo */
+  #submerso { position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: 0; transition: opacity .5s;
+    background: radial-gradient(ellipse at 50% 0%, rgba(120,220,235,.25), rgba(20,95,130,.55) 70%, rgba(10,60,95,.7)); }
+  body.submerso #submerso { opacity: 1; }
   @media (prefers-reduced-motion: reduce) { #btAcao.on { animation: none; } .bt { transition: none; } }
   body.menos #btAcao.on { animation: none; }
 </style>
 </head>
 <body>
 <div id="palco"></div>
+<div id="submerso"></div>
 <div id="joy"><i></i></div>
 <div id="joyCasa" class="hud" aria-hidden="true">👆</div>
 
@@ -213,6 +218,10 @@ if (!temWebGL()) {
       if (tipo === 'agua') toast('🏊 Nadando na beirinha!');
     },
     aoTchau() {},
+    // na água funda o botão Pular vira Mergulhar (e Subir enquanto está lá embaixo)
+    aoNadando(on) { $('#btPular').innerHTML = on ? '<span class="ic">🤿</span>Mergulhar' : '<span class="ic">⤴️</span>Pular'; $('#btPular').setAttribute('aria-label', on ? 'Mergulhar' : 'Pular'); },
+    aoMergulho(on) { if ($('#btPular').textContent.includes('Mergulhar') || $('#btPular').textContent.includes('Subir')) $('#btPular').innerHTML = on ? '<span class="ic">🫧</span>Subir' : '<span class="ic">🤿</span>Mergulhar'; avisar('fonema:mergulho', { on }); },
+    aoSubmerso(on) { document.body.classList.toggle('submerso', on); window.dispatchEvent(new CustomEvent('fonema:submerso', { detail: { on } })); },
     aoToque() { esconderDica(); },
   });
   window.FONEMA_PASSEIO = passeio;
@@ -229,7 +238,7 @@ if (!temWebGL()) {
 
   // dica de controles (some sozinha ou no primeiro passo)
   const DICA_TOQUE = [['👈', 'Dedo à esquerda: andar'], ['👉', 'Dedo à direita: girar'], ['👆', 'Toque no chão: ir até lá']];
-  const DICA_PC = [['⬆️⬇️⬅️➡️', 'Setinhas ou WASD: andar'], ['🖱️', 'Arraste: girar · Roda: zoom'], ['␣', 'Espaço: pular · T: tchau'], ['👆', 'Clique no chão: ir até lá']];
+  const DICA_PC = [['⬆️⬇️⬅️➡️', 'Setinhas ou WASD: andar'], ['🖱️', 'Arraste: girar · Roda: zoom'], ['␣', 'Espaço: pular (na água: mergulhar) · T: tchau'], ['👆', 'Clique no chão: ir até lá']];
   let dicaT = 0;
   function mostrarDica(ms = 7000) {
     const d = $('#dica'); d.innerHTML = '';
