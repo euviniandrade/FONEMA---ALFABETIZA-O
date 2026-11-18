@@ -50,6 +50,32 @@ ou trocou a menina. 180 imagens geradas; folha antes × depois, tentativas, ferr
 `docs/propostas/06-fonema-unificada/cenas-do-som-sofia/`. **Verificado** (cópia separada, commit 2fc0d4b): typecheck, lint, testes,
 relatório de decodificabilidade (0 erros) e capturas de AL-A, AL-X, TF-03 e TF-10 em 1850×980 e 390×844 (olhadas: cena aparece certa).
 
+**Memória dos Sons (pedido do dono, fila nº 17; pesquisa 46 item 2; 18/11; NÃO publicado ainda):**
+- **O jogo** (`web/src/mecanicas/jogos/MemoriaSons.tsx`, tela `telas/crianca/MemoriaDosSons.tsx`, regras `motor/src/memoria-sons.ts`):
+  duas grades de cartas viradas (verso marinho/verde com bolinhas e selo, com volume): em cima a **cena do som** (`CENAS_DO_SOM`: a
+  Sofia em A, E, I, L, V, X; a cena atual nas outras), embaixo a **letra**. A cena **toca o som puro** ao virar (regra 1).
+  Níveis: **1 Olhar e lembrar** (3 pares abertos para olhar e ouvir antes de virar; tudo exposição), **2 Memória** (3–4 pares),
+  **3 Memória grande** (5–6 pares; aqui podem entrar sons parecidos), **4 Só ouvindo** (carta de som × letra, sem figura).
+  Alvos ≥ 60 px; cabe em 390×844; "menos movimento" troca a face sem giro 3D. Moedinhas que pulam são só enfeite (nada é dado).
+- **Decisão do projeto (regra 3), diferente do pedido literal:** a carta da LETRA só toca o som no nível 1. Nos níveis 2–4 ela é muda
+  até o par fechar (aí toca, confirmando). Se as duas tocassem, o par se faria comparando dois sons iguais, sem ler a letra.
+- **Filtro:** só sons de letras com fase concluída (o mesmo `sonsEnsinados` do Corre-Som: som real, com clipe, sem os duvidosos L, V,
+  J, P, T, B, C, D, G, R); nunca duas letras que podem fazer o mesmo som (C/K/Q, S/Z/X, C/S, G/J, I/Y, U/W, E/I, O/U: `MESMO_SOM`);
+  sem sons parecidos nos níveis 1, 2 e 4; posições sorteadas e nunca todas as letras embaixo das suas cenas. Hoje, na prática, entram
+  A, E ou I, O ou U, M, N, F, S ou Z ou X.
+- **Registro:** um par é **decisão** quando a segunda carta virada já tinha sido vista. Par fechado com decisão = tentativa
+  **avaliada** (`mecanica 'memoria-sons'`, alvo, escolhido, respostas, tempo, nOpcoes = cartas de letra na mesa, posições, formato
+  `memoria-cena-letra`/`memoria-som-letra`, contexto `livre` ou `desafio`); par errado com decisão = erro do alvo (confusão letra × som)
+  com correção "Essa letra faz este som: … Essa cena faz este som: …"; virar carta nunca vista é palpite e não conta; par achado por
+  palpite = exposição. Depois de 2 erros no mesmo som a letra certa brilha (com ajuda).
+- **Onde:** Brincar › Jogos (cartão "Memória dos Sons", trancado até haver 3 sons; `#/c/:id/memoria`) e **desafio opcional no Ritual**
+  das fases AL-X concluídas cujo som entra no jogo (`#/c/:id/memoria/AL-X`, nível 2 com a letra X).
+- **Voz:** nenhuma gerada; 2 falas sem clipe em `app/docs/falas-pendentes.md` §1g.
+- **Verificado (18/11, cópia separada, porta 4590):** typecheck, lint, 375 testes (novo `motor/test/memoria-sons.test.ts`), build e
+  E2E `node web/e2e/fluxo.e2e.mjs --memoria` (24 checagens: níveis 1, 2 e 4, palpite × erro com decisão, registro, desafio da AL-M;
+  também no completo e no `--sem-jornada`, não rodados inteiros). Capturas `--capturas-memoria` em `app/docs/capturas/v12-memoria-*`
+  (1850×980 e 390×844, olhadas). **Não testado:** o botão do Ritual de verdade (só a rota do desafio) e o toque num celular real.
+
 **Jogos fônicos 1 e 2: Corre-Som e Bichinho Come-Som (D032 §4, pesquisa 47 G1/G5; 17/11, noite; NÃO publicado ainda):**
 - **Corre-Som** (`web/src/mecanicas/jogos/CorreSom.tsx` + pista 3D `corre-som-3d.ts`, three.js sob demanda, avatar 3D da criança de
   costas): rua de 3 pistas no campo, árvores, cerquinhas, moedinhas de enfeite e almofadas fofas para pular (sem castigo: só um tropeço).
