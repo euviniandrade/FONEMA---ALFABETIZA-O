@@ -352,6 +352,7 @@ export function criarPasseio(mundo, h = {}) {
     mundo.controls.target.copy(alvoCam);
   }
 
+  let tSim = 1000;
   mundo.usarControlador({ tick });
   // começa já atrás do boneco (sem voo)
   tick(0.016, 0);
@@ -374,6 +375,13 @@ export function criarPasseio(mundo, h = {}) {
     zoom(f) { cam.dist = clamp(cam.dist * f, LIM_DIST[0], LIM_DIST[1]); },
     verDoAlto(on = !cam.alto) { cam.alto = on; return on; },
     irPara(x, z) { destino = { x, z, perto: 0.4 }; },
+    /** Para onde o boneco está indo sozinho (tocar no chão / irPara), ou null. */
+    get destino() { return destino ? { x: destino.x, z: destino.z } : null; },
+    /**
+     * Testes e aparelho sem placa de vídeo: avança a simulação `seg` segundos em passos fixos, sem desenhar.
+     * Assim o teste confere o que acontece (andou, pulou, chegou na porta) sem depender de quantos quadros por segundo saem.
+     */
+    simular(seg, passo = 0.05) { const n = Math.round(seg / passo); for (let k = 0; k < n; k++) { tSim += passo; tick(passo, tSim, passo); } return { x: pos.x, z: pos.z, noAr }; },
     teleportar(x, z, g = giro) { pos.x = x; pos.z = z; giro = g; velX = velZ = 0; destino = null; encaixar = true; },
   };
 }

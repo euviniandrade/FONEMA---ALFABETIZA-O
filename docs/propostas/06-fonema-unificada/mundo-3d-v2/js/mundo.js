@@ -310,7 +310,7 @@ export async function criarMundo(container, opts = {}) {
 
   // ---------- laço ----------
   const clock = new THREE.Timer();
-  let tempo = 0, fpsAcc = 0, fpsN = 0, lentoDesde = 0, ciclo = false;
+  let tempo = 0, fpsAcc = 0, fpsN = 0, lentoDesde = 0, ciclo = false, muitoLento = 0, poucosPixels = false;
   function atualizar(t, dt) {
     U.time.value = t;
     if (ciclo) { hora = 0.5 - 0.5 * Math.cos(t * 0.05); ceu.aplicar(hora, renderer); }
@@ -345,7 +345,9 @@ export async function criarMundo(container, opts = {}) {
     // medidor: se o quadro passar de 45 ms por 3 s, desce um degrau de qualidade
     fpsAcc += bruto; fpsN++; // tempo real (sem o teto do dt): num aparelho muito lento a qualidade cai logo
     if (fpsAcc > 1) { const ms = (fpsAcc / fpsN) * 1000; fpsAcc = 0; fpsN = 0; info.ms = ms; info.fps = 1000 / ms;
-      if (o.qualidade === 'auto' && ms > 45) { lentoDesde += ms > 150 ? 3 : 1; if (lentoDesde >= 3 && nivel !== 'baixo') { lentoDesde = 0; aplicarQualidade(nivel === 'alto' && ms < 150 ? 'medio' : 'baixo'); } } else lentoDesde = 0; }
+      if (o.qualidade === 'auto' && ms > 45) { lentoDesde += ms > 150 ? 3 : 1; if (lentoDesde >= 3 && nivel !== 'baixo') { lentoDesde = 0; aplicarQualidade(nivel === 'alto' && ms < 150 ? 'medio' : 'baixo'); } } else lentoDesde = 0;
+      // já no "baixo" e ainda muito lento (aparelho fraco ou sem placa de vídeo): desenha com menos pixels (uma vez)
+      if (o.qualidade === 'auto' && nivel === 'baixo' && ms > 100 && !poucosPixels && ++muitoLento >= 3) { poucosPixels = true; renderer.setPixelRatio(0.75); redimensionar(); emitir('fonema:qualidade', { nivel, pixels: 0.75 }); } }
   }
   const info = { ms: 0, fps: 0 };
   let destruido = false, controlador = null;

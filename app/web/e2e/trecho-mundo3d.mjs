@@ -52,17 +52,19 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   const CLIQUE = { noWaitAfter: true, force: true, timeout: 60000 }; // a página do mundo fica ocupada desenhando; o botão "Entrar" pulsa
   const canvas = fr.locator('#palco canvas');
   await canvas.focus();
-  // o navegador de teste desenha sem placa de vídeo (poucos quadros por segundo): as conferências esperam o
-  // resultado (até `max` ms) em vez de contar com um tempo fixo
+  // O navegador de teste (e o CI) desenha sem placa de vídeo: ~1 quadro/s. Por isso a entrada é de verdade (teclas, mouse,
+  // toque), mas o tempo do jogo avança por `simular(s)` (passos fixos, sem desenhar): o teste não depende do FPS.
+  const simular = (seg, f = frame) => f.evaluate((t) => window.FONEMA_PASSEIO.simular(t), seg);
   const ate = (fn, arg, max = 45000) => frame.waitForFunction(fn, arg, { timeout: max, polling: 200 }).then(() => true, () => false);
-  const andou = (de, m) => ({ x: de.x, z: de.z, m });
-  const segurar = async (tecla, de, m, max = 45000) => { await pg.keyboard.down(tecla); const r = await ate(({ x, z, m }) => { const p = window.FONEMA_PASSEIO.posicao; return Math.hypot(p.x - x, p.z - z) > m; }, andou(de, m), max); await pg.keyboard.up(tecla); return r; };
+  const dist = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
+  const segurar = async (tecla, seg) => { await pg.keyboard.down(tecla); await simular(seg); await pg.keyboard.up(tecla); return pos(); };
 
   // andar com o teclado
   const p0 = await pos();
-  ok(await segurar('ArrowUp', p0, 1.5), 'setinha para cima anda (mais de 1,5 m)');
-  const p1 = await pos();
-  ok(await segurar('d', p1, 0.6), 'WASD também anda');
+  const p1 = await segurar('ArrowUp', 1.2);
+  ok(dist(p0, p1) > 1.5, `setinha para cima anda (${dist(p0, p1).toFixed(1)} m em 1,2 s)`);
+  const p2 = await segurar('d', 0.8);
+  ok(dist(p1, p2) > 0.6, 'WASD também anda');
 
   // girar a câmera arrastando o mouse
   const g0 = await frame.evaluate(() => window.FONEMA_PASSEIO.camera.giro);
@@ -79,32 +81,34 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   // pular (espaço)
   await canvas.focus();
   await pg.keyboard.press('Space');
-  ok(await ate(() => window.FONEMA_PASSEIO.posicao.noAr), 'espaço pula');
-  ok(await ate(() => !window.FONEMA_PASSEIO.posicao.noAr, null, 30000), 'e o boneco volta ao chão');
+  ok((await simular(0.15)).noAr, 'espaço pula');
+  ok(!(await simular(1.5)).noAr, 'e o boneco volta ao chão');
   // tchau (botão grande)
   await fr.getByTestId('passeio-tchau').click(CLIQUE);
+  await simular(0.2);
   ok(await ate(() => window.FONEMA_MUNDO.scene.getObjectByName('boneco-crianca').children.some((c) => c.isSprite && c.visible)), 'Tchau: o boneco acena (mãozinha aparece)');
   if (capturas) { await pg.waitForTimeout(150); await pg.screenshot({ path: `${capturas}/mundo3d-02-tchau.png` }); }
 
   // parede: andando contra a escola, não atravessa
   await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(0, -17, Math.PI));
   await frame.evaluate(() => { const p = window.FONEMA_PASSEIO; const c = p.camera; p.girarCamera(0 - c.giro); });
-  await pg.waitForTimeout(300);
+  await simular(0.1);
   await canvas.focus();
-  await segurar('ArrowUp', { x: 0, z: -17 }, 30, 14000); // anda até onde der
-  const pz = await pos();
+  const pz = await segurar('ArrowUp', 4); // anda até onde der
   ok(pz.z > -25.5, `a parede da escola segura o boneco (parou em z = ${pz.z.toFixed(1)})`);
 
   // clique no chão = ir até lá
   await frame.evaluate(() => { const p = window.FONEMA_PASSEIO; p.teleportar(0, 19.5, Math.PI); p.girarCamera(0 - p.camera.giro); });
-  // espera a câmera chegar atrás do boneco (ela encaixa no próximo quadro)
-  await ate(() => { const c = window.FONEMA_MUNDO.camera.position, p = window.FONEMA_PASSEIO.posicao; return Math.hypot(c.x - p.x, c.z - p.z) < 12 && c.z > p.z; }, null, 30000);
+  await simular(0.1); // a câmera encaixa atrás do boneco
   const antes = await pos();
   await pg.mouse.click(box.x + box.width * 0.35, box.y + box.height * 0.72);
-  ok(await ate(({ x, z }) => { const p = window.FONEMA_PASSEIO.posicao; return Math.hypot(p.x - x, p.z - z) > 1; }, { x: antes.x, z: antes.z }, 45000), 'clicar no chão leva o boneco até lá');
+  ok(await ate(() => !!window.FONEMA_PASSEIO.destino, null, 20000), 'clicar no chão marca o destino');
+  const depois = await simular(3);
+  ok(dist(antes, depois) > 1, `e o boneco vai sozinho até lá (${dist(antes, depois).toFixed(1)} m)`);
 
   // conversar com a Sofia (fala roteirizada)
   await frame.evaluate(() => { const s = window.FONEMA_PASSEIO.npcs.lista.find((n) => n.id === 'sofia').boneco.raiz.position; window.FONEMA_PASSEIO.teleportar(s.x + 1.4, s.z + 1.4); });
+  await simular(0.1);
   await fr.locator('#btAcao.on').waitFor({ timeout: 20000 });
   ok(/Conversar/.test(await fr.locator('#btAcao').innerText()), 'perto da Sofia aparece o botão "Conversar"');
   await fr.locator('#btAcao').click(CLIQUE);
@@ -117,6 +121,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   // porta trancada (Coreto: "Ler mais ligeiro" ainda não abriu para quem começa)
   await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(-2.5, 9.6, Math.PI));
   await frame.evaluate(() => { const s = window.FONEMA_PASSEIO.npcs.lista.find((n) => n.id === 'sofia'); s.boneco.raiz.position.set(-3.5, 0, 14); s.espera = 30; });
+  await simular(0.1);
   await fr.locator('#btAcao.on.trancado').waitFor({ timeout: 20000 });
   await fr.locator('#btAcao').click(CLIQUE);
   await fr.locator('#cartao.aberto').waitFor();
@@ -137,10 +142,12 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   // chegar numa porta andando (ir até lá) e entrar: Biblioteca → Cantinho da Leitura
   await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(-13.6, -4.6, -Math.PI / 2));
   await frame.evaluate(() => window.FONEMA_PASSEIO.irPara(-15.4, -5));
+  await simular(3);
   await fr.locator('#btAcao.on:not(.trancado)').waitFor({ timeout: 40000 });
   ok(/Entrar/.test(await fr.locator('#btAcao').innerText()) && /Biblioteca/.test(await fr.locator('#lugar').innerText()), 'na porta da Biblioteca aparece o botão grande "Entrar"');
   if (capturas) { await pg.waitForTimeout(600); await pg.screenshot({ path: `${capturas}/mundo3d-05-porta-biblioteca.png` }); }
   await fr.locator('#btAcao').click(CLIQUE);
+  await simular(1).catch(() => {}); // anda até o meio da porta e entra (a página do mundo sai)
   await pg.getByTestId('biblioteca').waitFor({ timeout: 60000 });
   ok(pg.url().endsWith(`/c/${id}/leitura`), 'Entrar leva ao Cantinho da Leitura');
   await ctx.close();
@@ -167,7 +174,8 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   const toque = (type, x, y) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x, y, id: 1 }] });
   await toque('touchStart', 95, 690);
   for (let k = 1; k <= 6; k++) { await toque('touchMove', 95, 690 - k * 12); await pc.waitForTimeout(30); }
-  await fc.waitForFunction(({ x, z }) => { const p = window.FONEMA_PASSEIO.posicao; return Math.hypot(p.x - x, p.z - z) > 1; }, { x: q0.x, z: q0.z }, { timeout: 25000, polling: 200 }).catch(() => {});
+  await fc.waitForFunction(() => document.querySelector('#joy').classList.contains('ativo'), null, { timeout: 20000, polling: 100 }).catch(() => {});
+  await simular(1.5, fc);
   ok(await fc.evaluate(() => document.querySelector('#joy').classList.contains('ativo')), 'o joystick aparece onde o dedo encosta (lado esquerdo)');
   if (capturas) await pc.screenshot({ path: `${capturas}/mundo3d-06-celular-joystick.png` });
   await toque('touchEnd');
@@ -179,8 +187,8 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   for (let k = 1; k <= 6; k++) { await toque('touchMove', 300 - k * 18, 420); await pc.waitForTimeout(20); }
   await toque('touchEnd');
   ok(Math.abs((await fc.evaluate(() => window.FONEMA_PASSEIO.camera.giro)) - c0) > 0.3, 'arrastar o dedo à direita gira a câmera');
-  await fc.locator('#btPular').tap();
-  ok(await fc.waitForFunction(() => window.FONEMA_PASSEIO.posicao.noAr, null, { timeout: 20000, polling: 100 }).then(() => true, () => false), 'botão Pular no celular');
+  await fc.locator('#btPular').tap({ noWaitAfter: true, timeout: 60000 });
+  ok((await simular(0.15, fc)).noAr, 'botão Pular no celular');
   if (capturas) { await pc.waitForTimeout(900); await pc.screenshot({ path: `${capturas}/mundo3d-07-celular.png` }); }
   await cel.close();
 }
