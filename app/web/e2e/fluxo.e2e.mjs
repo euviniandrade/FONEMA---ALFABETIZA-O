@@ -15,6 +15,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { trechoVozReal } from './trecho-voz-real.mjs';
 import { trechoNomeFalado } from './trecho-nome-falado.mjs';
+import { trechoCapturasAa } from './trecho-capturas-aa.mjs';
 import { trechoCopia } from './trecho-copia.mjs';
 import { capturasCorrida, trechoJogos } from './trecho-jogos.mjs';
 import { trechoJogos2 } from './trecho-jogos2.mjs';
@@ -851,6 +852,15 @@ async function main() {
     await trechoTelas(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros: errosT, dirCap: process.argv.includes('--capturas-telas') ? (process.env.CAPTURAS_TELAS ?? DIR_CAP) : undefined });
     await browser.close(); servidor?.kill();
     if (errosT.length) throw new Error(`erros na página:\n${errosT.join('\n')}`);
+    return;
+  }
+  if (process.argv.includes('--capturas-aa')) {
+    const errosA = [];
+    const dir = process.env.CAPTURAS_AA ?? DIR_CAP;
+    mkdirSync(dir, { recursive: true });
+    await trechoCapturasAa(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, semearTrilhaFeita, dir, erros: errosA });
+    await browser.close(); servidor?.kill();
+    if (errosA.length) throw new Error(`erros na página:\n${errosA.join('\n')}`);
     return;
   }
   if (process.argv.includes('--nome-falado')) {

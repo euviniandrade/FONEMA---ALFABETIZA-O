@@ -164,6 +164,76 @@ Usadas as falas já gravadas; o que faria falta (o balão mostra o texto; nada n
 - Lições de vogal (TF-01…05) começam direto no Corre-Som e no Bichinho Come-Som, com os enunciados já gravados. Faria falta uma
   ponte curta antes do 1º jogo: **"Agora vamos brincar com o som que você conheceu!"** (Sofia).
 
+## 1j. Variantes SEM o nome da criança (fila do dono nº 27, item 2; 18/11)
+
+Regra nova (decisão do dono): o nome é dito no máximo uma vez, no começo de cada atividade, prova ou jogo
+(`web/src/servicos/nome-falado.ts`). Depois, a voz toca a variante gravada sem o nome (`semNome`, `@fonema/motor`) ou, se ela
+não existe, os mesmos trechos sem o clipe do nome. Com o nome no MEIO da fala isso soa natural ("Isso, | Você escutou…").
+Com o nome no FIM, o trecho gravado acaba em vírgula ("Agora é a sua vez,"): soa pendurado.
+
+**Gravadas em 18/11 (20 clipes, 488 caracteres com os 2 do abacaxi):** a lista `FALAS.comVarianteSemNome`
+(`packages/conteudo/src/falas-gerais.ts`): "Agora é a sua vez!" (Sofia e Tales), "Vamos fazer juntos?", "Você conseguiu!",
+"Que letra faz este som?", "Qual rima?", "Junta comigo!", "Uma palma para cada pedacinho!", "Olha que lindo! Você ganhou uma
+conquista nova!", "É a vovó ou o vovô?", "O que o Bolota disse?", "Olha a minha boca antes de responder.", "Lê a pedra e toca a
+figura.", "Letra por letra! Agora é a sua vez!", "Qual começa com o som?", "Rima ou não rima?", "Fala o som desta letra!",
+"Olha só o que chegou para você!", "Escolhe do seu jeito!", "O eco falou! Qual letra?".
+
+**Ainda sem variante (nome no fim; tocam o trecho com vírgula quando o nome já foi dito).** Para gravar: acrescentar a fala
+com `[NOME]` em `FALAS.comVarianteSemNome`, rodar `npx tsx scripts/extrair-falas.ts` e o gerador. A maioria é enunciado do
+começo da atividade (nesses o nome normalmente ainda vale e toca inteiro):
+
+- sofia: "Lábios fechados, o som sai pelo nariz: /mmm/. Sua vez, [NOME]!" → "Lábios fechados, o som sai pelo nariz: /mmmm/. Sua vez!"
+- sofia: "Qual letra faz /lll/, [NOME]?" → "Qual letra faz /llll/?"
+- sofia: "Sem ponte, sem bola. Só você e as letras, [NOME]." → "Sem ponte, sem bola. Só você e as letras."
+- sofia: "O Zum-Zum embaralhou as placas da vila! Me ajuda a pendurar, [NOME]?" → "O Zum-Zum embaralhou as placas da vila! Me ajuda a pendurar?"
+- sofia: "Enche o peito de ar… e solta devagar. Estica os braços bem alto, [NOME]!" → "Enche o peito de ar… e solta devagar. Estica os braços bem alto!"
+- sofia: "Sem o farol agora. Qual som começa a palavra, [NOME]?" → "Sem o farol agora. Qual som começa a palavra?"
+- sofia: "/aaa/. Boca bem aberta, como um bocejo. Sua vez, [NOME]!" → "/aaaa/. Boca bem aberta, como um bocejo. Sua vez!"
+- sofia: "/fff/, um ventinho. Dentes de cima no lábio de baixo. Sua vez, [NOME]!" → "/ffff/, um ventinho. Dentes de cima no lábio de baixo. Sua vez!"
+- sofia: "/iii/, um sorriso grande. Sua vez, [NOME]!" → "/iiii/, um sorriso grande. Sua vez!"
+- sofia: "Este botão diz o nome. Este diz o som. Agora é a sua vez, [NOME]!" → "Este botão diz o nome. Este diz o som. Agora é a sua vez!"
+- sofia: "O Zum-Zum embaralhou a placa. Escuta bem: qual som começa a palavra, [NOME]?" → "O Zum-Zum embaralhou a placa. Escuta bem: qual som começa a palavra?"
+- sofia: "Lembra das conchas, [NOME]?" → "Lembra das conchas?"
+- sofia: "Os dois são O. Sua vez, [NOME]!" → "Os dois são O. Sua vez!"
+- sofia: "Todas as placas no lugar! Obrigada pela ajuda, [NOME]!" → "Todas as placas no lugar! Obrigada pela ajuda!"
+- sofia: "Hoje você trabalhou com muita atenção, [NOME]." → "Hoje você trabalhou com muita atenção."
+- sofia: "A placa da sua porta está vazia. Monta o seu nome, letra por letra, [NOME]!" → "A placa da sua porta está vazia. Monta o seu nome, letra por letra!"
+- sofia: "Último andar, [NOME]!" → "Último andar!"
+- sofia: "Primeiro a gente escuta: /sss/. Dentinhos quase fechados, língua escondida. Agora é a sua vez, [NOME]!" → "Primeiro a gente escuta: /ssss/. Dentinhos quase fechados, língua escondida. Agora é a sua vez!"
+- sofia: "Pronto! Seu professor vai ver e responder. Que orgulho de você, [NOME]!" → "Pronto! Seu professor vai ver e responder. Que orgulho de você!"
+- sofia: "Bolinha aberta: óóó. Sua vez, [NOME]!" → "Bolinha aberta: óóóó. Sua vez!"
+- sofia: "Agora misturado. Letra por letra, [NOME]." → "Agora misturado. Letra por letra."
+- sofia: "Qual rima com GATO, [NOME]?" → "Qual rima com GATO?"
+- tales: "Pula no /a/, [NOME]!" → "Pula no /a/!"
+- tales: "É ou ê? Repara no meu sorriso. Sua vez, [NOME]!" → "É ou ê? Repara no meu sorriso. Sua vez!"
+- tales: "Bate uma palma para cada pedacinho do seu nome, [NOME]!" → "Bate uma palma para cada pedacinho do seu nome!"
+- tales: "Vamos mostrar pro professor, [NOME]?" → "Vamos mostrar pro professor?"
+- tales: "Andar 1! Qual letra, [NOME]?" → "Andar 1! Qual letra?"
+- tales: "Qual letra faz /fff/, [NOME]?" → "Qual letra faz /ffff/?"
+- tales: "E os nossos nomes? Bate pra mim, [NOME]!" → "E os nossos nomes? Bate pra mim!"
+- tales: "E eu sou o Tales! Que bom ter você na Vila das Letras, [NOME]!" → "E eu sou o Tales! Que bom ter você na Vila das Letras!"
+- tales: "/uuu/, biquinho de assobio. Sua vez, [NOME]!" → "/uuuu/, biquinho de assobio. Sua vez!"
+- tales: "Mexe quando ouvir /mmm/, [NOME]!" → "Mexe quando ouvir /mmmm/!"
+- tales: "Na roda a gente joga junto, ninguém bate em ninguém. Uma palma por pedacinho, [NOME]!" → "Na roda a gente joga junto, ninguém bate em ninguém. Uma palma por pedacinho!"
+- tales: "Desenha a letra na areia com o dedo e fala o som, [NOME]!" → "Desenha a letra na areia com o dedo e fala o som!"
+- tales: "O peixe-boi só come bolha de O. Qual letra faz /ôôô/, [NOME]?" → "O peixe-boi só come bolha de O. Qual letra faz /ôôôô/?"
+- tales: "/lll/, a língua sobe e fica lá. Sua vez, [NOME]!" → "/llll/, a língua sobe e fica lá. Sua vez!"
+- tales: "Amanhã a ponte do rio precisa da sua leitura, [NOME]!" → "Amanhã a ponte do rio precisa da sua leitura!"
+- tales: "O Paçoca pede em fala de tatu. Entrega pra ele, [NOME]?" → "O Paçoca pede em fala de tatu. Entrega pra ele?"
+- tales: "Pula quando ouvir o som do seu nome, [NOME]!" → "Pula quando ouvir o som do seu nome!"
+- tales: "A tartaruga volta! Valeu, [NOME]!" → "A tartaruga volta! Valeu!"
+- tales: "Aquece com a gente, [NOME]!" → "Aquece com a gente!"
+- tales: "A placa apagou! Qual sílaba falta aqui, [NOME]?" → "A placa apagou! Qual sílaba falta aqui?"
+- tales: "Pega a lupa! O que mais começa com o som do seu nome, [NOME]?" → "Pega a lupa! O que mais começa com o som do seu nome?"
+- tales: "E se tiver um /e/ escondido? Puxa a rede, [NOME]!" → "E se tiver um /e/ escondido? Puxa a rede!"
+- tales: "Esses são nomes de bichinhos da mata. Lê pra mim, [NOME]!" → "Esses são nomes de bichinhos da mata. Lê pra mim!"
+- tales: "O farol precisa da sua vogal, [NOME]!" → "O farol precisa da sua vogal!"
+- tales: "E eu sou o Tales! Seja bem-vinda na Vila das Letras, [NOME]!" → "E eu sou o Tales! Seja bem-vinda na Vila das Letras!"
+- tales: "Sorriso aberto: ééé. Sua vez, [NOME]!" → "Sorriso aberto: éééé. Sua vez!"
+- tales: "Qual letra faz /mmm/, [NOME]?" → "Qual letra faz /mmmm/?"
+- tales: "O Paçoca escondeu tudo que começa com /fff/. Bora, [NOME]!" → "O Paçoca escondeu tudo que começa com /ffff/. Bora!"
+- tales: "E eu sou o Tales! Seja bem-vindo na Vila das Letras, [NOME]!" → "E eu sou o Tales! Seja bem-vindo na Vila das Letras!"
+
 ## 2. Com clipe, mas a auditoria pede regravação ou conferência de ouvido
 
 | Voz | Fala | O que a transcrição ouviu | Situação |
