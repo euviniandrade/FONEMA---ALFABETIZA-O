@@ -198,17 +198,17 @@ export async function trechoTelas(browser, h) {
     await medir('historia-pergunta', { espera: 700 });
 
     // jogos da vila e jogos fônicos: a tela do jogo, já com as opções
-    const jogo = async (rota, comecar, raiz, nome) => {
+    const jogo = async (rota, comecar, raiz, nome, visiveis = []) => {
       await pg.goto(BASE + `#/c/${id}/${rota}`);
       if (comecar) { await pg.getByTestId(comecar).click({ timeout: 8000 }).catch(() => {}); }
       await pg.getByTestId(raiz).waitFor({ timeout: 10000 }).catch(() => {});
-      await medir(nome, { espera: 2500 });
+      await medir(nome, { espera: 2500, visiveis });
     };
     await jogo('brincar/corre-som', 'variacao-letra', 'corre-som', 'jogo-corre-som');
     await jogo('brincar/come-som', 'variacao-inicio', 'come-som', 'jogo-come-som');
     await jogo('jogo/carteiro', 'jogo-comecar', 'carteiro', 'jogo-carteiro');
     await jogo('jogo/estrada-pares', 'jogo-comecar-ouvir', 'estrada-pares', 'jogo-estrada');
-    await jogo('jogo/casa-som', 'jogo-comecar', 'casa-som', 'jogo-casa-som');
+    await jogo('jogo/casa-som', 'jogo-comecar', 'casa-som', 'jogo-casa-som', ['[data-testid=escrita-pronto]']);
     await ctx.close();
   }
   console.log(`  ${medidas} telas medidas (${comRespostas} com botões de resposta)`);
