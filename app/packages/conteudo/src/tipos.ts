@@ -161,6 +161,12 @@ export interface AtividadeEscolher extends AtividadeBase {
    * No modo de teste (determinístico) valem os primeiros.
    */
   sortear?: number;
+  /**
+   * A cena JÁ COMEÇA como jogo (Corre-Som para som → letra; Bichinho Come-Som para som → figura), com os mesmos itens e o
+   * mesmo registro. Usado nas lições de vogal da Trilha dos Sons, que vêm logo depois da letra (Trilha A–Z) e não podem
+   * repetir as mesmas telas (revisão de qualidade 18/11, item 10) [DP].
+   */
+  comoJogo?: boolean;
 }
 
 /**

@@ -37,7 +37,7 @@ function categoriaDoItem(item: ItemEscolha, certa: Opcao): CategoriaAlvo {
 export function Escolher(props: PropsMecanica<AtividadeEscolher>) {
   // D032 §4: a cena "som → letra" / "som → figura" pode virar jogo (Corre-Som / Bichinho Come-Som), se a criança quiser
   const desafio = useDesafioDaCena(props.atividade);
-  const [jogando, setJogando] = useState(false);
+  const [jogando, setJogando] = useState(!!props.atividade.comoJogo);
   if (jogando && desafio) return <JogoNaFase desafio={desafio} {...props} />;
   return <EscolherClassico {...props} oferecerJogo={desafio ? { jogo: desafio.jogo, iniciar: () => setJogando(true) } : undefined} />;
 }

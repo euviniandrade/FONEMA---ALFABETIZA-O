@@ -854,10 +854,16 @@ function faseDaLicao(li: Licao, numero: number): Fase {
   const ehLicaoDeLetra = ensinaLetra(li);
   const regraNova = li.tipo === 'regra-aberta' || li.tipo === 'regra-mn' || li.tipo === 'regra-r';
   add(cenaRevisao(`${id}-C1`, li));
-  if (ehLicaoDeLetra && letrasDa(li).length > 1) letrasDa(li).forEach((x, k) => add(cenaSomNovo(`${id}-C2${'ab'[k] ?? k}`, li, x)));
+  // Vogais (TF-01…05): a fase "Letra X" da Trilha A–Z vem logo antes (D031) e já apresenta o som (nome, forma, som, Espelho).
+  // A lição não repete a apresentação ("Som novo") e faz as mesmas perguntas em OUTRA tela, como jogo (Corre-Som e
+  // Bichinho Come-Som): letra = conhecer e traçar; lição = som e ler (revisão de qualidade 18/11, item 10) [DP].
+  const vogalDepoisDaLetra = li.tipo === 'vogal' && !!li.letra && !!LETRA_POR_ID[li.letra];
+  if (vogalDepoisDaLetra) { /* sem "Som novo": a apresentação acabou de acontecer na fase da letra */ }
+  else if (ehLicaoDeLetra && letrasDa(li).length > 1) letrasDa(li).forEach((x, k) => add(cenaSomNovo(`${id}-C2${'ab'[k] ?? k}`, li, x)));
   else if (ehLicaoDeLetra || li.tipo === 'regra-final' || li.tipo === 'regra-tidi' || regraNova) add(cenaSomNovo(`${id}-C2`, li));
   if (ehLicaoDeLetra) {
-    cenas.push(...cenasAcharLetra(`${id}-C3`, li));
+    const achar = cenasAcharLetra(`${id}-C3`, li);
+    cenas.push(...(vogalDepoisDaLetra ? achar.map((c) => (c.atividade?.tipo === 'escolher' ? { ...c, titulo: c.id.endsWith('a') ? 'Corre-Som' : 'Bichinho Come-Som', atividade: { ...c.atividade, comoJogo: true } } : c)) : achar));
     // o traçado fica na Trilha A–Z ("conhecer as letras"); aqui a lição é curta: som, leitura e escrita
   }
   if (li.tipo === 'revisao-vogais') {

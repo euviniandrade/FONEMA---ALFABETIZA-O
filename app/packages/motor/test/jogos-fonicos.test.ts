@@ -237,3 +237,20 @@ describe('registro das escolhas (contrato do motor)', () => {
     expect(figurasQueComecam('B').at(-1)).toBe(LETRA_POR_ID.B.palavra);
   });
 });
+
+describe('lições de vogal depois da letra: complementares, sem repetir as mesmas telas (revisão 18/11, item 10)', () => {
+  it('TF-01…05 não repetem o "Som novo" e fazem som → letra e som → figura como jogo (mesmos itens, mesmo registro)', () => {
+    for (const id of ['TF-01', 'TF-02', 'TF-03', 'TF-04', 'TF-05']) {
+      const cenas = FASE_POR_ID[id].cenas;
+      expect(cenas.some((c) => c.atividade?.tipo === 'somNovo'), id).toBe(false);
+      const jogos = cenas.filter((c) => c.atividade?.tipo === 'escolher' && (c.atividade as AtividadeEscolher).comoJogo);
+      expect(jogos.map((c) => desafioDaCena(c.atividade as AtividadeEscolher)?.jogo), id).toEqual(['corre-som', 'come-som']);
+      // a fase da letra que vem antes continua com as telas dela (Escolher clássico): nenhuma tela igual em sequência
+      const letra = FASE_POR_ID[`AL-${id === 'TF-01' ? 'A' : id === 'TF-02' ? 'E' : id === 'TF-03' ? 'I' : id === 'TF-04' ? 'O' : 'U'}`];
+      expect(letra.cenas.some((c) => c.atividade?.tipo === 'escolher' && (c.atividade as AtividadeEscolher).comoJogo)).toBe(false);
+    }
+  });
+  it('as consoantes continuam com o "Som novo" (só as vogais mudaram)', () => {
+    expect(FASE_POR_ID['TF-07'].cenas.some((c) => c.atividade?.tipo === 'somNovo')).toBe(true);
+  });
+});

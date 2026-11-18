@@ -149,6 +149,17 @@ O "o que falta" dos cartões fechados aparece só escrito (cadeado + bolinhas da
 - "Esse jogo ganha um som novo a cada missão." (Tales; selo "Para aquecer" dos jogos com menos de 3 sons)
 - "Abriu um jogo novo! Vamos ver?" (Tales; alternativa mais curta ao "Olha só o que chegou…", se o dono preferir)
 
+## 1i. Revisão de qualidade 18/11 — som, espera e lógica (fila do dono nº 23; NENHUMA voz gerada)
+
+Usadas as falas já gravadas; o que faria falta (o balão mostra o texto; nada novo foi ligado sem clipe):
+- História do Bolota: a pergunta "Olhe a capa…" agora mostra a capa na tela (fala igual, já gravada). A resposta "bola" virou a
+  figura nova da bola VERMELHA (`figuras/bola-vermelha.webp`), e o nome falado continua o clipe "bola".
+- Memória dos Sons (item 14 da revisão): a fala do Tales "Ligue cada letra à cena que faz o som dela." não combina com cartas
+  viradas. Sugerida para gravar: **"Vire duas cartas: a cena e a letra do mesmo som."** (Tales). Até lá fica a fala antiga.
+- Botão "Ouvindo…" (botões de avanço enquanto a dupla fala): só texto e ondinha, sem voz (de propósito).
+- Lições de vogal (TF-01…05) começam direto no Corre-Som e no Bichinho Come-Som, com os enunciados já gravados. Faria falta uma
+  ponte curta antes do 1º jogo: **"Agora vamos brincar com o som que você conheceu!"** (Sofia).
+
 ## 2. Com clipe, mas a auditoria pede regravação ou conferência de ouvido
 
 | Voz | Fala | O que a transcrição ouviu | Situação |

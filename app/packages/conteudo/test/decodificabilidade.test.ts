@@ -104,7 +104,14 @@ describe('verificador de decodificabilidade', () => {
     for (const f of FASES_TF) {
       const tipos = f.cenas.map((c) => c.atividade?.tipo);
       const licao = f.trilhaSons!.tipo === 'licao';
-      if (licao) {
+      // vogais (TF-01…05): a fase "Letra X" (Trilha A–Z) vem logo antes e já apresenta o som (cena 'letra', som antes do nome);
+      // a lição faz as perguntas em outra tela, como jogo (revisão 18/11, item 10) [DP]
+      const vogal = /^TF-0[1-5]$/.test(f.id);
+      if (vogal) {
+        const letra = FASES.find((x) => x.id === `AL-${'AEIOU'[Number(f.id.slice(-1)) - 1]}`);
+        expect(letra?.cenas.map((c) => c.atividade?.tipo)[0], `${f.id}: a letra antes apresenta o som`).toBe('letra');
+        expect(f.cenas.filter((c) => c.id.includes('-C3')).every((c) => c.atividade?.tipo === 'escolher' && c.atividade.comoJogo), f.id).toBe(true);
+      } else if (licao) {
         expect(tipos, f.id).toContain('somNovo');
         // som antes do nome da letra: a cena do som novo vem antes de qualquer cena que mostre a letra
         expect(tipos.indexOf('somNovo'), f.id).toBeLessThan(tipos.indexOf('escolher', f.id === 'TF-01' ? 0 : 1));

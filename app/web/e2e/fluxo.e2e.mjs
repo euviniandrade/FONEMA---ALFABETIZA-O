@@ -301,6 +301,21 @@ async function jogarSessao(page, capturar = {}) {
       await page.waitForTimeout(120);
       continue;
     }
+    // cena que já começa como jogo (lições de vogal: Corre-Som e Bichinho Come-Som, revisão 18/11 item 10)
+    const corre = page.getByTestId('corre-som');
+    if (await corre.isVisible().catch(() => false)) {
+      await tirar('corre-som');
+      if (await corre.getAttribute('data-fase').catch(() => '') === 'escolher' && !(await corre.getAttribute('data-demo').catch(() => null))) await page.locator('.cs-pista[data-correta="1"]').first().click({ timeout: 2000 }).catch(() => {});
+      await page.waitForTimeout(100);
+      continue;
+    }
+    const come = page.getByTestId('come-som');
+    if (await come.isVisible().catch(() => false)) {
+      await tirar('come-som');
+      if (await come.getAttribute('data-livre').catch(() => null) && !(await come.getAttribute('data-demo').catch(() => null))) await page.locator('.cm-prato[data-correta="1"]').first().click({ timeout: 2000 }).catch(() => {});
+      await page.waitForTimeout(100);
+      continue;
+    }
     // botões de som (letra → som, ouvir as leituras): tocar OUVE; a resposta só vale em "É este!"
     const confirmar = page.getByTestId('confirmar-som');
     if (await confirmar.isVisible().catch(() => false)) {
