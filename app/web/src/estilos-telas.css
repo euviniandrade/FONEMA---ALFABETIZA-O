@@ -179,3 +179,7 @@ html,body{overflow-x:clip}
   .mec .cs-bandeja{gap:6px;flex-wrap:nowrap}
   .mec .cs-bandeja .peca{width:clamp(44px,12.5vw,58px);height:clamp(52px,14vw,64px);font-size:30px;border-radius:13px}
 }
+
+/* ---------- Tutorial (item 23): a 2ª moedinha que voa para o porquinho não fica parada e apagada ao lado dele antes de partir ---------- */
+.tut-moeda-voa.d2{animation-fill-mode:backwards}
+.menos-movimento .tut-moeda-voa.d2{display:none}@media (prefers-reduced-motion:reduce){.tut-moeda-voa.d2{display:none}}
