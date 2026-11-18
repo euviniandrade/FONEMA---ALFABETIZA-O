@@ -77,8 +77,9 @@ export function JogoEscuta({ jogo, crianca, sessao, onFim }: { jogo: Jogo; crian
         await espera(500);
         if (!atual) return;
         marcar(crianca.id, jogo.id);
+        // a vez da criança começa limpa: a resposta da demonstração não fica marcada (revisão 18/11, item 6)
+        setAcesa(null); setAcertou(false); setRevelar(false);
         await diz(F.voceFaz);
-        setAcesa(null);
         setEmDemo(false);
         return;
       }
