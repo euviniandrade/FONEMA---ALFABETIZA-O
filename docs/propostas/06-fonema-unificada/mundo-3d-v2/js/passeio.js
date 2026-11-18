@@ -335,7 +335,8 @@ export function criarPasseio(mundo, h = {}) {
       const ud = m.userData, aberto = estadoLugar[ud.lugar.id].aberto;
       ud.placa.position.y = ud.lugar.alto + (menos ? 0 : Math.sin(t * 1.6 + m.position.x) * 0.08);
       ud.anel.material.emissiveIntensity = aberto ? 1.3 + (menos ? 0 : Math.sin(t * 3) * 0.5) : 0.2;
-      ud.placa.visible = perto?.id !== ud.lugar.id; // de perto quem mostra o nome é o HUD (a placa ficaria enorme)
+      ud.placa.visible = perto?.id !== ud.lugar.id && !camSub; // de perto quem mostra o nome é o HUD; embaixo d'água, nada de placa
+      m.visible = !camSub; // anel e placa são da superfície
       const s = perto?.id === ud.lugar.id ? 1.15 : 1; ud.anel.scale.setScalar(lerp(ud.anel.scale.x, s, 0.15));
     }
     if (destinoMarca.visible) { destinoMarca.userData.t += dt; destinoMarca.scale.setScalar(1 + (menos ? 0 : Math.sin(destinoMarca.userData.t * 6) * 0.12)); }
@@ -371,7 +372,15 @@ export function criarPasseio(mundo, h = {}) {
     camera.lookAt(alvoCam);
     mundo.controls.target.copy(alvoCam);
     enquadrar(dt);
+    // embaixo d'água: sem placas, balões e marcador de destino (voltam ao subir)
+    if (camSub !== subAntes) { subAntes = camSub; for (const n of npcs.lista) n.boneco.raiz.visible = !camSub || Math.hypot(n.boneco.raiz.position.x - pos.x, n.boneco.raiz.position.z - pos.z) < 12; if (camSub) destinoMarca.visible = false; }
+    if (camSub) for (const n of npcs.lista) n.boneco.balao.visible = false;
+    // o fundo do rio (submerso.js) sabe onde está o corpo da criança: os peixinhos nadam em volta no mergulho
+    pePeixes.x = pos.x; pePeixes.z = pos.z; pePeixes.y = nadando ? (eu.cabecaY() ?? pos.y) - 0.35 : pos.y;
   }
+  let subAntes = false;
+  const pePeixes = { x: 0, y: 0, z: 0 };
+  mundo.pe = pePeixes;
 
   // ---------- cartão aberto (conversa, porta trancada): a imagem sobe para o boneco não ficar atrás dele ----------
   let limiteCartao = null, desloca = 0;

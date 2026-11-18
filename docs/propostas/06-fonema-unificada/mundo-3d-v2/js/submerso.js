@@ -226,6 +226,11 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
       cd.u = Math.sin(t * 0.13 + cd.fase) * 2.6;
       cd.y = NIVEL - prof(cd.u) * (0.45 + 0.2 * Math.sin(t * 0.21 + cd.fase));
     }
+    // mergulho (frente do boneco, 18/11): com a criança embaixo d'água, o cardume mais perto vem nadar em volta dela
+    if (fugir && submerso) {
+      let perto = null, pd = 1e9; for (const cd of cardumes) { const d = Math.abs(cd.s - fugir.s); if (d < pd) { pd = d; perto = cd; } }
+      if (perto && pd < 40) { const k = Math.min(1, dt * 1.5); perto.s += (fugir.s + Math.sin(t * 0.7) * 1.6 - perto.s) * k; perto.u += (fugir.u + Math.cos(t * 0.7) * 1.2 - perto.u) * k; perto.y += (fugir.y + 0.15 - perto.y) * k; }
+    }
     for (let i = 0; i < nPeixes; i++) {
       const b = bichos[i], cd = cardumes[b.c];
       let as = 0, au = 0, ay = 0, ss = 0, su = 0, sy = 0, cs = 0, cu = 0, cy = 0, n = 0;
@@ -244,7 +249,7 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
       const chao = fundoRio(b.u) + 0.28, teto = NIVEL - 0.22;
       if (b.y < chao + 0.2) fy += (chao + 0.2 - b.y) * 6; if (b.y > teto - 0.15) fy -= (b.y - teto + 0.15) * 6;
       // a criança chegou perto: o cardume se espalha e volta depois
-      if (fugir) { const ds = b.s - fugir.s, du = b.u - fugir.u, dy = b.y - fugir.y, d2 = ds * ds + du * du + dy * dy; if (d2 < 4.5) { const k = (4.5 - d2) * 1.6 / Math.sqrt(d2 + 0.05); fs += ds * k; fu += du * k; fy += dy * k * 0.5; } }
+      if (fugir) { const ds = b.s - fugir.s, du = b.u - fugir.u, dy = b.y - fugir.y, d2 = ds * ds + du * du + dy * dy; const r2 = submerso ? 0.6 : 4.5; if (d2 < r2) { const k = (r2 - d2) * 1.6 / Math.sqrt(d2 + 0.05); fs += ds * k; fu += du * k; fy += dy * k * 0.5; } }
       b.vs += fs * dt; b.vu += fu * dt; b.vy += fy * dt;
       const sp = Math.hypot(b.vs, b.vu, b.vy), vmax = fugir ? 2.4 : 1.5, vmin = 0.35;
       if (sp > vmax) { const k = vmax / sp; b.vs *= k; b.vu *= k; b.vy *= k; } else if (sp < vmin && sp > 1e-4) { const k = vmin / sp; b.vs *= k; b.vu *= k; b.vy *= k; }
