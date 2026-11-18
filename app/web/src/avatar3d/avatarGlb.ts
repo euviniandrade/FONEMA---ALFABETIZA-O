@@ -158,9 +158,9 @@ function cabeloRente(g: THREE.BufferGeometry, mascara: ImageData, mapa: THREE.Te
     const ix = g.index, fica: number[] = [];
     for (let i = 0; i < ix.count; i += 3) {
       const a = ix.getX(i), b = ix.getX(i + 1), c = ix.getX(i + 2);
-      // triângulo só de cabelo com algum vértice abaixo da nuca: é o cabelo comprido pendurado (sai);
-      // os que misturam cabelo e pele/roupa ficam (gola, pescoço)
-      if ((levantado[a] || levantado[b] || levantado[c]) && cabelo[a] && cabelo[b] && cabelo[c]) continue;
+      // triângulo com algum vértice de cabelo abaixo da nuca: é o cabelo comprido pendurado (sai), inclusive as pontas
+      // presas à pele junto ao queixo (antes viravam tufinhos escuros)
+      if (levantado[a] || levantado[b] || levantado[c]) continue;
       fica.push(a, b, c);
     }
     geo.setIndex(fica);

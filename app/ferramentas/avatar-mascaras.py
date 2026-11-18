@@ -324,6 +324,13 @@ def segmentar(nome, pos, uv, idx, cor, conferir=None):
     nuca = coberto & (alt > alt_gola - 0.045) & (alt < alt_olhos) & ~zona_olho & ~azul & atras & ((regiao == 0) | ((regiao == REGIOES["camisa"]) & (np.abs(coord_lado) < 0.1 * escala)))
     nuca = ndimage.binary_dilation(nuca, iterations=2) & coberto & ((regiao == 0) | nuca) & ~azul & comprido
     # cabelo que sai: na cabeça; abaixo da gola, só no cabelo comprido (no menino é sombra da gola da camiseta)
+    # a sobrancelha é pintada SOBRE a pele do rosto; a franja tem volume e fica longe dela (franja não é sobrancelha)
+    perto_da_pele3d = np.zeros((LADO, LADO), bool)
+    candidatos = sobrancelha & (regiao == REGIOES['cabelo'])
+    if candidatos.any():
+        dd, _ = cKDTree(mapa[coberto0 & (regiao == REGIOES['pele'])]).query(mapa[candidatos])
+        perto_da_pele3d[candidatos] = dd < 0.014 * escala
+    sobrancelha = sobrancelha & perto_da_pele3d
     masc[..., 2] = np.where((regiao == REGIOES['cabelo']) & ~sobrancelha & (cabeca | comprido), 255, 0).astype(np.uint8)
     masc[..., 2][nuca] = 128
     regiao[nuca & (regiao == REGIOES['camisa'])] = 0  # é pescoço, não camiseta
