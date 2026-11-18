@@ -525,12 +525,13 @@ const PENTEADOS: Record<string, Montador> = {
   /** Topete (frente para cima e para trás). */
   topete: (c, _o, rnd, cor) => {
     const gs = camadaDeCima(c, rnd, { n: 26, elFim: -0.25, larg: 0.05, franja: false, folga: 1.025 });
-    for (let i = 0; i < 9; i++) {
+    // a frente sobe e vira para trás, alta no meio (topete)
+    for (let camada = 0; camada < 2; camada++) for (let i = 0; i < 9; i++) {
       const s = i / 8 - 0.5;
-      const az = s * 1.3;
-      const base = noCranio(c, az, 0.62, 0.99);
-      const pts = [base, noCranio(c, az * 0.9, 0.72, 1.12), noCranio(c, az * 0.7, 0.95, 1.2 - Math.abs(s) * 0.1), noCranio(c, az * 0.5, 1.2, 1.1)];
-      gs.push(mecha(pts, ponta(0.034, 0.3), ponta(0.014, 0.4), (p) => p.clone().sub(c.centro).normalize(), 20, 6));
+      const az = s * 1.2;
+      const alto = (1 - Math.abs(s) * 1.3) * (camada ? 0.85 : 1);
+      const pts = [noCranio(c, az, 0.5, 0.98), noCranio(c, az * 0.95, 0.62, 1.12 + 0.08 * alto), noCranio(c, az * 0.85, 0.85, 1.22 + 0.16 * alto), noCranio(c, az * 0.7, 1.12, 1.18 + 0.1 * alto), noCranio(c, az * 0.5, 1.35, 1.05)];
+      gs.push(mecha(pts, ponta(0.042, 0.35), ponta(0.016, 0.45), (p) => p.clone().sub(c.centro).normalize(), 22, 8));
     }
     return [malha(juntar(gs), material(cor, 'fios', 2))];
   }

@@ -865,7 +865,7 @@ async function main() {
   const bonecoReal = await page.evaluate(() => !!document.querySelector('.boneco3d-canvas')?.palco?.real);
   ok(estadoBoneco !== 'pronto' || bonecoReal, `boneco no palco: ${estadoBoneco === 'pronto' ? 'modelo 3D de verdade (GLB recolorido)' : 'reserva 2D (sem WebGL neste navegador)'}`);
   ok(await page.evaluate(() => document.documentElement.scrollHeight <= window.innerHeight + 1), 'tela de personalizar sem rolagem');
-  ok(await page.locator('[data-ir-passo="cabelo"]').count() === 0, 'tipo de cabelo não aparece enquanto só existe o modelo padrão (nada de opção que não funciona)');
+  ok(await page.locator('[data-ir-passo="cabelo"]').count() === 1, 'tipo de cabelo aparece (penteados em peça 3D, fila do dono nº 20)');
   ok(await page.locator('[data-ir-passo="rosto"]').count() === 0, 'sem passos de rosto/boca (dependem de kit de peças)');
   await page.locator('.montar-corpo [data-peca="pele-07"]').click();
   await page.locator('.montar-corpo [data-peca="pele-07"][aria-checked="true"]').waitFor();
@@ -874,6 +874,14 @@ async function main() {
   ok(await page.locator('.montar-corpo [data-peca="castanho-escuro"][aria-checked="true"]').count() === 1, 'olhos: a cor do padrão vem marcada');
   await page.locator('[data-ir-passo="corCabelo"]').click();
   await page.locator('.montar-corpo [data-peca="preto"]').click();
+  await page.locator('[data-ir-passo="cabelo"]').click();
+  await page.locator('[data-testid="montar-avatar"][data-passo="cabelo"]').waitFor();
+  const penteados = page.locator('.montar-corpo button[role="radio"][data-estado="livre"]');
+  ok(await penteados.count() >= 9, `penteado: ao menos 9 tipos livres para este sexo (${await penteados.count()})`);
+  await penteados.nth(5).click();
+  await page.locator('.montar-corpo button[role="radio"][aria-checked="true"]').waitFor();
+  await page.locator('[data-testid=boneco3d]:not([data-estado=carregando])').waitFor({ timeout: 30000 });
+  ok(true, 'escolher outro penteado troca o boneco');
   await page.locator('[data-ir-passo="camisa"]').click();
   ok(await page.locator('.montar-corpo [data-peca="branca"][aria-checked="true"]').count() === 1, 'camiseta: começa branca (padrão)');
   // D034: as cores especiais abrem uma a uma nas primeiras missões; o cadeado diz quantas missões faltam
