@@ -34,7 +34,7 @@ const PARTIDA = { x: 0, z: 19.5, giro: Math.PI }; // na entrada da praça, de fr
 const ALTURA = 1.5; // a criança no mundo (m)
 // velocidades de criança (m/s): a passada das pernas acompanha (js/boneco.js), então o pé não escorrega
 const ANDAR = 1.5, CORRER = 3.7, TECLADO = 2.6, PULO = 6.4, GRAVIDADE = 20;
-const NADA = 0.62; // água mais funda que isto (m) = nada; mais rasa = anda com a água pela cintura
+const NADA = 0.5; // água mais funda que isto (m) = nada; mais rasa = anda com a água pela cintura (o boneco de 1,5 m tem a virilha a 0,4 m)
 
 export function criarPasseio(mundo, h = {}) {
   const { scene, camera, renderer } = mundo;
@@ -303,7 +303,7 @@ export function criarPasseio(mundo, h = {}) {
     const nada = naAgua > NADA;
     if (nada !== nadando) { nadando = nada; if (nada) h.aoAviso?.('agua'); h.aoNadando?.(nadando); if (!nada && mergulho) mergulhar(false); }
     if (mergulho && (mergulhoT -= dt) <= 0) mergulhar(false);
-    const fundura = clamp(naAgua - 0.35, 0.3, ALTURA * 0.72); // até onde a cabeça desce sem bater no fundo
+    const fundura = clamp(naAgua - 0.75, 0.2, 0.55); // até onde a cabeça desce (o corpo deitado não bate no fundo)
     // nadando: o ponto em que o corpo deita fica na superfície (costas e cabeça para fora); andando: pés no chão (ou no degrau)
     const base = nadando ? colisao.NIVEL_AGUA + eu.baseNado : Math.max(chao, colisao.piso(pos.x, pos.z));
     if (noAr) {
