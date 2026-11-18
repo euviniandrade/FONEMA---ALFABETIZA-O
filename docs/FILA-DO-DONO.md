@@ -32,6 +32,7 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 | 21 | Passeio 3D: o boneco não anda (fica pulando) e não nada (some no mar) (18/11) | 🔧 | D032 §3 |
 | 22 | Tarefas e funções bloqueadas mesmo depois de terminar a atividade: liberar conforme for fazendo, para não cansar nem desanimar (18/11) | 🔧 | — |
 | 23 | "Tem muita coisa ruim ainda": revisão geral de qualidade olhando o app como usuário (18/11) | 🔧 | — |
+| 24 | Passeio com qualidade de jogo grande (18/11): andar e correr com naturalidade (nada robótico), nadar batendo os braços, mergulhar e ver peixinhos, mundo 3D bonito e mais realista, divertido e encantado, com trilha sonora e sons de ambiente; imersivo e "viciante no bom sentido". Dono ofereceu um conector do Blender se ajudar | 🔧 | D032 §3 |
 
 ## Aguardando o dono
 | # | Pedido | O que falta |
