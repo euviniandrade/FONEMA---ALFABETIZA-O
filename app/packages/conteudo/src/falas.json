@@ -102,10 +102,10 @@
   "origem": "S-SOM-I"
  },
  {
-  "id": "s-11idavc",
+  "id": "s-11h152r",
   "voz": "sofia",
-  "texto": "Chefe: Cachoeira dos Sons. Ler palavras e nomes de bichinhos da mata e escrever 4 palavras.",
-  "origem": "R2a-F05"
+  "texto": "A vovó viu a bola.",
+  "origem": "TF-24-C5f"
  },
  {
   "id": "s-11n5xas",
@@ -124,6 +124,12 @@
   "voz": "sofia",
   "texto": "O que ele viu?",
   "origem": "TF-12-C5f"
+ },
+ {
+  "id": "s-11u1xjq",
+  "voz": "sofia",
+  "texto": "A com til, de lã.",
+  "origem": "TF-25-C2"
  },
  {
   "id": "s-11wcpy8",
@@ -330,6 +336,12 @@
   "origem": "telas"
  },
  {
+  "id": "s-16crhyi",
+  "voz": "sofia",
+  "texto": "Faz de conta que você está pensando, bem quietinho.",
+  "origem": "TF-25-C2"
+ },
+ {
   "id": "s-16f73ud",
   "voz": "sofia",
   "texto": "éééé… pé!",
@@ -438,6 +450,12 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-18irhaw",
+  "voz": "sofia",
+  "texto": "É, de pé.",
+  "origem": "TF-23-C2a"
+ },
+ {
   "id": "s-18sv5nn",
   "voz": "sofia",
   "texto": "Quem sai?",
@@ -520,6 +538,12 @@
   "voz": "sofia",
   "texto": "Compare com:",
   "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-1acxgi3",
+  "voz": "sofia",
+  "texto": "O que a anta viu?",
+  "origem": "TF-25-C5f"
  },
  {
   "id": "s-1adv423",
@@ -756,6 +780,24 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-1dupxwt",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do Ó.",
+  "origem": "TF-25-C1"
+ },
+ {
+  "id": "s-1dupybh",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do Ã.",
+  "origem": "TF-25-C3a"
+ },
+ {
+  "id": "s-1dupygn",
+  "voz": "sofia",
+  "texto": "Isso! Esse é o som do É.",
+  "origem": "TF-25-C1"
+ },
+ {
   "id": "s-1duq14f",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do Q.",
@@ -765,13 +807,13 @@
   "id": "s-1duq165",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do S.",
-  "origem": "TF-22-C1"
+  "origem": "TF-25-C1"
  },
  {
   "id": "s-1duq17v",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do U.",
-  "origem": "TF-22-C1"
+  "origem": "TF-25-C1"
  },
  {
   "id": "s-1duq1bb",
@@ -789,19 +831,19 @@
   "id": "s-1duq1kt",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do C.",
-  "origem": "AL-RV3-C4f"
+  "origem": "TF-25-C1"
  },
  {
   "id": "s-1duq1mj",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do E.",
-  "origem": "TF-22-C1"
+  "origem": "TF-25-C1"
  },
  {
   "id": "s-1duq1o9",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do G.",
-  "origem": "AL-RV3-C4f"
+  "origem": "TF-25-C1"
  },
  {
   "id": "s-1duq1pz",
@@ -813,13 +855,13 @@
   "id": "s-1duq1tf",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do M.",
-  "origem": "TF-22-C1"
+  "origem": "TF-25-C1"
  },
  {
   "id": "s-1duq1v5",
   "voz": "sofia",
   "texto": "Isso! Esse é o som do O.",
-  "origem": "TF-22-C1"
+  "origem": "TF-25-C1"
  },
  {
   "id": "s-1dxf71a",
@@ -934,6 +976,12 @@
   "voz": "sofia",
   "texto": "Escute a história. Depois eu faço umas perguntas.",
   "origem": "cantinho da leitura"
+ },
+ {
+  "id": "s-1g6j158",
+  "voz": "sofia",
+  "texto": "Atravessar a Cachoeira dos Sons",
+  "origem": "S-R2a-08"
  },
  {
   "id": "s-1gia5jq",
@@ -1170,6 +1218,12 @@
   "origem": "pares (D030)"
  },
  {
+  "id": "s-1ky70t0",
+  "voz": "sofia",
+  "texto": "Faz de conta que você viu uma coisa linda. Que surpresa!",
+  "origem": "TF-23-C2b"
+ },
+ {
   "id": "s-1l49mhj",
   "voz": "sofia",
   "texto": "O gato viu o galo.",
@@ -1356,6 +1410,12 @@
   "origem": "bolota-chuva"
  },
  {
+  "id": "s-1p64tbm",
+  "voz": "sofia",
+  "texto": "E o E às vezes soa é.",
+  "origem": "TF-24-C2"
+ },
+ {
   "id": "s-1p8k0l1",
   "voz": "sofia",
   "texto": "Ficou um bordado lindo!",
@@ -1536,10 +1596,22 @@
   "origem": "sons"
  },
  {
+  "id": "s-1qah7ig",
+  "voz": "sofia",
+  "texto": "avô",
+  "origem": "TF-23-C5p"
+ },
+ {
+  "id": "s-1qah7in",
+  "voz": "sofia",
+  "texto": "avó",
+  "origem": "TF-23-C5p"
+ },
+ {
   "id": "s-1qah7mh",
   "voz": "sofia",
   "texto": "ave",
-  "origem": "TF-13-C5t"
+  "origem": "TF-23-C5p"
  },
  {
   "id": "s-1qah7xr",
@@ -1557,19 +1629,19 @@
   "id": "s-1qaha4j",
   "voz": "sofia",
   "texto": "ela",
-  "origem": "TF-12-C4b"
+  "origem": "TF-24-C4b"
  },
  {
   "id": "s-1qaha4n",
   "voz": "sofia",
   "texto": "ele",
-  "origem": "TF-12-C4c"
+  "origem": "TF-24-C4b"
  },
  {
   "id": "s-1qaha4r",
   "voz": "sofia",
   "texto": "eli",
-  "origem": "TF-12-C4b"
+  "origem": "TF-24-C4b"
  },
  {
   "id": "s-1qahaaq",
@@ -1860,6 +1932,18 @@
   "origem": "trilha dos sons"
  },
  {
+  "id": "s-1ro2ygu",
+  "voz": "sofia",
+  "texto": "Leia primeiro com o som fechado. Se não virar palavra, tente o aberto!",
+  "origem": "TF-24-C2"
+ },
+ {
+  "id": "s-1rpeu1z",
+  "voz": "sofia",
+  "texto": "Ó, de vovó.",
+  "origem": "TF-23-C2b"
+ },
+ {
   "id": "s-1rskjwt",
   "voz": "sofia",
   "texto": "Quantas palmas tem esta palavra, [NOME]? Eu me perdi!",
@@ -1872,16 +1956,22 @@
   "origem": "cantinho da leitura"
  },
  {
-  "id": "s-1s7y0ow",
-  "voz": "sofia",
-  "texto": "Atravessar a Cachoeira dos Sons",
-  "origem": "S-R2a-08"
- },
- {
   "id": "s-1sdgiv",
   "voz": "sofia",
   "texto": "A ema viu a lama.",
   "origem": "ema-suja"
+ },
+ {
+  "id": "s-1sfyon6",
+  "voz": "sofia",
+  "texto": "Sem acento, o O às vezes soa ó.",
+  "origem": "TF-24-C2"
+ },
+ {
+  "id": "s-1smhcrx",
+  "voz": "sofia",
+  "texto": "A anta viu a lua.",
+  "origem": "TF-25-C5f"
  },
  {
   "id": "s-1sspl1",
@@ -1978,12 +2068,6 @@
   "voz": "sofia",
   "texto": "Parabéns, [NOME]! O professor viu que você aprendeu!",
   "origem": "telas (E2E)"
- },
- {
-  "id": "s-1u3et1r",
-  "voz": "sofia",
-  "texto": "Montar sons na tábua",
-  "origem": "S-R2a-04"
  },
  {
   "id": "s-1u78zhe",
@@ -2181,7 +2265,7 @@
   "id": "s-1uqi613",
   "voz": "sofia",
   "texto": "latu",
-  "origem": "TF-17-C4b"
+  "origem": "TF-25-C4b"
  },
  {
   "id": "s-1uqi61f",
@@ -2226,10 +2310,22 @@
   "origem": "palavras"
  },
  {
+  "id": "s-1uqifbc",
+  "voz": "sofia",
+  "texto": "lupê",
+  "origem": "TF-23-C4b"
+ },
+ {
+  "id": "s-1uqifbf",
+  "voz": "sofia",
+  "texto": "lupé",
+  "origem": "TF-23-C4b"
+ },
+ {
   "id": "s-1uqifer",
   "voz": "sofia",
   "texto": "lupa",
-  "origem": "TF-18-C4a"
+  "origem": "TF-23-C4b"
  },
  {
   "id": "s-1uqifif",
@@ -2320,6 +2416,12 @@
   "voz": "sofia",
   "texto": "mala",
   "origem": "telas (E2E)"
+ },
+ {
+  "id": "s-1uqj12q",
+  "voz": "sofia",
+  "texto": "mata",
+  "origem": "TF-25-C4b"
  },
  {
   "id": "s-1uqj130",
@@ -2421,7 +2523,7 @@
   "id": "s-1uqjls3",
   "voz": "sofia",
   "texto": "nafa",
-  "origem": "TF-13-C4b"
+  "origem": "TF-23-C4b"
  },
  {
   "id": "s-1uqjlsn",
@@ -2436,6 +2538,18 @@
   "origem": "TF-R3-C5p"
  },
  {
+  "id": "s-1uqjlw1",
+  "voz": "sofia",
+  "texto": "nafó",
+  "origem": "TF-23-C4b"
+ },
+ {
+  "id": "s-1uqjlw6",
+  "voz": "sofia",
+  "texto": "nafô",
+  "origem": "TF-23-C4b"
+ },
+ {
   "id": "s-1uqjm6v",
   "voz": "sofia",
   "texto": "nave",
@@ -2445,7 +2559,7 @@
   "id": "s-1uqjm8h",
   "voz": "sofia",
   "texto": "nata",
-  "origem": "TF-R3-C5p"
+  "origem": "TF-25-C4b"
  },
  {
   "id": "s-1uqjm8v",
@@ -2482,6 +2596,12 @@
   "voz": "sofia",
   "texto": "olho",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1uqlwhd",
+  "voz": "sofia",
+  "texto": "anta",
+  "origem": "TF-25-C4b"
  },
  {
   "id": "s-1uqm2o4",
@@ -2568,16 +2688,34 @@
   "origem": "TF-18-C4b"
  },
  {
+  "id": "s-1uqn58t",
+  "voz": "sofia",
+  "texto": "bupa",
+  "origem": "TF-24-C4b"
+ },
+ {
   "id": "s-1uqn5cl",
   "voz": "sofia",
   "texto": "bule",
   "origem": "TF-18-C5p"
  },
  {
+  "id": "s-1uqn5co",
+  "voz": "sofia",
+  "texto": "bupô",
+  "origem": "TF-24-C4b"
+ },
+ {
   "id": "s-1uqn5cp",
   "voz": "sofia",
   "texto": "buli",
   "origem": "TF-16-C4b"
+ },
+ {
+  "id": "s-1uqn5cv",
+  "voz": "sofia",
+  "texto": "bupó",
+  "origem": "TF-24-C4b"
  },
  {
   "id": "s-1uqn5hv",
@@ -2592,6 +2730,12 @@
   "origem": "rimas"
  },
  {
+  "id": "s-1uqnfco",
+  "voz": "sofia",
+  "texto": "copo",
+  "origem": "TF-24-C4c"
+ },
+ {
   "id": "s-1uqnjsa",
   "voz": "sofia",
   "texto": "calo",
@@ -2601,7 +2745,7 @@
   "id": "s-1uqnjty",
   "voz": "sofia",
   "texto": "café",
-  "origem": "AL-C-C5p"
+  "origem": "TF-24-C3r"
  },
  {
   "id": "s-1uqnju6",
@@ -2619,13 +2763,13 @@
   "id": "s-1uqnjxq",
   "voz": "sofia",
   "texto": "cafa",
-  "origem": "TF-19-C4b"
+  "origem": "TF-23-C4b"
  },
  {
   "id": "s-1uqnjy2",
   "voz": "sofia",
   "texto": "cafu",
-  "origem": "TF-19-C4b"
+  "origem": "TF-23-C4b"
  },
  {
   "id": "s-1uqnjzg",
@@ -2662,6 +2806,24 @@
   "voz": "sofia",
   "texto": "doce",
   "origem": "alfabeto: palavras"
+ },
+ {
+  "id": "s-1uqo3mk",
+  "voz": "sofia",
+  "texto": "dovê",
+  "origem": "TF-24-C4b"
+ },
+ {
+  "id": "s-1uqo3mn",
+  "voz": "sofia",
+  "texto": "dové",
+  "origem": "TF-24-C4b"
+ },
+ {
+  "id": "s-1uqo3pz",
+  "voz": "sofia",
+  "texto": "dova",
+  "origem": "TF-24-C4b"
  },
  {
   "id": "s-1uqo3tr",
@@ -3150,6 +3312,12 @@
   "origem": "comeco"
  },
  {
+  "id": "s-1ur0n69",
+  "voz": "sofia",
+  "texto": "tafi",
+  "origem": "TF-25-C4b"
+ },
+ {
   "id": "s-1ur0n6h",
   "voz": "sofia",
   "texto": "tafa",
@@ -3357,7 +3525,7 @@
   "id": "s-1utb0sr",
   "voz": "sofia",
   "texto": "ãããã",
-  "origem": "sons"
+  "origem": "trilha dos sons"
  },
  {
   "id": "s-1ute0p1",
@@ -3798,6 +3966,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-3gq81w",
+  "voz": "sofia",
+  "texto": "Chefe: Cachoeira dos Sons. Ler palavras e nomes de bichinhos da mata e escrever 4 palavras.",
+  "origem": "R2a-F05"
+ },
+ {
   "id": "s-3hau1x",
   "voz": "sofia",
   "texto": "Tem uma palavra escondida dentro de outra. Escute bem!",
@@ -4170,6 +4344,12 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-anyyj",
+  "voz": "sofia",
+  "texto": "janta",
+  "origem": "TF-25-C4b"
+ },
+ {
   "id": "s-ao69k",
   "voz": "sofia",
   "texto": "jaula",
@@ -4186,6 +4366,12 @@
   "voz": "sofia",
   "texto": "Oi, oi!",
   "origem": "oi"
+ },
+ {
+  "id": "s-av51wt",
+  "voz": "sofia",
+  "texto": "Montar sons na tábua",
+  "origem": "S-R2a-04"
  },
  {
   "id": "s-aycy1h",
@@ -4248,6 +4434,18 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-c5pd5",
+  "voz": "sofia",
+  "texto": "lantu",
+  "origem": "TF-25-C4b"
+ },
+ {
+  "id": "s-c5pdp",
+  "voz": "sofia",
+  "texto": "lanta",
+  "origem": "TF-25-C4b"
+ },
+ {
   "id": "s-cawv55",
   "voz": "sofia",
   "texto": "Ei! Ai! Ui! Eu! Oi! Oi, oi!",
@@ -4296,6 +4494,12 @@
   "origem": "S-R2a-01"
  },
  {
+  "id": "s-cy5q4",
+  "voz": "sofia",
+  "texto": "manta",
+  "origem": "TF-25-C4b"
+ },
+ {
   "id": "s-cy7ik",
   "voz": "sofia",
   "texto": "mamãe",
@@ -4324,6 +4528,12 @@
   "voz": "sofia",
   "texto": "navio",
   "origem": "comprida"
+ },
+ {
+  "id": "s-dhxmh1",
+  "voz": "sofia",
+  "texto": "Faz de conta que você pisou na lama. Que nojo!",
+  "origem": "TF-23-C2a"
  },
  {
   "id": "s-dn0nh0",
@@ -4695,7 +4905,7 @@
   "id": "s-jbeu12",
   "voz": "sofia",
   "texto": "Qual som falta nesta palavra?",
-  "origem": "TF-22-C3r"
+  "origem": "TF-24-C3r"
  },
  {
   "id": "s-jc2hfk",
@@ -4774,6 +4984,12 @@
   "voz": "sofia",
   "texto": "xícara",
   "origem": "comprida"
+ },
+ {
+  "id": "s-ltvp4d",
+  "voz": "sofia",
+  "texto": "O que a vovó viu?",
+  "origem": "TF-24-C5f"
  },
  {
   "id": "s-lyxfku",
@@ -5004,6 +5220,12 @@
   "origem": "rimas"
  },
  {
+  "id": "s-q9vap",
+  "voz": "sofia",
+  "texto": "panda",
+  "origem": "TF-25-C4a"
+ },
+ {
   "id": "s-qb8apk",
   "voz": "sofia",
   "texto": "Som e nome das vogais. Reconhecer as 5 vogais misturadas.",
@@ -5094,6 +5316,18 @@
   "origem": "telas (E2E)"
  },
  {
+  "id": "s-rdgy2",
+  "voz": "sofia",
+  "texto": "rrrrá",
+  "origem": "trilha dos sons"
+ },
+ {
+  "id": "s-rpt9fo",
+  "voz": "sofia",
+  "texto": "lã",
+  "origem": "TF-25-C4c"
+ },
+ {
   "id": "s-rpt9hc",
   "voz": "sofia",
   "texto": "ja",
@@ -5176,6 +5410,12 @@
   "voz": "sofia",
   "texto": "ba",
   "origem": "palmas"
+ },
+ {
+  "id": "s-rpt9ou",
+  "voz": "sofia",
+  "texto": "fã",
+  "origem": "TF-25-C4c"
  },
  {
   "id": "s-rpt9pl",
@@ -5346,6 +5586,18 @@
   "origem": "falas fônicas (D030)"
  },
  {
+  "id": "s-t3d6f",
+  "voz": "sofia",
+  "texto": "tanfa",
+  "origem": "TF-25-C4b"
+ },
+ {
+  "id": "s-t3d6n",
+  "voz": "sofia",
+  "texto": "tanfi",
+  "origem": "TF-25-C4b"
+ },
+ {
   "id": "s-tb8y1h",
   "voz": "sofia",
   "texto": "Ajuda a Dona Cida a bordar, [NOME]? Um carretel para cada pedacinho.",
@@ -5440,6 +5692,12 @@
   "voz": "sofia",
   "texto": "Olha, a peça certa está brilhando.",
   "origem": "falas fônicas (D030)"
+ },
+ {
+  "id": "s-upvj6r",
+  "voz": "sofia",
+  "texto": "Vencer a Cachoeira dos Sons",
+  "origem": "TI-R2a-01"
  },
  {
   "id": "s-uqqlhq",
@@ -5538,22 +5796,10 @@
   "origem": "cantinho da leitura"
  },
  {
-  "id": "s-xtncm1",
-  "voz": "sofia",
-  "texto": "Juntar sílabas: primeiras palavras. Ler sozinho as primeiras palavras (MALA, LUA, FALA).",
-  "origem": "R2a-F04"
- },
- {
   "id": "s-xuuulk",
   "voz": "sofia",
   "texto": "Abelha",
   "origem": "telas (E2E)"
- },
- {
-  "id": "s-y1od5b",
-  "voz": "sofia",
-  "texto": "Vencer a Cachoeira dos Sons",
-  "origem": "TI-R2a-01"
  },
  {
   "id": "s-y5a2vg",
@@ -5620,6 +5866,12 @@
   "voz": "sofia",
   "texto": "O macaco viu a jaca.",
   "origem": "TF-19-C5f"
+ },
+ {
+  "id": "s-ye5ua4",
+  "voz": "sofia",
+  "texto": "Com chapeuzinho, o som é fechado: ô e ê.",
+  "origem": "TF-24-C2"
  },
  {
   "id": "s-yf63ie",
@@ -7215,7 +7467,7 @@
   "id": "t-qfk4z1",
   "voz": "tales",
   "texto": "Isso! Esse é o som do N.",
-  "origem": "TF-22-C1"
+  "origem": "TF-25-C1"
  },
  {
   "id": "t-qfk52h",
@@ -7251,7 +7503,7 @@
   "id": "t-qfk5h5",
   "voz": "tales",
   "texto": "Isso! Esse é o som do Z.",
-  "origem": "TF-22-C1"
+  "origem": "TF-25-C1"
  },
  {
   "id": "t-qfk5iv",
@@ -7263,7 +7515,7 @@
   "id": "t-qfk5kl",
   "voz": "tales",
   "texto": "Isso! Esse é o som do V.",
-  "origem": "TF-22-C1"
+  "origem": "TF-25-C1"
  },
  {
   "id": "t-qfk5mb",
