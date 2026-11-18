@@ -24,6 +24,7 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
   const [falando, setFalando] = useState(false);
   const [fase, setFase] = useState<'mostra' | 'vez' | 'feito'>('mostra');
   const [dica, setDica] = useState(false);
+  const [ouviuOSom, setOuviuOSom] = useState(false);
   const solto = useDestravar(fase === 'mostra');
 
   const quem = atividade.voz ?? 'sofia';
@@ -54,6 +55,7 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
     (async () => {
       await falar(atividade.enunciado, crianca);
       if (segue()) await mostrar();
+      if (vivo) setOuviuOSom(true); // o som já tocou: "Eu fiz o som!" libera (revisão 18/11, item 7)
       if (segue()) {
         if (atividade.falaAncora !== undefined) { if (atividade.falaAncora) await voz.falar(atividade.falaAncora, { quem }); }
         else await voz.falar(ehNome ? `${crianca.pronuncia.fala}!` : `${s.esticado}… ${atividade.ancora.texto}!`, { quem });
@@ -68,6 +70,8 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
   const ouvirDeNovo = async (lento: boolean) => { mexeu.current = true; efeitos.toque(); await mostrar(lento); setFase((f) => (f === 'mostra' ? 'vez' : f)); };
 
   const fiz = async () => {
+    mexeu.current = true;
+    voz.parar(); // tocar em "Eu fiz o som!" corta a fala com fade
     setFase('feito');
     efeitos.acerto();
     await voz.falar(textoVoz(atividade.comemora?.texto ?? 'Isso! Você fez o som!', crianca), { quem: atividade.comemora?.quem ?? 'sofia' });
@@ -95,7 +99,7 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
         <button className="btn" onClick={() => void ouvirDeNovo(true)}><Icone nome="tartaruga" />Bem devagar</button>
         {fase !== 'mostra' && !atividade.falaSom && atividade.falaAncora === undefined ? <button className="btn" onClick={async () => { setDica(true); await voz.falar(s.correcao, { quem: 'sofia' }); }}><Icone nome="dica" />Dica de boca</button> : null}
         {/* ver e ouvir o som É a atividade: enquanto a dupla mostra, "Ouvindo…" animado (não um botão apagado) */}
-        <BotaoOuvindo ouvindo={fase === 'mostra' && !solto} onClick={fiz} disabled={fase === 'feito'} testId="fiz-o-som"><Icone nome="check" />Eu fiz o som!</BotaoOuvindo>
+        <BotaoOuvindo ouvindo={fase === 'mostra' && !solto && !ouviuOSom} onClick={fiz} disabled={fase === 'feito'} testId="fiz-o-som"><Icone nome="check" />Eu fiz o som!</BotaoOuvindo>
       </div>
       {fase === 'feito' ? <Brilho ativo /> : null}
     </div>

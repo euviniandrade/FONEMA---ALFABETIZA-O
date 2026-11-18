@@ -28,6 +28,8 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
   const l = LETRA_POR_ID[atividade.letra];
   const [passo, setPasso] = useState(-1);
   const [pronto, setPronto] = useState(false);
+  /** O som da letra já tocou inteiro uma vez: o estímulo principal acabou e o avanço pode liberar (revisão 18/11, item 7). */
+  const [ouviuOSom, setOuviuOSom] = useState(false);
   const [feito, setFeito] = useState(false);
   const [palavra, setPalavra] = useState(-1);
   const vivo = useRef(true);
@@ -69,6 +71,7 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
       await voz.somReal(l.fonema, l.tipo === 'vogal' ? 2 : 3);
       await espera(350);
       if (!ok()) return;
+      setOuviuOSom(true);
       if (!(await diz(atividade.repita, 12)) || !ok()) return;
       setPasso(11);
       await voz.somReal(l.fonema, 1);
@@ -98,6 +101,8 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
   }, []);
 
   const continuar = async () => {
+    rodada.current++; // a apresentação em andamento para aqui
+    voz.parar(); // tocar em "Já conheci!" corta a fala com fade
     setFeito(true);
     efeitos.acerto();
     await espera(500);
@@ -142,7 +147,7 @@ export function Letra({ atividade, crianca, sessao, cenaId, onFim }: PropsMecani
       <div className="linha-botoes">
         <button className="btn" onClick={() => { efeitos.toque(); void apresentar(); }}><Icone nome="som" />Ouvir de novo</button>
         {/* escutar a letra É a atividade: enquanto a dupla apresenta, "Ouvindo…" animado (não um botão apagado) */}
-        <BotaoOuvindo ouvindo={!(pronto || solto) && !feito} onClick={continuar} disabled={feito} testId="conheci-a-letra"><Icone nome="check" />Já conheci!</BotaoOuvindo>
+        <BotaoOuvindo ouvindo={!(pronto || solto || ouviuOSom) && !feito} onClick={continuar} disabled={feito} testId="conheci-a-letra"><Icone nome="check" />Já conheci!</BotaoOuvindo>
       </div>
       {feito ? <Brilho ativo /> : null}
     </div>

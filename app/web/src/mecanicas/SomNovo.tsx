@@ -86,6 +86,7 @@ export function SomNovo({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
     await som(3);
     await espera(300);
     if (!ok()) return;
+    jaViu.current = true; // o som novo já tocou inteiro: o avanço libera (o resto continua tocando)
     if (a.repita) { setPasso('repita'); if (!(await diz(a.repita)) || !ok()) return; await som(1); }
     if (!ok()) return;
     setPasso('vez');
@@ -109,6 +110,8 @@ export function SomNovo({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
   }, []);
 
   const continuar = async () => {
+    rodada.current++;
+    voz.parar(); // tocar em "Continuar" corta a fala com fade
     setFeito(true);
     efeitos.acerto();
     await espera(450);

@@ -75,9 +75,10 @@ export function CorreSom({ itens, crianca, sessao, cena, contexto, enunciado, de
   useEffect(() => {
     vivo.current = true;
     let p: PistaCorreSom | null = null;
+    let decidido = !comWebGL;
     if (comWebGL && canvas.current) {
       void import('./corre-som-3d.ts').then(async (m) => {
-        if (!vivo.current || !canvas.current) return;
+        if (!vivo.current || !canvas.current || decidido) return;
         try {
           p = new m.PistaCorreSom(canvas.current, menos);
           p.aoMoeda = () => efeitos.moeda();
@@ -85,10 +86,15 @@ export function CorreSom({ itens, crianca, sessao, cena, contexto, enunciado, de
           pista.current = p;
           await p.vestir(aparenciaDe(crianca));
         } catch { pista.current = null; p?.descartar(); p = null; setComWebGL(false); }
+        if (decidido) return;
+        decidido = true;
         if (vivo.current) { setPronta(true); if (pista.current) setColunas(pista.current.colunasNaTela()); }
-      });
+      }).catch(() => { if (vivo.current && !decidido) { decidido = true; pista.current = null; setComWebGL(false); setPronta(true); } });
     }
-    return () => { vivo.current = false; voz.parar(); window.clearTimeout(auto.current); p?.descartar(); pista.current = null; };
+    // rede de segurança (o jogo é cena obrigatória nas lições de vogal): se a pista 3D não ficar pronta em 8 s (aparelho fraco,
+    // contexto WebGL perdido, módulo que não chega), segue com a reserva em 2D — a lição nunca fica parada
+    const reserva = window.setTimeout(() => { if (vivo.current && !decidido) { decidido = true; pista.current = null; p?.descartar(); p = null; setComWebGL(false); setPronta(true); } }, 8000);
+    return () => { vivo.current = false; window.clearTimeout(reserva); voz.parar(); window.clearTimeout(auto.current); p?.descartar(); pista.current = null; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
