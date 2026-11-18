@@ -14,6 +14,7 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { trechoVozReal } from './trecho-voz-real.mjs';
+import { trechoNomeFalado } from './trecho-nome-falado.mjs';
 import { trechoCopia } from './trecho-copia.mjs';
 import { capturasCorrida, trechoJogos } from './trecho-jogos.mjs';
 import { trechoJogos2 } from './trecho-jogos2.mjs';
@@ -850,6 +851,13 @@ async function main() {
     await trechoTelas(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros: errosT, dirCap: process.argv.includes('--capturas-telas') ? (process.env.CAPTURAS_TELAS ?? DIR_CAP) : undefined });
     await browser.close(); servidor?.kill();
     if (errosT.length) throw new Error(`erros na página:\n${errosT.join('\n')}`);
+    return;
+  }
+  if (process.argv.includes('--nome-falado')) {
+    const errosN = [];
+    await trechoNomeFalado(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, jogarLivre, erros: errosN });
+    await browser.close(); servidor?.kill();
+    if (errosN.length) throw new Error(`erros na página:\n${errosN.join('\n')}`);
     return;
   }
   if (process.argv.includes('--voz-real')) {
