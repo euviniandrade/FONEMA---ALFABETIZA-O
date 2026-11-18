@@ -35,8 +35,10 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   densidade de pixels limitada (1,25 no celular), sombra só perto, bonecos longe sem sombra, qualidade cai sozinha (o medidor agora usa o
   tempo real, antes um aparelho muito lento levava minutos para baixar). "Menos movimento" desliga balanços, câmera que segue e pulsos.
 - **Verificado:** typecheck, lint, 366 testes; E2E `node e2e/fluxo.e2e.mjs --mundo3d` (também no `--sem-jornada`; `--capturas-mundo3d`
-  salva `app/docs/capturas/mundo3d-*.png`). **Limite honesto:** o Chromium de teste desenha sem placa de vídeo (0,3–0,9 quadro/s nesta
-  vila), por isso o FPS mínimo do teste é 0,3 (`FPS_MINIMO=30` num PC de verdade). Nenhum aparelho real foi medido. A vila tem ~500 mil
+  salva `app/docs/capturas/mundo3d-*.png`, olhadas). O teste NÃO depende do FPS: a entrada é real (teclas, mouse, toque/CDP) e o tempo
+  do jogo avança por `FONEMA_PASSEIO.simular(s)` (passos fixos, sem desenhar). **Limite honesto:** o Chromium de teste (e o CI) desenha
+  sem placa de vídeo (0,3–1,4 quadro/s nesta vila); o FPS mínimo do teste é 0,3 (`FPS_MINIMO=30` num PC de verdade). Aparelho muito
+  lento: a qualidade cai para "baixo" em ~1 s e, se ainda arrastar, a imagem passa a 0,75 de pixel. Nenhum aparelho real foi medido. A vila tem ~500 mil
   triângulos (prédios arredondados): se o celular sofrer, o próximo passo é simplificar os prédios para o passeio.
 - A vista aérea antiga continua em `mundo3d/index.html` (não removida; o app agora abre o passeio).
 
