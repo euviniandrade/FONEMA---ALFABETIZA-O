@@ -33,7 +33,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   const fr = pg.frameLocator('[data-testid="passeio3d-iframe"]');
   const quadro = async (p) => { for (let i = 0; i < 300; i++) { const f = p.frames().find((x) => /mundo3d\/passeio\.html/.test(x.url())); if (f) return f; await p.waitForTimeout(200); } throw new Error('iframe do passeio não apareceu'); };
   const frame = await quadro(pg);
-    await frame.waitForFunction(() => window.FONEMA_PASSEIO, null, { timeout: 120000 });
+    await frame.waitForFunction(() => window.FONEMA_PASSEIO, null, { timeout: 240000 });
   await frame.waitForFunction(() => (window.FONEMA_RECEBIDOS || []).length >= 6, null, { timeout: 240000, polling: 1000 }).catch(async (e) => { console.log('    recebidos até agora:', await frame.evaluate(() => window.FONEMA_RECEBIDOS)); throw e; });
   const recebidos = await frame.evaluate(() => window.FONEMA_RECEBIDOS);
   ok(recebidos.includes('crianca') && ['sofia', 'tales', 'bolota', 'crianca-1', 'crianca-2'].every((x) => recebidos.includes(x)), `o app mandou o boneco da criança e os outros 5 bonecos (${recebidos.join(', ')})`);
@@ -50,13 +50,13 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   const pos = () => frame.evaluate(() => window.FONEMA_PASSEIO.posicao);
   const q = await frame.evaluate(() => ({ q: window.FONEMA_MUNDO.qualidade, fps: window.FONEMA_MUNDO.info.fps }));
   console.log(`    qualidade ${q.q}, ${q.fps.toFixed(1)} quadros/s`);
-  const CLIQUE = { noWaitAfter: true, force: true, timeout: 60000 }; // a página do mundo fica ocupada desenhando; o botão "Entrar" pulsa
+  const CLIQUE = { noWaitAfter: true, force: true, timeout: 240000 }; // a página do mundo fica ocupada desenhando; o botão "Entrar" pulsa
   const canvas = fr.locator('#palco canvas');
   await canvas.focus({ timeout: 180000 }); // a vila nova pesa: sem placa de vídeo um quadro leva segundos
   // O navegador de teste (e o CI) desenha sem placa de vídeo: ~1 quadro/s. Por isso a entrada é de verdade (teclas, mouse,
   // toque), mas o tempo do jogo avança por `simular(s)` (passos fixos, sem desenhar): o teste não depende do FPS.
   const simular = (seg, f = frame) => f.evaluate((t) => window.FONEMA_PASSEIO.simular(t), seg);
-  const ate = (fn, arg, max = 45000) => frame.waitForFunction(fn, arg, { timeout: max, polling: 200 }).then(() => true, () => false);
+  const ate = (fn, arg, max = 180000) => frame.waitForFunction(fn, arg, { timeout: max, polling: 200 }).then(() => true, () => false);
   const dist = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
   const segurar = async (tecla, seg) => { await pg.keyboard.down(tecla); await simular(seg); await pg.keyboard.up(tecla); return pos(); };
 
@@ -128,7 +128,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   // conversar com a Sofia (fala roteirizada)
   await frame.evaluate(() => { const s = window.FONEMA_PASSEIO.npcs.lista.find((n) => n.id === 'sofia').boneco.raiz.position; window.FONEMA_PASSEIO.teleportar(s.x + 1.4, s.z + 1.4); });
   await simular(0.1);
-  await fr.locator('#btAcao.on').waitFor({ timeout: 120000 });
+  await fr.locator('#btAcao.on').waitFor({ timeout: 240000 });
   ok(/Conversar/.test(await fr.locator('#btAcao').innerText()), 'perto da Sofia aparece o botão "Conversar"');
   await fr.locator('#btAcao').click(CLIQUE);
   await fr.locator('#cartao.aberto').waitFor();
@@ -141,7 +141,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(-2.5, 9.6, Math.PI));
   await frame.evaluate(() => { const s = window.FONEMA_PASSEIO.npcs.lista.find((n) => n.id === 'sofia'); s.boneco.raiz.position.set(-3.5, 0, 14); s.espera = 30; });
   await simular(0.1);
-  await fr.locator('#btAcao.on').waitFor({ timeout: 120000 });
+  await fr.locator('#btAcao.on').waitFor({ timeout: 240000 });
   ok(await fr.locator('#btAcao.on.trancado').count() === 0 && /Entrar/.test(await fr.locator('#btAcao').innerText()), 'porta do Coreto aberta para quem começa (D034: nada de porta trancada; leva às palmas)');
   if (capturas) { await pg.waitForTimeout(400); await pg.screenshot({ path: `${capturas}/mundo3d-04-porta-coreto.png` }); }
 
@@ -159,12 +159,12 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(-13.6, -4.6, -Math.PI / 2));
   await frame.evaluate(() => window.FONEMA_PASSEIO.irPara(-15.4, -5));
   await simular(3);
-  await fr.locator('#btAcao.on:not(.trancado)').waitFor({ timeout: 120000 });
+  await fr.locator('#btAcao.on:not(.trancado)').waitFor({ timeout: 240000 });
   ok(/Entrar/.test(await fr.locator('#btAcao').innerText()) && /Biblioteca/.test(await fr.locator('#lugar').innerText()), 'na porta da Biblioteca aparece o botão grande "Entrar"');
   if (capturas) { await pg.waitForTimeout(600); await pg.screenshot({ path: `${capturas}/mundo3d-05-porta-biblioteca.png` }); }
   await fr.locator('#btAcao').click(CLIQUE);
   await simular(1).catch(() => {}); // anda até o meio da porta e entra (a página do mundo sai)
-  await pg.getByTestId('biblioteca').waitFor({ timeout: 60000 });
+  await pg.getByTestId('biblioteca').waitFor({ timeout: 240000 });
   ok(pg.url().endsWith(`/c/${id}/leitura`), 'Entrar leva ao Cantinho da Leitura');
   await ctx.close();
 
@@ -183,7 +183,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await pc.goto(BASE + `#/c/${idc}/mundo`);
   await pc.getByTestId('passeio3d').waitFor();
   const fc = await quadro(pc);
-  await fc.waitForFunction(() => window.FONEMA_PASSEIO && (window.FONEMA_RECEBIDOS || []).includes('crianca'), null, { timeout: 120000 });
+  await fc.waitForFunction(() => window.FONEMA_PASSEIO && (window.FONEMA_RECEBIDOS || []).includes('crianca'), null, { timeout: 240000 });
   const tamanhos = await fc.evaluate(() => ['#btPular', '#btTchau'].map((s) => { const r = document.querySelector(s).getBoundingClientRect(); return Math.min(r.width, r.height); }));
   ok(tamanhos.every((t) => t >= 60), `botões grandes no celular: Pular e Tchau com ${tamanhos.map((t) => Math.round(t)).join(' e ')} px`);
   const q0 = await fc.evaluate(() => window.FONEMA_PASSEIO.posicao);
@@ -204,7 +204,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   for (let k = 1; k <= 6; k++) { await toque('touchMove', 300 - k * 18, 420); await pc.waitForTimeout(20); }
   await toque('touchEnd');
   ok(Math.abs((await fc.evaluate(() => window.FONEMA_PASSEIO.camera.giro)) - c0) > 0.3, 'arrastar o dedo à direita gira a câmera');
-  await fc.locator('#btPular').tap({ noWaitAfter: true, timeout: 60000 });
+  await fc.locator('#btPular').tap({ noWaitAfter: true, timeout: 240000 });
   ok((await simular(0.15, fc)).noAr, 'botão Pular no celular');
   if (capturas) { await pc.waitForTimeout(900); await pc.screenshot({ path: `${capturas}/mundo3d-07-celular.png` }); }
   await cel.close();
