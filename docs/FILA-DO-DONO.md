@@ -9,8 +9,8 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 ## Em andamento / na fila
 | # | Pedido (data) | Estado | Onde |
 |---|---|---|---|
-| 1 | Tutorial de boas-vindas: panorama, como mexer, tudo o que tem, o que vai aprender e em que ordem, o que ganha; levar à 1ª missão (17/11) | 🔧 | D032 §1 |
-| 2 | Painel guia ao lado: nível, desempenho, próxima fase, barra da missão, "você está aqui" (17/11) | 🔧 (corrigir painel cobrindo a letra A) | D032 §2 |
+| 1 | Tutorial de boas-vindas: panorama, como mexer, tudo o que tem, o que vai aprender e em que ordem, o que ganha; levar à 1ª missão (17/11) | ✅ pronto no repositório (falta publicar) | D032 §1 |
+| 2 | Painel guia ao lado: nível, desempenho, próxima fase, barra da missão, "você está aqui" (17/11) | ✅ pronto no repositório (painel não cobre mais a letra A; falta publicar) | D032 §2 |
 | 3 | Mundo 3D em 3ª pessoa com o próprio boneco: andar (mouse, toque, setinhas), câmera, pular, tchau, entrar em lugares, área limitada, outros bonecos (17/11) | 🔧 | D032 §3 |
 | 4 | Nadar no rio, barco, carro, "construir uma vida", profissões (17/11) | ⏳ (parte nos jogos 3–5; mundo 3D preparado) | D032 §3 |
 | 5 | Pesquisa dos jogos mais jogados e adaptação à fonética (17/11) | ✅ pesquisa 47 | docs/pesquisa/47 |
