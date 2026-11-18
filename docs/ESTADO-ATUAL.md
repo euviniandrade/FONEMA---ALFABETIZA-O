@@ -103,7 +103,9 @@ relatório de decodificabilidade (0 erros) e capturas de AL-A, AL-X, TF-03 e TF-
 - **Falta voz** de 8 falas próprias (enunciado do "termina com", entrada dos jogos, reações do Bolota…): `app/docs/falas-pendentes.md` §1c.
 - **Verificado (17/11, cópia separada, porta 4530):** typecheck, lint, 366 testes, relatório de decodificabilidade (0 erros), build,
   E2E `node web/e2e/fluxo.e2e.mjs --jogos` (trecho `web/e2e/trecho-jogos.mjs`, também dentro do `--sem-jornada`) e capturas
-  `--capturas-jogos` (`app/docs/capturas/v10-jogos-*`, 1850×980 e 390×844). Ver a linha "E2E" abaixo para o resultado do `--sem-jornada`.
+  `--capturas-jogos` (`app/docs/capturas/v10-jogos-*`, 1850×980 e 390×844, olhadas). `--sem-jornada` (commit 0f73b27): todos os trechos
+  até J (jogos fônicos), J2 (jogos da vila) e F (fichas) passaram; **falhou no trecho M (Passeio 3D, outra frente)**: "clicar no chão leva o
+  boneco até lá", com o passeio a 0,8 quadro/s no Chromium sem placa de vídeo. Ninguém jogou no celular de verdade nem ouviu a rodada inteira.
 
 **Fichas de leitura por campo semântico (D033, pedido do dono; 17/11, noite; NÃO publicado ainda):**
 - **Onde:** Cantinho da Leitura › "Fichas de leitura" (`#/c/:id/leitura/fichas`), 6 cartões: Animais, Comidas, Coisas da casa,
