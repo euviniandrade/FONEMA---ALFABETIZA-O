@@ -5,7 +5,7 @@
  */
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { FALAS_BIBLIOTECA as B, JOGOS_ESCUTA, JOGO_ESCUTA_POR_ID, type AtividadePalmas } from '@fonema/conteudo';
-import { dadosBiblioteca, variacoesDoJogo } from '@fonema/motor';
+import { dadosBiblioteca, memoriaAberta, variacoesDoJogo } from '@fonema/motor';
 import { useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Carregando, Topo } from '../../componentes/basicos.tsx';
@@ -19,6 +19,7 @@ import { embaralhar, sementeDaTentativa } from '../../mecanicas/comum.tsx';
 import { useRegistroLivre } from './Biblioteca.tsx';
 import { JOGOS_DA_VILA, rotaDoJogoDaVila, situacaoDosJogosDaVila } from './jogos-vila-cartoes.ts';
 import { Capa, JOGOS_FONICOS, JOGO_FONICO_POR_ID, TelaJogoFonico } from '../../mecanicas/jogos/JogoFonico.tsx';
+import { CapaMemoria } from './MemoriaDosSons.tsx';
 import '../../estilos-biblioteca.css';
 
 /** Figura da capa de cada jogo. */
@@ -121,6 +122,19 @@ export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?:
                   </button>
                 );
               })}
+              {/* fila do dono nº 17: Memória dos Sons (cena do som × letra), tela em MemoriaDosSons.tsx */}
+              {(() => {
+                const aberto = memoriaAberta(progresso);
+                const vezes = d.jogos.filter((x) => x.id === 'memoria-sons').length;
+                return (
+                  <button className={`brincar-jogo-cartao cor-ceu ${aberto ? '' : 'trancado'}`} style={{ ['--k' as string]: JOGOS_FONICOS.length + JOGOS_DA_VILA.length } as CSSProperties} onClick={() => navegar(`c/${criancaId}/memoria`)} data-testid="jogo-memoria-sons">
+                    <CapaMemoria itens={['fig', 'verso', 'letra']} />
+                    <b>Memória dos Sons</b>
+                    <small>{aberto ? 'Achar o par da cena e da letra do mesmo som' : 'Abre com os primeiros sons da trilha'}</small>
+                    {vezes ? <span className="biblio-selo"><Icone nome="check" />{vezes}×</span> : null}
+                  </button>
+                );
+              })()}
             </div>
             <h2 className="brincar-secao">Brincadeiras de escutar</h2>
             <div className="brincar-grade">
