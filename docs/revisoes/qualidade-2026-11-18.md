@@ -33,33 +33,39 @@ lado, todas as respostas inteiras sem rolar e sem nada por cima, "Voltar para a 
 
 - ✅ **8** Celular: as 3 respostas lado a lado em toda tela com 3 opções (lições, brincadeiras de escutar, história; cartões que
   crescem com a altura da tela; 4 respostas em 2×2 menores); a frase "Toque no alto-falante…" sai da lição no celular.
-  ⏸ Espelho do Som com as duas vistas lado a lado (não feito).
+  Espelho do Som no celular: "De frente" e "Por dentro" empilhadas e inteiras acima do rodapé fixo (a checagem mede o quadro inteiro).
 - ✅ **11** Entrada da fase sem "(o avanço é por domínio)", sem o objetivo escrito e sem "Em casa (para o adulto)" (continua na Área
   da Família); no lugar, o botão de ouvir a fala de novo. Títulos na tela da criança sem barras de fonética: "O som /a/" aparece
   "O som do A" (a voz continua com o texto original); vale para sessão, vila, alfinetes, painel guia, álbum e selos.
 - ✅ **12** Fim da missão: sem moedas no dia, some a linha e aparece um elogio (nunca "+0"); as moedinhas voam logo no começo e o
   contador sobe de uma em uma na hora; "Próximo objetivo" só quando é outra missão de verdade (e com o título sem fonética); a
   fileira de botões fica presa embaixo no computador (com "Tchau! Voltar para a vila" primeiro) e o "Voltar" fica preso embaixo no
-  celular. ⏸ falta: a medalha 3D genérica do celular.
-- ⏸ **13** Corre-Som: NÃO resolvido por esta frente. Testei placas grandes em HTML (repetiam a letra dos arcos 3D, que na versão
-  atual param perto do boneco com a letra legível) e áreas de toque em terços iguais (no celular os arcos ficam juntos no meio, e o
-  toque no arco da esquerda caía na pista do meio): as duas coisas foram desfeitas. Falta: arcos que param mais abertos (as três pistas
-  com a mesma largura na tela), a demonstração longa e os dois botões de som do celular; o boneco "todo branco" é a roupa inicial do avatar.
+  celular. A "medalha genérica" do celular era o VERSO do selo (estrela e data) quando ele abre de costas: o selo de letra agora tem
+  a letra também no verso.
+- ✅ **13** Corre-Som: no celular a câmera ficou mais perto e mais fechada (letras dos arcos ~60 px em vez de ~40, os três arcos
+  ocupam ~70 % da largura e as faixas de toque, que seguem a posição de cada arco na tela, ficaram largas); céu e morros pintados atrás
+  da pista. (Placas HTML repetidas e terços iguais foram testados e desfeitos: repetiam a letra e erravam a pista no celular.)
+  ⏸ a demonstração longa e os dois botões de som do celular; o boneco "todo branco" é a roupa inicial do avatar.
 - ✅ **15** O convite "Dar comida ao Bolota" mostra o Bolota; no celular vira um botão redondo no canto, sem texto. ⏸ fala ao aparecer.
 - ✅ **16** (parte) Palmas: as lâmpadas acendem sem a sílaba escrita. A troca de narrador é da frente de som.
 - ✅ **18** (parte) "Falta 1 som" (singular). Cadeado e fala são da frente de desbloqueio.
 - ✅ **21** (parte) Fundos borrados sem a Sofia e o Tales quando a dupla já está na frente: arte nova só de cenário
   (`arte/paisagem-sem-dupla.webp`) na chegada, fim da missão, tutorial, alunos, PIN e painel guia. ⏸ o retrato 2D no balão ao lado
-  da dupla 3D.
+  da dupla 3D: resolvido também — onde a dupla 3D está na tela (chegada, telas do cadastro com a dupla), o balão não repete o retrato
+  2D (fica o nome de quem fala).
 - ✅ **22** (parte) Carteiro: três casinhas pintadas novas (`arte/jogos/casa-carteiro-1..3.webp`, olhadas uma a uma, com a placa em
-  branco onde entra a figura) numa rua da vila pintada (`arte/jogos/rua-vila.webp`). ⏸ Estrada, Corre-Som e Casa do Som continuam
-  com o cenário antigo.
+  branco onde entra a figura) numa rua da vila pintada (`arte/jogos/rua-vila.webp`). Estrada: campo pintado visto de cima
+  (`arte/jogos/campo-estrada.webp`); Corre-Som: céu e morros pintados (`arte/jogos/ceu-corre-som.webp`); Casa do Som: sala pintada
+  sem a dupla (`arte/jogos/sala-casa-som.webp`) e letras numa fileira só no celular; fundos dos jogos da vila sem a Sofia e o Tales.
 - ✅ **23** (parte) Barraca da Lojinha sem "SHOP" (placa com duas moedinhas); ícones 3D novos para "Meu boneco" (camiseta no
-  cabide) e "Passear 3D" (vilinha); no tutorial, cada brincadeira com a figura 3D da capa. ⏸ troféu "MESTRE LEITOR" e a
-  moeda-fantasma do porquinho.
+  cabide) e "Passear 3D" (vilinha); no tutorial, cada brincadeira com a figura 3D da capa. Troféu: arte nova sem texto
+  (`modelos3d/trofeu.webp`); o modelo 3D antigo tem "MESTRE LEITOR" EM RELEVO na malha (apagar a pintura não basta), então o troféu
+  conquistado abre o selo em 360° até haver um troféu 3D sem texto (pode ser feito na Área do administrador › Foto → 3D com a arte
+  nova). ⏸ a moeda-fantasma do porquinho no tutorial.
 - ✅ **24** Caminho da leitura: etapas futuras com cor, nome legível e cadeado pequeno.
 - ✅ **25** Tutorial: a mãozinha aponta o "Brincar" de cima, sem cobrir a palavra; no último passo só o "Vamos!".
-- ✅ **26** (parte) Vila no computador: os selos do "Última missão" sem o nome vazando. ⏸ três botões para a mesma missão.
+- ✅ **26** Vila no computador: os selos do "Última missão" sem o nome vazando; um botão grande só para a missão (o "Continuar" do
+  painel guia; o "Missão" da barra de baixo só aparece onde o painel fica fechado, no celular e tablet; a estrela do mapa marca o lugar).
 - ✅ **27** (parte) Vila no celular: sem rótulos cortados na borda (no celular os alfinetes mostram só a figura, menos a missão).
 - ✅ **28** (parte) Lojinha no celular: roupas logo abaixo do boneco (porquinho grande e frase do adulto saem; abas numa linha;
   tipos de peça numa fileira); nenhuma tela rola para o lado. O carregamento cinza do boneco é da frente do avatar.

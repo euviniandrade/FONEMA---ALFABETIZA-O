@@ -48,9 +48,13 @@ item a item está em `docs/revisoes/qualidade-2026-11-18.md` ("Situação dos it
   `--sem-jornada`): em 390×844 e 1850×980 mede chegada, Letra A cena a cena, fim da missão, vila, Lojinha, álbum, Brincar, Leitura,
   as duas trilhas, mapa, entradas de fase, lições TF-01/07/09/17 (2 min cada) e os 5 jogos. Variável `TELAS_LARGURA=390` roda só um tamanho.
 - **Verificado:** lint, typecheck e `npm test` (433 de 433) passaram; `--telas` na cópia separada (porta 4670, build do commit `c25476e`): 44 telas medidas em 390×844 e 44 em 1850×980 (29 com botões de resposta cada), 0 problemas. Capturas olhadas: `app/docs/capturas/v11-telas-*.png`. O `--sem-jornada` inteiro NÃO terminou aqui: com a máquina carregada ele passou 98 checagens sem nenhum ✗ e foi interrompido de fora dentro da Trilha dos Sons, antes de chegar ao trecho das telas; a prova da checagem nova são as rodadas `--telas` acima. Ninguém olhou num celular de verdade
-- **Falta (desta frente):** Corre-Som (arcos mais abertos/áreas de toque iguais; a tentativa foi desfeita), Espelho do Som lado a lado no celular, cenário pintado da Estrada, do Corre-Som e da Casa do Som; troféu "MESTRE LEITOR"; medalha 3D genérica
-  do celular; retrato 2D da Sofia no balão ao lado da dupla 3D; três botões para a mesma missão na vila. Do avatar: boneco "todo branco"
-  e o cinza carregando na Lojinha.
+- **Segunda volta (pedido do coordenador, "não deixar nada passar"):** Corre-Som com câmera mais perto no celular (letras ~60 px,
+  pistas largas) e céu pintado; Espelho do Som inteiro acima do rodapé no celular; cenário pintado na Estrada (campo), Corre-Som (céu)
+  e Casa do Som (sala sem a dupla); troféu com arte sem texto (o 3D com "MESTRE LEITOR" em relevo não abre mais; o selo abre em 360°
+  até haver um 3D sem texto, pela Foto → 3D); selo de letra com a letra no verso; balão sem retrato 2D onde a dupla 3D aparece; vila
+  no computador com um botão só para a missão; "Ler sozinho" trancado sem o texto; painel guia com "Próxima: …".
+- **Falta (desta frente):** troféu 3D novo sem texto; moeda-fantasma do porquinho no tutorial; demonstração longa e os dois botões de
+  som do Corre-Som no celular. Do avatar: boneco "todo branco" e o cinza carregando na Lojinha.
 
 **Avatar: olhos e tipos de cabelo; "robô" foto → 3D (fila do dono nº 20 e 19; 18/11; NÃO publicado ainda):**
 - **Olhos:** a máscara da íris estava errada (pegava parte do branco do olho e deixava pedaços castanhos). Refeita pela COR da textura
