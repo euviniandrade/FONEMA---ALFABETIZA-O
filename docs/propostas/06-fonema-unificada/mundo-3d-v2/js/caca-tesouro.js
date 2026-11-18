@@ -120,6 +120,14 @@ export function ligarCaca({ mundo, passeio, avisar }) {
     let { x, z } = def;
     const modo = def.modo || 'terra';
     if (modo === 'terra' || modo === 'agua') [x, z] = livreMaisPerto(x, z);
+    if (modo === 'barco') {
+      // de barco: o baú fica na beira da água funda (o barco vai até ~4,7 m do meio do rio e alcança a ~3,4 m)
+      const v = mundo.vila;
+      for (let i = 0; i < 80 && v.distRio(x, z) > 5.6; i++) {
+        let mx = 0, mz = 0, md = 1e9; for (const q of v.RIO_PTS) { const dd = (q.x - x) ** 2 + (q.y - z) ** 2; if (dd < md) { md = dd; mx = q.x; mz = q.y; } }
+        const l = Math.hypot(mx - x, mz - z) || 1; x += ((mx - x) / l) * 0.2; z += ((mz - z) / l) * 0.2;
+      }
+    }
     const chao = colisao.altura(x, z);
     const y = modo === 'mergulho' ? chao : modo === 'barco' ? Math.max(chao, N) : modo === 'agua' ? Math.max(chao, N - 0.05) : chao;
     const g = new THREE.Group(); g.position.set(x, y, z);
