@@ -243,10 +243,9 @@ export function SeloAmpliado({ conquista, ganha, letra, bloqueado = false, aoFec
   const [tam] = useState(tamanhoGrande);
   const mist = bloqueado && conquista.visivel_antes === 'misterio';
   const nivel = ganha && NOME_NIVEL[ganha.nivel];
-  // troféu conquistado: abre o TROFÉU 3D de verdade (o selo continua sendo a miniatura do Álbum)
-  const objeto = conquista.tipo === 'trofeu' && !bloqueado
-    ? <Modelo3D qual="trofeu" tamanho={tam} />
-    : <SeloGirando conquista={conquista} ganha={ganha} letra={letra} bloqueado={bloqueado} tamanho={tam} modo="auto" />;
+  // revisão 18/11 (item 23): o troféu 3D antigo tem "MESTRE LEITOR" em relevo (D022 pede nomes neutros, sem "Mestre"); até haver
+  // um troféu 3D sem texto (Área do administrador › Foto → 3D, com a arte nova modelos3d/trofeu.webp), o troféu abre o selo em 360°
+  const objeto = <SeloGirando conquista={conquista} ganha={ganha} letra={letra} bloqueado={bloqueado} tamanho={tam} modo="auto" />;
   return (
     <Ampliado rotulo={mist ? 'Mistério' : conquista.nome} objeto={objeto} aoFechar={aoFechar}>
       <h2 className="t">{mist ? 'Mistério' : semFonetica(conquista.nome)}</h2>
