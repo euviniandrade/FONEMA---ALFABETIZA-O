@@ -52,12 +52,18 @@ rodam em placa de vídeo gratuita, com **fila e cota diária**.
 3. Aplique: `npx tsx scripts/importar-pacote.ts fonema-pacote-3d-<nome>.zip` (confere, grava em
    `web/public/assets/<caminho>.glb` e roda os testes).
 
-**Limite honesto (18/11):** neste ambiente de trabalho do agente, os hosts `*.hf.space` (a API dos Spaces) e
-`us.aws.cdn.hf.co` (download de modelos de IA) estão **bloqueados**; só `huggingface.co` responde. Por isso o passo 2
-**não foi testado contra o serviço de verdade** daqui: o script foi testado até a chamada (pedido → pacote, com
-`--servico relevo`, e a recusa sem a confirmação de "não é pessoa"). A API dos Spaces muda sem aviso; se um passo
-falhar, o script diz qual e sugere `--servico relevo`. Liberar `trellis-community-trellis.hf.space` (e
-`tencent-hunyuan3d-2.hf.space`) no ambiente permitiria testar.
+**O que foi testado (18/11, com os hosts do Hugging Face liberados e a autorização do dono para enviar fotos de objetos):**
+- a API real dos Spaces foi conferida com o cliente oficial (`gradio_client`, `view_api`): o TRELLIS faz tudo numa chamada
+  (`/generate_and_extract_glb`); o script foi refeito para usar essa API pelo cliente em Python
+  (**precisa de `pip install gradio_client`**);
+- com a figura da **bola** do próprio app (objeto, nunca pessoa), os dois Spaces recusaram por **cota**: sem conta,
+  "You have exceeded your ZeroGPU quota" (TRELLIS) e "ZeroGPU runs limit" (Hunyuan3D-2). O Hunyuan3D-2 também está com a
+  textura quebrada no Space ("texgen_worker is not defined"); só a forma, sem cor, sairia de lá;
+- **para funcionar de verdade**: criar uma conta grátis no Hugging Face, gerar um token de leitura e rodar
+  `HF_TOKEN=<token> npx tsx scripts/foto-para-3d.ts ...` (o token nunca vai para o código nem para o repositório). Nenhum
+  modelo do "3D completo" foi gerado ainda; tamanho, giro (os modelos do projeto olham para +X) e aparência do GLB
+  devolvido ainda precisam ser conferidos no primeiro uso com token;
+- sem cota, o script avisa e sugere `--servico relevo` (o 3D feito no navegador), que funciona sempre.
 
 ## 3. Do modelo novo a um item que a criança vê
 

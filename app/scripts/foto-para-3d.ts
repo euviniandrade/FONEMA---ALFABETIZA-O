@@ -10,6 +10,7 @@
  *   npx tsx scripts/foto-para-3d.ts caminho/fonema-pedido-3d-<nome>.zip [opções]
  *     --servico trellis|hunyuan|relevo   (padrão: trellis; "relevo" usa o relevo que veio no pedido, sem internet)
  *     --space dono/nome                  outro Space do Hugging Face com a mesma API
+ *   Precisa de Python com `pip install gradio_client`; com conta grátis do Hugging Face, HF_TOKEN=<token> (mais cota).
  *     --saida PASTA                      onde gravar o pacote (padrão: a pasta do pedido)
  *     --sem-comprimir                    não passa pelo gltf-transform
  *
@@ -59,72 +60,51 @@ export function pacoteDoModelo(pedido: Pedido, glb: Uint8Array, quando = new Dat
   return montarPacoteGeral({ audios: [], edicoes: [], midias: [{ caminho: `${pedido.caminho}.glb`, dados: glb, mime: 'model/gltf-binary', nome: `${pedido.slug}.glb`, quem: pedido.quem, em: quando.getTime() }] }, quando).zip;
 }
 
-/* ------------------------------------------------------------------ serviço gratuito (gradio) */
+/* ------------------------------------------------------------------ serviço gratuito (Space do Hugging Face) */
 
-const SPACES: Record<string, { space: string; passos: { api: string; dados: (foto: unknown, anterior: unknown[]) => unknown[] }[] }> = {
-  // TRELLIS (Microsoft, licença MIT), cópia mantida pela comunidade: gera o 3D e depois extrai o GLB
-  trellis: {
-    space: 'trellis-community/TRELLIS',
-    passos: [
-      { api: 'start_session', dados: () => [] },
-      { api: 'preprocess_image', dados: (foto) => [foto] },
-      { api: 'image_to_3d', dados: (_f, ant) => [ant[0], [], 0, 7.5, 12, 3, 12, 'stochastic'] },
-      { api: 'extract_glb', dados: () => [0.95, 1024] }
-    ]
-  },
-  // Hunyuan3D-2 (Tencent): forma + textura
-  hunyuan: { space: 'tencent/Hunyuan3D-2', passos: [{ api: 'generation_all', dados: (foto) => ['', foto, null, null, null, null, 30, 5, 1234, 256, true, 8000, true] }] }
-};
+/**
+ * API conferida em 18/11 com `gradio_client` (view_api):
+ *  - TRELLIS (trellis-community/TRELLIS): UMA chamada, /generate_and_extract_glb (imagem → GLB com textura);
+ *  - Hunyuan3D-2 (tencent/Hunyuan3D-2): /generation_all (forma + textura). Em 18/11 a parte de textura do Space
+ *    estava quebrada ("texgen_worker is not defined"); /shape_generation dá só a forma, sem cor.
+ * A chamada vai pelo cliente oficial em Python (`pip install gradio_client`), que cuida da fila e da sessão.
+ * Cota: os Spaces usam ZeroGPU; SEM conta a cota é mínima e acaba logo (em 18/11, daqui: "You have exceeded your
+ * ZeroGPU quota"). Com uma conta grátis do Hugging Face, ponha o token em HF_TOKEN (nunca no código).
+ */
+const PY_GRADIO = `
+import json, os, shutil, sys
+from gradio_client import Client, handle_file
+servico, space, foto, saida = sys.argv[1:5]
+c = Client(space, token=os.environ.get("HF_TOKEN") or None, verbose=False)
+if servico == "trellis":
+    r = c.predict(handle_file(foto), [], 0, 7.5, 12, 3.0, 12, "stochastic", 0.95, 1024, api_name="/generate_and_extract_glb")
+    glb = r[2]
+else:
+    r = c.predict(None, handle_file(foto), None, None, None, None, 30, 5.0, 1234, 256, True, 8000, False, api_name="/generation_all")
+    glb = r[1]
+shutil.copy(glb, saida)
+print(json.dumps({"ok": True}))
+`;
 
-const urlDoSpace = (s: string) => `https://${s.toLowerCase().replace(/[/_.]/g, '-')}.hf.space`;
-
-async function chamarGradio(base: string, api: string, dados: unknown[]): Promise<unknown[]> {
-  const r = await fetch(`${base}/gradio_api/call/${api}`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ data: dados }) });
-  if (!r.ok) throw new Error(`${api}: o serviço respondeu ${r.status}`);
-  const { event_id: id } = (await r.json()) as { event_id: string };
-  const ev = await fetch(`${base}/gradio_api/call/${api}/${id}`);
-  const texto = await ev.text();
-  const erro = /event: error\ndata: (.*)/.exec(texto);
-  if (erro) throw new Error(`${api}: ${erro[1] || 'erro no serviço (fila cheia ou cota do dia acabou?)'}`);
-  const fim = [...texto.matchAll(/event: complete\ndata: (.*)/g)].pop();
-  if (!fim) throw new Error(`${api}: o serviço não terminou`);
-  return JSON.parse(fim[1]) as unknown[];
-}
-
-async function enviarArquivo(base: string, dados: Uint8Array, nome: string): Promise<unknown> {
-  const fd = new FormData();
-  fd.append('files', new Blob([dados as BlobPart], { type: 'image/png' }), nome);
-  const r = await fetch(`${base}/gradio_api/upload`, { method: 'POST', body: fd });
-  if (!r.ok) throw new Error(`envio da foto: o serviço respondeu ${r.status}`);
-  const [caminho] = (await r.json()) as string[];
-  return { path: caminho, meta: { _type: 'gradio.FileData' }, orig_name: nome };
-}
-
-/** Acha, na resposta do gradio, o primeiro arquivo .glb e baixa. */
-async function baixarGlb(base: string, resposta: unknown): Promise<Uint8Array> {
-  const achar = (x: unknown): string | null => {
-    if (!x || typeof x !== 'object') return null;
-    const o = x as Record<string, unknown>;
-    for (const k of ['url', 'path']) if (typeof o[k] === 'string' && /\.glb(\?|$)/i.test(o[k] as string)) return o[k] as string;
-    for (const v of Object.values(o)) { const a = achar(v); if (a) return a; }
-    return null;
-  };
-  const alvo = achar(resposta);
-  if (!alvo) throw new Error('O serviço não devolveu um .glb.');
-  const url = /^https?:/.test(alvo) ? alvo : `${base}/gradio_api/file=${alvo}`;
-  const r = await fetch(url);
-  if (!r.ok) throw new Error(`download do modelo: ${r.status}`);
-  return new Uint8Array(await r.arrayBuffer());
-}
+const SPACES: Record<string, string> = { trellis: 'trellis-community/TRELLIS', hunyuan: 'tencent/Hunyuan3D-2' };
 
 export async function gerarNoServico(servico: string, foto: Uint8Array, space?: string): Promise<Uint8Array> {
-  const cfg = SPACES[servico];
-  if (!cfg) throw new Error(`Serviço desconhecido: ${servico}`);
-  const base = urlDoSpace(space ?? cfg.space);
-  const arquivo = await enviarArquivo(base, foto, 'foto.png');
-  let anterior: unknown[] = [];
-  for (const p of cfg.passos) anterior = await chamarGradio(base, p.api, p.dados(arquivo, anterior) as unknown[]);
-  return baixarGlb(base, anterior);
+  if (!SPACES[servico]) throw new Error(`Serviço desconhecido: ${servico}`);
+  const pasta = mkdtempSync(join(tmpdir(), 'foto3d-servico-'));
+  try {
+    const ent = join(pasta, 'foto.png'), sai = join(pasta, 'modelo.glb'), py = join(pasta, 'chamar.py');
+    writeFileSync(ent, foto);
+    writeFileSync(py, PY_GRADIO);
+    const r = spawnSync('python3', ['-I', py, servico, space ?? SPACES[servico], ent, sai], { encoding: 'utf8', timeout: 15 * 60_000 });
+    if (r.status !== 0 || !existsSync(sai)) {
+      const msg = `${r.stderr ?? ''}${r.stdout ?? ''}`;
+      if (/No module named .gradio_client/.test(msg)) throw new Error('falta o cliente do gradio: pip install gradio_client');
+      if (/ZeroGPU (quota|runs limit)/i.test(msg)) throw new Error('acabou a cota grátis de placa de vídeo do Space (ZeroGPU). Crie uma conta grátis no Hugging Face e rode com HF_TOKEN=... (ou tente amanhã).');
+      const ultima = msg.trim().split('\n').filter(Boolean).pop() ?? `saída ${r.status}`;
+      throw new Error(ultima.slice(0, 300));
+    }
+    return new Uint8Array(readFileSync(sai));
+  } finally { rmSync(pasta, { recursive: true, force: true }); }
 }
 
 function comprimir(glb: Uint8Array): Uint8Array {
