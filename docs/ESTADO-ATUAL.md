@@ -54,6 +54,34 @@ item a item está em `docs/revisoes/qualidade-2026-11-18.md` ("Situação dos it
 - **Verificado:** typecheck, lint, testes (novos: `relevo.test.ts`, `foto-para-3d.test.ts`, catálogo de cabelos), build, E2E `--foto3d`
   (7 ✓) e folha `docs/propostas/06-fonema-unificada/avatar-3d/folha-v2.jpg` (olhada). `--sem-jornada`: ver o relatório do agente.
 
+**Passeio 3D: o MUNDO com cara de jogo, fundo do rio e trilha sonora (fila do dono nº 24, parte do mundo; 18/11; NÃO publicado ainda):**
+fonte em `docs/propostas/06-fonema-unificada/mundo-3d-v2` (copiada no build para `public/mundo3d`, fora do precache). Arquivos novos:
+`js/materiais.js`, `js/grama.js`, `js/submerso.js`, `js/som.js`; mexidos: `mundo.js`, `vila.js`, `agua.js`, `ceu.js` (o boneco, a colisão,
+`passeio.js`, `npcs.js` e o HUD são da frente do boneco). README do mundo, seção 5, tem a tabela por qualidade.
+- **Visual:** grama de perto de verdade (até 42 mil folhinhas numa malha só, num tapete que acompanha a criança, balança em rajadas e
+  deita onde o boneco pisa; só nasce onde o chão é verde); chão com manchas, pedrinhas e relevo fino; telha em fiadas, veio de madeira e
+  reboco nos prédios; florzinhas com pétalas (eram bolinhas); céu com véu de nuvens altas e disco do sol; nuvens com base sombreada.
+  Tudo procedural (nenhuma textura ou arte de terceiros).
+- **Rio:** o meio ficou mais fundo (3,2 m de água; a beirinha rasa e a colisão não mudaram); a água vai até o barranco (acabou a faixa
+  de areia "seca" entre a água e a grama); transparente na beira (vê-se o fundo, as pedras e os peixes), espelho no meio, brilho do sol nas
+  ondinhas, espuma que vai e volta; luz dançando (cáusticas) no fundo.
+- **Embaixo d'água** (liga sozinho quando a câmera passa da superfície; API `mundo.submerso(true|false|'auto')`, `mundo.agua.nivel/fundo/
+  profundidade/noRio`, `mundo.pe`): névoa verde-azulada, raios de luz, partículas, bolhas saindo do boneco, 4 cardumes de peixinhos (boids:
+  nadam juntos, nunca saem da água, se espalham quando o boneco chega perto), uma tartaruga, plantas que balançam, pedras, aguapés com
+  flores na beira. Com o véu azul que a página já tinha, o mundo não põe outro.
+- **Som** (`js/som.js`, carregado depois que o mundo aparece; começa no 1º toque): trilha **original** composta em código (Web Audio:
+  kalimba, às vezes flautinha, acordes, baixo e chocalho bem baixo; 16 compassos em Dó maior que voltam com variações) — decisão do
+  projeto, sem música de terceiros e sem gastar crédito; ambiente por lugar (passarinhos na praça, água perto do rio, vento no alto, tudo
+  abafado no mergulho). Botão 🔊/🔇 no canto (tecla M, fica salvo). "Menos movimento" = trilha mais baixa, sem chocalho, menos passarinhos.
+  A trilha abaixa quando há cartão aberto (as falas tocam por cima). Medido sem som (`medirTrilha`): pico -15 dB, volume médio ~-32 dB.
+  **Ninguém ouviu ainda**: só medido.
+- **Qualidade:** no "baixo" (celular fraco e navegador de teste) não há grama de perto, acabamento nem cáusticas — o acabamento nem entra
+  no programa (medido: mesmo custo de antes, ~2,3 s/quadro nos dois no Chromium sem placa de vídeo). Peso novo: 55 KB de código (~20 KB
+  comprimido), nenhum arquivo de mídia.
+- **Verificado (cópia separada, porta 4650):** typecheck, lint, 424 testes, build, E2E `--mundo3d` verde (33 ✓); `--sem-jornada`: ver o
+  relatório. Capturas antes/depois olhadas (praça, rio, embaixo d'água). **Não testado:** aparelho real (FPS do médio/alto num celular de
+  verdade), o som num alto-falante.
+
 **Passeio 3D: andar, nadar e mergulhar (fila do dono nº 21 e 24; 18/11; NÃO publicado ainda):** queixa do dono: "o personagem não
 anda, ele fica pulando, e ele não nada, ele some no mar". Causa: os modelos (Tripo) são uma malha inteira sem esqueleto e a
 animação antiga sacudia o corpo inteiro; no rio, o corpo deitado ficava abaixo da linha d'água.
