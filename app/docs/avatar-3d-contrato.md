@@ -61,7 +61,7 @@ o modelo gerado deve seguir o padrão dos dois que já existem:
 
 Regiões da máscara (`<nome>.mascara.png`, 1024 px): canal **R** = região — `0` não muda · `1` pele (inclui o corado
 das bochechas e a boca) · `2` cabelo e sobrancelhas · `3` íris · `4` camiseta · `5` calça · `6` calçado; canal **G** =
-peso (na íris: distância ao centro, para desenhar pupila e contorno). Ficam **fora** (nunca mudam): a letra A, o
+peso (na íris: quanto o texel é íris, pela cor; a borda é suave). Ficam **fora** (nunca mudam): a letra A, o
 branco dos olhos, o brilho da íris, a linha dos cílios e a sola do tênis.
 
 Como o app aplica as cores (`app/web/src/avatar3d/avatarGlb.ts › recolorir`), sempre em luz linear:
@@ -86,8 +86,11 @@ Sem cor escolhida, a região fica exatamente como o modelo veio.
 
 ## 5. O que ainda depende de modelo próprio
 
-- **Tipos de cabelo:** as artes de referência estão em `docs/propostas/06-fonema-unificada/avatar-3d/padrao/variacoes/`
-  (menina: black, cacheado, coque, rabo, tranças; menino: cacheado, crespo, franja, topete). Falta gerar os GLB.
+- **Tipos de cabelo:** desde 18/11 são **peças feitas em código** (`app/web/src/avatar3d/cabelos.ts`), encaixadas no crânio
+  medido do modelo padrão; o cabelo do modelo é cortado rente (canal **B** da máscara: 255 = cabelo que sai, 128 = nuca que vira
+  pele). Peça de catálogo com `penteado` (em `conteudo/src/avatar.ts › CABELOS`). Um GLB inteiro por tipo de cabelo continua
+  possível (campo `modelo`), mas não é mais necessário. Conferência: `web/bancada-avatar.html` e
+  `docs/propostas/06-fonema-unificada/avatar-3d/folha-v2.jpg`.
 - **Cadeira de rodas:** o modelo é uma malha única, em pé e sem esqueleto. Precisa de um **modelo sentado na
   cadeira** por sexo (ex.: `avatar-menina-padrao-cadeira.glb`, mesma roupa branca). Enquanto não existir, o item fica
   fora da tela (o dado do cadastro é preservado).

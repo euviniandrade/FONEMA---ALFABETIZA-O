@@ -9,6 +9,32 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Avatar: olhos e tipos de cabelo; "robô" foto → 3D (fila do dono nº 20 e 19; 18/11; NÃO publicado ainda):**
+- **Olhos:** a máscara da íris estava errada (pegava parte do branco do olho e deixava pedaços castanhos). Refeita pela COR da textura
+  (`app/ferramentas/avatar-mascaras.py`: castanho da íris perto do branco do olho, longe da pele, crescendo pelas costuras da textura);
+  o app troca só a íris seguindo o claro-escuro original (`avatar3d/avatarGlb.ts › recolorir`). Pupila, brilho, cílios e branco não
+  mudam. 7 cores: castanho-escuro (padrão), castanho-claro, mel, verde, azul, cinza, preto. No menino ficou limpo; na menina a pintura
+  original do olho é picada em várias ilhas e sobra uma beirinha escura na íris (aceitável, olhado de perto).
+- **Cabelos:** 22 tipos (menina: liso no ombro, comprido, com franja, curtinho, ondulado, cacheado, black power, crespo curtinho,
+  puffs, tranças, rabo de cavalo, coque; menino: liso curto, raspadinho, franja, liso repartido, ondulado, cacheado, crespo curtinho,
+  black power, twists, topete), todos com a cor de cabelo escolhida. Caminho que funcionou: **(b) peças feitas em código com three.js**
+  (`web/src/avatar3d/cabelos.ts`: mechas, molas, volume crespo, tranças). O cabelo pintado no modelo é "cortado rente" ao crânio
+  (canal B da máscara; a menina ganha um colarinho de pele na nuca) e a peça vai por cima. Os GLB originais NÃO foram mexidos (servem ao
+  passeio articulado). O caminho (a) image-to-3D grátis ficou bloqueado aqui: `*.hf.space` (API dos Spaces) e `us.aws.cdn.hf.co`
+  (pesos de modelos) dão 403 no proxy; Higgsfield não foi usado. Catálogo em `conteudo/src/avatar.ts › CABELOS` (`penteado`); o passo
+  "Penteado" e a aba Cabelo da Lojinha aparecem sozinhos. Coque e topete seguem com cadeado (D034).
+- **Limites honestos:** o "cortado rente" da menina às vezes deixa dois tufinhos escuros junto ao queixo e a franja original dela aparece
+  por baixo de alguns penteados (vista de lado, uma pontinha na testa); o liso repartido e a franja de menino ficam parecidos; as
+  peças são estilizadas (não esculpidas como o cabelo original). Ninguém viu num celular de verdade. Bancada: `web/bancada-avatar.html`.
+- **Foto → 3D:** Admin › Foto → 3D (`telas/admin/foto3d/`): aviso LGPD, só abre a foto com a confirmação "não é pessoa" e recusa foto
+  com rosto quando o navegador sabe procurar (FaceDetector); tira o fundo, faz um **relevo inflado** (grátis, na hora, gira 360° — não
+  inventa o verso) e coloca no lugar do troféu/baú/porquinho ou como modelo novo em `modelos3d/itens/` (vai no pacote do Publicar).
+  "Pedir o 3D completo" baixa um pedido para `app/scripts/foto-para-3d.ts` (TRELLIS/Hunyuan3D por Space grátis; **não testado contra o
+  serviço**, hosts bloqueados aqui). Modelo novo ainda precisa de uma linha no catálogo para virar peça da Lojinha/objeto do passeio.
+  Passo a passo: `app/docs/como-transformar-foto-em-3d.md`.
+- **Verificado:** typecheck, lint, testes (novos: `relevo.test.ts`, `foto-para-3d.test.ts`, catálogo de cabelos), build, E2E `--foto3d`
+  (7 ✓) e folha `docs/propostas/06-fonema-unificada/avatar-3d/folha-v2.jpg` (olhada). `--sem-jornada`: ver o relatório do agente.
+
 **Passeio 3D: andar, nadar e mergulhar (fila do dono nº 21 e 24; 18/11; NÃO publicado ainda):** queixa do dono: "o personagem não
 anda, ele fica pulando, e ele não nada, ele some no mar". Causa: os modelos (Tripo) são uma malha inteira sem esqueleto e a
 animação antiga sacudia o corpo inteiro; no rio, o corpo deitado ficava abaixo da linha d'água.
