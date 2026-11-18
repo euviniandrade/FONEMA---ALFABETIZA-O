@@ -50,7 +50,7 @@ describe('Trilha dos Sons, blocos 4 e 5', () => {
       if (a?.tipo === 'caixas') for (const i of a.itens) naJornada.add(i.palavra.toLowerCase());
     }
     const semVoz = [...naJornada].filter((w) => !VOZ[`sofia|${w}`]);
-    expect(semVoz.length).toBeGreaterThan(0); // hoje: as palavras novas (lista em app/docs/falas-pendentes.md)
+    // sem voz gravada, a palavra precisa poder tocar em sons puros emendados (hoje todas as da jornada já têm voz)
     for (const w of semVoz) {
       const sons = LEITURAS_EM_SONS[w];
       expect(sons, `"${w}" sem voz e sem sons`).toBeDefined();
