@@ -58,7 +58,7 @@ export function CorreSom({ itens, crianca, sessao, cena, contexto, enunciado, de
   const [acesa, setAcesa] = useState<number | null>(null);
   const [aqui, setAqui] = useState(1);
   const [maozinha, setMaozinha] = useState(true);
-  const [, setColunas] = useState([1 / 6, 0.5, 5 / 6]);
+  const [colunas, setColunas] = useState([1 / 6, 0.5, 5 / 6]);
   const vivo = useRef(true);
   const escolha = useRef<((k: number) => void) | null>(null);
   const auto = useRef<number | undefined>(undefined);
@@ -287,8 +287,7 @@ export function CorreSom({ itens, crianca, sessao, cena, contexto, enunciado, de
   };
 
   // áreas de toque: uma por pista, divididas no meio do caminho entre as pistas (na tela)
-  // revisão 18/11 (item 13): as três áreas de toque têm a MESMA largura (terço da tela), cada uma com a placa da sua pista
-  const cortes = [0, 1 / 3, 2 / 3, 1];
+  const cortes = [0, (colunas[0] + colunas[1]) / 2, (colunas[1] + colunas[2]) / 2, 1];
   const escolhendo = fase === 'escolher';
   const ehFigura = item.formato !== 'som-letra';
   return (
@@ -322,13 +321,13 @@ export function CorreSom({ itens, crianca, sessao, cena, contexto, enunciado, de
         {ehFigura && escolhendo ? (
           <div className="cs-nomes">
             {[0, 1, 2].map((k) => (
-              <button key={k} className="cs-nome" style={{ left: `${(k * 2 + 1) / 6 * 100}%` } as CSSProperties} aria-label={`Ouvir o nome da figura ${k + 1}`} onClick={(e) => { e.stopPropagation(); efeitos.toque(); void dizerFigura(item.opcoes[k]); }}>
+              <button key={k} className="cs-nome" style={{ left: `${colunas[k] * 100}%` } as CSSProperties} aria-label={`Ouvir o nome da figura ${k + 1}`} onClick={(e) => { e.stopPropagation(); efeitos.toque(); void dizerFigura(item.opcoes[k]); }}>
                 <Icone nome="som" />
               </button>
             ))}
           </div>
         ) : null}
-        {maozinha && (escolhendo || fase === 'correndo') && !emDemo ? <span className="cs-maozinha" aria-hidden="true" style={{ left: `${((aqui === 0 ? 2 : 0) * 2 + 1) / 6 * 100}%` } as CSSProperties} /> : null}
+        {maozinha && (escolhendo || fase === 'correndo') && !emDemo ? <span className="cs-maozinha" aria-hidden="true" style={{ left: `${colunas[aqui === 0 ? 2 : 0] * 100}%` } as CSSProperties} /> : null}
       </div>
       <div className="jogo-rodape">
         <button className="btn grande jogo-pular" onClick={confirmarOuPular} disabled={fase !== 'correndo' && !escolhendo} data-testid="cs-pular">

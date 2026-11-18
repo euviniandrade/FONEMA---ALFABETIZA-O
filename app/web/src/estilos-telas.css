@@ -21,18 +21,18 @@ html,body{overflow-x:clip}
   /* a frase "Toque no alto-falante…" é para quem lê: no celular fica só o alto-falante grande */
   .tela-sessao .dica-ouvir{display:none}
   /* três respostas lado a lado; quatro em 2×2 menores */
-  .tela-sessao .opcoes.n3{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-  .tela-sessao .opcoes.n3 .opcao{min-height:clamp(112px,17vh,156px);padding:8px 4px}
-  .tela-sessao .opcoes.n3 .opcao .fig{width:clamp(80px,12.5vh,112px);height:clamp(80px,12.5vh,112px)}
-  .tela-sessao .opcoes.n3 .opcao .letra{font-size:64px}
-  .tela-sessao .opcoes.n3 .opcao .rot{font-size:16px}
-  .tela-sessao .opcoes.n3 .opcao-ouvir{width:38px;height:38px;right:-4px;top:-8px}.tela-sessao .opcoes.n3 .opcao-ouvir .ic{width:28px;height:28px}
-  .tela-sessao .opcoes.n4{gap:10px}
-  .tela-sessao .opcoes.n4 .opcao{min-height:clamp(112px,15vh,140px)}
-  .tela-sessao .opcoes.n4 .opcao .fig{width:84px;height:84px}
-  .tela-sessao .opcoes.n4 .opcao .letra{font-size:64px}
+  .opcoes.n3{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .opcoes.n3 .opcao{min-height:clamp(112px,17vh,156px);padding:8px 4px}
+  .opcoes.n3 .opcao .fig{width:clamp(80px,12.5vh,112px);height:clamp(80px,12.5vh,112px)}
+  .opcoes.n3 .opcao .letra{font-size:64px}
+  .opcoes.n3 .opcao .rot{font-size:16px}
+  .opcoes.n3 .opcao-ouvir{width:38px;height:38px;right:-4px;top:-8px}.opcoes.n3 .opcao-ouvir .ic{width:28px;height:28px}
+  .opcoes.n4{gap:10px}
+  .opcoes.n4 .opcao{min-height:clamp(112px,15vh,140px)}
+  .opcoes.n4 .opcao .fig{width:84px;height:84px}
+  .opcoes.n4 .opcao .letra{font-size:64px}
   .tela-sessao .opcao.opcao-som{min-height:104px}
-  .tela-sessao .opcoes.n3 .som-botao{width:68px;height:68px}.tela-sessao .opcoes.n3 .som-botao .ic{width:62px;height:62px}
+  .opcoes.n3 .som-botao{width:68px;height:68px}.opcoes.n3 .som-botao .ic{width:62px;height:62px}
   /* "Dar comida ao Bolota"/"Jogar no Corre-Som": vira um botão redondo no canto do título (a criança não lê o texto) */
   .tela-sessao .mec-escolher>.jogo-desafio{position:absolute;top:-46px;right:-2px;margin:0;min-height:0;padding:4px;width:auto;font-size:0;gap:0}
   .tela-sessao .mec-escolher>.jogo-desafio .rot{display:none}
@@ -41,8 +41,6 @@ html,body{overflow-x:clip}
   /* "Dar comida ao Bolota": o próprio Bolota no botão (a criança reconhece o bichinho, não lê o texto) */
   .tela-sessao .mec-escolher>.jogo-desafio.come .jogo-desafio-ic{background:#FFF3D0 url(/assets/vivos/corpo/bolota-parado.webp) center 30%/120% auto no-repeat;box-shadow:inset 0 0 0 3px #37A862}
   .tela-sessao .mec-escolher>.jogo-desafio.come .jogo-desafio-ic .ic{display:none}
-  /* Espelho do Som: as duas vistas lado a lado, acima do rodapé fixo */
-  .tela-sessao .mec-espelho .espelho-palco{grid-template-columns:1fr 1fr}
 }
 
 /* ---------- Lojinha no celular: roupas logo abaixo do boneco; porquinho pequeno ---------- */

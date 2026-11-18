@@ -31,8 +31,9 @@ Feito e conferido pela checagem automática nova (`app/web/e2e/trecho-telas.mjs`
 lado, todas as respostas inteiras sem rolar e sem nada por cima, "Voltar para a vila" à vista no fim da missão, nada de "/a/",
 "domínio", "para o adulto" ou "+0 moedinhas" na tela da criança) e por capturas olhadas uma a uma.
 
-- ✅ **8** Celular: as 3 respostas lado a lado (cartões que crescem com a altura da tela; 4 respostas em 2×2 menores); a frase
-  "Toque no alto-falante…" sai do celular; Espelho do Som com as duas vistas lado a lado.
+- ✅ **8** Celular: as 3 respostas lado a lado em toda tela com 3 opções (lições, brincadeiras de escutar, história; cartões que
+  crescem com a altura da tela; 4 respostas em 2×2 menores); a frase "Toque no alto-falante…" sai da lição no celular.
+  ⏸ Espelho do Som com as duas vistas lado a lado (não feito).
 - ✅ **11** Entrada da fase sem "(o avanço é por domínio)", sem o objetivo escrito e sem "Em casa (para o adulto)" (continua na Área
   da Família); no lugar, o botão de ouvir a fala de novo. Títulos na tela da criança sem barras de fonética: "O som /a/" aparece
   "O som do A" (a voz continua com o texto original); vale para sessão, vila, alfinetes, painel guia, álbum e selos.
@@ -40,9 +41,10 @@ lado, todas as respostas inteiras sem rolar e sem nada por cima, "Voltar para a 
   contador sobe de uma em uma na hora; "Próximo objetivo" só quando é outra missão de verdade (e com o título sem fonética); a
   fileira de botões fica presa embaixo no computador (com "Tchau! Voltar para a vila" primeiro) e o "Voltar" fica preso embaixo no
   celular. ⏸ falta: a medalha 3D genérica do celular.
-- ✅ **13** (parte) Corre-Som: as três áreas de toque com a mesma largura (terço da tela cada). As letras: na versão atual os arcos 3D
-  param perto do boneco com a placa grande da letra (uma placa HTML extra foi testada e tirada, porque repetia a letra). ⏸ falta: o boneco "todo branco" (é a roupa inicial do avatar — frente do avatar), a demonstração longa e os
-  dois botões de som do celular.
+- ⏸ **13** Corre-Som: NÃO resolvido por esta frente. Testei placas grandes em HTML (repetiam a letra dos arcos 3D, que na versão
+  atual param perto do boneco com a letra legível) e áreas de toque em terços iguais (no celular os arcos ficam juntos no meio, e o
+  toque no arco da esquerda caía na pista do meio): as duas coisas foram desfeitas. Falta: arcos que param mais abertos (as três pistas
+  com a mesma largura na tela), a demonstração longa e os dois botões de som do celular; o boneco "todo branco" é a roupa inicial do avatar.
 - ✅ **15** O convite "Dar comida ao Bolota" mostra o Bolota; no celular vira um botão redondo no canto, sem texto. ⏸ fala ao aparecer.
 - ✅ **16** (parte) Palmas: as lâmpadas acendem sem a sílaba escrita. A troca de narrador é da frente de som.
 - ✅ **18** (parte) "Falta 1 som" (singular). Cadeado e fala são da frente de desbloqueio.

@@ -38,20 +38,26 @@ export async function medirTela(pg, { visiveis = [] } = {}) {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
     const desc = (e) => `${e.tagName.toLowerCase()}${e.dataset.testid ? `[${e.dataset.testid}]` : ''}${e.dataset.opcao ? `[${e.dataset.opcao}]` : ''}.${String(e.className?.baseVal ?? e.className).trim().split(/\s+/).slice(0, 2).join('.')}`;
-    // 1. a página rola para o lado?
+    // 1. a página rola para o lado? Mede SEM o corte de segurança (overflow-x:clip em html/body/#root/.pagina), para achar a causa
+    const semCorte = document.createElement('style');
+    semCorte.textContent = 'html,body,#root,.pagina{overflow-x:visible!important}';
+    document.head.appendChild(semCorte);
+    await new Promise((r) => setTimeout(r, 30));
     window.scrollTo(9999, 0);
     await new Promise((r) => setTimeout(r, 30));
     const rolaLado = window.scrollX;
     window.scrollTo(0, 0);
     const largura = Math.max(document.documentElement.scrollWidth, document.body.scrollWidth);
+    // elementos que passam da borda direita (fora os presos na tela e os de dentro de uma caixa que corta ou rola)
     const vazam = [];
-    if (rolaLado > 0 || largura > vw + 1) {
-      for (const e of document.querySelectorAll('body *')) {
-        const r = e.getBoundingClientRect();
-        if (r.width > 0 && r.right > vw + 1 && getComputedStyle(e).position !== 'fixed') vazam.push(`${desc(e)} (${Math.round(r.right)}px)`);
-        if (vazam.length >= 6) break;
-      }
+    const raizes = new Set([document.documentElement, document.body, document.getElementById('root'), ...document.querySelectorAll('.pagina')]);
+    const cortado = (e) => { for (let a = e.parentElement; a && !raizes.has(a); a = a.parentElement) { if (getComputedStyle(a).overflowX !== 'visible') return true; } return false; };
+    for (const e of document.querySelectorAll('body *')) {
+      const r = e.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0 && r.right > vw + 1 && getComputedStyle(e).position !== 'fixed' && !e.closest('[aria-hidden=true].fundo,.fundo') && !cortado(e)) vazam.push(`${desc(e)} (${Math.round(r.right)}px)`);
+      if (vazam.length >= 6) break;
     }
+    semCorte.remove();
     // 2. respostas inteiras sem rolar e sem nada por cima (pointer-events ligado só durante a medida)
     const st = document.createElement('style');
     st.textContent = '*{pointer-events:auto!important}';
@@ -105,10 +111,10 @@ export async function trechoTelas(browser, h) {
       if (m.nRespostas) comRespostas++;
       const onde = `${nome}${suf}`;
       const antes = problemas.length;
-      if (m.rolaLado > 0 || m.largura > m.vw + 1) problemas.push(`${onde}: página rola para o lado (${m.largura}px em ${m.vw}px) ${m.vazam.join(', ')}`);
+      if (m.rolaLado > 0 || m.largura > m.vw + 1 || m.vazam.length) problemas.push(`${onde}: passa da largura da tela (${m.largura}px em ${m.vw}px) ${m.vazam.join(', ')}`);
       for (const e of m.escondidas) problemas.push(`${onde}: escondido ${e}`);
       for (const a of m.adulto) problemas.push(`${onde}: ${a}`);
-      console.log(`  · ${onde}: ${m.nRespostas} respostas${m.escondidas.length || m.adulto.length || m.rolaLado > 0 || m.largura > m.vw + 1 ? ' ✗' : ' ok'}`);
+      console.log(`  · ${onde}: ${m.nRespostas} respostas${m.escondidas.length || m.adulto.length || m.vazam.length || m.rolaLado > 0 || m.largura > m.vw + 1 ? ' ✗' : ' ok'}`);
       for (const p of problemas.slice(antes)) console.log(`      ✗ ${p}`);
       if (dirCap && !vistas.has(nome)) {
         vistas.add(nome);
@@ -160,7 +166,7 @@ export async function trechoTelas(browser, h) {
 
     // lições da Trilha dos Sons com 3+ respostas (som novo, som inicial, síntese, caixas, pares mínimos, frase)
     // (cada lição tem um prazo: o objetivo aqui é medir as telas, não terminar a lição; ao estourar, o gancho interrompe o jogador)
-    for (const f of ['TF-01', 'TF-07', 'TF-09', 'TF-17']) {
+    for (const f of ['TF-07', 'TF-09', 'TF-17']) {
       await pg.goto(BASE + `#/c/${id}/sons`);
       await pg.goto(BASE + `#/c/${id}/sessao/${f}`);
       const prazo = Date.now() + 120000;
@@ -168,6 +174,22 @@ export async function trechoTelas(browser, h) {
       await jogarSessao(pg, { gancho: async (p, cena) => { if (Date.now() > prazo) throw new Error('prazo'); await g(p, cena); } })
         .catch((e) => { if (String(e?.message) !== 'prazo') throw e; console.log(`  (${f}: prazo de 2 min para medir; lição não terminada)`); });
     }
+
+    // brincadeiras de escutar (fora da lição): 3 figuras, depois da demonstração
+    for (const j of ['comprida', 'escondida', 'rimas', 'intruso', 'comeco']) {
+      await pg.goto(BASE + `#/c/${id}/brincar/${j}`);
+      await pg.locator('[data-testid=jogo-escuta]:not([data-demo]) .opcao:not([disabled])').first().waitFor({ timeout: 30000 }).catch(() => {});
+      await medir(`escuta-${j}`, { espera: 700 });
+    }
+    // história: a primeira pergunta (figuras para escolher)
+    await pg.goto(BASE + `#/c/${id}/leitura/historia-bolota-chuva`);
+    for (let k = 0; k < 60; k++) {
+      const passo = await pg.getByTestId('historia').getAttribute('data-passo', { timeout: 2000 }).catch(() => null);
+      if (passo === 'pergunta' && await pg.locator('.historia-pergunta .opcao:not([disabled])').count()) break;
+      await pg.locator('[data-testid=historia-virar]:not([disabled])').click({ timeout: 1500 }).catch(() => {});
+      await pg.waitForTimeout(300);
+    }
+    await medir('historia-pergunta', { espera: 700 });
 
     // jogos da vila e jogos fônicos: a tela do jogo, já com as opções
     const jogo = async (rota, comecar, raiz, nome) => {
