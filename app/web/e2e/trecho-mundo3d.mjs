@@ -45,6 +45,10 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
     return px;
   });
   ok(amarelo > 40, `o boneco no mundo é o da criança, com a camiseta amarela escolhida (${amarelo} texels amarelos)`);
+  // o boneco é o avatar montado no app (não o bonequinho de reserva): malha do avatar com textura, e os 5 da vila também
+  const modelos = await frame.evaluate(() => { const p = window.FONEMA_PASSEIO; const info = (b) => { let v = 0, mapa = false; b.modelo.traverse((o) => { if (o.isMesh && !b.silhuetas.includes(o)) { v += o.geometry.attributes.position.count; mapa ||= !!o.material.map; } }); return { origem: b.origem || 'reserva', v, mapa }; }; return { eu: info(p.boneco), npcs: p.npcs.lista.map((n) => ({ id: n.id, ...info(n.boneco) })) }; });
+  ok(modelos.eu.origem === 'app' && modelos.eu.v > 5000 && modelos.eu.mapa, `é o PRÓPRIO avatar (veio do app, ${modelos.eu.v} vértices, com textura), não a reserva`);
+  ok(modelos.npcs.every((n) => n.origem === 'app' && n.v > 5000 && n.mapa), `os bonecos da vila também são os modelos de verdade (${modelos.npcs.map((n) => `${n.id} ${n.v}`).join(', ')})`);
   if (capturas) { await pg.waitForTimeout(1500); await pg.screenshot({ path: `${capturas}/mundo3d-01-chegada.png` }); }
 
   const pos = () => frame.evaluate(() => window.FONEMA_PASSEIO.posicao);

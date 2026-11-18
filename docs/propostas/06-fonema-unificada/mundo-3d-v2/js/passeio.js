@@ -415,14 +415,14 @@ export function criarPasseio(mundo, h = {}) {
 
   return {
     colisao, npcs, rotasRuins, LUGARES,
-    get posicao() { return { x: pos.x, y: pos.y, z: pos.z, giro, nadando, noAr, mergulhando: !!mergulho, cameraSubmersa: camSub }; },
+    get posicao() { return { x: pos.x, y: pos.y, z: pos.z, giro, nadando, noAr, mergulhando: !!mergulho, cameraSubmersa: camSub, mergulhoCamera: +sub.toFixed(2) }; },
     mergulhar,
     get camera() { return { ...cam }; },
     get perto() { return perto; },
-    usarAvatar(pacote) { eu.usarModelo(malhaDoPacote(pacote), pacote.altura || 1.1); },
+    usarAvatar(pacote) { eu.usarModelo(malhaDoPacote(pacote), pacote.altura || 1.1); eu.origem = 'app'; },
     /** O boneco da criança (testes: ossos, cabeça, silhueta). */
     get boneco() { return eu; },
-    usarModeloNpc(id, pacote) { npcs.usarModelo(id, malhaDoPacote(pacote), pacote.altura || 1.1); },
+    usarModeloNpc(id, pacote) { npcs.usarModelo(id, malhaDoPacote(pacote), pacote.altura || 1.1); const n = npcs.lista.find((x) => x.id === id); if (n) n.boneco.origem = 'app'; },
     /** Estado das portas vindo do app: { id: { aberto, falta } }. */
     definirLugares(estados) { for (const [id, st] of Object.entries(estados || {})) if (estadoLugar[id]) estadoLugar[id] = { ...estadoLugar[id], ...st }; remontarMarcas(); perto = null; },
     pular, acenar, interagir, conversar, fimConversa,

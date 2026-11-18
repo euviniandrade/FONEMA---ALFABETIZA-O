@@ -152,8 +152,11 @@ animação antiga sacudia o corpo inteiro; no rio, o corpo deitado ficava abaixo
   Capturas olhadas quadro a quadro: `app/docs/capturas/mundo3d-0*.png` (08 nadando, 09 mergulho com plantas e bolhas), sequências
   `mundo3d-seq-trotar-correr.png`, `mundo3d-seq-pulo-tchau-nado-mergulho.png`, poses de todos os bonecos
   `mundo3d-poses-captura-lado.png`/`-3q.png`; coreto (boneco em pé no 1º degrau) e varal olhados em cópia separada.
+- **O boneco é o avatar de verdade:** as capturas `mundo3d-arte-*` (da frente do mundo) foram tiradas com o `passeio.html` aberto sozinho,
+  sem o app, por isso mostram o bonequinho de reserva. No app o pacote chega: o E2E agora confere que o boneco da criança veio do app
+  (`boneco.origem = 'app'`, malha com milhares de vértices e textura) e que os 5 da vila também (capturas `mundo3d-01`, `08`, `09`).
 - **Embaixo d'água (pedido do coordenador):** placas, anéis das portas, balões e marcador de destino somem com a câmera submersa e
-  voltam ao subir; o passeio informa a posição do corpo ao mundo (`mundo.pe`) e, mergulhando, o cardume mais perto nada em volta da
+  voltam ao subir (conferido: mergulhando 0 placas visíveis, depois de subir 7); o passeio informa a posição do corpo ao mundo (`mundo.pe`) e, mergulhando, o cardume mais perto nada em volta da
   criança (`submerso.js`, mudança pequena combinada com a frente do mundo: perto da criança submersa os peixes só se afastam a menos de ~0,8 m).
 - **Falta / limites:** ninguém jogou num celular de verdade; o tchau da Sofia/Tales e o pulo deles esticam um pedaço da roupa; o fundo
   do rio no mergulho é a areia comum (o cenário submerso é da outra frente); no "menos movimento" a captura toca igual (só a câmera fica calma).
