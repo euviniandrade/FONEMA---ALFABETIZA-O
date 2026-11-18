@@ -9,6 +9,37 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Passeio 3D em terceira pessoa (D032 item 3; 17–18/11; NÃO publicado ainda):** o botão "Passear 3D" (no "Mais") abre
+`public/mundo3d/passeio.html` (fonte: `docs/propostas/06-fonema-unificada/mundo-3d-v2`, copiado no build; fora do precache).
+- **O próprio boneco:** o app monta o avatar com as cores/cabelo/roupa salvos (mesmo código da Lojinha, `avatar3d/pacote.ts`) e manda
+  as malhas + textura ao iframe por postMessage (`telas/crianca/Passeio3D.tsx`). Sofia, Tales e Bolota vêm dos GLB deles; duas crianças
+  da vila são o avatar padrão recolorido. Antes de chegar, aparece um bonequinho de reserva.
+- **Controles:** PC = setinhas/WASD (Shift corre), arrastar gira, roda = zoom, espaço pula, T acena, Enter entra. Celular/tablet =
+  dedo à esquerda vira joystick onde encosta, dedo à direita gira, pinça = zoom, botões Pular (92–104 px), Tchau (76–84 px) e
+  Entrar/Conversar. Tocar/clicar no chão, numa porta ou num boneco = o boneco vai sozinho. Botão 🦅 "ver do alto" e ❔ "como mexer".
+- **Animação procedural** (os GLB são malha inteira, sem esqueleto): passos com quique e balanço, inclina ao correr, respira parado,
+  pulo com antecipação e "amassadinho" na queda, tchau = pulinhos virado para a câmera + mãozinha 👋 flutuando, nado deitado na beira.
+  **Com modelos riggados** (esqueleto + clipes andar/correr/pular/acenar) daria braços e pernas de verdade e o aceno com a mão.
+- **Área:** colisão por grade montada das peças da vila (`js/colisao.js`): prédios, muros, cercas, bancos, postes, troncos, arbustos.
+  Cerca de madeira baixa no limite (a mata fica do lado de fora, com aviso "A mata fica para outro dia!", só visual). Rio: beirinha
+  rasa onde o boneco nada; meio fundo bloqueado. Barquinho com cadeado "Em breve na Lojinha".
+- **Portas** (`js/passeio.js › LUGARES`, destinos em `Passeio3D.tsx`): Escola → missão de agora; Biblioteca → Cantinho da Leitura;
+  Campinho → Brincar com sons; Padaria → Lojinha; Casa da Sofia → Escrever do seu jeito (trancada até haver palavras para escrever,
+  fala já gravada `escTrancada`); Coreto → Ler mais ligeiro (trancada pela mesma regra da fluência, fala `fluTrancada`). Botão grande
+  "Entrar" na porta; trancada mostra cadeado e o que falta.
+- **Bonecos** (`js/npcs.js`): rotas simples, param e olham para a criança, devolvem o tchau; "Conversar" com falas roteirizadas JÁ
+  gravadas: Sofia "Oi, [NOME]!" (+ "Tudo pronto para a primeira missão?…" na 1ª vez) e botão Missão; Tales "Oi, [NOME]!" + "Vamos
+  brincar com os sons das palavras!" e botão Brincar; Bolota (voz do Tales) "Pula com a gente, [NOME]!" e pula junto; as crianças só
+  acenam. Sem IA, sem chat (D032). Encaixe pronto: `npcs.definirCerebro()` (IA no futuro) e `npcs.remoto.entrar/mover/sair` (multijogador).
+- **Desempenho:** lotes da vila em blocos de 24 m no passeio (câmera e sombra só desenham o que veem), sem reflexo do rio fora do "alto",
+  densidade de pixels limitada (1,25 no celular), sombra só perto, bonecos longe sem sombra, qualidade cai sozinha (o medidor agora usa o
+  tempo real, antes um aparelho muito lento levava minutos para baixar). "Menos movimento" desliga balanços, câmera que segue e pulsos.
+- **Verificado:** typecheck, lint, 366 testes; E2E `node e2e/fluxo.e2e.mjs --mundo3d` (também no `--sem-jornada`; `--capturas-mundo3d`
+  salva `app/docs/capturas/mundo3d-*.png`). **Limite honesto:** o Chromium de teste desenha sem placa de vídeo (0,3–0,9 quadro/s nesta
+  vila), por isso o FPS mínimo do teste é 0,3 (`FPS_MINIMO=30` num PC de verdade). Nenhum aparelho real foi medido. A vila tem ~500 mil
+  triângulos (prédios arredondados): se o celular sofrer, o próximo passo é simplificar os prédios para o passeio.
+- A vista aérea antiga continua em `mundo3d/index.html` (não removida; o app agora abre o passeio).
+
 **Cenas do som com a Sofia (pedido do dono, fila nº 13; 17/11, noite; NÃO publicado ainda):** a figura do faz de conta de
 A, E, I/Y, L, V e X (`CENAS_DO_SOM` em `conteudo/src/alfabeto.ts`) agora é a Sofia fazendo a ação (no médico com a boca aberta, erguendo
 o troféu, mão na testa "iii!", lambendo o sorvete, voando o aviãozinho, dedo nos lábios), com o "A" azul no peito em A, I, L, V e X.

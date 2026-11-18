@@ -54,9 +54,9 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await canvas.focus();
   // o navegador de teste desenha sem placa de vídeo (poucos quadros por segundo): as conferências esperam o
   // resultado (até `max` ms) em vez de contar com um tempo fixo
-  const ate = (fn, arg, max = 20000) => frame.waitForFunction(fn, arg, { timeout: max, polling: 200 }).then(() => true, () => false);
+  const ate = (fn, arg, max = 45000) => frame.waitForFunction(fn, arg, { timeout: max, polling: 200 }).then(() => true, () => false);
   const andou = (de, m) => ({ x: de.x, z: de.z, m });
-  const segurar = async (tecla, de, m, max = 15000) => { await pg.keyboard.down(tecla); const r = await ate(({ x, z, m }) => { const p = window.FONEMA_PASSEIO.posicao; return Math.hypot(p.x - x, p.z - z) > m; }, andou(de, m), max); await pg.keyboard.up(tecla); return r; };
+  const segurar = async (tecla, de, m, max = 45000) => { await pg.keyboard.down(tecla); const r = await ate(({ x, z, m }) => { const p = window.FONEMA_PASSEIO.posicao; return Math.hypot(p.x - x, p.z - z) > m; }, andou(de, m), max); await pg.keyboard.up(tecla); return r; };
 
   // andar com o teclado
   const p0 = await pos();
@@ -101,7 +101,7 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await ate(() => { const c = window.FONEMA_MUNDO.camera.position, p = window.FONEMA_PASSEIO.posicao; return Math.hypot(c.x - p.x, c.z - p.z) < 12 && c.z > p.z; }, null, 30000);
   const antes = await pos();
   await pg.mouse.click(box.x + box.width * 0.35, box.y + box.height * 0.72);
-  ok(await ate(({ x, z }) => { const p = window.FONEMA_PASSEIO.posicao; return Math.hypot(p.x - x, p.z - z) > 1; }, { x: antes.x, z: antes.z }, 25000), 'clicar no chão leva o boneco até lá');
+  ok(await ate(({ x, z }) => { const p = window.FONEMA_PASSEIO.posicao; return Math.hypot(p.x - x, p.z - z) > 1; }, { x: antes.x, z: antes.z }, 45000), 'clicar no chão leva o boneco até lá');
 
   // conversar com a Sofia (fala roteirizada)
   await frame.evaluate(() => { const s = window.FONEMA_PASSEIO.npcs.lista.find((n) => n.id === 'sofia').boneco.raiz.position; window.FONEMA_PASSEIO.teleportar(s.x + 1.4, s.z + 1.4); });

@@ -130,6 +130,16 @@ Sem clipe nenhum (o balão mostra o texto e a dupla fica calada):
 - O NOME das palavras novas das fichas (leão, zebra, queijo, xícara… e as que já estavam no banco sem clipe): quando a figura
   certa aparece, a tela toca o clipe da palavra se houver; senão, os sons puros emendados, ligeiro (nunca voz do aparelho).
 
+## 1g. Memória dos Sons (fila do dono nº 17, 18/11; NENHUMA voz gerada)
+
+Tela em `web/src/mecanicas/jogos/MemoriaSons.tsx`. Usa clipes existentes: "Ligue cada letra à cena que faz o som dela." (Tales,
+enunciado dos níveis 1–3), "Essa letra faz este som:" e "Essa cena faz este som:" (correção), "Muito bem!" e os elogios de acerto.
+Sem clipe (o balão mostra o texto e a dupla fica calada):
+- "Olhe as cartas e toque para ouvir. Depois a gente vira." (nível 1, etapa de olhar)
+- "Vire uma carta de som e ache a letra que faz esse som." (nível 4, "só ouvindo")
+- Faria falta (não usada ainda): "Achou um par!" e "Vire uma carta de cima e uma de baixo." (dica quando a criança tenta virar
+  duas cartas do mesmo lado; hoje a segunda só não vira).
+
 ## 2. Com clipe, mas a auditoria pede regravação ou conferência de ouvido
 
 | Voz | Fala | O que a transcrição ouviu | Situação |

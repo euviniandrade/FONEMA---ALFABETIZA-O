@@ -53,6 +53,7 @@ export async function trechoMemoria(browser, h) {
   const ctx = await browser.newContext({ viewport: { width: w, height: alt }, locale: 'pt-BR', serviceWorkers: 'block', ...(movel ? { deviceScaleFactor: 2, isMobile: true, hasTouch: true } : {}) });
   await ctx.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { /* sem armazenamento */ } });
   const pg = await ctx.newPage();
+  pg.setDefaultTimeout(30000);
   pg.on('pageerror', (e) => erros.push(String(e)));
   const cap = async (nome) => {
     if (!capturar) return;
