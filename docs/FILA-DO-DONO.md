@@ -18,7 +18,7 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 | 7 | Jogos: Estrada e Rio dos Pares, Carteiro da Vila, Casa do Som (17/11) | ✅ no ar 18/11 (testar o botão de desafio no fim da missão e o arrastar no celular real) | pesquisa 47 |
 | 8 | Jogos primeiro dentro dos desafios; depois livres no Parque de Jogos, mostrando os tipos de jogo (17/11) | ✅ no ar 18/11 (desafios no fim das missões; Brincar → Jogos) | D032 §4 |
 | 9 | Página do administrador (login do dono, aba à parte; admin da escola; configurar o site) (17/11) | ✅ no ar 18/11 (#/admin) | D032 §5 |
-| 10 | Áudios: texto ao lado de cada áudio (letra, palavra, sílaba, frase), subir/gravar áudio que entra no lugar certo; "Gravar o alfabeto" com a Agatha (17/11) | ✅ no ar 18/11 (1.708 áudios listados; pacote .zip + importador) | app/docs/como-trocar-audios.md |
+| 10 | Áudios: texto ao lado de cada áudio (letra, palavra, sílaba, frase), subir/gravar áudio que entra no lugar certo; "Gravar o alfabeto" com a Agatha (17/11) | ✅ no ar 18/11 (1.708 áudios listados; pacote .zip + importador) | app/docs/como-editar-a-plataforma.md |
 | 11 | Lições depois da TF-22 (é/ó, vogais misturadas, nasais, R…) (17/11, "faça tudo") | ✅ no ar 18/11: TF-23, 24, 25 com voz; ⏸ TF-26 a 32 e TF-R4 escritas, esperando sons puros (nasais, R fraco) — entram sozinhas quando os sons forem publicados | pedagogia/01 |
 | 12 | Testes automáticos no GitHub (recomendação aceita) (17/11) | ✅ criado; 1ª execução completa a confirmar | .github/workflows/ci.yml |
 | 13 | Sofia nas cenas do som segurando coisas / fazendo a ação (médico "aaa", silêncio "xiii"…) (17/11) | ✅ no ar 18/11: A, E, I/Y, L, V e X trocadas (falta publicar). Ó, Ã e R fraco prontos como proposta para as lições TF; O, U, N, M, F, H, S, Z, J e É não saíram bons e ficaram como estavam | docs/propostas/06-fonema-unificada/cenas-do-som-sofia |
@@ -38,7 +38,7 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 | # | Pedido | O que falta |
 |---|---|---|
 | A1 | Boca do Espelho do Som bonita (desenho estilo Sofia/Tales ou vídeo) (17/11) | Escolher: vídeo da boca da Agatha (recomendado) e/ou autorizar a Cloudinary para editar só a boca, ou ilustrador. Tentativa com IA: docs/propostas/06-fonema-unificada/espelho-do-som-desenho |
-| A2 | Áudios da Agatha: sons de cada letra, palavras, frases (17/11) | Gravar pela página do administrador e enviar o pacote (como-trocar-audios.md); autorização por escrito dela |
+| A2 | Áudios da Agatha: sons de cada letra, palavras, frases (17/11) | Gravar pela página do administrador e enviar o pacote (como-editar-a-plataforma.md); autorização por escrito dela |
 | A3 | Vídeo do YouTube com palavras (17/11): https://www.youtube.com/watch?v=FXylvtji5uM | É o mesmo vídeo do canal Kidspace Tv já estudado (pesquisa 45): de terceiros, então não copiamos o áudio. Já usado como referência (faz de conta, ordem, palavras). Se o dono tiver autorização por escrito do canal, revemos |
 | A4 | IA conversando com os bonecos; sala de aula online com vários alunos (17/11) | Servidor (dono: "sem dinheiro por enquanto"), moderação e LGPD |
 | A5 | Validar os sons puros e as listas de palavras (fonoaudióloga/alfabetizadora); conferir E/O duvidosos e vozes novas de ouvido | Pessoa para ouvir |

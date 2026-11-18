@@ -4,14 +4,14 @@
  * Nomes: as telas usam `nomeDoPersonagem` (util.ts › NOMES_PERSONAGEM lê daqui). As FALAS que citam o nome ("Eu sou a
  * Sofia") são texto das falas: mudam na aba Textos e falas (e o áudio precisa ser regravado).
  */
-import type { Fala, Personagem } from './tipos.ts';
+import type { Personagem } from './tipos.ts';
 
 export interface FichaPersonagem {
   id: Personagem;
   nome: string;
   papel: string;
-  /** Como se apresenta (fala da chegada). */
-  apresentacao?: Fala;
+  /** Como se apresenta: onde está a fala de apresentação (as falas da chegada, `FALAS.chegada`, são as que tocam). */
+  apresentacao?: { colecao: string; item: string; caminho: (string | number)[] };
   /** Cor de destaque (#rrggbb). */
   cor: string;
   /** Arquivos (dentro de assets/) que mostram o personagem: busto, corpo, giro 360°, modelo 3D. */
@@ -21,12 +21,12 @@ export interface FichaPersonagem {
 export const PERSONAGENS: FichaPersonagem[] = [
   {
     id: 'sofia', nome: 'Sofia', papel: 'Guia das letras e dos sons (voz principal).', cor: '#e8743b',
-    apresentacao: { quem: 'sofia', texto: 'Oi, [NOME]! Eu sou a Sofia.' },
+    apresentacao: { colecao: 'falas-gerais', item: 'chegada', caminho: [0, 'texto'] },
     imagens: ['dupla/sofia-busto-alegre.webp', 'modelos3d/sofia.webp', 'modelos3d/sofia.glb', 'vivos/giro/sofia.webp']
   },
   {
     id: 'tales', nome: 'Tales', papel: 'Amigo da Sofia; brinca com os sons.', cor: '#2f7fd0',
-    apresentacao: { quem: 'tales', texto: 'E eu sou o Tales! {Seja bem-vindo|Seja bem-vinda|Que bom ter você} na Vila das Letras, [NOME]!' },
+    apresentacao: { colecao: 'falas-gerais', item: 'chegada', caminho: [1, 'texto'] },
     imagens: ['dupla/tales-busto-alegre.webp', 'modelos3d/tales.webp', 'modelos3d/tales.glb', 'vivos/giro/tales.webp']
   },
   { id: 'bolota', nome: 'Bolota', papel: 'O tatu da dupla (voz do Tales); às vezes erra para a criança ensinar.', cor: '#9a6b3f', imagens: ['modelos3d/bolota.webp', 'modelos3d/bolota.glb', 'vivos/giro/bolota.webp'] },

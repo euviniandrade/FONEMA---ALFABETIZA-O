@@ -289,7 +289,7 @@ function Publicar() {
         <li>Mande o arquivo para quem cuida do repositório (e-mail, Drive, WhatsApp).</li>
         <li>Lá, ele roda <code>npx tsx scripts/importar-pacote-audios.ts pacote.zip</code> (na pasta <code>app/</code>), confere e publica uma versão nova do site.</li>
       </ol>
-      <p className="adm-nota">Passo a passo completo: <code>app/docs/como-trocar-audios.md</code>.</p>
+      <p className="adm-nota">Passo a passo completo: <code>app/docs/como-editar-a-plataforma.md</code>.</p>
       {semAutorizacao ? <p className="adm-aviso" role="alert">{semAutorizacao} gravação(ões) sem a marca "a pessoa autorizou por escrito". Publicar voz de pessoa real pede autorização por escrito (decisão do dono).</p> : null}
       <div className="adm-linha">
         <button className="btn adm-btn pri" onClick={() => void gerar()} disabled={!lista.length || gerando} data-testid="gerar-pacote"><Icone nome="baixar" />{gerando ? 'Gerando…' : `Gerar pacote de áudios (${lista.length})`}</button>

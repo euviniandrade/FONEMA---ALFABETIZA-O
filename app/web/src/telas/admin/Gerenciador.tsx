@@ -208,7 +208,7 @@ export function AbaPersonagens() {
             <CampoEditavel alvo={{ colecao: 'personagens', item: p.id, caminho: ['cor'] }} rotulo="Cor" tipo="cor" />
           </div>
           <CampoEditavel alvo={{ colecao: 'personagens', item: p.id, caminho: ['papel'] }} rotulo="Quem é (para o adulto)" multilinha />
-          {p.apresentacao ? <CampoEditavel alvo={{ colecao: 'personagens', item: p.id, caminho: ['apresentacao', 'texto'] }} rotulo="Como se apresenta" quem={p.apresentacao.quem} multilinha /> : null}
+          {p.apresentacao ? <CampoEditavel alvo={p.apresentacao} rotulo="Como se apresenta (fala da chegada)" quem={p.id} multilinha /> : null}
           {p.imagens.length ? <div className="adm-linha">{p.imagens.map((c) => <ImagemDoItem key={c} caminho={c} />)}</div> : <p className="adm-nota">Ainda sem figura própria.</p>}
         </fieldset>
       )) : null}

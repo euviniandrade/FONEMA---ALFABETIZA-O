@@ -285,7 +285,7 @@ relatório de decodificabilidade (0 erros) e capturas de AL-A, AL-X, TF-03 e TF-
   nomes → `audio-fontes/` + masterização; `audio-fontes/voz-humana.json`; marca na `docs/auditoria-audio.json` e seção em
   `docs/auditoria-sons-letras.md`; `--seco`, `--sem-masterizar`, exige `--confirmo-autorizacao` se faltar a marca).
   Testado de verdade numa cópia com ffmpeg + masterização (diffs limpos). `servicos/provedor-audios.ts`: lugar do provedor
-  remoto (Vercel Blob/DB) sem implementação nem credencial. Passo a passo do dono: **`app/docs/como-trocar-audios.md`**.
+  remoto (Vercel Blob/DB) sem implementação nem credencial. Passo a passo do dono: **`app/docs/como-editar-a-plataforma.md`**.
 - **Verificado:** typecheck, lint, 338 testes (novos: substituições, pacote/zip, catálogo, edição de áudio, conta do admin,
   resumo, importador; `vitest.config.ts` passou a incluir `scripts/**/*.test.ts`), build numa cópia (worktree, porta 4520) e
   E2E **`node web/e2e/fluxo.e2e.mjs --admin`** (também dentro do completo e do `--sem-jornada`; `--capturas-admin` tira

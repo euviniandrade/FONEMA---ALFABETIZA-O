@@ -1,7 +1,7 @@
 /**
  * Aplica um PACOTE DE ÁUDIOS gerado na Área do administrador (Publicar › Gerar pacote) ao repositório, para que os
  * áudios trocados passem a valer para TODOS na próxima versão publicada do site. Passo a passo para o dono:
- * app/docs/como-trocar-audios.md.
+ * app/docs/como-editar-a-plataforma.md.
  *
  * Uso (a partir de app/):
  *   npx tsx scripts/importar-pacote-audios.ts caminho/fonema-pacote-audios-AAAAMMDD-HHMM.zip [opções]
