@@ -1,0 +1,6 @@
+{
+ "formato": "fonema-edicoes",
+ "versao": 1,
+ "nota": "Edições do conteúdo publicadas para todos (aplicadas pelo importador do pacote: app/scripts/importar-pacote.ts). Não edite à mão.",
+ "edicoes": []
+}

@@ -22,3 +22,6 @@ export * from './decodificabilidade.ts';
 export * from './nomes-comuns.ts';
 export * from './biblioteca/index.ts';
 export * from './caminho.ts';
+export * from './textos-tela.ts';
+export * from './personagens.ts';
+export * from './edicao/index.ts';
