@@ -134,7 +134,13 @@ relatório de decodificabilidade (0 erros) e capturas de AL-A, AL-X, TF-03 e TF-
   `ficha-bocas-palavra`, com alvo, escolhido, respostas, distratores, tempo, nOpcoes, posições e contexto; resumo em `biblioteca.jogos`.
 - **Verificado:** typecheck, lint, 366 testes (novos: `motor/test/fichas.test.ts`, `web/src/componentes/boquinha.test.ts`),
   verificador (0 erros), build numa cópia (worktree, porta 4580) e E2E **`node web/e2e/fluxo.e2e.mjs --fichas`** (32 checagens, os 4
-  níveis e o desafio; também no completo e no `--sem-jornada`). Capturas `--capturas-fichas` em `app/docs/capturas/v11-fichas-*`.
+  níveis e o desafio; também no completo e no `--sem-jornada`). Capturas `--capturas-fichas` (1850×980 e 390×844) olhadas; 15 guardadas
+  em `app/docs/capturas/v11-fichas-*`. Depois delas: boquinha mais de perto (linha dos lábios fechados, ponta da língua só com dentes
+  abertos) e a palavra do nível 1 cabendo numa linha no celular pelo número de letras — conferidos com o `--fichas` de novo (passou).
+  **O `--sem-jornada` inteiro NÃO passou nesta rodada:** parou no trecho 12 (Cantinho) esperando o boneco ficar pronto (máquina
+  carregada, antes do trecho das fichas); o `--cantinho` sozinho passou em seguida. Não investigado a fundo.
+- **Falta:** ninguém usou com criança; poses da boca a validar com fonoaudióloga; a captura da "festa" sai já na tela de fim (modo
+  rápido do teste); vozes pendentes (§1f).
 
 **Trilha dos Sons, blocos 4 e 5: TF-23…TF-32 e TF-R4 (17/11, noite; NÃO publicado ainda):**
 - **Na jornada** (depois da revisão P…G, antes de R…W e da Festa): **TF-23** é e ó com acento (faz de conta: nojo ao pisar na lama;
