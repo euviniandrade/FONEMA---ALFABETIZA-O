@@ -16,7 +16,7 @@ import { CAMPOS_SEMANTICOS, CAMPO_POR_ID, PALAVRAS_DAS_FICHAS, FALAS_FICHAS } fr
 import { BANCO } from '../fases/tf-banco.ts';
 import { UNIDADE_DA_REVISAO_TF } from '../fases/tf.ts';
 import { FALAS } from '../falas-gerais.ts';
-import { FALAS_TUTORIAL } from '../caminho.ts';
+import { ETAPAS_DO_CAMINHO, FALAS_TUTORIAL } from '../caminho.ts';
 import { TEXTOS_TELA, RECURSOS } from '../textos-tela.ts';
 import type { Fase } from '../tipos.ts';
 import { Sobreposicao, colecaoLista, colecaoRegistro, ordenarEDesligarCenas, type Colecao } from './sobreposicao.ts';
@@ -27,6 +27,28 @@ const reg = (x: object) => x as unknown as Record<string, unknown>;
 function colecaoFases(): Colecao {
   const base = colecaoLista<Fase>('fases', 'Missões (fases)', FASES, [FASE_POR_ID]);
   const rascunhos = new Set<string>();
+  /** Fases novas da jornada → a fase de onde foram copiadas. */
+  const modelos = new Map<string, string>();
+  /** O `ate` de cada etapa do caminho, como veio do repositório. */
+  const ateOriginal = new Map(ETAPAS_DO_CAMINHO.map((e) => [e.id, e.ate]));
+  const ultimaFase = FASES[FASES.length - 1]?.id;
+  /**
+   * Listas montadas na carga (etapas do caminho do tutorial e do painel guia): uma fase nova logo depois do fim de uma
+   * etapa, copiada da própria fase do fim (ou de outra fase nova dela), entra na mesma etapa; a última etapa vai até o fim.
+   */
+  const refazerEtapas = () => {
+    for (const e of ETAPAS_DO_CAMINHO) {
+      let ate = ateOriginal.get(e.id);
+      if (!ate) continue;
+      if (ate === ultimaFase) { e.ate = FASES[FASES.length - 1].id; continue; }
+      for (;;) {
+        const prox = FASES[FASES.findIndex((f) => f.id === ate) + 1];
+        if (!prox || !modelos.has(prox.id)) break;
+        ate = prox.id;
+      }
+      e.ate = ate;
+    }
+  };
   return {
     ...base,
     ids: () => [...FASES.map((f) => f.id), ...rascunhos],
@@ -40,6 +62,7 @@ function colecaoFases(): Colecao {
         const pos = e.depoisDe ? FASES.findIndex((x) => x.id === e.depoisDe) : -1;
         if (pos >= 0) FASES.splice(pos + 1, 0, f); else FASES.push(f);
         FASE_POR_ID[k] = f;
+        modelos.set(k, e.modelo ?? e.depoisDe ?? '');
       }
       const r = REGIAO_POR_ID[f.regiao];
       if (r && !r.fases.includes(k)) {
@@ -51,11 +74,13 @@ function colecaoFases(): Colecao {
       const i = FASES.findIndex((x) => x.id === k);
       if (i >= 0) FASES.splice(i, 1);
       rascunhos.delete(k);
+      modelos.delete(k);
       for (const r of REGIOES) { const j = r.fases.indexOf(k); if (j >= 0) r.fases.splice(j, 1); }
       delete FASE_POR_ID[k];
       delete UNIDADE_DA_REVISAO_TF[k];
     },
-    depoisDoItem: (_k, item, edicoes) => ordenarEDesligarCenas(item as Fase, edicoes)
+    depoisDoItem: (_k, item, edicoes) => ordenarEDesligarCenas(item as Fase, edicoes),
+    depoisDeTudo: refazerEtapas
   };
 }
 
