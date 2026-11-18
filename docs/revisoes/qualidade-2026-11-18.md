@@ -40,8 +40,8 @@ lado, todas as respostas inteiras sem rolar e sem nada por cima, "Voltar para a 
   contador sobe de uma em uma na hora; "Próximo objetivo" só quando é outra missão de verdade (e com o título sem fonética); a
   fileira de botões fica presa embaixo no computador (com "Tchau! Voltar para a vila" primeiro) e o "Voltar" fica preso embaixo no
   celular. ⏸ falta: a medalha 3D genérica do celular.
-- ✅ **13** Corre-Som: placa grande com a letra (ou figura) de cada pista, perto do boneco, desde o começo; as três áreas de toque
-  com a mesma largura. ⏸ falta: o boneco "todo branco" (é a roupa inicial do avatar — frente do avatar), a demonstração longa e os
+- ✅ **13** (parte) Corre-Som: as três áreas de toque com a mesma largura (terço da tela cada). As letras: na versão atual os arcos 3D
+  param perto do boneco com a placa grande da letra (uma placa HTML extra foi testada e tirada, porque repetia a letra). ⏸ falta: o boneco "todo branco" (é a roupa inicial do avatar — frente do avatar), a demonstração longa e os
   dois botões de som do celular.
 - ✅ **15** O convite "Dar comida ao Bolota" mostra o Bolota; no celular vira um botão redondo no canto, sem texto. ⏸ fala ao aparecer.
 - ✅ **16** (parte) Palmas: as lâmpadas acendem sem a sílaba escrita. A troca de narrador é da frente de som.
