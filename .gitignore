@@ -13,3 +13,4 @@ app/web/test-results/
 
 # Artefatos de falha do E2E (logs e capturas locais)
 app/web/e2e-falha/
+app/web/e2e/_*_tmp.mjs
