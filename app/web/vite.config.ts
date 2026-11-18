@@ -32,10 +32,25 @@ function midiaPublica() {
 }
 const midia = midiaPublica();
 
+/** Figuras e modelos de public/assets (lista para a aba Imagens do gerenciador). */
+function imagensPublicas(): string[] {
+  const raiz = join(import.meta.dirname, 'public/assets');
+  const out: string[] = [];
+  const andar = (d: string) => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const f = join(d, e.name);
+      if (e.isDirectory()) andar(f);
+      else if (/\.(webp|png|jpe?g|glb)$/i.test(e.name)) out.push(relative(raiz, f).split(sep).join('/'));
+    }
+  };
+  andar(raiz);
+  return out.sort();
+}
+
 // base relativa ('./') + roteamento por hash: o dist/ funciona em qualquer subcaminho de um site estático.
 export default defineConfig({
   base: './',
-  define: { __FONEMA_VERSOES__: JSON.stringify(midia.versoes) },
+  define: { __FONEMA_VERSOES__: JSON.stringify(midia.versoes), __FONEMA_IMAGENS__: JSON.stringify(imagensPublicas()) },
   plugins: [
     react(),
     {

@@ -17,7 +17,7 @@ import { dataCurta, pararAudio, tocarAtual, tocarUrl, useCatalogo, useTocando, u
 
 /* ------------------------------------------------------------------ quem grava (aviso de autorização) */
 interface PrefGravacao { quem: string; autorizacao: boolean }
-function usePrefGravacao(): [PrefGravacao, (p: Partial<PrefGravacao>) => void] {
+export function usePrefGravacao(): [PrefGravacao, (p: Partial<PrefGravacao>) => void] {
   const [p, setP] = useState<PrefGravacao>({ quem: '', autorizacao: false });
   useEffect(() => { void servicoAdmin().ler<PrefGravacao>('gravacao').then((v) => { if (v) setP(v); }); }, []);
   const mudar = (n: Partial<PrefGravacao>) => setP((a) => { const v = { ...a, ...n }; void servicoAdmin().gravar('gravacao', v); return v; });

@@ -19,16 +19,26 @@ import { sha256 } from '../../servicos/audio-edicao.ts';
 import { ROTULO_TIPO_AUDIO, contarPorTipo, type TipoAudio } from '../../servicos/catalogo-audios.ts';
 import { AbaAudios } from './AbaAudios.tsx';
 import { AbaEscola } from './AbaEscola.tsx';
+import { AbaMissoes } from './AbaMissoes.tsx';
+import { AbaFoto3D, AbaHistorico, AbaImagens, AbaLeitura, AbaPersonagens, AbaTextos, ConfigConteudo } from './Gerenciador.tsx';
+import { PublicarTudo } from './PublicarTudo.tsx';
 import { baixar, carimbo, dataCurta, useCatalogo, useTrocados } from './dados-admin.ts';
 import { idade } from './resumo-admin.ts';
 import { useCriancas } from './useCriancas.ts';
 import '../../estilos-admin.css';
 
-type Aba = 'visao' | 'escola' | 'audios' | 'publicar' | 'site';
+type Aba = 'visao' | 'escola' | 'textos' | 'missoes' | 'personagens' | 'leitura' | 'imagens' | 'audios' | 'historico' | 'foto3d' | 'publicar' | 'site';
 const ABAS: { id: Aba; rota: string; rotulo: string; icone: string; so?: 'geral' }[] = [
   { id: 'visao', rota: 'admin', rotulo: 'Visão geral', icone: 'grafico' },
   { id: 'escola', rota: 'admin/escola', rotulo: 'Escola', icone: 'chapeu' },
+  { id: 'textos', rota: 'admin/textos', rotulo: 'Textos e falas', icone: 'caderno', so: 'geral' },
+  { id: 'missoes', rota: 'admin/missoes', rotulo: 'Missões', icone: 'mapa', so: 'geral' },
+  { id: 'personagens', rota: 'admin/personagens', rotulo: 'Personagens e prêmios', icone: 'pessoa', so: 'geral' },
+  { id: 'leitura', rota: 'admin/leitura', rotulo: 'Histórias e leitura', icone: 'olho', so: 'geral' },
+  { id: 'imagens', rota: 'admin/imagens', rotulo: 'Imagens', icone: 'album', so: 'geral' },
   { id: 'audios', rota: 'admin/audios', rotulo: 'Áudios', icone: 'microfone', so: 'geral' },
+  { id: 'historico', rota: 'admin/historico', rotulo: 'Histórico', icone: 'relogio', so: 'geral' },
+  { id: 'foto3d', rota: 'admin/foto3d', rotulo: 'Foto → 3D', icone: 'cubo', so: 'geral' },
   { id: 'publicar', rota: 'admin/publicar', rotulo: 'Publicar', icone: 'baixar', so: 'geral' },
   { id: 'site', rota: 'admin/site', rotulo: 'Site', icone: 'engrenagem', so: 'geral' }
 ];
@@ -51,6 +61,13 @@ export function Admin({ aba, sub }: { aba?: string; sub?: string }) {
       <main className="adm-palco">
         {aqui === 'visao' ? <VisaoGeral papel={sessao.papel} /> : null}
         {aqui === 'escola' ? <AbaEscola papel={sessao.papel} /> : null}
+        {aqui === 'textos' ? <AbaTextos /> : null}
+        {aqui === 'missoes' ? <AbaMissoes sub={sub} /> : null}
+        {aqui === 'personagens' ? <AbaPersonagens /> : null}
+        {aqui === 'leitura' ? <AbaLeitura /> : null}
+        {aqui === 'imagens' ? <AbaImagens /> : null}
+        {aqui === 'historico' ? <AbaHistorico /> : null}
+        {aqui === 'foto3d' ? <AbaFoto3D /> : null}
         {aqui === 'audios' ? <AbaAudios sub={sub} /> : null}
         {aqui === 'publicar' ? <Publicar /> : null}
         {aqui === 'site' ? <Site sessao={sessao} /> : null}
@@ -264,6 +281,8 @@ function Publicar() {
   return (
     <section className="adm-cartao" data-testid="aba-publicar">
       <div className="adm-cab"><h1>Publicar para todos</h1>{msg ? <span className="adm-etq verde" role="status" data-testid="msg-publicar">{msg}</span> : null}</div>
+      <PublicarTudo />
+      <h2>Só os áudios (pacote antigo)</h2>
       <p>Os áudios trocados valem, por enquanto, <b>só neste aparelho</b>. Como o FONEMA ainda não tem servidor, para valer para todo mundo:</p>
       <ol className="adm-passos">
         <li>Toque em <b>Gerar pacote de áudios</b>: baixa um arquivo <code>.zip</code> com os áudios e a lista de onde cada um entra.</li>
@@ -308,12 +327,10 @@ function Site({ sessao }: { sessao: SessaoAdmin }) {
         <label className="adm-check"><input type="checkbox" checked={configBruta.alfabeto?.primeirasPalavrinhas ?? true} onChange={(e) => void set({ alfabeto: { primeirasPalavrinhas: e.target.checked } })} /> Primeiras palavrinhas na Trilha do Alfabeto</label>
         <label className="adm-check"><input type="checkbox" checked={configBruta.modoDemonstracao} onChange={(e) => void set({ modoDemonstracao: e.target.checked })} /> Modo demonstração (cada fase em 1 sessão; desligue para a criança)</label>
       </fieldset>
-      <fieldset className="adm-grupo"><legend>Ainda sem ponto de configuração</legend>
-        <p className="adm-nota">Estes pedem uma chave nova no código (fica para quando as telas da vila e da entrada assentarem):</p>
-        <ul className="adm-lista"><li>Ligar/desligar o Mundo 3D, o Brincar e a Leitura na barra da vila</li><li>Textos da tela de entrada</li><li>Ordem e conteúdo das fases (hoje: dados em <code>packages/conteudo</code>, com o verificador)</li></ul>
-      </fieldset>
+      <ConfigConteudo />
+      <p className="adm-nota">Ordem e conteúdo das missões: aba <button className="adm-link" onClick={() => navegar('admin/missoes')}>Missões</button> (com o verificador).</p>
       <fieldset className="adm-grupo"><legend>Precisa de servidor</legend>
-        <ul className="adm-lista"><li>Publicar áudios e configurações para todos os aparelhos de uma vez (hoje: pacote .zip)</li><li>Login do administrador e da escola em qualquer aparelho</li><li>Relatórios da rede (várias escolas), sala de aula online, conversa com IA</li></ul>
+        <ul className="adm-lista"><li>Publicar edições, áudios e figuras para todos os aparelhos de uma vez (hoje: pacote .zip, aba Publicar)</li><li>Login do administrador e da escola em qualquer aparelho</li><li>Relatórios da rede (várias escolas), sala de aula online, conversa com IA</li></ul>
       </fieldset>
       <fieldset className="adm-grupo"><legend>Minha senha</legend>
         <div className="adm-linha">
