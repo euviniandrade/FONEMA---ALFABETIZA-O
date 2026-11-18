@@ -29,7 +29,7 @@ tesouro das palavras… desbravar na água, pegar o barco… um circulozinho… 
   achar o lugar = exposição; 2ª dica (seta/brilho) = `resposta-mostrada`. Grava no fim da rodada ou ao sair. Moedinhas do caminho são enfeite.
 - **Voz:** 20 falas novas da Sofia (charadas e instruções), 764 caracteres; auditoria: as 20 "ok"; bocas regeradas.
 - **Verificado:** typecheck, lint, `npm test` 445/445 (12 novos da caça); E2E `--caca` (trecho-caca.mjs, também no completo e no
-  `--sem-jornada`): RESULTADO_CACA
+  `--sem-jornada`): na cópia separada (porta 4680) no commit ef4df91: `--caca` 41 ✓ 0 ✗ e `--mundo3d` 35 ✓ 0 ✗; antes, `--capturas-caca` nos dois tamanhos 82 ✓ 0 ✗ (os 4 níveis e o barco jogados até o fim em 1850×980 e 390×844). Capturas olhadas: `app/docs/capturas/v14-caca-*.png`. O `--sem-jornada` inteiro não foi rodado por esta frente
 - **Falta / limites:** ninguém jogou num aparelho de verdade; o barco anda em linha reta para onde se toca (numa curva do rio ele para
   na margem e é preciso tocar de novo); as charadas são só de lugar (não de bilhete escrito: o "Bilhete do Tesouro" da pesquisa 47 G9
   fica para quando houver frases decodificáveis prontas); trilha/peças da Lojinha não mudaram.
