@@ -35,3 +35,4 @@ Data: 2026-11-17. Origem: pedido do dono ("elevar o nível… o jogo está solto
   pacote que é aplicado ao repositório e publicado. IA de conversa e multijogador online ficam para quando houver servidor.
 - **"Faça tudo isso e as recomendações que você me trouxe."** Os 5 jogos da pesquisa 47 entram (Corre-Som, Bichinho Come-Som,
   Estrada e Rio dos Pares, Carteiro da Vila, Casa do Som), primeiro dentro dos desafios e depois no Parque de Jogos.
+  *Atualizado pela D035 (18/11): o Corre-Som virou corrida contínua (a pista não para antes da escolha), com pontos, tempo, meta e níveis.*

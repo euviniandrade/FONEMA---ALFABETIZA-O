@@ -33,6 +33,7 @@ Para criar uma decisão nova, veja [`../CONVENCOES.md`](../CONVENCOES.md) §3.
 | [023](023-escadas-de-patentes-por-area.md) | Escada de patentes em cada área | 13/11/2026 | Aprovada (nomes a confirmar) | 8 patentes neutras por área (Aprendiz → Lenda), com I-II-III e estrelas sem fim; convivem com os títulos da leitura (D022) |
 | [024](024-musica-danca-multissensorial.md) | Música, dança e todos os sentidos | 13/11/2026 | Aprovada | Músicas originais da dupla com dancinha que representa o som, sempre seguidas de atividade (D015); versão calma para TEA |
 | [031](031-alternar-letras-e-leitura.md) | Alternar "conhecer as letras" e "ler" | 15/11/2026 | Aprovada (resposta do dono: "B"); implementada em 16/11 | Na jornada, cada letra da Trilha A–Z vem logo antes da lição da Trilha dos Sons que ensina o som dela; revisões do alfabeto no fim de cada bloco; letras sem lição até TF-22 (R, H, X, Q, K, Y, W) antes da Festa; o mapa A–Z continua em ordem alfabética; progresso salvo recalculado sem perder nada |
+| [035](035-corre-som-corrida.md) | Corre-Som em corrida | 18/11/2026 | Pedido do dono + decisão do projeto [DP] | A pista não para; ondas de arcos com o som tocado uma vez; ✖ e −5 no erro, +10 × sequência no acerto, moedinha +1, bônus +2; tempo, meta, estrelas, níveis e moedinhas da Lojinha (teto 3); passagem sem mexer e acerto isolado após 2 erros não contam como domínio |
 
 ## Conflitos entre decisões (e como ficam)
 
@@ -45,6 +46,7 @@ Para criar uma decisão nova, veja [`../CONVENCOES.md`](../CONVENCOES.md) §3.
 | Adornos e acessórios | D002: avatar com "acessórios" | **D006/D008**: nunca joias, adornos ou enfeites; só utensílios | D002; lojinha (README e fontes) |
 | Eventos e temporadas | D001: "datas, cultura brasileira" | **D012**: só celebrações neutras ou cristãs | D001; D002 já tinha nota |
 | Linguagem "jogo" | D001/D002: "jogo", "amigo do jogo" | **D014**: plataforma, jornada, missões, atividades | D002 |
+| Corre-Som | D032 §4 e pesquisa 47 G1: a pista desacelera e para antes de cada escolha; sem cronômetro nem placar | **D035**: corrida contínua com pontos, tempo, meta e níveis | D032 §4 (nota); pesquisa 47 G1 |
 | Arte | qualquer arte anterior a 13/11/2026 | **D008 + D009 + D012**: checklist de arte obrigatório | ver [`../QUALIDADE.md`](../QUALIDADE.md) |
 | Títulos com gênero | D019: "Caçador de Sílabas", "Mestre Leitor"… | **D022**: títulos e selos neutros pela ação ("Caça às Sílabas", "Maestria da Leitura") | jogo-completo/07 |
 | Vilão leve | D018 e rel. 37: "Nuvem Bagunceira" | **D019**: **Zum-Zum**, besouro barulhento (distração) que vira amigo | D018; jornada; esporte |
