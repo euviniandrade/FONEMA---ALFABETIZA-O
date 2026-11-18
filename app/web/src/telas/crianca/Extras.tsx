@@ -13,7 +13,7 @@ import { efeitos } from '../../servicos/efeitos.ts';
 import { gravar, temGravacao } from '../../servicos/microfone.ts';
 import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
-import { falar, falarVarias } from '../../util.ts';
+import { falar, falarVarias, semFonetica } from '../../util.ts';
 
 /** Álbum de Conquistas: por região; ganhas brilham; as outras mostram a HABILIDADE (P1-b). */
 export function Album({ criancaId }: { criancaId: string }) {
@@ -57,7 +57,7 @@ export function Album({ criancaId }: { criancaId: string }) {
                     return (
                       <div key={c.id} className={`conquista-item ${g ? 'ganha' : 'bloqueada'}`} data-conquista={c.id}>
                         <Selo conquista={c} ganha={g} bloqueado={!g} letra={letra} tamanho={110} ampliavel />
-                        <p className="dica-cadeado">{g ? `${g.nivel === 'unico' ? '' : g.nivel + ' · '}${new Date(g.em).toLocaleDateString('pt-BR')}` : c.visivel_antes === 'misterio' ? 'Mistério' : c.dica}</p>
+                        <p className="dica-cadeado">{g ? `${g.nivel === 'unico' ? '' : g.nivel + ' · '}${new Date(g.em).toLocaleDateString('pt-BR')}` : c.visivel_antes === 'misterio' ? 'Mistério' : semFonetica(c.dica)}</p>
                         {/* D030: selo de participação (ver, imitar, traçar) não é selo de habilidade */}
                         {ehSeloDeParticipacao(c.id) ? <p className="selo-participacao">participação</p> : null}
                       </div>

@@ -64,3 +64,19 @@ html,body{overflow-x:clip}
 .ritual-moedas p .soma{display:inline-block;animation:somaPula .5s var(--mola) both}
 @keyframes somaPula{from{transform:scale(.4);opacity:0}}
 .ritual-elogio{font-family:var(--f-titulo);font-weight:600;color:var(--marinho);font-size:20px;margin:6px 0 0}
+.ritual-elogio{display:flex;align-items:center;justify-content:center;gap:8px}
+.ritual-elogio .ic{width:30px;height:30px;color:var(--ipe-esc)}
+/* "Tchau! Voltar para a vila" sempre à vista: a fileira de botões fica presa embaixo da tela enquanto o resto rola */
+.ritual-cartao{overflow:clip}
+.tela-ritual .ritual-botoes{position:sticky;bottom:0;z-index:5;margin:18px calc(-1 * clamp(18px,3vw,34px)) calc(-1 * clamp(18px,3vw,34px));padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(255,255,255,.78),rgba(255,255,255,.97) 35%);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:22px 22px 0 0}
+.tela-ritual .ritual-botoes [data-testid=voltar-vila]{order:-1}
+@media (max-width:700px){
+  /* no celular a fileira é longa: só o "Voltar para a vila" fica preso; os outros vêm junto com a página */
+  .tela-ritual .ritual-botoes{position:static;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;margin:14px 0 0;padding:0}
+  .tela-ritual .ritual-botoes [data-testid=voltar-vila]{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));z-index:6;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+}
+
+/* entrada da fase: o botão de ouvir de novo no lugar do texto do objetivo */
+.entrada-cab .entrada-ouvir{width:64px;height:64px;margin-top:6px}
+.entrada-cab .entrada-ouvir .ic{width:46px;height:46px}

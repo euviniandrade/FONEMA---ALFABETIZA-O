@@ -9,7 +9,7 @@ import { BarraObjetivo, CelebracaoSelos, Cofrinho, FiguraLimpa, MiniaturaPremio,
 import { asset, espera } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
 import { voz } from '../../servicos/voz.ts';
-import { textoTela, textoVoz } from '../../util.ts';
+import { semFonetica, textoTela, textoVoz } from '../../util.ts';
 import { BotaoTreino } from './Treino.tsx';
 import { PainelAbriu } from '../../componentes/Desbloqueio.tsx';
 
@@ -23,6 +23,8 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
   const { config } = useApp();
   const [passo, setPasso] = useState(0);
   const [moedasAnim, setMoedasAnim] = useState(0);
+  // revisão 18/11 (item 12): o contador soma NA HORA, de uma em uma, enquanto as moedinhas voam para o porquinho
+  const [somadas, setSomadas] = useState(0);
   const nivel = useMemo(() => calcularNivel(progresso.desafios, missaoInicialFeita(progresso), fasesConcluidas(progresso)), [progresso]);
   const proxima = FASE_POR_ID[progresso.faseAtual];
   const letra = infoNome(crianca.nome, crianca.pronuncia.grafia).letras;
@@ -39,14 +41,11 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
     let vivo = true;
     (async () => {
       const f = (t: string, quem: 'sofia' | 'tales' = 'sofia') => (vivo ? voz.falar(textoVoz(t, crianca), { quem }) : Promise.resolve());
+      if (relatorio.moedinhas > 0) { setMoedasAnim(relatorio.moedinhas); efeitos.moeda(); }
       await f(FALAS.ritual.recap);
       if (!vivo) return;
       setPasso(1);
-      if (relatorio.moedinhas > 0) {
-        setMoedasAnim(relatorio.moedinhas);
-        efeitos.moeda();
-        await f(FALAS.ritual.moedinhas);
-      }
+      if (relatorio.moedinhas > 0) await f(FALAS.ritual.moedinhas);
       await espera(600);
       if (!vivo) return;
       setPasso(2);
@@ -67,26 +66,40 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (!relatorio.moedinhas) return;
+    // as moedas chegam ao porquinho ~1 s depois de começarem a voar; dali o número sobe uma por vez
+    let n = 0;
+    let relogio = 0;
+    const subir = () => { n++; setSomadas(n); if (n < relatorio.moedinhas) relogio = window.setTimeout(subir, 160); };
+    relogio = window.setTimeout(subir, 950);
+    return () => window.clearTimeout(relogio);
+  }, [relatorio.moedinhas]);
+  const saldoAgora = saldoAntes + Math.max(somadas, passo >= 1 && moedasAnim === 0 ? relatorio.moedinhas : 0);
+  // "próximo objetivo" só quando é OUTRA missão (se a mesma precisa ser treinada de novo, a Sofia já diz no gancho)
+  const proximaDeVerdade = relatorio.faseConcluida && proxima && proxima.id !== fase.id ? proxima : undefined;
   const idade = new Date().getFullYear() - crianca.anoNascimento;
   return (
     <div className="tela-ritual" data-testid="ritual">
       <Fundo cena="arte/hero-paisagem" desfoque={10} tom="claro" />
       {relatorio.conquistasNovas.length || relatorio.faseConcluida ? <div className="confete" aria-hidden="true">{Array.from({ length: 26 }, (_, i) => <i key={i} style={{ left: `${(i * 41 + 7) % 100}%`, animationDuration: `${3.5 + (i % 5) * 0.7}s`, animationDelay: `${(i % 9) * 0.25}s` }} />)}</div> : null}
-      <Topo crianca={crianca} moedinhas={saldoAntes + (passo >= 1 ? relatorio.moedinhas : 0)} titulo="Fim da missão de hoje" />
+      <Topo crianca={crianca} moedinhas={saldoAgora} titulo="Fim da missão de hoje" />
       <main className="palco ritual">
         <section className="cartao ritual-cartao">
           <div className="ritual-raios" aria-hidden="true" />
           {relatorio.faseConcluida ? <FiguraLimpa className="ritual-trofeu" src={asset('figuras/estrela.webp')} /> : null}
-          <h1 className="t">{relatorio.faseConcluida ? `Fase concluída: ${fase.titulo}!` : 'Missão de hoje feita!'}</h1>
+          <h1 className="t">{relatorio.faseConcluida ? `Fase concluída: ${semFonetica(fase.titulo)}!` : 'Missão de hoje feita!'}</h1>
           <Balao fala={{ quem: 'sofia', texto: FALAS.ritual.recap }} crianca={crianca} />
           <p className="ritual-desafios">Hoje: <b>{relatorio.atividades}</b> desafios feitos</p>
           {/* D034: o que abriu fica logo no alto (no celular, o resto do ritual vem embaixo) */}
           {passo >= 2 && abriu.length ? <PainelAbriu ids={relatorio.abriu ?? []} sexo={crianca.genero} criancaId={crianca.id} ir={navegar} /> : null}
           <div className="ritual-grade">
             <div className="ritual-moedas">
-              <Cofrinho saldo={saldoAntes + (passo >= 1 ? relatorio.moedinhas : 0)} animar={moedasAnim} tamanho={250} />
-              <p data-testid="moedinhas-ganhas"><span className="ritual-moeda-3d" aria-hidden="true"><Premio3D tipo="moeda" tamanho={44} /></span><b>+{relatorio.moedinhas}</b> moedinhas no cofrinho</p>
-              {relatorio.moedinhasCalculadas > relatorio.moedinhas ? <small>Hoje o cofrinho já está cheio; amanhã tem mais.</small> : null}
+              <Cofrinho saldo={saldoAgora} animar={moedasAnim} tamanho={250} />
+              {/* revisão 18/11 (item 12): nunca "+0 moedinhas": sem moedas hoje (cofrinho do dia cheio), só o elogio */}
+              {relatorio.moedinhas > 0
+                ? <p data-testid="moedinhas-ganhas"><span className="ritual-moeda-3d" aria-hidden="true"><Premio3D tipo="moeda" tamanho={44} /></span><b className="soma">+{relatorio.moedinhas}</b> moedinhas no cofrinho</p>
+                : <p className="ritual-elogio" data-testid="ritual-elogio"><Icone nome="estrela" />Você trabalhou muito bem!</p>}
             </div>
             <div className="ritual-conquistas" aria-live="polite">
               {passo >= 2 && relatorio.conquistasNovas.length ? (
@@ -117,7 +130,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
           {expressa && relatorio.expressa ? <p className="ritual-chefe"><Icone nome="raio" />{relatorio.expressa.passou ? 'Trilha Expressa: fase feita em ritmo rápido!' : 'Essa a gente vai fazer com calma, juntos!'}</p> : null}
           {relatorio.termometroDepois > relatorio.termometroAntes ? <div className="ritual-termo"><p>O termômetro da leitura subiu!</p><Termometro valor={relatorio.termometroDepois} comNumero={false} /></div> : null}
           {relatorio.tituloNovo ? <p className="titulo-novo">Título novo: <b>{relatorio.tituloNovo}</b></p> : null}
-          <BarraObjetivo nivel={nivel} objetivo={config.recompensas.modo === 'surpresa' ? proxima?.objetivo : undefined} />
+          <BarraObjetivo nivel={nivel} objetivo={config.recompensas.modo === 'surpresa' && proximaDeVerdade ? semFonetica(proximaDeVerdade.titulo) : undefined} />
           {passo >= 3 ? <Balao fala={relatorio.faseConcluida ? fase.gancho : { quem: 'sofia', texto: FALAS.ritual.amanha }} crianca={crianca} humor="curiosa" /> : null}
           <div className="linha-botoes ritual-botoes">
             {fase.demonstracao ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/mostra/${fase.id}`)} data-testid="mostra-professor"><Icone nome="chapeu" />Mostra pro professor</button> : null}

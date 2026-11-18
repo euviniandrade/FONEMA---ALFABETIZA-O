@@ -6,6 +6,7 @@ import { asset } from '../servicos/ambiente.ts';
 import { caminhoFigura } from './ui.tsx';
 import { carregarImagem, figuraSemChao, geoPremio, geoSelo, novoCanvas, pintarFrente, pintarVerso, prepararSelo, relevoEstrela, type ArteSelo, type Forma, type Metal, type Motivo } from './selo-pintura.ts';
 import type { Modo, Peca, PecaModelo, Vista } from './premio3d.ts';
+import { semFonetica } from '../util.ts';
 
 /* ============================== selos 3D (D025/D029) ============================== */
 const NOME_NIVEL: Record<string, string> = { bronze: 'Bronze', prata: 'Prata', ouro: 'Ouro', diamante: 'Diamante' };
@@ -203,7 +204,7 @@ export function Selo({ conquista, ganha, tamanho = 150, girar = false, letra, bl
       {girar
         ? <SeloGirando conquista={conquista} ganha={ganha} letra={letra} bloqueado={bloqueado} tamanho={tamanho} modo="entrada" />
         : <canvas ref={ref} style={{ aspectRatio: `${g.w} / ${g.h}` }} role="img" aria-label={rotulo} />}
-      {tamanho <= 130 && !girar && !mist ? <figcaption className="selo-nome">{conquista.nome}</figcaption> : null}
+      {tamanho <= 130 && !girar && !mist ? <figcaption className="selo-nome">{semFonetica(conquista.nome)}</figcaption> : null}
       {aberto ? <SeloAmpliado conquista={conquista} ganha={ganha} letra={letra} bloqueado={bloqueado} aoFechar={() => setAberto(false)} /> : null}
     </figure>
   );
@@ -248,11 +249,11 @@ export function SeloAmpliado({ conquista, ganha, letra, bloqueado = false, aoFec
     : <SeloGirando conquista={conquista} ganha={ganha} letra={letra} bloqueado={bloqueado} tamanho={tam} modo="auto" />;
   return (
     <Ampliado rotulo={mist ? 'Mistério' : conquista.nome} objeto={objeto} aoFechar={aoFechar}>
-      <h2 className="t">{mist ? 'Mistério' : conquista.nome}</h2>
+      <h2 className="t">{mist ? 'Mistério' : semFonetica(conquista.nome)}</h2>
       {bloqueado
         ? <p className="selo-ampliado-nivel bloqueado">Ainda não conquistado</p>
         : <p className={`selo-ampliado-nivel ${ganha?.nivel ?? 'unico'}`}>{nivel ? `Nível ${nivel}` : 'Conquistado'}{ganha ? ` · ${new Date(ganha.em).toLocaleDateString('pt-BR')}` : ''}</p>}
-      <p className="selo-ampliado-como"><b>{bloqueado ? 'Como conquistar: ' : 'Como você conquistou: '}</b>{mist ? 'Continue a trilha para descobrir!' : conquista.dica}</p>
+      <p className="selo-ampliado-como"><b>{bloqueado ? 'Como conquistar: ' : 'Como você conquistou: '}</b>{mist ? 'Continue a trilha para descobrir!' : semFonetica(conquista.dica)}</p>
     </Ampliado>
   );
 }
