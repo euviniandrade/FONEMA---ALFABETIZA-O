@@ -1,7 +1,7 @@
 // FONEMA · Mundo 3D v2 — prédios e mobiliário da Vila das Letras (procedural, "de brinquedo").
 // Regra de arte (D009): 2–3 cores por objeto + telha/madeira naturais. Sem arco-íris.
 import * as THREE from 'three';
-import { rbox, G, F, M, roofGeo, hipRoof, rng } from './kit.js';
+import { rbox, G, F, M, roofGeo, hipRoof, rng, blobGeo } from './kit.js';
 
 export const P = {
   telha: '#D2693F', telhaEsc: '#B4502E', creme: '#FFF4DE', branco: '#FCF8F0', marinho: '#2E4374', azulClaro: '#8EC5E8',
@@ -67,12 +67,22 @@ export function casa(ctx, x, z, ry, o = {}) {
   const nj = Math.max(1, Math.round((w - 2) / 2.6));
   for (let i = 0; i < nj; i++) {
     const jx = -w / 2 + (i + 0.5) * w / nj;
-    if (Math.abs(jx - px) < 1.4 && and === 1) continue;
+    if (Math.abs(jx - px) < 1.4) continue; // nunca uma janela por cima da porta (no sobrado também)
     janela(ctx, L, jx, 2.35, d / 2, { cor: jan || det });
+    floreira(ctx, L, jx, 2.35, d / 2, o.seed || 1);
   }
   for (let a = 1; a < and; a++) for (let i = 0; i < nj; i++) janela(ctx, L, -w / 2 + (i + 0.5) * w / nj, 2.35 + h * a, d / 2, { cor: jan || det, arco: true });
   // janelas laterais
   for (const s of [-1, 1]) janela(ctx, F(x, 0, z, ry + s * Math.PI / 2), 0, 2.35, w / 2, { cor: jan || det });
+  // acabamento (lote à parte, sem colisão): cumeeira, calhas com condutor e beiral arrematado
+  if (ctx.D && !o.quatroAguas) {
+    const yb = H + 0.5, zb = (d + 0.2) / 2 + 0.47;
+    ctx.D.add(G.cyl10, P.telhaEsc, L(0, yb + rh + 0.02, 0, 0, 0, Math.PI / 2, 0.34, w + 1.25, 0.34), { jit: 0.02 });
+    for (const s of [-1, 1]) {
+      ctx.D.add(G.cyl10, '#E6DED0', L(0, yb + 0.03, s * zb, 0, 0, Math.PI / 2, 0.17, w + 1.15, 0.17), { jit: 0 });
+      if (s > 0) for (const sx of [-1, 1]) ctx.D.add(G.cyl10, '#E6DED0', L(sx * (w / 2 + 0.52), yb / 2, zb - 0.02, 0, 0, 0, 0.12, yb, 0.12), { jit: 0 });
+    }
+  }
   // floreira e vasos
   if (o.vasos !== false) for (const s of [-1, 1]) {
     const vx = px + s * 1.25;
@@ -81,6 +91,16 @@ export function casa(ctx, x, z, ry, o = {}) {
     for (let k = 0; k < 5; k++) ctx.flores.push({ m: L(vx + (r() - 0.5) * 0.5, 1.55 + r() * 0.15, d / 2 + 0.55 + (r() - 0.5) * 0.5, 0, 0, 0, 0.14), c: [P.ipe, '#FFFFFF', '#E86A5C'][k % 3] });
   }
   return { L, w, d, H };
+}
+
+/** Floreira de madeira embaixo da janela: caixinha, folhagem fofa e florzinhas (2 cores, D009). Só no lote de acabamento. */
+export function floreira(ctx, L, x, y, z, seed = 1) {
+  if (!ctx.D) return;
+  const r = rng(seed * 31 + Math.round(x * 10) + 500), yb = y - 1.35 / 2 - 0.42;
+  ctx.D.add(rbox(1.35, 0.32, 0.4, 0.06), P.madeira, L(x, yb, z + 0.36), { grad: 0.25 });
+  for (let k = 0; k < 3; k++) ctx.D.add(blobGeo(40 + k, 2, 0.25, 1, 0.55), k % 2 ? '#5DAA52' : '#4C9A4A', L(x - 0.42 + k * 0.42, yb + 0.25, z + 0.38, 0, r() * 6, 0, 0.55, 0.38, 0.42), { grad: 0.35 });
+  const cores = r() < 0.5 ? [P.ipe, '#FFFFFF'] : ['#E86A5C', '#FFFFFF'];
+  for (let k = 0; k < 5; k++) ctx.flores.push({ m: L(x - 0.5 + k * 0.25 + (r() - 0.5) * 0.1, yb + 0.42 + r() * 0.08, z + 0.42 + (r() - 0.5) * 0.15, 0.3, r() * 6, 0, 0.12), c: cores[k % 2] });
 }
 
 /** Poste colonial curvado com lanterna (lote de luzes acende ao entardecer). */

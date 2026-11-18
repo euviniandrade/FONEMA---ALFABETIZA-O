@@ -155,7 +155,7 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   const matFolha = addTranslucido(addRim(addWind(matStd({ roughness: 0.82 }), U, 0.018, 2.5), '#FFF2B0', 0.3, 2.4), U, 0.35);
   const matJanela = matStd({ roughness: 0.25, metalness: 0.1, emissive: new THREE.Color('#FFB866'), emissiveIntensity: 0 });
   const matLuz = matStd({ emissive: new THREE.Color('#FFD08A'), emissiveIntensity: 0.15, roughness: 0.3 });
-  const ctx = { C: new Lote(1), J: new Lote(2), Fo: new Lote(3), Lz: new Lote(4), flores: [], arbustos: [], petalas: [] };
+  const ctx = { C: new Lote(1), J: new Lote(2), Fo: new Lote(3), Lz: new Lote(4), D: q === 'baixo' ? null : new Lote(5), flores: [], arbustos: [], petalas: [] };
   const alturaQ = (x, z) => altura(x, z);
 
   // ---------- terreno ----------
@@ -390,6 +390,8 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   const folhas = montar(ctx.Fo, matFolha); grupo.add(folhas);
   const janelas = montar(ctx.J, matJanela, { cast: false }); grupo.add(janelas);
   const luzes = montar(ctx.Lz, matLuz, { cast: false }); grupo.add(luzes);
+  // acabamento dos prédios (cumeeiras, calhas, floreiras): lote à parte, fora da colisão (pecas)
+  const acabamento = ctx.D && !ctx.D.vazio ? montar(ctx.D, matCorpo) : null; if (acabamento) grupo.add(acabamento);
 
   // fumaça da padaria
   const fumTex = radialTex('rgba(255,255,255,0.9)', 'rgba(255,255,255,0)');
@@ -423,7 +425,7 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   return {
     grupo, POIS, portais, rio, altura,
     /** Troca ao vivo de qualidade (o mundo chama): o que tem versão leve e pesada. */
-    qualidade(n) { qualidadeArbustos(n); },
+    qualidade(n) { qualidadeArbustos(n); if (acabamento) acabamento.visible = n !== 'baixo'; },
     // grama de perto (js/grama.js) e o fundo do rio (js/submerso.js)
     chao: { tex: chaoTex, ext: EXT, geo: gIn, seg: segIn }, RIO_PTS, fundoRio, terreno,
     // para o passeio (colisão e água): peças dos lotes, troncos, arbustos, rio e barquinho
