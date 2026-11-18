@@ -1,5 +1,5 @@
 import { Figura, Icone } from '../componentes/ui.tsx';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { som, type AtividadeEspelho } from '@fonema/conteudo';
 import { infoNome } from '@fonema/motor';
 import { Balao, Brilho } from '../componentes/basicos.tsx';
@@ -8,6 +8,7 @@ import { efeitos } from '../servicos/efeitos.ts';
 import { espera } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
 import { useDestravar } from '../servicos/destravar.ts';
+import { BotaoOuvindo } from '../componentes/BotaoOuvindo.tsx';
 import { falar, textoVoz } from '../util.ts';
 import { tentativa, type PropsMecanica } from './comum.tsx';
 
@@ -45,18 +46,26 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
     setFalando(false);
   };
 
+  /** A criança tocou em "Ouvir o som"/"Bem devagar" no meio da apresentação: o resto dela não toca por cima. */
+  const mexeu = useRef(false);
   useEffect(() => {
+    let vivo = true;
+    const segue = () => vivo && !mexeu.current;
     (async () => {
       await falar(atividade.enunciado, crianca);
-      await mostrar();
-      if (atividade.falaAncora !== undefined) { if (atividade.falaAncora) await voz.falar(atividade.falaAncora, { quem }); }
-      else await voz.falar(ehNome ? `${crianca.pronuncia.fala}!` : `${s.esticado}… ${atividade.ancora.texto}!`, { quem });
-      if (nome.nota && ehNome) await voz.falar(nome.nota, { quem });
-      await voz.falar(textoVoz('Agora é a sua vez, [NOME]!', crianca), { quem });
-      setFase('vez');
+      if (segue()) await mostrar();
+      if (segue()) {
+        if (atividade.falaAncora !== undefined) { if (atividade.falaAncora) await voz.falar(atividade.falaAncora, { quem }); }
+        else await voz.falar(ehNome ? `${crianca.pronuncia.fala}!` : `${s.esticado}… ${atividade.ancora.texto}!`, { quem });
+      }
+      if (segue() && nome.nota && ehNome) await voz.falar(nome.nota, { quem });
+      if (segue()) await voz.falar(textoVoz('Agora é a sua vez, [NOME]!', crianca), { quem });
+      if (vivo) setFase((f) => (f === 'mostra' ? 'vez' : f));
     })();
+    return () => { vivo = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const ouvirDeNovo = async (lento: boolean) => { mexeu.current = true; efeitos.toque(); await mostrar(lento); setFase((f) => (f === 'mostra' ? 'vez' : f)); };
 
   const fiz = async () => {
     setFase('feito');
@@ -82,10 +91,11 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
       </div>
       {embed ? null : <p className="dica-boca"><Icone nome="boca" /><span>{s.dica}</span></p>}
       <div className="linha-botoes">
-        <button className="btn" onClick={() => mostrar()}><Icone nome="som" />Ouvir o som</button>
-        <button className="btn" onClick={() => mostrar(true)}><Icone nome="tartaruga" />Bem devagar</button>
+        <button className="btn" onClick={() => void ouvirDeNovo(false)}><Icone nome="som" />Ouvir o som</button>
+        <button className="btn" onClick={() => void ouvirDeNovo(true)}><Icone nome="tartaruga" />Bem devagar</button>
         {fase !== 'mostra' && !atividade.falaSom && atividade.falaAncora === undefined ? <button className="btn" onClick={async () => { setDica(true); await voz.falar(s.correcao, { quem: 'sofia' }); }}><Icone nome="dica" />Dica de boca</button> : null}
-        <button className="btn grande verde" onClick={fiz} disabled={fase === 'feito' || (fase === 'mostra' && !solto)} data-testid="fiz-o-som"><Icone nome="check" />Eu fiz o som!</button>
+        {/* ver e ouvir o som É a atividade: enquanto a dupla mostra, "Ouvindo…" animado (não um botão apagado) */}
+        <BotaoOuvindo ouvindo={fase === 'mostra' && !solto} onClick={fiz} disabled={fase === 'feito'} testId="fiz-o-som"><Icone nome="check" />Eu fiz o som!</BotaoOuvindo>
       </div>
       {fase === 'feito' ? <Brilho ativo /> : null}
     </div>

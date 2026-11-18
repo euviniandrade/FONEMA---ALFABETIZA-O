@@ -13,6 +13,7 @@ import { FALAS, FALAS_HISTORIA as H, type Historia as THistoria, type Opcao, typ
 import type { Crianca, Tentativa } from '@fonema/motor';
 import { Balao, Brilho } from '../componentes/basicos.tsx';
 import { Figura, Icone } from '../componentes/ui.tsx';
+import { BotaoOuvindo } from '../componentes/BotaoOuvindo.tsx';
 import { asset, espera, modoTeste } from '../servicos/ambiente.ts';
 import { efeitos } from '../servicos/efeitos.ts';
 import { voz } from '../servicos/voz.ts';
@@ -143,8 +144,10 @@ export function Historia({ historia, crianca, sessao, onFim }: { historia: THist
           </div>
           <div className="livro-rodape">
             <span className="livro-contador" aria-label="Página">{atual.tipo === 'pagina' ? `${atual.n + 1} / ${totalPaginas}` : 'Capa'}</span>
-            <button className="btn" onClick={() => { efeitos.toque(); void diz(atual.tipo === 'capa' ? historia.abre : historia.paginas[atual.n].texto); }} disabled={ocupado}><Icone nome="repetir" />Ouvir de novo</button>
-            <button className="btn grande ipe" onClick={avancar} disabled={ocupado} data-testid="historia-virar"><Icone nome="seta" />{atual.tipo === 'capa' ? 'Abrir o livro' : 'Virar a página'}</button>
+            {/* nunca apagado (revisão 18/11, item 7): tocar recomeça a leitura da página (a fala anterior sai com fade) */}
+            <button className="btn" onClick={() => { efeitos.toque(); void diz(atual.tipo === 'capa' ? historia.abre : historia.paginas[atual.n].texto); }}><Icone nome="repetir" />Ouvir de novo</button>
+            {/* ouvir a história É a atividade: enquanto a dupla lê, "Ouvindo…" animado no lugar do botão apagado */}
+            <BotaoOuvindo ouvindo={ocupado && !virando} onClick={avancar} disabled={virando} className="btn grande ipe" testId="historia-virar"><Icone nome="seta" />{atual.tipo === 'capa' ? 'Abrir o livro' : 'Virar a página'}</BotaoOuvindo>
           </div>
         </div>
       ) : null}
@@ -174,7 +177,7 @@ export function Historia({ historia, crianca, sessao, onFim }: { historia: THist
           <div>
             <h2 className="t">Fim!</h2>
             <ul className="vocab-lista">{historia.vocabulario.map((v) => <li key={v.palavra}><Figura palavra={v.figura} /><b>{v.palavra}</b></li>)}</ul>
-            <button className="btn enorme ipe brilha" onClick={terminar} disabled={ocupado} data-testid="historia-fim"><Icone nome="check" />Terminar</button>
+            <BotaoOuvindo ouvindo={ocupado} onClick={terminar} className="btn enorme ipe brilha" testId="historia-fim"><Icone nome="check" />Terminar</BotaoOuvindo>
           </div>
           <Brilho ativo />
         </div>

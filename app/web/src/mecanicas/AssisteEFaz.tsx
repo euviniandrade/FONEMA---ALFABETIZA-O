@@ -6,6 +6,7 @@ import { Icone } from '../componentes/ui.tsx';
 import { asset, modoTeste } from '../servicos/ambiente.ts';
 import { voz } from '../servicos/voz.ts';
 import { useDestravar } from '../servicos/destravar.ts';
+import { BotaoOuvindo } from '../componentes/BotaoOuvindo.tsx';
 import { useUrlDeAudio } from '../servicos/substituicoes.ts';
 import { NOMES_PERSONAGEM, falarVarias, textoTela } from '../util.ts';
 
@@ -84,9 +85,10 @@ export function AssisteEFaz({ roteiro, imagem, video, audio, crianca, onFim }: {
       </div>
       <div className="linha-botoes">
         <button className="btn vidro" onClick={tocar}><Icone nome="repetir" />Ver de novo</button>
-        <button className="btn grande ipe" onClick={() => { voz.parar(); midia.current?.pause(); onFim(); }} data-testid="minha-vez" disabled={!acabou && i < roteiro.length - 1 && !solto}>
+        {/* assistir É a atividade: enquanto a dupla mostra, "Ouvindo…" animado no lugar do botão apagado (revisão 18/11, item 7) */}
+        <BotaoOuvindo ouvindo={!acabou && i < roteiro.length - 1 && !solto} className="btn grande ipe" testId="minha-vez" onClick={() => { voz.parar(); midia.current?.pause(); onFim(); }}>
           {textoTela('Agora é a minha vez!', crianca)}<Icone nome="seta" />
-        </button>
+        </BotaoOuvindo>
       </div>
     </div>
   );
