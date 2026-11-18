@@ -155,3 +155,16 @@ html,body{overflow-x:clip}
   .tela-sessao .mec-espelho .ancora{font-size:20px}.tela-sessao .mec-espelho .ancora .fig{width:48px;height:48px}
   .tela-sessao .mec-espelho .espelho-embed{height:max(300px,calc(100svh - 440px))}
 }
+
+/* ---------- Um estilo por tela (item 21): onde a Sofia e o Tales 3D já estão na tela, o balão não repete o retrato 2D
+   (fica o nome de quem fala em cima do balão) ---------- */
+.tela-chegada .balao,.tela-fluxo:has(.dupla3d) .balao,.cartao:has(> .dupla3d) .balao{grid-template-columns:minmax(0,1fr) auto}
+.tela-chegada .balao>.rosto,.tela-fluxo:has(.dupla3d) .balao>.rosto,.cartao:has(> .dupla3d) .balao>.rosto{display:none}
+.tela-chegada .balao .balao-texto::before,.tela-fluxo:has(.dupla3d) .balao .balao-texto::before,.cartao:has(> .dupla3d) .balao .balao-texto::before{display:none}
+@media (max-width:560px){.tela-chegada .balao .ouvir,.tela-fluxo:has(.dupla3d) .balao .ouvir{grid-column:auto}}
+
+/* ---------- Vila (item 26): um botão grande só para a missão. No computador o painel guia já tem o "Continuar";
+   o "Missão" da barra de baixo aparece só onde o painel fica fechado (celular e tablet). A estrela no mapa marca o lugar. ---------- */
+@media (min-width:900px){
+  .tela-vila:has(aside.guia-vila) .doca2-missao{display:none}
+}

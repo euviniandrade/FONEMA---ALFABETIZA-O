@@ -404,7 +404,14 @@ export function pintarVerso(canvas: HTMLCanvasElement, arte: ArteSelo, im: Image
   const cy0 = (g.centro.cy + g.centro.y) / 2;
   const cy = cy0 - r * 0.24;
   const R = r * 0.5;
-  relevoEstrela(ctx, cx, cy, R, tom);
+  // revisão 18/11 (item 12): selo de letra tem a LETRA também no verso (antes era uma estrela genérica, e o selo ampliado no
+  // celular podia abrir de costas mostrando "uma medalha qualquer")
+  if (arte.motivo.tipo === 'letra') {
+    const fs = R * 1.9;
+    ctx.font = FONTE(700, fs); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = 'rgba(255,255,255,.6)'; ctx.fillText(arte.motivo.texto, cx + fs * 0.02, cy + fs * 0.05);
+    ctx.fillStyle = tom.escuro; ctx.globalAlpha = 0.85; ctx.fillText(arte.motivo.texto, cx, cy); ctx.globalAlpha = 1;
+  } else relevoEstrela(ctx, cx, cy, R, tom);
   // gravação: nível e data
   const gravar = (t: string, y: number, fs: number) => {
     ctx.font = FONTE(700, fs); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
