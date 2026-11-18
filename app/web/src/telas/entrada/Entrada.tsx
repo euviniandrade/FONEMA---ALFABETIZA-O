@@ -5,6 +5,7 @@
  */
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { calcularNivel, fasesConcluidas, missaoInicialFeita, type Crianca, type Progresso } from '@fonema/motor';
+import { TEXTOS_TELA } from '@fonema/conteudo';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Ajustes, AvatarMini, Carregando, Topo } from '../../componentes/basicos.tsx';
@@ -75,32 +76,32 @@ export function Entrada() {
       <div className="entrada-conteudo">
         <div className="entrada-logo"><Logo tamanho="g" subtitulo animar /></div>
         <main className="entrada-painel" aria-labelledby="entrada-titulo">
-          <h1 id="entrada-titulo" className="entrada-titulo">Quem vai entrar?</h1>
+          <h1 id="entrada-titulo" className="entrada-titulo">{TEXTOS_TELA['entrada.titulo']}</h1>
           <div className="portas">
             <button className="porta porta-aluno" onClick={() => navegar('aluno')} data-testid="entrar-aluno">
               <span className="porta-arte">
                 {ultima ? <AvatarMini crianca={ultima} tamanho={84} /> : <img className="porta-dupla" src={asset('dupla3d/acenando.webp')} alt="" />}
               </span>
-              <span className="porta-texto"><b>Sou aluno(a)</b><small>{ultima ? `Continuar a aventura, ${ultima.nome}!` : 'Entrar na aventura'}</small></span>
+              <span className="porta-texto"><b>{TEXTOS_TELA['entrada.aluno']}</b><small>{ultima ? `Continuar a aventura, ${ultima.nome}!` : TEXTOS_TELA['entrada.aluno.sub']}</small></span>
               <Icone nome="seta" className="porta-seta" />
             </button>
             <button className="porta porta-familia" onClick={() => navegar('familia')} data-testid="entrar-familia">
               <span className="porta-arte porta-par"><img src={asset('figuras/mamae.webp')} alt="" /><img src={asset('figuras/papai.webp')} alt="" /></span>
-              <span className="porta-texto"><b>Sou pai, mãe ou responsável</b><small>Área da Família</small></span>
+              <span className="porta-texto"><b>{TEXTOS_TELA['entrada.familia']}</b><small>{TEXTOS_TELA['entrada.familia.sub']}</small></span>
               <Icone nome="seta" className="porta-seta" />
             </button>
             <button className="porta porta-professor" onClick={() => navegar('professor')} data-testid="entrar-professor">
               <span className="porta-arte"><img src={asset('arte/icones/album.webp')} alt="" /></span>
-              <span className="porta-texto"><b>Sou professor(a)</b><small>Área do Professor</small></span>
+              <span className="porta-texto"><b>{TEXTOS_TELA['entrada.professor']}</b><small>{TEXTOS_TELA['entrada.professor.sub']}</small></span>
               <Icone nome="seta" className="porta-seta" />
             </button>
             <button className="porta porta-nova" onClick={() => navegar('primeira-vez')} data-testid="primeira-vez">
               <span className="porta-arte"><img src={asset('figuras/estrela.webp')} alt="" /></span>
-              <span className="porta-texto"><b>Primeira vez aqui</b><small>Criar conta e cadastrar a criança</small></span>
+              <span className="porta-texto"><b>{TEXTOS_TELA['entrada.primeira']}</b><small>{TEXTOS_TELA['entrada.primeira.sub']}</small></span>
               <Icone nome="seta" className="porta-seta" />
             </button>
           </div>
-          <p className="entrada-nota"><Icone nome="escudo" />Por enquanto sua conta fica guardada neste aparelho.</p>
+          <p className="entrada-nota"><Icone nome="escudo" />{TEXTOS_TELA['entrada.nota']}</p>
         </main>
       </div>
     </div>
@@ -127,8 +128,8 @@ export function Alunos() {
       <main className="alunos-palco">
         {lista.length ? (
           <>
-            <h1 className="t alunos-titulo">Quem é você?</h1>
-            <p className="alunos-sub">Toque no seu cartão para entrar na aventura.</p>
+            <h1 className="t alunos-titulo">{TEXTOS_TELA['alunos.titulo']}</h1>
+            <p className="alunos-sub">{TEXTOS_TELA['alunos.sub']}</p>
             <div className="alunos-grade" data-qtd={Math.min(lista.length, 4)}>
               {lista.map(({ c, p }) => {
                 const n = nivelDe(p);

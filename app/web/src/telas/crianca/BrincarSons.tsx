@@ -4,7 +4,7 @@
  * palmas. Sem moedinhas; respostas conferidas vão para o motor no contexto "livre".
  */
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
-import { FALAS_BIBLIOTECA as B, JOGOS_ESCUTA, JOGO_ESCUTA_POR_ID, type AtividadePalmas } from '@fonema/conteudo';
+import { FALAS_BIBLIOTECA as B, JOGOS_ESCUTA, JOGO_ESCUTA_POR_ID, RECURSOS, type AtividadePalmas } from '@fonema/conteudo';
 import { dadosBiblioteca, memoriaAberta, variacoesDoJogo } from '@fonema/motor';
 import { useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
@@ -20,6 +20,7 @@ import { useRegistroLivre } from './Biblioteca.tsx';
 import { JOGOS_DA_VILA, rotaDoJogoDaVila, situacaoDosJogosDaVila } from './jogos-vila-cartoes.ts';
 import { Capa, JOGOS_FONICOS, JOGO_FONICO_POR_ID, TelaJogoFonico } from '../../mecanicas/jogos/JogoFonico.tsx';
 import { CapaMemoria } from './MemoriaDosSons.tsx';
+import { Falta, SeloNovo, ehNovo, marcarVistoAqui, useMissoesAteAbrir } from '../../componentes/Desbloqueio.tsx';
 import '../../estilos-biblioteca.css';
 
 /** Figura da capa de cada jogo. */
@@ -36,7 +37,12 @@ export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?:
   useEffect(() => { if (crianca && !jogoId) void falar(B.brincar, crianca); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [crianca?.id, jogoId]);
   useEffect(() => () => voz.parar(), []);
+  // D034: quantas missões faltam para cada jogo fechado (o "o que falta" de cada cartão)
+  const missoes = useMissoesAteAbrir(progresso);
   if (!crianca || !progresso) return <Carregando />;
+  /** Toca no cartão: tira o "Novo!" e vai para o jogo. */
+  const abrir = (id: string, rota: string) => { marcarVistoAqui(criancaId, id); navegar(rota); };
+  const novo = (id: string) => ehNovo(progresso, criancaId, id);
   const d = dadosBiblioteca(progresso);
   const vila = situacaoDosJogosDaVila(progresso);
   // D032 §4: jogos fônicos (Corre-Som e Bichinho Come-Som), com os sons já ensinados
@@ -95,17 +101,19 @@ export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?:
                 <Balao fala={B.brincar} crianca={crianca} />
               </div>
             </header>
-            <h2 className="brincar-secao">Jogos</h2>
-            <div className="brincar-grade brincar-jogos-grade">
+            {RECURSOS.jogos ? <h2 className="brincar-secao">Jogos</h2> : null}
+            <div className="brincar-grade brincar-jogos-grade" hidden={!RECURSOS.jogos}>
               {JOGOS_FONICOS.map((j, k) => {
                 const vezes = d.jogos.filter((x) => x.id === j.id).length;
-                const aberto = variacoesDoJogo(progresso, j.id).some((v) => v.liberada);
+                const vs = variacoesDoJogo(progresso, j.id);
+                const aberto = vs.some((v) => v.liberada);
+                const id = `jogo:${j.id}`;
                 return (
-                  <button key={j.id} className={`brincar-jogo-cartao cor-${j.cor} ${aberto ? '' : 'trancado'}`} style={{ ['--k' as string]: k } as CSSProperties} onClick={() => navegar(`c/${criancaId}/brincar/${j.id}`)} data-testid={`jogo-${j.id}`}>
+                  <button key={j.id} className={`brincar-jogo-cartao cor-${j.cor} ${aberto ? '' : 'trancado'}`} style={{ ['--k' as string]: k } as CSSProperties} onClick={() => abrir(id, `c/${criancaId}/brincar/${j.id}`)} data-testid={`jogo-${j.id}`} data-aberto={aberto ? '1' : '0'}>
                     <Capa itens={j.capa} />
                     <b>{j.nome}</b>
-                    <small>{aberto ? j.treina : 'Abre com os primeiros sons da trilha'}</small>
-                    {vezes ? <span className="biblio-selo"><Icone nome="check" />{vezes}×</span> : null}
+                    {aberto ? <small>{j.treina}</small> : <Falta texto="Abre com o primeiro som da trilha." n={missoes[id]} compacto />}
+                    {aberto && novo(id) ? <SeloNovo /> : vezes ? <span className="biblio-selo"><Icone nome="check" />{vezes}×</span> : null}
                   </button>
                 );
               })}
@@ -113,12 +121,13 @@ export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?:
               {JOGOS_DA_VILA.map((j, k) => {
                 const vezes = d.jogos.filter((x) => x.id === j.id).length;
                 const s = vila[j.id];
+                const id = `jogo:${j.id}`;
                 return (
-                  <button key={j.id} className={`brincar-jogo-cartao cor-${j.cor} ${s.aberto ? '' : 'trancado'}`} style={{ ['--k' as string]: k + JOGOS_FONICOS.length } as CSSProperties} onClick={() => navegar(rotaDoJogoDaVila(criancaId, j.id))} data-testid={`jogo-${j.id}`}>
+                  <button key={j.id} className={`brincar-jogo-cartao cor-${j.cor} ${s.aberto ? '' : 'trancado'}`} style={{ ['--k' as string]: k + JOGOS_FONICOS.length } as CSSProperties} onClick={() => abrir(id, rotaDoJogoDaVila(criancaId, j.id))} data-testid={`jogo-${j.id}`} data-aberto={s.aberto ? '1' : '0'}>
                     <span className="brincar-figs" aria-hidden="true">{j.capa.map((f) => <Figura key={f} palavra={f} />)}</span>
                     <b>{j.nome}</b>
-                    <small>{s.aberto ? j.treina : s.motivo}</small>
-                    {vezes ? <span className="biblio-selo"><Icone nome="check" />{vezes}×</span> : null}
+                    {s.aberto ? <small>{j.treina}</small> : <Falta texto={s.motivo} n={missoes[id]} compacto />}
+                    {s.aberto && novo(id) ? <SeloNovo /> : vezes ? <span className="biblio-selo"><Icone nome="check" />{vezes}×</span> : null}
                   </button>
                 );
               })}
@@ -127,11 +136,11 @@ export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?:
                 const aberto = memoriaAberta(progresso);
                 const vezes = d.jogos.filter((x) => x.id === 'memoria-sons').length;
                 return (
-                  <button className={`brincar-jogo-cartao cor-ceu ${aberto ? '' : 'trancado'}`} style={{ ['--k' as string]: JOGOS_FONICOS.length + JOGOS_DA_VILA.length } as CSSProperties} onClick={() => navegar(`c/${criancaId}/memoria`)} data-testid="jogo-memoria-sons">
+                  <button className={`brincar-jogo-cartao cor-ceu ${aberto ? '' : 'trancado'}`} style={{ ['--k' as string]: JOGOS_FONICOS.length + JOGOS_DA_VILA.length } as CSSProperties} onClick={() => abrir('jogo:memoria', `c/${criancaId}/memoria`)} data-testid="jogo-memoria-sons" data-aberto={aberto ? '1' : '0'}>
                     <CapaMemoria itens={['fig', 'verso', 'letra']} />
                     <b>Memória dos Sons</b>
-                    <small>{aberto ? 'Achar o par da cena e da letra do mesmo som' : 'Abre com os primeiros sons da trilha'}</small>
-                    {vezes ? <span className="biblio-selo"><Icone nome="check" />{vezes}×</span> : null}
+                    {aberto ? <small>Achar o par da cena e da letra do mesmo som</small> : <Falta texto="Abre com os primeiros sons da trilha." n={missoes['jogo:memoria']} compacto />}
+                    {aberto && novo('jogo:memoria') ? <SeloNovo /> : vezes ? <span className="biblio-selo"><Icone nome="check" />{vezes}×</span> : null}
                   </button>
                 );
               })()}
@@ -150,7 +159,7 @@ export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?:
                 );
               })}
             </div>
-            <p className="brincar-nota">Os jogos de escutar ficam sempre abertos e não travam a trilha. Pode jogar quantas vezes quiser.</p>
+            <p className="brincar-nota">Os jogos de escutar ficam sempre abertos e não travam a trilha. Os jogos de sons abrem com o primeiro som da trilha e ganham sons novos a cada missão. Pode jogar quantas vezes quiser.</p>
           </section>
         )}
       </main>

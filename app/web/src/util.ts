@@ -1,4 +1,4 @@
-import type { Fala } from '@fonema/conteudo';
+import { nomeDoPersonagem, type Fala } from '@fonema/conteudo';
 import { generoDaFala, renderFala, type Crianca } from '@fonema/motor';
 import { voz } from './servicos/voz.ts';
 
@@ -16,9 +16,10 @@ export function falar(f: Fala | string, c?: Crianca, extras?: Record<string, str
 export function falarVarias(fs: Fala[], c?: Crianca, aoMudar?: (i: number) => void): Promise<void> {
   return voz.sequencia(fs.map((f) => ({ quem: f.quem, texto: textoVoz(f.texto, c) })), aoMudar);
 }
-export const NOMES_PERSONAGEM: Record<string, string> = {
-  sofia: 'Sofia', tales: 'Tales', bolota: 'Bolota', 'dona-cida': 'Dona Cida', davi: 'Davi', 'guarda-parque': 'Guarda-parque', pescadora: 'Pescadora', 'zum-zum': 'Zum-Zum'
-};
+/** Nome de cada personagem (vem de conteudo/personagens.ts: o administrador pode mudar no gerenciador). */
+export const NOMES_PERSONAGEM: Record<string, string> = new Proxy({} as Record<string, string>, {
+  get: (_, k) => (typeof k === 'string' ? nomeDoPersonagem(k) : undefined)
+});
 export function ehDeterminista<T>(arr: T[], semente: number): T[] {
   const a = [...arr];
   let s = semente || 1;

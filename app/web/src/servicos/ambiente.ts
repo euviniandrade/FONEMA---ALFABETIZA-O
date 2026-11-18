@@ -3,7 +3,17 @@ export const modoTeste = (): boolean => {
   try { return localStorage.getItem('fonema-teste-rapido') === '1'; } catch { return false; }
 };
 export const espera = (ms: number) => new Promise<void>((r) => setTimeout(r, modoTeste() ? Math.min(ms, 30) : ms));
-export const asset = (caminho: string) => `./assets/${caminho}`;
+/**
+ * Endereço de um arquivo de assets/. Se o administrador trocou a figura ou o modelo NESTE aparelho (gerenciador,
+ * servicos/edicoes.ts), devolve o arquivo trocado (blob:) no lugar do original.
+ */
+export const asset = (caminho: string) => TROCADOS.get(normalizarCaminhoAsset(caminho)) ?? `./assets/${caminho}`;
+/** Figuras/modelos trocados pelo administrador: caminho em assets/ → endereço blob:. */
+const TROCADOS = new Map<string, string>();
+export const normalizarCaminhoAsset = (c: string) => c.replace(/^\.?\/?(assets\/)?/, '').split(/[?#]/)[0];
+export function trocarAsset(caminho: string, url: string | null) {
+  if (url) TROCADOS.set(normalizarCaminhoAsset(caminho), url); else TROCADOS.delete(normalizarCaminhoAsset(caminho));
+}
 
 /** O mundo 3D (mundo-3d-v2) foi copiado para ./mundo3d/? (servidores de SPA devolvem o index do app para caminhos inexistentes.) */
 let mundo: Promise<boolean> | null = null;

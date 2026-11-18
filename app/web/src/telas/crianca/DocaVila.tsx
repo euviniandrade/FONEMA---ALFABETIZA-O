@@ -7,6 +7,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { treinoDisponivel, type Progresso } from '@fonema/motor';
+import { RECURSOS } from '@fonema/conteudo';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Icone } from '../../componentes/ui.tsx';
@@ -61,8 +62,8 @@ export function DocaVila({ criancaId, progresso, faseId, mundo3d }: { criancaId:
     <>
       <nav className="hud-doca doca2 vidro" aria-label="Lugares da vila">
         <button className="btn ipe doca-missao doca2-missao brilha" onClick={() => ir(`${c}/fase/${faseId}`)} data-testid="ir-missao"><Icone nome="play" />Missão</button>
-        <BotaoDoca onClick={() => ir(`${c}/leitura`)} figura={<Livrinho />} rotulo="Leitura" testid="ir-leitura" ponto="leitura" />
-        <BotaoDoca onClick={() => ir(`${c}/brincar`)} figura={<img className="ic ic3d" src={asset('figuras/pandeiro.webp')} alt="" draggable={false} />} rotulo="Brincar" testid="ir-brincar" ponto="brincar" />
+        {RECURSOS.leitura ? <BotaoDoca onClick={() => ir(`${c}/leitura`)} figura={<Livrinho />} rotulo="Leitura" testid="ir-leitura" ponto="leitura" /> : null}
+        {RECURSOS.brincar ? <BotaoDoca onClick={() => ir(`${c}/brincar`)} figura={<img className="ic ic3d" src={asset('figuras/pandeiro.webp')} alt="" draggable={false} />} rotulo="Brincar" testid="ir-brincar" ponto="brincar" /> : null}
         {lojinha
           ? <BotaoDoca onClick={() => ir(`${c}/lojinha`)} figura={<Icone nome="lojinha" />} rotulo="Lojinha" testid="ir-lojinha" ponto="lojinha" />
           : <BotaoDoca onClick={() => ir(`${c}/avatar`)} figura={<Icone nome="casa" />} rotulo="Meu boneco" testid="ir-boneco" ponto="boneco" />}
@@ -107,7 +108,7 @@ function PainelMais({ c, criancaId, progresso, lojinha, mundo3d, fechar }: { c: 
           {item(`${c}/album`, <img className="ic ic3d" src={asset('arte/icones/album.webp')} alt="" draggable={false} />, 'Álbum', 'album')}
           {item(`${c}/mapa`, <img className="ic ic3d" src={asset('arte/icones/mapa.webp')} alt="" draggable={false} />, 'Ilhas', 'ilhas')}
           {lojinha ? item(`${c}/avatar`, <img className="ic ic3d" src={asset('arte/icones/casa.webp')} alt="" draggable={false} />, 'Meu boneco', 'boneco') : null}
-          {mundo3d ? item(`${c}/mundo`, <Icone nome="cubo" />, 'Passear 3D', 'mundo3d') : null}
+          {mundo3d && RECURSOS.mundo3d ? item(`${c}/mundo`, <Icone nome="cubo" />, 'Passear 3D', 'mundo3d') : null}
         </div>
       </div>
     </div>,

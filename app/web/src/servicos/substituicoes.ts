@@ -65,12 +65,15 @@ export class ArmazemMemoria implements ArmazemSubstitutos {
 }
 
 export const NOME_BANCO_ADMIN = 'fonema-admin';
-/** Abre (e cria, na primeira vez) o banco do administrador. Lojas: substitutos (áudios) e chaves (acesso, escola). */
+/** Abre (e cria, na primeira vez) o banco do administrador. Lojas: substitutos (áudios), chaves (acesso, escola), edicoes e midias. */
 export async function abrirBancoAdmin() {
-  return openDB(NOME_BANCO_ADMIN, 1, {
+  // versão 2 (gerenciador): edições do conteúdo e figuras/modelos trocados (servicos/edicoes.ts)
+  return openDB(NOME_BANCO_ADMIN, 2, {
     upgrade(db) {
       if (!db.objectStoreNames.contains('substitutos')) db.createObjectStore('substitutos', { keyPath: 'id' });
       if (!db.objectStoreNames.contains('chaves')) db.createObjectStore('chaves', { keyPath: 'id' });
+      if (!db.objectStoreNames.contains('edicoes')) db.createObjectStore('edicoes', { keyPath: 'chave' });
+      if (!db.objectStoreNames.contains('midias')) db.createObjectStore('midias', { keyPath: 'caminho' });
     }
   });
 }
