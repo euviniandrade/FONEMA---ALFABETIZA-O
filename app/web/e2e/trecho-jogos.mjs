@@ -31,6 +31,17 @@ const tentativasDo = (p, mecanica) => Object.values(p.habilidades).flatMap((h) =
 async function jogarRodada(pg, { errar = false, tirar = async () => {} } = {}) {
   let errou = !errar;
   for (let passo = 0; passo < 900; passo++) {
+    // corrida (D035): o arco da vez primeiro (o arco não espera)
+    const vez = pg.locator('[data-testid=corre-som][data-decidir="1"]');
+    if (await vez.count().catch(() => 0)) {
+      const antes = Number(await vez.getAttribute('data-passados').catch(() => '0'));
+      const alvo = errou ? '.cs-pista[data-correta="1"]' : '.cs-pista[data-opcao]:not([data-correta])';
+      await pg.locator(alvo).first().click({ timeout: 1500 }).catch(() => {});
+      await tirar('corre-escolher');
+      const passou = await pg.waitForFunction((n) => { const e = document.querySelector('[data-testid=corre-som]'); return !e || Number(e.getAttribute('data-passados')) > n || e.getAttribute('data-fase') === 'fim'; }, antes, { timeout: 8000 }).then(() => true, () => false);
+      if (!errou && passou) { errou = true; await tirar('corre-correcao'); }
+      continue;
+    }
     if (await pg.getByTestId('jogo-fim').isVisible().catch(() => false)) return true;
     // D035: fim da corrida do Corre-Som (Brincar: tela de resultado; fase: "Continuar" volta para a sessão)
     const continuar = pg.getByTestId('corrida-continuar');

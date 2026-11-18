@@ -56,7 +56,8 @@ export interface PropsJogoFonico {
 type Fase = 'carregando' | 'largada' | 'correndo' | 'fim';
 /** No modo de teste a corrida livre acaba por número de arcos (máquina carregada não muda o resultado). */
 const ARCOS_NO_TESTE = 8;
-const CHEGADA_NO_TESTE_MS = 1300;
+// máquina de teste carregada: o arco demora o bastante para o robô do teste tocar a pista antes de ele passar
+const CHEGADA_NO_TESTE_MS = 3500;
 
 interface Arco { it: ItemJogo; onda: { mostrada: boolean; ouviu: number }; inicio: number; mexeu: boolean; h?: PortalCorrida }
 interface Flutuante { id: number; texto: string; tipo: 'mais' | 'menos' | 'moeda' }
