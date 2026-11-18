@@ -83,7 +83,8 @@
     "camisa": 130609,
     "calca": 204378,
     "calcado": 94203
-   }
+   },
+   "sobrancelhaDesenhada": true
   },
   "menino-padrao": {
    "arquivo": "avatar-menino-padrao.glb",

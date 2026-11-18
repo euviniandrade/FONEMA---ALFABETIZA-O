@@ -230,6 +230,11 @@ export function recolorir(base: Pick<Base, 'cor' | 'mascara' | 'info'>, a: Pick<
     const regiao = msk[i];
     if (regiao === 0) {
       // com cabelo curto aparece a nuca que o cabelo comprido escondia (sem cor de pele na textura): vira pele
+      if (nuca && msk[i + 2] === 64) {
+        // faixa da sobrancelha pintada (menina): vira pele lisa; a sobrancelha nova é desenhada por cima
+        d[i] = srgb(nuca[0] * 0.97); d[i + 1] = srgb(nuca[1] * 0.97); d[i + 2] = srgb(nuca[2] * 0.97);
+        continue;
+      }
       if (nuca && msk[i + 2] === 128) {
         const k = Math.min(1, lum(PARA_LINEAR[src[i]], PARA_LINEAR[src[i + 1]], PARA_LINEAR[src[i + 2]]) / branco) * 0.92;
         d[i] = srgb(nuca[0] * k); d[i + 1] = srgb(nuca[1] * k); d[i + 2] = srgb(nuca[2] * k);
@@ -244,6 +249,7 @@ export function recolorir(base: Pick<Base, 'cor' | 'mascara' | 'info'>, a: Pick<
       d[i + 1] = srgb(tom(pele[1], g / mPele[1]));
       d[i + 2] = srgb(tom(pele[2], b / mPele[2]));
     } else if (regiao === 2) {
+      if (nuca && msk[i + 2] === 64) { d[i] = srgb(nuca[0] * 0.97); d[i + 1] = srgb(nuca[1] * 0.97); d[i + 2] = srgb(nuca[2] * 0.97); continue; }
       if (!cabelo) continue;
       const k = Math.min(3.2, Math.pow(lum(r, g, b) / lCabelo, 0.9));
       d[i] = srgb(cabelo[0] * k); d[i + 1] = srgb(cabelo[1] * k); d[i + 2] = srgb(cabelo[2] * k);
@@ -343,6 +349,7 @@ export async function criarBonecoGlb(a: Aparencia): Promise<BonecoGlb | null> {
   if (a.penteado && cranio) {
     const peca = criarPenteado(a.penteado, { sexo: a.sexo, cranio, olhos, cor: a.cabelo ?? COR_PADRAO_CABELO[a.sexo] });
     if (peca) grupo.add(peca);
+    if (base.info.sobrancelhaDesenhada) grupo.add(sobrancelhas(interno, olhos, a.cabelo ?? COR_PADRAO_CABELO[a.sexo]));
     if (pescoco && pescoco.rx > 0.02) {
       // colarinho de pele atrás do pescoço (meia volta, um tico maior que o pescoço)
       const cor = a.pele ? new THREE.Color(a.pele) : new THREE.Color().setRGB(...linearDeMedia(base.info.medias.pele), THREE.LinearSRGBColorSpace);
@@ -355,6 +362,44 @@ export async function criarBonecoGlb(a: Aparencia): Promise<BonecoGlb | null> {
     }
   }
   return boneco;
+}
+
+/** Sobrancelhas novas (arcos finos) coladas na testa, acima de cada olho, na cor do cabelo. */
+function sobrancelhas(rosto: THREE.Object3D, olhos: BonecoGlb['olhos'], cor: string): THREE.Group {
+  const g = new THREE.Group();
+  g.name = 'sobrancelhas';
+  const mat = new THREE.MeshStandardMaterial({ color: new THREE.Color(cor).multiplyScalar(0.8), roughness: 0.7 });
+  rosto.updateMatrixWorld(true);
+  const raio = new THREE.Raycaster();
+  for (const o of olhos) {
+    const lado = Math.sign(o.centro.x) || 1;
+    const pts: THREE.Vector3[] = [];
+    for (let k = 0; k <= 8; k++) {
+      const t = k / 8 - 0.5; // -0,5 (perto do nariz) … 0,5 (fora)
+      const x = o.centro.x + lado * t * o.raioOlho * 2.3;
+      const y = o.centro.y + o.raioOlho * (1.75 + 0.35 * Math.cos(t * Math.PI * 1.1) - 0.1 * t);
+      raio.set(new THREE.Vector3(x, y, 2), new THREE.Vector3(0, 0, -1));
+      const toque = raio.intersectObject(rosto, true)[0];
+      if (!toque) continue;
+      const n = toque.face ? toque.face.normal.clone().transformDirection(toque.object.matrixWorld) : new THREE.Vector3(0, 0, 1);
+      pts.push(toque.point.clone().addScaledVector(n, 0.002));
+    }
+    if (pts.length < 4) continue;
+    const curva = new THREE.CatmullRomCurve3(pts);
+    const geo = new THREE.TubeGeometry(curva, 24, 0.0042, 6);
+    // afina nas pontas
+    const p = geo.getAttribute('position');
+    const v = new THREE.Vector3(), c = new THREE.Vector3();
+    for (let i = 0; i < p.count; i++) {
+      const anel = Math.floor(i / 7), t = anel / 24;
+      curva.getPointAt(Math.min(1, t), c);
+      v.fromBufferAttribute(p, i).sub(c).multiplyScalar(0.45 + 0.75 * Math.sin(Math.PI * Math.min(1, Math.max(0, t * 0.9 + 0.08)))).add(c);
+      p.setXYZ(i, v.x, v.y, v.z);
+    }
+    geo.computeVertexNormals();
+    g.add(new THREE.Mesh(geo, mat));
+  }
+  return g;
 }
 
 /* ------------------------------------------------------------------ acessibilidade sobre o modelo */

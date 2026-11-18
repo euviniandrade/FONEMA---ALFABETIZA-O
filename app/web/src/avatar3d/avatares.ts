@@ -17,6 +17,8 @@ export interface InfoAvatar {
   caixa: { min: [number, number, number]; max: [number, number, number] };
   olhos: { centro: [number, number, number]; raioIris: number; raioOlho: number }[];
   cabeca: { centro: [number, number, number] };
+  /** Com outro penteado, a sobrancelha pintada sai e o app desenha uma nova (a da menina fica em parte debaixo da franja). */
+  sobrancelhaDesenhada?: boolean;
 }
 export interface ManifestoAvatares { versao: 1; modelos: Record<string, InfoAvatar> }
 

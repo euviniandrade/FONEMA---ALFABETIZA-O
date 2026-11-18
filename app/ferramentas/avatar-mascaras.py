@@ -329,10 +329,38 @@ def segmentar(nome, pos, uv, idx, cor, conferir=None):
     candidatos = sobrancelha & (regiao == REGIOES['cabelo'])
     if candidatos.any():
         dd, _ = cKDTree(mapa[coberto0 & (regiao == REGIOES['pele'])]).query(mapa[candidatos])
-        perto_da_pele3d[candidatos] = dd < 0.014 * escala
+        perto_da_pele3d[candidatos] = dd < 0.024 * escala
     sobrancelha = sobrancelha & perto_da_pele3d
+    if comprido:
+        # menina: a sobrancelha pintada fica em parte debaixo da franja; com outro penteado o app desenha sobrancelhas
+        # novas, então aqui só fica (e vira pele) o que está colado à pele; o resto da franja vai para o crânio
+        # (a faixa aqui é mais larga: a sombra da franja também foi pintada na pele da têmpora, ao lado do olho)
+        larga = (cabeca & (regiao == REGIOES['cabelo']) & coberto0 & ~zona_olho & (coord_frente > frente_rosto - 4 * raio_olho)
+                 & (alt > alt_olhos - 1.2 * raio_olho / escala) & (alt < alt_olhos + 3.6 * raio_olho / escala)
+                 & (np.abs(coord_lado) < meia_distancia + 3.5 * raio_olho))
+        colado = np.zeros((LADO, LADO), bool)
+        if larga.any():
+            d2, _ = cKDTree(mapa[coberto0 & (regiao == REGIOES['pele'])]).query(mapa[larga])
+            colado[larga] = d2 < 0.006 * escala
+        sobrancelha = colado
     masc[..., 2] = np.where((regiao == REGIOES['cabelo']) & ~sobrancelha & (cabeca | comprido), 255, 0).astype(np.uint8)
     masc[..., 2][nuca] = 128
+    if comprido:
+        # menina: com outro penteado, a sobrancelha pintada vira pele (B = 64) e o app desenha sobrancelhas novas,
+        # inteiras (avatarGlb › sobrancelhas)
+        faixa = sobrancelha & coberto
+        masc[..., 2][faixa] = 64
+        # mecha da franja que passa perto do olho (fica na "zona do olho" e não entrou como cabelo): tem volume, longe
+        # da pele; cílios e contorno do olho são pintados na pálpebra (colados à pele) e ficam
+        perto_olho = cabeca & coberto0 & zona_olho & escuro & ~iris & (regiao == 0)
+        if perto_olho.any():
+            d3, _ = cKDTree(mapa[coberto0 & (regiao == REGIOES['pele'])]).query(mapa[perto_olho])
+            solto = np.zeros((LADO, LADO), bool)
+            solto[perto_olho] = d3 >= 0.006 * escala
+            masc[..., 2][solto] = 255
+            regiao[solto] = REGIOES['cabelo']
+            masc[..., 0] = regiao
+        info['sobrancelhaDesenhada'] = True
     regiao[nuca & (regiao == REGIOES['camisa'])] = 0  # é pescoço, não camiseta
     masc[..., 0] = regiao
 
