@@ -162,7 +162,9 @@ export function criarSubmerso({ vila, U, q = 'medio', menos = false }) {
     matPeixe.onBeforeCompile = (sh, rr) => { prev(sh, rr); sh.uniforms.uTempoF = U.time;
       sh.vertexShader = 'uniform float uTempoF;\n' + sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
         { float rabo = smoothstep(0.08, -0.3, position.z);
-          transformed.x += sin(uTempoF * 12.0 + float(gl_InstanceID) * 1.9 - position.z * 9.0) * (0.012 + 0.05 * rabo); }`); };
+          transformed.x += sin(uTempoF * 12.0 + float(gl_InstanceID) * 1.9 - position.z * 9.0) * (0.012 + 0.05 * rabo); }`);
+      // cor viva mesmo dentro d'água (um pouco de luz própria na cor do peixe)
+      sh.fragmentShader = sh.fragmentShader.replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n totalEmissiveRadiance += diffuseColor.rgb * 0.32;'); };
     const k0 = matPeixe.customProgramCacheKey.bind(matPeixe); matPeixe.customProgramCacheKey = () => k0() + 'peixe'; }
   const NMAX = QM.cardumes * QM.peixes;
   const peixes = new THREE.InstancedMesh(peixeGeo(), matPeixe, NMAX);
