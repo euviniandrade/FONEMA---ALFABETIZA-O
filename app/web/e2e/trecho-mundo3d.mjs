@@ -1,7 +1,7 @@
 // FONEMA · trecho E2E: PASSEIO 3D em terceira pessoa (D032 item 3).
 // Confere: o boneco da criança chega do app (com a camiseta escolhida) e os outros bonecos também; anda com o teclado;
 // arrastar gira a câmera; espaço pula; tchau; parede não deixa passar; clique no chão = ir até lá; conversa com a Sofia
-// (fala roteirizada); porta trancada diz o que falta; porta aberta tem o botão "Entrar" e leva ao Cantinho da Leitura;
+// (fala roteirizada); D034: o Coreto (antes trancado) abre para quem começa; porta aberta tem o botão "Entrar" e leva ao Cantinho da Leitura;
 // FPS mínimo. No celular (390×844, toque): joystick aparece onde o dedo encosta e anda.
 // Uso: node e2e/fluxo.e2e.mjs --mundo3d [--capturas-mundo3d]   (também roda dentro do E2E completo e do --sem-jornada)
 
@@ -118,16 +118,13 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   if (capturas) { await pg.waitForTimeout(500); await pg.screenshot({ path: `${capturas}/mundo3d-03-conversa-sofia.png` }); }
   await fr.locator('#cartao button', { hasText: 'Tchau' }).click(CLIQUE);
 
-  // porta trancada (Coreto: "Ler mais ligeiro" ainda não abriu para quem começa)
+  // D034: o Coreto não fica mais trancado: enquanto "Ler mais ligeiro" não abre, a porta leva às palmas (escuta com música)
   await frame.evaluate(() => window.FONEMA_PASSEIO.teleportar(-2.5, 9.6, Math.PI));
   await frame.evaluate(() => { const s = window.FONEMA_PASSEIO.npcs.lista.find((n) => n.id === 'sofia'); s.boneco.raiz.position.set(-3.5, 0, 14); s.espera = 30; });
   await simular(0.1);
-  await fr.locator('#btAcao.on.trancado').waitFor({ timeout: 20000 });
-  await fr.locator('#btAcao').click(CLIQUE);
-  await fr.locator('#cartao.aberto').waitFor();
-  ok(/trancado/.test(await fr.locator('#cartao').innerText()) && /palavras/.test(await fr.locator('#cartao').innerText()), 'porta trancada: cadeado e o que falta ("…ler mais palavras")');
-  if (capturas) { await pg.waitForTimeout(400); await pg.screenshot({ path: `${capturas}/mundo3d-04-porta-trancada.png` }); }
-  await fr.locator('#cartao button', { hasText: 'Ok' }).click(CLIQUE);
+  await fr.locator('#btAcao.on').waitFor({ timeout: 20000 });
+  ok(await fr.locator('#btAcao.on.trancado').count() === 0 && /Entrar/.test(await fr.locator('#btAcao').innerText()), 'porta do Coreto aberta para quem começa (D034: nada de porta trancada; leva às palmas)');
+  if (capturas) { await pg.waitForTimeout(400); await pg.screenshot({ path: `${capturas}/mundo3d-04-porta-coreto.png` }); }
 
   // FPS (rAF dentro do iframe, 3 s andando)
   await canvas.focus();

@@ -857,7 +857,8 @@ async function main() {
   await page.locator('.montar-corpo [data-peca="preto"]').click();
   await page.locator('[data-ir-passo="camisa"]').click();
   ok(await page.locator('.montar-corpo [data-peca="branca"][aria-checked="true"]').count() === 1, 'camiseta: começa branca (padrão)');
-  ok(/Letra B · 4 moedas/.test(await page.locator('.montar-corpo [data-peca="mata"]').getAttribute('aria-label')), 'cor especial aparece com cadeado: "Abre na Letra B · 4 moedas"');
+  // D034: as cores especiais abrem uma a uma nas primeiras missões; o cadeado diz quantas missões faltam
+  ok(/Abre na próxima missão · 4 moedas/.test(await page.locator('.montar-corpo [data-peca="mata"]').getAttribute('aria-label')), 'cor especial aparece com cadeado: "Abre na próxima missão · 4 moedas"');
   await page.locator('.montar-corpo [data-peca="mata"]').click();
   ok(/Lojinha/.test(await page.locator('.montar-aviso').innerText()) && await page.locator('.montar-corpo [data-peca="branca"][aria-checked="true"]').count() === 1, 'tocar numa cor trancada explica a Lojinha e não muda o boneco');
   await page.locator('.montar-corpo [data-peca="ipe"]').click();
@@ -865,7 +866,7 @@ async function main() {
   await cap(page, 'avatar');
   await page.locator('[data-ir-passo="lojinha"]').click();
   await page.getByTestId('vitrine-lojinha').waitFor();
-  ok(await page.locator('.vitrine-lista li').count() >= 4 && /Abre na Letra I/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'o fim da personalização ensina a Lojinha: o que abre depois, com fase e moedas');
+  ok(await page.locator('.vitrine-lista li').count() >= 4 && /Abre (na próxima missão|em \d+ missões)/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'o fim da personalização ensina a Lojinha: o que abre depois, com quantas missões faltam e moedas');
   ok(/Acessibilidade/.test(await page.getByTestId('vitrine-lojinha').innerText()), 'acessibilidade não vem de entrada: fica na Lojinha, grátis');
   await page.getByTestId('avatar-pronto').click();
   // D032: o tutorial abre sozinho na primeira vez; aqui o adulto pula e a criança cai na Chegada (o tutorial inteiro: --tutorial)
@@ -970,9 +971,10 @@ async function main() {
   await page.getByTestId('lojinha').waitFor();
   await cap(page, 'lojinha');
   // D029: Lojinha do boneco — cadeados por fase + moedas, e Acessibilidade sempre grátis
-  ok(/Abre na Letra C · 6 moedas/.test(await page.locator('[data-testid="loja-boneco"] [data-peca="terra"]').innerText()), 'Lojinha: camiseta terracota com cadeado "Abre na Letra C · 6 moedas"');
-  // D031: depois da letra A vem a lição do som /a/; a letra B só abre bem depois (depois de TF-17)
-  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="mata"][data-estado="fase"]').count() === 1, 'Lojinha: a camiseta verde espera a Letra B (cadeado de fase, mesmo com moedinhas)');
+  // D034: depois da Letra A, a camiseta verde já abriu (só falta a moedinha); a terracota abre daqui a 3 missões
+  ok(/Abre em 3 missões · 6 moedas/.test(await page.locator('[data-testid="loja-boneco"] [data-peca="terra"]').innerText()), 'Lojinha: camiseta terracota com cadeado "Abre em 3 missões · 6 moedas"');
+  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="mata"]:not([data-estado="fase"])').count() >= 1, 'Lojinha: a camiseta verde abriu com a 1ª missão (sem cadeado de fase)');
+  ok(await page.locator('[data-testid="loja-boneco"] [data-peca="madeira"][data-estado="fase"]').count() === 1, 'Lojinha: a camiseta cor de madeira ainda espera (cadeado de fase, mesmo com moedinhas)');
   ok(await page.locator('[data-testid="loja-boneco"] [data-peca="ipe"]').innerText().then((t) => /Usando/.test(t)), 'Lojinha: a cor escolhida na personalização aparece como "Usando"');
   ok(await page.locator('[data-cat="cabelo"]').count() === 0, 'Lojinha: sem aba de cabelos enquanto só existe o modelo padrão');
   await page.locator('[data-aba="acessibilidade"]').click();

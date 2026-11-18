@@ -140,6 +140,15 @@ Sem clipe (o balão mostra o texto e a dupla fica calada):
 - Faria falta (não usada ainda): "Achou um par!" e "Vire uma carta de cima e uma de baixo." (dica quando a criança tenta virar
   duas cartas do mesmo lado; hoje a segunda só não vira).
 
+## 1h. Desbloqueio progressivo (D034, fila do dono nº 22, 18/11; NENHUMA voz gerada)
+
+O painel "Abriu!" do fim da missão usa o clipe já gravado do Tales "Olha só o que chegou para você, [NOME]!" (`FALAS.surpresa`).
+O "o que falta" dos cartões fechados aparece só escrito (cadeado + bolinhas das missões ou barrinha). Sem clipe:
+- "Esse abre na próxima missão!" (Sofia; cartão fechado que abre na missão seguinte)
+- "Esse abre daqui a pouquinho. Cada missão abre uma coisa nova!" (Sofia; cartão fechado que abre mais adiante)
+- "Esse jogo ganha um som novo a cada missão." (Tales; selo "Para aquecer" dos jogos com menos de 3 sons)
+- "Abriu um jogo novo! Vamos ver?" (Tales; alternativa mais curta ao "Olha só o que chegou…", se o dono preferir)
+
 ## 2. Com clipe, mas a auditoria pede regravação ou conferência de ouvido
 
 | Voz | Fala | O que a transcrição ouviu | Situação |
