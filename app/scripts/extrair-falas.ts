@@ -55,7 +55,7 @@ for (const f of FASES) {
   if (f.demonstracao) add('tales', `${f.demonstracao.descricao}.`, f.id);
 }
 FALAS.chegada.forEach((f) => addF(f, 'chegada'));
-FALAS.voltou.forEach((f) => addF(f, 'voltou'));
+addF(FALAS.saudacao, 'saudacao');
 addF(FALAS.avatar, 'avatar'); addF(FALAS.avatarPronto, 'avatar'); addF(FALAS.avatarSexo, 'avatar'); addF(FALAS.avatarLojinha, 'avatar');
 PASSOS_AVATAR.forEach((p) => add('tales', p.pergunta, 'avatar'));
 FALAS_DAS_TELAS.forEach((f) => addF(f, 'telas'));

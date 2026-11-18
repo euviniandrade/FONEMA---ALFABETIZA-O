@@ -1,5 +1,5 @@
 /**
- * Falas que aparecem em qualquer fase (acertou, quase, vamos juntos, fim da missão, voltou) ficam no aparelho logo
+ * Falas que aparecem em qualquer fase (acertou, quase, vamos juntos, fim da missão, saudação) ficam no aparelho logo
  * que a criança entra, com o nome dela. Assim, sem internet, a dupla não fica muda num erro que ainda não tinha
  * acontecido com internet. São poucos clipes curtos (centenas de KB); o resto da mídia só entra quando é usado.
  */
@@ -14,7 +14,7 @@ const feitas = new Set<string>();
 function falasComuns(): Fala[] {
   const s = (texto: string): Fala => ({ quem: 'sofia', texto });
   return [
-    ...FALAS.voltou,
+    FALAS.saudacao,
     FALAS.suaVez,
     ...FALAS.acertos.map(s),
     s(FALAS.erro1), s(FALAS.erro2), s(FALAS.erroJunto), s(FALAS.erroJunto.replace('?', '!')),

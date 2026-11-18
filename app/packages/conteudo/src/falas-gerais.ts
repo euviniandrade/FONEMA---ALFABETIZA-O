@@ -11,9 +11,11 @@ export const FALAS = {
     { quem: 'tales', texto: 'E eu sou o Tales! {Seja bem-vindo|Seja bem-vinda|Que bom ter você} na Vila das Letras, [NOME]!' },
     { quem: 'sofia', texto: '{Você está pronto|Você está pronta|Tudo pronto} para conhecer as letras?' }
   ] as Fala[],
-  voltou: [
-    { quem: 'sofia', texto: 'Oi, [NOME]! {Que bom que você voltou, curioso|Que bom que você voltou, curiosa|Que bom te ver de novo}!' }
-  ] as Fala[],
+  /**
+   * Fila do dono nº 27 (1): saudação curta, só na 1ª entrada do dia na vila (web/src/servicos/saudacao.ts). Saiu o
+   * "Que bom que você voltou, curioso/curiosa" que tocava a cada volta à vila ("fica cansativo"). Voltar de uma tela não fala nada.
+   */
+  saudacao: { quem: 'sofia', texto: 'Oi, [NOME]!' } as Fala,
   avatar: { quem: 'tales', texto: 'Vamos montar o seu boneco, [NOME]! Qual é a cor da sua pele?' } as Fala,
   avatarSexo: { quem: 'sofia', texto: 'O boneco é menino ou menina?' } as Fala,
   avatarLojinha: { quem: 'tales', texto: 'Olha a Lojinha! A cada letra abrem coisas novas para o seu boneco.' } as Fala,

@@ -9,6 +9,7 @@ import { PersonagemVivo } from '../../componentes/PersonagemVivo.tsx';
 import { Fundo, Icone, MapaNavegavel, type Marcador } from '../../componentes/ui.tsx';
 import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
 import { DocaVila } from './DocaVila.tsx';
+import { primeiraEntradaDoDia } from '../../servicos/saudacao.ts';
 import { PainelGuia } from '../../componentes/Guia.tsx';
 import { Dupla3DGiravel } from '../../componentes/Personagem3D.tsx';
 import { falar, falarVarias, semFonetica, textoTela } from '../../util.ts';
@@ -89,7 +90,8 @@ export function Vila({ criancaId }: { criancaId: string }) {
   useEffect(() => { if (tutorial) navegar(`c/${criancaId}/tutorial`); }, [tutorial, criancaId]);
 
   useEffect(() => {
-    if (crianca && progresso && !recado && !tutorialPendente(progresso)) falar(progresso.sessoesFeitas ? FALAS.voltou[0] : FALAS.chegada[0], crianca);
+    // fila nº 27 (1): só a 1ª entrada do dia cumprimenta ("Oi, [NOME]!"); voltar de outra tela para a vila não fala nada
+    if (crianca && progresso && !recado && !tutorialPendente(progresso) && primeiraEntradaDoDia(crianca.id)) falar(progresso.sessoesFeitas ? FALAS.saudacao : FALAS.chegada[0], crianca);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [crianca?.id, progresso?.sessoesFeitas]);
 
@@ -100,7 +102,7 @@ export function Vila({ criancaId }: { criancaId: string }) {
   const proximas = FASES.slice(idx + 1, idx + 3);
   const total = Math.min(8, nivel.custoProximo || 1);
   const feitos = Math.round(((nivel.desafiosNoNivel || 0) / (nivel.custoProximo || 1)) * total);
-  const fala: Fala = recado ?? (progresso.sessoesFeitas ? FALAS.voltou[0] : { quem: 'sofia', texto: 'Oi, [NOME]! Toque na estrela para a missão de hoje.' });
+  const fala: Fala = recado ?? { quem: 'sofia', texto: 'Oi, [NOME]! Toque na estrela para a missão de hoje.' };
 
   const lugar = (id: keyof typeof LUGAR, icone: string, rotulo: string, ir: string, o: number): Marcador => ({
     id, ...LUGAR[id],
