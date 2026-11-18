@@ -21,6 +21,7 @@ import { falarVarias, textoTela } from '../../util.ts';
 import { aparenciaDe, temWebGL, type Aparencia } from '../../avatar3d/index.ts';
 import { barcoLiberado } from '@fonema/motor';
 import { useCacaNoPasseio } from './caca/useCacaTesouro.ts'; // caça ao tesouro (fila nº 25)
+import { lerMarca, limparMarca, marcarVindoDoPasseio } from '../../servicos/origem-passeio.ts'; // fila nº 27 (6)
 
 interface EstadoLugar { aberto: boolean; falta?: string; fala?: Fala }
 
@@ -112,7 +113,11 @@ export function Passeio3D({ criancaId, caca = false }: { criancaId: string; caca
       if (!c || !p) return;
       if (d.tipo === 'fonema:ola' && !iniciado.current) {
         iniciado.current = true;
-        enviar('fonema:init', { nome: textoTela('[NOME]', c), primeiraMissao: !p.sessoesFeitas, menosMovimento: menos, lugares: lugaresDoPasseio(p) });
+        // fila nº 27 (6): voltou de um lugar aberto pela porta → o boneco volta para onde estava
+        const marca = lerMarca();
+        const posicao = marca?.criancaId === c.id ? marca.pos : undefined;
+        limparMarca();
+        enviar('fonema:init', { nome: textoTela('[NOME]', c), primeiraMissao: !p.sessoesFeitas, menosMovimento: menos, lugares: lugaresDoPasseio(p), posicao });
         void mandarBonecos(c);
       }
       if (d.tipo === 'fonema:pronto') ref.current?.focus();
@@ -126,7 +131,13 @@ export function Passeio3D({ criancaId, caca = false }: { criancaId: string; caca
         const id = String(d.detalhe?.id ?? '');
         const st = lugaresDoPasseio(p)[id];
         const rota = destinosDoPasseio(c.id, p)[id];
-        if (rota && st?.aberto) { voz.parar(); navegar(rota); }
+        if (rota && st?.aberto) {
+          voz.parar();
+          // fila nº 27 (6): a setinha de voltar do lugar traz de volta ao passeio, na mesma posição
+          const pos = d.detalhe?.pos as { x: number; z: number; giro: number } | null | undefined;
+          marcarVindoDoPasseio({ criancaId: c.id, rota, pos: pos ?? undefined });
+          navegar(rota);
+        }
       }
     };
     window.addEventListener('message', ouvir);

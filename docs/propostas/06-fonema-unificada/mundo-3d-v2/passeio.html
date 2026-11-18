@@ -144,10 +144,22 @@ window.addEventListener('message', (ev) => {
     app.nome = d.nome ?? app.nome; app.primeiraMissao = !!d.primeiraMissao; app.lugares = d.lugares || null; app.menos = !!d.menosMovimento || app.menos;
     if (app.menos) document.body.classList.add('menos');
     if (passeio && app.lugares) passeio.definirLugares(app.lugares);
+    // fila nº 27 (6): voltou de um lugar aberto pela porta → o boneco reaparece onde estava antes de entrar
+    if (d.posicao) { app.posicao = d.posicao; if (passeio) voltarAoLugar(); }
   }
   if (m.tipo === 'fonema:boneco') { app.bonecos.push(m.detalhe); if (passeio) aplicarBonecos(); }
 });
 avisar('fonema:ola');
+let posAntesDaPorta = null; // fila nº 27 (6): onde o boneco estava antes de andar para dentro da porta
+const ondeEsta = () => { const p = passeio?.posicao; return p ? { x: +p.x.toFixed(2), z: +p.z.toFixed(2), giro: +p.giro.toFixed(3) } : null; };
+function voltarAoLugar() {
+  const p = app.posicao; app.posicao = null;
+  if (!p || !Number.isFinite(p.x) || !Number.isFinite(p.z)) return;
+  const g = Number.isFinite(p.giro) ? p.giro : passeio.posicao.giro;
+  passeio.teleportar(p.x, p.z, g);
+  passeio.girarCamera(g + Math.PI - passeio.camera.giro); // câmera atrás do boneco, como na partida
+  window.FONEMA_VOLTOU_DA_PORTA = { x: p.x, z: p.z, giro: g };
+}
 
 function aplicarBonecos() {
   for (const b of app.bonecos.splice(0)) {
@@ -196,18 +208,18 @@ if (!temWebGL()) {
       cartao.abrir(l.emBreve ? '⛵' : '🔒', l.emBreve ? `${l.nome}: em breve!` : `${l.nome}: ainda trancado`, st.falta || (l.emBreve ? 'Logo, logo dá para passear de barco.' : 'Abre depois, continue aprendendo!'), [bt('Ok', '👍', () => cartao.fechar(), 'sol')]);
       if (fala) avisar('fonema:falar', { falas: [fala] });
     },
-    aoEntrando(l) { cartao.fechar(); $('#btAcao').classList.remove('on'); },
+    aoEntrando(l) { posAntesDaPorta = ondeEsta(); cartao.fechar(); $('#btAcao').classList.remove('on'); },
     aoEntrar(l) {
       if (window.FONEMA_CACA?.aoEntrar(l)) return; // porta do barquinho: embarca (js/caca-tesouro.js)
       $('#veu').classList.add('on');
       setTimeout(() => {
-        if (EMBED) avisar('fonema:entrar', { id: l.id });
+        if (EMBED) avisar('fonema:entrar', { id: l.id, pos: posAntesDaPorta });
         else { toast(`▶️ ${l.sub}`); $('#veu').classList.remove('on'); passeio.cancelarEntrada(); }
       }, 450);
     },
     aoConversar(n, r) {
       const botoes = [];
-      if (r.acao) { const l = LUGAR_POR_ID[r.acao.lugar]; const aberto = app.lugares ? app.lugares[r.acao.lugar]?.aberto !== false : true; if (aberto) botoes.push(bt(r.acao.rotulo, r.acao.icone || '▶️', () => { cartao.fechar(); passeio.fimConversa(); avisar('fonema:entrar', { id: l.id }); $('#veu').classList.add('on'); }, 'sol')); }
+      if (r.acao) { const l = LUGAR_POR_ID[r.acao.lugar]; const aberto = app.lugares ? app.lugares[r.acao.lugar]?.aberto !== false : true; if (aberto) botoes.push(bt(r.acao.rotulo, r.acao.icone || '▶️', () => { cartao.fechar(); passeio.fimConversa(); avisar('fonema:entrar', { id: l.id, pos: ondeEsta() }); $('#veu').classList.add('on'); }, 'sol')); }
       botoes.push(bt('Tchau', '👋', () => { cartao.fechar(); passeio.acenar(); passeio.fimConversa(); avisar('fonema:parar'); }));
       cartao.abrir(n.papel === 'crianca' ? '👋' : '💬', n.nome, r.balao ? nomeNoTexto(r.balao) : '', botoes);
       if (r.falas?.length) avisar('fonema:falar', { falas: r.falas });
@@ -229,6 +241,7 @@ if (!temWebGL()) {
   // caça ao tesouro e barquinho (fila do dono nº 25): arquivos próprios; aqui só o gancho
   import('./js/caca-tesouro.js').then((m) => m.ligarCaca({ mundo, passeio, avisar })).catch((e) => console.warn('[passeio] caça não montou', e));
   if (app.lugares) passeio.definirLugares(app.lugares);
+  if (app.posicao) voltarAoLugar();
   aplicarBonecos();
 
   $('#btPular').onclick = () => { passeio.pular(); esconderDica(); };

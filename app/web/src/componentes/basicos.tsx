@@ -5,6 +5,7 @@ import { asset } from '../servicos/ambiente.ts';
 import { NOMES_PERSONAGEM, falar, textoTela } from '../util.ts';
 import { useApp } from '../contexto.tsx';
 import { navegar } from '../rotas.ts';
+import { destinoDoVoltar, lerMarca } from '../servicos/origem-passeio.ts';
 import { Icone, Logo } from './ui.tsx';
 import { Camada } from './Camada.tsx';
 import { PersonagemVivo, temBustoVivo } from './PersonagemVivo.tsx';
@@ -105,7 +106,7 @@ export function Topo({ crianca, moedinhas, voltar, titulo, children }: { crianca
     <header className="topo">
       <div className="topo-esq">
         {voltar !== undefined ? (
-          <button className="hud-btn" onClick={() => navegar(voltar)} aria-label="Voltar"><Icone nome="voltar" /></button>
+          <button className="hud-btn" onClick={() => navegar(destinoDoVoltar(voltar, location.hash, lerMarca()))} aria-label="Voltar"><Icone nome="voltar" /></button>
         ) : null}
         {crianca ? <div className="hud-perfil"><AvatarMini crianca={crianca} tamanho={52} /><div><b>{crianca.nome}</b>{titulo ? <small>{titulo}</small> : null}</div></div> : (
           <div className="hud-marca"><Logo tamanho="p" />{titulo ? <small>{titulo}</small> : null}</div>

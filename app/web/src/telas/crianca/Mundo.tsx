@@ -10,6 +10,7 @@ import { Fundo, Icone, MapaNavegavel, type Marcador } from '../../componentes/ui
 import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
 import { DocaVila } from './DocaVila.tsx';
 import { primeiraEntradaDoDia } from '../../servicos/saudacao.ts';
+import { limparMarca } from '../../servicos/origem-passeio.ts';
 import { PainelGuia } from '../../componentes/Guia.tsx';
 import { Dupla3DGiravel } from '../../componentes/Personagem3D.tsx';
 import { falar, falarVarias, semFonetica, textoTela } from '../../util.ts';
@@ -84,6 +85,9 @@ export function Vila({ criancaId }: { criancaId: string }) {
       await repo.salvarDemonstracao({ ...nova, vista: true });
     });
   }, [crianca, repo]);
+
+  // fila nº 27 (6): chegou à vila → já não está "dentro de um lugar do passeio"
+  useEffect(() => { limparMarca(); }, []);
 
   // D032: quem ainda não viu o tutorial e não fez nenhuma missão volta para ele (retoma no passo em que parou)
   const tutorial = !!progresso && tutorialPendente(progresso);
