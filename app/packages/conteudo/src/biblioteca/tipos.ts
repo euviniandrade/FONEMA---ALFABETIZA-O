@@ -19,6 +19,8 @@ export interface PerguntaHistoria {
   correta?: string;
   /** Página que a dupla relê no 1º erro (ensina o caminho: voltar à história, sem dizer a resposta). */
   pista?: number;
+  /** A pergunta cita a capa ("Olhe a capa…"): a capa fica na tela junto com as opções (a pergunta mostra o que cita). */
+  mostraCapa?: boolean;
 }
 
 /** Palavra de vocabulário (04 N16; ABC p. 230–233): explicação de criança, uso em frase e uma conferência por figura. */

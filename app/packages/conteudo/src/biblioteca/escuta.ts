@@ -99,7 +99,9 @@ export const JOGO_ESCUTA_POR_ID: Record<string, JogoEscuta> = Object.fromEntries
 export const NOME_DA_FIGURA: Record<string, string> = {
   pao: 'pão', mao: 'mão', leao: 'leão', aviao: 'avião', pe: 'pé', jacare: 'jacaré', xicara: 'xícara', helicoptero: 'helicóptero',
   hipopotamo: 'hipopótamo', poca: 'poça', 'copo-agua': 'copo de água', 'bolhas-sabao': 'bolhas de sabão', 'bolo-velinhas': 'bolo',
-  'rosto-feliz': 'feliz', 'rosto-triste': 'triste', 'rosto-bravo': 'bravo', chuva: 'chuva', banho: 'banho'
+  'rosto-feliz': 'feliz', 'rosto-triste': 'triste', 'rosto-bravo': 'bravo', chuva: 'chuva', banho: 'banho',
+  // a bola VERMELHA da história do Bolota (figura própria, 18/11): diz "bola" (clipe gravado)
+  'bola-vermelha': 'bola'
 };
 export const nomeDaFigura = (id: string) => NOME_DA_FIGURA[id] ?? id;
 

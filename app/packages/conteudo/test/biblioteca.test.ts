@@ -62,6 +62,9 @@ describe('hora da história (04 N12, N16)', () => {
         if (p.tipo === 'previsao') expect(p.correta).toBeUndefined();
         else expect(p.opcoes).toContain(p.correta);
         if (p.momento === 'durante') expect(p.depoisDaPagina).toBeLessThan(h.paginas.length);
+        // revisão 18/11 (itens 4 e 5): a pergunta mostra o que cita, e a bola do Bolota é a vermelha da história
+        if (/\bcapa\b/i.test(p.pergunta.texto)) expect(p.mostraCapa, p.pergunta.texto).toBe(true);
+        if (h.id === 'bolota-chuva' && /levou/.test(p.pergunta.texto)) expect(p.correta).toBe('bola-vermelha');
       }
       expect(h.vocabulario).toHaveLength(3);
       for (const v of h.vocabulario) {

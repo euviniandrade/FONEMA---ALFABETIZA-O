@@ -9,6 +9,8 @@
  *  - compreensão ouvida e vocabulário correm ao lado da fônica desde o começo: SOA p. 27; ABC p. 286–289.
  * As histórias, os personagens Fia e Beto e as falas são do projeto (07 §3: nada copiado dos materiais).
  * Perguntas respondidas por figura, 3 opções plausíveis; a resposta não está na ilustração da pergunta (04 N12) [DP].
+ * A figura certa é a que APARECE na história (a bola do Bolota é vermelha: `bola-vermelha`), e a pergunta que cita a capa
+ * mostra a capa junto (`mostraCapa`); revisão de qualidade 18/11, itens 4 e 5 [DP].
  */
 import type { Fala } from '../tipos.ts';
 import type { Historia } from './tipos.ts';
@@ -30,10 +32,10 @@ export const HISTORIAS: Historia[] = [
       { imagem: 'historias/bolota-chuva/5', texto: s('Quando a chuva passou, o sol voltou. O Bolota agradeceu à folha e foi pular nas poças.') }
     ],
     perguntas: [
-      { momento: 'antes', tipo: 'previsao', pergunta: s('Olhe a capa. Que tempo você acha que vai fazer nesta história?'), opcoes: ['chuva', 'sol', 'estrela'] },
-      { momento: 'durante', tipo: 'literal', depoisDaPagina: 1, pergunta: s('O que o Bolota levou quando saiu de casa?'), opcoes: ['bola', 'mala', 'sacola'], correta: 'bola', pista: 0 },
+      { momento: 'antes', tipo: 'previsao', pergunta: s('Olhe a capa. Que tempo você acha que vai fazer nesta história?'), opcoes: ['chuva', 'sol', 'estrela'], mostraCapa: true },
+      { momento: 'durante', tipo: 'literal', depoisDaPagina: 1, pergunta: s('O que o Bolota levou quando saiu de casa?'), opcoes: ['bola-vermelha', 'mala', 'sacola'], correta: 'bola-vermelha', pista: 0 },
       { momento: 'depois', tipo: 'literal', pergunta: s('Onde o Bolota se escondeu?'), opcoes: ['folha', 'casa', 'mala'], correta: 'folha', pista: 3 },
-      { momento: 'depois', tipo: 'inferencia', pergunta: s('Por que o Bolota se escondeu?'), opcoes: ['chuva', 'sol', 'bola'], correta: 'chuva', pista: 2 }
+      { momento: 'depois', tipo: 'inferencia', pergunta: s('Por que o Bolota se escondeu?'), opcoes: ['chuva', 'sol', 'bola-vermelha'], correta: 'chuva', pista: 2 }
     ],
     vocabulario: [
       {
@@ -67,7 +69,7 @@ export const HISTORIAS: Historia[] = [
       { imagem: 'historias/piquenique-fia/5', texto: s('Os dois comeram juntos, embaixo de uma flor. E o piquenique ficou ainda mais gostoso.') }
     ],
     perguntas: [
-      { momento: 'antes', tipo: 'previsao', pergunta: s('Olhe a capa. O que você acha que a formiga vai fazer?'), opcoes: ['piquenique', 'banho', 'bola'] },
+      { momento: 'antes', tipo: 'previsao', pergunta: s('Olhe a capa. O que você acha que a formiga vai fazer?'), opcoes: ['piquenique', 'banho', 'bola'], mostraCapa: true },
       { momento: 'durante', tipo: 'literal', depoisDaPagina: 0, pergunta: s('Que fruta a Fia levou no piquenique?'), opcoes: ['uva', 'abacaxi', 'banana'], correta: 'uva', pista: 0 },
       { momento: 'depois', tipo: 'literal', pergunta: s('Quem a Fia encontrou no caminho?'), opcoes: ['besouro', 'abelha', 'sapo'], correta: 'besouro', pista: 2 },
       { momento: 'depois', tipo: 'inferencia', pergunta: s('Como o Beto ficou quando a Fia dividiu o lanche?'), opcoes: ['rosto-feliz', 'rosto-triste', 'rosto-bravo'], correta: 'rosto-feliz', pista: 3 }

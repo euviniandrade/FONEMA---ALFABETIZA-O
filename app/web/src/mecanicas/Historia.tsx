@@ -152,6 +152,7 @@ export function Historia({ historia, crianca, sessao, onFim }: { historia: THist
       {atual.tipo === 'pergunta' || (atual.tipo === 'vocab' && vocabFase !== 'apresenta') ? (
         <div className="historia-pergunta">
           {atual.tipo === 'pergunta' ? <span className={`etiqueta ${atual.p.tipo === 'inferencia' ? 'verde' : ''}`}>{atual.p.momento === 'antes' ? 'Antes da história' : atual.p.momento === 'durante' ? 'No meio da história' : atual.p.tipo === 'inferencia' ? 'Pense bem' : 'Depois da história'}</span> : <span className="etiqueta">Palavra nova</span>}
+          {atual.tipo === 'pergunta' && atual.p.mostraCapa ? <img className="historia-pista historia-capa-pergunta" src={asset(`${historia.capa}.webp`)} alt="Capa da história" data-testid="historia-capa-pergunta" /> : null}
           {pista !== null ? <img className="historia-pista" src={asset(`${historia.paginas[pista].imagem}.webp`)} alt="" /> : null}
           {atual.tipo === 'vocab' && vocabFase === 'feito' ? <div className="vocab-revela"><Figura palavra={historia.vocabulario[atual.v].figura} /></div> : null}
           <OpcoesTF opcoes={opcoes} correta={perguntaAtual?.correta ?? '__previsao'} marcadas={marcadas} acertou={acertou} ocupado={ocupado} mostrarCerta={marcadas.length >= 2} onEscolher={responder} rotulo="Respostas" />
