@@ -413,6 +413,23 @@ const PENTEADOS: Record<string, Montador> = {
   'liso-comprido': (c, olhoY, rnd, cor) => [malha(juntar(liso(c, olhoY, rnd, { ate: 0.5 })), material(cor, 'fios', 3))],
   /** Liso no ombro com franja. */
   franja: (c, olhoY, rnd, cor) => [malha(juntar(liso(c, olhoY, rnd, { ate: 0.66, franja: true })), material(cor, 'fios', 3))],
+  /** Liso repartido de lado (a frente varre a testa na diagonal, sem cobrir as sobrancelhas). */
+  repartido: (c, olhoY, rnd, cor) => {
+    const gs = camadaDeCima(c, rnd, { n: 26, elFim: -0.25, larg: 0.05, franja: false, folga: 1.025 });
+    for (let i = 0; i < 7; i++) {
+      const t0 = i / 6;
+      const pts: THREE.Vector3[] = [];
+      for (let k = 0; k <= 10; k++) {
+        const t = k / 10;
+        const az = 0.75 - 1.6 * t + 0.25 * t0, el = 1.25 - 0.45 * t - 0.25 * t0;
+        const p = noCranio(c, az, el, 1.035 + 0.02 * Math.sin(t * Math.PI));
+        if (p.y < olhoY + 0.1) p.y = olhoY + 0.1;
+        pts.push(paraFora(c, p, 1.03));
+      }
+      gs.push(mecha(pts, ponta(0.04, 0.35), ponta(0.013, 0.5), (p) => p.clone().sub(c.centro).normalize(), 24, 8));
+    }
+    return [malha(juntar(gs), material(cor, 'fios', 1))];
+  },
   /** Franjinha de menino (liso curto com franja reta). */
   'franja-curta': (c, olhoY, rnd, cor) => [malha(juntar([...camadaDeCima(c, rnd, { n: 26, elFim: -0.25, larg: 0.05, franja: false, folga: 1.025 }), ...franja(c, olhoY, rnd, { n: 9, largura: 1.7, altura: 0.075, larg: 0.034 })]), material(cor, 'fios', 1))],
   /** Ondulado (até o ombro / meio das costas). */

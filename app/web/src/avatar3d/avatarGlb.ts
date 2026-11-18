@@ -120,19 +120,23 @@ function cabeloRente(g: THREE.BufferGeometry, mascara: ImageData, mapa: THREE.Te
   const nt = new THREE.Matrix3().getNormalMatrix(inv); // normais da cena de volta para a malha
   const novaPos = new Float32Array(n * 3), novaNor = new Float32Array(n * 3);
   const levantado = new Uint8Array(n);
+  // o cabelo do modelo desce abaixo da nuca? (menina: sim; menino: só a sombra da gola, que fica como está)
+  let abaixo = 0;
+  for (let i = 0; i < n; i++) if (cabelo[i] && cena[i * 3 + 1] < centro.y - 0.7 * cranio.baixo - 0.05) abaixo++;
+  const desce = abaixo > 50;
   const d = new THREE.Vector3(), nn = new THREE.Vector3();
   for (let i = 0; i < n; i++) {
     v.set(cena[i * 3], cena[i * 3 + 1], cena[i * 3 + 2]);
     if (nor) nn.fromBufferAttribute(nor, i); else nn.set(0, 1, 0);
     const linhaNuca = centro.y - 0.7 * cranio.baixo;
     // abaixo da linha da nuca o cabelo comprido não se mexe: os triângulos só de cabelo dali saem da malha (abaixo)
-    if (cabelo[i] && v.y < linhaNuca) levantado[i] = 1;
-    if (cabelo[i] && !levantado[i]) {
+    if (cabelo[i] && v.y < linhaNuca && desce) levantado[i] = 1;
+    if (cabelo[i] && !levantado[i] && v.y >= linhaNuca) {
       // abaixo do centro o crânio é mais baixo (nuca): o cabelo comprido sobe até ela
       const rr = v.y < centro.y ? new THREE.Vector3(cranio.raios.x, cranio.baixo, cranio.raios.z) : cranio.raios.clone();
       // nas têmporas e na frente da orelha o cabelo comprido vai para dentro (senão vira uma aba saindo do rosto)
       const frente = (v.z - centro.z) / Math.max(1e-6, Math.hypot(v.x - centro.x, v.z - centro.z));
-      if (frente > 0.15 && v.y < centro.y + 0.45 * cranio.raios.y) rr.multiplyScalar(1 - 0.16 * Math.min(1, (frente - 0.15) / 0.35));
+      if (frente > 0.15 && v.y < centro.y + 0.75 * cranio.raios.y) rr.multiplyScalar(1 - 0.16 * Math.min(1, (frente - 0.15) / 0.35) * Math.min(1, (centro.y + 0.75 * cranio.raios.y - v.y) / (0.3 * cranio.raios.y)));
       d.subVectors(v, centro).divide(rr);
       const rho = d.length();
       // na nuca, até o que estava por dentro vai para a superfície (sem pontas soltas penduradas no pescoço)

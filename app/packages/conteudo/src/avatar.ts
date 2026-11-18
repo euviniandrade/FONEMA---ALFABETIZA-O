@@ -93,7 +93,7 @@ export const CABELOS: PecaAvatar[] = [
   p('cabelo', 'm-padrao', 'Liso curto', 'm', { modelo: 'menino-padrao', padrao: true }),
   cab('m-raspado', 'Raspadinho', 'm', 'raspado'),
   cab('m-franja', 'Franja', 'm', 'franja-curta'),
-  cab('m-liso', 'Liso repartido', 'm', 'liso-curto'),
+  cab('m-liso', 'Liso repartido', 'm', 'repartido'),
   cab('m-ondulado', 'Ondulado', 'm', 'ondulado-curto'),
   cab('m-cacheado', 'Cacheado', 'm', 'cacheado-curto'),
   cab('m-crespo', 'Crespo curtinho', 'm', 'black-pequeno'),

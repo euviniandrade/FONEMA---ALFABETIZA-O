@@ -272,6 +272,7 @@ def segmentar(nome, pos, uv, idx, cor, conferir=None):
     peso[regiao > 0] = 255
     peso[iris] = np.round(raio_norm[iris] * 255).astype(np.uint8)  # na íris, G = quanto o texel é íris (0–255)
 
+    coberto0 = coberto.copy()  # só o que a malha usa de verdade (antes de preencher a folga)
     # ---- preenche a folga em volta de cada ilha da textura (os filtros da placa leem texels vizinhos)
     for _ in range(10):
         vazio = ~coberto
@@ -315,11 +316,15 @@ def segmentar(nome, pos, uv, idx, cor, conferir=None):
     frente_rosto = np.percentile(coord_frente[coberto & cabeca], 97)
     sobrancelha = ((alt > alt_olhos + 0.6 * raio_olho / escala) & (alt < alt_olhos + 3.4 * raio_olho / escala)
                    & (coord_frente > frente_rosto - 2.6 * raio_olho) & (np.abs(coord_lado) < meia_distancia + 2.2 * raio_olho))
-    masc[..., 2] = np.where((regiao == REGIOES['cabelo']) & ~sobrancelha, 255, 0).astype(np.uint8)
+
     # B = 128: pescoço/nuca escondidos pelo cabelo comprido (a textura ali não tem cor de pele); com cabelo curto viram pele
+    # só quando o cabelo do modelo descia abaixo da gola (a menina): no menino a nuca já é pele
+    comprido = int(((regiao == REGIOES['cabelo']) & coberto0 & (alt < alt_olhos - 0.11)).sum()) > 2000
     atras = coord_frente < np.median(coord_frente[coberto & cabeca]) + 0.01 * escala
     nuca = coberto & (alt > alt_gola - 0.045) & (alt < alt_olhos) & ~zona_olho & ~azul & atras & ((regiao == 0) | ((regiao == REGIOES["camisa"]) & (np.abs(coord_lado) < 0.1 * escala)))
-    nuca = ndimage.binary_dilation(nuca, iterations=2) & coberto & ((regiao == 0) | nuca) & ~azul
+    nuca = ndimage.binary_dilation(nuca, iterations=2) & coberto & ((regiao == 0) | nuca) & ~azul & comprido
+    # cabelo que sai: na cabeça; abaixo da gola, só no cabelo comprido (no menino é sombra da gola da camiseta)
+    masc[..., 2] = np.where((regiao == REGIOES['cabelo']) & ~sobrancelha & (cabeca | comprido), 255, 0).astype(np.uint8)
     masc[..., 2][nuca] = 128
     regiao[nuca & (regiao == REGIOES['camisa'])] = 0  # é pescoço, não camiseta
     masc[..., 0] = regiao
