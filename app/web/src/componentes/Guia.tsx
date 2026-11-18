@@ -146,8 +146,10 @@ export function PainelGuia({ crianca, progresso, onde }: { crianca: Crianca; pro
 
         <section className="guia-bloco guia-missao" aria-label="Missão de hoje">
           <h3 className="guia-rotulo">{missao.feitaHoje ? 'Missão de hoje: feita!' : 'Missão de hoje'}</h3>
-          <p className="guia-fase">{semFonetica(fase?.titulo ?? '')}</p>
+          {/* feita hoje: a barra cheia é a de HOJE; o nome que aparece embaixo é o da PRÓXIMA missão, com rótulo (antes parecia a mesma) */}
+          {missao.feitaHoje ? null : <p className="guia-fase">{semFonetica(fase?.titulo ?? '')}</p>}
           <BarraMissao passos={missao.passos} feitos={missao.feitaHoje ? missao.passos : 0} agora={missao.feitaHoje ? undefined : 0} rotulo={missao.feitaHoje ? 'Missão de hoje feita' : `Missão de hoje: ${missao.passos} passos`} />
+          {missao.feitaHoje && fase ? <p className="guia-fase guia-proxima" data-testid="guia-proxima"><small>Próxima:</small> {semFonetica(fase.titulo)}</p> : null}
           <button className="btn enorme ipe brilha guia-continuar" onClick={continuar} data-testid="guia-continuar"><Icone nome="play" />{progresso.sessoesFeitas ? 'Continuar' : 'Começar'}</button>
         </section>
 

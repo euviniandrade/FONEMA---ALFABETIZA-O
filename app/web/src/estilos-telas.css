@@ -143,3 +143,6 @@ html,body{overflow-x:clip}
 
 /* ---------- Palmas (item 16; regra 6): a sílaba vale na escuta; as lâmpadas acendem sem a sílaba escrita ---------- */
 .lampadas .lampada small{display:none}
+
+/* painel guia: "Próxima:" antes do nome da próxima missão quando a de hoje já foi feita */
+.guia-proxima{margin-top:6px}.guia-proxima small{font-family:var(--f-titulo);font-weight:600;font-size:13px;color:var(--cinza);text-transform:uppercase;letter-spacing:.4px;margin-right:4px}

@@ -65,6 +65,8 @@ lado, todas as respostas inteiras sem rolar e sem nada por cima, "Voltar para a 
 - ✅ **33** Estrada: as cores à venda aparecem (uma classe "loja" colidia com o layout da Lojinha). ⏸ fala de apresentação.
 - ✅ **34** Come-Som: o pedido é um balão de fala saindo da boca do Bolota.
 - ✅ **37** Números sem o zero cortado (os algarismos vêm da Andika).
+- ✅ (achados extras da frente de desbloqueio) Os textos de "Ler sozinho" trancados não mostram mais as primeiras linhas; no painel
+  guia, com a missão de hoje feita, a barra cheia fica sob "Missão de hoje: feita!" e o nome embaixo vem como "Próxima: …".
 
 ## Lista priorizada
 

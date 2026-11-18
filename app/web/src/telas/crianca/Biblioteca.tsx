@@ -206,7 +206,8 @@ function Menu({ criancaId, d, flu, frases, escrever, progresso }: {
             <button key={t.id} className={`biblio-texto ${aberto ? '' : 'trancado'}`} style={estilo()} disabled={!aberto} onClick={() => ir(`texto-${t.id}`, `leitura:texto:${t.id}`)} data-testid={`texto-${t.id}`}>
               <span className="biblio-bloco">Bloco {t.bloco}</span>
               <b className="biblio-texto-titulo">{t.titulo}</b>
-              <span className="biblio-texto-linhas" aria-hidden="true">{t.linhas.slice(0, 2).map((l) => l.texto).join(' ')}…</span>
+              {/* trancado não mostra o texto (só abre quando a criança já pode ler) */}
+              {aberto ? <span className="biblio-texto-linhas" aria-hidden="true">{t.linhas.slice(0, 2).map((l) => l.texto).join(' ')}…</span> : null}
               {aberto ? (novo(`leitura:texto:${t.id}`) && !lido ? <SeloNovo /> : lido ? <span className="biblio-selo"><Icone nome="check" />lido</span> : null) : <span className="biblio-cadeado"><Falta texto={`Abre no fim do bloco ${t.bloco}`} n={missoes[`leitura:texto:${t.id}`]} compacto /></span>}
             </button>
           );
