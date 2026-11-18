@@ -202,3 +202,60 @@ export async function trechoJogos(browser, h) {
   }
   await ctx.close();
 }
+
+/**
+ * D035: sequência de capturas de UMA corrida do Corre-Som em velocidade real (sem o modo de teste: pista 3D andando, ondas,
+ * ✖, +N, placar e tempo) e o fim. Lê a medida de quadros por segundo da pista (data-fps do canvas, qualidade adaptativa).
+ * Uso: node e2e/fluxo.e2e.mjs --capturas-corrida   (1850×980 e 390×844 em app/docs/capturas/v15-corrida-*.png)
+ */
+export async function capturasCorrida(browser, h) {
+  const { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros, w = 1850, h: alt = 980, suf = '', movel = false, dirCap } = h;
+  console.log(`K. Corre-Som em corrida: capturas em velocidade real (${w}×${alt})`);
+  const ctx = await browser.newContext({ viewport: { width: w, height: alt }, locale: 'pt-BR', serviceWorkers: 'block', ...(movel ? { deviceScaleFactor: 2, isMobile: true, hasTouch: true } : {}) });
+  const pg = await ctx.newPage();
+  pg.on('pageerror', (e) => erros.push(String(e)));
+  await pg.goto(BASE + '#/adulto/cadastro');
+  await pg.evaluate(() => localStorage.setItem('fonema-teste-rapido', '1'));
+  await pg.reload();
+  await passarPorteira(pg);
+  await cadastrar(pg, 'Bia', 'f');
+  await montarAvatar(pg);
+  await pg.getByTestId('primeira-missao').waitFor();
+  const id = pg.url().split('/c/')[1].split('/')[0];
+  await semear(pg, id, ['AL-A', 'TF-01', 'AL-E', 'TF-02', 'AL-I', 'TF-03', 'AL-O', 'TF-04', 'AL-U', 'TF-05', 'TF-06', 'AL-RV1', 'AL-M', 'TF-07', 'AL-F', 'TF-08']);
+  // a demonstração já vista (vai direto à corrida); velocidade real
+  await pg.evaluate((cid) => { localStorage.setItem(`fonema-demo-jogo:${cid}:corre-som:letra`, '1'); localStorage.removeItem('fonema-teste-rapido'); }, id);
+  await pg.goto(BASE + `#/c/${id}/brincar/corre-som`); await pg.reload();
+  await pg.getByTestId('variacao-letra').click();
+  await pg.getByTestId('corre-som').waitFor();
+  const t0 = Date.now();
+  await pg.waitForFunction(() => document.querySelector('[data-testid=corre-som]')?.getAttribute('data-fase') === 'correndo', null, { timeout: 30000 }).catch(() => {});
+  ok(Date.now() - t0 < 15000, `a corrida largou sem "esperando a pista" (${Math.round((Date.now() - t0) / 100) / 10} s, com a fala de abertura)`);
+  let n = 0, errou = false;
+  const fps = [];
+  const foto = async (nome) => { await pg.screenshot({ path: resolve(dirCap, `v15-corrida-${String(++n).padStart(2, '0')}-${nome}${suf}.png`) }); };
+  for (let passo = 0; passo < 400; passo++) {
+    if (await pg.getByTestId('corrida-fim').isVisible().catch(() => false)) break;
+    const corre = pg.getByTestId('corre-som');
+    const f = await pg.locator('.cs-canvas').getAttribute('data-fps').catch(() => null);
+    if (f) fps.push(Number(f));
+    if (await corre.getAttribute('data-decidir').catch(() => null)) {
+      const antes = Number(await corre.getAttribute('data-passados').catch(() => '0'));
+      if (n < 16 && antes % 2 === 0) await foto('arco');
+      const alvo = !errou && antes === 2 ? '.cs-pista[data-opcao]:not([data-correta])' : '.cs-pista[data-correta="1"]';
+      await pg.locator(alvo).first().click({ timeout: 1500 }).catch(() => {});
+      if (alvo.includes('not')) errou = true;
+      await pg.waitForFunction((x) => { const e = document.querySelector('[data-testid=corre-som]'); return !e || Number(e.getAttribute('data-passados')) > x; }, antes, { timeout: 8000 }).catch(() => {});
+      if (n < 18) { await pg.waitForTimeout(120); await foto(antes === 2 ? 'errou' : 'passou'); }
+      continue;
+    }
+    await pg.waitForTimeout(150);
+  }
+  await pg.getByTestId('corrida-fim').waitFor({ timeout: 90000 }).catch(() => {});
+  await pg.waitForTimeout(600);
+  await foto('fim');
+  const media = fps.length ? Math.round(fps.reduce((a, b) => a + b, 0) / fps.length) : 0;
+  console.log(`  · quadros por segundo medidos pela pista (navegador sem tela, sem placa de vídeo): média ${media}, mínimo ${fps.length ? Math.min(...fps) : 0}, ${fps.length} medidas`);
+  ok(await pg.getByTestId('corrida-fim').isVisible().catch(() => false), 'a corrida em velocidade real chegou ao fim com o resultado');
+  await ctx.close();
+}

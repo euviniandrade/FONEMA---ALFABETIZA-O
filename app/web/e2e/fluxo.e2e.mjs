@@ -15,7 +15,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { trechoVozReal } from './trecho-voz-real.mjs';
 import { trechoCopia } from './trecho-copia.mjs';
-import { trechoJogos } from './trecho-jogos.mjs';
+import { capturasCorrida, trechoJogos } from './trecho-jogos.mjs';
 import { trechoJogos2 } from './trecho-jogos2.mjs';
 import { trechoMemoria } from './trecho-memoria.mjs';
 import { trechoMundo3d } from './trecho-mundo3d.mjs';
@@ -808,6 +808,16 @@ async function main() {
     } else await trechoDesbloqueio(browser, hD);
     await browser.close(); servidor?.kill();
     if (errosD.length) throw new Error(`erros na página:\n${errosD.join('\n')}`);
+    return;
+  }
+  if (process.argv.includes('--capturas-corrida')) {
+    const errosK = [];
+    const h = { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosK, dirCap: DIR_CAP };
+    mkdirSync(DIR_CAP, { recursive: true });
+    await capturasCorrida(browser, { ...h, w: 1850, h: 980 });
+    await capturasCorrida(browser, { ...h, w: 390, h: 844, suf: '-celular', movel: true });
+    await browser.close(); servidor?.kill();
+    if (errosK.length) throw new Error(`erros na página:\n${errosK.join('\n')}`);
     return;
   }
   if (process.argv.includes('--jogos') || process.argv.includes('--capturas-jogos')) {
