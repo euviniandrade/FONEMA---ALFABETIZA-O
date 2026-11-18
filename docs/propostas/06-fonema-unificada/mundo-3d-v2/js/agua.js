@@ -4,30 +4,58 @@ import { Reflector } from 'three/addons/objects/Reflector.js';
 
 const RIO_FRAG = `
   uniform vec3 color; uniform sampler2D tDiffuse; uniform float uTime; uniform vec3 uRaso; uniform vec3 uFundo; uniform float uRefl;
-  uniform vec3 uCeu;
+  uniform vec3 uCeu; uniform vec3 uSol; uniform vec3 uSolCor;
   varying vec4 vUv; varying vec2 vRib; varying vec3 vW;
   #include <fog_pars_fragment>
   float h(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
   float n(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(h(i),h(i+vec2(1,0)),f.x), mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x), f.y); }
+  // ondinhas: soma de ruídos que correm com a correnteza (altura) -> normal por diferenças
+  float onda(vec2 p, float along){
+    vec2 q = p + vec2(0.0, 0.0);
+    return n(q * 0.9 + vec2(-uTime * 0.35, uTime * 0.12)) * 0.5 + n(q * 2.3 + vec2(uTime * 0.21, -uTime * 0.4)) * 0.3 + n(q * 5.1 - uTime * 0.6) * 0.2;
+  }
   void main(){
     float across = vRib.y;                 // 0..1 de margem a margem
     float edge = min(across, 1.0 - across); // 0 na margem
-    vec2 flow = vec2(vRib.x * 0.35 - uTime * 0.25, across * 3.0);
-    float w = n(flow * 2.0) * 0.6 + n(flow * 5.0 + 3.1) * 0.4;
-    vec4 uv = vUv; uv.xy += (vec2(w, n(flow * 3.0 + 7.0)) - 0.5) * 0.05 * uv.w;
-    vec3 refl = texture2DProj(tDiffuse, uv).rgb;
-    vec3 base = mix(uRaso, uFundo, smoothstep(0.02, 0.38, edge));
+    vec2 P = vW.xz;
+    float e = 0.12, h0 = onda(P, vRib.x);
+    vec3 N = normalize(vec3(-(onda(P + vec2(e, 0.0), vRib.x) - h0) / e * 0.22, 1.0, -(onda(P + vec2(0.0, e), vRib.x) - h0) / e * 0.22));
     vec3 V = normalize(cameraPosition - vW);
-    float fres = 0.18 + 0.82 * pow(1.0 - max(V.y, 0.0), 3.0);
-    vec3 c = mix(base, mix(base, refl, 0.85), clamp(fres * uRefl, 0.0, 1.0));
-    // faixas de correnteza e espuma nas margens (desenho animado)
+    float w = h0;
+    if (!gl_FrontFacing) {
+      // de baixo d'água: a "janela" clara para o céu quando se olha para cima; em volta, o espelho verde-azulado
+      float up = clamp(-V.y, 0.0, 1.0);
+      vec3 janela = mix(vec3(0.62, 0.9, 0.95), vec3(1.0, 1.0, 0.96), smoothstep(0.55, 0.85, w));
+      vec3 c = mix(uFundo * 0.55 + uRaso * 0.15, janela, smoothstep(0.5, 0.82, up));
+      c += smoothstep(0.62, 0.8, n(P * 1.4 + uTime * 0.3)) * 0.25 * smoothstep(0.4, 0.9, up);
+      gl_FragColor = vec4(c, 0.92);
+      #include <tonemapping_fragment>
+      #include <colorspace_fragment>
+      #include <fog_fragment>
+      return;
+    }
+    vec2 flow = vec2(vRib.x * 0.35 - uTime * 0.25, across * 3.0);
+    vec4 uv = vUv; uv.xy += N.xz * 0.9 * uv.w * 0.06;
+    vec3 refl = texture2DProj(tDiffuse, uv).rgb;
+    float fundo = smoothstep(0.02, 0.42, edge);
+    vec3 base = mix(uRaso, uFundo, fundo);
+    float fres = 0.12 + 0.88 * pow(1.0 - max(dot(V, N), 0.0), 4.0);
+    vec3 c = mix(base, mix(base, refl, 0.88), clamp(fres * uRefl * 1.25, 0.0, 1.0));
+    // brilho do sol nas ondinhas
+    vec3 Hh = normalize(normalize(uSol) + V);
+    float spec = pow(max(dot(N, Hh), 0.0), 220.0) * 3.2 + pow(max(dot(N, Hh), 0.0), 30.0) * 0.12;
+    c += uSolCor * spec;
+    // faixas de correnteza e espuma que vai e volta na margem
     float stripe = smoothstep(0.78, 0.92, n(vec2(vRib.x * 0.8 - uTime * 0.6, across * 9.0)));
-    c += stripe * 0.10 * smoothstep(0.08, 0.25, edge);
-    float foam = smoothstep(0.075, 0.0, edge + (w - 0.5) * 0.05);
-    c = mix(c, vec3(1.0, 0.99, 0.95), foam * 0.85);
-    float spark = pow(max(n(vW.xz * 1.7 + uTime * 0.7), 0.0), 18.0) * 2.5;
-    c += spark * fres;
-    gl_FragColor = vec4(c, 1.0);
+    c += stripe * 0.08 * smoothstep(0.08, 0.25, edge);
+    float vai = 0.5 + 0.5 * sin(uTime * 1.3 + vRib.x * 0.35);
+    float foam = smoothstep(0.05 + vai * 0.03, 0.0, edge + (w - 0.5) * 0.05);
+    foam += smoothstep(0.11 + vai * 0.04, 0.07 + vai * 0.04, edge) * smoothstep(0.45, 0.75, n(P * 3.0 + uTime * 0.4)) * 0.7;
+    c = mix(c, vec3(1.0, 0.99, 0.95), clamp(foam, 0.0, 1.0) * 0.85);
+    // transparência: na beirinha dá para ver a areia, as pedras e os peixinhos; no meio e de lado, quase espelho
+    float a = mix(0.42, 0.86, fundo);
+    a = clamp(max(a, fres * 1.1) + foam * 0.6, 0.0, 0.97);
+    gl_FragColor = vec4(c, a);
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
     #include <fog_fragment>
@@ -67,7 +95,7 @@ export function criarRio({ curva, largura = 9, y = 0.0, U, reflexo = true, resol
   const uniforms = {
     color: { value: new THREE.Color('#ffffff') }, tDiffuse: { value: null }, textureMatrix: { value: null },
     uTime: U.time, uRaso: { value: new THREE.Color('#5FD1C8') }, uFundo: { value: new THREE.Color('#1F7FA0') }, uRefl: { value: 1 },
-    uCeu: { value: new THREE.Color('#A9D6F2') },
+    uCeu: { value: new THREE.Color('#A9D6F2') }, uSol: { value: new THREE.Vector3(0.5, 0.75, 0.3) }, uSolCor: { value: new THREE.Color('#FFF1D2') },
   };
   const shader = { name: 'RioFonema', uniforms: { ...THREE.UniformsLib.fog, ...uniforms }, vertexShader: RIO_VERT, fragmentShader: RIO_FRAG };
   let mesh;
@@ -83,6 +111,9 @@ export function criarRio({ curva, largura = 9, y = 0.0, U, reflexo = true, resol
     mat.uniforms.textureMatrix.value = new THREE.Matrix4();
     mesh = new THREE.Mesh(geo, mat);
   }
+  // transparente e dos dois lados: de cima vê-se o fundo na beira; de baixo (mergulho) vê-se a superfície
+  Object.assign(mesh.material, { transparent: true, side: THREE.DoubleSide, depthWrite: false });
+  mesh.renderOrder = 2;
   mesh.rotation.x = -Math.PI / 2; mesh.position.y = y;
   mesh.receiveShadow = false;
   mesh.userData.uniforms = mesh.material.uniforms;

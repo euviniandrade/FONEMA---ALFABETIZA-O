@@ -7,6 +7,7 @@ import { Lote, rbox, G, M, F, rng, fbm, smooth, lerp, clamp, canvasTex, placaTex
 import { P, CASAS, casa, poste, banco, coreto, escola, biblioteca, padaria, cerca } from './predios.js';
 import { Instancias, criarArvores, ipe, coqueiro, bananeira, criarBichinhos } from './natureza.js';
 import { criarRio } from './agua.js';
+import { addDetalheChao, addDetalheSuperficie, addCausticas, DETALHE } from './materiais.js';
 import { criarSprite, criarBolota, criarZumZum, criarPortal, rotulo } from './personagens.js';
 
 // ---------- rio e relevo ----------
@@ -23,8 +24,13 @@ export function altura(x, z) {
   const d = distRio(x, z);
   const banco = smooth(clamp((d - RIO_W / 2 + 1.5) / 7, 0, 1));
   h = lerp(-1.7, h, banco);
+  // o meio do rio é mais fundo (dá para mergulhar e ver os peixinhos); a beirinha continua rasa
+  h -= 1.9 * smooth(clamp(1 - d / 4.6, 0, 1));
   return h;
 }
+/** Fundo do rio a `u` metros do meio (|u| até ~4,5 m: ali o fundo não depende do relevo de fora). */
+export function fundoRio(u) { return -1.7 - 1.9 * smooth(clamp(1 - Math.abs(u) / 4.6, 0, 1)); }
+export { RIO_PTS, RIO_W, NIVEL_AGUA };
 
 // ---------- pontos de interesse (câmera) ----------
 export const POIS = [
@@ -114,6 +120,16 @@ function pintarChao(S) {
   }, { aniso: 8 });
 }
 
+/** Florzinha: 5 pétalas em volta de um miolo amarelo (cor por vértice; a cor da instância pinta as pétalas). */
+let _flor = null;
+function florGeo() {
+  if (_flor) return _flor;
+  const L = new Lote(5);
+  for (let i = 0; i < 5; i++) { const a = (i / 5) * Math.PI * 2; L.add(G.sphLo, '#FFFFFF', M(Math.cos(a) * 0.32, 0.04, Math.sin(a) * 0.32, 0, -a, 0.28, 0.42, 0.1, 0.26), { jit: 0 }); }
+  L.add(G.sphLo, '#F7C948', M(0, 0.09, 0, 0, 0, 0, 0.26, 0.16, 0.26), { jit: 0 });
+  _flor = L.geometry(); return _flor;
+}
+
 /** Divide um lote em blocos (grade de `tam` m pela posição de cada peça). Devolve um grupo com uma malha por bloco. */
 function emBlocos(lote, mat, o = {}, tam = 24) {
   const blocos = new Map();
@@ -130,7 +146,8 @@ function emBlocos(lote, mat, o = {}, tam = 24) {
 export async function criarVila({ U, q, renderer, estados = {}, passeio = false }) {
   const grupo = new THREE.Group(); grupo.name = 'vila';
   const r = rng(2024);
-  const matCorpo = addRim(matStd(), '#FFE4BE', 0.22, 3.0);
+  const matCorpo = addDetalheSuperficie(addRim(matStd(), '#FFE4BE', 0.22, 3.0), U, P);
+  DETALHE.nivel.value = NIVEL_AGUA;
   const matFolha = addRim(addWind(matStd({ roughness: 0.82 }), U, 0.018, 2.5), '#FFF2B0', 0.3, 2.4);
   const matJanela = matStd({ roughness: 0.25, metalness: 0.1, emissive: new THREE.Color('#FFB866'), emissiveIntensity: 0 });
   const matLuz = matStd({ emissive: new THREE.Color('#FFD08A'), emissiveIntensity: 0.15, roughness: 0.3 });
@@ -145,14 +162,14 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   const cIn = [];
   { const p = gIn.attributes.position; for (let i = 0; i < p.count; i++) { const x = p.getX(i), z = p.getZ(i), h = alturaQ(x, z); p.setY(i, h); const f = h < -0.3 ? 0.78 : 1 - clamp(h / 30, 0, 0.25); cIn.push(f, f, f); } }
   gIn.setAttribute('color', new THREE.Float32BufferAttribute(cIn, 3)); gIn.computeVertexNormals();
-  const terreno = new THREE.Mesh(gIn, new THREE.MeshStandardMaterial({ map: chaoTex, vertexColors: true, roughness: 0.95 }));
+  const terreno = new THREE.Mesh(gIn, addDetalheChao(new THREE.MeshStandardMaterial({ map: chaoTex, vertexColors: true, roughness: 0.95 }), U));
   terreno.receiveShadow = true; grupo.add(terreno);
   // anel externo (colinas da mata), cor por altura
   const gOut = new THREE.PlaneGeometry(1000, 1000, q === 'baixo' ? 90 : 170, q === 'baixo' ? 90 : 170).rotateX(-Math.PI / 2);
   { const p = gOut.attributes.position, col = []; const c = new THREE.Color(), cg = new THREE.Color('#74B556'), cf = new THREE.Color('#4C8F4E'), cs = new THREE.Color('#D9C391');
     for (let i = 0; i < p.count; i++) { const x = p.getX(i), z = p.getZ(i); const far = Math.max(Math.abs(x), Math.abs(z)) > EXT - 2; let h = alturaQ(x, z); if (!far) h -= 0.08; const fall = smooth(clamp((Math.hypot(x, z) - 300) / 200, 0, 1)); h = lerp(h, h * 0.4 - 4, fall); p.setY(i, h); c.copy(cg).lerp(cf, clamp(h / 18, 0, 1)); if (h < -0.6) c.copy(cs); col.push(c.r, c.g, c.b); }
     gOut.setAttribute('color', new THREE.Float32BufferAttribute(col, 3)); gOut.computeVertexNormals(); }
-  const anel = new THREE.Mesh(gOut, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95 })); anel.receiveShadow = true; grupo.add(anel);
+  const anel = new THREE.Mesh(gOut, addCausticas(new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95 }), U)); anel.receiveShadow = true; grupo.add(anel);
 
   // ---------- rio ----------
   const rio = criarRio({ curva: RIO2D, largura: RIO_W, y: NIVEL_AGUA, U, reflexo: passeio ? q === 'alto' : q !== 'baixo', resolucao: q === 'alto' ? 1024 : 512 });
@@ -334,10 +351,10 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   for (const c of casas) for (const s of [-1, 1]) ctx.arbustos.push({ m: c.L(s * (c.w / 2 + 0.6), 0.4, c.d / 2 - 0.4, 0, 0, 0, 1.3, 1.0, 1.1), c: '#4E9A50' });
   // flores silvestres e capim
   for (let i = 0; i < (q === 'baixo' ? 500 : 1800); i++) { const a = r() * 7, d = 14 + r() * 62, x = Math.cos(a) * d, z = Math.sin(a) * d + 4; if (distRio(x, z) < RIO_W / 2 + 1) continue; const cc = r(); ctx.flores.push({ m: M(x, altura(x, z) + 0.14, z, 0, 0, 0, 0.13 + r() * 0.08), c: cc < 0.4 ? '#FFFFFF' : cc < 0.75 ? P.ipe : '#B9A6E8' }); }
-  const capim = new Instancias(new THREE.ConeGeometry(0.06, 0.6, 4).translate(0, 0.3, 0), addWind(new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.9 }), U, 0.18, -1), { cast: false });
+  const capim = new Instancias(new THREE.ConeGeometry(0.035, 0.5, 3).translate(0, 0.25, 0), addWind(new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.9 }), U, 0.18, -1), { cast: false });
   if (q !== 'baixo') for (let i = 0; i < 2600; i++) { const a = r() * 7, d = 14 + r() * 66, x = Math.cos(a) * d, z = Math.sin(a) * d + 4; if (!livre(x, z) && r() < 0.9) continue; const h = altura(x, z); for (let k = 0; k < 3; k++) capim.add(M(x + (r() - 0.5) * 0.3, h, z + (r() - 0.5) * 0.3, (r() - 0.5) * 0.5, r() * 6, (r() - 0.5) * 0.5, 1, 0.6 + r() * 0.9, 1), r() < 0.5 ? '#6DB451' : '#86C35E'); }
   if (capim.l.length) grupo.add(capim.build());
-  const flor = new Instancias(blobGeo(3, 0, 0.2), new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.6, emissive: '#fff', emissiveIntensity: 0.06 }), { cast: false });
+  const flor = new Instancias(florGeo(), new THREE.MeshStandardMaterial({ color: '#fff', vertexColors: true, roughness: 0.6, emissive: '#fff', emissiveIntensity: 0.05 }), { cast: false });
   ctx.flores.forEach((f) => flor.add(f.m, f.c)); grupo.add(flor.build());
   const matArb = addRim(addWind(new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.85 }), U, 0.02, 0), '#FFF2B0', 0.28, 2.4);
   const arb = new Instancias(blobGeo(8, 1, 0.3), matArb); ctx.arbustos.forEach((f) => arb.add(f.m, f.c)); grupo.add(arb.build());
@@ -393,6 +410,8 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   const tint = new THREE.Color();
   return {
     grupo, POIS, portais, rio, altura,
+    // grama de perto (js/grama.js) e o fundo do rio (js/submerso.js)
+    chao: { tex: chaoTex, ext: EXT, geo: gIn, seg: segIn }, RIO_PTS, fundoRio, terreno,
     // para o passeio (colisão e água): peças dos lotes, troncos, arbustos, rio e barquinho
     pecas: () => [ctx.C.parts, ctx.Fo.parts], troncos: arv.troncos, arbustos: ctx.arbustos, distRio, NIVEL_AGUA, RIO_W, barco,
     sprites: [dupla, sofia, tales],

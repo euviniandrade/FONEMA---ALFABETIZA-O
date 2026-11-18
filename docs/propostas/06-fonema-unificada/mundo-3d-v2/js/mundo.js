@@ -14,6 +14,13 @@
 // Passeio em terceira pessoa (passeio.html): `opts.passeio = true` monta a vila sem os personagens recortados e sem os
 // portais antigos; `mundo.usarControlador(c)` desliga a órbita e, a cada quadro, chama `c.tick(dt, t)` (js/passeio.js).
 // `opts.dprMax` limita a densidade de pixels (celular).
+//
+// Água e mergulho (para quem anima o boneco): `mundo.agua.nivel` (y da superfície do rio), `mundo.agua.fundo(x, z)`,
+// `mundo.agua.profundidade(x, z)`, `mundo.agua.noRio(x, z)`. `mundo.submerso(true|false)` força o "embaixo d'água"
+// (tom azul, raios de luz, partículas, som abafado); `mundo.submerso('auto')` (padrão) liga sozinho quando a CÂMERA
+// passa para baixo da superfície do rio. `mundo.estaSubmerso`; evento `fonema:mundo-submerso` {submerso}.
+// `mundo.pe = {x, y, z}` (opcional): pés do boneco — a grama deita e os peixes fogem dali (sem isso, usa o alvo da câmera).
+// Som (só no passeio, carregado sob demanda): `mundo.som` (js/som.js), botão 🔊 no #topoDir, tecla M.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -26,6 +33,9 @@ import { carregarFontes, clamp, lerp, easeInOut, smooth } from './kit.js';
 import { criarCeu, criarNuvens } from './ceu.js';
 import { criarVila, POIS, FASES_R0 } from './vila.js';
 import { criarArquipelago, REGIOES } from './arquipelago.js';
+import { criarGrama } from './grama.js';
+import { criarSubmerso } from './submerso.js';
+import { DETALHE } from './materiais.js';
 
 export { POIS, FASES_R0, REGIOES };
 
@@ -119,6 +129,7 @@ export async function criarMundo(container, opts = {}) {
     const c = await obter(nome);
     if (C) scene.remove(C.grupo);
     C = c; cenaAtual = nome; scene.add(C.grupo);
+    if (nome === 'vila') montarExtras(c); else definirSubmerso(false);
     nevoaMul = nome === 'vila' ? 1 : 0.32; ceu.aplicar(hora, renderer);
     C.grupo.traverse((m) => { if (m.isSprite || m.isPoints || m.userData.camada1) m.layers.set(1); });
     const L = LIMITES[nome];
@@ -133,11 +144,12 @@ export async function criarMundo(container, opts = {}) {
 
   // ---------- pós-processamento ----------
   const GRADE = {
-    uniforms: { tDiffuse: { value: null }, uRes: { value: new THREE.Vector2(1, 1) }, uTilt: { value: 0 }, uVig: { value: 0.32 }, uSat: { value: 1.08 }, uFoco: { value: 0.5 } },
+    uniforms: { tDiffuse: { value: null }, uRes: { value: new THREE.Vector2(1, 1) }, uTilt: { value: 0 }, uVig: { value: 0.32 }, uSat: { value: 1.08 }, uFoco: { value: 0.5 }, uAgua: { value: 0 }, uT: { value: 0 } },
     vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
-    fragmentShader: `uniform sampler2D tDiffuse; uniform vec2 uRes; uniform float uTilt, uVig, uSat, uFoco; varying vec2 vUv;
+    fragmentShader: `uniform sampler2D tDiffuse; uniform vec2 uRes; uniform float uTilt, uVig, uSat, uFoco, uAgua, uT; varying vec2 vUv;
       void main(){
-        vec3 c = texture2D(tDiffuse, vUv).rgb;
+        vec2 uvA = vUv + vec2(sin(vUv.y * 26.0 + uT * 1.9), cos(vUv.x * 21.0 + uT * 1.6)) * 0.0022 * uAgua; // ondulação embaixo d'água
+        vec3 c = texture2D(tDiffuse, uvA).rgb;
         if (uTilt > 0.0) {
           float b = smoothstep(0.08, 0.42, abs(vUv.y - uFoco)) * uTilt;
           if (b > 0.01) { vec3 acc = c; float n = 1.0;
@@ -146,6 +158,7 @@ export async function criarMundo(container, opts = {}) {
         }
         float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
         c = mix(vec3(l), c, uSat);
+        c = mix(c, c * vec3(0.78, 1.0, 1.04) + vec3(0.0, 0.02, 0.035), uAgua);
         c *= vec3(1.025, 1.0, 0.965);
         vec2 q = vUv - 0.5; float v = 1.0 - dot(q, q) * uVig * 1.6;
         c *= mix(vec3(0.82, 0.74, 0.86), vec3(1.0), clamp(v, 0.0, 1.0));
@@ -172,6 +185,7 @@ export async function criarMundo(container, opts = {}) {
     renderer.shadowMap.enabled = Q.sombra > 0;
     if (Q.sombra) { ceu.sun.shadow.mapSize.set(Q.sombra, Q.sombra); if (ceu.sun.shadow.map) { ceu.sun.shadow.map.dispose(); ceu.sun.shadow.map = null; } }
     scene.traverse((m) => { if (m.material) m.material.needsUpdate = true; });
+    qualidadeExtras(n);
     montarPos(); redimensionar();
     emitir('fonema:qualidade', { nivel: n });
   }
@@ -308,6 +322,68 @@ export async function criarMundo(container, opts = {}) {
     });
   }
 
+  // ---------- grama de perto, fundo do rio, mergulho e som ----------
+  let grama = null, sub = null, som = null, menos = !!o.menosMovimento;
+  let modoSub = 'auto', submersoAgora = false, peExterno = null, somT = 0;
+  const _pe = new THREE.Vector3(), corAgua = new THREE.Color('#2F8FA6'), corAguaFundo = new THREE.Color('#1D6E86');
+  const veuAgua = document.createElement('div');
+  veuAgua.style.cssText = 'position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s;background:radial-gradient(ellipse at 50% 30%, rgba(120,220,230,0.10), rgba(20,90,120,0.28) 70%, rgba(10,50,80,0.5));mix-blend-mode:multiply';
+  function qualidadeExtras(n) {
+    DETALHE.on.value = n === 'baixo' ? 0 : 1; DETALHE.caus.value = n === 'baixo' ? 0 : 1;
+    grama?.qualidade(n); sub?.qualidade(n);
+  }
+  function montarExtras(v) {
+    if (grama || !v) return;
+    try { grama = criarGrama({ vila: v, U }); v.grupo.add(grama.malha); } catch (e) { console.warn('[mundo] grama não montou', e); grama = null; }
+    try { sub = criarSubmerso({ vila: v, U, q: nivel, menos }); v.grupo.add(sub.grupo); sub.grupo.traverse((m) => { if (m.isPoints || m.userData.camada1) m.layers.set(1); }); } catch (e) { console.warn('[mundo] fundo do rio não montou', e); sub = null; }
+    qualidadeExtras(nivel);
+  }
+  const pe = () => peExterno ? _pe.set(peExterno.x, peExterno.y, peExterno.z) : _pe.copy(controls.target).setY(controls.target.y - 0.9);
+  function noRio(x, z) { const v = cenas.vila; return !!v && v.distRio(x, z) < v.RIO_W / 2 + 0.6; }
+  function definirSubmerso(on) {
+    if (on === submersoAgora) return;
+    submersoAgora = on; sub?.definirSubmerso(on);
+    if (on) { scene.background = corAgua; ceu.dome.visible = false; nuvens.meshes.forEach((m) => { m.visible = false; }); }
+    else { scene.background = null; ceu.dome.visible = true; nuvens.meshes.forEach((m) => { m.visible = true; }); ceu.aplicar(hora, renderer); }
+    // a página do passeio já tem o seu véu azul (#submerso): aí o véu daqui não entra (não escurece duas vezes)
+    veuAgua.style.opacity = on && !document.querySelector('#submerso') ? '1' : '0';
+    emitir('fonema:mundo-submerso', { submerso: on });
+  }
+  function extrasTick(t, dt) {
+    const v = cenas.vila; if (!v) return;
+    const p = pe();
+    grama?.tick(camera, controls.target, p, menos);
+    // embaixo d'água: automático pela câmera (com folga para não piscar na linha d'água) ou forçado
+    let on = submersoAgora;
+    if (modoSub === 'auto') { const y = camera.position.y, nv = v.NIVEL_AGUA; on = submersoAgora ? y < nv + 0.03 && noRio(camera.position.x, camera.position.z) : y < nv - 0.03 && noRio(camera.position.x, camera.position.z); }
+    else on = modoSub;
+    definirSubmerso(on);
+    sub?.tick(dt, t, camera, p);
+    if (submersoAgora) {
+      const fundo = clamp((v.NIVEL_AGUA - camera.position.y) / 3, 0, 1);
+      scene.fog.color.copy(corAgua).lerp(corAguaFundo, fundo); scene.fog.density = 0.085 + fundo * 0.05; scene.background = scene.fog.color;
+    }
+    if (passes.grade) { passes.grade.uniforms.uAgua.value = lerp(passes.grade.uniforms.uAgua.value, submersoAgora ? 1 : 0, Math.min(1, dt * 6)); passes.grade.uniforms.uT.value = t; }
+    // reflexo do sol no rio acompanha a hora
+    const ur = v.rio.userData.uniforms; if (ur && ur.uSol) { ur.uSol.value.copy(ceu.sun.userData.dir || ur.uSol.value); ur.uSolCor.value.copy(ceu.sun.color).multiplyScalar(Math.min(1.2, ceu.sun.intensity / 3)); }
+    // som do lugar (4 vezes por segundo)
+    if (som && (somT += dt) > 0.25) {
+      somT = 0; const x = controls.target.x, z = controls.target.z;
+      const dr = v.distRio(x, z), dP = Math.hypot(x, z - 1), alto = clamp((camera.position.y - controls.target.y - 6) / 25, 0, 1);
+      som.atualizar({ rio: 1 - smooth(clamp((dr - 6) / 26, 0, 1)), praca: 0.35 + 0.65 * (1 - smooth(clamp((dP - 18) / 50, 0, 1))), vento: Math.max(alto, smooth(clamp((dP - 60) / 40, 0, 1))), sub: submersoAgora, falando: !!document.querySelector('#cartao.aberto') });
+    }
+  }
+  async function montarSom() {
+    if (som || o.som === false || !o.passeio) return;
+    try {
+      const { criarSom } = await import('./som.js');
+      if (destruido) return;
+      som = criarSom({ menos });
+      const onde = document.querySelector('#topoDir'); if (onde) som.criarBotao(onde);
+    } catch (e) { console.warn('[mundo] som não carregou', e); }
+  }
+  if (o.passeio) window.addEventListener('message', (ev) => { const m = ev.data; if (m && m.tipo === 'fonema:init' && m.detalhe) { if (m.detalhe.menosMovimento) { menos = true; som?.definirMenos(true); } } });
+
   // ---------- laço ----------
   const clock = new THREE.Timer();
   let tempo = 0, fpsAcc = 0, fpsN = 0, lentoDesde = 0, ciclo = false, muitoLento = 0, poucosPixels = false;
@@ -316,6 +392,8 @@ export async function criarMundo(container, opts = {}) {
     if (ciclo) { hora = 0.5 - 0.5 * Math.cos(t * 0.05); ceu.aplicar(hora, renderer); }
     C.tick(t, camera, hora);
     nuvens.tick(t, ceu.st);
+    ceu.U.uTempoC.value = t;
+    if (cenaAtual === 'vila') extrasTick(t, dt);
     // limites: câmera acima do chão e dentro da área
     const L = LIMITES[cenaAtual];
     controls.target.x = clamp(controls.target.x, -L.caixa, L.caixa); controls.target.z = clamp(controls.target.z, -L.caixa, L.caixa);
@@ -353,6 +431,8 @@ export async function criarMundo(container, opts = {}) {
   let destruido = false, controlador = null;
 
   await trocarCena(o.cena);
+  if (cenas.vila) montarExtras(cenas.vila);
+  container.appendChild(veuAgua);
   if (o.vista && VISTAS[o.vista]) aplicarVista(o.vista);
   // mini-mapa (vista ortográfica de cima, gerada uma vez por cena)
   const mapas = {};
@@ -380,6 +460,7 @@ export async function criarMundo(container, opts = {}) {
 
   if (!o.captura) quadro();
   emitir('fonema:pronto', { cena: cenaAtual, qualidade: nivel });
+  setTimeout(montarSom, 0);
 
   const api = {
     renderer, scene, camera, controls, POIS, FASES_R0, REGIOES, VISTAS,
@@ -389,6 +470,20 @@ export async function criarMundo(container, opts = {}) {
     vooParaVila, miniMapa,
     abrirPortalPorId(id) { const p = C.portais && C.portais.find((x) => x.userData.id === id); if (p) abrirPortal(p); },
     get vila() { return cenas.vila; },
+    /** Rio: nível da superfície, fundo, profundidade e se (x, z) está dentro d'água. */
+    agua: {
+      get nivel() { return cenas.vila ? cenas.vila.NIVEL_AGUA : -0.42; },
+      fundo: (x, z) => (cenas.vila ? cenas.vila.altura(x, z) : 0),
+      profundidade: (x, z) => (cenas.vila ? Math.max(0, cenas.vila.NIVEL_AGUA - cenas.vila.altura(x, z)) : 0),
+      noRio: (x, z) => noRio(x, z),
+    },
+    /** true/false força o embaixo d'água; 'auto' (ou nada) volta a seguir a câmera. */
+    submerso(v = 'auto') { modoSub = v === 'auto' || v == null ? 'auto' : !!v; return modoSub; },
+    get estaSubmerso() { return submersoAgora; },
+    set pe(p) { peExterno = p || null; }, get pe() { return peExterno; },
+    get som() { return som; },
+    get grama() { return grama; }, get fundoDoRio() { return sub; },
+    definirMenosMovimento(v) { menos = !!v; som?.definirMenos(menos); },
     /** Passeio em 3ª pessoa: o controlador move a câmera (e o alvo) a cada quadro; a órbita fica desligada. */
     usarControlador(c) { controlador = c; controls.enabled = !c; passeioAtivo = false; voo = null; },
     definirHora(t) { ciclo = false; hora = clamp(t, 0, 1); ceu.aplicar(hora, renderer); },
@@ -431,7 +526,7 @@ export async function criarMundo(container, opts = {}) {
     tourDur: tour.dur,
     /** Medição: um render direto (sem pós) e os números do renderizador (sombras incluídas). */
     stats() { renderer.info.autoReset = false; renderer.info.reset(); renderer.render(scene, camera); const i = renderer.info; const r = { calls: i.render.calls, tris: i.render.triangles, geos: i.memory.geometries, tex: i.memory.textures }; renderer.info.autoReset = true; return r; },
-    destruir() { destruido = true; ro.disconnect(); controls.dispose(); renderer.dispose(); canvas.remove(); veu.remove(); },
+    destruir() { destruido = true; ro.disconnect(); controls.dispose(); renderer.dispose(); canvas.remove(); veu.remove(); veuAgua.remove(); som?.destruir(); grama?.destruir(); },
   };
   return api;
 }

@@ -17,18 +17,29 @@ export const HORAS = [
 export function criarCeu(scene) {
   const U = {
     topo: { value: new THREE.Color() }, meio: { value: new THREE.Color() }, horiz: { value: new THREE.Color() },
-    glow: { value: new THREE.Color() }, sunDir: { value: new THREE.Vector3(0, 1, 0) },
+    glow: { value: new THREE.Color() }, sunDir: { value: new THREE.Vector3(0, 1, 0) }, uTempoC: { value: 0 }, uNuvemC: { value: new THREE.Color('#fff') }, uCirros: { value: 1 },
   };
   const mat = new THREE.ShaderMaterial({
     uniforms: U, side: THREE.BackSide, depthWrite: false, fog: false,
     vertexShader: `varying vec3 vD; void main(){ vD = normalize(position); vec4 p = projectionMatrix * modelViewMatrix * vec4(position,1.0); gl_Position = p.xyww; }`,
-    fragmentShader: `uniform vec3 topo, meio, horiz, glow; uniform vec3 sunDir; varying vec3 vD;
+    fragmentShader: `uniform vec3 topo, meio, horiz, glow; uniform vec3 sunDir; uniform float uTempoC, uCirros; uniform vec3 uNuvemC; varying vec3 vD;
+      float ch(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+      float cn(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(ch(i), ch(i + vec2(1, 0)), f.x), mix(ch(i + vec2(0, 1)), ch(i + vec2(1, 1)), f.x), f.y); }
       void main(){
-        float h = vD.y;
+        vec3 d = normalize(vD);
+        float h = d.y;
         vec3 c = mix(horiz, meio, smoothstep(-0.02, 0.22, h));
         c = mix(c, topo, smoothstep(0.18, 0.85, h));
-        float s = max(dot(normalize(vD), normalize(sunDir)), 0.0);
+        float s = max(dot(d, normalize(sunDir)), 0.0);
+        // véu de nuvens altas (cirros) bem leve, correndo devagar
+        if (uCirros > 0.0 && h > 0.02) {
+          vec2 q = d.xz / (h + 0.12) * 1.6 + vec2(uTempoC * 0.004, uTempoC * 0.0015);
+          float w = cn(q * 1.1) * 0.55 + cn(q * 2.7 + 3.0) * 0.3 + cn(q * 6.1 - 1.0) * 0.15;
+          float k = smoothstep(0.55, 0.85, w) * smoothstep(0.02, 0.25, h) * (1.0 - smoothstep(0.75, 1.0, h)) * 0.42 * uCirros;
+          c = mix(c, uNuvemC, k);
+        }
         c += glow * (pow(s, 6.0) * 0.35 + pow(s, 90.0) * 0.9);
+        c += vec3(1.0, 0.98, 0.9) * smoothstep(0.9993, 0.9997, s) * 1.6; // disco do sol
         c = mix(c, horiz * 0.96, smoothstep(0.0, -0.25, h));
         gl_FragColor = vec4(c, 1.0);
         #include <tonemapping_fragment>
@@ -58,7 +69,7 @@ export function criarCeu(scene) {
     hemi.color.copy(mix('hemiC')); hemi.groundColor.copy(mix('hemiS')); hemi.intensity = lerp(a.hemiI, b.hemiI, t);
     scene.fog.color.copy(mix('nevoa')); scene.fog.density = lerp(a.nevoaD, b.nevoaD, t);
     if (renderer) renderer.toneMappingExposure = lerp(a.exp, b.exp, t);
-    st.nuvem = mix('nuvem'); st.nuvemS = mix('nuvemS');
+    st.nuvem = mix('nuvem'); st.nuvemS = mix('nuvemS'); U.uNuvemC.value.copy(st.nuvem);
   }
   /** Ambiente (IBL) gerado do próprio céu: reflexos suaves e luz difusa "de estúdio". */
   function ambiente(renderer, scene) {
@@ -86,6 +97,17 @@ export function criarCeu(scene) {
 export function criarNuvens(scene, n = 14, raio = 420, alt = [70, 120], seed = 5) {
   const r = rng(seed);
   const mat = new THREE.MeshStandardMaterial({ color: '#fff', roughness: 1, emissive: '#fff', emissiveIntensity: 0.28, flatShading: false });
+  const uN = { uBase: { value: new THREE.Color('#C9D9EA') } };
+  mat.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, uN);
+    sh.vertexShader = 'varying vec3 vNW;\n' + sh.vertexShader.replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\n vNW = normalize(mat3(modelMatrix) * objectNormal);');
+    sh.fragmentShader = 'varying vec3 vNW; uniform vec3 uBase;\n' + sh.fragmentShader.replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+      { float up = vNW.y * 0.5 + 0.5; totalEmissiveRadiance *= mix(0.25, 1.15, up);
+        diffuseColor.rgb *= mix(uBase, vec3(1.0), smoothstep(0.15, 0.75, up));
+        float fr = pow(1.0 - clamp(dot(normalize(normal), normalize(vViewPosition)), 0.0, 1.0), 2.5);
+        totalEmissiveRadiance += vec3(1.0, 0.98, 0.94) * fr * 0.35; }`);
+  };
+  mat.customProgramCacheKey = () => 'nuvemVol1';
   const out = [];
   for (let i = 0; i < n; i++) {
     const parts = [], k = 4 + Math.floor(r() * 4);
@@ -111,7 +133,7 @@ export function criarNuvens(scene, n = 14, raio = 420, alt = [70, 120], seed = 5
     meshes: out, mat,
     tick(t, cores) {
       for (const m of out) { const a = m.userData.a0 + t * 0.004 * m.userData.v; m.position.x = Math.cos(a) * m.userData.d; m.position.z = Math.sin(a) * m.userData.d; }
-      if (cores) { mat.color.copy(cores.nuvem); mat.emissive.copy(cores.nuvem); }
+      if (cores) { mat.color.copy(cores.nuvem); mat.emissive.copy(cores.nuvem); if (cores.nuvemS) uN.uBase.value.copy(cores.nuvemS); }
     },
   };
 }
