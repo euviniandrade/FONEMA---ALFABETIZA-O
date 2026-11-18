@@ -114,6 +114,64 @@ export async function trechoGerenciador(browser, { BASE, ok, passarPorteira, cad
   ok((await troca.getByTestId('palavra-atual').innerText()).trim() === 'LAMA', 'palavra válida (LAMA, só sons já ensinados na TF-10) aceita e trocada');
   await cap('04-palavra-trocada');
 
+  // 2b. palavra nova SEM figura e SEM pronúncia: sobe a figura na hora e responde às perguntas de pronúncia
+  const troca1 = c4a.locator('[data-testid="trocar-palavra"][data-item="1"]');
+  await troca1.getByTestId('nova-palavra').fill('lulu');
+  await troca1.getByTestId('sem-figura').waitFor();
+  await troca1.getByTestId('trocar-imagem').getByTestId('arquivo-imagem').setInputFiles({ name: 'lulu.png', mimeType: 'image/png', buffer: pngDeTeste(80, 80, [40, 160, 220, 255]) });
+  await troca1.getByTestId('previa-imagem').waitFor();
+  await troca1.getByTestId('salvar-imagem').click();
+  await troca1.getByTestId('assistente-pronuncia').waitFor();
+  ok(/l u l u/.test(await troca1.getByTestId('anotacao').inputValue()), 'figura nova subida na hora para "lulu"; palavra nova pede a pronúncia (assistente: "l u l u")');
+  await troca1.getByTestId('salvar-pronuncia').click();
+  await troca1.getByTestId('verificador-ok').waitFor();
+  await troca1.getByTestId('salvar-palavra').click();
+  await troca1.getByTestId('palavra-trocada').waitFor();
+  ok((await troca1.getByTestId('palavra-atual').innerText()).trim() === 'LULU', 'palavra nova (LULU) com figura nova e pronúncia anotada entra no item de leitura');
+
+  // 2c. frase (sons de cada palavra): som não ensinado bloqueado; frase válida trocada
+  const c5f = pg.locator('[data-testid="cena"][data-cena="TF-10-C5f"]');
+  await c5f.getByTestId('abrir-cena').click();
+  const fr = c5f.locator('[data-testid="trocar-item"][data-tipo="frase"]');
+  await fr.getByTestId('campo-frase').fill('A mula viu o pato.');
+  await fr.getByTestId('bloqueio-decod').waitFor();
+  ok(await fr.getByTestId('salvar-item').isDisabled(), 'frase: "A mula viu o pato." bloqueada (P e T ainda não ensinados)');
+  await fr.getByTestId('campo-frase').fill('A mula viu a lua.');
+  await fr.getByTestId('verificador-ok').waitFor();
+  await fr.getByTestId('salvar-item').click();
+  await fr.getByTestId('item-trocado').waitFor();
+  ok(true, 'frase trocada para "A mula viu a lua." (sons de cada palavra tirados do banco)');
+
+  // 2d. juntar os sons: palavra e opções novas
+  const c3s = pg.locator('[data-testid="cena"][data-cena="TF-10-C3s"]');
+  await c3s.getByTestId('abrir-cena').click();
+  const si = c3s.locator('[data-testid="trocar-item"][data-tipo="sintese"][data-item="0"]');
+  await si.getByTestId('campo-outras').fill('mala');
+  await si.getByTestId('erro-item').waitFor();
+  ok(/pelo menos 2/.test(await si.getByTestId('erro-item').innerText()), 'juntar os sons: com só 2 opções não deixa (o chute acertaria metade)');
+  await si.getByTestId('campo-palavra').fill('lama');
+  await si.getByTestId('campo-outras').fill('mala, mula');
+  await si.getByTestId('verificador-ok').waitFor();
+  await si.getByTestId('salvar-item').click();
+  await si.getByTestId('item-trocado').waitFor();
+  ok(true, 'juntar os sons: LAMA com as opções mala e mula');
+
+  // 2e. fala compartilhada: mudar em todos os lugares
+  const enun = c4a.locator('[data-caminho="fases|TF-10|cenas/@TF-10-C4a/atividade/enunciado/texto"]');
+  await enun.getByTestId('valor').fill('Leia a palavra e toque na figura certa.');
+  await enun.getByTestId('fala-compartilhada').waitFor();
+  const quantos = Number(/mais (\d+) lugar/.exec(await enun.getByTestId('fala-compartilhada').innerText())[1]);
+  await enun.getByTestId('em-todos').check();
+  await enun.getByTestId('salvar-edicao').click();
+  await enun.locator('.adm-etq.verde', { hasText: 'mais' }).waitFor({ timeout: 30000 });
+  await pg.goto(BASE + '#/admin/textos');
+  await pg.getByTestId('busca-texto').fill('toque na figura certa');
+  await pg.waitForFunction(() => /^\d+ encontrados/.test(document.querySelector('[data-testid="contagem-textos"]')?.textContent ?? ''));
+  const nIguais = Number(/^(\d+)/.exec(await pg.getByTestId('contagem-textos').innerText())[1]);
+  ok(quantos > 1 && nIguais === quantos + 1, `fala compartilhada: "em todos" mudou a mesma fala aqui e em mais ${quantos} lugares (${nIguais} na busca)`);
+  await pg.goto(BASE + '#/admin/missoes/TF-10');
+  await pg.locator('[data-testid="editor-fase"][data-fase="TF-10"]').waitFor();
+
   // 3. desliga as cenas antes da leitura (a lição começa nela) e confere a ordem guardada
   for (const id of ['TF-10-C1', 'TF-10-C2', 'TF-10-C3a', 'TF-10-C3s']) {
     const c = pg.locator(`[data-testid="cena"][data-cena="${id}"]`);
@@ -144,6 +202,19 @@ export async function trechoGerenciador(browser, { BASE, ok, passarPorteira, cad
   ok(true, 'Lojinha: preço do caderno mudado para 9 moedinhas');
   await cap('07-lojinha');
 
+  // 5b. nome do personagem dentro das falas (buscar e substituir com pré-visualização)
+  await pg.locator('[data-parte="personagens"]').click();
+  const bol = pg.locator('[data-personagem="bolota"]');
+  await bol.getByTestId('abrir-trocar-nome').click();
+  await bol.getByTestId('nome-para').fill('Bolinha');
+  await bol.getByTestId('contagem-nome').waitFor();
+  const nNome = Number(/^(\d+)/.exec(await bol.getByTestId('contagem-nome').innerText())[1]);
+  ok(nNome > 3 && /Bolinha/.test(await bol.getByTestId('trocar-nome').innerText()), `nome nas falas: ${nNome} textos com "Bolota", com o antes → depois`);
+  await bol.getByTestId('aplicar-nome').click();
+  await bol.getByTestId('nome-trocado').waitFor({ timeout: 60000 });
+  ok(/mudado/.test(await bol.getByTestId('nome-trocado').innerText()), `nome trocado nas falas: ${(await bol.getByTestId('nome-trocado').innerText()).split('.')[0]}`);
+  await pg.locator('[data-parte="lojinha"]').click();
+
   // 6. texto para ler sozinho: frase com som não ensinado é bloqueada
   await pg.goto(BASE + '#/admin/leitura');
   const frase = pg.locator('[data-texto="ema-suja"]').getByTestId('campo-frase').first();
@@ -170,7 +241,7 @@ export async function trechoGerenciador(browser, { BASE, ok, passarPorteira, cad
   await pg.goto(BASE + '#/admin/historico');
   await pg.getByTestId('lista-historico').waitFor();
   const nHist = await pg.getByTestId('edicao').count();
-  ok(nHist >= 4 && await pg.getByTestId('midia-trocada').count() === 1, `histórico: ${nHist} edições e 1 figura, com desfazer e voltar ao original`);
+  ok(nHist >= 8 && await pg.getByTestId('midia-trocada').count() === 2, `histórico: ${nHist} edições e 2 figuras, com desfazer e voltar ao original`);
   await cap('09-historico');
 
   // 9. pacote com tudo
@@ -197,8 +268,8 @@ export async function trechoGerenciador(browser, { BASE, ok, passarPorteira, cad
   await pg.getByTestId('voltar-fase').click();
   await pg.waitForFunction(() => document.querySelectorAll('[data-testid="cena"].desligada').length === 0);
   await pg.goto(BASE + '#/admin/historico');
-  for (let i = 0; i < 20 && await pg.getByTestId('original-historico').count(); i++) await pg.getByTestId('original-historico').first().click();
-  if (await pg.getByTestId('original-midia').count()) await pg.getByTestId('original-midia').click();
+  pg.once('dialog', (d) => d.accept());
+  await pg.getByTestId('voltar-tudo').click();
   await pg.waitForFunction(() => !document.querySelector('[data-testid="edicao"], [data-testid="midia-trocada"]'));
   ok(true, 'histórico vazio: tudo de volta ao original (edições e figura)');
   await pg.goto(BASE + `#/c/${criancaId}/sessao/TF-10`);
