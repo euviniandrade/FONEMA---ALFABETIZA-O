@@ -18,8 +18,15 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   da lição (`Sessao.tsx`). Depois, a voz toca a variante gravada SEM o nome (`semNome` em `@fonema/motor`; ex. "Agora é a sua vez!") ou
   os mesmos trechos sem o clipe do nome. O nome continua escrito na tela. 20 variantes gravadas (`FALAS.comVarianteSemNome`); as que
   faltam estão em `app/docs/falas-pendentes.md` §1j. Para mudar a regra (ex. 1× por lição inteira em vez de por atividade): tirar o
-  `useEffect` de `voz.novaAtividade()` do `Sessao.tsx`. Medido com voz real (E2E `--nome-falado`, criança "Mariana"): lição da letra A
-  inteira = 6 falas com o nome, nome dito 2× (antes seriam 6); jogo "Achar a rima" = 3 falas com o nome, dito 0× (a 1ª veio depois dos 30 s).
+  `useEffect` de `voz.novaAtividade()` do `Sessao.tsx`. A janela de 30 s é escolha desta frente (o dono disse "no começo"), não do
+  dono: num jogo em que a 1ª fala com o nome vem depois dos 30 s, o nome não é dito nenhuma vez. O nome como CONTEÚDO
+  ("Mariana!", "monta o seu nome", "[NOME] começa com este som") nunca é cortado; só o chamamento (`nomeSoChamamento`).
+  Brincar e Lojinha também só se apresentam na 1ª vez do dia (voltar de um jogo para a lista não repete a fala).
+  Medido com voz real (E2E `--nome-falado`, criança "Mariana", build 5d49015): lição da letra A inteira = 6 falas com o nome; o
+  nome tocou no Espelho ("Agora é a sua vez, Mariana!") e no fim ("Hoje você trabalhou…, Mariana."); as seguintes do fim tocaram
+  a variante sem nome ("…conquista nova!", "…chegou para você!") ou sem o clipe ("Tchau, | A tela…"). A abertura "Oi, Mariana!
+  Hoje tem letra nova!" saiu sem o nome porque a saudação da vila (atrasada pelo teste, que entra na lição 3 s depois) ocupou a vez.
+  Jogo "Achar a rima" = 3 falas com o nome, dito 1× (1º acerto); depois "Você conseguiu!" (variante) e "Isso, | Você escutou…".
 - **(4) Letras "Aa":** letra isolada sempre maiúscula e minúscula juntas: `web/src/componentes/LetraAa.tsx` (`letraAa()` texto e
   `<LetraAa>`; também usado pela frente do Corre-Som). Aplicado em: opções de letra (Escolher, Troca, Ligar), Trilha A–Z, Memória (cartas
   e capa), capa dos jogos fônicos, Placas da vila, desbloqueio, selos (frente e verso, `selo-pintura.ts`), baús e painel da caça (rótulo
@@ -39,7 +46,12 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   lugar o voltar interno continua (jogo → Brincar → passeio). A posição é a de antes de o boneco andar para dentro da porta
   (`passeio.html`: `aoEntrando`), e a câmera volta atrás dele. A marca some ao abrir a vila. E2E `--mundo3d` ganhou a checagem.
 - **Verificado:** typecheck (o erro em `corre-som-3d.ts`/`jornada.ts` que apareceu no meio era da outra frente, já resolvido) e lint dos
-  arquivos mexidos, `npm test` 481/481, E2E `--nome-falado` e `--capturas-aa` na cópia separada (porta 4700). `--sem-jornada`: ver abaixo.
+  arquivos mexidos, `npm test` 484/484 (51 arquivos). Cópia separada (worktree, porta 4700): `--nome-falado` ✓ (acima);
+  `--capturas-aa` ✓ nos dois tamanhos (opções "Bb Aa Cc Dd"; capturas olhadas: lição, Trilha A–Z, Espelho; selos NÃO foram vistos
+  numa captura, nem cartas viradas da Memória, baús da caça, Troca e Ligar); `--sem-jornada` (build e091117): 141 ✓ e parou no 1º ✗,
+  "fim da corrida: pontos e estrelas" do Corre-Som (frente da corrida), depois de passar cadastro, Trilha A–Z, vila/lojinha,
+  jornada, Trilha dos Sons, Cantinho, voz real e cópia. `--mundo3d`: as checagens antigas de andar/mergulho da frente do passeio
+  falham agora (obra em andamento dela); as do voltar ao passeio: ver o resultado anotado logo abaixo.
 
 **Corre-Som em corrida (fila do dono nº 27, ponto 3; D035; 18/11; NÃO publicado ainda):** pedido do dono: "não pode ficar parando…
 xizinho e perde ponto… tempo, objetivo e premiação… elevando o nível… letras Aa". Decisão: `docs/decisoes/035-corre-som-corrida.md`.
