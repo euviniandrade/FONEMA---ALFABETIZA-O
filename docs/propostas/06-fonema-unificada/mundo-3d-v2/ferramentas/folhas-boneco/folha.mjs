@@ -5,6 +5,7 @@
 //  ref      — o manequim da Universal Animation Library (Quaternius, CC0) tocando Walk / Jog / Sprint (referência);
 //  giro     — a câmera girando em volta da menina NO MUNDO (QUALS=baixo,medio,alto);
 //  mat      — cabeça de perto: como está × sem silhueta × sem rim × dois lados × verso (caça ao "fantasma");
+//  perto    — cabelo andando/correndo e joelhos de perto;  quique — cabeça sobe e desce como no E2E;
 //  mergulho — mergulho livre com a câmera do jogo;  probe — materiais e normais das malhas;  dbg — o que cobre o boneco no fundo.
 // Uso (com um build servido, nunca a pasta dist do repositório):
 //   DIST=<pasta dist servida> BASE_URL=http://127.0.0.1:PORTA/ [UAL_DIR=<clone da biblioteca>/glTF] \
@@ -82,6 +83,10 @@ for (const cabelo of CABELOS) {
     const url = await frame.evaluate(async () => { const m = await import('./diag.js'); return m.folhaMateriais(window.FONEMA_PASSEIO, window.FONEMA_MUNDO.renderer); });
     salvar(`${cabelo}-materiais`, url);
   }
+  if (MODOS.includes('perto')) for (const [nome, vel, alvoY, alt, vista] of [['cabelo-andar', 1.3, 1.05, 1.15, 'lado'], ['cabelo-correr', 3.7, 1.05, 1.15, 'tresq'], ['joelhos-andar', 1.3, 0.35, 0.4, 'lado']]) {
+    const r = await frame.evaluate(async (a) => { const m = await import('./diag.js'); return m.folhaBoneco(window.FONEMA_PASSEIO, window.FONEMA_MUNDO.renderer, { vel: a.vel, vista: a.vista, n: 24, dist: 2.3, alvoY: a.alvoY, alturaCam: a.alt, rotulo: `${a.nome} ${a.vel} m/s — de perto` }); }, { nome, vel, alvoY, alt, vista });
+    salvar(`${cabelo}-${nome}`, r.url);
+  }
   if (MODOS.includes('anim')) {
     for (const [nome, vel] of [['parado', 0], ['andar', 1.3], ['teclado', 2.6], ['correr', 3.7]]) for (const vista of ['lado', 'tras']) {
       const r = await frame.evaluate(async ({ vel, vista, nome }) => { const m = await import('./diag.js'); return m.folhaBoneco(window.FONEMA_PASSEIO, window.FONEMA_MUNDO.renderer, { vel, vista, n: 24, rotulo: `${nome} ${vel} m/s — ${vista}` }); }, { vel, vista, nome });
@@ -102,6 +107,7 @@ for (const cabelo of CABELOS) {
     const url2 = await frame.evaluate(async () => { const m = await import('./diag.js'); return m.folhaGiro(window.FONEMA_MUNDO, window.FONEMA_PASSEIO, { rotulo: 'giro de perto, de cima', dist: 2.2, alto: 1.9 }); });
     salvar(`${cabelo}-giro-cima-${qual}`, url2);
   }
+  if (MODOS.includes('quique')) console.log('QUIQUE', JSON.stringify(await frame.evaluate(() => { const r = {}; for (const vel of ['arrowup', 'shift']) { const p = window.FONEMA_PASSEIO, b = p.boneco; p.teleportar(0, 40, Math.PI); p.teclar('arrowup', true); if (vel === 'shift') p.teclar('shift', true); p.simular(0.6); let a = 1e9, z = -1e9; const v = new b.raiz.position.constructor(); for (let i = 0; i < 40; i++) { p.simular(0.025); const y = b.rig.ossos.cabeca.getWorldPosition(v).y - b.raiz.position.y; a = Math.min(a, y); z = Math.max(z, y); } p.teclar('arrowup', false); p.teclar('shift', false); p.simular(0.5); r[vel] = +(z - a).toFixed(3); } return r; })));
   if (MODOS.includes('dbg')) console.log(JSON.stringify(await frame.evaluate(async () => { const m = await import('./diag.js'); return m.depurarFundo(window.FONEMA_MUNDO, window.FONEMA_PASSEIO); })));
   if (MODOS.includes('mergulho')) {
     const url = await frame.evaluate(async () => { const m = await import('./diag.js'); return m.folhaMergulho ? m.folhaMergulho(window.FONEMA_MUNDO, window.FONEMA_PASSEIO, {}) : null; });

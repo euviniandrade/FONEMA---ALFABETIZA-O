@@ -24,7 +24,7 @@ function folha(cols, n, w, h, rotulo) {
 }
 
 /** Folha do boneco de verdade andando/correndo, sem o mundo (palco neutro). vista: 'lado' | 'tras' | 'tresq'. */
-export function folhaBoneco(P, renderer, { vel = 1.5, vista = 'lado', n = 24, dt = 1 / 30, cols = 8, w = 220, h = 300, rotulo = '', aquecer = 2, alturaCam = 0.8, dist = 5.2 } = {}) {
+export function folhaBoneco(P, renderer, { vel = 1.5, vista = 'lado', n = 24, dt = 1 / 30, cols = 8, w = 220, h = 300, rotulo = '', aquecer = 2, alturaCam = 0.8, dist = 5.2, alvoY = 0.72 } = {}) {
   const eu = P.boneco, pai = eu.raiz.parent;
   const cena = palco();
   const guarda = { pos: eu.raiz.position.clone(), rot: eu.raiz.rotation.y };
@@ -42,7 +42,7 @@ export function folhaBoneco(P, renderer, { vel = 1.5, vista = 'lado', n = 24, dt
     passo(dt);
     const z = eu.raiz.position.z;
     if (vista === 'lado') cam.position.set(dist, alturaCam, z); else if (vista === 'tras') cam.position.set(0, alturaCam + 0.3, z - dist); else cam.position.set(dist * 0.7, alturaCam + 0.6, z - dist * 0.7);
-    cam.lookAt(0, 0.72, z);
+    cam.lookAt(0, alvoY, z);
     eu.raiz.updateMatrixWorld(true);
     const r = eu.rig?.ossos;
     let sola = null;
