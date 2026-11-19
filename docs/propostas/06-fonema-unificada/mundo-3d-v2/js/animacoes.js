@@ -79,9 +79,12 @@ const _m = new THREE.Matrix4(), _e = new THREE.Euler(), _q = new THREE.Quaternio
 // Referência de ordem de grandeza: criança pequena anda com ~2,2–2,8 passos/s e corre com ~3–3,4 passos/s (decisão do
 // projeto a partir da proporção do boneco; não é medida de laboratório).
 const CAD_ANDAR = (v) => 0.92 + 0.3 * v, CAD_CORRER = (v) => 1.28 + 0.1 * v;
-const CORRE_DE = 1.55, CORRE_ATE = 2.15; // m/s
+const CORRE_DE = 1.4, CORRE_ATE = 3.6; // m/s (no meio, um trote leve: parte andar, parte correr)
 const S_MIN = 0.45, S_MAX = 1.25; // encolhe/estica a passada
 const NO_AR = 0.35; // quanto do tempo no ar da corrida fica
+const ESTICA = 0.5; // quanto a perna de apoio da corrida se estica (0 = como na captura)
+const INCLINA = 0.55; // quanto da inclinação do tronco da captura sai (0 = toda fica)
+const JUNTA = 0.5; // quanto os pés se aproximam da linha do quadril (lado a lado)
 
 export class Animador {
   constructor(rig, k) {
@@ -176,8 +179,17 @@ export class Animador {
       const pe0 = P[iz('pe')];
       for (const nm of ['joelho', 'pe']) P[iz(nm)] = zq + (P[iz(nm)] - zq) * s;
       P[iz('ponta')] += P[iz('pe')] - pe0; // o pé não encolhe: a ponta acompanha o tornozelo
+      // perna de apoio menos dobrada (o corredor adulto afunda no apoio; no boneco isso parecia agachar a cada passo):
+      // o joelho vai em direção à reta quadril→tornozelo, mais quanto mais perto do chão está o pé
+      const ic = ij['coxa' + L] * 3, ik = ij['joelho' + L] * 3, ip = ij['pe' + L] * 3;
+      const apoio = 1 - Math.min(1, Math.max(0, (P[ip + 1] - D.rep.P[ip + 1]) / 0.12));
+      const a = ESTICA * apoio * this.pCorre;
+      if (a > 0) for (let c = 0; c < 3; c++) P[ik + c] += ((P[ic + c] + P[ip + c]) / 2 - P[ik + c]) * a;
       const sb = Math.min(1, 0.35 + 0.65 * s), zo = P[iz('ombro')];
       for (const nm of ['cotovelo', 'mao']) P[iz(nm)] = zo + (P[iz(nm)] - zo) * sb;
+      // braços da corrida mais junto do corpo (somados à abertura do boneco, abriam como asa vistos de trás)
+      const xo = P[iz('ombro') - 2], sx = 1 - 0.45 * this.pCorre;
+      for (const nm of ['cotovelo', 'mao']) P[iz(nm) - 2] = xo + (P[iz(nm) - 2] - xo) * sx;
     }
   }
 
@@ -189,7 +201,11 @@ export class Animador {
     const W = {};
     const giro = (nome) => { const g = ig[nome] * 4; _q.set(R[g], R[g + 1], R[g + 2], R[g + 3]); _qi.set(rep.R[g], rep.R[g + 1], rep.R[g + 2], rep.R[g + 3]).invert(); return _q.clone().multiply(_qi); };
     W.quadril = giro('quadril'); W.tronco = giro('tronco'); W.peito = giro('peito'); W.cabeca = giro('cabeca');
-    _e.setFromQuaternion(W.cabeca, 'YXZ'); _e.x *= 0.3; _e.z *= 0.4; W.cabeca.setFromEuler(_e);
+    // tronco menos inclinado para a frente: com o cabeção, a inclinação do corredor adulto vira "corcunda olhando o chão"
+    // (fora d'água; nadando o corpo deita como na captura)
+    const fi = 1 - INCLINA * (1 - this.pNado);
+    for (const nm of ['quadril', 'tronco', 'peito']) { _e.setFromQuaternion(W[nm], 'YXZ'); _e.x *= fi; W[nm].setFromEuler(_e); }
+    _e.setFromQuaternion(W.cabeca, 'YXZ'); _e.x *= 0.3 - 0.15 * this.pMover * (1 - this.pNado); _e.z *= 0.4; W.cabeca.setFromEuler(_e);
     const local = (osso, Wpai, Wosso) => { O[osso].quaternion.copy(_q2.copy(Wpai).invert().multiply(Wosso)); };
     local('quadril', new THREE.Quaternion(), W.quadril);
     local('tronco', W.quadril, W.tronco);
@@ -204,6 +220,14 @@ export class Animador {
       local(osso, Wpai, Wo);
       return Wo;
     };
+    // pés mais juntos e menos virados para fora (a base do adulto parada fica de "pernas abertas" no boneco); no chão só
+    const pj0 = (1 - this.pNado) * (1 - this.pAr);
+    if (pj0 > 0.01) for (const L of ['E', 'D']) {
+      const xc = P[ij['coxa' + L] * 3], ik = ij['joelho' + L] * 3, ip = ij['pe' + L] * 3, it = ij['ponta' + L] * 3;
+      const k = 1 - JUNTA * pj0, pe0 = P[ip];
+      P[ik] = xc + (P[ik] - xc) * k; P[ip] = xc + (P[ip] - xc) * k;
+      P[it] = P[ip] + (P[it] - pe0) * (1 - 0.5 * pj0);
+    }
     if (!this.repPe) { this.repPe = {}; for (const L of ['E', 'D']) this.repPe[L] = pj('ponta' + L, new THREE.Vector3(), rep.P).sub(pj('pe' + L, new THREE.Vector3(), rep.P)).normalize(); }
     for (const [L, s] of [['E', 1], ['D', -1]]) {
       const Wc = membro('coxa' + L, W.quadril, 'coxa' + L, 'joelho' + L);
