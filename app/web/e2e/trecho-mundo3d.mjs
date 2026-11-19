@@ -153,7 +153,14 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   }
   await fr.locator('#btAcao.on').waitFor({ timeout: 240000 });
   ok(/Conversar/.test(await fr.locator('#btAcao').innerText()), 'perto da Sofia aparece o botão "Conversar"');
-  await fr.locator('#btAcao').click(CLIQUE);
+  // máquina lenta: entre o teste e o clique o Bolota (que segue a criança) podia virar o "mais perto".
+  // Afasta o Bolota, encosta na Sofia e clica no mesmo instante (sem quadro no meio).
+  await frame.evaluate(() => {
+    const P = window.FONEMA_PASSEIO, L = P.npcs.lista, s = L.find((n) => n.id === 'sofia').boneco.raiz.position;
+    for (const n of L) if (n.id !== 'sofia') { const q = n.boneco.raiz.position; if (Math.hypot(q.x - s.x, q.z - s.z) < 6) q.set(s.x + 12, q.y, s.z + 12); }
+    P.teleportar(s.x + 1.2, s.z + 1.2); P.simular(0.05);
+    document.getElementById('btAcao').click();
+  });
   await fr.locator('#cartao.aberto').waitFor();
   const txt = await fr.locator('#cartao').innerText();
   ok(/Sofia/.test(txt) && /Oi, Bia!/.test(txt) && /Missão/.test(txt), `a Sofia diz "Oi, Bia!" (fala já gravada) e convida para a missão (cartão: ${txt.replace(/\s+/g, ' ').slice(0, 120)})`);

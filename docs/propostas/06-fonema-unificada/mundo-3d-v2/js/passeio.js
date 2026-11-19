@@ -233,7 +233,7 @@ export function criarPasseio(mundo, h = {}) {
     // (hora do evento, não a hora em que foi tratado: aparelho lento demora a tratar e o toque viraria "segurar")
     if (on) { espacoT = quando; espacoProf = prof; if (prof > 0.25) segurar('subir', true); return; }
     // toque = soltou logo OU quase não saiu do lugar (aparelho lento: o soltar chega tarde, mas a criança só tocou)
-    const toque = quando - espacoT < 260 || Math.abs(prof - espacoProf) < 0.15;
+    const toque = quando - espacoT < 600 || Math.abs(prof - espacoProf) < 0.3; // até ~0,6 s ainda é toque (máquina lenta entrega o soltar tarde)
     segurar('subir', false);
     if (toque) mergulhar(prof < 0.25); // na superfície mergulha; lá embaixo volta para cima
   }
