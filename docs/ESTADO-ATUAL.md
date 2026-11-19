@@ -130,8 +130,11 @@ xizinho e perde ponto… tempo, objetivo e premiação… elevando o nível… l
   você passou no Mm". `--sem-jornada`: 290 ✓ e 1 ✗ fora desta frente (passeio: "Oi, Bia!").
 - **Defeitos achados e corrigidos na verificação:** "menos movimento" lançava os 2 arcos da onda juntos e media a passagem no relógio da
   animação (b95f584); a medida de qps nunca mostrava menos de 20 e a pista andava em câmera lenta em aparelho lento (75351d8).
-- **Falta:** medir os qps de verdade depois de 75351d8 (rodada nova de `--capturas-corrida` em andamento; aqui não há placa de vídeo:
-  60 qps no celular NÃO confirmado); ninguém jogou num aparelho de verdade; números [DP] a calibrar com crianças.
+- **Medida depois de 75351d8** (navegador sem tela e sem placa de vídeo, máquina com carga ~15–20; a resolução baixa sozinha): média
+  4 qps no PC (mín. 2) e 7 qps no celular (mín. 4); mesmo assim a corrida anda no ritmo do relógio: 10 arcos em 60 s, 192 pontos,
+  3 estrelas, "Meta batida!", selo e "+3 moedinhas para a Lojinha" (captura `v15-corrida-14-fim.png`). Largada em 5–6 s com a fala.
+- **Falta:** 60 qps num celular de verdade NÃO confirmado (aqui não há placa de vídeo); ninguém jogou num aparelho; números [DP] a calibrar;
+  o porquinho do topo só mostra as moedinhas novas ao sair da tela (o crédito é gravado na hora, conferido no E2E).
 
 **Passeio e caça "profissional": mapa, próximo passo, trilha de moedas e lembrete (fila do dono nº 29, pontos 2–5; 19/11; NÃO publicado):**
 arquivo novo `mundo-3d-v2/js/guia-passos.js` (carregado por `js/caca-tesouro.js`; nenhuma linha nova no `passeio.js`: usa o `noQuadro` que já existia).

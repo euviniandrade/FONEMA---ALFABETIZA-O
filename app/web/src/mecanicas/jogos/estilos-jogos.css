@@ -126,7 +126,7 @@ html.menos-movimento .cm-prato-caixa.voando{transform:none;opacity:.5}
 
 /* ---------- Corre-Som em corrida (D035): placar, tempo, meta, contagem, +N/−N, ✖ com a letra certa no canto, reserva 2D ---------- */
 .cs-placar{display:flex;align-items:center;gap:10px;margin:0 0 6px;flex-wrap:nowrap}
-.cs-pontos{display:inline-flex;align-items:center;gap:6px;min-height:52px;padding:4px 16px 4px 8px;border-radius:var(--r-pilula);background:#fff;
+.cs-pontos{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-height:52px;padding:4px 16px 4px 8px;border-radius:var(--r-pilula);background:#fff;
   box-shadow:0 4px 0 #e7c35a;font-family:var(--f-titulo);color:var(--marinho)}
 .cs-pontos .ic{width:34px;height:34px;color:#ffb400}
 .cs-pontos b{font-size:30px;line-height:1;min-width:2ch;text-align:right}
