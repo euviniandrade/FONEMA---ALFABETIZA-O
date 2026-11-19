@@ -24,6 +24,26 @@ xizinho e perde ponto… tempo, objetivo e premiação… elevando o nível… l
   da nova rodada, o `--sem-jornada` e o `--capturas-corrida` (PC e celular, mede qps) AINDA NÃO foram conferidos.
 - **Falta:** rodar/olhar `--capturas-corrida` e `--sem-jornada`; 60 qps não medido num celular; números a calibrar com crianças.
 
+**Passeio e caça "profissional": mapa, próximo passo, trilha de moedas e lembrete (fila do dono nº 29, pontos 2–5; 19/11; NÃO publicado):**
+arquivo novo `mundo-3d-v2/js/guia-passos.js` (carregado por `js/caca-tesouro.js`; nenhuma linha nova no `passeio.js`: usa o `noQuadro` que já existia).
+- **Minimapa** no canto de cima, à esquerda (gira com a câmera: a frente fica para cima; a criança é a setinha vermelha, as portas
+  aparecem como ícones, os baús da caça como bolinhas douradas, o objetivo como estrela). Tocar nele abre o **mapa grande** (norte para cima).
+- **Próximo passo sempre à vista:** faixa azul no topo com ícone + texto e seta 3D com coluna de luz sobre o destino. No passeio livre o
+  destino é a **missão de hoje** (porta da Escola, "Missão de hoje: <título>"); a fala nova "Sua missão de hoje está na Escola. Siga as
+  moedinhas!" toca uma vez, quando o objetivo muda. **Trilha de moedas** brilhantes pelo caminho andável (busca na grade de colisão),
+  refeita quando a criança se afasta e some perto do destino; pegar moeda soma no contador 🪙 (enfeite, não é guardado).
+- **Na caça** (cuidado da regra 3): na escolha pelo som, a faixa diz "Escute o som e passe pelo baú certo", o minimapa mostra TODOS os
+  baús iguais e a trilha leva só até a ÁREA dos baús (termina antes do baú mais perto do centro), sem seta no certo; nas charadas, a faixa
+  repete a charada e o lugar não aparece no mapa nem na trilha. A 2ª dica põe seta + trilha até o baú (já gravada como ajuda).
+- **Tesouros espalhados:** os baús dos níveis 1 e 2 saem de 23 pontos pela vila inteira e pela beira do rio (baú boiando na água rasa).
+- **Pegar passando por cima (decisão do dono, 18/11):** entrar no círculo já é a escolha (não precisa parar); quem já estava dentro
+  precisa sair e entrar. A tentativa continua gravada igual. Isto substitui a regra anterior ("é preciso parar no círculo").
+- **Lembrete:** depois de ~3,5 min no passeio livre (fora da caça, fora do barco, sem cartão aberto) aparece "Vamos continuar a missão?"
+  com a fala já gravada do Tales; "Vamos!" entra na Escola (missão de hoje) e "Mais um pouquinho" adia 2 min.
+- **Voz:** 1 fala nova (53 caracteres), auditoria "ok". **Verificado:** RESULTADO_29
+- **Falta:** música de aventura (ponto 1 do item 29) é de outra frente; ninguém testou num aparelho de verdade; com a máquina de teste
+  muito carregada o minimapa redesenha a cada 3 passos (pode pesar em celular fraco: não medido).
+
 **Caça ao tesouro das palavras no passeio 3D (fila do dono nº 25; 18/11; NÃO publicado ainda):** pedido do dono: "um caça ao
 tesouro das palavras… desbravar na água, pegar o barco… um circulozinho… dicas tipo charada… vários níveis… ensinando a usar cada cenário".
 - **Onde:** ícone 🗺️ no passeio (canto de cima, à direita) e cartão "Caça ao Tesouro" em Brincar → Jogos (só aparece com 3D; abre
