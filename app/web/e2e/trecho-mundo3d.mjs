@@ -76,9 +76,22 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   ok(nadando.length > 2 && nadando.every((x) => x.cab > 0), `no rio o boneco nada com a cabeça fora d'água (${nadando.length} amostras, cabeça ${Math.min(...nadando.map((x) => x.cab)).toFixed(2)} m acima ou mais)`);
   ok(agua.r.every((x) => x.cab > -0.3 || !x.nada), 'nunca some na água');
   if (capturas) { await pg.waitForTimeout(800); await pg.screenshot({ path: `${capturas}/mundo3d-08-nadando.png` }); }
+  // fila nº 28: mergulho LIVRE — tocar Mergulhar desce e FICA lá (sem limite de tempo); segurar Descer vai até o fundo
+  // (o corpo inteiro acima da areia); tocar Subir volta à superfície; no PC, C desce e Espaço sobe
   await fr.getByTestId('passeio-pular').click(CLIQUE);
-  const mergulho = await frame.evaluate(() => { const p = window.FONEMA_PASSEIO, b = p.boneco, N = p.colisao.NIVEL_AGUA; const m = p.posicao.mergulhando; p.simular(1.8); const fundo = b.cabecaY() - N; p.simular(4); return { m, fundo, volta: b.cabecaY() - N, ainda: p.posicao.mergulhando }; });
-  ok(mergulho.m && mergulho.fundo < -0.2 && mergulho.volta > 0 && !mergulho.ainda, `Mergulhar: a cabeça desce ${(-mergulho.fundo).toFixed(2)} m e volta para respirar`);
+  const mergulho = await frame.evaluate(() => { const p = window.FONEMA_PASSEIO, b = p.boneco, N = p.colisao.NIVEL_AGUA; p.simular(1.8); const desceu = b.cabecaY() - N, m = p.posicao.mergulhando; p.simular(6); return { m, desceu, ficou: p.posicao.mergulhando, prof: p.posicao.profundidade }; });
+  ok(mergulho.m && mergulho.desceu < -0.4 && mergulho.ficou, `Mergulhar: a cabeça desce ${(-mergulho.desceu).toFixed(2)} m e fica embaixo d'água (sem os 4 s de antes; ${mergulho.prof} m depois de 6 s)`);
+  const fundo = await frame.evaluate(() => { const p = window.FONEMA_PASSEIO, b = p.boneco, v = new b.raiz.position.constructor(); const antes = p.posicao.profundidade; p.segurar('descer', true); p.simular(3); p.segurar('descer', false); p.simular(0.5); let baixo = 1e9; for (const nm of ['peE', 'peD', 'canelaE', 'canelaD', 'antebracoE', 'antebracoD']) baixo = Math.min(baixo, b.rig.ossos[nm].getWorldPosition(v).y); const st = p.posicao; return { antes, prof: st.profundidade, max: st.profundidadeMax, folga: baixo - p.colisao.altura(st.x, st.z) }; });
+  ok(fundo.prof > fundo.antes + 0.3 && fundo.prof >= fundo.max - 0.25 && fundo.folga > 0, `segurar Descer leva ao fundo (${fundo.antes} → ${fundo.prof} m de ${fundo.max} m; corpo ${fundo.folga.toFixed(2)} m acima da areia)`);
+  await fr.getByTestId('passeio-subir').click(CLIQUE);
+  const subiu = await frame.evaluate(() => { const p = window.FONEMA_PASSEIO, b = p.boneco; p.simular(3); return { cab: b.cabecaY() - p.colisao.NIVEL_AGUA, m: p.posicao.mergulhando }; });
+  ok(subiu.cab > 0 && !subiu.m, `tocar Subir volta à superfície (cabeça ${subiu.cab.toFixed(2)} m fora d'água)`);
+  await canvas.focus();
+  await pg.keyboard.down('c'); await simular(1.2); await pg.keyboard.up('c');
+  const teclaC = await frame.evaluate(() => window.FONEMA_PASSEIO.posicao.profundidade);
+  await pg.keyboard.press('Space'); await simular(2.5);
+  const teclaEsp = await frame.evaluate(() => window.FONEMA_PASSEIO.posicao);
+  ok(teclaC > 0.8 && !teclaEsp.mergulhando && teclaEsp.profundidade < 0.1, `no PC: segurar C desce (${teclaC} m) e tocar Espaço volta para cima`);
   if (capturas) { await frame.evaluate(() => { window.FONEMA_PASSEIO.mergulhar(true); window.FONEMA_PASSEIO.simular(1.6); }); await pg.waitForTimeout(900); await pg.screenshot({ path: `${capturas}/mundo3d-09-mergulho.png` }); await frame.evaluate(() => window.FONEMA_PASSEIO.mergulhar(false)); }
   await frame.evaluate(() => { const p = window.FONEMA_PASSEIO; p.teleportar(0, 19.5, Math.PI); p.girarCamera(0 - p.camera.giro); p.simular(0.5); });
 

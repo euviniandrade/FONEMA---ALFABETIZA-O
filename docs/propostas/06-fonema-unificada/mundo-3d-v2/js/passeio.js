@@ -239,7 +239,10 @@ export function criarPasseio(mundo, h = {}) {
     if (bloqueado() || (on && !nadando)) return;
     alvoProf = on ? (prof < MERGULHO_TOQUE - 0.1 ? MERGULHO_TOQUE : prof + 0.8) : 0; // toque em Descer lá embaixo: mais fundo
   }
-  function profMax(x, z) { return Math.max(0, colisao.NIVEL_AGUA + eu.altura * 0.09 - (colisao.altura(x, z) + 0.4)); }
+  // fundo do rio como ele é DESENHADO: o terreno é uma malha de ~1,5 m (no "baixo"), então no meio do rio a areia
+  // desenhada fica até ~0,8 m acima da altura exata; o maior valor em volta (1,6 m) é o que se vê
+  function fundoVisto(x, z) { let m = colisao.altura(x, z); for (const [a, b] of [[1.6, 0], [-1.6, 0], [0, 1.6], [0, -1.6], [1.1, 1.1], [-1.1, 1.1], [1.1, -1.1], [-1.1, -1.1]]) m = Math.max(m, colisao.altura(x + a, z + b)); return m; }
+  function profMax(x, z) { return Math.max(0, colisao.NIVEL_AGUA + eu.altura * 0.09 - (fundoVisto(x, z) + 0.45)); }
   const mergulhando = () => prof > 0.25;
   let acenando = 0;
   function acenar() {
@@ -361,7 +364,7 @@ export function criarPasseio(mundo, h = {}) {
     sub = lerp(sub, nadando ? clamp(prof / 0.45, 0, 1) : 0, 1 - Math.exp(-dt * 2.5));
     // lá no fundo o corpo inteiro (pés, mãos) fica acima da areia: se algum osso afundou, a profundidade recua
     if (nadando && prof > 0.25 && eu.rig) {
-      const fundoY = colisao.altura(pos.x, pos.z) + 0.12;
+      const fundoY = fundoVisto(pos.x, pos.z) + 0.12;
       let baixo = 1e9;
       for (const nm of ['peE', 'peD', 'canelaE', 'canelaD', 'antebracoE', 'antebracoD', 'cabeca']) { const o = eu.rig.ossos[nm]; if (o) baixo = Math.min(baixo, o.getWorldPosition(_f).y); }
       if (baixo < fundoY) prof = Math.max(0, prof - Math.min(fundoY - baixo, 1.5 * dt + 0.02));
@@ -407,7 +410,7 @@ export function criarPasseio(mundo, h = {}) {
     // um lado com água livre (fila nº 28: no fundo a câmera ficava dentro da margem e o boneco virava silhueta)
     if (sub > 0.3 && !cam.alto) {
       const ci0 = Math.cos(inclAlvo), si0 = Math.sin(inclAlvo);
-      const aguaLivre = (g) => { for (let s = 0.6; s <= distAlvo; s += 0.3) { const x = alvoCam.x + Math.sin(g) * ci0 * s, z = alvoCam.z + Math.cos(g) * ci0 * s, y = alvoCam.y + si0 * s; if (y < colisao.altura(x, z) + 0.35) return false; } return true; };
+      const aguaLivre = (g) => { for (let s = 0.6; s <= distAlvo; s += 0.3) { const x = alvoCam.x + Math.sin(g) * ci0 * s, z = alvoCam.z + Math.cos(g) * ci0 * s, y = alvoCam.y + si0 * s; if (y < fundoVisto(x, z) + 0.3) return false; } return true; };
       if (!aguaLivre(cam.giro)) {
         for (let k = 1; k <= 9; k++) for (const sg of [1, -1]) {
           const g = cam.giro + sg * k * 0.35;
@@ -425,7 +428,7 @@ export function criarPasseio(mundo, h = {}) {
     }
     cam.distReal = livre < cam.distReal ? lerp(cam.distReal, livre, 1 - Math.exp(-dt * 18)) : lerp(cam.distReal, livre, 1 - Math.exp(-dt * (cam.alto ? 2.5 : 4)));
     desejada.copy(alvoCam).addScaledVector(_d, cam.distReal);
-    desejada.y = Math.max(desejada.y, colisao.altura(desejada.x, desejada.z) + lerp(1.25, 0.35, sub));
+    desejada.y = Math.max(desejada.y, (sub > 0.01 ? fundoVisto(desejada.x, desejada.z) : colisao.altura(desejada.x, desejada.z)) + lerp(1.25, 0.35, sub));
     if (sub > 0.5) desejada.y = Math.min(desejada.y, colisao.NIVEL_AGUA - 0.15); // fica embaixo d'água junto do boneco
     // a câmera está embaixo da linha d'água: no mergulho (mesmo perto da margem) ou dentro do rio
     const submersa = camera.position.y < colisao.NIVEL_AGUA - 0.02 && (sub > 0.2 || colisao.agua(camera.position.x, camera.position.z) > 0);
