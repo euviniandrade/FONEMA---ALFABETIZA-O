@@ -219,6 +219,11 @@
 0.06,
 1.06
 ],
+"077590d54a386ea2": [
+"Lê a pedra e toca a figura",
+0.08,
+1.58
+],
 "07bd90a37903f26b": [
 "Este é o nome de um bichinho inventado. Toque para ouvir e escolha a leitura",
 0.08,
@@ -593,6 +598,11 @@ null
 "Essa figura começa com este som",
 0.2,
 2.0
+],
+"12eed459df63bec0": [
+"Olha a minha boca antes de responder",
+0.08,
+1.86
 ],
 "13289970d9eccf75": [
 "Pu-la",
@@ -1289,6 +1299,11 @@ null
 0.06,
 1.2
 ],
+"2e21ebdb6f0954e5": [
+"O que o Bolota disse?",
+0.06,
+1.2
+],
 "2e3301705275752f": [
 "Mola! Multa e o Gol Vale",
 0.1,
@@ -1643,6 +1658,11 @@ null
 "Escolha a camisa",
 0.16,
 1.36
+],
+"3bf0a58e5a2a3b5f": [
+"Agora é a sua vez",
+0.08,
+1.22
 ],
 "3c3f0c8998337e56": [
 "Ei, ai, ui, eu, oi, oi, oi",
@@ -2199,6 +2219,11 @@ null
 0.12,
 1.5
 ],
+"4dd7f278f2406675": [
+"Que letra faz este som?",
+0.14,
+1.18
+],
 "4e5f0308c29cec00": [
 "Passa a bola",
 0.1,
@@ -2233,6 +2258,11 @@ null
 "Qual é o som desta letra? Toque para ouvir e escolha",
 0.08,
 2.96
+],
+"4f94587b4c165d71": [
+"Rima ou não rima?",
+0.08,
+1.52
 ],
 "4fe5d0709ff87084": [
 "Estes sons se parecem. Escute bem",
@@ -2783,6 +2813,11 @@ null
 "Fala,",
 0.2,
 0.66
+],
+"5e7c4534b6b55a0e": [
+"Agora é a sua vez",
+0.1,
+1.64
 ],
 "5e7f5316404a4472": [
 "Este é o caminho que você vai fazer",
@@ -3509,6 +3544,11 @@ null
 0.12,
 0.66
 ],
+"7594f676b665d6c3": [
+"Abacaxi",
+0.08,
+0.84
+],
 "759fe258c439caef": [
 "Camila",
 0.08,
@@ -3769,6 +3809,11 @@ null
 0.1,
 0.56
 ],
+"7dab6f9d379da2cf": [
+"Uma palma para cada pedacinho",
+0.08,
+1.8
+],
 "7ddd225a56f7f0be": [
 "Procure na água rasinha do rio",
 0.08,
@@ -3939,6 +3984,11 @@ null
 0.1,
 2.92
 ],
+"83b869506f548889": [
+"Olha só o que chegou pra você",
+0.12,
+1.72
+],
 "83f422f78c25603a": [
 "Levy",
 0.1,
@@ -3958,6 +4008,11 @@ null
 "Giovanna",
 0.08,
 0.76
+],
+"848e8b9e31c12405": [
+"Você conseguiu",
+0.08,
+1.04
 ],
 "849952076f35a117": [
 "Vou!",
@@ -4068,6 +4123,11 @@ null
 "Olívia",
 0.1,
 0.72
+],
+"881246bba7243e14": [
+"Letra por letra. Agora é a sua vez",
+0.08,
+2.58
 ],
 "88935f769e93c201": [
 "Clara",
@@ -4303,6 +4363,11 @@ null
 "Antonella",
 0.16,
 0.92
+],
+"910c3fbd3389f4d0": [
+"O eco falou: qual letra?",
+0.08,
+1.82
 ],
 "91127bea692849fe": [
 "Quadro",
@@ -4669,6 +4734,11 @@ null
 0.12,
 1.26
 ],
+"9c8078ba41c71c02": [
+"Abacaxi",
+0.06,
+0.76
+],
 "9cebdaacde9627a6": [
 "Stella",
 0.14,
@@ -4784,6 +4854,11 @@ null
 0.12,
 0.72
 ],
+"a1763d91f66a5615": [
+"É a vovó ou o vovô?",
+0.08,
+1.38
+],
 "a195d65899dd9282": [
 "F de foca",
 0.28,
@@ -4858,6 +4933,11 @@ null
 "Hello Isa",
 0.1,
 0.92
+],
+"a545c220bd5ffeb3": [
+"Ou começa como o som",
+0.14,
+1.66
 ],
 "a564435d6e235086": [
 "O que vem sempre com o U",
@@ -5149,6 +5229,16 @@ null
 0.08,
 0.74
 ],
+"ae0b787b570dd5fe": [
+"Escolhe do seu jeito",
+0.08,
+1.42
+],
+"ae9e4bc78dde8d55": [
+"Fala o som desta letra",
+0.1,
+1.5
+],
 "aeea3cec5ed7ade0": [
 "Liz",
 0.06,
@@ -5423,6 +5513,11 @@ null
 "Pó lá",
 0.16,
 1.0
+],
+"b70fbd9c7a20c722": [
+"Qual firma?",
+0.08,
+0.76
 ],
 "b7273db8a90d233b": [
 "Liz",
@@ -6053,6 +6148,11 @@ null
 "Agora é com você",
 0.1,
 1.16
+],
+"c8a019f855079a12": [
+"Olha que lindo! Você ganhou uma conquista nova",
+0.06,
+2.66
 ],
 "c90c83340674d984": [
 "Na lojinha, você troca as moedinhas por roupas para o seu boneco e mais para frente, até barco e carro",
@@ -7194,6 +7294,11 @@ null
 0.1,
 0.54
 ],
+"f4c74620fc1837fd": [
+"Junta comigo",
+0.08,
+1.12
+],
 "f547fc5b1f1806f7": [
 "G de gato",
 0.64,
@@ -7393,6 +7498,11 @@ null
 "Cato",
 0.12,
 0.66
+],
+"fd1735c8ad4f3a83": [
+"Vamos fazer juntos?",
+0.08,
+1.16
 ],
 "fd1b934589fe828c": [
 "Escute o som novo",

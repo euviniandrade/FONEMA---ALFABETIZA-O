@@ -229,6 +229,14 @@
   "tales|abacaxi": {
    "versao": 1,
    "texto": "Abacachi."
+  },
+  "sofia|Qual rima?": {
+   "versao": 1,
+   "texto": "Qual é a rima?"
+  },
+  "tales|Qual começa com o som?": {
+   "versao": 1,
+   "texto": "Qual palavra começa com o som?"
   }
  },
  "nomes": {
