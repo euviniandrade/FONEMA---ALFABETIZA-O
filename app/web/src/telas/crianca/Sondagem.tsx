@@ -24,6 +24,7 @@ import { voz } from '../../servicos/voz.ts';
 import { novoId } from '../../dados/repositorio.ts';
 import { falar } from '../../util.ts';
 import { IDADE_DA_LEITURA, Sondagem as MissaoDasPlacas } from './Extras.tsx';
+import { letraAa } from '../../componentes/LetraAa.tsx';
 
 /** Menos que isto de itens possíveis: a criança ainda viu pouco; vale a Missão das Placas antiga. */
 const MINIMO_DE_ITENS = 3;
@@ -225,7 +226,7 @@ function BlocoAtual({ area, item, primeiro, n, total, crianca, aoResponder }: Pr
         <>
           <div className="pergunta"><BotaoOuvir onClick={ouvirDeNovo} rotulo="Ouvir o som de novo" /></div>
           <div className="opcoes opcoes-sondagem">{item.opcoes.map((l) => (
-            <button key={l} className="opcao opcao-letra" onClick={() => escolher(l)} disabled={!pronto} data-opcao={l} data-testid="opcao-sondagem"><span className="letra">{l}<small>{l.toLowerCase()}</small></span></button>
+            <button key={l} className="opcao opcao-letra" onClick={() => escolher(l)} disabled={!pronto} data-opcao={l} data-testid="opcao-sondagem"><span className="letra">{letraAa(l)}</span></button>
           ))}</div>
         </>
       ) : area === 'leitura-palavras' ? (

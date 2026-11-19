@@ -11,6 +11,7 @@ import { useDestravar } from '../servicos/destravar.ts';
 import { BotaoOuvindo } from '../componentes/BotaoOuvindo.tsx';
 import { falar, textoVoz } from '../util.ts';
 import { tentativa, type PropsMecanica } from './comum.tsx';
+import { letraAa } from '../componentes/LetraAa.tsx';
 
 /**
  * C2 · Eu faço (Espelho do Som): fundo limpo; som ×2 → boca de frente e raio-X → a letra surge no instante
@@ -79,7 +80,8 @@ export function Espelho({ atividade, crianca, sessao, cenaId, onFim }: PropsMeca
     onFim({ tentativas: [tentativa(atividade.habilidade, sessao, cenaId, dica ? 1 : 0, { tipo: 'exposicao', mecanica: 'espelho', alvo: atividade.fonema, categoria: 'fonema', tentativaNumero: 1 })], tentouDeNovo: 0 });
   };
 
-  const letrasTela = atividade.letra;
+  // fila nº 27 (4): a letra do som aparece em maiúscula e minúscula ("Mm"); o nome da criança fica como está
+  const letrasTela = ehNome ? atividade.letra : letraAa(atividade.letra);
   const embed = useEspelhoEmbed(); // o embed novo já traz a dica de boca na legenda
   return (
     <div className="mec mec-espelho licao">
