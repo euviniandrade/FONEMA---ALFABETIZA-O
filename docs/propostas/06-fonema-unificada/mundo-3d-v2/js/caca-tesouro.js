@@ -34,7 +34,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
   #cacaBarra { left: max(14px, env(safe-area-inset-left)); top: calc(var(--topo) + 12px); display: none; flex-direction: column; gap: 12px; }
   body.caca #cacaBarra { display: flex; }
   #cacaBarra .bt { width: 64px; height: 64px; }
-  #cacaFaixa { left: 50%; transform: translateX(-50%); top: calc(var(--topo) + 122px); display: none; gap: 8px; padding: 8px 12px; background: rgba(255,248,236,.95); border-radius: 22px; box-shadow: var(--sombra); pointer-events: none; }
+  #cacaFaixa { left: 50%; transform: translateX(-50%); top: calc(var(--topo) + 134px); display: none; gap: 8px; padding: 8px 12px; background: rgba(255,248,236,.95); border-radius: 22px; box-shadow: var(--sombra); pointer-events: none; }
   #cacaFaixa.on { display: flex; }
   #cacaFaixa i { width: 54px; height: 64px; border-radius: 14px; background: #EFE4D0; display: grid; place-items: center; font: 700 44px Andika, sans-serif; font-style: normal; color: var(--tinta); }
   #cacaFaixa i.cheia { background: #fff; box-shadow: inset 0 0 0 3px var(--sol); }
@@ -67,7 +67,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
     #cacaAviso { font-size: 16px; bottom: 210px; }
     #cacaPainel, #cacaMenu { bottom: 200px; }
     #cacaMoedas { left: 124px; }
-    #cacaFaixa { top: calc(var(--topo) + 112px); }
+    #cacaFaixa { top: calc(var(--topo) + 152px); }
   }`;
   document.head.appendChild(css);
   const el = (tag, attrs = {}, html = '') => { const e = document.createElement(tag); Object.assign(e, attrs); if (html) e.innerHTML = html; return e; };
