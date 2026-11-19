@@ -58,7 +58,7 @@ queixa do dono: "parece que ela está pulando… a forma de andar está muito ru
   alto (`v15-passeio-depois-silhueta-atras-do-tronco.jpg`); travessia do rio a nado: 0 de 4 tentativas passaram da linha do meio.
   **Banco e poste da beira do rio estavam dentro da água** (8,3 e 7,5 m do meio; a água desenhada vai a 8 m): foram para a grama
   (`vila.js`: banco em 33,5/14,5, poste em 33,5/3,5; o coqueiro de 36/−2 também recuou 1,5 m); a colisão os vê lá
-  (`v15-passeio-depois-rio-banco-poste.jpg`). E2E `--mundo3d` de novo **42 ✓ 0 ✗** com tudo isso; `npm test` 484/484.
+  (`v15-passeio-depois-rio-banco-poste.jpg`). E2E `--mundo3d` de novo **42 ✓ 0 ✗** e `--caca` **50 ✓ 0 ✗** com tudo isso; `npm test` 484/484.
 - **Verificado (19/11, cópia separada em git worktree, porta 4720, build com todas as mudanças = commit b7b364b):** typecheck e lint
   verdes; `npm test` 484/484 (antes dos ajustes de cabelo/joelho; depois deles typecheck e lint de novo verdes); E2E `--mundo3d` **42 ✓ 0 ✗**
   (15+ ossos, cabeça sobe e desce 7,6 cm a 2,6 m/s, nada com a cabeça fora, Mergulhar desce e FICA, segurar Descer chega ao fundo com o
