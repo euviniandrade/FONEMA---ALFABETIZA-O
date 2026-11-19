@@ -74,13 +74,12 @@ export function casa(ctx, x, z, ry, o = {}) {
   for (let a = 1; a < and; a++) for (let i = 0; i < nj; i++) janela(ctx, L, -w / 2 + (i + 0.5) * w / nj, 2.35 + h * a, d / 2, { cor: jan || det, arco: true });
   // janelas laterais
   for (const s of [-1, 1]) janela(ctx, F(x, 0, z, ry + s * Math.PI / 2), 0, 2.35, w / 2, { cor: jan || det });
-  // acabamento (lote à parte, sem colisão): cumeeira, calhas com condutor e beiral arrematado
+  // acabamento (lote à parte, sem colisão): cumeeira e calhas no beiral
   if (ctx.D && !o.quatroAguas) {
     const yb = H + 0.5, zb = (d + 0.2) / 2 + 0.47;
     ctx.D.add(G.cyl10, P.telhaEsc, L(0, yb + rh + 0.02, 0, 0, 0, Math.PI / 2, 0.34, w + 1.25, 0.34), { jit: 0.02 });
     for (const s of [-1, 1]) {
       ctx.D.add(G.cyl10, '#E6DED0', L(0, yb + 0.03, s * zb, 0, 0, Math.PI / 2, 0.17, w + 1.15, 0.17), { jit: 0 });
-      if (s > 0) for (const sx of [-1, 1]) ctx.D.add(G.cyl10, '#E6DED0', L(sx * (w / 2 + 0.52), yb / 2, zb - 0.02, 0, 0, 0, 0.12, yb, 0.12), { jit: 0 });
     }
   }
   // floreira e vasos
