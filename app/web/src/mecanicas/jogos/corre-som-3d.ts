@@ -439,7 +439,10 @@ export class PistaCorreSom implements MotorCorrida {
   private passo = (agora: number) => {
     this.quadro = 0;
     if (!this.vivo) return;
-    const dt = this.anterior ? Math.min(0.05, (agora - this.anterior) / 1000) : 0.016;
+    // tempo de verdade entre quadros: a medida de qualidade usa ele inteiro; o movimento aceita até 0,25 s por quadro, para a
+    // corrida andar no ritmo do relógio mesmo num aparelho lento (os arcos e o tempo da corrida não se desencontram)
+    const real = this.anterior ? (agora - this.anterior) / 1000 : 0.016;
+    const dt = Math.min(0.25, real);
     this.anterior = agora;
     this.t += dt;
 
@@ -519,7 +522,7 @@ export class PistaCorreSom implements MotorCorrida {
     }
 
     this.r.render(this.cena, this.camera);
-    this.medirQualidade(dt);
+    this.medirQualidade(Math.min(real, 2));
     this.esperas = this.esperas.filter((e) => { if (e.cond()) { e.ok(); return false; } return true; });
     this.agendar();
   };
