@@ -51,7 +51,17 @@ queixa do dono: "parece que ela está pulando… a forma de andar está muito ru
   o penteado pedido, entram no passeio e desenham o boneco num palco neutro com chão quadriculado (lado/trás, 0 / 1,3 / 2,6 / 3,7 m/s,
   com a altura da sola medida), o manequim da biblioteca tocando a animação de referência, a câmera girando em volta da menina no mundo
   (alto/médio/baixo) e o mergulho com a câmera do jogo.
-- **VERIFICAÇÃO:** (preenchida abaixo)
+- **Verificado (19/11, cópia separada em git worktree, porta 4720, build com todas as mudanças = commit b7b364b):** typecheck e lint
+  verdes; `npm test` 484/484 (antes dos ajustes de cabelo/joelho; depois deles typecheck e lint de novo verdes); E2E `--mundo3d` **42 ✓ 0 ✗**
+  (15+ ossos, cabeça sobe e desce 7,6 cm a 2,6 m/s, nada com a cabeça fora, Mergulhar desce e FICA, segurar Descer chega ao fundo com o
+  corpo acima da areia, tocar Subir volta, C desce e Espaço sobe no PC) e `--caca` **48 ✓ 0 ✗** (nível 4 com o fundo do rio). O
+  `--sem-jornada` inteiro NÃO foi rodado por esta frente (contêiner reiniciou duas vezes; fica com o teste completo do coordenador).
+  Folhas olhadas quadro a quadro: `v15-passeio-antes-*` × `v15-passeio-depois-*` (andar/trote/corrida de lado e de trás, giro no baixo,
+  médio e alto com 5 penteados, cabeça de perto, mergulho fundo, cabelo e joelhos de perto).
+- **Falta / limites:** ninguém viu num celular de verdade; a corrida a 3,7 m/s ainda sobe e desce 13–14 cm a cabeça (é a corrida mais
+  rápida; dá para baixar mais encurtando a passada); o cabelo balança como uma peça só (mola em um osso, não mecha por mecha); os
+  outros penteados ganharam a mola mas só o liso foi puxado para trás; no fundo, a caça confere só a distância (não a profundidade);
+  sem "fôlego" lúdico (decidido não ter limite nenhum).
 
 **Lote de correções 18/11, pontos 1, 2, 4, 5 e 6 (fila do dono nº 27; NÃO publicado ainda):**
 - **(1) Boas-vindas:** saiu "Oi, [NOME]! Que bom que você voltou, curioso/curiosa / Que bom te ver de novo" (`FALAS.voltou`). Agora
