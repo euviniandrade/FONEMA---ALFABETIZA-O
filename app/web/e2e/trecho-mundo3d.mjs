@@ -170,6 +170,19 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await simular(1).catch(() => {}); // anda até o meio da porta e entra (a página do mundo sai)
   await pg.getByTestId('biblioteca').waitFor({ timeout: 240000 });
   ok(pg.url().endsWith(`/c/${id}/leitura`), 'Entrar leva ao Cantinho da Leitura');
+  // fila do dono nº 27 (6): a setinha de voltar do lugar traz de volta ao PASSEIO (não à vila), com o boneco onde estava
+  await pg.locator('.topo button[aria-label="Voltar"]').click();
+  await pg.getByTestId('passeio3d').waitFor({ timeout: 60000 });
+  ok(pg.url().endsWith(`/c/${id}/mundo`), 'voltar do Cantinho (aberto pela porta) leva de volta ao passeio 3D');
+  const fr2 = await quadro(pg);
+  await fr2.waitForFunction(() => window.FONEMA_PASSEIO && window.FONEMA_VOLTOU_DA_PORTA, null, { timeout: 240000 });
+  const volta = await fr2.evaluate(() => { const p = window.FONEMA_PASSEIO.posicao; const c = window.FONEMA_PASSEIO.camera; return { x: p.x, z: p.z, giro: p.giro, cam: c.giro }; });
+  const dif = Math.abs(((volta.cam - (volta.giro + Math.PI)) % (2 * Math.PI) + 3 * Math.PI) % (2 * Math.PI) - Math.PI);
+  ok(Math.hypot(volta.x + 15.4, volta.z + 5) < 3, `o boneco volta para a porta da Biblioteca (${volta.x.toFixed(1)}, ${volta.z.toFixed(1)}), não para a partida`);
+  ok(dif < 0.6, `a câmera volta atrás do boneco (diferença ${dif.toFixed(2)} rad)`);
+  await pg.locator('.topo button[aria-label="Voltar"]').click();
+  await pg.waitForFunction(() => location.hash.endsWith('/vila'), null, { timeout: 60000 });
+  ok(true, 'do passeio, a setinha continua levando à vila');
   await ctx.close();
 
   // ---------- celular (toque): joystick ----------
