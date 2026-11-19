@@ -285,7 +285,7 @@ function franja(c: Cranio, olhoY: number, rnd: () => number, o: { n: number; lar
 function liso(c: Cranio, olhoY: number, rnd: () => number, o: { ate: number; onda?: number; nTras?: number; franja?: boolean; folga?: number; laterais?: number }): THREE.BufferGeometry[] {
   const gs: THREE.BufferGeometry[] = [];
   const n = o.nTras ?? 26;
-  const lat = o.laterais ?? 1.05; // até onde as mechas vêm para a frente (rad a partir da nuca... frente = π)
+  const lat = o.laterais ?? 1.15; // (era 1,05: de lado as mechas cobriam a bochecha — fila nº 28) // até onde as mechas vêm para a frente (rad a partir da nuca... frente = π)
   for (let i = 0; i < n; i++) {
     const az = Math.PI + (i / (n - 1) - 0.5) * 2 * (Math.PI - lat) + (rnd() - 0.5) * 0.05;
     for (const camada of [0, 1]) {
@@ -300,7 +300,7 @@ function liso(c: Cranio, olhoY: number, rnd: () => number, o: { ate: number; ond
   // mechas que emolduram o rosto (na frente da orelha), quando o cabelo é comprido
   for (const lado of [-1, 1]) {
     for (let i = 0; i < 2; i++) {
-      const az = lado * (0.95 + 0.12 * i);
+      const az = lado * (1.1 + 0.12 * i); // um pouco mais para trás (era 0,95): emoldura sem cobrir o rosto de lado
       const pts = caminhoCaindo(c, { az, el: 0.85, ate: Math.max(o.ate + 0.04, olhoY - 0.2), folga: 1.05, onda: o.onda ? o.onda * 0.7 : 0, frente: 0.0 });
       gs.push(mecha(pts, ponta(0.026, 0.2), ponta(0.011, 0.4), foraDoEixo(c), 30, 6));
     }

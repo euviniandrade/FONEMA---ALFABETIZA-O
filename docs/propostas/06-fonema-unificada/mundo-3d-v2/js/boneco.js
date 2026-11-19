@@ -40,6 +40,7 @@ export function malhaDoPacote(pacote) {
     }), '#FFE4BE', 0.22, 3.0);
     const malha = new THREE.Mesh(geo, mat);
     malha.castShadow = (m.opacidade ?? 1) >= 1;
+    if (m.parte) malha.userData.parte = m.parte; // 'cabelo': osso próprio com balanço (esqueleto.js)
     g.add(malha);
   }
   return g;

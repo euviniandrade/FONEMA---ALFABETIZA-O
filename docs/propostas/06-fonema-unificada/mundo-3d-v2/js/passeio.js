@@ -161,7 +161,7 @@ export function criarPasseio(mundo, h = {}) {
   window.addEventListener('keydown', (e) => {
     const k = e.key.toLowerCase();
     if (TECLAS.has(k)) { teclas.add(k); destino = null; e.preventDefault(); }
-    if (k === ' ' || e.code === 'Space') { e.preventDefault(); if (!e.repeat) { if (nadando) espacoNaAgua(true); else pular(); } }
+    if (k === ' ' || e.code === 'Space') { e.preventDefault(); if (!e.repeat) { if (nadando) espacoNaAgua(true, e.timeStamp); else pular(); } }
     // mergulho livre (fila nº 28): na água, C ou Shift seguram para descer; Espaço segura para subir
     if ((k === 'c' || k === 'shift') && nadando) { e.preventDefault(); segurar('descer', true); }
     if (k === 't' && !e.repeat) acenar();
@@ -170,7 +170,7 @@ export function criarPasseio(mundo, h = {}) {
   window.addEventListener('keyup', (e) => {
     const k = e.key.toLowerCase(); teclas.delete(k);
     if (k === 'c' || k === 'shift') segurar('descer', false);
-    if (k === ' ' || e.code === 'Space') espacoNaAgua(false);
+    if (k === ' ' || e.code === 'Space') espacoNaAgua(false, e.timeStamp);
   });
   window.addEventListener('blur', () => { teclas.clear(); segurar('descer', false); segurar('subir', false); });
 
@@ -228,10 +228,11 @@ export function criarPasseio(mundo, h = {}) {
   const segura = { descer: false, subir: false };
   let mergulhoAntes = false, espacoT = 0;
   function segurar(dir, on) { if (segura[dir] === on) return; segura[dir] = on; if (on) alvoProf = null; }
-  function espacoNaAgua(on) {
+  function espacoNaAgua(on, quando = performance.now()) {
     // Espaço: tocar = mergulhar (na superfície) ou voltar à superfície; segurar = subir
-    if (on) { espacoT = performance.now(); if (prof > 0.25) segurar('subir', true); return; }
-    const toque = performance.now() - espacoT < 260;
+    // (hora do evento, não a hora em que foi tratado: aparelho lento demora a tratar e o toque viraria "segurar")
+    if (on) { espacoT = quando; if (prof > 0.25) segurar('subir', true); return; }
+    const toque = quando - espacoT < 260;
     segurar('subir', false);
     if (toque) mergulhar(prof < 0.25); // na superfície mergulha; lá embaixo volta para cima
   }

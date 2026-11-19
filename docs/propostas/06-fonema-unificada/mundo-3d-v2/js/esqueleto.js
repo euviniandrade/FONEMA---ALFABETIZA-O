@@ -140,8 +140,8 @@ export function medir(P) {
   return { H, cx, zc: zs / n, virilha, temPernas, pernaX, lados, axila: axilaM, pescoco };
 }
 
-const TODOS = Array.from({ length: 15 }, (_, i) => i);
-const NOMES = ['raiz', 'quadril', 'tronco', 'peito', 'cabeca', 'coxaE', 'canelaE', 'coxaD', 'canelaD', 'bracoE', 'antebracoE', 'bracoD', 'antebracoD', 'peE', 'peD'];
+const TODOS = Array.from({ length: 16 }, (_, i) => i);
+const NOMES = ['raiz', 'quadril', 'tronco', 'peito', 'cabeca', 'coxaE', 'canelaE', 'coxaD', 'canelaD', 'bracoE', 'antebracoE', 'bracoD', 'antebracoD', 'peE', 'peD', 'cabelo'];
 
 /**
  * Dá esqueleto ao grupo (troca cada Mesh por uma SkinnedMesh com o mesmo material). Devolve { ossos, medidas, malhas }.
@@ -171,6 +171,9 @@ export function articular(grupo) {
     for (let i = 0; i < P.length / 3; i++) { const y = P[i * 3 + 1], x = P[i * 3]; if (y < tornozelo && (x - cx) * s > 0) { z0 = Math.min(z0, P[i * 3 + 2]); z1 = Math.max(z1, P[i * 3 + 2]); n++; } }
     pes[s] = n > 10 ? { z0, z1 } : { z0: zc - 0.05 * H, z1: zc + 0.08 * H };
   }
+  // cabelo de peça (penteado): pende de um ponto atrás e no alto da cabeça e balança com mola (js/animacoes.js)
+  const pivoCabelo = md.pescoco + 0.55 * (H - md.pescoco);
+  abs.cabelo = [cx, pivoCabelo, zc - 0.04 * H];
   for (const [s, L] of [[1, 'E'], [-1, 'D']]) {
     abs['coxa' + L] = [cx + s * pernaX, virilha + 0.03 * H, zc];
     abs['canela' + L] = [cx + s * pernaX, virilha * 0.5, zc];
@@ -185,7 +188,7 @@ export function articular(grupo) {
     const cotY = (ombroY + maoY) / 2 + 0.02 * H;
     abs['antebraco' + L] = [cx + s * (l ? l.borda(cotY) + 0.03 * H : ombroX + 0.02 * H), cotY, zA];
   }
-  const pai = { quadril: 'raiz', tronco: 'quadril', peito: 'tronco', cabeca: 'peito', coxaE: 'quadril', canelaE: 'coxaE', coxaD: 'quadril', canelaD: 'coxaD', bracoE: 'peito', antebracoE: 'bracoE', bracoD: 'peito', antebracoD: 'bracoD', peE: 'canelaE', peD: 'canelaD' };
+  const pai = { quadril: 'raiz', tronco: 'quadril', peito: 'tronco', cabeca: 'peito', coxaE: 'quadril', canelaE: 'coxaE', coxaD: 'quadril', canelaD: 'coxaD', bracoE: 'peito', antebracoE: 'bracoE', bracoD: 'peito', antebracoD: 'bracoD', peE: 'canelaE', peD: 'canelaD', cabelo: 'cabeca' };
   o.raiz.position.set(...abs.raiz);
   for (const nm of NOMES.slice(1)) {
     const p = abs[pai[nm]], a = abs[nm];
@@ -205,7 +208,8 @@ export function articular(grupo) {
   for (const me of malhas) {
     const cnt = me.geometry.attributes.position.count;
     const si = new Uint16Array(cnt * 4), sw = new Float32Array(cnt * 4);
-    const gBraco = new Float32Array(cnt), gLado = new Float32Array(cnt); // para achar as "pontes" (abaixo)
+    const gBraco = new Float32Array(cnt), gLado = new Float32Array(cnt);
+    const cabelo = me.userData.parte === 'cabelo'; // para achar as "pontes" (abaixo)
     for (let i = 0; i < cnt; i++, k++) {
       const x = P[k * 3], y = P[k * 3 + 1], z = P[k * 3 + 2];
       w.fill(0);
@@ -230,8 +234,8 @@ export function articular(grupo) {
       }
       if (wp > 0) {
         const kn = abs.canelaE[1];
-        const fc = sst(kn + 0.03 * H, kn - 0.03 * H, y);
-        const fp = sst(tornozelo + 0.012 * H, tornozelo - 0.012 * H, y); // sapato = pé
+        const fc = sst(kn + 0.06 * H, kn - 0.06 * H, y); // joelho largo: a calça dobra em curva, sem vinco (fila nº 28)
+        const fp = sst(tornozelo + 0.002 * H, tornozelo - 0.02 * H, y); // sapato = pé; a barra da calça fica com a canela
         for (const [LL, f] of [['E', lado], ['D', 1 - lado]]) { w[I['pe' + LL]] += wp * f * fc * fp; w[I['canela' + LL]] += wp * f * fc * (1 - fp); w[I['coxa' + LL]] += wp * f * (1 - fc); }
       }
       if (resto > 1e-4) {
@@ -241,7 +245,14 @@ export function articular(grupo) {
         const fQua = Math.max(0, 1 - fCab - fPei - fTro);
         w[I.cabeca] += resto * fCab; w[I.peito] += resto * fPei; w[I.tronco] += resto * fTro; w[I.quadril] += resto * fQua;
       }
-      gBraco[i] = wb; gLado[i] = wp * (lado - 0.5) * 2;
+      if (cabelo) {
+        // peça de cabelo: só cabeça e osso do cabelo (antes o cabelo comprido abaixo do pescoço ia para o peito e até
+        // para o braço, e balançava "duro" junto); quanto mais abaixo do ponto de onde pende, mais segue a mola
+        w.fill(0);
+        const tc = sst(pivoCabelo - 0.03 * H, pivoCabelo - 0.3 * H, y);
+        w[I.cabelo] = tc; w[I.cabeca] = 1 - tc;
+      }
+      gBraco[i] = cabelo ? 0 : wb; gLado[i] = cabelo ? 0 : wp * (lado - 0.5) * 2;
       // 4 maiores
       const ord = TODOS.slice().sort((a, b) => w[b] - w[a]).slice(0, 4);
       let soma = 0; for (const j of ord) soma += w[j];

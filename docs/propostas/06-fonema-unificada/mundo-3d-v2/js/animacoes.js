@@ -126,6 +126,7 @@ export class Animador {
     const D = DADOS; if (!D) return false;
     const C = D.clipes, kf = (r) => 1 - Math.exp(-dt * r);
     const v = e.vel || 0;
+    this.dt = dt; this.acel = dt > 0 ? (v - (this.vAntes ?? v)) / dt : 0; this.vAntes = v; this.vAgora = v;
     this.pAr += ((e.noAr ? 1 : 0) - this.pAr) * kf(e.noAr ? 12 : 16);
     this.pNado += ((e.nadando ? 1 : 0) - this.pNado) * kf(5);
     this.pMover += ((v > 0.12 ? 1 : 0) - this.pMover) * kf(8);
@@ -252,7 +253,26 @@ export class Animador {
     }
     O.quadril.position.y += dy;
     this.altQuadril = dy * this.k;
+    if (O.cabelo) this.balancarCabelo(O, W);
     return dy * this.k;
+  }
+
+  /**
+   * Cabelo de peça com MOLA (fila nº 28: "balança duro"): o osso do cabelo tenta continuar pendurado quando a cabeça
+   * inclina, vai para trás na corrida e ao arrancar, e chega lá com um pouco de atraso e de vai-e-vem.
+   */
+  balancarCabelo(O, W) {
+    const dt = Math.min(0.05, this.dt || 0.016), m = this.mola || (this.mola = { x: 0, vx: 0, z: 0, vz: 0 });
+    _e.setFromQuaternion(W.cabeca, 'YXZ');
+    const v = this.vAgora || 0, ac = Math.max(-6, Math.min(6, this.acel || 0));
+    const tx = Math.max(-0.5, Math.min(0.6, -0.65 * _e.x + 0.05 * v + 0.03 * ac + 0.03 * this.pNado));
+    const tz = Math.max(-0.4, Math.min(0.4, -0.65 * _e.z));
+    // passo do corredor: o cabelo sobe e desce com o quadril (pequeno empurrão vertical vira balanço)
+    const empurra = (this.altQuadril - (this.altAntes ?? this.altQuadril)) / Math.max(1e-3, dt); this.altAntes = this.altQuadril;
+    m.vx += ((tx - m.x) * 70 - m.vx * 7 + Math.max(-3, Math.min(3, empurra)) * 1.2) * dt; m.x += m.vx * dt;
+    m.vz += ((tz - m.z) * 70 - m.vz * 7) * dt; m.z += m.vz * dt;
+    m.x = Math.max(-0.6, Math.min(0.7, m.x)); m.z = Math.max(-0.45, Math.min(0.45, m.z));
+    _e.set(m.x, 0, m.z, 'YXZ'); O.cabelo.quaternion.setFromEuler(_e);
   }
 
   /** Sola mais baixa (calcanhar ou ponta dos dois pés), no espaço do modelo, com a pose atual e o quadril parado. */

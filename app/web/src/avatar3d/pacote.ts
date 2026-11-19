@@ -22,6 +22,8 @@ export interface PacoteMalha {
   cor: string;
   rugosidade: number;
   opacidade: number;
+  /** 'cabelo' = peça de penteado (cabelos.ts): no passeio ganha osso próprio com balanço (fila nº 28). */
+  parte?: 'cabelo';
 }
 export interface Pacote { malhas: PacoteMalha[]; altura: number }
 
@@ -47,6 +49,9 @@ async function imagemDe(t: THREE.Texture | null | undefined): Promise<ImageBitma
   try { return await createImageBitmap(img); } catch { return undefined; }
 }
 
+/** A malha faz parte de uma peça de penteado (grupo `penteado-…`, cabelos.ts)? */
+function ehCabelo(o: THREE.Object3D): boolean { for (let p: THREE.Object3D | null = o; p; p = p.parent) if (p.name.startsWith('penteado-')) return true; return false; }
+
 /** Todas as malhas de `raiz` (com as matrizes já aplicadas) num pacote. */
 async function empacotar(raiz: THREE.Object3D, altura: number): Promise<Pacote> {
   raiz.updateMatrixWorld(true);
@@ -66,7 +71,8 @@ async function empacotar(raiz: THREE.Object3D, altura: number): Promise<Pacote> 
       mapa: await imagemDe(mat.map),
       cor: `#${(mat.color ?? new THREE.Color(0xffffff)).getHexString()}`,
       rugosidade: mat.roughness ?? 0.9,
-      opacidade: mat.transparent ? mat.opacity : 1
+      opacidade: mat.transparent ? mat.opacity : 1,
+      ...(ehCabelo(me) ? { parte: 'cabelo' as const } : {})
     });
   }
   return { malhas, altura };
