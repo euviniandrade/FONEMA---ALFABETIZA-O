@@ -147,7 +147,7 @@ export async function trechoJogos(browser, h) {
   const letrasNaTela = new Set();
   const tirarCorre = async (k) => {
     if (k === 'corre-fim-fase') return;
-    if (k === 'corre-escolher') for (const x of await pg.locator('.cs-pista[data-opcao]').evaluateAll((es) => es.map((e) => e.dataset.opcao))) letrasNaTela.add(x);
+    if (k === 'corre-escolher') for (const x of await pg.locator('.cs-pista[data-opcao]').evaluateAll((es) => es.map((e) => e.dataset.opcao).filter(Boolean))) letrasNaTela.add(x);
     await cap('')(k === 'corre-escolher' ? '03-corre-escolher' : k === 'corre-correcao' ? '04-corre-correcao' : '03b-corre-correndo');
   };
   ok(await jogarRodada(pg, { errar: true, tirar: tirarCorre }), 'Corre-Som (letras): corrida inteira jogada sem parar, com um erro');
