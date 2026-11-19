@@ -89,9 +89,10 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await canvas.focus();
   await pg.keyboard.down('c'); await simular(1.2); await pg.keyboard.up('c');
   const teclaC = await frame.evaluate(() => window.FONEMA_PASSEIO.posicao.profundidade);
+  await frame.evaluate(() => { window.__teclas = []; for (const t of ['keydown', 'keyup']) window.addEventListener(t, (e) => window.__teclas.push(`${t}:${e.code}:${Math.round(e.timeStamp)}:${window.FONEMA_PASSEIO.posicao.profundidade}`), true); });
   await pg.keyboard.press('Space'); await simular(2.5);
-  const teclaEsp = await frame.evaluate(() => window.FONEMA_PASSEIO.posicao);
-  ok(teclaC > 0.8 && !teclaEsp.mergulhando && teclaEsp.profundidade < 0.1, `no PC: segurar C desce (${teclaC} m) e tocar Espaço volta para cima`);
+  const teclaEsp = await frame.evaluate(() => ({ ...window.FONEMA_PASSEIO.posicao, teclas: window.__teclas.join(' '), foco: document.activeElement?.id || document.activeElement?.tagName }));
+  ok(teclaC > 0.8 && !teclaEsp.mergulhando && teclaEsp.profundidade < 0.1, `no PC: segurar C desce (${teclaC} m) e tocar Espaço volta para cima (${teclaEsp.profundidade} m; ${teclaEsp.teclas}; foco ${teclaEsp.foco})`);
   if (capturas) { await frame.evaluate(() => { window.FONEMA_PASSEIO.mergulhar(true); window.FONEMA_PASSEIO.simular(1.6); }); await pg.waitForTimeout(900); await pg.screenshot({ path: `${capturas}/mundo3d-09-mergulho.png` }); await frame.evaluate(() => window.FONEMA_PASSEIO.mergulhar(false)); }
   await frame.evaluate(() => { const p = window.FONEMA_PASSEIO; p.teleportar(0, 19.5, Math.PI); p.girarCamera(0 - p.camera.giro); p.simular(0.5); });
 

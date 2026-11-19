@@ -307,14 +307,14 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   // ---------- postes nas ruas e mais bancos ----------
   const postesRua = [];
   for (const z of [16, 25, 34, 43, 52]) postesRua.push(poste(ctx, z % 2 ? 3.2 : -3.2, z, z % 2 ? 0 : Math.PI));
-  for (const [x, z, a] of [[-4, -16, 0], [4, -16, Math.PI], [20, 6, Math.PI / 2], [-14, 6, 0], [36, 4, -Math.PI / 2], [30, 9, 0]]) postesRua.push(poste(ctx, x, z, a));
-  banco(ctx, 36, 12, -Math.PI / 2 - 0.3); banco(ctx, -22, 10, 0.4);
+  for (const [x, z, a] of [[-4, -16, 0], [4, -16, Math.PI], [20, 6, Math.PI / 2], [-14, 6, 0], [33.5, 3.5, -Math.PI / 2], [30, 9, 0]]) postesRua.push(poste(ctx, x, z, a));
+  banco(ctx, 33.5, 14.5, -Math.PI / 2 - 0.3); // banco e poste da beira saíram da água (estavam a 8,3 e 7,5 m do meio do rio; a água desenhada vai a 8 m) — fila nº 28 banco(ctx, -22, 10, 0.4);
 
   // ---------- vegetação ----------
   ipe(ctx, -9.5, 0.55, -6, 0.95, 3); ipe(ctx, 9.5, 0.55, -6, 0.9, 7); ipe(ctx, -9.5, 0.55, 9, 0.85, 11); ipe(ctx, 9.5, 0.55, 9, 0.92, 5);
   ipe(ctx, 30, altura(30, 30), 30, 1.1, 13); ipe(ctx, -36, altura(-36, -14), -14, 1.2, 17); ipe(ctx, 16, altura(16, 60), 60, 1.1, 19);
   ipe(ctx, -40, altura(-40, 40), 40, 1.05, 23, '#E58AA6', '#F2B2C6'); // ipê-rosa ao longe (2 tons)
-  for (const [x, z, s] of [[33, 10, 1], [36, -2, 1.1], [35.5, 25, 0.9], [-16, 36, 0.95], [16, -32, 1.05], [-14, -32, 1.0]]) coqueiro(ctx, x, altura(x, z), z, s, x * 3 + z);
+  for (const [x, z, s] of [[33, 10, 1], [34.5, -2, 1.1], [35.5, 25, 0.9], [-16, 36, 0.95], [16, -32, 1.05], [-14, -32, 1.0]]) coqueiro(ctx, x, altura(x, z), z, s, x * 3 + z);
   for (const [x, z] of [[-26, 25], [-12, 45], [15, 30], [27, 30], [-30, -26], [13, -38]]) bananeira(ctx, x, altura(x, z), z, 1, x + z * 7);
   const arv = criarArvores(U, q);
   const livre = (x, z) => {
