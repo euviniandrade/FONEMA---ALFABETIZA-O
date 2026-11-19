@@ -1,6 +1,6 @@
 # FONEMA — Estado atual e passagem de bastão
 
-Atualizado em 2026-11-18 (seção 0: desbloqueio progressivo, D034). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
+Atualizado em 2026-11-19 (seção 0: lote de correções nº 27). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
 Tudo o que foi feito está neste repositório, no ramo `claude/eager-brahmagupta-3d2lhr` (commit e push a cada mudança). Nada depende
 da memória da conversa anterior.
 
@@ -8,6 +8,38 @@ da memória da conversa anterior.
 
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
+
+**Lote de correções 18/11, pontos 1, 2, 4, 5 e 6 (fila do dono nº 27; NÃO publicado ainda):**
+- **(1) Boas-vindas:** saiu "Oi, [NOME]! Que bom que você voltou, curioso/curiosa / Que bom te ver de novo" (`FALAS.voltou`). Agora
+  `FALAS.saudacao` = "Oi, [NOME]!" (clipe já gravado), só na 1ª entrada do dia na vila (`web/src/servicos/saudacao.ts`, por criança e
+  por dia, localStorage); voltar de outra tela para a vila não fala nada; o balão mostra "Toque na estrela para a missão de hoje." (sem voz).
+- **(2) Nome da criança (decisão do dono):** dito no máximo 1×, nos primeiros 30 s de cada atividade, prova ou jogo
+  (`web/src/servicos/nome-falado.ts`, usado por `servicos/voz.ts`). A atividade recomeça a cada troca de tela (`rotas.ts`) e a cada cena
+  da lição (`Sessao.tsx`). Depois, a voz toca a variante gravada SEM o nome (`semNome` em `@fonema/motor`; ex. "Agora é a sua vez!") ou
+  os mesmos trechos sem o clipe do nome. O nome continua escrito na tela. 20 variantes gravadas (`FALAS.comVarianteSemNome`); as que
+  faltam estão em `app/docs/falas-pendentes.md` §1j. Para mudar a regra (ex. 1× por lição inteira em vez de por atividade): tirar o
+  `useEffect` de `voz.novaAtividade()` do `Sessao.tsx`. Medido com voz real (E2E `--nome-falado`, criança "Mariana"): lição da letra A
+  inteira = 6 falas com o nome, nome dito 2× (antes seriam 6); jogo "Achar a rima" = 3 falas com o nome, dito 0× (a 1ª veio depois dos 30 s).
+- **(4) Letras "Aa":** letra isolada sempre maiúscula e minúscula juntas: `web/src/componentes/LetraAa.tsx` (`letraAa()` texto e
+  `<LetraAa>`; também usado pela frente do Corre-Som). Aplicado em: opções de letra (Escolher, Troca, Ligar), Trilha A–Z, Memória (cartas
+  e capa), capa dos jogos fônicos, Placas da vila, desbloqueio, selos (frente e verso, `selo-pintura.ts`), baús e painel da caça (rótulo
+  vindo do app; a letra/registro continua "A"), ícone do cadastro. Sílabas, dígrafos, palavras e letras de palavra sendo escrita/lida
+  ficam como estavam (só letra única vira "Aa"). Nenhuma atividade pareia maiúscula com minúscula (conferido; regra 3). Capturas
+  olhadas: `app/docs/capturas/v15-aa-*.png` (390×844 e 1850×980).
+- **(5) abacaxi:** a medida do chiado mostrou um fechamento (silêncio de "t") antes do /ʃ/ só no clipe da Sofia (o do Tales já estava
+  certo); a transcrição ouvia "Abacaxi" nos dois (ela corrige para a palavra do dicionário). Regravados os dois com texto de pronúncia
+  "Abacachi." (recurso já existente: `audio-fontes/ajustes.json` › `texto` muda só o que vai ao TTS; a chave continua "abacaxi").
+  O novo da Sofia vai direto da vogal ao chiado. Outras palavras com X = /ʃ/ (xícara, xadrez, peixe, caixa, debaixo, Mexe, Puxa,
+  "X, de xícara") medidas: sem o problema. Ninguém ouviu ainda num aparelho.
+- **Voz gasta:** 22 + 2 clipes, 532 caracteres (saldo antes: 7.488). Auditoria: as 22 ok, menos "Qual rima?" (Sofia, ouvido "Qual
+  firma?") e "Qual começa com o som?" (Tales), regravados com "Qual é a rima?" / "Qual palavra começa com o som?"; "pra você" no
+  lugar de "para você" (Tales) ficou. Bocas regeradas.
+- **(6) Voltar ao passeio:** marca "de onde vim" fora da rota (`web/src/servicos/origem-passeio.ts`, sessionStorage; a rota por hash
+  não aceita `?de=`). Entrando por uma porta do passeio, a setinha da tela aberta (e a que iria para a vila) volta ao passeio; dentro do
+  lugar o voltar interno continua (jogo → Brincar → passeio). A posição é a de antes de o boneco andar para dentro da porta
+  (`passeio.html`: `aoEntrando`), e a câmera volta atrás dele. A marca some ao abrir a vila. E2E `--mundo3d` ganhou a checagem.
+- **Verificado:** typecheck (o erro em `corre-som-3d.ts`/`jornada.ts` que apareceu no meio era da outra frente, já resolvido) e lint dos
+  arquivos mexidos, `npm test` 481/481, E2E `--nome-falado` e `--capturas-aa` na cópia separada (porta 4700). `--sem-jornada`: ver abaixo.
 
 **Corre-Som em corrida (fila do dono nº 27, ponto 3; D035; 18/11; NÃO publicado ainda):** pedido do dono: "não pode ficar parando…
 xizinho e perde ponto… tempo, objetivo e premiação… elevando o nível… letras Aa". Decisão: `docs/decisoes/035-corre-som-corrida.md`.
