@@ -94,7 +94,8 @@ export class PistaCorrida2D implements MotorCorrida {
       c.el.style.transform = `translateY(${y}%) scale(${s})`;
       c.el.style.opacity = f > 1.15 ? String(Math.max(0, 1 - (f - 1.15) * 6)) : '1';
       if (c.tipo === 'portal') {
-        if (!c.longe && f >= 0.45) { c.longe = true; c.aoLonge?.(); }
+        // 12 m de 26 (ESPACO_ENTRE_ARCOS / DISTANCIA_ARCO); parado (menos movimento), o próximo só vem depois de este passar
+        if (!c.longe && !this.menos && f >= 0.46) { c.longe = true; c.aoLonge?.(); }
         if (!c.passou && f >= 1) { c.passou = true; c.ao?.(this.pistaAlvo); if (!c.longe) { c.longe = true; c.aoLonge?.(); } }
       } else if (!c.pega && f >= 0.97 && c.pista === this.pistaAlvo) { c.pega = true; c.el.remove(); this.aoMoeda?.(); }
     }

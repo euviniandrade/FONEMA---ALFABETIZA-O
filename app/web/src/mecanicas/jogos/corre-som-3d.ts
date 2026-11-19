@@ -313,7 +313,7 @@ export class PistaCorreSom implements MotorCorrida {
     const passou = new Promise<number>((ok) => { aoPassar = ok; });
     const longe = new Promise<void>((ok) => { aoLonge = ok; });
     const parado = this.menosMovimento;
-    const pt: Portal = { raiz, arcos, z: parado ? Z_PARADA : Z_SURGE, marca: null, passou: false, longe: false, fim: parado ? this.t + tempoMs / 1000 : Infinity, aoPassar, aoLonge };
+    const pt: Portal = { raiz, arcos, z: parado ? Z_PARADA : Z_SURGE, marca: null, passou: false, longe: false, fim: parado ? performance.now() + tempoMs : Infinity, aoPassar, aoLonge };
     raiz.position.z = pt.z;
     this.cena.add(raiz);
     this.portais.push(pt);
@@ -489,11 +489,12 @@ export class PistaCorreSom implements MotorCorrida {
     // arcos: andam com a rua; passou pelo boneco (z ≥ 0) = escolheu a pista em que está; marca certo (brilho) ou tentado
     const pulsar = 0.5 + 0.5 * Math.sin(this.t * 6);
     for (const pt of this.portais) {
-      if (this.menosMovimento) { if (!pt.passou && this.t >= pt.fim) pt.z = 0.01; }
+      // menos movimento: o arco fica parado e passa no tempo do relógio de verdade (não no da animação, que anda devagar em aparelho lento)
+      if (this.menosMovimento) { if (!pt.passou && agora >= pt.fim) pt.z = 0.01; }
       else pt.z += dz;
       pt.raiz.position.z = pt.z;
-      if (!pt.longe && (pt.z - Z_SURGE >= ESPACO || pt.passou)) { pt.longe = true; pt.aoLonge(); }
-      if (!pt.passou && pt.z >= 0) { pt.passou = true; pt.fim = this.t + 0.6; pt.aoPassar(this.pistaAlvo); }
+      if (!pt.longe && ((!this.menosMovimento && pt.z - Z_SURGE >= ESPACO) || pt.passou)) { pt.longe = true; pt.aoLonge(); }
+      if (!pt.passou && pt.z >= 0) { pt.passou = true; pt.fim = agora + 600; pt.aoPassar(this.pistaAlvo); }
       pt.arcos.forEach((a, k) => {
         const minha = k === this.pistaAlvo;
         const m = pt.marca && minha ? pt.marca : null;
@@ -502,9 +503,9 @@ export class PistaCorreSom implements MotorCorrida {
         a.mat.color.setHex(m === 'tentado' ? 0xc9c3ba : CORES_ARCO[k]);
         (a.placa.material as THREE.MeshBasicMaterial).opacity = m === 'tentado' ? 0.55 : 1;
       });
-      if (this.menosMovimento && pt.passou) pt.raiz.visible = this.t < pt.fim;
+      if (this.menosMovimento && pt.passou) pt.raiz.visible = agora < pt.fim;
     }
-    this.portais = this.portais.filter((pt) => { const sai = pt.passou && (this.menosMovimento ? this.t >= pt.fim : pt.z > 7); if (sai) this.tirarPortal(pt); return !sai; });
+    this.portais = this.portais.filter((pt) => { const sai = pt.passou && (this.menosMovimento ? agora >= pt.fim : pt.z > 7); if (sai) this.tirarPortal(pt); return !sai; });
 
     // confete
     if (this.confete) {
