@@ -1,30 +1,27 @@
 import { beforeAll, describe, expect, it } from 'vitest';
-import { ControleNome, JANELA_DO_NOME_MS } from './nome-falado.ts';
+import { ControleNome } from './nome-falado.ts';
 import { ProvedorPreGerado, ProvedorSilencioso } from './voz.ts';
 
 describe('nome da criança no máximo uma vez por atividade (fila nº 27, item 2)', () => {
-  it('diz o nome uma vez no começo; depois, a atividade inteira sem chamar', () => {
-    let agora = 1000;
-    const c = new ControleNome(() => agora);
+  it('diz o nome na 1ª fala com nome, venha quando vier; depois, a atividade inteira sem chamar', () => {
+    const c = new ControleNome();
     expect(c.podeDizer()).toBe(true);
     c.disse();
-    agora += 2000;
-    expect(c.podeDizer()).toBe(false);
-    agora += 60_000;
     expect(c.podeDizer()).toBe(false);
   });
   it('atividade nova libera o nome de novo (uma vez)', () => {
-    let agora = 0;
-    const c = new ControleNome(() => agora);
+    const c = new ControleNome();
     c.disse();
-    agora = 5000;
     c.novaAtividade();
     expect(c.podeDizer()).toBe(true);
   });
-  it('o nome é só do começo: passada a janela, não é dito nem se ainda não foi', () => {
-    let agora = 0;
-    const c = new ControleNome(() => agora);
-    agora = JANELA_DO_NOME_MS + 1;
+  it('fala de outra tela que toca atrasada (saudação da vila) não gasta a vez da lição', () => {
+    const c = new ControleNome();
+    const daVila = c.atividade;
+    c.novaAtividade(); // entrou na lição
+    c.disse(daVila);
+    expect(c.podeDizer()).toBe(true);
+    c.disse();
     expect(c.podeDizer()).toBe(false);
   });
 });

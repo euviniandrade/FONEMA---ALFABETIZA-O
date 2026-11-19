@@ -212,12 +212,13 @@ export class ProvedorPreGerado implements ProvedorVoz {
   async falar(texto: string, o: OpcoesFala = {}): Promise<void> {
     await this.pronto;
     const quem = o.quem ?? 'sofia';
+    const ativ = this.controleNome.atividade;
     const plano = this.plano(texto, quem, this.controleNome.podeDizer());
     const ehNome = (p: { id: string }) => p.id.startsWith('nome:');
     if (modoTeste()) {
       for (const p of plano ?? []) {
         anotarTocado({ id: p.id, origem: substituicoes.tem(p.id) ? 'substituto' : 'original' });
-        if (ehNome(p)) this.disseNome();
+        if (ehNome(p)) this.disseNome(ativ);
       }
       return this.reserva.falar(texto, o);
     }
@@ -237,7 +238,7 @@ export class ProvedorPreGerado implements ProvedorVoz {
       // substituto: sem boca pré-calculada (o PersonagemVivo acompanha o texto)
       const arquivo = urls[i].substituto ? `substituto:${plano[i].id}` : plano[i].arquivo.replace(/^\.\//, '');
       const tocou = await this.tocarNoCanal(el, g, () => {
-        if (ehNome(plano[i])) this.disseNome();
+        if (ehNome(plano[i])) this.disseNome(ativ);
         anotarTocado({ id: plano[i].id, origem: urls[i].substituto ? 'substituto' : 'original', url: urls[i].url });
         avisar('fonema:fala', { quem, voz: vozDe(quem), texto, audio: el, arquivo, inicio: performance.now(), trecho: i, trechos: els.length });
       });
@@ -264,8 +265,8 @@ export class ProvedorPreGerado implements ProvedorVoz {
       liberar();
     }
   }
-  private disseNome() {
-    this.controleNome.disse();
+  private disseNome(ativ: number) {
+    this.controleNome.disse(ativ);
     this.vezesNome++;
     try { (window as any).__fonemaNomeDito = this.vezesNome; } catch { /* sem janela (teste) */ }
   }
