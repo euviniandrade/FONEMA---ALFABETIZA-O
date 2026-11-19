@@ -43,7 +43,7 @@ export function criarGuia({ mundo, passeio, avisar }) {
   #mapaGrande .caixa { background: #FFF8EC; border-radius: 30px; padding: 14px; box-shadow: 0 20px 60px rgba(0,0,0,.4); text-align: center; }
   #mapaGrande canvas { width: min(78vh, 86vw); height: min(78vh, 86vw); border-radius: 22px; display: block; }
   #mapaGrande .bt { margin-top: 10px; }
-  #lembrete { position: fixed; z-index: 10; left: 50%; bottom: max(150px, calc(env(safe-area-inset-bottom) + 150px)); transform: translateX(-50%); width: min(540px, calc(100vw - 20px));
+  #lembrete { position: fixed; z-index: 10; left: 50%; top: calc(var(--topo) + 150px); transform: translateX(-50%); width: min(540px, calc(100vw - 20px));
     background: var(--papel); border-radius: 32px; box-shadow: 0 20px 60px rgba(40,30,60,.4); padding: 18px 22px; text-align: center; display: none; }
   #lembrete.on { display: block; }
   #lembrete h3 { margin: 4px 0 12px; font-size: 26px; }
@@ -54,7 +54,13 @@ export function criarGuia({ mundo, passeio, avisar }) {
     body.caca #cacaBarra { top: calc(var(--topo) + 126px); }
     #guiaFaixa { top: calc(var(--topo) + 62px); max-width: calc(100vw - 210px); font-size: 15px; padding: 6px 12px 6px 6px; left: calc(50% - 6px); }
     #guiaFaixa b { width: 34px; height: 34px; font-size: 22px; }
-    #lembrete { bottom: 210px; }
+    /* celular: no meio da tela, entre a coluna de botões de cima e os botões de baixo (Entrar, Pular/Mergulhar, Tchau, joystick) */
+    #lembrete { top: calc(var(--topo) + 318px); width: calc(100vw - 24px); padding: 12px 14px; border-radius: 26px; }
+    #lembrete .ic { font-size: 34px !important; }
+    #lembrete h3 { font-size: 21px; margin: 2px 0 8px; }
+    #lembrete .acoes { flex-wrap: nowrap; gap: 10px; }
+    #lembrete .bt.grande { min-height: 64px; font-size: 20px; padding: 8px 16px; }
+    #lembrete .bt { min-height: 64px; font-size: 16px; padding: 8px 12px; }
   }`;
   document.head.appendChild(css);
   const faixa = el('div', { id: 'guiaFaixa', className: 'hud', role: 'status' }); faixa.dataset.testid = 'guia-faixa';
