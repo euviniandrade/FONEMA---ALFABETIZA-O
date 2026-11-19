@@ -12,6 +12,7 @@ import { asset } from '../../servicos/ambiente.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
 import { novoId } from '../../dados/repositorio.ts';
 import { falar } from '../../util.ts';
+import { primeiraVezHoje } from '../../servicos/saudacao.ts';
 
 type Aba = 'boneco' | 'acessibilidade' | 'utensilios';
 type CatLoja = 'cabelo' | 'camisa' | 'calca' | 'calcado';
@@ -37,7 +38,8 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
   const existem = useModelosExistentes();
   const temCrianca = !!crianca;
   useEffect(() => {
-    if (crianca) falar({ quem: 'tales', texto: 'Aqui você troca as moedinhas que ganhou aprendendo. Pode esperar e juntar para algo maior!' }, crianca);
+    // fila nº 27 (1): a apresentação da Lojinha só na 1ª vez do dia
+    if (crianca && primeiraVezHoje(crianca.id, 'lojinha')) falar({ quem: 'tales', texto: 'Aqui você troca as moedinhas que ganhou aprendendo. Pode esperar e juntar para algo maior!' }, crianca);
     // fala uma vez, quando a criança carrega (não a cada troca de peça)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [temCrianca]);

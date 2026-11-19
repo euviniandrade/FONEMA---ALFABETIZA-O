@@ -23,6 +23,7 @@ import { CapaMemoria } from './MemoriaDosSons.tsx';
 import { Falta, SeloNovo, ehNovo, marcarVistoAqui, useMissoesAteAbrir } from '../../componentes/Desbloqueio.tsx';
 import { CartaoCaca } from './caca/CartaoCaca.tsx'; // fila nº 25
 import '../../estilos-biblioteca.css';
+import { primeiraVezHoje } from '../../servicos/saudacao.ts';
 
 /** Figura da capa de cada jogo. */
 const CAPA: Record<string, string[]> = { comprida: ['sol', 'formiga'], escondida: ['sapato', 'pato'], rimas: ['pato', 'rato'], intruso: ['mao', 'pao', 'vela'], comeco: ['sapo', 'sapato'], palmas: ['abacaxi'] };
@@ -36,7 +37,7 @@ export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?:
   const jogo = jogoId ? JOGO_ESCUTA_POR_ID[jogoId] : undefined;
   const palavrasPalmas = useMemo(() => (jogo?.palavras ? embaralhar(jogo.palavras, sementeDaTentativa()).slice(0, jogo.porRodada) : []), [jogo, rodada]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { setFim(null); }, [jogoId]);
-  useEffect(() => { if (crianca && !jogoId) void falar(B.brincar, crianca); // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { if (crianca && !jogoId && primeiraVezHoje(crianca.id, 'brincar')) void falar(B.brincar, crianca); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [crianca?.id, jogoId]);
   useEffect(() => () => voz.parar(), []);
   // D034: quantas missões faltam para cada jogo fechado (o "o que falta" de cada cartão)

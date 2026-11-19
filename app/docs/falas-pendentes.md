@@ -236,6 +236,11 @@ começo da atividade (nesses o nome normalmente ainda vale e toca inteiro):
 
 ## 2. Com clipe, mas a auditoria pede regravação ou conferência de ouvido
 
+- **18/11 (fila nº 27):** "Olha só o que chegou para você!" (Tales, variante sem nome) sai "…pra você": a auditoria marca grave
+  (palavra trocada), mas é a fala natural do Tales e o sentido não muda; ACEITO, sem regravar. "Qual rima?" (Sofia) e "Qual começa
+  com o som?" (Tales) foram regravados com "Qual é a rima?" e "Qual palavra começa com o som?" (texto de pronúncia em
+  `audio-fontes/ajustes.json`) e passaram na auditoria. abacaxi (Sofia e Tales) regravado com "Abacachi." (ver ESTADO §0).
+
 | Voz | Fala | O que a transcrição ouviu | Situação |
 |---|---|---|---|
 | Sofia | "Como o Tales ficou no fim?", "A ema foi na lama.", "Monte a palavra som por som," | "[som de carro]" / "[som de transição]" | 16/11: só o Scribe transcreveu; duração e volume normais. Provável erro do transcritor; conferir de ouvido |

@@ -14,7 +14,7 @@ import { fonemasDaSequencia, sonsLetras } from './sons-letras.ts';
 import { tocarAteOFim } from './midia.ts';
 import { interromper, ocupar, tocandoDoElemento, vez, type MotivoParar } from './canal-audio.ts';
 import { anotarTocado, idFala, idNome, substituicoes } from './substituicoes.ts';
-import { semNome } from '@fonema/motor';
+import { nomeSoChamamento, semNome } from '@fonema/motor';
 import { ControleNome } from './nome-falado.ts';
 export { noMaximo, tocarAteOFim } from './midia.ts';
 
@@ -181,6 +181,8 @@ export class ProvedorPreGerado implements ProvedorVoz {
     if (!this.falas) return null;
     const v = { voz: vozDe(quem) };
     const partes = this.nome ? texto.split(this.nome) : [texto];
+    // o nome como CONTEÚDO ("Mariana!", "[NOME] começa com este som") é sempre dito; só o chamamento é cortado
+    if (!comNome && partes.length > 1 && !nomeSoChamamento(partes.join('[NOME]'))) comNome = true;
     if (!comNome && partes.length > 1) {
       // fila nº 27 (2): o nome já foi dito nesta atividade. 1º a variante gravada sem o nome ("Agora é a sua vez!")…
       const k = chaveTrecho(semNome(partes.join('[NOME]')));

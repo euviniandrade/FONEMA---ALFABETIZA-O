@@ -45,3 +45,19 @@ export function semNome(texto: string): string {
   t = t.replace(/\s{2,}/g, ' ').trim();
   return t.charAt(0).toUpperCase() + t.slice(1);
 }
+
+/**
+ * Fila nº 27 (2): o nome só pode ser cortado quando é CHAMAMENTO ("Agora é a sua vez, [NOME]!", "[NOME], olha"). Quando o
+ * nome é o conteúdo da fala ("[NOME]!", "[NOME] começa com este som"), ele sempre é dito.
+ */
+export function nomeSoChamamento(texto: string): boolean {
+  if (!texto.includes('[NOME]')) return false;
+  if (!semNome(texto).replace(/[^\p{L}]/gu, '')) return false; // sem o nome não sobra nada
+  for (const m of texto.matchAll(/\[NOME\]/g)) {
+    const antes = texto.slice(0, m.index).trimEnd();
+    const depois = texto.slice(m.index + m[0].length).trimStart();
+    const vocativo = (antes === '' || antes.endsWith(',')) && (depois === '' || /^[,!?.…]/u.test(depois));
+    if (!vocativo) return false;
+  }
+  return true;
+}

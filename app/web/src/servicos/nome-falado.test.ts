@@ -51,6 +51,11 @@ describe('plano da voz com e sem o nome', () => {
   it('sem variante gravada: os mesmos trechos, sem o clipe do nome', () => {
     expect(arqs('Isso, Mariana! Você conseguiu.', false)).toEqual(['falas/i.mp3', 'falas/v.mp3']);
   });
+  it('o nome como conteúdo da fala é sempre dito (nunca vira silêncio)', () => {
+    expect(arqs('Mariana!', false)).toEqual(['nomes/sofia/mariana.mp3']);
+    expect(arqs('Mariana', false)).toEqual(['nomes/sofia/mariana.mp3']);
+    expect(arqs('Mariana Você conseguiu.', false)).toEqual(['nomes/sofia/mariana.mp3', 'falas/v.mp3']);
+  });
   it('fala sem nome não muda', () => {
     expect(arqs('Você conseguiu.', false)).toEqual(['falas/v.mp3']);
   });

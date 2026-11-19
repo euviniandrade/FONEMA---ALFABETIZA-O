@@ -3,7 +3,7 @@
 Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai ao ar sem esta auditoria**.
 
 - Clipes auditados: **1757** (1467 falas + 290 nomes; vozes Sofia e Tales)
-- Graves (defeito audível provável): **57** · a conferir de ouvido (palavra/som solto com transcrição diferente): **139** · leves (higiene do sinal): **0** · sem defeito: **1561**
+- Graves (defeito audível provável): **56** · a conferir de ouvido (palavra/som solto com transcrição diferente): **138** · leves (higiene do sinal): **0** · sem defeito: **1563**
 - Conteúdo conferido por transcrição: **1757** clipes · **sem transcrição: 0** (só o sinal foi conferido nesses)
 - Volume (clipes ≥ 0,4 s): mediana -17.4 LUFS, de -22.8 a -14.6 (alvo -16)
 
@@ -11,23 +11,23 @@ Gerado por `ferramentas/auditar-audio.py`. Regra (D027 §2): **nenhum áudio vai
 
 | Tipo | Antes | Agora |
 |---|---|---|
-| conteúdo: palavra trocada | 69 | 159 |
+| conteúdo: palavra trocada | 69 | 156 |
 | começo seco | 184 | 0 |
 | volume fora da média | 135 | 0 |
 | sem respiro no começo | 113 | 0 |
 | sem respiro no fim | 69 | 0 |
 | clipping | 63 | 3 |
 | fim seco | 35 | 0 |
-| conteúdo: nome errado | 16 | 5 |
 | fim cortado na gravação | 21 | 0 |
+| conteúdo: nome errado | 16 | 5 |
 | conteúdo: sílaba faltando no fim | 6 | 8 |
 | conteúdo: sílaba faltando no começo | 4 | 7 |
 | conteúdo: sobrando | 5 | 4 |
 | curto demais | 0 | 4 |
 | conteúdo: transcrição vazia | 2 | 2 |
 | conteúdo: sílaba faltando no meio | 0 | 3 |
-| conteúdo: palavra faltando | 0 | 2 |
 | conteúdo: fim faltando | 0 | 2 |
+| conteúdo: palavra faltando | 0 | 2 |
 | conteúdo: começo faltando | 0 | 1 |
 | mudo | 1 | 0 |
 
@@ -93,7 +93,6 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 | tales | Isso! Você me entendeu! | É isso. Você me entendeu? | sobrando “e” | `falas/tales-hohrig-v3-m1.mp3` |
 | tales | Olha a Lojinha! A cada letra abrem coisas novas para o seu boneco. | Olhe a lojinha! A cada letra abrem coisas novas para o seu boneco | palavra trocada (“olia” → “olie”) | `falas/tales-s8k98h-v3-m1.mp3` |
 | tales | Olha só o que chegou para você! | Olha só o que chegou pra você | palavra trocada (“para” → “pra”) | `falas/tales-ykgnjm-v3-m1.mp3` |
-| tales | Qual começa com o som? | Ou começa como o som | palavra trocada (“kal” → “o”); palavra trocada (“kon” → “komo”) | `falas/tales-lxokwt-v3-m1.mp3` |
 | tales | X, de xícara | Xis, de chave. / X de chave | palavra trocada (“xikara” → “xave”) | `falas/tales-1ooggl2-v3-m1.mp3` |
 | sofia | bryan | Brian | clipping | `nomes/sofia/bryan-m1.mp3` |
 
@@ -186,7 +185,6 @@ Critérios: começo/fim seco = RMS dos 25 ms das pontas acima de −30 dBFS; cur
 | sofia | Pufi. | Poofy | `falas/sofia-1uqxa69-m1.mp3` |
 | sofia | Pule. | Pô! | `falas/sofia-1uqx9xj-m1.mp3` |
 | sofia | Pá. | Dê / E aí? | `falas/sofia-rpta56-m1.mp3` |
-| sofia | Qual rima? | Qual firma? | `falas/sofia-febgmi-m1.mp3` |
 | sofia | Rei. | Ei! | `falas/sofia-1qahlf9-m1.mp3` |
 | sofia | Ré. | Trê | `falas/sofia-rpta6o-m1.mp3` |
 | sofia | Saia. | Sai! | `falas/sofia-1uqzv69-m1.mp3` |
