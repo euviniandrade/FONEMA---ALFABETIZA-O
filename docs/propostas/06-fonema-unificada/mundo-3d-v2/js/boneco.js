@@ -136,7 +136,8 @@ export class Boneco {
     this.corpo.add(grupo);
     this.rig = null;
     try { this.rig = articular(grupo); } catch (e) { console.warn('[boneco] sem esqueleto', this.nome, e); }
-    this.anim = this.rig && this.rig.medidas.temPernas ? new Animador(this.rig, k) : null; // bicho sem pernas: gingado em código
+    this.anim = this.rig && this.rig.medidas.temPernas ? new Animador(this.rig, k) : null;
+    if (this.anim) this.anim.menos = this.menos; // bicho sem pernas: gingado em código
     if (this.rig && this.comSilhueta) {
       const mat = materialSilhueta();
       for (const sk of this.rig.malhas) {

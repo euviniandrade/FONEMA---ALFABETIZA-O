@@ -272,6 +272,7 @@ export class Animador {
     m.vx += ((tx - m.x) * 70 - m.vx * 7 + Math.max(-3, Math.min(3, empurra)) * 1.2) * dt; m.x += m.vx * dt;
     m.vz += ((tz - m.z) * 70 - m.vz * 7) * dt; m.z += m.vz * dt;
     m.x = Math.max(-0.6, Math.min(0.7, m.x)); m.z = Math.max(-0.45, Math.min(0.45, m.z));
+    if (this.menos) { m.x *= 0.5; m.z *= 0.5; } // "menos movimento": balanço pela metade
     _e.set(m.x, 0, m.z, 'YXZ'); O.cabelo.quaternion.setFromEuler(_e);
   }
 

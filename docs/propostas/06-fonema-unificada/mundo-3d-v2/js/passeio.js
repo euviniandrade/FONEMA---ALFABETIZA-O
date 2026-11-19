@@ -415,7 +415,7 @@ export function criarPasseio(mundo, h = {}) {
       if (!aguaLivre(cam.giro)) {
         for (let k = 1; k <= 9; k++) for (const sg of [1, -1]) {
           const g = cam.giro + sg * k * 0.35;
-          if (aguaLivre(g)) { let d = g - cam.giro; cam.giro += d * clamp(dt * 3, 0, 1); k = 99; break; }
+          if (aguaLivre(g)) { const d = g - cam.giro; cam.giro += d * clamp(dt * (menos ? 1.2 : 3), 0, 1); k = 99; break; } // menos movimento: gira mais devagar
         }
       }
     }

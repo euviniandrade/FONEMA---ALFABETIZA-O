@@ -249,7 +249,7 @@ export function articular(grupo) {
         // peça de cabelo: só cabeça e osso do cabelo (antes o cabelo comprido abaixo do pescoço ia para o peito e até
         // para o braço, e balançava "duro" junto); quanto mais abaixo do ponto de onde pende, mais segue a mola
         w.fill(0);
-        const tc = sst(pivoCabelo - 0.03 * H, pivoCabelo - 0.3 * H, y);
+        const tc = sst(md.pescoco + 0.02 * H, md.pescoco - 0.22 * H, y); // só o que passa do pescoço balança (o cabelo curto fica no crânio)
         w[I.cabelo] = tc; w[I.cabeca] = 1 - tc;
       }
       gBraco[i] = cabelo ? 0 : wb; gLado[i] = cabelo ? 0 : wp * (lado - 0.5) * 2;

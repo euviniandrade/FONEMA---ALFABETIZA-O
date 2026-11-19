@@ -31,6 +31,7 @@
   /* mergulho livre (fila nº 28): na água, Tchau dá lugar a Subir; Pular vira Descer (segurar = ir descendo) */
   #btSubir { grid-area: tchau; width: 84px; height: 84px; display: none; background: #CFF1FF; }
   body.nadando #btTchau { display: none; } body.nadando #btSubir { display: inline-flex; }
+  #btPular, #btSubir { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; touch-action: none; } /* segurar no celular não abre menu */
   #btPular.segurando, #btSubir.segurando { transform: translateY(3px) scale(.96); filter: brightness(1.08); }
   #fundura { position: fixed; z-index: 6; left: 50%; transform: translateX(-50%); bottom: max(18px, env(safe-area-inset-bottom)); background: rgba(225,246,255,.92); color: var(--tinta); border-radius: 22px; padding: 6px 16px; font: 700 18px Fredoka, sans-serif; box-shadow: var(--sombra); display: none; pointer-events: none; }
   body.mergulhando #fundura { display: block; }
@@ -267,6 +268,7 @@ if (!temWebGL()) {
     el.addEventListener('pointerup', fim); el.addEventListener('pointercancel', fim);
     el.onclick = () => { const segurou = el.dataset.segurou === '1'; el.dataset.segurou = ''; esconderDica(); if (!segurou) toque(); };
   }
+  for (const b of [$('#btPular'), $('#btSubir')]) b.addEventListener('contextmenu', (e) => e.preventDefault());
   botaoSegurar($('#btPular'), 'descer', () => { if (document.body.classList.contains('nadando')) passeio.mergulhar(true); else passeio.pular(); });
   botaoSegurar($('#btSubir'), 'subir', () => passeio.mergulhar(false));
   // profundidade na tela enquanto mergulha (e quando chega no fundo)
