@@ -171,6 +171,8 @@ export async function trechoJogos(browser, h) {
   const ganhou = p.moedinhas.saldo - antes.moedinhas.saldo;
   const mostrou = Number((await pg.getByTestId('corrida-moedinhas').innerText().catch(() => '+0')).replace(/\D+/g, '') || 0);
   ok(ganhou >= 0 && ganhou <= 3 && ganhou === mostrou, `moedinhas da Lojinha pela corrida: entre 0 e 3, iguais às mostradas (${ganhou})`);
+  const noTopo = Number(await pg.getByTestId('moedinhas').locator('b').innerText().catch(() => '-1'));
+  ok(noTopo === p.moedinhas.saldo, `o porquinho do topo já mostra as moedinhas novas, sem sair da tela (${noTopo} = ${p.moedinhas.saldo})`);
 
   // ---- Bichinho Come-Som, começo ----
   await pg.goto(BASE + `#/c/${id}/brincar/come-som`);

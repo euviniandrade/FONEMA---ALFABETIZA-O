@@ -74,6 +74,12 @@ export function useApp(): Contexto {
 }
 
 /** Carrega a criança e o progresso dela; `salvar` grava e atualiza a tela. */
+/** Evento da janela: um progresso acabou de ser salvo (todos os `useCrianca` da mesma criança passam a mostrá-lo). */
+export const EVENTO_PROGRESSO = 'fonema:progresso-salvo';
+export function avisarProgresso(p: Progresso) {
+  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(EVENTO_PROGRESSO, { detail: { id: p.criancaId, p } }));
+}
+
 export function useCrianca(id: string | undefined) {
   const { repo } = useApp();
   const [crianca, setCrianca] = useState<Crianca>();
@@ -95,10 +101,18 @@ export function useCrianca(id: string | undefined) {
   }, [id, repo]);
 
   useEffect(() => { recarregar(); }, [recarregar]);
+  // quem mostra o mesmo progresso na mesma tela (ex.: o porquinho do topo) recebe na hora o que outro gancho salvou
+  // (D035: moedinhas da corrida do Corre-Som aparecem sem sair da tela)
+  useEffect(() => {
+    const aoSalvar = (e: Event) => { const d = (e as CustomEvent<{ id: string; p: Progresso }>).detail; if (d?.id === id) setProgresso(d.p); };
+    window.addEventListener(EVENTO_PROGRESSO, aoSalvar);
+    return () => window.removeEventListener(EVENTO_PROGRESSO, aoSalvar);
+  }, [id]);
 
   const salvarProgresso = useCallback(async (p: Progresso) => {
     await repo.salvarProgresso(p);
     setProgresso(p);
+    avisarProgresso(p);
   }, [repo]);
 
   const salvarCrianca = useCallback(async (c: Crianca) => {
