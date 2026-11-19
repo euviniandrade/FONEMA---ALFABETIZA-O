@@ -16,8 +16,9 @@ export async function trechoCapturasAa(browser, { BASE, ok, passarPorteira, cada
     const id = pg.url().split('/c/')[1].split('/')[0];
     // lição da letra A até a 1ª escolha com letras
     await pg.goto(BASE + `#/c/${id}/sessao/AL-A`);
-    let viuLetra = false;
+    let viuLetra = false, viuEspelho = false;
     await Promise.race([jogarSessao(pg, { gancho: async (p) => {
+      if (!viuEspelho && await p.locator('[data-testid=letra-espelho].visivel, .letra-surge.visivel').count().catch(() => 0)) { viuEspelho = true; await p.waitForTimeout(400); await cap('espelho'); }
       if (viuLetra) return;
       const l = p.locator('button.opcao .letra');
       if (await l.count().catch(() => 0)) { viuLetra = true; await p.waitForTimeout(400); await cap('licao-letras'); const t = await l.allInnerTexts(); ok(t.every((x) => x.length !== 1 || !/\p{L}/u.test(x)), `opções de letra em "Aa" (${t.join(' ')})`); }
@@ -29,6 +30,10 @@ export async function trechoCapturasAa(browser, { BASE, ok, passarPorteira, cada
       await pg.waitForTimeout(1200);
       await cap(nome);
     }
+    // selo de letra no álbum (desenhado em canvas)
+    await pg.goto(BASE + `#/c/${id}/album`); await pg.reload();
+    const selo = pg.locator('.selo, [data-selo], canvas').first();
+    if (await selo.waitFor({ timeout: 15000 }).then(() => true, () => false)) { await selo.scrollIntoViewIfNeeded().catch(() => {}); await pg.waitForTimeout(1200); await cap('album-selo'); }
     // memória: vira uma carta de letra para ver o "Aa"
     await pg.goto(BASE + `#/c/${id}/memoria`); await pg.reload();
     const carta = pg.locator('.mem-letras [data-carta]').first();
