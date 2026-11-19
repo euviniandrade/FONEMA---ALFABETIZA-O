@@ -78,10 +78,10 @@ const _m = new THREE.Matrix4(), _e = new THREE.Euler(), _q = new THREE.Quaternio
 // Cadência (ciclos de 2 passos por segundo) de criança por velocidade (m/s), e a faixa em que andar vira correr.
 // Referência de ordem de grandeza: criança pequena anda com ~2,2–2,8 passos/s e corre com ~3–3,4 passos/s (decisão do
 // projeto a partir da proporção do boneco; não é medida de laboratório).
-const CAD_ANDAR = (v) => 0.92 + 0.3 * v, CAD_CORRER = (v) => 1.28 + 0.1 * v;
+const CAD_ANDAR = (v) => 0.92 + 0.3 * v, CAD_CORRER = (v) => 1.35 + 0.15 * v;
 const CORRE_DE = 1.4, CORRE_ATE = 3.6; // m/s (no meio, um trote leve: parte andar, parte correr)
 const S_MIN = 0.45, S_MAX = 1.25; // encolhe/estica a passada
-const NO_AR = 0.2; // quanto do tempo no ar da corrida fica
+const NO_AR = 0.1; // quanto do tempo no ar da corrida fica
 const ESTICA = 0.6; // quanto a perna de apoio da corrida se estica (0 = como na captura)
 const INCLINA = 0.55; // quanto da inclinação do tronco da captura sai (0 = toda fica)
 const JUNTA = 0.5; // quanto os pés se aproximam da linha do quadril (lado a lado)
