@@ -17,7 +17,7 @@ import { trechoVozReal } from './trecho-voz-real.mjs';
 import { trechoNomeFalado } from './trecho-nome-falado.mjs';
 import { trechoCapturasAa } from './trecho-capturas-aa.mjs';
 import { trechoCopia } from './trecho-copia.mjs';
-import { capturasCorrida, trechoJogos } from './trecho-jogos.mjs';
+import { capturasCorrida, roboCorrida, trechoJogos } from './trecho-jogos.mjs';
 import { trechoJogos2 } from './trecho-jogos2.mjs';
 import { trechoMemoria } from './trecho-memoria.mjs';
 import { trechoMundo3d } from './trecho-mundo3d.mjs';
@@ -310,11 +310,7 @@ async function jogarSessao(page, capturar = {}) {
       await tirar('corre-som');
       // D035: corrida sem parar; o arco da vez vem com data-decidir; no fim da fase, "Continuar"
       if (await page.getByTestId('corrida-continuar').isVisible().catch(() => false)) await page.getByTestId('corrida-continuar').click({ timeout: 2000 }).catch(() => {});
-      else if (await corre.getAttribute('data-decidir').catch(() => null)) {
-        const n = Number(await corre.getAttribute('data-passados').catch(() => '0'));
-        await page.locator('.cs-pista[data-correta="1"]').first().click({ timeout: 2000, force: true }).catch(() => {});
-        await page.waitForFunction((x) => { const e = document.querySelector('[data-testid=corre-som]'); return !e || Number(e.getAttribute('data-passados')) > x || e.getAttribute('data-fase') === 'fim'; }, n, { timeout: 6000 }).catch(() => {});
-      }
+      else await roboCorrida(page); // o robô dentro da página toca o arco da vez (sem a demora do Playwright)
       await page.waitForTimeout(100);
       continue;
     }

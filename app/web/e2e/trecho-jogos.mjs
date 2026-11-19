@@ -25,22 +25,42 @@ const semear = (pg, id, fases) => pg.evaluate(async ([cid, fs]) => {
 const tentativasDo = (p, mecanica) => Object.values(p.habilidades).flatMap((h) => h.tentativas).filter((t) => t.mecanica === mecanica);
 
 /**
+ * D035: robô da corrida DENTRO da página (sem a demora de ida e volta do Playwright, que com a máquina carregada deixava o arco
+ * passar antes do toque): a cada 40 ms, se há arco da vez (data-decidir), toca a pista certa (ou uma errada, uma vez).
+ * Marca no corpo da página quantas vezes tocou (data-robo-toques) para o teste conferir.
+ */
+export const roboCorrida = (pg, { errarUma = false } = {}) => pg.evaluate((errar) => {
+  if (window.__roboCorrida) { window.__roboCorrida.errar = window.__roboCorrida.errar || errar; return; }
+  const r = { errar, ultimo: '', toques: 0 };
+  window.__roboCorrida = r;
+  setInterval(() => {
+    const raiz = document.querySelector('[data-testid=corre-som][data-decidir="1"]');
+    if (!raiz) return;
+    const chave = `${raiz.getAttribute('data-passados')}`;
+    if (chave === r.ultimo) return;
+    const alvo = r.errar ? raiz.querySelector('.cs-pista[data-opcao]:not([data-correta])') : raiz.querySelector('.cs-pista[data-correta="1"]');
+    if (!alvo) return;
+    r.ultimo = chave;
+    r.errar = false;
+    r.toques++;
+    document.body.dataset.roboToques = String(r.toques);
+    alvo.click();
+  }, 40);
+}, errarUma);
+
+/**
  * Joga a rodada do jogo que está na tela até o fim (ou até a tela do jogo sumir, no desafio da fase).
  * `errar`: erra o 1º item uma vez (confere a correção e os arcos/pratinhos que voltam).
  */
 async function jogarRodada(pg, { errar = false, tirar = async () => {} } = {}) {
   let errou = !errar;
   for (let passo = 0; passo < 900; passo++) {
-    // corrida (D035): o arco da vez primeiro (o arco não espera)
-    const vez = pg.locator('[data-testid=corre-som][data-decidir="1"]');
-    if (await vez.count().catch(() => 0)) {
-      const antes = Number(await vez.getAttribute('data-passados').catch(() => '0'));
-      const alvo = errou ? '.cs-pista[data-correta="1"]' : '.cs-pista[data-opcao]:not([data-correta])';
-      await pg.locator(alvo).first().click({ timeout: 1500, force: true }).catch(() => {});
-      await tirar('corre-escolher');
-      const passou = await pg.waitForFunction((n) => { const e = document.querySelector('[data-testid=corre-som]'); return !e || Number(e.getAttribute('data-passados')) > n || e.getAttribute('data-fase') === 'fim'; }, antes, { timeout: 8000 }).then(() => true, () => false);
-      if (!errou && passou) { errou = true; await tirar('corre-correcao'); }
-      continue;
+    // corrida (D035): o robô dentro da página toca o arco da vez; aqui só se tiram as fotos
+    if (await pg.locator('[data-testid=corre-som]').count().catch(() => 0)) {
+      await roboCorrida(pg, { errarUma: !errou });
+      errou = true;
+      if (await pg.locator('[data-testid=corre-som][data-decidir="1"]').count().catch(() => 0)) await tirar('corre-escolher');
+      if (await pg.getByTestId('cs-xis').isVisible().catch(() => false)) await tirar('corre-correcao');
     }
     if (await pg.getByTestId('jogo-fim').isVisible().catch(() => false)) return true;
     // D035: fim da corrida do Corre-Som (Brincar: tela de resultado; fase: "Continuar" volta para a sessão)
@@ -53,17 +73,6 @@ async function jogarRodada(pg, { errar = false, tirar = async () => {} } = {}) {
     const ehCome = !ehCorre && await come.isVisible().catch(() => false);
     if (!ehCorre && !ehCome) return true; // desafio da fase: a cena acabou e a sessão seguiu
     if (ehCorre) {
-      // corrida (D035): a pista não para; o arco que vem é o da vez (data-decidir). Troca para a pista e espera ele passar.
-      const decidir = await corre.getAttribute('data-decidir').catch(() => null);
-      if (decidir) {
-        const antes = Number(await corre.getAttribute('data-passados').catch(() => '0'));
-        await tirar('corre-escolher');
-        const alvo = errou ? '.cs-pista[data-correta="1"]' : '.cs-pista[data-opcao]:not([data-correta])';
-        await pg.locator(alvo).first().click({ timeout: 1500, force: true }).catch(() => {});
-        const passou = await pg.waitForFunction((n) => { const e = document.querySelector('[data-testid=corre-som]'); return !e || Number(e.getAttribute('data-passados')) > n || e.getAttribute('data-fase') === 'fim'; }, antes, { timeout: 6000 }).then(() => true, () => false);
-        if (!errou && passou) { errou = true; await tirar('corre-correcao'); }
-        continue;
-      }
       const fase = await corre.getAttribute('data-fase').catch(() => '');
       if (fase === 'correndo' || fase === 'largada') await tirar('corre-correndo');
     } else {
@@ -244,25 +253,17 @@ export async function capturasCorrida(browser, h) {
   const t0 = Date.now();
   await pg.waitForFunction(() => document.querySelector('[data-testid=corre-som]')?.getAttribute('data-fase') === 'correndo', null, { timeout: 30000 }).catch(() => {});
   ok(Date.now() - t0 < 15000, `a corrida largou sem "esperando a pista" (${Math.round((Date.now() - t0) / 100) / 10} s, com a fala de abertura)`);
-  let n = 0, errou = false;
+  let n = 0;
   const fps = [];
   const foto = async (nome) => { await pg.screenshot({ path: resolve(dirCap, `v15-corrida-${String(++n).padStart(2, '0')}-${nome}${suf}.png`) }); };
-  for (let passo = 0; passo < 400; passo++) {
+  await roboCorrida(pg, { errarUma: true });
+  const ini = Date.now();
+  while (Date.now() - ini < 120000) {
     if (await pg.getByTestId('corrida-fim').isVisible().catch(() => false)) break;
-    const corre = pg.getByTestId('corre-som');
     const f = await pg.locator('.cs-canvas').getAttribute('data-fps').catch(() => null);
     if (f) fps.push(Number(f));
-    if (await corre.getAttribute('data-decidir').catch(() => null)) {
-      const antes = Number(await corre.getAttribute('data-passados').catch(() => '0'));
-      if (n < 16 && antes % 2 === 0) await foto('arco');
-      const alvo = !errou && antes === 2 ? '.cs-pista[data-opcao]:not([data-correta])' : '.cs-pista[data-correta="1"]';
-      await pg.locator(alvo).first().click({ timeout: 1500, force: true }).catch(() => {});
-      if (alvo.includes('not')) errou = true;
-      await pg.waitForFunction((x) => { const e = document.querySelector('[data-testid=corre-som]'); return !e || Number(e.getAttribute('data-passados')) > x; }, antes, { timeout: 8000 }).catch(() => {});
-      if (n < 18) { await pg.waitForTimeout(120); await foto(antes === 2 ? 'errou' : 'passou'); }
-      continue;
-    }
-    await pg.waitForTimeout(150);
+    if (n < 14) await foto(await pg.getByTestId('cs-xis').isVisible().catch(() => false) ? 'errou' : 'correndo');
+    await pg.waitForTimeout(2500);
   }
   await pg.getByTestId('corrida-fim').waitFor({ timeout: 90000 }).catch(() => {});
   await pg.waitForTimeout(600);
