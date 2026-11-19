@@ -122,10 +122,16 @@ xizinho e perde ponto… tempo, objetivo e premiação… elevando o nível… l
   `corre-som-3d.ts` (placas guardadas, qualidade adaptativa), `corre-som-2d.ts` (reserva), `CorridaResultado.tsx`; letra Aa: `componentes/LetraAa.tsx`.
 - **Registro:** cada passagem = tentativa avaliada `formato: 'corrida'` com o estado da corrida; não contam: passar sem mexer e acerto
   isolado após 2 erros seguidos; depois de um ✖, os arcos da mesma onda valem "com ajuda". Pontos/estrelas nunca contam (regra 4).
-- **Verificado:** `npm test` 481/481 (19 novos, inclusive "TF-01 ainda conclui"), lint e typecheck. E2E `--jogos` adaptado: na 1ª rodada
-  o clique do teste esperava o botão "estável" e o arco passava antes (máquina com carga ~25); corrigido com clique forçado; o resultado
-  da nova rodada, o `--sem-jornada` e o `--capturas-corrida` (PC e celular, mede qps) AINDA NÃO foram conferidos.
-- **Falta:** rodar/olhar `--capturas-corrida` e `--sem-jornada`; 60 qps não medido num celular; números a calibrar com crianças.
+- **Verificado:** `npm test` 481/481 (19 novos, inclusive "TF-01 ainda conclui"), lint e typecheck. E2E na cópia separada (porta 4710):
+  `--jogos` **23 ✓ 0 ✗** (corrida com um erro: pontos, estrelas, erros com som no fim, "Próximo nível", 8 passagens `corrida` gravadas,
+  moedinhas = as mostradas; Bichinho; desafio na Letra A até o ritual). O teste toca as pistas com um robô dentro da página
+  (`roboCorrida`): pelo Playwright o toque chegava tarde com a máquina carregada. `--capturas-corrida` (1850×980 e 390×844) passou e foi
+  olhado (`app/docs/capturas/v15-corrida-*`): pista correndo, placas "Mm Aa Ii", placar/meta/tempo, arco errado cinza, fim com "Era Ii —
+  você passou no Mm". `--sem-jornada`: 290 ✓ e 1 ✗ fora desta frente (passeio: "Oi, Bia!").
+- **Defeitos achados e corrigidos na verificação:** "menos movimento" lançava os 2 arcos da onda juntos e media a passagem no relógio da
+  animação (b95f584); a medida de qps nunca mostrava menos de 20 e a pista andava em câmera lenta em aparelho lento (75351d8).
+- **Falta:** medir os qps de verdade depois de 75351d8 (rodada nova de `--capturas-corrida` em andamento; aqui não há placa de vídeo:
+  60 qps no celular NÃO confirmado); ninguém jogou num aparelho de verdade; números [DP] a calibrar com crianças.
 
 **Passeio e caça "profissional": mapa, próximo passo, trilha de moedas e lembrete (fila do dono nº 29, pontos 2–5; 19/11; NÃO publicado):**
 arquivo novo `mundo-3d-v2/js/guia-passos.js` (carregado por `js/caca-tesouro.js`; nenhuma linha nova no `passeio.js`: usa o `noQuadro` que já existia).
