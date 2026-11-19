@@ -359,6 +359,13 @@ export function criarPasseio(mundo, h = {}) {
     eu.raiz.rotation.y = giro;
     eu.tick(dt, { vel, correr: CORRER, noAr, vy, nadando, vau: nadando ? 0 : clamp(naAgua / NADA, 0, 1), prof: nadando ? prof : 0, profVel });
     sub = lerp(sub, nadando ? clamp(prof / 0.45, 0, 1) : 0, 1 - Math.exp(-dt * 2.5));
+    // lá no fundo o corpo inteiro (pés, mãos) fica acima da areia: se algum osso afundou, a profundidade recua
+    if (nadando && prof > 0.25 && eu.rig) {
+      const fundoY = colisao.altura(pos.x, pos.z) + 0.12;
+      let baixo = 1e9;
+      for (const nm of ['peE', 'peD', 'canelaE', 'canelaD', 'antebracoE', 'antebracoD', 'cabeca']) { const o = eu.rig.ossos[nm]; if (o) baixo = Math.min(baixo, o.getWorldPosition(_f).y); }
+      if (baixo < fundoY) prof = Math.max(0, prof - Math.min(fundoY - baixo, 1.5 * dt + 0.02));
+    }
     eu.sombraEm(yPe, nadando || naAgua > 0.05);
     if (vel > 0.2 || noAr) tempoParado = 0; else tempoParado += dt;
 
