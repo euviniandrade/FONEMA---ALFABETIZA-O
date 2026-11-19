@@ -144,14 +144,19 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   ok(dist(antes, depois) > 1, `e o boneco vai sozinho até lá (${dist(antes, depois).toFixed(1)} m)`);
 
   // conversar com a Sofia (fala roteirizada)
-  await frame.evaluate(() => { const s = window.FONEMA_PASSEIO.npcs.lista.find((n) => n.id === 'sofia').boneco.raiz.position; window.FONEMA_PASSEIO.teleportar(s.x + 1.4, s.z + 1.4); });
-  await simular(0.1);
+  // a Sofia passeia e outros bonecos andam por perto: com a máquina lenta, o "perto" podia ser outro (Tales: "Oi, Bia! Vamos brincar…").
+  // Teleporta ao lado dela de novo até o botão ser o da Sofia.
+  for (let k = 0; k < 20; k++) {
+    await frame.evaluate(() => { const s = window.FONEMA_PASSEIO.npcs.lista.find((n) => n.id === 'sofia').boneco.raiz.position; window.FONEMA_PASSEIO.teleportar(s.x + 1.4, s.z + 1.4); });
+    await simular(0.1);
+    if (await frame.evaluate(() => window.FONEMA_PASSEIO.perto?.npc?.id === 'sofia' || window.FONEMA_PASSEIO.perto?.npc?.papel === 'sofia')) break;
+  }
   await fr.locator('#btAcao.on').waitFor({ timeout: 240000 });
   ok(/Conversar/.test(await fr.locator('#btAcao').innerText()), 'perto da Sofia aparece o botão "Conversar"');
   await fr.locator('#btAcao').click(CLIQUE);
   await fr.locator('#cartao.aberto').waitFor();
   const txt = await fr.locator('#cartao').innerText();
-  ok(/Sofia/.test(txt) && /Oi, Bia!/.test(txt) && /Missão/.test(txt), 'a Sofia diz "Oi, Bia!" (fala já gravada) e convida para a missão');
+  ok(/Sofia/.test(txt) && /Oi, Bia!/.test(txt) && /Missão/.test(txt), `a Sofia diz "Oi, Bia!" (fala já gravada) e convida para a missão (cartão: ${txt.replace(/\s+/g, ' ').slice(0, 120)})`);
   if (capturas) { await pg.waitForTimeout(500); await pg.screenshot({ path: `${capturas}/mundo3d-03-conversa-sofia.png` }); }
   await fr.locator('#cartao button', { hasText: 'Tchau' }).click(CLIQUE);
 
