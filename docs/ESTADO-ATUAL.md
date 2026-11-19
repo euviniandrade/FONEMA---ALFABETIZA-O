@@ -9,6 +9,45 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Passeio 3D, rodada 3: andar/correr, "fantasminha" e mergulho livre (fila do dono nº 28; 18–19/11; NÃO publicado ainda):**
+queixa do dono: "parece que ela está pulando… a forma de andar está muito ruim… atalho para mergulhar e abaixar e ir mais fundo…
+às vezes parece um fantasminha, partes brancas; ao girar fica transparente". Diagnóstico com folhas quadro a quadro (ANTES em
+`app/docs/capturas/v15-passeio-antes-*.jpg`, DEPOIS em `v15-passeio-depois-*.jpg`; ferramenta de folhas fora do repositório, ver abaixo).
+- **Por que parecia pulo (medido):** com o teclado (2,6 m/s) e a perna do boneco (0,52 m), 85% da animação era o "Jog" da biblioteca,
+  que é um trote de adulto com o quadril subindo e descendo 1/4 da perna e muito tempo com os dois pés no ar (folha de referência
+  `v15-passeio-antes-ref-Jog_Fwd_Loop.jpg`); tocado na passada de adulto num boneco de perna curta virava salto agachado. Também:
+  o quadril subia e descia pela metade do que a captura pedia (pé flutuando ou afundando), sapato sem osso (bico enterrava) e o Walk e o
+  Sprint pisavam em instantes diferentes do ciclo (a mistura cruzava as pernas). Câmera e mistura de estados não eram a causa.
+- **Correção na raiz (`js/animacoes.js`, `js/esqueleto.js`):** só Walk e Sprint (o Jog saiu); cadência de criança pela velocidade e a
+  passada encolhida para caber nela (pé de apoio parado no chão); ciclos alinhados na pisada; **pé com osso próprio** (15 ossos) e
+  **quadril posto pela sola mais baixa** (medido: sola a 0 cm do chão em todo quadro de apoio, andando e correndo); tempo no ar da
+  corrida reduzido a 10%; tronco 55% menos inclinado (com o cabeção parecia corcunda olhando o chão); perna de apoio menos dobrada;
+  braços da corrida junto do corpo; base parada mais fechada. Cabeça sobe e desce (medida como no E2E): 4 cm andando (1,3 m/s), 7–7,6 cm a 2,6 m/s, 13 cm
+  correndo a 3,7 m/s; antes o número era parecido (2,4 / 4,7 / 3,2 cm) porque o quadril só subia metade — mas o corpo ficava agachado
+  10–18 cm abaixo da pose parada e os pés saíam do chão: o "pulo" era a perna, não a cabeça. Joystick leve agora anda a 1,3 m/s (era 1,5).
+  O auto-rig no navegador NÃO era o limite (o Blender não foi preciso; nenhum GLB novo).
+- **"Fantasminha" (provado com A/B: some ao esconder a silhueta, `v15-passeio-antes-materiais-cabeca.jpg`):** a silhueta clarinha
+  acendia onde o PRÓPRIO corpo se cobre (o cabelo de trás aparecia por cima do rosto; a perna de trás por cima da da frente) e as
+  mechas empilhavam até ficar branco. Agora usa **stencil** (`js/boneco.js`; `mundo.js` ganhou `stencil: true` no renderizador e no
+  alvo do pós-processamento, autorizado): o corpo, desenhado depois do cenário opaco, marca onde aparece; a silhueta só entra onde algo de
+  fora cobre, uma camada só, 30% (era 42%); a grama de perto é desenhada depois do corpo e não acende. Mechas de cabelo
+  (`app/web/src/avatar3d/cabelos.ts`): a face de fora passou a ser a da frente (antes o lado de dentro do tubo era o visível, com a luz
+  invertida). Calça e tênis brancos são a roupa padrão do catálogo (não é defeito).
+- **Mergulho livre (`js/passeio.js`, `js/boneco.js`, `passeio.html`):** na água funda, Pular vira **Mergulhar** (tocar = desce ~1,2 m;
+  segurar = vai descendo; lá embaixo vira "Descer") e Tchau vira **Subir** (tocar = volta à superfície; segurar = vai subindo). No PC:
+  Espaço mergulha/volta, **C ou Shift** seguram para descer, Espaço segura para subir. Sem limite de tempo (sem fôlego que acaba).
+  Nada em qualquer direção e profundidade até o fundo e até perto do meio do rio (não atravessa: a outra margem é de barco); o corpo
+  inteiro fica acima da areia **desenhada** (no "baixo" a malha do terreno fica até 0,8 m acima da altura exata no meio do rio — a
+  caça pode querer saber disso para os baús do fundo); a câmera gira em volta do boneco para não entrar no barranco; profundidade na
+  tela ("🫧 1,8 m · no fundo!"); o corpo aponta para baixo descendo e para cima subindo. API: `posicao.profundidade/profundidadeMax`,
+  `segurar('descer'|'subir', on)`, `mergulhar(true|false)` continua (a caça usa).
+- **Mantido:** qualidade adaptativa, `simular()` de passos fixos do E2E, "menos movimento".
+- **Folhas (como refazer):** `mundo-3d-v2/ferramentas/folhas-boneco/folha.mjs` + `diag.js` (uso no topo do arquivo): abrem o app, cadastram uma criança com
+  o penteado pedido, entram no passeio e desenham o boneco num palco neutro com chão quadriculado (lado/trás, 0 / 1,3 / 2,6 / 3,7 m/s,
+  com a altura da sola medida), o manequim da biblioteca tocando a animação de referência, a câmera girando em volta da menina no mundo
+  (alto/médio/baixo) e o mergulho com a câmera do jogo.
+- **VERIFICAÇÃO:** (preenchida abaixo)
+
 **Lote de correções 18/11, pontos 1, 2, 4, 5 e 6 (fila do dono nº 27; NÃO publicado ainda):**
 - **(1) Boas-vindas:** saiu "Oi, [NOME]! Que bom que você voltou, curioso/curiosa / Que bom te ver de novo" (`FALAS.voltou`). Agora
   `FALAS.saudacao` = "Oi, [NOME]!" (clipe já gravado), só na 1ª entrada do dia na vila (`web/src/servicos/saudacao.ts`, por criança e
@@ -238,7 +277,7 @@ fonte em `docs/propostas/06-fonema-unificada/mundo-3d-v2` (copiada no build para
   `app/docs/capturas/mundo3d-arte-{antes,depois}-*.jpg` (praça, rio, embaixo d'água; 1850×980 alto e 390×844 médio). **Não testado:**
   aparelho real (FPS do médio/alto), o som num alto-falante (ninguém ouviu, só medido).
 
-**Passeio 3D: andar, nadar e mergulhar (fila do dono nº 21 e 24; 18/11; NÃO publicado ainda):** queixa do dono: "o personagem não
+**Passeio 3D: andar, nadar e mergulhar (fila do dono nº 21 e 24; 18/11; NÃO publicado ainda) — esqueleto, locomoção e mergulho refeitos na rodada 3 (fila nº 28, bloco acima); o que segue é o histórico:** queixa do dono: "o personagem não
 anda, ele fica pulando, e ele não nada, ele some no mar". Causa: os modelos (Tripo) são uma malha inteira sem esqueleto e a
 animação antiga sacudia o corpo inteiro; no rio, o corpo deitado ficava abaixo da linha d'água.
 - **Esqueleto automático** (`mundo-3d-v2/js/esqueleto.js`), feito no navegador ao receber cada boneco (nenhum arquivo do avatar foi
