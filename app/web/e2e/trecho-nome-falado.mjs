@@ -32,7 +32,11 @@ export async function trechoNomeFalado(browser, { BASE, ok, passarPorteira, cada
     const fs = window.__falasN.filter((f) => f.t >= a && f.t <= b);
     const nome = fs.filter((f) => /audio\/nomes\//.test(f.arquivo));
     const comNome = fs.filter((f) => f.trecho === 0 && /Mari[aá]na/.test(f.texto));
-    return { amostra: [...new Set(fs.filter((f) => f.trecho === 0).map((f) => `${f.cena}:${f.texto.slice(0, 50)}`))].slice(0, 40), fim: location.hash, falas: fs.filter((f) => f.trecho === 0).length, nome: nome.length, comNome: comNome.length, cenasComNome: nome.map((f) => f.cena || f.hash), textos: comNome.map((f) => { const c0 = fs.find((g) => g.cena === f.cena)?.t ?? f.t; const disse = fs.some((g) => g.t >= f.t && g.t - f.t < 8000 && /audio\/nomes\//.test(g.arquivo) && g.texto === f.texto); return `[${f.cena || 'entrada'} +${Math.round((f.t - c0) / 1000)}s ${disse ? 'COM nome' : 'sem nome'}] ${f.texto}`; }).slice(0, 30) };
+    return { amostra: [...new Set(fs.filter((f) => f.trecho === 0).map((f) => `${f.cena}:${f.texto.slice(0, 50)}`))].slice(0, 40), fim: location.hash, falas: fs.filter((f) => f.trecho === 0).length, nome: nome.length, comNome: comNome.length, cenasComNome: nome.map((f) => f.cena || f.hash), textos: comNome.map((f) => {
+      const arqs = fs.filter((g) => g.texto === f.texto && g.t >= f.t && g.t - f.t < 15000).map((g) => g.arquivo.split('/').slice(-2).join('/'));
+      return `[${f.cena || f.hash.split('/').pop()}] ${f.texto} → ${arqs.join(' + ')}`;
+    }).slice(0, 30),
+    nomesTocados: nome.map((f) => `${f.hash.split('/').pop()} ${f.cena} «${f.texto}»`) };
   }, [t0, t1]);
 
   // ---- uma lição inteira (Letra A), voz real ----
@@ -41,6 +45,7 @@ export async function trechoNomeFalado(browser, { BASE, ok, passarPorteira, cada
   await Promise.race([jogarSessao(pg), pg.waitForTimeout(240000)]);
   const lic = await resumo(tL, Date.now());
   if (process.env.NOME_DIAG) console.log(lic.fim, lic.amostra);
+  console.log(`  clipes do nome que tocaram: ${lic.nomesTocados.join(' | ')}`);
   console.log(`  falas com nome na lição:\n    ${lic.textos.join('\n    ')}`);
   const cenas = new Set(lic.cenasComNome);
   console.log(`  lição: ${lic.falas} falas, ${lic.comNome} com o nome no texto, nome dito ${lic.nome}× (${[...cenas].join(', ')})`);
