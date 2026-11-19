@@ -13,20 +13,20 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
 - **(1) Boas-vindas:** saiu "Oi, [NOME]! Que bom que você voltou, curioso/curiosa / Que bom te ver de novo" (`FALAS.voltou`). Agora
   `FALAS.saudacao` = "Oi, [NOME]!" (clipe já gravado), só na 1ª entrada do dia na vila (`web/src/servicos/saudacao.ts`, por criança e
   por dia, localStorage); voltar de outra tela para a vila não fala nada; o balão mostra "Toque na estrela para a missão de hoje." (sem voz).
-- **(2) Nome da criança (decisão do dono):** dito no máximo 1×, nos primeiros 30 s de cada atividade, prova ou jogo
-  (`web/src/servicos/nome-falado.ts`, usado por `servicos/voz.ts`). A atividade recomeça a cada troca de tela (`rotas.ts`) e a cada cena
-  da lição (`Sessao.tsx`). Depois, a voz toca a variante gravada SEM o nome (`semNome` em `@fonema/motor`; ex. "Agora é a sua vez!") ou
-  os mesmos trechos sem o clipe do nome. O nome continua escrito na tela. 20 variantes gravadas (`FALAS.comVarianteSemNome`); as que
-  faltam estão em `app/docs/falas-pendentes.md` §1j. Para mudar a regra (ex. 1× por lição inteira em vez de por atividade): tirar o
-  `useEffect` de `voz.novaAtividade()` do `Sessao.tsx`. A janela de 30 s é escolha desta frente (o dono disse "no começo"), não do
-  dono: num jogo em que a 1ª fala com o nome vem depois dos 30 s, o nome não é dito nenhuma vez. O nome como CONTEÚDO
-  ("Mariana!", "monta o seu nome", "[NOME] começa com este som") nunca é cortado; só o chamamento (`nomeSoChamamento`).
-  Brincar e Lojinha também só se apresentam na 1ª vez do dia (voltar de um jogo para a lista não repete a fala).
-  Medido com voz real (E2E `--nome-falado`, criança "Mariana", build 5d49015): lição da letra A inteira = 6 falas com o nome; o
-  nome tocou no Espelho ("Agora é a sua vez, Mariana!") e no fim ("Hoje você trabalhou…, Mariana."); as seguintes do fim tocaram
-  a variante sem nome ("…conquista nova!", "…chegou para você!") ou sem o clipe ("Tchau, | A tela…"). A abertura "Oi, Mariana!
-  Hoje tem letra nova!" saiu sem o nome porque a saudação da vila (atrasada pelo teste, que entra na lição 3 s depois) ocupou a vez.
-  Jogo "Achar a rima" = 3 falas com o nome, dito 1× (1º acerto); depois "Você conseguiu!" (variante) e "Isso, | Você escutou…".
+- **(2) Nome da criança (decisão do dono):** dito na PRIMEIRA fala com nome de cada atividade, prova ou jogo (venha quando vier) e
+  só ela (`web/src/servicos/nome-falado.ts`, usado por `servicos/voz.ts`). A atividade recomeça a cada troca de tela (`rotas.ts`) e a
+  cada cena da lição (`Sessao.tsx`); uma fala pedida em outra tela que toca atrasada (ex.: a saudação da vila) não gasta a vez da
+  nova. Depois, a voz toca a variante gravada SEM o nome (`semNome` em `@fonema/motor`; ex. "Agora é a sua vez!") ou os mesmos
+  trechos sem o clipe do nome. O nome como CONTEÚDO ("Mariana!", "monta o seu nome", "[NOME] começa com este som") nunca é cortado;
+  só o chamamento (`nomeSoChamamento`). O nome continua escrito na tela. 20 variantes gravadas (`FALAS.comVarianteSemNome`); as que
+  faltam estão em `app/docs/falas-pendentes.md` §1j. Para 1× por lição inteira em vez de por atividade: tirar o `useEffect` de
+  `voz.novaAtividade()` do `Sessao.tsx`. Brincar e Lojinha também só se apresentam na 1ª vez do dia.
+  Medido com voz real (E2E `--nome-falado`, criança "Mariana", build c9bf870): lição da letra A inteira = 6 falas com o nome; o nome
+  tocou 2×: no Espelho ("Agora é a sua vez, Mariana!") e no fim da missão ("Hoje você trabalhou…, Mariana."); as seguintes do fim
+  tocaram a variante sem nome ("…conquista nova!", "…chegou para você!") ou sem o clipe ("Tchau, | A tela…"). A saudação da vila
+  já não gasta a vez da lição. A abertura "Oi, Mariana! Hoje tem letra nova!" foi cortada pelo robô do teste logo depois de "Oi,"
+  (ele toca em "Começar" na hora; o nome vinha em seguida). Jogo "Achar a rima" = 3 falas com o nome, dito 1× (1º acerto: "Isso,
+  Mariana!"); depois "Você conseguiu!" (variante) e "Isso, | Você escutou…" (sem o clipe).
 - **(4) Letras "Aa":** letra isolada sempre maiúscula e minúscula juntas: `web/src/componentes/LetraAa.tsx` (`letraAa()` texto e
   `<LetraAa>`; também usado pela frente do Corre-Som). Aplicado em: opções de letra (Escolher, Troca, Ligar), Trilha A–Z, Memória (cartas
   e capa), capa dos jogos fônicos, Placas da vila, desbloqueio, selos (frente e verso, `selo-pintura.ts`), baús e painel da caça (rótulo
