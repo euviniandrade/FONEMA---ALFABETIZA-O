@@ -171,7 +171,7 @@ export class Boneco {
    * vel: velocidade no chão (m/s) · correr: velocidade de corrida (referência) · noAr: está pulando/caindo ·
    * vy: velocidade vertical · nadando: na água funda · vau: 0..1 água rasa (até a cintura).
    */
-  tick(dt, { vel = 0, correr = 5, noAr = false, vy = 0, nadando = false, vau = 0, falando = false, mergulho = 0, fundura = this.altura * 0.72 } = {}) {
+  tick(dt, { vel = 0, correr = 5, noAr = false, vy = 0, nadando = false, vau = 0, falando = false, prof = 0, profVel = 0 } = {}) {
     this.t += dt;
     const mm = this.menos ? 0.5 : 1;
     const kf = (r) => 1 - Math.exp(-dt * r);
@@ -202,13 +202,14 @@ export class Boneco {
     } else this.mao.visible = false;
 
     // ---- com captura de movimento (js/animacoes.js) ----
-    // no mergulho o corpo fica deitado nadando, mesmo parado
-    if (this.anim && this.anim.passo(dt, { vel: mergulho && nadando ? Math.max(v, 0.6) : v, noAr, nadando, falando, pousou: this.pousou })) {
+    // embaixo d'água o corpo fica deitado nadando, mesmo parado (pernadinha devagar)
+    const fundo = nadando && prof > 0.25;
+    if (this.anim && this.anim.passo(dt, { vel: fundo ? Math.max(v, 0.6) : v, noAr, nadando, falando, pousou: this.pousou })) {
       this.pousou = false;
-      this.mergulho = lerp(this.mergulho || 0, mergulho, kf(3));
       this.pivo.position.y = 0; this.pivo.scale.set(1, 1, 1);
-      // mergulho: o corpo aponta para baixo na descida e volta a ficar reto lá embaixo
-      this.pivo.rotation.set(this.mergulho * 0.35 * this.agua, 0, 0, 'YXZ');
+      // mergulho livre: o corpo aponta para baixo descendo e para cima subindo; lá embaixo, parado, fica reto
+      this.inclMerg = lerp(this.inclMerg || 0, clamp(profVel * 0.45, -0.55, 0.6) * this.agua, kf(4));
+      this.pivo.rotation.set(this.inclMerg, 0, 0, 'YXZ');
       this.anim.aplicar();
       this.posarTchau(tch, kt);
       // na água: a cabeça fica fora (ou, no mergulho, bem embaixo) — mede onde a cabeça ficou e ajusta o corpo
@@ -216,7 +217,7 @@ export class Boneco {
         this.corpo.position.y = 0;
         this.raiz.updateMatrixWorld(true);
         const cab = this.rig.ossos.cabeca.getWorldPosition(_cab).y - this.raiz.getWorldPosition(_raiz).y;
-        const alvo = lerp(this.altura * 0.09, -fundura, this.mergulho) + Math.sin(this.t * 2.4) * 0.025 * mm * (1 - this.mergulho);
+        const alvo = this.altura * 0.09 - prof + Math.sin(this.t * 2.4) * 0.025 * mm * clamp(1 - prof / 0.2, 0, 1);
         this.boia = lerp(this.boia ?? 0, alvo - cab, this.boia === undefined ? 1 : kf(10));
         this.corpo.position.y = this.boia * this.agua;
       } else { this.corpo.position.y = 0; this.boia = undefined; }

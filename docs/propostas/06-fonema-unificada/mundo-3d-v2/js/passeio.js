@@ -34,6 +34,7 @@ const PARTIDA = { x: 0, z: 19.5, giro: Math.PI }; // na entrada da praça, de fr
 const ALTURA = 1.5; // a criança no mundo (m)
 // velocidades de criança (m/s): a passada das pernas acompanha (js/boneco.js), então o pé não escorrega
 const ANDAR = 1.3, CORRER = 3.7, TECLADO = 2.6, PULO = 6.4, GRAVIDADE = 20;
+const MEIO_RIO = 0.9; // nadando, chega até esta distância da linha do meio do rio (m)
 const NADA = 0.5; // água mais funda que isto (m) = nada; mais rasa = anda com a água pela cintura (o boneco de 1,5 m tem a virilha a 0,4 m)
 
 export function criarPasseio(mundo, h = {}) {
@@ -160,12 +161,18 @@ export function criarPasseio(mundo, h = {}) {
   window.addEventListener('keydown', (e) => {
     const k = e.key.toLowerCase();
     if (TECLAS.has(k)) { teclas.add(k); destino = null; e.preventDefault(); }
-    if (k === ' ' || e.code === 'Space') { e.preventDefault(); pular(); }
+    if (k === ' ' || e.code === 'Space') { e.preventDefault(); if (!e.repeat) { if (nadando) espacoNaAgua(true); else pular(); } }
+    // mergulho livre (fila nº 28): na água, C ou Shift seguram para descer; Espaço segura para subir
+    if ((k === 'c' || k === 'shift') && nadando) { e.preventDefault(); segurar('descer', true); }
     if (k === 't' && !e.repeat) acenar();
     if ((k === 'enter' || k === 'e') && !e.repeat) interagir();
   });
-  window.addEventListener('keyup', (e) => teclas.delete(e.key.toLowerCase()));
-  window.addEventListener('blur', () => teclas.clear());
+  window.addEventListener('keyup', (e) => {
+    const k = e.key.toLowerCase(); teclas.delete(k);
+    if (k === 'c' || k === 'shift') segurar('descer', false);
+    if (k === ' ' || e.code === 'Space') espacoNaAgua(false);
+  });
+  window.addEventListener('blur', () => { teclas.clear(); segurar('descer', false); segurar('subir', false); });
 
   function mostrarJoy(cx, cy, jx, jy) {
     if (!elJoy) return;
@@ -206,18 +213,34 @@ export function criarPasseio(mundo, h = {}) {
 
   // ---------- ações ----------
   function pular() {
-    if (nadando) { mergulhar(); return; } // na água funda o botão Pular vira Mergulhar
+    if (nadando) { mergulhar(prof < 0.25); return; } // na água funda: mergulhar (lá embaixo: voltar à superfície)
     if (noAr || bloqueado()) return;
     vy = PULO; noAr = true; eu.impulso(); pulou = true;
     npcs.puloPerto(pos.x, pos.z);
   }
-  // ---------- mergulho: na água funda, desce ~4 s (a câmera vai junto) e volta para respirar ----------
-  let mergulho = 0, mergulhoT = 0;
-  function mergulhar(on = !mergulho) {
-    if (bloqueado() || (on && !nadando)) return;
-    mergulho = on ? 1 : 0; mergulhoT = on ? 4.2 : 0;
-    h.aoMergulho?.(!!mergulho);
+  // ---------- MERGULHO LIVRE (fila nº 28: "ficar clicando em mergulhar e sair é ruim… abaixar e ir mais fundo") ----------
+  // Na água funda a criança nada em qualquer direção e PROFUNDIDADE: segurar Descer (C/Shift ou o botão) desce, segurar
+  // Subir (Espaço ou o botão) sobe; um toque rápido em Mergulhar desce até ~1,2 m e um toque em Subir volta à superfície.
+  // Sem limite de tempo (sem fôlego que acaba: nada de punição). Limites: o fundo do rio (a cabeça para ~0,4 m acima dele)
+  // e o meio do rio (não atravessa para a outra margem: lá é de barco).
+  const DESCE = 1.3, SOBE = 1.7, MERGULHO_TOQUE = 1.2;
+  let prof = 0, profVel = 0, alvoProf = null; // quanto a cabeça está abaixo da posição de nadar na superfície (m)
+  const segura = { descer: false, subir: false };
+  let mergulhoAntes = false, espacoT = 0;
+  function segurar(dir, on) { if (segura[dir] === on) return; segura[dir] = on; if (on) alvoProf = null; }
+  function espacoNaAgua(on) {
+    // Espaço: tocar = mergulhar (na superfície) ou voltar à superfície; segurar = subir
+    if (on) { espacoT = performance.now(); if (prof > 0.25) segurar('subir', true); return; }
+    const toque = performance.now() - espacoT < 260;
+    segurar('subir', false);
+    if (toque) mergulhar(prof < 0.25); // na superfície mergulha; lá embaixo volta para cima
   }
+  function mergulhar(on = prof < 0.25) {
+    if (bloqueado() || (on && !nadando)) return;
+    alvoProf = on ? (prof < MERGULHO_TOQUE - 0.1 ? MERGULHO_TOQUE : prof + 0.8) : 0; // toque em Descer lá embaixo: mais fundo
+  }
+  function profMax(x, z) { return Math.max(0, colisao.NIVEL_AGUA + eu.altura * 0.09 - (colisao.altura(x, z) + 0.4)); }
+  const mergulhando = () => prof > 0.25;
   let acenando = 0;
   function acenar() {
     if (bloqueado()) return;
@@ -252,7 +275,12 @@ export function criarPasseio(mundo, h = {}) {
   function aviso(tipo) { if (performance.now() - avisoT > 2600) { avisoT = performance.now(); h.aoAviso?.(tipo); } }
 
   function mover(dx, dz) {
-    const tenta = (x, z) => { const m = colisao.livre(x, z, 0.3); if (m) return m; if (npcs.colide(x, z, 0.3)) return 'npc'; return null; };
+    const tenta = (x, z) => {
+      let m = colisao.livre(x, z, 0.3);
+      // nadando, o meio do rio deixa passar (até perto da linha do meio; a outra margem é de barco)
+      if (m === 'fundo' && nadando && vila.distRio(x, z) > MEIO_RIO) m = colisao.bloqueado(x, z) ? 'parede' : null;
+      if (m) return m; if (npcs.colide(x, z, 0.3)) return 'npc'; return null;
+    };
     let m = tenta(pos.x + dx, pos.z + dz);
     if (!m) { pos.x += dx; pos.z += dz; return true; }
     const motivo = m;
@@ -307,9 +335,17 @@ export function criarPasseio(mundo, h = {}) {
     // altura: chão, água e pulo
     const chao = colisao.altura(pos.x, pos.z);
     const nada = naAgua > NADA;
-    if (nada !== nadando) { nadando = nada; if (nada) h.aoAviso?.('agua'); h.aoNadando?.(nadando); if (!nada && mergulho) mergulhar(false); }
-    if (mergulho && (mergulhoT -= dt) <= 0) mergulhar(false);
-    const fundura = clamp(naAgua - 0.75, 0.2, 0.55); // até onde a cabeça desce (o corpo deitado não bate no fundo)
+    if (nada !== nadando) { nadando = nada; if (nada) h.aoAviso?.('agua'); h.aoNadando?.(nadando); if (!nada) { prof = 0; alvoProf = null; segura.descer = segura.subir = false; } }
+    // profundidade: segurar desce/sobe; toque leva a um alvo; fica onde parou (sem voltar sozinho)
+    if (nadando && !bloqueado()) {
+      const pAntes = prof, lim = profMax(pos.x, pos.z);
+      if (segura.descer && !segura.subir) prof += DESCE * dt;
+      else if (segura.subir && !segura.descer) prof -= SOBE * dt;
+      else if (alvoProf != null) { const d = alvoProf - prof; prof += Math.sign(d) * Math.min(Math.abs(d), (d > 0 ? DESCE : SOBE) * dt); if (Math.abs(d) < 0.02) alvoProf = null; }
+      prof = clamp(prof, 0, lim);
+      profVel = lerp(profVel, (prof - pAntes) / Math.max(1e-3, dt), 1 - Math.exp(-dt * 8));
+    } else profVel = lerp(profVel, 0, 1 - Math.exp(-dt * 8));
+    if (mergulhando() !== mergulhoAntes) { mergulhoAntes = mergulhando(); h.aoMergulho?.(mergulhoAntes); }
     // nadando: o ponto em que o corpo deita fica na superfície (costas e cabeça para fora); andando: pés no chão (ou no degrau)
     const base = nadando ? colisao.NIVEL_AGUA + eu.baseNado : Math.max(chao, colisao.piso(pos.x, pos.z));
     if (noAr) {
@@ -321,8 +357,8 @@ export function criarPasseio(mundo, h = {}) {
     if (veiculo) pos.y = veiculoY;
     eu.raiz.position.set(pos.x, pos.y + yPe, pos.z);
     eu.raiz.rotation.y = giro;
-    eu.tick(dt, { vel, correr: CORRER, noAr, vy, nadando, vau: nadando ? 0 : clamp(naAgua / NADA, 0, 1), mergulho, fundura });
-    sub = lerp(sub, mergulho && nadando ? 1 : 0, 1 - Math.exp(-dt * 2.5));
+    eu.tick(dt, { vel, correr: CORRER, noAr, vy, nadando, vau: nadando ? 0 : clamp(naAgua / NADA, 0, 1), prof: nadando ? prof : 0, profVel });
+    sub = lerp(sub, nadando ? clamp(prof / 0.45, 0, 1) : 0, 1 - Math.exp(-dt * 2.5));
     eu.sombraEm(yPe, nadando || naAgua > 0.05);
     if (vel > 0.2 || noAr) tempoParado = 0; else tempoParado += dt;
 
@@ -356,10 +392,22 @@ export function criarPasseio(mundo, h = {}) {
       const atras = giro + Math.PI; let dif = atras - cam.giro; while (dif > Math.PI) dif -= Math.PI * 2; while (dif < -Math.PI) dif += Math.PI * 2;
       if (Math.abs(dif) < 1.9) cam.giro += dif * clamp(dt * 0.9 * (vel / CORRER + 0.3), 0, 1);
     }
-    const distAlvo = cam.alto ? 34 : lerp(cam.dist, 3.6, sub), inclAlvo = cam.alto ? 0.95 : lerp(cam.incl, 0.12, sub);
+    const distAlvo = cam.alto ? 34 : lerp(cam.dist, 3.6, sub), inclAlvo = cam.alto ? 0.95 : lerp(cam.incl, 0.2, sub);
     alvoCam.set(pos.x, pos.y + yPe * 0.35 + ALTURA * (cam.alto ? 0.2 : 0.82), pos.z);
     // mergulhando: a câmera desce atrás do boneco, embaixo d'água
     if (sub > 0.01) alvoCam.y = lerp(alvoCam.y, eu.cabecaY() ?? alvoCam.y, sub);
+    // embaixo d'água a câmera não entra no barranco: se atrás do boneco há areia, ela gira em volta dele até achar
+    // um lado com água livre (fila nº 28: no fundo a câmera ficava dentro da margem e o boneco virava silhueta)
+    if (sub > 0.3 && !cam.alto) {
+      const ci0 = Math.cos(inclAlvo), si0 = Math.sin(inclAlvo);
+      const aguaLivre = (g) => { for (let s = 0.6; s <= distAlvo; s += 0.3) { const x = alvoCam.x + Math.sin(g) * ci0 * s, z = alvoCam.z + Math.cos(g) * ci0 * s, y = alvoCam.y + si0 * s; if (y < colisao.altura(x, z) + 0.35) return false; } return true; };
+      if (!aguaLivre(cam.giro)) {
+        for (let k = 1; k <= 9; k++) for (const sg of [1, -1]) {
+          const g = cam.giro + sg * k * 0.35;
+          if (aguaLivre(g)) { let d = g - cam.giro; cam.giro += d * clamp(dt * 3, 0, 1); k = 99; break; }
+        }
+      }
+    }
     const ci = Math.cos(inclAlvo), si = Math.sin(inclAlvo);
     _d.set(Math.sin(cam.giro) * ci, si, Math.cos(cam.giro) * ci);
     // não atravessa prédios: anda do alvo para trás e para antes de entrar em algo mais alto que a câmera
@@ -417,8 +465,10 @@ export function criarPasseio(mundo, h = {}) {
 
   return {
     colisao, npcs, rotasRuins, LUGARES,
-    get posicao() { return { x: pos.x, y: pos.y, z: pos.z, giro, nadando, noAr, mergulhando: !!mergulho, cameraSubmersa: camSub, mergulhoCamera: +sub.toFixed(2) }; },
+    get posicao() { return { x: pos.x, y: pos.y, z: pos.z, giro, nadando, noAr, mergulhando: mergulhando(), profundidade: +prof.toFixed(2), profundidadeMax: +profMax(pos.x, pos.z).toFixed(2), cameraSubmersa: camSub, mergulhoCamera: +sub.toFixed(2) }; },
     mergulhar,
+    /** Mergulho livre: segurar('descer'|'subir', true|false) — botões da página e testes. */
+    segurar,
     get camera() { return { ...cam }; },
     get perto() { return perto; },
     usarAvatar(pacote) { eu.usarModelo(malhaDoPacote(pacote), pacote.altura || 1.1); eu.origem = 'app'; },

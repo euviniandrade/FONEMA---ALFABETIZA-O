@@ -28,6 +28,12 @@
   #btPular { grid-area: pular; width: 104px; height: 104px; background: var(--sol); }
   #btPular .ic { font-size: 40px; }
   #btTchau { grid-area: tchau; width: 84px; height: 84px; }
+  /* mergulho livre (fila nº 28): na água, Tchau dá lugar a Subir; Pular vira Descer (segurar = ir descendo) */
+  #btSubir { grid-area: tchau; width: 84px; height: 84px; display: none; background: #CFF1FF; }
+  body.nadando #btTchau { display: none; } body.nadando #btSubir { display: inline-flex; }
+  #btPular.segurando, #btSubir.segurando { transform: translateY(3px) scale(.96); filter: brightness(1.08); }
+  #fundura { position: fixed; z-index: 6; left: 50%; transform: translateX(-50%); bottom: max(18px, env(safe-area-inset-bottom)); background: rgba(225,246,255,.92); color: var(--tinta); border-radius: 22px; padding: 6px 16px; font: 700 18px Fredoka, sans-serif; box-shadow: var(--sombra); display: none; pointer-events: none; }
+  body.mergulhando #fundura { display: block; }
   #btAcao { grid-area: acao; min-height: 84px; font-size: 26px; padding: 12px 26px; background: var(--sol); display: none; }
   #btAcao.on { display: inline-flex; animation: chama 1.2s ease-in-out infinite; }
   #btAcao.trancado { background: #E1E4EC; animation: none; }
@@ -75,7 +81,7 @@
   #semgl .painel div { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
   @media (max-width: 700px) {
     #btPular { width: 92px; height: 92px; }
-    #btTchau { width: 76px; height: 76px; }
+    #btTchau, #btSubir { width: 76px; height: 76px; }
     #btAcao { min-height: 76px; font-size: 22px; padding: 10px 20px; }
     #lugar { font-size: 18px; padding: 6px 14px; max-width: calc(100vw - 110px); left: calc(50% - 36px); overflow: hidden; text-overflow: ellipsis; }
     #lugar #lugarNome { overflow: hidden; text-overflow: ellipsis; }
@@ -107,7 +113,10 @@
 <div id="acoes" class="hud">
   <button class="bt" id="btAcao" data-testid="passeio-acao"><span class="ic" id="acaoIc">▶️</span><span id="acaoRot">Entrar</span></button>
   <button class="bt redondo" id="btTchau" data-testid="passeio-tchau" aria-label="Dar tchau"><span class="ic">👋</span>Tchau</button>
+  <button class="bt redondo" id="btSubir" data-testid="passeio-subir" aria-label="Subir (segure para ir subindo)"><span class="ic">⬆️</span>Subir</button>
   <button class="bt redondo" id="btPular" data-testid="passeio-pular" aria-label="Pular"><span class="ic">⤴️</span>Pular</button>
+</div>
+<div id="fundura" aria-live="off">🫧 <span id="funduraM">0</span> m<span id="funduraFundo"></span>
 </div>
 <div id="dica"></div>
 <div id="cartao" role="dialog" aria-live="polite"><div class="ic" id="cIc">🔒</div><h3 id="cTit"></h3><p id="cTxt"></p><div class="acoes" id="cAcoes"></div></div>
@@ -232,8 +241,9 @@ if (!temWebGL()) {
     },
     aoTchau() {},
     // na água funda o botão Pular vira Mergulhar (e Subir enquanto está lá embaixo)
-    aoNadando(on) { $('#btPular').innerHTML = on ? '<span class="ic">🤿</span>Mergulhar' : '<span class="ic">⤴️</span>Pular'; $('#btPular').setAttribute('aria-label', on ? 'Mergulhar' : 'Pular'); },
-    aoMergulho(on) { if ($('#btPular').textContent.includes('Mergulhar') || $('#btPular').textContent.includes('Subir')) $('#btPular').innerHTML = on ? '<span class="ic">🫧</span>Subir' : '<span class="ic">🤿</span>Mergulhar'; avisar('fonema:mergulho', { on }); },
+    // na água funda: Pular vira Mergulhar/Descer (tocar = mergulhar; segurar = ir descendo) e Tchau vira Subir
+    aoNadando(on) { document.body.classList.toggle('nadando', on); rotularPular(); },
+    aoMergulho(on) { document.body.classList.toggle('mergulhando', on); rotularPular(); avisar('fonema:mergulho', { on }); },
     aoSubmerso(on) { document.body.classList.toggle('submerso', on); window.dispatchEvent(new CustomEvent('fonema:submerso', { detail: { on } })); },
     aoToque() { esconderDica(); },
   });
@@ -244,7 +254,23 @@ if (!temWebGL()) {
   if (app.posicao) voltarAoLugar();
   aplicarBonecos();
 
-  $('#btPular').onclick = () => { passeio.pular(); esconderDica(); };
+  // botões de segurar (mergulho livre): segurar desce/sobe; toque rápido = mergulhar / voltar à superfície
+  function rotularPular() {
+    const n = document.body.classList.contains('nadando'), m = document.body.classList.contains('mergulhando');
+    $('#btPular').innerHTML = !n ? '<span class="ic">⤴️</span>Pular' : m ? '<span class="ic">⬇️</span>Descer' : '<span class="ic">🤿</span>Mergulhar';
+    $('#btPular').setAttribute('aria-label', !n ? 'Pular' : 'Mergulhar (segure para ir descendo)');
+  }
+  function botaoSegurar(el, dir, toque) {
+    let t0 = 0, ativo = false;
+    el.addEventListener('pointerdown', (e) => { if (!document.body.classList.contains('nadando')) return; t0 = performance.now(); ativo = true; el.classList.add('segurando'); passeio.segurar(dir, true); try { el.setPointerCapture(e.pointerId); } catch { /* ok */ } });
+    const fim = () => { if (!ativo) return; ativo = false; el.classList.remove('segurando'); passeio.segurar(dir, false); el.dataset.segurou = performance.now() - t0 > 260 ? '1' : ''; };
+    el.addEventListener('pointerup', fim); el.addEventListener('pointercancel', fim);
+    el.onclick = () => { const segurou = el.dataset.segurou === '1'; el.dataset.segurou = ''; esconderDica(); if (!segurou) toque(); };
+  }
+  botaoSegurar($('#btPular'), 'descer', () => { if (document.body.classList.contains('nadando')) passeio.mergulhar(true); else passeio.pular(); });
+  botaoSegurar($('#btSubir'), 'subir', () => passeio.mergulhar(false));
+  // profundidade na tela enquanto mergulha (e quando chega no fundo)
+  setInterval(() => { if (!document.body.classList.contains('mergulhando')) return; const p = passeio.posicao; $('#funduraM').textContent = p.profundidade.toFixed(1).replace('.', ','); $('#funduraFundo').textContent = p.profundidade >= p.profundidadeMax - 0.05 ? ' · no fundo!' : ''; }, 200);
   $('#btTchau').onclick = () => passeio.acenar();
   $('#btAcao').onclick = () => passeio.interagir();
   $('#btAlto').onclick = () => { const on = passeio.verDoAlto(); $('#btAlto').classList.toggle('on', on); };
@@ -253,8 +279,8 @@ if (!temWebGL()) {
   for (const b of document.querySelectorAll('.bt')) b.addEventListener('keydown', (e) => { if (e.key.startsWith('Arrow') || e.key === ' ') e.preventDefault(); });
 
   // dica de controles (some sozinha ou no primeiro passo)
-  const DICA_TOQUE = [['👈', 'Dedo à esquerda: andar'], ['👉', 'Dedo à direita: girar'], ['👆', 'Toque no chão: ir até lá']];
-  const DICA_PC = [['⬆️⬇️⬅️➡️', 'Setinhas ou WASD: andar'], ['🖱️', 'Arraste: girar · Roda: zoom'], ['␣', 'Espaço: pular (na água: mergulhar) · T: tchau'], ['👆', 'Clique no chão: ir até lá']];
+  const DICA_TOQUE = [['👈', 'Dedo à esquerda: andar'], ['👉', 'Dedo à direita: girar'], ['👆', 'Toque no chão: ir até lá'], ['🤿', 'Na água: segure Mergulhar para descer e Subir para subir']];
+  const DICA_PC = [['⬆️⬇️⬅️➡️', 'Setinhas ou WASD: andar'], ['🖱️', 'Arraste: girar · Roda: zoom'], ['␣', 'Espaço: pular · T: tchau'], ['🤿', 'Na água: Espaço mergulha · C ou Shift: descer · Espaço: subir'], ['👆', 'Clique no chão: ir até lá']];
   let dicaT = 0;
   function mostrarDica(ms = 7000) {
     const d = $('#dica'); d.innerHTML = '';
