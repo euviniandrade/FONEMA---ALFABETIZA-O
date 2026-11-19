@@ -51,7 +51,8 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   numa captura, nem cartas viradas da Memória, baús da caça, Troca e Ligar); `--sem-jornada` (build e091117): 141 ✓ e parou no 1º ✗,
   "fim da corrida: pontos e estrelas" do Corre-Som (frente da corrida), depois de passar cadastro, Trilha A–Z, vila/lojinha,
   jornada, Trilha dos Sons, Cantinho, voz real e cópia. `--mundo3d`: as checagens antigas de andar/mergulho da frente do passeio
-  falham agora (obra em andamento dela); as do voltar ao passeio: ver o resultado anotado logo abaixo.
+  falham agora (obra em andamento dela); as do voltar ao passeio passaram (rodada com as falhas dos outros só anotadas): entrar pela porta → Cantinho; voltar → passeio;
+  boneco na porta da Biblioteca (-15,1; -4,9) e não na partida; câmera atrás dele; do passeio, voltar → vila. Ninguém testou num aparelho.
 
 **Corre-Som em corrida (fila do dono nº 27, ponto 3; D035; 18/11; NÃO publicado ainda):** pedido do dono: "não pode ficar parando…
 xizinho e perde ponto… tempo, objetivo e premiação… elevando o nível… letras Aa". Decisão: `docs/decisoes/035-corre-som-corrida.md`.
