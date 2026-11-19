@@ -33,6 +33,11 @@ queixa do dono: "parece que ela está pulando… a forma de andar está muito ru
   fora cobre, uma camada só, 30% (era 42%); a grama de perto é desenhada depois do corpo e não acende. Mechas de cabelo
   (`app/web/src/avatar3d/cabelos.ts`): a face de fora passou a ser a da frente (antes o lado de dentro do tubo era o visível, com a luz
   invertida). Calça e tênis brancos são a roupa padrão do catálogo (não é defeito).
+- **Ajustes depois da 1ª revisão (coordenador):** a calça dobrava em vinco no joelho e a barra ia junto com o pé → faixa de peso do
+  joelho 2× mais larga e a barra presa à canela (só o sapato segue o pé). O cabelo comprido balançava "duro" e cobria o rosto de lado →
+  as malhas do penteado chegam marcadas (`pacote.ts`, `parte: 'cabelo'`) e ganham um 16º osso com **mola** (pende quando a cabeça
+  inclina, vai para trás ao correr e ao arrancar, vai-e-vem leve; sem peso no peito/braço); o liso (comprido, franja, ondulado) começa
+  mais para trás dos lados (`cabelos.ts`, também no app): de lado aparecem olho e bochecha (`v15-passeio-depois-cabelo-andar-de-perto.jpg`).
 - **Mergulho livre (`js/passeio.js`, `js/boneco.js`, `passeio.html`):** na água funda, Pular vira **Mergulhar** (tocar = desce ~1,2 m;
   segurar = vai descendo; lá embaixo vira "Descer") e Tchau vira **Subir** (tocar = volta à superfície; segurar = vai subindo). No PC:
   Espaço mergulha/volta, **C ou Shift** seguram para descer, Espaço segura para subir. Sem limite de tempo (sem fôlego que acaba).
@@ -71,7 +76,11 @@ queixa do dono: "parece que ela está pulando… a forma de andar está muito ru
   e capa), capa dos jogos fônicos, Placas da vila, desbloqueio, selos (frente e verso, `selo-pintura.ts`), baús e painel da caça (rótulo
   vindo do app; a letra/registro continua "A"), ícone do cadastro. Sílabas, dígrafos, palavras e letras de palavra sendo escrita/lida
   ficam como estavam (só letra única vira "Aa"). Nenhuma atividade pareia maiúscula com minúscula (conferido; regra 3). Capturas
-  olhadas: `app/docs/capturas/v15-aa-*.png` (390×844 e 1850×980).
+  olhadas: `app/docs/capturas/v15-aa-*.png` (390×844 e 1850×980). Caça (19/11, achado da frente da caça: um baú parecia "b"): os
+  baús medem o "Bb" para caber inteiro no círculo, a letra que voa para a faixa é "Bb", o painel do baú aberto mostra "Cc Dd Gg" e
+  os portais 3D (`personagens.js`) também; capturas `v15-aa-caca-*.png`. A faixa do nível 2 continua com a letra da PALAVRA em
+  maiúscula ("F _ _ _", como as palavras do app), pela regra do dono de não mexer em palavra escrita. No nível 1 a placa de um
+  baú perto das árvores da praça fica em parte escondida pela copa: provável origem do "b" visto (só a metade de baixo aparecia).
 - **(5) abacaxi:** a medida do chiado mostrou um fechamento (silêncio de "t") antes do /ʃ/ só no clipe da Sofia (o do Tales já estava
   certo); a transcrição ouvia "Abacaxi" nos dois (ela corrige para a palavra do dicionário). Regravados os dois com texto de pronúncia
   "Abacachi." (recurso já existente: `audio-fontes/ajustes.json` › `texto` muda só o que vai ao TTS; a chave continua "abacaxi").
