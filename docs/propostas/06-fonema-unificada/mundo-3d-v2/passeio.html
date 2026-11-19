@@ -266,9 +266,9 @@ if (!temWebGL()) {
     $('#btPular').setAttribute('aria-label', !n ? 'Pular' : 'Mergulhar (segure para ir descendo)');
   }
   function botaoSegurar(el, dir, toque) {
-    let t0 = 0, ativo = false;
-    el.addEventListener('pointerdown', (e) => { if (!document.body.classList.contains('nadando')) return; t0 = e.timeStamp; ativo = true; el.classList.add('segurando'); passeio.segurar(dir, true); try { el.setPointerCapture(e.pointerId); } catch { /* ok */ } });
-    const fim = (e) => { if (!ativo) return; ativo = false; el.classList.remove('segurando'); passeio.segurar(dir, false); el.dataset.segurou = e.timeStamp - t0 > 260 ? '1' : ''; }; // hora do evento: aparelho lento não vira "segurar"
+    let t0 = 0, p0 = 0, ativo = false;
+    el.addEventListener('pointerdown', (e) => { if (!document.body.classList.contains('nadando')) return; t0 = e.timeStamp; p0 = passeio.posicao.profundidade; ativo = true; el.classList.add('segurando'); passeio.segurar(dir, true); try { el.setPointerCapture(e.pointerId); } catch { /* ok */ } });
+    const fim = (e) => { if (!ativo) return; ativo = false; el.classList.remove('segurando'); passeio.segurar(dir, false); el.dataset.segurou = e.timeStamp - t0 > 260 && Math.abs(passeio.posicao.profundidade - p0) >= 0.15 ? '1' : ''; }; // hora do evento: aparelho lento não vira "segurar"
     el.addEventListener('pointerup', fim); el.addEventListener('pointercancel', fim);
     el.onclick = () => { const segurou = el.dataset.segurou === '1'; el.dataset.segurou = ''; esconderDica(); if (!segurou) toque(); };
   }

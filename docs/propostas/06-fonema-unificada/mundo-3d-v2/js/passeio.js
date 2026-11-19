@@ -226,13 +226,14 @@ export function criarPasseio(mundo, h = {}) {
   const DESCE = 1.3, SOBE = 1.7, MERGULHO_TOQUE = 1.2;
   let prof = 0, profVel = 0, alvoProf = null; // quanto a cabeça está abaixo da posição de nadar na superfície (m)
   const segura = { descer: false, subir: false };
-  let mergulhoAntes = false, espacoT = 0;
+  let mergulhoAntes = false, espacoT = 0, espacoProf = 0;
   function segurar(dir, on) { if (segura[dir] === on) return; segura[dir] = on; if (on) alvoProf = null; }
   function espacoNaAgua(on, quando = performance.now()) {
     // Espaço: tocar = mergulhar (na superfície) ou voltar à superfície; segurar = subir
     // (hora do evento, não a hora em que foi tratado: aparelho lento demora a tratar e o toque viraria "segurar")
-    if (on) { espacoT = quando; if (prof > 0.25) segurar('subir', true); return; }
-    const toque = quando - espacoT < 260;
+    if (on) { espacoT = quando; espacoProf = prof; if (prof > 0.25) segurar('subir', true); return; }
+    // toque = soltou logo OU quase não saiu do lugar (aparelho lento: o soltar chega tarde, mas a criança só tocou)
+    const toque = quando - espacoT < 260 || Math.abs(prof - espacoProf) < 0.15;
     segurar('subir', false);
     if (toque) mergulhar(prof < 0.25); // na superfície mergulha; lá embaixo volta para cima
   }
