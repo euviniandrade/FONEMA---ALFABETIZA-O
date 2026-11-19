@@ -153,6 +153,34 @@ arquivo novo `mundo-3d-v2/js/guia-passos.js` (carregado por `js/caca-tesouro.js`
 - **Falta:** música de aventura (ponto 1 do item 29) é de outra frente; ninguém testou num aparelho de verdade; com a máquina de teste
   muito carregada o minimapa redesenha a cada 3 passos (pode pesar em celular fraco: não medido).
 
+**Passeio 3D: gráfico "de filme de animação" (fila nº 28, parte do gráfico) e trilha de aventura (fila nº 29, ponto 1); 18–19/11; NÃO publicado:**
+- **Trilha** (`mundo-3d-v2/js/som.js`, composição original em código): 120 batidas/min, ciclo de 32 compassos (A levada e riff, B tema
+  heroico, C pergunta e resposta com sininho, D ponte), camadas que entram e saem, bumbo/caixa suaves, chocalho, baixo em colcheias,
+  pizzicato, metais macios, viradas de tom. Três intensidades: `calmo` (embaixo d'água: sem bateria), `normal`, `aventura` (caça ao
+  tesouro e barco: `FONEMA_CACA.emCaca` ou `body.no-barco`). Abaixa para 28% quando há fala: cartão aberto OU o canal de voz do app
+  ocupado (`canal-audio.ts` expõe `window.FONEMA_CANAL_OCUPADO`, lido pelo iframe). Mudo (M) e "menos movimento" continuam.
+  Medido offline (OfflineAudioContext): normal pico -14,1 dB / RMS -28,6 dB; aventura -12,8 / -26,8; calmo -18,7 / -32,7; menos
+  movimento -19,4 / -32,2 (a antiga: pico -15,8 / RMS -31,4). Prévias para ouvir: `app/docs/audio-previa/trilha-passeio-*.mp3`.
+  **Ninguém ouviu num alto-falante** (só medido).
+- **Gráfico** (`ceu.js`, `kit.js`, `natureza.js`, `materiais.js`, `vila.js`, `predios.js`, `mundo.js`): luz de fim de manhã dourado (sol
+  #FFE6BC 3,4 mais baixo = sombras mais compridas; céu de preenchimento #BCDCFF 0,6; rebatida do chão #E8C390; exposição 1,0 igual;
+  raio da sombra 4→5); céu mais fundo com bruma quente no horizonte; morros em 3 camadas ao longe (perspectiva atmosférica);
+  pólen/cisquinhos de luz no ar; nuvens mais redondas e mais numerosas no médio/alto; copas sem facetas (normais da copa inteira +
+  oclusão de ambiente ASSADA na cor do vértice: por baixo e no miolo mais escuro); folhas com luz atravessando quando se olha
+  contra o sol; arbustos fofos (bolha mais redonda no médio/alto); prédios com cumeeira, calhas e floreiras nas janelas (lote à
+  parte, fora da colisão); janela nunca por cima da porta no sobrado. **Para a frente do boneco:** só mudou a luz do sol/céu acima
+  (o avatar fica um pouco mais quente e com sombra mais longa).
+- **Peso:** no "baixo" o desenho é o mesmo de antes (mesmas vistas: praça 130 draws/651 mil triângulos × 128/656 mil antes;
+  rio 55/505 mil × 55/507 mil; vista do alto 232/906 mil × 232/918 mil); morros, pólen, nuvens extras, arbustos fofos, acabamento
+  dos prédios e a luz nas folhas NÃO existem no baixo e são desligados na troca ao vivo de qualidade. Médio: +3–7% de triângulos.
+- **Verificado:** typecheck, lint e `npm test` 481/481 (cópia separada, commit 07d3b21); E2E `--mundo3d` 35 ✓ 0 ✗ no 07d3b21 (FPS no
+  baixo 0,6/s). Rodado de novo no c0b1715 (já com a animação do boneco em andamento da outra frente): parou em "cabeça sobe e desce
+  8,4 cm" (limite 8 cm), que é da animação, não do gráfico. Capturas antes × depois olhadas: `app/docs/capturas/mundo3d-v3-*`.
+- **Limites (honesto):** a diferença é clara de perto (arbustos, árvores, floreiras, céu) mas ainda não é "Pixar": as copas continuam
+  com contorno um pouco poligonal (mais triângulos pesariam no celular), os prédios não ganharam telhas em relevo nem varandas, e não
+  há modelos de artista. Próximos passos sugeridos: copas com mais triângulos só no alto (perto da câmera), varandas e portas
+  esculpidas, AO no médio. Ninguém viu num aparelho de verdade.
+
 **Caça ao tesouro das palavras no passeio 3D (fila do dono nº 25; 18/11; NÃO publicado ainda):** pedido do dono: "um caça ao
 tesouro das palavras… desbravar na água, pegar o barco… um circulozinho… dicas tipo charada… vários níveis… ensinando a usar cada cenário".
 - **Onde:** ícone 🗺️ no passeio (canto de cima, à direita) e cartão "Caça ao Tesouro" em Brincar → Jogos (só aparece com 3D; abre
