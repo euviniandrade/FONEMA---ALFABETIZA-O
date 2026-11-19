@@ -100,7 +100,15 @@ export function ligarCaca({ mundo, passeio, avisar }) {
       g.beginPath(); g.arc(w / 2, h / 2, 118, 0, 7); g.fillStyle = '#FFFFFF'; g.shadowColor = 'rgba(40,30,60,.35)'; g.shadowBlur = 12; g.fill(); g.shadowColor = 'transparent';
       g.lineWidth = 10; g.strokeStyle = '#F2B33D'; g.stroke();
       g.fillStyle = '#2E4374'; g.textAlign = 'center'; g.textBaseline = 'middle';
-      if (b.letra) { const t = b.rotulo || b.letra; g.font = `700 ${t.length > 1 ? 118 : 170}px Andika, Fredoka, sans-serif`; g.fillText(t, w / 2, h / 2 + 8); } // fila nº 27 (4): rótulo "Aa" vem do app
+      if (b.letra) {
+        // fila nº 27 (4): letra solta sempre maiúscula e minúscula ("Bb"); o rótulo vem do app e, se faltar, é montado aqui.
+        // O tamanho é medido para as duas letras caberem inteiras no círculo (nenhuma some na borda).
+        const t = b.rotulo || (b.letra.length === 1 ? b.letra.toUpperCase() + b.letra.toLowerCase() : b.letra);
+        let fs = t.length > 1 ? 130 : 170;
+        g.font = `700 ${fs}px Andika, Fredoka, sans-serif`;
+        const lw = g.measureText(t).width; if (lw > 190) { fs = Math.floor(fs * 190 / lw); g.font = `700 ${fs}px Andika, Fredoka, sans-serif`; }
+        g.fillText(t, w / 2, h / 2 + 8);
+      }
       else if (!b.figura) { g.font = '700 150px Fredoka, sans-serif'; g.fillText('?', w / 2, h / 2 + 6); }
     });
     if (b.figura) {
@@ -269,7 +277,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
     const r = mundo.renderer.domElement.getBoundingClientRect();
     const sx = r.left + (_v.x * 0.5 + 0.5) * r.width, sy = r.top + (-_v.y * 0.5 + 0.5) * r.height;
     const t = slot.getBoundingClientRect();
-    const v = el('div', { className: 'caca-voa', textContent: b.def.letra || '' });
+    const v = el('div', { className: 'caca-voa', textContent: b.def.rotulo || b.def.letra || '' }); // voando, a letra é solta: "Bb"; na faixa vira letra da PALAVRA (como está escrita)
     v.style.left = `${sx - 25}px`; v.style.top = `${sy - 30}px`; document.body.append(v);
     requestAnimationFrame(() => { v.style.transform = `translate(${t.left - sx + 25}px, ${t.top - sy + 30}px)`; });
     setTimeout(() => { slot.textContent = b.def.letra || ''; slot.classList.add('cheia'); v.remove(); }, menos ? 50 : 850);

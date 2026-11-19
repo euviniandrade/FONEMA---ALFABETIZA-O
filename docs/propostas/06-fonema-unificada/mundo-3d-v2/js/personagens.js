@@ -135,7 +135,7 @@ export function criarPortal({ id, nome, letra = '★', estado = 'atual' }) {
   const anel = new THREE.Mesh(new THREE.TorusGeometry(1.45, 0.07, 10, 48), new THREE.MeshStandardMaterial({ color: corBrilho, emissive: corBrilho, emissiveIntensity: ativo ? 2.2 : 0.0, roughness: 0.3 }));
   anel.rotation.x = Math.PI / 2; anel.position.y = 0.6; g.add(anel);
   // letra flutuante (o som da fase)
-  const lt = canvasTex(256, 256, (c) => { c.fillStyle = '#FFF8E7'; c.beginPath(); c.arc(128, 128, 116, 0, Math.PI * 2); c.fill(); c.lineWidth = 12; c.strokeStyle = estado === 'bloqueada' ? '#8A8EA0' : '#F2B33D'; c.stroke(); c.fillStyle = estado === 'bloqueada' ? '#8A8EA0' : '#2E4374'; c.font = '700 150px Andika, Fredoka, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(estado === 'bloqueada' ? '🔒' : letra, 128, 140); });
+  const lt = canvasTex(256, 256, (c) => { c.fillStyle = '#FFF8E7'; c.beginPath(); c.arc(128, 128, 116, 0, Math.PI * 2); c.fill(); c.lineWidth = 12; c.strokeStyle = estado === 'bloqueada' ? '#8A8EA0' : '#F2B33D'; c.stroke(); c.fillStyle = estado === 'bloqueada' ? '#8A8EA0' : '#2E4374'; c.textAlign = 'center'; c.textBaseline = 'middle'; const t = estado === 'bloqueada' ? '🔒' : /^\p{L}$/u.test(letra) ? letra.toUpperCase() + letra.toLowerCase() : letra; c.font = `700 ${t.length > 1 && t !== '🔒' ? 118 : 150}px Andika, Fredoka, sans-serif`; c.fillText(t, 128, 140); }); // fila nº 27 (4): letra solta em "Aa"
   const letraS = new THREE.Sprite(new THREE.SpriteMaterial({ map: lt, toneMapped: false, fog: false, alphaTest: 0.05 })); letraS.scale.set(1.2, 1.2, 1); letraS.position.set(0, 3.9, 0); g.add(letraS);
   // faíscas subindo
   const N = 40, pos = new Float32Array(N * 3), seed = new Float32Array(N);
