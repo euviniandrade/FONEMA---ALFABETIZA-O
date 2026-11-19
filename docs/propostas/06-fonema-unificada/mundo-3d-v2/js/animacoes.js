@@ -183,7 +183,7 @@ export class Animador {
       // o joelho vai em direção à reta quadril→tornozelo, mais quanto mais perto do chão está o pé
       const ic = ij['coxa' + L] * 3, ik = ij['joelho' + L] * 3, ip = ij['pe' + L] * 3;
       const apoio = 1 - Math.min(1, Math.max(0, (P[ip + 1] - D.rep.P[ip + 1]) / 0.12));
-      const a = ESTICA * apoio * this.pCorre;
+      const a = ESTICA * apoio * (0.4 + 0.6 * this.pCorre);
       if (a > 0) for (let c = 0; c < 3; c++) P[ik + c] += ((P[ic + c] + P[ip + c]) / 2 - P[ik + c]) * a;
       const sb = Math.min(1, 0.35 + 0.65 * s), zo = P[iz('ombro')];
       for (const nm of ['cotovelo', 'mao']) P[iz(nm)] = zo + (P[iz(nm)] - zo) * sb;
