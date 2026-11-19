@@ -146,7 +146,9 @@ function mecha(pts: THREE.Vector3[], larg: (t: number) => number, esp: (t: numbe
   const idx: number[] = [];
   for (let i = 0; i < segs; i++) for (let j = 0; j < voltas; j++) {
     const a = i * m + j, b = a + m;
-    idx.push(a, b, a + 1, a + 1, b, b + 1);
+    // face de fora para fora (fila nº 28): na ordem antiga o lado da frente era o de DENTRO do tubo e as normais
+    // apontavam para dentro (via-se a parede de trás de cada mecha, com a luz do lado errado)
+    idx.push(a, a + 1, b, a + 1, b + 1, b);
   }
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
