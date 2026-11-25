@@ -9,6 +9,7 @@ import { Instancias, criarArvores, ipe, coqueiro, bananeira, criarBichinhos } fr
 import { criarRio } from './agua.js';
 import { addDetalheChao, addDetalheSuperficie, addCausticas, addTranslucido, DETALHE } from './materiais.js';
 import { criarSprite, criarBolota, criarZumZum, criarPortal, rotulo } from './personagens.js';
+import { criarVida } from './vida.js';
 
 // ---------- rio e relevo ----------
 const RIO = new THREE.CatmullRomCurve3([[60, -200], [56, -110], [47, -55], [43, -10], [46, 25], [52, 60], [46, 110], [54, 200]].map(([x, z]) => new THREE.Vector3(x, 0, z)));
@@ -371,6 +372,23 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   const qualidadeArbustos = (n) => { const fofo = n !== 'baixo' && !!arbMalhas[1]; arbMalhas[0].visible = !fofo; if (arbMalhas[1]) arbMalhas[1].visible = fofo; };
   qualidadeArbustos(q);
   const pet = new Instancias(new THREE.CircleGeometry(0.5, 6).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.8 }), { cast: false }); ctx.petalas.forEach((f) => pet.add(f.m, f.c)); grupo.add(pet.build());
+  // gráfico, rodada 2 (só médio/alto): meio-fio, sombras de contato, flores do campo, bandos ao longe e borboletas (js/vida.js)
+  let vida = null;
+  if (ctx.D) {
+    const extras = [[0, 1, 6.6, 6.6, 0, 0.8]];
+    for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI * 2 + Math.PI / 8; extras.push([Math.cos(a) * 12.6, 1 + Math.sin(a) * 12.6, 0.55, 0.55, 0, 0.8]); }
+    for (const z of [16, 25, 34, 43, 52]) extras.push([z % 2 ? 3.2 : -3.2, z, 0.55, 0.55, 0, 0.8]);
+    for (const [x, z] of [[-4, -16], [4, -16], [20, 6], [-14, 6], [33.5, 3.5], [30, 9]]) extras.push([x, z, 0.55, 0.55, 0, 0.8]);
+    for (let i = 0; i < 6; i++) { const a = (i / 6) * Math.PI * 2 + 0.25; if (Math.abs(Math.sin(a) - 1) < 0.15) continue; extras.push([Math.cos(a) * 10.4, 1 + Math.sin(a) * 10.4, 1.35, 0.6, -a - Math.PI / 2, 0.7]); }
+    extras.push([33.5, 14.5, 1.35, 0.6, -Math.PI / 2 - 0.3, 0.7]);
+    for (const [x, z] of [[-9.5, -6], [9.5, -6], [-9.5, 9], [9.5, 9]]) extras.push([x, z, 2.9, 2.9, 0, 0.75]);
+    for (const [x, z] of [[30, 30], [-36, -14], [16, 60], [-40, 40]]) extras.push([x, z, 2.2, 2.2, 0, 0.8]);
+    for (const [x, z] of [[33, 10], [34.5, -2], [35.5, 25], [-16, 36], [16, -32], [-14, -32]]) extras.push([x, z, 1.1, 1.1, 0, 0.7]);
+    for (const [x, z] of [[-26, 25], [-12, 45], [15, 30], [27, 30], [-30, -26], [13, -38]]) extras.push([x, z, 1.4, 1.4, 0, 0.7]);
+    vida = criarVida({ grupo, altura, distRio, RIO_W, ctx, livre, arvores: arv.troncos, extras });
+    const fl2 = new Instancias(florGeo(), flor.mat, { cast: false }); vida.flores.forEach((f) => fl2.add(f.m, f.c));
+    if (fl2.l.length) { const m = fl2.build(); m.name = 'flores-do-campo'; grupo.add(m); vida.juntar(m); }
+  }
 
   // ---------- placas (palavras decodificáveis, Andika) ----------
   const placas = [
@@ -425,7 +443,7 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
   return {
     grupo, POIS, portais, rio, altura,
     /** Troca ao vivo de qualidade (o mundo chama): o que tem versão leve e pesada. */
-    qualidade(n) { qualidadeArbustos(n); if (acabamento) acabamento.visible = n !== 'baixo'; },
+    qualidade(n) { qualidadeArbustos(n); if (acabamento) acabamento.visible = n !== 'baixo'; vida?.qualidade(n); },
     // grama de perto (js/grama.js) e o fundo do rio (js/submerso.js)
     chao: { tex: chaoTex, ext: EXT, geo: gIn, seg: segIn }, RIO_PTS, fundoRio, terreno,
     // para o passeio (colisão e água): peças dos lotes, troncos, arbustos, rio e barquinho
@@ -433,7 +451,7 @@ export async function criarVila({ U, q, renderer, estados = {}, passeio = false 
     sprites: [dupla, sofia, tales],
     tick(t, cam, hora) {
       for (const s of [dupla, sofia, tales]) s.userData.tick(t, cam, tint.setRGB(1, lerp(1, 0.9, hora), lerp(1, 0.8, hora)));
-      bolota.userData.tick(t); zum.userData.tick(t, centroZum); bichos.tick(t);
+      bolota.userData.tick(t); zum.userData.tick(t, centroZum); bichos.tick(t); vida?.tick(t);
       for (const p of portais) p.userData.tick(t);
       barco.position.y = NIVEL_AGUA + 0.25 + Math.sin(t * 1.3) * 0.06; barco.rotation.z = Math.sin(t * 0.9) * 0.03; barco.rotation.x = Math.sin(t * 1.1) * 0.02;
       fumaca.forEach((s, i) => { const k = ((t * 0.12 + i / fumaca.length) % 1); s.position.set(pad.chamine.x + Math.sin(k * 6 + i) * 0.4 + k * 1.5, pad.chamine.y + k * 6, pad.chamine.z + k * 0.8); s.scale.setScalar(0.8 + k * 3.2); s.material.opacity = (1 - k) * 0.45 * smooth(Math.min(1, k * 6)); });

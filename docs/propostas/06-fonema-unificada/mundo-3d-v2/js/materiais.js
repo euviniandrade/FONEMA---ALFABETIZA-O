@@ -68,12 +68,72 @@ const CAUSTICA_FRAG = /* glsl */`
   }
 `;
 
-/** Chão (terreno com textura pintada): grama viva, cascalho nos caminhos, relevo fino e cáusticas no leito do rio. */
+/**
+ * Calçamento (rodada 2 do gráfico, fila nº 24/28): onde o chão pintado é caminho (não verde), o desenho troca a terra por
+ * pedra, conforme o lugar (contas em coordenadas do mundo, nada de textura nova):
+ *  - ruas da vila (avenida das casas, rua cruzada e o caminho da escola): paralelepípedos em fiadas desencontradas, rejunte de
+ *    areia, pedra mais lisa e clara no meio (gasta pelos passos) e rejunte esverdeado junto ao meio-fio;
+ *  - praça: pedra portuguesa (pedrinhas irregulares de ~9 cm) sobre as ondas pintadas;  - pátio da escola: lajotas.
+ * `m_pav` devolve a cor e a altura (para o relevo) e só roda perto da câmera (de longe fica a cor média, sem cintilar).
+ */
+const GLSL_PAVIMENTO = /* glsl */`
+  float m_hPav;
+  // tipo: 1 = paralelepípedo ao longo de z, 2 = paralelepípedo ao longo de x, 3 = praça, 4 = lajota; 0 = terra
+  float m_tipoPav(vec2 p){
+    if (p.x > -10.5 && p.x < 10.5 && p.y > -25.6 && p.y < -18.4) return 4.0;
+    if (length(p - vec2(0.0, 1.0)) < 13.75) return 3.0;
+    if (abs(p.x) < 2.45 && ((p.y > 13.0 && p.y < 72.0) || (p.y > -25.0 && p.y < -11.0))) return 1.0;
+    if (abs(p.y - 34.0) < 2.45 && abs(p.x) < 37.5) return 2.0;
+    return 0.0;
+  }
+  vec3 m_pav(vec2 p, vec3 c, float tipo, float perto, out float h){
+    h = 0.0;
+    // antisserrilhado: o desenho some quando a pedra fica menor que uns 5 pixels na tela (sem chuvisco de longe ou no celular)
+    float tam = tipo < 2.5 ? 0.22 : tipo < 3.5 ? 0.16 : 0.62;
+    float px = length(fwidth(p)) / tam;
+    perto *= 1.0 - smoothstep(0.2, 0.45, px);
+    if (tipo < 2.5) {
+      vec2 q = tipo < 1.5 ? p.yx : p;           // q.x ao longo da rua, q.y de lado a lado
+      float lado = tipo < 1.5 ? p.x : p.y - 34.0;
+      float fil = floor(q.x / 0.21);
+      vec2 cel = vec2(q.x / 0.21, (q.y + fil * 0.13) / 0.25);
+      vec2 id = floor(cel), f = fract(cel) - 0.5;
+      float r1 = m_h(id), r2 = m_h(id + 17.3);
+      vec2 b = abs(f) - vec2(0.36 + 0.06 * r1, 0.38 + 0.05 * r2);
+      float caixa = length(max(b, 0.0)) + min(max(b.x, b.y), 0.0);
+      float pedra = 1.0 - smoothstep(-0.02, 0.06, caixa);
+      float gasto = 1.0 - smoothstep(0.5, 1.9, abs(lado));
+      vec3 cp = c * mix(vec3(0.58, 0.58, 0.62), vec3(0.74, 0.71, 0.7), r1) * (0.9 + 0.2 * r2);
+      cp *= 1.0 + 0.08 * gasto - 0.06 * m_n(p * 3.7);
+      vec3 rej = c * vec3(0.6, 0.56, 0.47);
+      rej = mix(rej, rej * vec3(0.78, 0.95, 0.7), smoothstep(1.7, 2.3, abs(lado)) * 0.7); // musguinho junto ao meio-fio
+      h = pedra * (0.6 + 0.4 * smoothstep(0.0, -0.14, caixa)) * (1.0 - 0.35 * gasto);
+      h *= perto; return mix(c * 0.86, mix(rej, cp, pedra), perto);
+    }
+    if (tipo < 3.5) {
+      float borda = m_vor(p * 6.5, 0.0);
+      vec2 id = floor(p * 6.5);
+      float t = m_h(id);
+      h = 1.0 - borda;
+      vec3 cp = c * (0.92 + 0.12 * t);
+      h *= perto; return mix(c * 0.97, mix(cp, cp * 0.72, borda * 0.85), perto);
+    }
+    vec2 cel = p / 0.62, id = floor(cel), f = fract(cel) - 0.5;
+    float r1 = m_h(id), r2 = m_h(id + 5.1);
+    float jun = smoothstep(0.47, 0.49, max(abs(f.x), abs(f.y)));
+    h = (1.0 - jun) * (0.8 + 0.25 * (f.x * (r1 - 0.5) + f.y * (r2 - 0.5)));
+    vec3 cl = c * (0.9 + 0.16 * r1) * mix(vec3(1.0), vec3(1.03, 0.97, 0.92), r2);
+    h *= perto; return mix(c * 0.97, mix(cl, cl * 0.7, jun), perto);
+  }
+`;
+
+/** Chão (terreno com textura pintada): grama viva, cascalho nos caminhos, calçamento, relevo fino e cáusticas no leito do rio. */
 export function addDetalheChao(mat, U) {
-  return encadear(mat, 'chaoDet2', (sh) => {
+  return encadear(mat, 'chaoDet3', (sh) => {
     uniDet(sh, U); VERT_WP(sh);
-    sh.fragmentShader = PARS_FRAG + sh.fragmentShader
+    sh.fragmentShader = PARS_FRAG + GLSL_PAVIMENTO + sh.fragmentShader
       .replace('#include <map_fragment>', `#include <map_fragment>
+        m_hPav = -1.0;
         if (uDet > 0.5) {
           float dist = length(vWP - cameraPosition);
           float perto = 1.0 - smoothstep(14.0, 60.0, dist);
@@ -86,15 +146,23 @@ export function addDetalheChao(mat, U) {
           g = mix(g, g * vec3(0.82, 0.95, 0.84), smoothstep(0.55, 0.9, 1.0 - n2) * 0.4); // trevo mais escuro
           g *= mix(1.0, 0.8 + 0.34 * (n3 * 0.45 + n4 * 0.55), perto);
           vec3 s = c * (0.95 + 0.1 * n2);
-          s *= mix(1.0, (0.9 + 0.16 * step(0.74, n4)) * (1.0 - 0.1 * step(n3, 0.2)), perto); // pedrinhas e furinhos
+          float tipo = verde < 0.5 ? m_tipoPav(p) : 0.0;
+          if (tipo > 0.5) {
+            float pp = 1.0 - smoothstep(18.0, 50.0, dist), hp;
+            s = m_pav(p, c, tipo, pp, hp);
+            m_hPav = hp * pp;
+          } else s *= mix(1.0, (0.9 + 0.16 * step(0.74, n4)) * (1.0 - 0.1 * step(n3, 0.2)), perto); // pedrinhas e furinhos
           diffuseColor.rgb = mix(s, g, verde);
         }
         ${CAUSTICA_FRAG}`)
       .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
         if (uDet > 0.5) {
-          float dist = length(vWP - cameraPosition);
-          float perto = 1.0 - smoothstep(10.0, 40.0, dist);
-          if (perto > 0.01) { float h = m_n(vWP.xz * 8.3) * 0.5 + m_n(vWP.xz * vec2(33.0, 29.0)) * 0.5; normal = m_relevo(-vViewPosition, normal, h, 0.035 * perto); }
+          if (m_hPav >= 0.0) normal = m_relevo(-vViewPosition, normal, m_hPav, 0.045);
+          else {
+            float dist = length(vWP - cameraPosition);
+            float perto = 1.0 - smoothstep(10.0, 40.0, dist);
+            if (perto > 0.01) { float h = m_n(vWP.xz * 8.3) * 0.5 + m_n(vWP.xz * vec2(33.0, 29.0)) * 0.5; normal = m_relevo(-vViewPosition, normal, h, 0.035 * perto); }
+          }
         }`);
   });
 }

@@ -24,6 +24,13 @@ export function janela(ctx, L, x, y, z, { w = 1.0, h = 1.35, cor = P.marinho, mo
   C.add(rbox(w, 0.06, 0.06, 0.02), moldura, L(x, y + h * 0.12, z + 0.13));
   C.add(rbox(w + 0.5, 0.14, 0.32, 0.05), moldura, L(x, y - h / 2 - 0.16, z + 0.12));
   if (arco) C.add(G.cyl, moldura, L(x, y + h / 2 + 0.05, z + 0.02, Math.PI / 2, 0, 0, w + 0.3, 0.16, 0.5 * (w + 0.3)), { jit: 0 });
+  // acabamento (só médio/alto): cornija em cima da janela (sombra de verdade na parede) e mãos-francesas sob o peitoril
+  if (ctx.D) {
+    const yv = y + h / 2 + (arco ? 0.3 * (w + 0.3) + 0.14 : 0.25);
+    ctx.D.add(rbox(w + 0.66, 0.1, 0.3, 0.035, 1), moldura, L(x, yv, z + 0.12), { jit: 0 });
+    ctx.D.add(rbox(w + 0.52, 0.07, 0.22, 0.03, 1), moldura, L(x, yv + 0.085, z + 0.1), { jit: 0 });
+    for (const s of [-1, 1]) ctx.D.add(rbox(0.1, 0.16, 0.2, 0.03, 1), moldura, L(x + s * (w / 2 + 0.05), y - h / 2 - 0.3, z + 0.12), { jit: 0 });
+  }
   if (venez) for (const s of [-1, 1]) {
     C.add(rbox(w * 0.55, h + 0.1, 0.1, 0.04), cor, L(x + s * (w / 2 + 0.38), y, z + 0.08, 0, s * 0.35, 0));
     for (let k = -2; k <= 2; k++) C.add(rbox(w * 0.45, 0.04, 0.04, 0.015), cor, L(x + s * (w / 2 + 0.38), y + k * h * 0.17, z + 0.15, 0, s * 0.35, 0), { jit: 0.08 });
@@ -71,7 +78,11 @@ export function casa(ctx, x, z, ry, o = {}) {
     janela(ctx, L, jx, 2.35, d / 2, { cor: jan || det });
     floreira(ctx, L, jx, 2.35, d / 2, o.seed || 1);
   }
-  for (let a = 1; a < and; a++) for (let i = 0; i < nj; i++) janela(ctx, L, -w / 2 + (i + 0.5) * w / nj, 2.35 + h * a, d / 2, { cor: jan || det, arco: true });
+  for (let a = 1; a < and; a++) for (let i = 0; i < nj; i++) {
+    const jx = -w / 2 + (i + 0.5) * w / nj;
+    janela(ctx, L, jx, 2.35 + h * a, d / 2, { cor: jan || det, arco: true });
+    sacada(ctx, L, jx, 2.35 + h * a, d / 2, o.seed || 1);
+  }
   // janelas laterais
   for (const s of [-1, 1]) janela(ctx, F(x, 0, z, ry + s * Math.PI / 2), 0, 2.35, w / 2, { cor: jan || det });
   // acabamento (lote à parte, sem colisão): cumeeira e calhas no beiral
@@ -80,6 +91,14 @@ export function casa(ctx, x, z, ry, o = {}) {
     ctx.D.add(G.cyl10, P.telhaEsc, L(0, yb + rh + 0.02, 0, 0, 0, Math.PI / 2, 0.34, w + 1.25, 0.34), { jit: 0.02 });
     for (const s of [-1, 1]) {
       ctx.D.add(G.cyl10, '#E6DED0', L(0, yb + 0.03, s * zb, 0, 0, Math.PI / 2, 0.17, w + 1.15, 0.17), { jit: 0 });
+    }
+  }
+  // beiral (só médio/alto): cachorros de madeira sob a beirada do telhado, na frente (e atrás, no de duas águas)
+  if (ctx.D) {
+    const yb = H + 0.5, zb = o.quatroAguas ? d / 2 + 0.45 : (d + 0.2) / 2 + 0.47, n = Math.round((w + 0.4) / 0.55);
+    for (const sz of o.quatroAguas ? [1] : [1, -1]) {
+      for (let i = 0; i <= n; i++) ctx.D.add(rbox(0.1, 0.13, zb - d / 2 + 0.05, 0.025, 1), P.madeiraEsc, L(-(w + 0.4) / 2 + i * (w + 0.4) / n, yb - 0.1, sz * (d / 2 + (zb - d / 2) / 2)), { jit: 0.06 });
+      ctx.D.add(rbox(w + 0.9, 0.16, 0.06, 0.02, 1), P.branco, L(0, yb - 0.04, sz * (zb + 0.02)), { jit: 0 }); // testeira
     }
   }
   // floreira e vasos
@@ -100,6 +119,27 @@ export function floreira(ctx, L, x, y, z, seed = 1) {
   for (let k = 0; k < 3; k++) ctx.D.add(blobGeo(40 + k, 2, 0.25, 1, 0.55), k % 2 ? '#5DAA52' : '#4C9A4A', L(x - 0.42 + k * 0.42, yb + 0.25, z + 0.38, 0, r() * 6, 0, 0.55, 0.38, 0.42), { grad: 0.35 });
   const cores = r() < 0.5 ? [P.ipe, '#FFFFFF'] : ['#E86A5C', '#FFFFFF'];
   for (let k = 0; k < 5; k++) ctx.flores.push({ m: L(x - 0.5 + k * 0.25 + (r() - 0.5) * 0.1, yb + 0.42 + r() * 0.08, z + 0.42 + (r() - 0.5) * 0.15, 0.3, r() * 6, 0, 0.12), c: cores[k % 2] });
+}
+
+/** Sacada de ferro sob a janela de cima (sobrado): laje com mãos-francesas, gradil e vasinhos de flor. Só no acabamento. */
+export function sacada(ctx, L, x, y, z, seed = 1) {
+  if (!ctx.D) return;
+  const r = rng(seed * 17 + Math.round(x * 10) + 900), D = ctx.D, yl = y - 1.35 / 2 - 0.22, fundo = 0.72, larg = 1.9;
+  D.add(rbox(larg, 0.12, fundo, 0.04, 1), P.pedra, L(x, yl, z + fundo / 2), { jit: 0.03 });
+  for (const s of [-1, 1]) D.add(rbox(0.08, 0.16, 0.42, 0.03, 1), P.ferro, L(x + s * (larg / 2 - 0.2), yl - 0.12, z + 0.22, -0.35, 0, 0), { jit: 0 });
+  const yt = yl + 0.78, zf = z + fundo - 0.05;
+  D.add(rbox(larg, 0.06, 0.07, 0.025, 1), P.ferro, L(x, yt, zf), { jit: 0 });
+  for (const s of [-1, 1]) D.add(rbox(0.06, 0.06, fundo - 0.05, 0.025, 1), P.ferro, L(x + s * (larg / 2 - 0.03), yt, z + fundo / 2), { jit: 0 });
+  for (let k = 0; k <= 8; k++) D.add(G.cyl10, P.ferro, L(x - larg / 2 + 0.05 + k * (larg - 0.1) / 8, yl + 0.42, zf, 0, 0, 0, 0.035, 0.68, 0.035), { jit: 0 });
+  for (const s of [-1, 1]) for (let k = 1; k <= 2; k++) D.add(G.cyl10, P.ferro, L(x + s * (larg / 2 - 0.03), yl + 0.42, z + k * fundo / 3, 0, 0, 0, 0.035, 0.68, 0.035), { jit: 0 });
+  // dois vasinhos com flor (2 cores, D009)
+  const cores = r() < 0.5 ? [P.ipe, '#FFFFFF'] : ['#E86A5C', '#FFFFFF'];
+  for (const s of [-1, 1]) {
+    const vx = x + s * (larg / 2 - 0.3);
+    D.add(G.cylTaper, P.terracota, L(vx, yl + 0.2, z + 0.32, Math.PI, 0, 0, 0.3, 0.3, 0.3), { jit: 0.05 });
+    D.add(blobGeo(60 + (s > 0 ? 1 : 0), 2, 0.25, 1, 0.55), '#4F9C4B', L(vx, yl + 0.42, z + 0.32, 0, r() * 6, 0, 0.42, 0.3, 0.42), { grad: 0.35 });
+    for (let k = 0; k < 4; k++) ctx.flores.push({ m: L(vx + (r() - 0.5) * 0.25, yl + 0.55 + r() * 0.06, z + 0.32 + (r() - 0.5) * 0.25, 0, 0, 0, 0.11), c: cores[k % 2] });
+  }
 }
 
 /** Poste colonial curvado com lanterna (lote de luzes acende ao entardecer). */

@@ -379,6 +379,7 @@ export async function criarMundo(container, opts = {}) {
     if (passes.grade) { passes.grade.uniforms.uAgua.value = lerp(passes.grade.uniforms.uAgua.value, submersoAgora ? 1 : 0, Math.min(1, dt * 6)); passes.grade.uniforms.uT.value = t; }
     // reflexo do sol no rio acompanha a hora
     const ur = v.rio.userData.uniforms; if (ur && ur.uSol) { ur.uSol.value.copy(ceu.sun.userData.dir || ur.uSol.value); ur.uSolCor.value.copy(ceu.sun.color).multiplyScalar(Math.min(1.2, ceu.sun.intensity / 3)); }
+    if (ur && ur.uCeuT) { ur.uCeuT.value.copy(ceu.U.topo.value); ur.uCeuM.value.copy(ceu.U.meio.value); ur.uCeuH.value.copy(ceu.U.horiz.value); }
     // som do lugar (4 vezes por segundo)
     if (som && (somT += dt) > 0.25) {
       somT = 0; const x = controls.target.x, z = controls.target.z;
