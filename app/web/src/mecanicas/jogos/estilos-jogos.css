@@ -86,7 +86,7 @@
 /* ---------- moldura (Brincar › Jogos) ---------- */
 .jogo-capa{display:flex;align-items:flex-end;justify-content:center;min-height:96px}
 .jogo-capa .fig{width:84px;height:84px;margin:0 -6px;filter:drop-shadow(0 10px 10px rgba(12,26,64,.25))}
-.jogo-capa-letra{display:grid;place-items:center;width:70px;height:70px;margin:0 2px;border-radius:50%;background:#fffaf0;border:7px solid #ff8a65;font-family:var(--f-leitura);font-size:40px;color:#22407a;box-shadow:0 8px 12px -6px rgba(12,26,64,.4)}
+.jogo-capa-letra{display:grid;place-items:center;width:70px;height:70px;flex:none;margin:0 3px;border-radius:50%;background:#fffaf0;border:7px solid #ff8a65;font-family:var(--f-leitura);font-size:29px;line-height:1;color:#22407a;box-shadow:0 8px 12px -6px rgba(12,26,64,.4)}
 .jogo-capa-letra:nth-child(2){border-color:#ffc93c}.jogo-capa-letra:nth-child(3){border-color:#5ec2e8}
 .jogo-variacoes-cab{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center;text-align:center}
 .jogo-variacoes-cab p{font-family:var(--f-adulto);color:var(--cinza)}

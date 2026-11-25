@@ -43,7 +43,7 @@ button{cursor:pointer;border:0;background:none;-webkit-user-select:none;user-sel
 img{max-width:100%;-webkit-user-drag:none}
 :focus-visible{outline:4px solid var(--ipe);outline-offset:3px;border-radius:var(--r-p);box-shadow:0 0 0 8px rgba(22,41,90,.55)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.t,h1,h2,h3{font-family:var(--f-titulo);color:var(--marinho);line-height:1.12;font-weight:700;letter-spacing:.2px}
+.t,h1,h2,h3{font-family:var(--f-titulo);color:var(--marinho);line-height:1.12;font-weight:700;letter-spacing:.2px;word-spacing:.08em}
 h1{font-size:clamp(26px,3.2vw,40px)}h2{font-size:clamp(20px,2.2vw,26px);margin:18px 0 10px}h3{font-size:18px;margin:14px 0 6px}
 .nota-mic{font-family:var(--f-adulto);font-size:14px;color:var(--cinza);margin-top:10px}
 .carregando{display:grid;place-items:center;min-height:100vh;min-height:100dvh;background:linear-gradient(180deg,#BFE1F7,#EAF6FE)}
@@ -77,7 +77,7 @@ h1{font-size:clamp(26px,3.2vw,40px)}h2{font-size:clamp(20px,2.2vw,26px);margin:1
 .palco{flex:1;width:100%;padding:8px clamp(12px,3vw,32px) 40px;max-width:1240px;margin:0 auto}
 
 /* ---- botão 3D ---- */
-.btn{--b1:#fff;--b2:#EAF3FB;--bb:#B9CEE2;--bt:var(--marinho);position:relative;min-height:64px;padding:0 24px;border-radius:var(--r-m);display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--f-titulo);font-weight:600;font-size:20px;line-height:1.1;color:var(--bt);text-align:center;background:linear-gradient(180deg,var(--b1),var(--b2));box-shadow:0 6px 0 var(--bb),0 14px 18px -8px rgba(12,26,64,.35),inset 0 2px 0 rgba(255,255,255,.75),inset 0 -3px 0 rgba(12,26,64,.07);transition:transform .22s var(--mola),box-shadow .16s,filter .16s;overflow:hidden;isolation:isolate}
+.btn{--b1:#fff;--b2:#EAF3FB;--bb:#B9CEE2;--bt:var(--marinho);position:relative;min-height:64px;padding:0 24px;border-radius:var(--r-m);display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--f-titulo);font-weight:600;font-size:20px;line-height:1.1;word-spacing:.08em;color:var(--bt);text-align:center;background:linear-gradient(180deg,var(--b1),var(--b2));box-shadow:0 6px 0 var(--bb),0 14px 18px -8px rgba(12,26,64,.35),inset 0 2px 0 rgba(255,255,255,.75),inset 0 -3px 0 rgba(12,26,64,.07);transition:transform .22s var(--mola),box-shadow .16s,filter .16s;overflow:hidden;isolation:isolate}
 .btn::before{content:"";position:absolute;left:6%;right:6%;top:4px;height:42%;border-radius:var(--r-m) var(--r-m) 60% 60%/var(--r-m) var(--r-m) 100% 100%;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0));z-index:-1;pointer-events:none}
 .btn:hover:not([disabled]){transform:translateY(-2px);filter:brightness(1.04)}
 .btn:active:not([disabled]){transform:translateY(4px);box-shadow:0 2px 0 var(--bb),0 4px 8px -4px rgba(12,26,64,.35),inset 0 2px 0 rgba(255,255,255,.6);transition-duration:.06s}
@@ -492,6 +492,7 @@ details.mais-opcoes[open]{padding-bottom:14px}
 .entrada-capa::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,26,64,0) 20%,rgba(12,26,64,.82))}
 .entrada-cab{position:relative;display:flex;gap:16px;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;width:100%}
 .entrada-cab h1{color:#fff;text-shadow:0 3px 0 rgba(12,26,64,.6);font-size:clamp(30px,4vw,46px)}
+.entrada-cab .sobre{text-shadow:0 2px 6px rgba(12,26,64,.85)}
 .sobre{font-family:var(--f-titulo);font-weight:600;color:#FFE27A;font-size:15px;letter-spacing:.6px;text-transform:uppercase}
 .objetivo{font-size:20px;margin-top:6px;display:flex;align-items:center;gap:8px}
 .entrada-cab .objetivo{color:#fff}.objetivo .ic{color:var(--ipe);flex:none}
@@ -836,6 +837,8 @@ html.menos-movimento .splash-nuvens,html.menos-movimento .splash-petalas,html.me
   .grade-loja{grid-template-columns:repeat(2,1fr);gap:12px}.item-loja>img{width:100px;height:92px}
   .comparar b{font-size:36px}
   .entrada-capa{min-height:200px}
+  /* no celular o título sobe para a parte clara da foto: véu escuro também em cima, para ler o título */
+  .entrada-capa::before{background:linear-gradient(180deg,rgba(12,26,64,.62),rgba(12,26,64,.3) 42%,rgba(12,26,64,.82))}
   .entrada-cab .btn{width:100%}
   .linha-botoes .btn.grande{flex:1 1 100%}
   .portao-icone{width:92px;height:92px;margin-top:-64px}

@@ -77,7 +77,7 @@
 .guia-selos{display:flex;gap:4px}.guia-selo{width:44px;height:44px;display:block}
 .guia-vazio{display:flex;align-items:center;gap:6px;font-family:var(--f-titulo);font-size:16px;color:var(--cinza)}.guia-vazio .ic{color:var(--ipe2)}
 .guia-fase{font-family:var(--f-titulo);font-weight:700;font-size:20px;color:var(--marinho);margin:0 0 2px}
-.guia-continuar{width:100%;margin-top:8px;min-height:72px;font-size:26px}
+.btn.enorme.guia-continuar{width:100%;margin-top:8px;min-height:72px;font-size:26px;padding:0 18px 0 12px;gap:10px}.btn.enorme.guia-continuar .ic{width:52px;height:52px}
 .guia-aqui{margin-top:24px;width:100%;min-height:64px;display:flex;align-items:center;gap:10px;text-align:left;border-radius:18px;padding:6px 12px 6px 6px;background:linear-gradient(180deg,#FFF8DC,#FFEDB8);box-shadow:0 4px 0 #E8C66A;transition:transform .2s var(--mola)}
 .guia-aqui:active{transform:translateY(3px);box-shadow:0 1px 0 #E8C66A}
 .guia-aqui small{display:block;font-family:var(--f-titulo);font-size:12px;color:#8a5a00;text-transform:uppercase;letter-spacing:.5px}
@@ -112,7 +112,7 @@
   .guia-vila .guia-corpo{padding:10px;gap:8px;max-height:calc(100dvh - 96px - 128px);overflow:auto;scrollbar-width:thin}
 }
 @media (min-width:900px) and (max-height:820px){
-  .guia-vila .guia-continuar{min-height:64px;font-size:22px;margin-top:4px}
+  .guia-vila .btn.enorme.guia-continuar{min-height:64px;font-size:22px;margin-top:4px}
   .guia-vila .guia-bloco{padding:8px 10px}
   .guia-vila .guia-aqui{margin-top:20px}
 }

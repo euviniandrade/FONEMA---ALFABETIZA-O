@@ -26,7 +26,7 @@ html,body{overflow-x:clip}
   .opcoes.n3 .opcao .fig{width:clamp(80px,12.5vh,112px);height:clamp(80px,12.5vh,112px)}
   .opcoes.n3 .opcao .letra{font-size:64px}
   .opcoes.n3 .opcao .rot{font-size:16px}
-  .opcoes.n3 .opcao-ouvir{width:38px;height:38px;right:-4px;top:-8px}.opcoes.n3 .opcao-ouvir .ic{width:28px;height:28px}
+  .opcoes.n3 .opcao-ouvir{width:44px;height:44px;right:-4px;top:-8px}.opcoes.n3 .opcao-ouvir .ic{width:30px;height:30px}
   .opcoes.n4{gap:10px}
   .opcoes.n4 .opcao{min-height:clamp(112px,15vh,140px)}
   .opcoes.n4 .opcao .fig{width:84px;height:84px}
