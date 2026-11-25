@@ -230,7 +230,7 @@ html.menos-movimento .dupla3d img,html.menos-movimento .dupla3d-sombra{animation
 .area-menu::-webkit-scrollbar{display:none}
 /* centraliza sem perder o começo quando não cabe (justify-content:center cortava o 1º item, ex.: "Turma" no professor a 1440 px) */
 .area-menu>:first-child{margin-left:auto}.area-menu>:last-child{margin-right:auto}
-@media (min-width:901px) and (max-width:1600px){.area-item{padding:0 11px;gap:6px;font-size:15px}.area-topo{gap:10px}}
+@media (min-width:901px) and (max-width:1600px){.area-item{padding:0 9px;gap:5px;font-size:14px}.area-item .ic{width:19px;height:19px}.area-topo{gap:8px}}
 .area-item{display:inline-flex;align-items:center;gap:8px;flex:none;min-height:50px;padding:0 16px;border-radius:999px;font-family:var(--f-titulo);font-weight:600;font-size:16px;color:var(--marinho);white-space:nowrap;transition:background .15s}
 .area-item .ic{width:22px;height:22px}
 .area-item:hover{background:var(--acento-claro)}
