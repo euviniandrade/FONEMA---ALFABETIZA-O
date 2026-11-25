@@ -17,6 +17,9 @@ import { categoriaDoAlvo } from './confusao.ts';
 
 export const BKT = { p0: 0.15, transicao: 0.2, chute: 0.25, deslize: 0.1 };
 
+/** "1 sessão" / "2 sessões": o texto vai para o painel do adulto, sem "sessão(ões)". */
+const qtd = (n: number, um: string, varios: string): string => `${n} ${n === 1 ? um : varios}`;
+
 /** Atualiza P(domínio) com uma tentativa. Acerto com ajuda conta como meio acerto. */
 export function atualizarP(p: number, acertou: boolean, comAjuda = false): number {
   const { transicao, chute, deslize } = BKT;
@@ -186,16 +189,16 @@ export function avaliarDominio(h: EstadoHabilidade | undefined, cfg: ConfigPlata
   const tiposMin = Math.min(cfg.tiposDeAtividadeMin ?? 2, possiveis);
   const faltaTipos = ts.some((t) => t.mecanica) && tiposDeAtividade < tiposMin;
   const falta: string[] = [];
-  if (ts.length < cfg.tentativasMin) falta.push(`mais ${cfg.tentativasMin - ts.length} tentativa(s)`);
-  if (sessoes < cfg.sessoesMin) falta.push(`treinar em mais ${cfg.sessoesMin - sessoes} sessão(ões)`);
+  if (ts.length < cfg.tentativasMin) falta.push(`mais ${qtd(cfg.tentativasMin - ts.length, 'tentativa', 'tentativas')}`);
+  if (sessoes < cfg.sessoesMin) falta.push(`treinar em mais ${qtd(cfg.sessoesMin - sessoes, 'sessão', 'sessões')}`);
   if (acertosRecentes < cfg.acertosNasUltimas) falta.push(`${cfg.acertosNasUltimas} acertos nas últimas ${cfg.ultimas}`);
   if (p < cfg.pMin) falta.push(`firmeza ${Math.round(p * 100)}% (meta ${Math.round(cfg.pMin * 100)}%)`);
   const basico = falta.length === 0;
   const faltaPseudo = exigePseudo && pseudoCertas < cfg.pseudoMin;
   const soFaltaPseudo = faltaPseudo && basico && !faltaItens && !faltaTipos;
-  if (faltaPseudo) falta.push(`${cfg.pseudoMin - pseudoCertas} pseudopalavra(s) em atividade conferida`);
-  if (faltaItens) falta.push(`acertar ${itensMin - itensDiferentes} palavra(s) diferente(s)`);
-  if (faltaTipos) falta.push(`acertar em mais ${tiposMin - tiposDeAtividade} tipo(s) de atividade (ex.: ouvir e achar a letra, ver a letra e achar o som)`);
+  if (faltaPseudo) falta.push(`${qtd(cfg.pseudoMin - pseudoCertas, 'pseudopalavra', 'pseudopalavras')} em atividade conferida`);
+  if (faltaItens) falta.push(`acertar ${qtd(itensMin - itensDiferentes, 'palavra diferente', 'palavras diferentes')}`);
+  if (faltaTipos) falta.push(`acertar em mais ${qtd(tiposMin - tiposDeAtividade, 'tipo', 'tipos')} de atividade (ex.: ouvir e achar a letra, ver a letra e achar o som)`);
   // 4. pares mínimos: 8 de 10 no contraste (ou a mesma proporção, quando ainda não houve 10)
   const nomeHab = habilidade ?? ts[0]?.habilidade;
   const pares = ehHabilidadeDePar(nomeHab) && ts.length ? criterioPares(ts, cfg) : undefined;

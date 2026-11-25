@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { letraAa } from '../../componentes/LetraAa.tsx';
 import { CONFIG_PADRAO, CONQUISTA_POR_ID, FASE_POR_ID, type ConfigPlataforma, sonsPurosPendentes } from '@fonema/conteudo';
 import { AREAS_SONDAGEM, NIVEIS_AJUDA, NIVEIS_INICIAIS, aplicarNivelInicial, avaliarConquistas, dificuldadesDaTurma, filaProfessor, mapaHabilidades, progressoInicial, resumoAprendizagem, resumoFamilia, type CategoriaAlvo, type Crianca, type Demonstracao, type Evento, type NivelInicial, type Progresso, type StatusDemonstracao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
@@ -165,7 +166,7 @@ export function BlocosAprendizagem({ c, p, config }: { c: Crianca; p: Progresso;
         {r.sonsELetras.length ? (
           <>
             <h3>Sons e letras com mais erro</h3>
-            <div className="fichas">{r.sonsELetras.slice(0, 8).map((x) => <span key={x.alvo} className="ficha" title={`${x.erros} de ${x.vezes} vezes`}><b>{x.alvo}</b><small>{ROTULO_CATEGORIA[x.categoria ?? 'outro']} · {x.erros}/{x.vezes}</small></span>)}</div>
+            <div className="fichas">{r.sonsELetras.slice(0, 8).map((x) => <span key={x.alvo} className="ficha-erro" title={`${x.erros} de ${x.vezes} vezes`}><b>{x.categoria === 'grafema' ? letraAa(x.alvo) : x.alvo}</b><small>{ROTULO_CATEGORIA[x.categoria ?? 'outro']} · {x.erros}/{x.vezes}</small></span>)}</div>
           </>
         ) : null}
       </div>
@@ -553,7 +554,7 @@ export function Professor({ aba = 'turma' }: { aba?: AbaProfessor }) {
           {turmaDificil.sonsELetras.length ? (
             <>
               <h2 className="t sub">Sons e letras</h2>
-              <div className="fichas">{turmaDificil.sonsELetras.map((x) => <span key={x.alvo} className="ficha"><b>{x.alvo}</b><small>{x.criancas} {x.criancas === 1 ? 'aluno' : 'alunos'} · {x.erros}/{x.vezes}</small></span>)}</div>
+              <div className="fichas">{turmaDificil.sonsELetras.map((x) => <span key={x.alvo} className="ficha-erro"><b>{x.alvo}</b><small>{x.criancas} {x.criancas === 1 ? 'aluno' : 'alunos'} · {x.erros}/{x.vezes}</small></span>)}</div>
             </>
           ) : null}
           {dificeis.length ? (
