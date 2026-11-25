@@ -140,8 +140,8 @@ export function medir(P) {
   return { H, cx, zc: zs / n, virilha, temPernas, pernaX, lados, axila: axilaM, pescoco };
 }
 
-const TODOS = Array.from({ length: 16 }, (_, i) => i);
-const NOMES = ['raiz', 'quadril', 'tronco', 'peito', 'cabeca', 'coxaE', 'canelaE', 'coxaD', 'canelaD', 'bracoE', 'antebracoE', 'bracoD', 'antebracoD', 'peE', 'peD', 'cabelo'];
+const NOMES = ['raiz', 'quadril', 'tronco', 'peito', 'cabeca', 'coxaE', 'canelaE', 'coxaD', 'canelaD', 'bracoE', 'antebracoE', 'bracoD', 'antebracoD', 'peE', 'peD', 'cabelo', 'cabeloE', 'cabeloD'];
+const TODOS = Array.from({ length: NOMES.length }, (_, i) => i);
 
 /**
  * Dá esqueleto ao grupo (troca cada Mesh por uma SkinnedMesh com o mesmo material). Devolve { ossos, medidas, malhas }.
@@ -174,6 +174,9 @@ export function articular(grupo) {
   // cabelo de peça (penteado): pende de um ponto atrás e no alto da cabeça e balança com mola (js/animacoes.js)
   const pivoCabelo = md.pescoco + 0.55 * (H - md.pescoco);
   abs.cabelo = [cx, pivoCabelo, zc - 0.04 * H];
+  // mechas (gráfico, rodada 2): o comprido balança em 3 partes — atrás (cabelo) e dos dois lados (cabeloE/cabeloD), cada
+  // uma com a sua mola; os pesos passam de uma para a outra aos poucos (sem rasgo na emenda)
+  abs.cabeloE = [cx + 0.07 * H, pivoCabelo, zc]; abs.cabeloD = [cx - 0.07 * H, pivoCabelo, zc];
   for (const [s, L] of [[1, 'E'], [-1, 'D']]) {
     abs['coxa' + L] = [cx + s * pernaX, virilha + 0.03 * H, zc];
     abs['canela' + L] = [cx + s * pernaX, virilha * 0.5, zc];
@@ -188,7 +191,7 @@ export function articular(grupo) {
     const cotY = (ombroY + maoY) / 2 + 0.02 * H;
     abs['antebraco' + L] = [cx + s * (l ? l.borda(cotY) + 0.03 * H : ombroX + 0.02 * H), cotY, zA];
   }
-  const pai = { quadril: 'raiz', tronco: 'quadril', peito: 'tronco', cabeca: 'peito', coxaE: 'quadril', canelaE: 'coxaE', coxaD: 'quadril', canelaD: 'coxaD', bracoE: 'peito', antebracoE: 'bracoE', bracoD: 'peito', antebracoD: 'bracoD', peE: 'canelaE', peD: 'canelaD', cabelo: 'cabeca' };
+  const pai = { quadril: 'raiz', tronco: 'quadril', peito: 'tronco', cabeca: 'peito', coxaE: 'quadril', canelaE: 'coxaE', coxaD: 'quadril', canelaD: 'coxaD', bracoE: 'peito', antebracoE: 'bracoE', bracoD: 'peito', antebracoD: 'bracoD', peE: 'canelaE', peD: 'canelaD', cabelo: 'cabeca', cabeloE: 'cabeca', cabeloD: 'cabeca' };
   o.raiz.position.set(...abs.raiz);
   for (const nm of NOMES.slice(1)) {
     const p = abs[pai[nm]], a = abs[nm];
@@ -250,7 +253,8 @@ export function articular(grupo) {
         // para o braço, e balançava "duro" junto); quanto mais abaixo do ponto de onde pende, mais segue a mola
         w.fill(0);
         const tc = sst(md.pescoco + 0.02 * H, md.pescoco - 0.22 * H, y); // só o que passa do pescoço balança (o cabelo curto fica no crânio)
-        w[I.cabelo] = tc; w[I.cabeca] = 1 - tc;
+        const fE = sst(0.025 * H, 0.1 * H, x - cx), fD = sst(-0.025 * H, -0.1 * H, x - cx);
+        w[I.cabelo] = tc * (1 - fE - fD); w[I.cabeloE] = tc * fE; w[I.cabeloD] = tc * fD; w[I.cabeca] = 1 - tc;
       }
       gBraco[i] = cabelo ? 0 : wb; gLado[i] = cabelo ? 0 : wp * (lado - 0.5) * 2;
       // 4 maiores

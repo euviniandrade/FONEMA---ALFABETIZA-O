@@ -70,6 +70,21 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   ok(rig.silhueta > 0, 'silhueta clarinha do boneco quando algo fica na frente');
   const quique = await frame.evaluate(() => { const p = window.FONEMA_PASSEIO, b = p.boneco; p.teleportar(0, 40, Math.PI); p.teclar('arrowup', true); p.simular(0.6); let a = 1e9, z = -1e9; const v = new b.raiz.position.constructor(); for (let i = 0; i < 40; i++) { p.simular(0.025); const y = b.rig.ossos.cabeca.getWorldPosition(v).y - b.raiz.position.y; a = Math.min(a, y); z = Math.max(z, y); } p.teclar('arrowup', false); p.simular(0.5); return { sobeDesce: z - a, noAr: p.posicao.noAr }; });
   ok(quique.sobeDesce < 0.08 && !quique.noAr, `andando, a cabeça sobe e desce só ${(quique.sobeDesce * 100).toFixed(1)} cm (passada, sem pulo)`);
+  // correndo (Shift, 3,7 m/s): a cabeça sobe e desce menos de 9 cm (era 13–14) e a sola desce até o chão nos quadros de
+  // apoio (sem afundar e sem ficar pairando o tempo todo: não virou pulo nem "patinar no ar")
+  const corrida = await frame.evaluate(() => {
+    const p = window.FONEMA_PASSEIO, b = p.boneco, A = b.anim; p.teleportar(0, 40, Math.PI); p.teclar('arrowup', true); p.teclar('shift', true); p.simular(1.0);
+    let a = 1e9, z = -1e9, solaMin = 1e9, solaMax = -1e9; const v = new b.raiz.position.constructor();
+    for (let i = 0; i < 40; i++) {
+      p.simular(0.025);
+      const y = b.rig.ossos.cabeca.getWorldPosition(v).y - b.raiz.position.y; a = Math.min(a, y); z = Math.max(z, y);
+      if (A && A.sola && A.sola.E) { b.raiz.updateMatrixWorld(true); let s = 1e9; for (const L of ['E', 'D']) for (const q of A.sola[L]) s = Math.min(s, v.copy(q).applyMatrix4(b.rig.ossos['pe' + L].matrixWorld).y - b.raiz.position.y); solaMin = Math.min(solaMin, s); solaMax = Math.max(solaMax, s); }
+    }
+    p.teclar('arrowup', false); p.teclar('shift', false); p.simular(0.5);
+    return { sobeDesce: z - a, noAr: p.posicao.noAr, solaMin, solaMax, temSola: !!(A && A.sola && A.sola.E) };
+  });
+  ok(corrida.sobeDesce < 0.09 && !corrida.noAr && (!corrida.temSola || (corrida.solaMin > -0.02 && corrida.solaMin < 0.015 && corrida.solaMax < 0.12)),
+    `correndo, a cabeça sobe e desce só ${(corrida.sobeDesce * 100).toFixed(1)} cm e o pé pisa no chão (sola mais baixa entre ${(corrida.solaMin * 100).toFixed(1)} e ${(corrida.solaMax * 100).toFixed(1)} cm)`);
   // nadar no rio: nunca some — a cabeça fica fora d'água; e mergulhar (Pular vira Mergulhar) desce e volta
   const agua = await frame.evaluate(() => { const p = window.FONEMA_PASSEIO, b = p.boneco, N = p.colisao.NIVEL_AGUA; p.teleportar(36, 20, Math.PI / 2); p.irPara(44, 20); const r = []; for (let i = 0; i < 28; i++) { p.simular(0.25); r.push({ nada: p.posicao.nadando, cab: b.cabecaY() - N, x: p.posicao.x }); } p.simular(1); return { r, nada: p.posicao.nadando, cab: b.cabecaY() - N, N }; });
   const nadando = agua.r.filter((x) => x.nada);

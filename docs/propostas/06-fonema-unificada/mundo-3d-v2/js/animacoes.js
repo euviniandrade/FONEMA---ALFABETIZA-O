@@ -27,6 +27,8 @@ export function carregarAnimacoes() {
   return pedido;
 }
 export const animacoesProntas = () => !!DADOS;
+/** Diagnóstico (folhas e medições): os dados preparados da captura. */
+export const dadosAnimacao = () => DADOS;
 
 function prepararDados(d) {
   const J = d.juntas.length, G = d.giros.length;
@@ -85,6 +87,7 @@ const NO_AR = 0.1; // quanto do tempo no ar da corrida fica
 const ESTICA = 0.6; // quanto a perna de apoio da corrida se estica (0 = como na captura)
 const INCLINA = 0.55; // quanto da inclinação do tronco da captura sai (0 = toda fica)
 const JUNTA = 0.5; // quanto os pés se aproximam da linha do quadril (lado a lado)
+const PISO_CORRE = 0.025, TOPO_DESCE = 0.03; // m: correndo, o quadril fica no máximo 2,5 cm abaixo do ponto mais alto recente
 
 export class Animador {
   constructor(rig, k) {
@@ -250,6 +253,15 @@ export class Animador {
       for (const L of ['E', 'D']) for (const nm of ['pe', 'ponta']) alvo = Math.min(alvo, P[ij[nm + L] * 3 + 1] - rep.P[ij[nm + L] * 3 + 1]);
       alvo = Math.max(0, alvo) * esc * NO_AR;
       dy = dy * (1 - pc) + (alvo - baixo) * pc;
+      // CORRIDA SEM QUIQUE (fila nº 24/28: a cabeça subia e descia 13–14 cm a 3,7 m/s): medido quadro a quadro, o quadril
+      // ficava MAIS BAIXO justamente no tempo no ar (a perna encolhida da captura puxava o corpo para a sola tocar o chão)
+      // e mais alto no meio do apoio. Agora, correndo, o quadril não desce mais que PISO_CORRE abaixo do ponto mais alto
+      // recente: no ar os pés ficam um pouco acima do chão (como numa corrida de verdade) e no apoio a sola continua no
+      // chão (o quadril nunca fica abaixo do que põe a sola no chão).
+      const pcc = pc * this.pCorre * this.pMover;
+      const dtc = Math.min(0.05, this.dt || 0.016);
+      this.topo = Math.max(dy, (this.topo ?? dy) - dtc * TOPO_DESCE / this.k);
+      if (pcc > 0.01) dy += Math.max(0, this.topo - PISO_CORRE / this.k - dy) * pcc;
     }
     O.quadril.position.y += dy;
     this.altQuadril = dy * this.k;
@@ -262,18 +274,32 @@ export class Animador {
    * inclina, vai para trás na corrida e ao arrancar, e chega lá com um pouco de atraso e de vai-e-vem.
    */
   balancarCabelo(O, W) {
-    const dt = Math.min(0.05, this.dt || 0.016), m = this.mola || (this.mola = { x: 0, vx: 0, z: 0, vz: 0 });
+    const dt = Math.min(0.05, this.dt || 0.016);
     _e.setFromQuaternion(W.cabeca, 'YXZ');
     const v = this.vAgora || 0, ac = Math.max(-6, Math.min(6, this.acel || 0));
     const tx = Math.max(-0.5, Math.min(0.6, -0.65 * _e.x + 0.05 * v + 0.03 * ac + 0.03 * this.pNado));
     const tz = Math.max(-0.4, Math.min(0.4, -0.65 * _e.z));
     // passo do corredor: o cabelo sobe e desce com o quadril (pequeno empurrão vertical vira balanço)
-    const empurra = (this.altQuadril - (this.altAntes ?? this.altQuadril)) / Math.max(1e-3, dt); this.altAntes = this.altQuadril;
-    m.vx += ((tx - m.x) * 70 - m.vx * 7 + Math.max(-3, Math.min(3, empurra)) * 1.2) * dt; m.x += m.vx * dt;
-    m.vz += ((tz - m.z) * 70 - m.vz * 7) * dt; m.z += m.vz * dt;
-    m.x = Math.max(-0.6, Math.min(0.7, m.x)); m.z = Math.max(-0.45, Math.min(0.45, m.z));
-    if (this.menos) { m.x *= 0.5; m.z *= 0.5; } // "menos movimento": balanço pela metade
-    _e.set(m.x, 0, m.z, 'YXZ'); O.cabelo.quaternion.setFromEuler(_e);
+    const empurra = Math.max(-3, Math.min(3, (this.altQuadril - (this.altAntes ?? this.altQuadril)) / Math.max(1e-3, dt))); this.altAntes = this.altQuadril;
+    // MECHAS (rodada 2): atrás e dos dois lados, cada uma com a sua mola (as dos lados mais moles e um pouco atrasadas, e
+    // abrem para fora quando a cabeça vira de lado): o cabelo comprido deixa de balançar como uma peça só
+    const molas = this.molas || (this.molas = [
+      { osso: 'cabelo', k: 70, am: 7, ez: 1, x: 0, vx: 0, z: 0, vz: 0 },
+      { osso: 'cabeloE', k: 52, am: 5.2, ez: 1.25, lado: 1, x: 0, vx: 0, z: 0, vz: 0 },
+      { osso: 'cabeloD', k: 58, am: 5.6, ez: 1.25, lado: -1, x: 0, vx: 0, z: 0, vz: 0 },
+    ]);
+    // virar o corpo de repente (giro da cabeça em torno de y) joga as mechas dos lados para fora
+    const giro = _e.y, dg = (giro - (this.giroAntes ?? giro)) / Math.max(1e-3, dt); this.giroAntes = giro;
+    for (const m of molas) {
+      const o = O[m.osso]; if (!o) continue;
+      const fora = m.lado ? Math.max(-0.25, Math.min(0.25, -m.lado * dg * 0.05)) : 0;
+      const alvoZ = Math.max(-0.45, Math.min(0.45, tz * m.ez + fora));
+      m.vx += ((tx - m.x) * m.k - m.vx * m.am + empurra * (m.lado ? 1.5 : 1.2)) * dt; m.x += m.vx * dt;
+      m.vz += ((alvoZ - m.z) * m.k - m.vz * m.am) * dt; m.z += m.vz * dt;
+      m.x = Math.max(-0.6, Math.min(0.7, m.x)); m.z = Math.max(-0.45, Math.min(0.45, m.z));
+      const f = this.menos ? 0.5 : 1; // "menos movimento": balanço pela metade
+      _e.set(m.x * f, 0, m.z * f, 'YXZ'); o.quaternion.setFromEuler(_e);
+    }
   }
 
   /** Sola mais baixa (calcanhar ou ponta dos dois pés), no espaço do modelo, com a pose atual e o quadril parado. */
