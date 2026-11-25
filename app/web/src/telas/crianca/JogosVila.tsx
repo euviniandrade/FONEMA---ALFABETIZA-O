@@ -148,7 +148,7 @@ export function JogosVila({ criancaId, jogoId }: { criancaId: string; jogoId?: s
                 <h1 className="t">{jogo.id === 'casa-som' ? 'Chegou na sua casinha!' : jogo.id === 'carteiro' ? 'Cartas entregues!' : 'Chegamos!'}</h1>
                 <p>{fim.total ? `Você acertou ${fim.acertos} de ${fim.total} de primeira.` : FALAS_ESCUTA.muitoBem.texto}</p>
               </div>
-            ) : <h1 className="t jv-titulo">{jogo.nome}</h1>}
+            ) : <><h1 className="t jv-titulo">{jogo.nome}</h1><p className="jv-sobre">{jogo.treina}</p></>}
             {!sit[jogo.id].aberto && !faseId ? <div className="jv-motivo"><Falta texto={sit[jogo.id].motivo} n={missoes[`jogo:${jogo.id}`]} /></div> : null}
 
             {jogo.id === 'estrada-pares' ? (
@@ -166,12 +166,11 @@ export function JogosVila({ criancaId, jogoId }: { criancaId: string; jogoId?: s
                 <button className="btn grande verde" onClick={() => jogar()} disabled={!sit.carteiro.aberto} data-testid="jogo-comecar"><Icone nome="play" />{fim ? 'Entregar mais cartas' : 'Começar a entregar'}</button>
               </div>
             )}
-            {fim || faseId ? (
-              <div className="linha-botoes centro">
-                {faseId ? <button className="btn grande ipe" onClick={() => navegar(`c/${criancaId}/vila`)} data-testid="voltar-vila"><Icone nome="casa" />Voltar para a vila</button>
-                  : <button className="btn grande ipe" onClick={() => navegar(`c/${criancaId}/brincar`)} data-testid="jogo-outros"><Icone nome="seta-esq" />Outros jogos</button>}
-              </div>
-            ) : null}
+            {/* revisão de qualidade 25/11 (fila 23): o caminho de volta fica sempre à vista, como nos outros jogos */}
+            <div className="linha-botoes centro">
+              {faseId ? <button className="btn grande ipe" onClick={() => navegar(`c/${criancaId}/vila`)} data-testid="voltar-vila"><Icone nome="casa" />Voltar para a vila</button>
+                : <button className="btn grande ipe" onClick={() => navegar(`c/${criancaId}/brincar`)} data-testid="jogo-outros"><Icone nome="seta-esq" />Outros jogos</button>}
+            </div>
           </section>
         )}
       </main>

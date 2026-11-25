@@ -7,6 +7,7 @@ import { Carregando, Topo } from '../../componentes/basicos.tsx';
 import { PainelGuia } from '../../componentes/Guia.tsx';
 import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { asset } from '../../servicos/ambiente.ts';
+import { letraAa } from '../../componentes/LetraAa.tsx';
 import { falar } from '../../util.ts';
 import '../../estilos-trilha-sons.css';
 import '../../estilos-biblioteca.css';
@@ -87,7 +88,7 @@ export function TrilhaSons({ criancaId }: { criancaId: string }) {
                       <li key={f.id} className={`sons-marco ${e} ${ts.tipo}`} style={{ ['--i' as string]: k++ } as CSSProperties}>
                         <button disabled={!aberto} onClick={() => navegar(`c/${criancaId}/fase/${f.id}`)} data-fase={f.id} data-estado={e} aria-label={`${f.titulo}: ${ROTULO[e]}`} aria-current={e === 'atual' ? 'step' : undefined}>
                           <span className="sons-disco">
-                            {ts.tipo === 'revisao' && ts.rotulo === '★' ? <Icone nome="estrela" /> : ts.rotulo}
+                            {ts.tipo === 'revisao' && ts.rotulo === '★' ? <Icone nome="estrela" /> : letraAa(ts.rotulo)}
                             {e === 'dominada' || e === 'feita' ? <span className="sons-selo"><Icone nome={e === 'dominada' ? 'estrela' : 'check'} /></span> : null}
                             {e === 'trancada' ? <span className="sons-cadeado"><Icone nome="cadeado" /></span> : null}
                           </span>

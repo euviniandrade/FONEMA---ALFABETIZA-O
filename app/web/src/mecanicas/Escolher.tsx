@@ -220,7 +220,7 @@ function EscolherClassico({ atividade, crianca, sessao, cenaId, revisao, onFim, 
       <Progressinho atual={i} total={itens.length} />
       <div className="pergunta">
         {temOuvir ? <BotaoOuvir onClick={() => { if (!ocupado) tocarItem(); }} rotulo="Ouvir de novo" /> : null}
-        {ehLeitura ? <div className="palavra-grande" data-testid="palavra-lida">{item.mostrar}</div> : null}
+        {ehLeitura ? <div className="palavra-grande" data-testid="palavra-lida">{letraAa(item.mostrar ?? '')}</div> : null}
         {item.mostrarFigura ? <div className="figura-pergunta" data-testid="figura-pergunta"><Figura palavra={item.mostrarFigura} /></div> : null}
         {temOuvir && !ehLeitura && !item.mostrarFigura ? <span className="dica-ouvir">Toque no alto-falante para ouvir de novo</span> : null}
       </div>
