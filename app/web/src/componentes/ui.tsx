@@ -79,7 +79,9 @@ const POR_EMOJI: Record<string, string> = {
 /** Caminho da figura 3D para uma palavra (ou para o emoji provisório do conteúdo); `null` se não houver arte. */
 export function caminhoFigura(emoji?: string, palavra?: string): string | null {
   const p = palavra ? semAcento(palavra) : '';
-  const porPalavra = palavra ? POR_PALAVRA[palavra.toLowerCase()] ?? POR_PALAVRA[p] ?? (TEM.has(p) || figuraExiste(p) ? p : undefined) : undefined;
+  const minuscula = palavra?.toLowerCase() ?? '';
+  // nomes de arquivo com hífen (vovo-f, alto-falante, bola-vermelha) não passam pelo semAcento, que tira o hífen
+  const porPalavra = palavra ? POR_PALAVRA[minuscula] ?? POR_PALAVRA[p] ?? (TEM.has(minuscula) || figuraExiste(minuscula) ? minuscula : TEM.has(p) || figuraExiste(p) ? p : undefined) : undefined;
   const e = emoji ? POR_EMOJI[emoji] ?? POR_EMOJI[emoji.replace(/️/g, '')] : undefined;
   const nome = porPalavra ?? e;
   if (!nome) return null;
@@ -242,7 +244,7 @@ export function MapaNavegavel({ imagem, proporcao, marcadores, foco = { x: 50, y
       return limitar(tam.w / 2 - (foco.x / 100) * base.w * z, tam.h / 2 - (foco.y / 100) * base.h * z, z);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [base.w, base.h]);
+  }, [base.w, base.h, tam.w, tam.h]); // tam também: no tablet em pé a base só depende da altura; se a largura mudava depois da 1ª medida, o mapa ficava fora do lugar (fundo azul vazio)
 
   const zoomEm = (cx: number, cy: number, fator: number, animado = false) => {
     setSuave(animado);
