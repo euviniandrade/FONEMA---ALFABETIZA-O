@@ -252,7 +252,7 @@ function CampoSenha({ rotulo = 'Senha', valor, aoMudar, testId, nova, erro, foco
   return (
     <CampoTexto
       rotulo={rotulo} valor={valor} aoMudar={aoMudar} testId={testId} tipo={ver ? 'text' : 'password'} auto={nova ? 'new-password' : 'current-password'} erro={erro} foco={foco}
-      dica={nova ? 'Pelo menos 6 caracteres, com letras' : undefined}
+      dica={nova ? '6 ou mais, com letras' : undefined}
       extra={<button type="button" className="acesso-ver" onClick={() => setVer(!ver)} aria-pressed={ver} aria-label={ver ? 'Esconder a senha' : 'Mostrar a senha'}><Icone nome="olho" /><span>{ver ? 'Esconder' : 'Mostrar'}</span></button>}
     />
   );

@@ -139,11 +139,13 @@ html.contraste .portal-porta-texto small,html.contraste .portal-admin{color:#000
 .acesso-cab h1{margin-top:4px;font-size:clamp(24px,2.4vw,32px);line-height:1.1}
 .acesso-form{display:flex;flex-direction:column;gap:clamp(8px,1.3vh,12px)}
 .acesso-form .fluxo-sub{font-family:var(--f-adulto);font-size:16px;margin:0}
-.acesso-campo{margin:0}
-.acesso-campo>span:first-child{font-size:16px;margin-bottom:5px}
-.acesso-entrada{position:relative;display:block}
-.campo.acesso-campo input:not([type=checkbox]){min-height:56px;font-size:19px;font-family:var(--f-adulto);padding:0 16px;border-radius:16px}
-.acesso-entrada:has(.acesso-ver) input{padding-right:118px}
+/* seletores fortes: a ordem dos arquivos CSS no pacote final não é garantida (estilos.css tem .campo genérico) */
+.campo.acesso-campo{margin:0}
+.campo.acesso-campo>span:first-child{font-size:16px;margin-bottom:5px}
+.campo.acesso-campo>.acesso-entrada{position:relative;display:block;margin:0}
+.campo.acesso-campo .acesso-entrada input:not([type=checkbox]):not([type=radio]):not([type=range]){display:block;min-height:56px;font-size:19px;font-family:var(--f-adulto);padding:0 16px;border-radius:16px}
+.campo.acesso-campo .acesso-entrada:has(.acesso-ver) input:not([type=checkbox]){padding-right:118px}
+.campo.acesso-campo input::placeholder{font-size:16px}
 .acesso-ver{position:absolute;right:6px;top:50%;translate:0 -50%;min-height:44px;display:inline-flex;align-items:center;gap:6px;padding:0 12px;border-radius:12px;font-family:var(--f-adulto);font-weight:700;font-size:14px;color:var(--marinho2);background:var(--ceu)}
 .acesso-ver .ic{width:20px;height:20px}
 .acesso-ver[aria-pressed=true]{background:var(--ipe-claro);color:#6B4300}
