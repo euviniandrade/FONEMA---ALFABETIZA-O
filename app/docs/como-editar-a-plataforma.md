@@ -5,6 +5,8 @@ Tales e do Bolota, **missões** (títulos, palavras das atividades, ordem das ce
 nova a partir de outra), **personagens**, **peças da Lojinha**, **selos**, **histórias**, **textos para ler sozinho**,
 **fichas de leitura**, **figuras e modelos 3D**, **recursos** (ligar/desligar) e os **textos da entrada**. E, como antes,
 trocar **qualquer áudio** pela sua voz ou a da Agatha (o áudio novo toca **exatamente onde o antigo tocava**).
+Novo: o **Estúdio criativo** (passo 1-A) junta **jogos** (nome, ligar/desligar, ordem, palavras), **personagens**,
+**vozes** e o **robô de voz** (a sua voz transformada em voz de adulto, cômica ou de personagem, pelo ElevenLabs).
 
 Como o FONEMA ainda não tem servidor (decisão D032), tudo o que você muda vale primeiro **só no aparelho** onde você
 mudou. Para valer para todo mundo, você gera um **pacote** e quem cuida do repositório o aplica (passo 12).
@@ -28,6 +30,63 @@ mudou. Para valer para todo mundo, você gera um **pacote** e quem cuida do repo
    os áudios trocados e as mudanças que ainda não foram publicados.
 
 Sem servidor, o acesso e os áudios trocados ficam **só no aparelho e no navegador** onde você fez.
+
+## 1-A. Estúdio criativo: jogos, personagens, vozes e robô de voz (novo, 26/11)
+
+Aba **Estúdio criativo** (`#/admin/estudio`). São quatro cartões grandes no topo. Tudo o que você muda aqui vale na hora
+**neste aparelho** e vai no **mesmo pacote** do Publicar (passo 12). As outras abas continuam iguais.
+
+**Jogos** — cada jogo do Parque aparece com a **prévia do cartão** (como a criança vê).
+1. **Subir / Descer** muda a ordem dos cartões no Parque.
+2. **Editar** abre: *Jogo ligado* (desmarque para desligar), *Nome do jogo* e *O que treina* (a linha do cartão). Toque
+   em **Guardar** em cada campo.
+3. Desligar um jogo tira o cartão do Parque, o "Novo!" e o convite do fim da missão. O jogo que faz parte de uma
+   **lição** continua (é parte da lição). As regras do jogo não mudam por aqui.
+4. **Casa do Som — palavras que a criança escreve:** cada palavra aparece com a figura e **a lição a partir da qual a
+   criança consegue escrevê-la** (ex.: "a partir da TF-17"). Para pôr uma palavra, escreva em *Palavra nova* › **Pôr na
+   lista** › **Guardar a lista**. O verificador confere na hora e **bloqueia** palavra sem pronúncia anotada (abre as
+   perguntas de pronúncia), sem figura, sem a voz da Sofia gravada ou com vogal que muda na fala (como em "cama"). No
+   jogo, cada criança só recebe a palavra depois da lição dela. **Voltar à lista original** desfaz.
+5. **Ver o jogo como** (uma criança deste aparelho) › **Abrir o jogo**: abre o jogo com o progresso dela (o que ela
+   jogar conta para ela).
+
+**Personagens** — a **prévia do elenco** (figura, nome e cor de cada um) e, logo abaixo, o editor de sempre: nome, cor,
+quem é, como se apresenta, figuras e "Trocar o nome nas falas". Atalhos para **Imagens** (trocar figura ou modelo 3D: o
+arquivo novo entra no mesmo lugar) e **Foto → 3D**. A roupa da Sofia, do Tales e do Bolota é a do desenho/modelo: para
+mudar, troque a figura ou o modelo. As roupas e cores do boneco **da criança** são escolhas dela na Lojinha.
+
+**Vozes** — escolha **Sofia, Tales, Bolota ou Sons das letras** e aparecem todos os áudios daquela voz, com o texto ao
+lado: **Ouvir**, **Subir áudio** (gravar de novo ou subir arquivo), **Voltar ao original**. É a mesma lista da aba
+Áudios, já filtrada.
+
+**Robô de voz** — você grava a sua fala e a inteligência artificial do **ElevenLabs** devolve a **mesma fala, com o seu
+jeito de falar (emoção, pausas, ritmo)**, em outra voz: **Adulto (narrador)**, **Cômica (personagem)** ou **Personagem
+infantil (desenho)**. Quem troca a voz é a IA; o FONEMA não mexe no tom nem na velocidade.
+1. **A chave do ElevenLabs (uma vez só):** entre em **elevenlabs.io** com a sua conta › clique no seu perfil (canto de
+   baixo) › **API Keys** › **Create API key** (deixe marcado *Speech to Speech* e *Voices*) › copie a chave (começa com
+   `sk_`). No Estúdio, passo 1, cole e toque em **Guardar neste aparelho**. Ela aparece escondida (só os 4 últimos
+   caracteres), fica **só neste aparelho**, não vai no pacote, nem no código. **Apagar a chave deste aparelho** tira.
+2. **Custos:** cada toque em **Transformar** é uma conversão e **gasta créditos da sua conta do ElevenLabs** (mais ou
+   menos pelo tamanho do áudio; o plano grátis tem pouco). O sistema **não repete sozinho**. Buscar as vozes não gasta.
+3. **Vozes e cenários (passo 2):** toque em **Buscar minhas vozes**. Para cada cenário escolha uma voz da sua
+   biblioteca (o sistema sugere pelo nome, ex.: "Sofia — FONEMA" para o personagem infantil). Não tem uma voz cômica ou
+   de narrador? Crie no ElevenLabs (Voice Design) e toque em **Atualizar minhas vozes**.
+4. **Voz de criança:** o ElevenLabs **não faz voz de criança de verdade**, e o FONEMA não tenta contornar isso. O
+   "Personagem infantil" é uma voz de desenho animado **feita por adulto**, como a Sofia e o Tales (decisão D011).
+5. **Grave (passo 3):** marque *"A voz gravada é minha, ou a pessoa me deu autorização por escrito"* (sem isso o botão
+   não liga), escreva quem grava e toque em **Gravar agora** (até 30 s) ou **Subir um arquivo**.
+6. **Transformar (passo 4):** escolha o cenário (ou outra voz da biblioteca) e toque em **Transformar**.
+7. **Usar (passo 5):** **Ouvir**, **Comparar** (toca a sua voz e depois a transformada), **Baixar** (mp3) ou **Salvar
+   numa fala**: procure a fala, palavra ou nome e toque nela; o áudio passa a tocar ali **neste aparelho**. Os sons
+   puros das letras não aparecem (esses só com voz humana gravada). No pacote, esse áudio vai marcado como **voz
+   sintética (robô)**, com a voz e o modelo usados, nunca como voz humana.
+8. **Se der erro:** a tela diz o motivo em palavras simples — sem chave, chave recusada, **sem créditos**, muitos
+   pedidos, sem internet, áudio ruim. Nada é gasto de novo sem você tocar outra vez.
+
+> Conferido sem gastar créditos: os testes usam um ElevenLabs **falso**. O formato da API (endereço
+> `api.elevenlabs.io/v1/speech-to-speech/<voz>`, campos `audio` e `model_id`, modelo `eleven_multilingual_sts_v2`) segue a
+> documentação pública, mas **não foi conferido ao vivo** (o site estava fora da rede desta sessão). Se a primeira
+> conversão de verdade der erro "outro", avise: o ajuste fica num lugar só (`web/src/servicos/robo-voz.ts`, bloco `ELEVEN`).
 
 ## 2. Gravar o alfabeto (o mais importante)
 
