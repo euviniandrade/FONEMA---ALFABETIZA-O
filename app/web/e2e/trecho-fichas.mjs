@@ -123,6 +123,7 @@ export async function trechoFichas(browser, h) {
   const textoTrancadas = (await pg.locator('[data-trancada]').allInnerTexts()).join(' ');
   ok(legiveis.includes('pato') && !legiveis.includes('rato') && !legiveis.includes('leão'), `palavras para ler só com sons ensinados (${legiveis.join(' ')})`);
   ok(await pg.locator('[data-trancada]').count() > 0 && !/RATO|LEÃO|PEIXE|ZEBRA|COBRA/.test(textoTrancadas), 'palavras trancadas aparecem só como figura com cadeado, nunca escritas (regra 2)');
+  ok(/abre com as missões/.test(textoTrancadas) && !/em breve/i.test(await pg.getByTestId('ficha-campo').innerText()), 'fila nº 30: a palavra trancada diz "abre com as missões" (nada de "em breve")');
   ok(!(await pg.getByTestId('ficha-nivel-ler').isDisabled()) && await pg.getByTestId('ficha-nivel-ouvir').isDisabled() && await pg.getByTestId('ficha-nivel-bocas').isDisabled() && await pg.getByTestId('ficha-nivel-bocas-palavra').isDisabled(),
     'só o nível 1 aberto no começo');
 

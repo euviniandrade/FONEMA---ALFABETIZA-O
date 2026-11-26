@@ -82,7 +82,18 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
   await fr.getByTestId('mapa-fechar').click(CLIQUE);
   await frame.evaluate(() => { const p = window.FONEMA_PASSEIO; p.teleportar(0, 19.5, Math.PI); p.simular(0.5); });
   await cap('01c-proximo-passo');
-  await fr.getByTestId('caca-mapa').click(CLIQUE);
+  // fila nº 30: sem a chave, o barquinho diz o que falta (a chave) e o cartão leva direto à caça (era "Em breve na Lojinha")
+  const semChave = await frame.evaluate(() => {
+    const p = window.FONEMA_PASSEIO; const l = p.LUGARES.find((x) => x.id === 'barco');
+    p.teleportar(38.6, 12.6, Math.PI / 2); p.simular(0.5); p.interagir(); p.simular(0.3);
+    return { sub: l.sub, aberto: document.querySelector('#cartao')?.classList.contains('aberto'), tit: document.querySelector('#cTit')?.textContent, txt: document.querySelector('#cTxt')?.textContent, botoes: [...document.querySelectorAll('#cAcoes .bt')].map((b) => b.textContent) };
+  });
+  ok(semChave.sub === 'Precisa da chave' && semChave.aberto && /precisa da chave/.test(semChave.tit) && /chave/.test(semChave.txt), `sem a chave: "${semChave.sub}", cartão "${semChave.tit}" — "${semChave.txt}"`);
+  ok(semChave.botoes.some((b) => /Caça ao tesouro/.test(b)), 'o cartão do barquinho tem o botão "Caça ao tesouro" (onde a chave se ganha)');
+  await cap('01d-barco-sem-chave');
+  await fr.locator('#cAcoes .bt', { hasText: 'Caça ao tesouro' }).click(CLIQUE);
+  await fr.getByTestId('caca-menu').waitFor({ state: 'visible', timeout: 60000 });
+  ok(true, 'tocar em "Caça ao tesouro" no cartão abre o mapa da caça');
 
   const juiz = () => pg.evaluate(() => window.FONEMA_CACA_JUIZ);
   const esperarJuiz = (fn, arg) => pg.waitForFunction(fn, arg, { timeout: 180000, polling: 200 }).catch(async (e) => { console.log('    juiz:', JSON.stringify(await pg.evaluate(() => window.FONEMA_CACA_JUIZ)), 'baús:', JSON.stringify(await frame.evaluate(() => window.FONEMA_CACA.baus.map((b) => [b.id, b.estado])))); throw e; });
@@ -140,6 +151,7 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
     .catch(async (e) => { console.log('    níveis:', JSON.stringify(await frame.evaluate(() => window.FONEMA_CACA.niveis)), 'jogos:', JSON.stringify((await lerProgresso(pg, id)).biblioteca?.jogos)); throw e; });
   ok(true, 'depois da caça aos sons, as charadas abrem');
   await fr.getByTestId('caca-mapa').click(CLIQUE);
+  ok(/ganha a chave do barquinho/.test(await fr.getByTestId('caca-nivel-3').innerText()), 'no mapa da caça, as Charadas dizem que ganham a chave do barquinho');
   await fr.getByTestId('caca-nivel-2').click(CLIQUE);
   await esperarJuiz(() => window.FONEMA_CACA_JUIZ?.nivel === 2 && window.FONEMA_CACA_JUIZ.k === 0);
   bs = await baus();
@@ -201,6 +213,13 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
   ok(comErro.length >= 1 && comErro.every((t) => t.tipo === 'avaliada' && t.nOpcoes === 3), 'a letra do baú é avaliada (com o erro guardado)');
   await frame.waitForFunction(() => window.FONEMA_PASSEIO.LUGARES.find((l) => l.id === 'barco')?.emBreve === false, null, { timeout: 60000, polling: 300 });
   ok(true, 'fim das charadas: a chave do barquinho (o píer deixa embarcar)');
+  // fila nº 30: ganhou a chave → o próximo passo é usá-la no píer (seta e trilha até lá), até embarcar
+  await frame.waitForFunction(() => window.FONEMA_GUIA?.objetivo?.chave === 'pier', null, { timeout: 60000, polling: 300 });
+  await frame.evaluate(() => { const p = window.FONEMA_PASSEIO; p.teleportar(14, 6, Math.PI / 2); p.simular(0.6); });
+  const gPier = await frame.evaluate(() => ({ o: window.FONEMA_GUIA.objetivo, faixa: document.querySelector('#guiaFaixa')?.innerText, trilha: window.FONEMA_GUIA.moedasTrilha.length, aviso: document.querySelector('#cacaAviso')?.innerText }));
+  ok(gPier.o.marcador && gPier.o.trilha && /píer/.test(gPier.faixa) && gPier.trilha >= 4, `com a chave, o guia aponta o píer ("${gPier.faixa}", ${gPier.trilha} moedas no caminho)`);
+  ok(/píer/.test(gPier.aviso ?? ''), `o aviso diz para que serve a chave ("${gPier.aviso}")`);
+  await cap('06b-chave-pier');
 
   /* ============================== barco ============================== */
   const barco = await frame.evaluate(() => {
@@ -209,6 +228,7 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
     return { perto, ativo: window.FONEMA_CACA.barco.ativo, classe: document.body.classList.contains('no-barco') };
   });
   ok(barco.perto === 'barco' && barco.ativo && barco.classe, `no píer, "Entrar" embarca no barquinho (perto: ${barco.perto})`);
+  ok(await frame.evaluate(() => window.FONEMA_GUIA.objetivo?.chave === 'missao' && !window.FONEMA_GUIA.extra), 'chave usada: o guia volta a apontar a missão de hoje');
   await cap('07-barco');
   const remar = await frame.evaluate(() => {
     const p = window.FONEMA_PASSEIO, b = window.FONEMA_CACA.barco, v = window.FONEMA_MUNDO.vila;
@@ -228,6 +248,7 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
   /* ============================== nível 4: na água ============================== */
   await frame.waitForFunction(() => window.FONEMA_CACA.niveis.find((n) => n.nivel === 4)?.aberto, null, { timeout: 60000, polling: 300 });
   await fr.getByTestId('caca-mapa').click(CLIQUE);
+  ok(/píer/.test(await fr.getByTestId('caca-chave').innerText()), 'com a chave, o mapa da caça lembra que ela é sua e onde usar');
   await fr.getByTestId('caca-nivel-4').click(CLIQUE);
   const vistos = [];
   for (let k = 0; k < 3; k++) {

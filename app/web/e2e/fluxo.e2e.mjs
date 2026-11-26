@@ -29,6 +29,7 @@ import { trechoTutorial } from './trecho-tutorial.mjs';
 import { trechoFichas } from './trecho-fichas.mjs';
 import { trechoDesbloqueio } from './trecho-desbloqueio.mjs';
 import { trechoTelas } from './trecho-telas.mjs';
+import { trechoGuia } from './trecho-guia.mjs';
 
 const aqui = dirname(fileURLToPath(import.meta.url));
 const CAPTURAS_V2 = process.argv.includes('--capturas-v2');
@@ -842,6 +843,15 @@ async function main() {
     if (errosT.length) throw new Error(`erros na página:\n${errosT.join('\n')}`);
     return;
   }
+  if (process.argv.includes('--guia') || process.argv.includes('--capturas-guia')) {
+    const errosG = [];
+    const dirG = process.argv.includes('--capturas-guia') ? (process.env.CAPTURAS_GUIA ?? DIR_CAP) : undefined;
+    if (dirG) mkdirSync(dirG, { recursive: true });
+    await trechoGuia(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros: errosG, dirCap: dirG });
+    await browser.close(); servidor?.kill();
+    if (errosG.length) throw new Error(`erros na página:\n${errosG.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--telas') || process.argv.includes('--capturas-telas')) {
     const errosT = [];
     if (process.argv.includes('--capturas-telas')) mkdirSync(process.env.CAPTURAS_TELAS ?? DIR_CAP, { recursive: true });
@@ -1301,6 +1311,7 @@ async function main() {
   await trechoFoto3d(browser, { BASE, ok, erros });
   await trechoTutorial(browser, { BASE, ok, passarPorteira, cadastrar, erros, dirCap: DIR_CAP });
   await trechoTelas(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros });
+  await trechoGuia(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros });
 
   if (CAPTURAS_AL) {
     const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR' });
