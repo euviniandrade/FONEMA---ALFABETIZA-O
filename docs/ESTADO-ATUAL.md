@@ -9,6 +9,32 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Estúdio criativo e robô de voz no administrador (fila nº 32 e 33; 26/11; no ramo, NÃO publicado):**
+- **Aba nova `#/admin/estudio/<jogos|personagens|vozes|robo>`** (`telas/admin/estudio/`); as 12 abas antigas ficam iguais.
+- **Jogos como dados** (`conteudo/src/jogos.ts`, coleção `jogos` do gerenciador): nome, "treina", ligado, ordem e as palavras
+  da Casa do Som (eram `MOVEIS_CASA` fixas no motor). Verificador: `errosDasPalavrasDoJogo` (fora do banco, sem figura,
+  nunca decodificável, vogal nasalizada/reduzida, < 3 palavras) entra no `errosDoItem` e no `verificarTudo` (o importador
+  também barra); a tela mostra a lição de cada palavra (`licaoQueLibera`) e bloqueia palavra sem a voz `sofia|<palavra>`.
+  No jogo vale sempre `palavraLiberada` por criança. Desligado: sai do Parque (BrincarSons/JogosVila, endereço direto avisa),
+  do `catalogoDeExtras` e do `desafioDaFase`; o desafio DENTRO da lição continua. Nome/treina lidos por getters nos cartões.
+- **Personagens:** prévia do elenco + `AbaPersonagens` + atalhos (Imagens, Foto → 3D). Sofia/Tales/Bolota não têm roupas como
+  dado (só figura/modelo): roupa muda trocando a figura/modelo.
+- **Vozes:** `ListaAudios` (exportada, filtro inicial) por Sofia/Tales/Bolota/sons das letras.
+- **Robô de voz** (`servicos/robo-voz.ts`): ElevenLabs STS `POST /v1/speech-to-speech/{voz}` (multipart `audio`, `model_id`
+  `eleven_multilingual_sts_v2`, `remove_background_noise`; `xi-api-key`), `GET /v1/voices`, `GET /v1/user/subscription`;
+  **formato NÃO conferido ao vivo** (elevenlabs.io fora da rede da sessão; ajuste só no bloco `ELEVEN`). Chave do dono no
+  banco `fonema-admin` (`dados:robo-voz`), mascarada, nunca no pacote/código/mensagem; sem nova tentativa automática;
+  erros: sem chave, chave inválida, sem créditos, muitos pedidos, áudio ruim, rede. Cenários = vozes da biblioteca do dono
+  escolhidas no aparelho (nenhum id fixo); "Personagem infantil" = voz de desenho feita por adulto (D011). Consentimento
+  obrigatório. Salvar numa fala: origem nova **`robo`** (voz + modelo) em substituições e pacotes; importador grava
+  `-robo-` e marca `voz_robo` (nunca "voz humana") e **recusa robô em `som:`**; sons de letra/sons da dupla não recebem robô.
+- **Verificado:** typecheck, lint, `vitest` 501/501 (novos: `robo-voz.test.ts` 10, `conteudo/test/jogos-parque.test.ts` 4,
+  `motor/test/jogos-estudio.test.ts` 3); build; E2E `--estudio` (novo, 49 ✓ 0 ✗, API falsa por `page.route`, nenhuma chamada real),
+  `--admin` 23 ✓, `--gerenciador` 29 ✓, `--foto3d` 7 ✓; `--sem-jornada` **NÃO terminou** em 3 tentativas (o navegador foi fechado por fora, saída 144, em trechos de outras frentes: ordem das trilhas e Trilha dos Sons, com outros E2E rodando na máquina); rodado sozinho, `--trilha-sons` passou inteiro.
+  Capturas `app/docs/capturas/v18-estudio-*.jpg` (PC 1440×900 e tablet 820×1180). Passo a passo: `app/docs/como-editar-a-plataforma.md` §1-A.
+- **Falta / limites:** o dono criar a chave e testar a 1ª conversão real; ninguém ouviu uma conversão de verdade; nomes da
+  Caça ao Tesouro não editáveis; palavras dos jogos de escutar não editáveis (são ouvidas, estrutura própria).
+
 **O jogo guia: próxima missão e para que serve cada item (fila nº 30; 26/11; no ramo, NÃO publicado):**
 - **Auditoria como criança:** a vila já guiava bem (estrela "Missão de hoje", botão Missão brilhando, painel guia com "Próxima:" e
   "Continuar"); o passeio já tinha a faixa da missão com seta e moedinhas. Faltava: nas telas de fora da missão (Lojinha, Álbum,
