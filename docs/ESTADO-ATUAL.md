@@ -509,7 +509,7 @@ entravam nos jogos, e os cadeados não diziam quanto faltava. Tabela completa do
   mergulhar" no topo desta seção). A animação antiga em código ficou só como reserva enquanto a captura carrega.
 - **Área:** colisão por grade montada das peças da vila (`js/colisao.js`): prédios, muros, cercas, bancos, postes, troncos, arbustos.
   Cerca de madeira baixa no limite (a mata fica do lado de fora, com aviso "A mata fica para outro dia!", só visual). Rio: beirinha
-  rasa onde o boneco nada; meio fundo bloqueado. Barquinho com cadeado "Em breve na Lojinha".
+  rasa onde o boneco nada; meio fundo bloqueado. Barquinho com cadeado "Em breve na Lojinha" (desde a fila nº 30: "Precisa da chave"; a chave sai da Caça ao tesouro).
 - **Portas** (`js/passeio.js › LUGARES`, destinos em `Passeio3D.tsx`): Escola → missão de agora; Biblioteca → Cantinho da Leitura;
   Campinho → Brincar com sons; Padaria → Lojinha; Casa da Sofia → Escrever do seu jeito (trancada até haver palavras para escrever,
   fala já gravada `escTrancada`); Coreto → Ler mais ligeiro (trancada pela mesma regra da fluência, fala `fluTrancada`). Botão grande

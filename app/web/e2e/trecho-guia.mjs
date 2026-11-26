@@ -98,10 +98,12 @@ export async function trechoGuia(browser, h) {
       ok(m.h >= 44 && m.esq >= 0 && m.dir <= m.vw && m.topo >= 0 && m.base <= m.vh && m.livre, `${nome}${suf}: inteira à vista e sem nada por cima (${m.h} px de altura, ${m.esq}–${m.dir} de ${m.vw})`);
     }
     // tocar leva à ENTRADA da missão (não direto à lição)
-    await pg.goto(BASE + `#/c/${id}/album`);
-    await pg.getByTestId('proxima-missao').click();
-    await pg.waitForFunction(() => /\/fase\//.test(location.hash), null, { timeout: 15000 }).catch(() => {});
-    ok(pg.url().endsWith(`/fase/${faseAgora}`), `tocar na pílula leva à entrada da missão (${pg.url().split('#')[1]})`);
+    if (!soCapturas) {
+      await pg.goto(BASE + `#/c/${id}/album`);
+      await pg.getByTestId('proxima-missao').click();
+      await pg.waitForFunction(() => /\/fase\//.test(location.hash), null, { timeout: 15000 }).catch(() => {});
+      ok(pg.url().endsWith(`/fase/${faseAgora}`), `tocar na pílula leva à entrada da missão (${pg.url().split('#')[1]})`);
+    }
 
     // Fichas: "abre com as missões" no lugar de "em breve"
     await pg.goto(BASE + `#/c/${id}/leitura/ficha.animais`);
@@ -114,7 +116,8 @@ export async function trechoGuia(browser, h) {
     // para que serve: cofrinho, Lojinha (peças e utensílios), Álbum
     await pg.goto(BASE + `#/c/${id}/lojinha`);
     await pg.getByTestId('lojinha').waitFor();
-    ok(await pg.getByTestId('lojinha-para-que').isVisible().catch(() => false), `Lojinha${suf}: diz como as peças abrem`);
+    // (no celular o cabeçalho da Lojinha esconde os textos para a roupa caber na 1ª tela; cada peça já diz "Abre na próxima missão")
+    if (!movel) ok(await pg.getByTestId('lojinha-para-que').isVisible().catch(() => false), `Lojinha${suf}: diz como as peças abrem`);
     await pg.locator('[data-aba=utensilios]').click();
     await cap('lojinha-utensilios', 900);
     ok(await pg.getByTestId('utensilios-para-que').isVisible().catch(() => false), `Lojinha${suf}: utensílios dizem para que servem`);
