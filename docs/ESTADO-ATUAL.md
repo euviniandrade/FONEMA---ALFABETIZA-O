@@ -9,6 +9,35 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Passeio 3D, gráfico rodada 2 + corrida + mechas (fila nº 24/28; 25–26/11; no ramo, NÃO publicado):**
+- **Chão:** ruas calçadas só no médio/alto (`materiais.js`, contas no próprio desenho): paralelepípedo na avenida das casas, rua
+  cruzada e caminho da escola (pedra mais lisa no meio, rejunte esverdeado na beira), pedra portuguesa em relevo na praça, lajotas no
+  pátio da escola; some aos poucos de longe e quando a pedra fica pequena na tela (sem chuvisco). Meio-fio de pedra na avenida e no
+  caminho da escola (`vida.js`, lote de acabamento, fora da colisão).
+- **Prédios** (`predios.js`, só médio/alto): cornija em cima de toda janela e mãos-francesas no peitoril; beiral com cachorros de
+  madeira e testeira; **sacadas de ferro** com vasinhos nas janelas de cima dos sobrados.
+- **Sombra de contato** (médio e alto; no alto continua o AO de tela): manchinhas macias no pé de árvores, arbustos, postes, bancos,
+  canteiros e coreto — uma malha só, fora do AO.
+- **Rio:** no médio (sem espelho) reflete o céu de verdade (degradê do céu da hora, nuvens passando); espuma rendada na margem,
+  floquinhos descendo e brilhinhos do sol (médio/alto). **Vida:** 3 bandos de passarinhos em V ao longe, 22 borboletas nas flores e
+  na beira do rio, moitas de flores do campo (`js/vida.js`, novo; 1 chamada de desenho cada).
+- **Peso (medido, mesmas vistas):** no **baixo nada muda** — mesmo número de objetos (236 visíveis) e mesmas chamadas/triângulos
+  (praça 128/0,649 M, rio 55/0,505 M, alto 232/0,903 M, idênticos antes×depois; trocado ao vivo do médio para o baixo: +0,01 M).
+  Médio 390×844: praça 154→168 chamadas, 1,67→1,81 M tri; rio 86→92, 1,41→1,47 M; vista do alto 298→311, 2,02→2,21 M (+4–9%).
+  Alto: +3–7% de chamadas e triângulos. Quadros/s sem placa de vídeo (SwiftShader, máquina dividida com outra frente) ficam entre
+  0,2 e 1,6 por segundo e variam ±30% de uma medida para outra: a diferença antes×depois ficou dentro do ruído no baixo; no médio
+  a praça e o rio empataram e a vista do alto saiu ~20% mais lenta. **Ninguém mediu num celular de verdade.**
+- **Corrida (`animacoes.js`):** medido quadro a quadro, o quadril ficava mais baixo justamente no tempo no ar; agora não desce mais
+  que 2,5 cm abaixo do ponto mais alto recente. Cabeça sobe e desce (E2E): **andando 2,6 m/s 7,0→5,0 cm; correndo 3,7 m/s
+  13,4→7,2 cm**; sola no chão (0,0 cm) nos quadros de apoio, até ~5–7 cm no ar. E2E ganhou a checagem da corrida (< 9 cm e sola).
+- **Cabelo comprido em 3 mechas** (`esqueleto.js`: ossos cabelo, cabeloE, cabeloD com molas diferentes; pesos misturados aos poucos):
+  sem rasgo em 6 penteados olhados correndo (liso comprido, tranças, rabo, ondulado, black, cacheado).
+- **Celular (revisão fila 23 a/b):** cartão de ajuda do passeio em 2 colunas largas (1 abaixo de 340 px); a pílula do perfil no
+  passeio vira só o rostinho (não cobre mais a placa do Coreto) — `estilos.css` e `passeio.html`, E2E confere.
+- **Verificado:** cópia limpa (worktree), build, typecheck, lint, `npm test` 484/484; E2E `--mundo3d` **45 ✓ 0 ✗** e `--caca` **49 ✓ 0 ✗**.
+  Capturas antes×depois (praça, rua, rio, prédio, alto; alto e baixo no PC 1600×900, médio no celular 390×844):
+  `app/docs/capturas/mundo3d-v4-{antes,depois}-*.jpg`.
+
 **Passeio 3D, rodada 3: andar/correr, "fantasminha" e mergulho livre (fila do dono nº 28; 18–19/11; NÃO publicado ainda):**
 queixa do dono: "parece que ela está pulando… a forma de andar está muito ruim… atalho para mergulhar e abaixar e ir mais fundo…
 às vezes parece um fantasminha, partes brancas; ao girar fica transparente". Diagnóstico com folhas quadro a quadro (ANTES em
