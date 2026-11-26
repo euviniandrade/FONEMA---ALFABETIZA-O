@@ -244,6 +244,12 @@ export async function trechoMundo3d(browser, { BASE, ok, passarPorteira, cadastr
   await fc.waitForFunction(() => window.FONEMA_PASSEIO && (window.FONEMA_RECEBIDOS || []).includes('crianca'), null, { timeout: 240000 });
   const tamanhos = await fc.evaluate(() => ['#btPular', '#btTchau'].map((s) => { const r = document.querySelector(s).getBoundingClientRect(); return Math.min(r.width, r.height); }));
   ok(tamanhos.every((t) => t >= 60), `botões grandes no celular: Pular e Tchau com ${tamanhos.map((t) => Math.round(t)).join(' e ')} px`);
+  // revisão de qualidade (fila 23 a/b): cartão de ajuda em até 2 colunas largas e a pílula do perfil só com o rostinho
+  const ajuda = await fc.evaluate(() => { document.querySelector('#btAjuda').click(); const d = [...document.querySelectorAll('#dica div')].map((e) => e.getBoundingClientRect()); const cols = new Set(d.map((r) => Math.round(r.left))).size; return { cols, larg: Math.min(...d.map((r) => r.width)), n: d.length }; });
+  ok(ajuda.n > 0 && ajuda.cols <= 2 && ajuda.larg >= 120, `cartão de ajuda no celular: ${ajuda.cols} colunas, a mais estreita com ${Math.round(ajuda.larg)} px`);
+  const pilula = await pc.evaluate(() => { const p = document.querySelector('.tela-mundo3d .hud-perfil'); return p ? { w: p.getBoundingClientRect().width, nome: [...p.querySelectorAll('b')].some((b) => b.offsetParent !== null) } : null; });
+  ok(!pilula || (pilula.w <= 60 && !pilula.nome), `pílula do perfil no passeio pequena (${pilula ? Math.round(pilula.w) : 0} px, sem o nome por cima das placas)`);
+  await fc.evaluate(() => document.querySelector('#dica').classList.remove('on'));
   const q0 = await fc.evaluate(() => window.FONEMA_PASSEIO.posicao);
   const cdp = await cel.newCDPSession(pc);
   const toque = (type, x, y) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x, y, id: 1 }] });

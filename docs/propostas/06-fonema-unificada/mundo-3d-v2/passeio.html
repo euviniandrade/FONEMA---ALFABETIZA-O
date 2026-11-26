@@ -86,12 +86,16 @@
     #btAcao { min-height: 76px; font-size: 22px; padding: 10px 20px; }
     #lugar { font-size: 18px; padding: 6px 14px; max-width: calc(100vw - 110px); left: calc(50% - 36px); overflow: hidden; text-overflow: ellipsis; }
     #lugar #lugarNome { overflow: hidden; text-overflow: ellipsis; }
-    #dica { font-size: 15px; gap: 10px; padding: 10px 14px; width: max-content; max-width: calc(100vw - 110px); left: calc(50% - 40px); }
-    #dica div { max-width: 96px; }
+    /* cartão de ajuda no celular: 2 colunas largas (antes, 4 colunas espremidas: "Dedo à / esquerda: / andar") */
+    #dica { font-size: 15px; padding: 10px 12px; width: calc(100vw - 32px); max-width: 420px; left: 50%; }
+    #dica.on { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; }
+    #dica div { max-width: none; flex-direction: row; text-align: left; gap: 8px; }
+    #dica b { font-size: 26px; flex: none; }
     #cartao { bottom: 220px; }
     #cartao h3 { font-size: 24px; }
     #cartao p { font-size: 19px; }
   }
+  @media (max-width: 340px) { #dica.on { grid-template-columns: 1fr; } }
   /* embaixo d'água (mergulho): véu azul por cima do 3D; o cenário submerso (peixes, plantas, luz) é da frente do mundo */
   #submerso { position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: 0; transition: opacity .5s;
     background: radial-gradient(ellipse at 50% 0%, rgba(120,220,235,.25), rgba(20,95,130,.55) 70%, rgba(10,60,95,.7)); }
