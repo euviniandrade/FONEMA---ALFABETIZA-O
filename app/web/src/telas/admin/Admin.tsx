@@ -22,15 +22,17 @@ import { AbaEscola } from './AbaEscola.tsx';
 import { AbaMissoes } from './AbaMissoes.tsx';
 import { AbaFoto3D, AbaHistorico, AbaImagens, AbaLeitura, AbaPersonagens, AbaTextos, ConfigConteudo } from './Gerenciador.tsx';
 import { PublicarTudo } from './PublicarTudo.tsx';
+import { Estudio } from './estudio/Estudio.tsx';
 import { baixar, carimbo, dataCurta, useCatalogo, useTrocados } from './dados-admin.ts';
 import { idade } from './resumo-admin.ts';
 import { useCriancas } from './useCriancas.ts';
 import '../../estilos-admin.css';
 
-type Aba = 'visao' | 'escola' | 'textos' | 'missoes' | 'personagens' | 'leitura' | 'imagens' | 'audios' | 'historico' | 'foto3d' | 'publicar' | 'site';
+type Aba = 'visao' | 'escola' | 'estudio' | 'textos' | 'missoes' | 'personagens' | 'leitura' | 'imagens' | 'audios' | 'historico' | 'foto3d' | 'publicar' | 'site';
 const ABAS: { id: Aba; rota: string; rotulo: string; icone: string; so?: 'geral' }[] = [
   { id: 'visao', rota: 'admin', rotulo: 'Visão geral', icone: 'grafico' },
   { id: 'escola', rota: 'admin/escola', rotulo: 'Escola', icone: 'chapeu' },
+  { id: 'estudio', rota: 'admin/estudio', rotulo: 'Estúdio criativo', icone: 'estrela', so: 'geral' },
   { id: 'textos', rota: 'admin/textos', rotulo: 'Textos e falas', icone: 'caderno', so: 'geral' },
   { id: 'missoes', rota: 'admin/missoes', rotulo: 'Missões', icone: 'mapa', so: 'geral' },
   { id: 'personagens', rota: 'admin/personagens', rotulo: 'Personagens e prêmios', icone: 'pessoa', so: 'geral' },
@@ -61,6 +63,7 @@ export function Admin({ aba, sub }: { aba?: string; sub?: string }) {
       <main className="adm-palco">
         {aqui === 'visao' ? <VisaoGeral papel={sessao.papel} /> : null}
         {aqui === 'escola' ? <AbaEscola papel={sessao.papel} /> : null}
+        {aqui === 'estudio' ? <Estudio sub={sub} /> : null}
         {aqui === 'textos' ? <AbaTextos /> : null}
         {aqui === 'missoes' ? <AbaMissoes sub={sub} /> : null}
         {aqui === 'personagens' ? <AbaPersonagens /> : null}

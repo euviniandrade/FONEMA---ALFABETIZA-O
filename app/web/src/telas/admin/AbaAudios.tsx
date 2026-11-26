@@ -16,7 +16,7 @@ import { servicoAdmin } from '../../servicos/admin-conta.ts';
 import { dataCurta, pararAudio, tocarAtual, tocarUrl, useCatalogo, useTocando, useTrocados } from './dados-admin.ts';
 
 /* ------------------------------------------------------------------ quem grava (aviso de autorização) */
-interface PrefGravacao { quem: string; autorizacao: boolean }
+export interface PrefGravacao { quem: string; autorizacao: boolean }
 export function usePrefGravacao(): [PrefGravacao, (p: Partial<PrefGravacao>) => void] {
   const [p, setP] = useState<PrefGravacao>({ quem: '', autorizacao: false });
   useEffect(() => { void servicoAdmin().ler<PrefGravacao>('gravacao').then((v) => { if (v) setP(v); }); }, []);
@@ -24,7 +24,7 @@ export function usePrefGravacao(): [PrefGravacao, (p: Partial<PrefGravacao>) => 
   return [p, mudar];
 }
 
-function AvisoAutorizacao({ pref, mudar }: { pref: PrefGravacao; mudar: (p: Partial<PrefGravacao>) => void }) {
+export function AvisoAutorizacao({ pref, mudar }: { pref: PrefGravacao; mudar: (p: Partial<PrefGravacao>) => void }) {
   return (
     <div className="adm-aviso" data-testid="aviso-autorizacao">
       <p><Icone nome="escudo" /> <b>Voz de pessoa real:</b> gravar a voz de um adulto para o produto pede <b>autorização por escrito</b> da pessoa (e do responsável, se for criança). Guarde o documento. A decisão de publicar é do dono.</p>
@@ -191,10 +191,10 @@ const LETRAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 const FASES = [['AL', 'Trilha do Alfabeto (AL)'], ['S-LETRA', 'Missão das letras (S-LETRA)'], ['TF', 'Trilha dos Sons (TF)'], ['R0', 'R0'], ['R1', 'R1'], ['R2a', 'R2a'], ['telas', 'Telas do app'], ['cantinho', 'Cantinho da Leitura'], ['bolota', 'Histórias do Bolota']] as const;
 const POR_PAGINA = 40;
 
-function ListaAudios({ pref }: { pref: PrefGravacao }) {
+export function ListaAudios({ pref, inicial }: { pref: PrefGravacao; inicial?: Partial<FiltroCatalogo> }) {
   const itens = useCatalogo();
   const trocados = useTrocados();
-  const [f, setF] = useState<FiltroCatalogo>({ busca: '', tipo: '', voz: '', letra: '', fase: '', so: '' });
+  const [f, setF] = useState<FiltroCatalogo>({ busca: '', tipo: '', voz: '', letra: '', fase: '', so: '', ...inicial });
   const [aberto, setAberto] = useState<string | null>(null);
   const [mostrar, setMostrar] = useState(POR_PAGINA);
   const lista = useMemo(() => (itens ? filtrarCatalogo(itens, { ...f, trocados: new Set(trocados.keys()) }) : []), [itens, f, trocados]);
