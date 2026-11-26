@@ -22,11 +22,12 @@ mudou. Para valer para todo mundo, você gera um **pacote** e quem cuida do repo
 
 ## 1. Entrar na Área do administrador
 
-1. Abra o FONEMA e entre na Área da Família ou do Professor › **Configurações**. No fim da página tem o link pequeno
-   **"Área do administrador"** (ou digite no endereço `#/admin`, por exemplo `https://fonema.vercel.app/#/admin`).
+1. Abra o FONEMA: na primeira página, embaixo, tem o link discreto **"Administrador"** (desde 26/11, fila nº 34).
+   Também dá para entrar pela Área da Família ou do Professor › **Configurações** › "Área do administrador", ou digitar
+   no endereço `#/admin` (por exemplo `https://fonema.vercel.app/#/admin`).
 2. Na primeira vez, escolha **o seu nome e uma senha** (pelo menos 8 caracteres, com letras). A senha não fica guardada:
    só uma "impressão digital" dela. Anote a senha num lugar seguro.
-3. Esqueceu a senha? Em "Esqueci a senha" dá para **zerar** o acesso (pede o PIN de um adulto do aparelho). Zerar apaga
+3. Esqueceu a senha? Em "Esqueci a senha" dá para **zerar** o acesso (pede a senha de um adulto cadastrado no aparelho; conta antiga: o PIN). Zerar apaga
    os áudios trocados e as mudanças que ainda não foram publicados.
 
 Sem servidor, o acesso e os áudios trocados ficam **só no aparelho e no navegador** onde você fez.
