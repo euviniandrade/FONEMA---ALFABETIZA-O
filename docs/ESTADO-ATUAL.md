@@ -15,7 +15,7 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   Brincar, Cantinho, Fichas, trilhas, mapa das ilhas) não havia caminho de volta à missão a não ser voltar à vila; o fim da missão só
   mostrava o próximo objetivo quando a fase acabava; o barquinho dizia "Em breve na Lojinha" (errado: abre com a chave da caça); a chave
   não dizia onde usar; a faixa do passeio mostrava "O som /a/"; cofrinho, utensílios e Álbum não diziam para que servem.
-- **Feito:** `ProximaMissao` (`componentes/Guia.tsx`): pílula dourada no topo dessas telas (e embaixo no mapa das ilhas), mesmo
+- **Feito:** `ProximaMissao` (`componentes/Guia.tsx`): pílula dourada no topo dessas telas (e embaixo no mapa das ilhas; nas trilhas não, porque o painel guia já tem "Continuar"), mesmo
   `missaoDeHoje` do painel guia, leva à ENTRADA da fase; nunca no meio da lição, no fim da missão nem no passeio. Fim da missão: sempre
   "Próxima missão: …" (só texto; sem botão de começar, regra C9/R13). Linhas "💡 Para que serve" no cofrinho, Lojinha (PC), utensílios e
   Álbum (só texto, sem voz). Fichas: "abre com as missões". Passeio: barquinho "Precisa da chave" + cartão com botão "Caça ao tesouro";
@@ -26,7 +26,7 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   Memória dos Sons sem pílula (é jogo; o voltar leva ao Brincar, que tem).
 - **Verificado (cópia limpa em git worktree, build de produção servido na porta 4840):** typecheck, lint, `npm test` 484/484;
   E2E `--guia` (novo) **83 ✓ 0 ✗**, `--fichas` **33 ✓ 0 ✗**, `--telas` ok (nenhuma tela passa da largura com a pílula),
-  `--mundo3d` **45 ✓ 0 ✗**, `--caca` (PC e celular) **114 ✓ 0 ✗**. O `--sem-jornada` inteiro NÃO foi rodado (> 50 min).
+  `--mundo3d` **45 ✓ 0 ✗**, `--caca` (PC e celular) **114 ✓ 0 ✗**; `--sem-jornada` inteiro (com o `--guia` dentro) **555 ✓ 0 ✗, E2E OK**.
   Capturas `app/docs/capturas/v17-guia-{antes,depois}-*.jpg` (celular 390×844 e PC 1440×900; o "antes" é o commit 21e1bde
   fotografado com o mesmo roteiro, `GUIA_PREFIXO=antes`).
 
