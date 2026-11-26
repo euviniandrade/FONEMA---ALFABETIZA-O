@@ -24,7 +24,11 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   missão com `semFonetica`. Nenhuma fala nova, nenhum áudio gerado. D034 ainda cita "Em breve na Lojinha" (decisão não editada; vale isto).
 - **Deixado de propósito:** as 5 ilhas "Em breve" (conteúdo que não existe), Alfabeto "Frases · Em breve", etapas futuras do caminho;
   Memória dos Sons sem pílula (é jogo; o voltar leva ao Brincar, que tem).
-- **Verificado:** ver resultado dos testes na FILA nº 30. Capturas `app/docs/capturas/v17-guia-{antes,depois}-*.jpg`.
+- **Verificado (cópia limpa em git worktree, build de produção servido na porta 4840):** typecheck, lint, `npm test` 484/484;
+  E2E `--guia` (novo) **83 ✓ 0 ✗**, `--fichas` **33 ✓ 0 ✗**, `--telas` ok (nenhuma tela passa da largura com a pílula),
+  `--mundo3d` **45 ✓ 0 ✗**, `--caca` (PC e celular) **114 ✓ 0 ✗**. O `--sem-jornada` inteiro NÃO foi rodado (> 50 min).
+  Capturas `app/docs/capturas/v17-guia-{antes,depois}-*.jpg` (celular 390×844 e PC 1440×900; o "antes" é o commit 21e1bde
+  fotografado com o mesmo roteiro, `GUIA_PREFIXO=antes`).
 
 **Passeio 3D, gráfico rodada 2 + corrida + mechas (fila nº 24/28; 25–26/11; no ramo, NÃO publicado):**
 - **Chão:** ruas calçadas só no médio/alto (`materiais.js`, contas no próprio desenho): paralelepípedo na avenida das casas, rua
