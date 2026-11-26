@@ -67,7 +67,9 @@ continuam passando).
   mudar a largura, menu do professor a 1440 px (medido: largura do menu = largura visível, nada escondido).
 - Nome da criança na fala (E2E `--nome-falado`, voz real): lição da Letra A com o nome dito 2× em atividades diferentes
   (no máximo 1× por atividade ✓); jogo "Achar a rima" com o nome 1× ✓.
-- E2E `--sem-jornada`: ver o resultado na fila (nº 23) e no relatório desta rodada.
+- E2E `--sem-jornada` no build com tudo (d64e39c, inclui o passeio da outra frente): **468 ✓ 0 ✗, E2E OK**. Antes das
+  correções, o mesmo E2E no build sem mudanças parou em 155 ✓ no 1º ✗ ("Letra A: … Corre-Som … Bichinho … jogados"), com a máquina
+  carregada pelas capturas rodando junto; depois não se repetiu (provável tempo, não defeito).
 
 ## 5. Como refazer
 Os roteiros desta revisão ficaram fora do repositório (eram descartáveis). Para repetir: build, servidor estático, e um
