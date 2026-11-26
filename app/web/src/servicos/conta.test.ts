@@ -68,6 +68,15 @@ describe('contas dos adultos com login e senha (fila do dono nº 34)', () => {
     expect((await s.entrarComLogin('rosa', 'fonema123', 'responsavel')).ok).toBe(true);
     expect((await s.entrar('ct-1', 'fonema123')).ok).toBe(true);
   });
+  it('conta antiga que esqueceu o PIN cria login e senha sem o PIN (como o antigo "Esqueci o PIN")', async () => {
+    const salt = 'sal-antigo';
+    const { repo, ver } = repoFalso([{ id: 'ct-1', nome: 'Rosa', tipo: 'responsavel', salt, hashPin: await hashPin('1234', salt), criadaEm: 1 }]);
+    const s = new ServicoContaLocal(repo, memoria());
+    await s.redefinirAcessoAntigo('ct-1', 'rosa', 'fonema123');
+    expect(ver()[0].hashPin).toBeUndefined();
+    await expect(s.redefinirAcessoAntigo('ct-1', 'rosa2', 'fonema123')).rejects.toThrow(/Esqueci a senha/);
+    expect((await s.entrarComLogin('rosa', 'fonema123')).ok).toBe(true);
+  });
   it('esqueci a senha: senha nova para o login, neste aparelho', async () => {
     const { repo } = repoFalso();
     const s = new ServicoContaLocal(repo, memoria());

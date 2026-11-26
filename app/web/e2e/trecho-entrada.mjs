@@ -137,6 +137,10 @@ export async function trechoEntrada(browser, { BASE, ok, erros, dirCap }) {
   await pg.getByTestId('esqueci-login').fill('ninguem');
   await segurar(pg, 'segurar-redefinir');
   await pg.getByText('Não achamos este login').waitFor();
+  await pg.getByTestId('esqueci-login').fill('rui@exemplo.com');
+  await segurar(pg, 'segurar-redefinir');
+  await pg.getByText('Este login é da porta Família').waitFor();
+  ok(true, 'esqueci a senha na porta errada: não troca a senha da família pela porta do professor');
   await pg.getByTestId('esqueci-login').fill('prof.bia');
   await segurar(pg, 'segurar-redefinir');
   await pg.getByTestId('nova-senha1').fill('nova-senha3');
@@ -152,16 +156,7 @@ export async function trechoEntrada(browser, { BASE, ok, erros, dirCap }) {
   ok(true, 'esqueci a senha: a senha nova entra e a antiga não');
 
   // 7. conta antiga (só PIN, de antes do login): entra com o PIN e cria login e senha
-  await pg.evaluate(async () => {
-    const sal = 'sal-antigo-e2e';
-    const chave = await crypto.subtle.importKey('raw', new TextEncoder().encode('1234'), 'PBKDF2', false, ['deriveBits']);
-    const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: new TextEncoder().encode(sal), iterations: 60_000 }, chave, 256);
-    const hashPin = 'p1:' + [...new Uint8Array(bits)].map((x) => x.toString(16).padStart(2, '0')).join('');
-    const db = await new Promise((r) => { const q = indexedDB.open('fonema'); q.onsuccess = () => r(q.result); });
-    const atual = await new Promise((r) => { const q = db.transaction('config').objectStore('config').get('contas'); q.onsuccess = () => r(q.result); });
-    const contas = [...(atual?.valor ?? []), { id: 'ct-antiga', nome: 'Rosa', tipo: 'responsavel', salt: sal, hashPin, criadaEm: 1 }];
-    await new Promise((r) => { const t = db.transaction('config', 'readwrite'); t.objectStore('config').put({ id: 'contas', valor: contas }); t.oncomplete = r; });
-  });
+  await semearContaAntiga(pg);
   await sair(pg, BASE);
   await pg.reload();
   await pg.getByTestId('entrar-familia').click();
@@ -204,4 +199,49 @@ export async function trechoEntrada(browser, { BASE, ok, erros, dirCap }) {
   ok(true, 'administrador: senha errada recusada, senha certa entra');
   ok(await pg.locator('[data-testid="area-professor"], [data-testid="area-familia"]').count() === 0, 'administrador: área própria, separada da família e do professor');
   await ctx.close();
+
+  // 9. aparelho só com conta antiga (PIN) da família: a porta do Professor deixa o adulto antigo confirmar com o PIN;
+  //    "Esqueci o PIN" continua existindo (cria login e senha sem o PIN)
+  const ctx2 = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'pt-BR', serviceWorkers: 'block' });
+  await ctx2.addInitScript(() => { try { localStorage.setItem('fonema-teste-rapido', '1'); } catch { /* sem armazenamento */ } });
+  const p2 = await ctx2.newPage();
+  p2.on('pageerror', (e) => erros.push(String(e)));
+  await p2.goto(BASE);
+  await p2.getByTestId('entrar-aluno').waitFor();
+  await semearContaAntiga(p2);
+  await p2.reload();
+  await p2.getByTestId('entrar-professor').click();
+  await p2.getByTestId('ir-criar-conta').click();
+  await p2.locator('[data-testid="acesso-adulto"][data-modo="confirmar"]').waitFor();
+  await p2.getByTestId('entrar-com-pin').click();
+  await p2.getByTestId('esqueci-pin').click();
+  await segurar(p2, 'segurar-redefinir-pin');
+  await p2.getByTestId('migrar-login').fill('rosa');
+  await p2.getByTestId('migrar-senha').fill('rosa2026');
+  await p2.getByTestId('migrar-senha2').fill('rosa2026');
+  await p2.getByTestId('migrar-salvar').click();
+  await p2.locator('[data-testid="criar-conta"][data-tipo="professor"]').waitFor();
+  ok(true, 'só conta antiga no aparelho: a porta do Professor aceita o adulto antigo (Esqueci o PIN → login e senha) para criar a conta');
+  await p2.getByTestId('conta-nome').fill('Leo');
+  await p2.getByTestId('conta-login').fill('leo.prof');
+  await p2.getByTestId('conta-senha').fill('leo-2026');
+  await p2.getByTestId('conta-senha2').fill('leo-2026');
+  await p2.getByTestId('conta-criar').click();
+  await p2.getByTestId('area-professor').waitFor();
+  ok(true, 'conta de professor criada depois da confirmação do adulto antigo');
+  await ctx2.close();
+}
+
+/** Grava uma conta antiga (só PIN 1234, como antes de 26/11) no banco do aparelho. */
+async function semearContaAntiga(pg) {
+  await pg.evaluate(async () => {
+    const sal = 'sal-antigo-e2e';
+    const chave = await crypto.subtle.importKey('raw', new TextEncoder().encode('1234'), 'PBKDF2', false, ['deriveBits']);
+    const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: new TextEncoder().encode(sal), iterations: 60_000 }, chave, 256);
+    const hashPin = 'p1:' + [...new Uint8Array(bits)].map((x) => x.toString(16).padStart(2, '0')).join('');
+    const db = await new Promise((r) => { const q = indexedDB.open('fonema'); q.onsuccess = () => r(q.result); });
+    const atual = await new Promise((r) => { const q = db.transaction('config').objectStore('config').get('contas'); q.onsuccess = () => r(q.result); });
+    const contas = [...(atual?.valor ?? []), { id: 'ct-antiga', nome: 'Rosa', tipo: 'responsavel', salt: sal, hashPin, criadaEm: 1 }];
+    await new Promise((r) => { const t = db.transaction('config', 'readwrite'); t.objectStore('config').put({ id: 'contas', valor: contas }); t.oncomplete = r; });
+  });
 }

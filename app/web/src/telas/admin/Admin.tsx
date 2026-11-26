@@ -170,7 +170,7 @@ function Zerar({ aoCancelar }: { aoCancelar: () => void }) {
       {adultos.length ? (
         <div className="adm-form">
           <p>Para confirmar, um adulto cadastrado neste aparelho digita a senha dele (ou o PIN, se a conta é antiga).</p>
-          <label className="adm-campo">Adulto <select value={quem} onChange={(e) => setQuem(e.target.value)}>{adultos.map((c) => <option key={c.id} value={c.id}>{c.nome}{c.login ? ` (${c.login})` : ''}</option>)}</select></label>
+          <label className="adm-campo">Adulto <select value={quem} onChange={(e) => setQuem(e.target.value)}>{adultos.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}</select></label>
           <label className="adm-campo">Senha (ou PIN) <input type="password" value={pin} onChange={(e) => setPin(e.target.value)} autoComplete="current-password" /></label>
         </div>
       ) : null}

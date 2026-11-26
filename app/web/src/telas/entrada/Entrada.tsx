@@ -338,7 +338,7 @@ export function PrimeiraVez() {
 }
 
 /* ------------------------------------------------------------------ entrar: login + senha (e contas antigas com PIN) */
-type Modo = 'entrar' | 'esqueci' | 'nova-senha' | 'pin' | 'migrar' | 'confirmar' | 'criar';
+type Modo = 'entrar' | 'esqueci' | 'nova-senha' | 'pin' | 'esqueci-pin' | 'migrar' | 'confirmar' | 'criar';
 /**
  * Porta de um tipo de adulto. `tipo` vazio = qualquer adulto (confirmação). `confirmar`: só confere quem é
  * (sem "criar conta" nem "outra porta").
@@ -353,12 +353,20 @@ export function AcessoAdulto({ tipo, contas, aoEntrar, sessaoAberta, confirmar, 
   const [outra, setOutra] = useState<TipoConta | null>(null);
   const [ocupado, setOcupado] = useState(false);
   const [confirmado, setConfirmado] = useState(!!sessaoAberta);
-  const antigas = contas.filter((c) => c.soPin && (!tipo || c.tipo === tipo));
+  // confirmando para criar outra conta: vale qualquer adulto já cadastrado (também conta antiga, com PIN)
+  const [paraCriar, setParaCriar] = useState(false);
+  const [semPin, setSemPin] = useState(false);
+  const antigas = contas.filter((c) => c.soPin && (paraCriar || !tipo || c.tipo === tipo));
   const [sel, setSel] = useState(antigas[0]?.id ?? '');
   const [pin, setPin] = useState('');
-  const ir = (m: Modo) => { setModo(m); setMsg(''); setOutra(null); setSenha(''); setSenha2(''); };
+  const ir = (m: Modo) => {
+    if (m === 'confirmar') setParaCriar(true);
+    if (m === 'entrar') setParaCriar(false);
+    if (m === 'pin') { setSel((x) => (antigas.some((c) => c.id === x) ? x : antigas[0]?.id ?? '')); setSemPin(false); }
+    setModo(m); setMsg(''); setOutra(null); setSenha(''); setSenha2('');
+  };
   const aberta = (s: Sessao) => {
-    if (modo === 'confirmar') { setConfirmado(true); ir('criar'); return; }
+    if (paraCriar) { setConfirmado(true); ir('criar'); return; }
     if (tipo && s.tipo !== tipo) { setOutra(s.tipo); conta.sair(); return; }
     aoEntrar(s);
   };
@@ -404,7 +412,7 @@ export function AcessoAdulto({ tipo, contas, aoEntrar, sessaoAberta, confirmar, 
         <section className="cartao acesso-cartao">
           <div className="acesso-cab">
             <span className="acesso-arte" aria-hidden="true"><ArteTipo tipo={tipo} /></span>
-            <div><small className="acesso-chip"><Icone nome="escudo" />{tipo ? `Porta ${PORTA[tipo]}` : 'Adultos'} · login e senha</small><h1 className="t">{modo === 'esqueci' || modo === 'nova-senha' ? 'Esqueceu a senha?' : modo === 'pin' || modo === 'migrar' ? 'Conta antiga, com PIN' : tituloAqui}</h1></div>
+            <div><small className="acesso-chip"><Icone nome="escudo" />{tipo ? `Porta ${PORTA[tipo]}` : 'Adultos'} · login e senha</small><h1 className="t">{modo === 'esqueci' || modo === 'nova-senha' ? 'Esqueceu a senha?' : modo === 'pin' || modo === 'esqueci-pin' || modo === 'migrar' ? 'Conta antiga, com PIN' : tituloAqui}</h1></div>
           </div>
 
           {modo === 'entrar' || modo === 'confirmar' ? (
@@ -425,7 +433,7 @@ export function AcessoAdulto({ tipo, contas, aoEntrar, sessaoAberta, confirmar, 
                 {modo === 'confirmar'
                   ? <button type="button" className="acesso-link" onClick={() => ir('entrar')}>Voltar</button>
                   : !confirmar ? <button type="button" className="acesso-link forte" onClick={() => ir(confirmado ? 'criar' : 'confirmar')} data-testid="ir-criar-conta"><Icone nome="mais" />Criar conta</button> : null}
-                {antigas.length && modo === 'entrar' ? <button type="button" className="acesso-link" onClick={() => ir('pin')} data-testid="entrar-com-pin">Conta antiga? Entrar com o PIN</button> : null}
+                {antigas.length ? <button type="button" className="acesso-link" onClick={() => ir('pin')} data-testid="entrar-com-pin">Conta antiga? Entrar com o PIN</button> : null}
               </div>
             </form>
           ) : null}
@@ -436,8 +444,9 @@ export function AcessoAdulto({ tipo, contas, aoEntrar, sessaoAberta, confirmar, 
               <CampoTexto rotulo="Seu login" valor={login} aoMudar={(v) => { setLogin(v); setMsg(''); }} testId="esqueci-login" auto="username" />
               <p className={`acesso-erro ${msg ? '' : 'vazio'}`} role={msg ? 'alert' : undefined}>{msg}</p>
               <BotaoSegurar key={msg} ms={5000} rotulo="Segure para criar uma senha nova" testId="segurar-redefinir" aoCompletar={() => {
-                const achou = contas.some((c) => c.login && c.login === login.trim().toLowerCase());
-                if (achou) ir('nova-senha'); else setMsg('Não achamos este login neste aparelho. Confira como foi escrito.');
+                const x = contas.find((c) => c.login && c.login === login.trim().toLowerCase());
+                if (x && (paraCriar || !tipo || x.tipo === tipo)) ir('nova-senha');
+                else setMsg(x ? `Este login é da porta ${PORTA[x.tipo]}: troque a senha por lá.` : 'Não achamos este login neste aparelho. Confira como foi escrito.');
               }} />
               <button type="button" className="acesso-link" onClick={() => ir('entrar')}>Lembrei! Voltar</button>
             </div>
@@ -469,7 +478,18 @@ export function AcessoAdulto({ tipo, contas, aoEntrar, sessaoAberta, confirmar, 
               <CampoPin rotulo="PIN" valor={pin} testId="pin" ativo erro={!!msg} focoInicial aoMudar={(v) => void mudarPin(v)} />
               <p className={`pin-msg ${msg ? 'erro' : ''}`} role={msg ? 'alert' : undefined} data-testid="pin-msg">{msg || ' '}</p>
               <Teclado aoDigitar={(d) => void mudarPin((pin + d).slice(0, 4))} aoApagar={() => void mudarPin(pin.slice(0, -1))} />
-              <button type="button" className="acesso-link" onClick={() => { setPin(''); ir('entrar'); }}>Voltar ao login</button>
+              <div className="acesso-links">
+                <button type="button" className="acesso-link" onClick={() => { setPin(''); ir('esqueci-pin'); }} data-testid="esqueci-pin">Esqueci o PIN</button>
+                <button type="button" className="acesso-link" onClick={() => { setPin(''); ir(paraCriar ? 'confirmar' : 'entrar'); }}>Voltar ao login</button>
+              </div>
+            </div>
+          ) : null}
+
+          {modo === 'esqueci-pin' ? (
+            <div className="acesso-form acesso-pin" data-testid="esqueci-pin-tela">
+              <p className="fluxo-sub">Sem servidor, a troca é feita aqui mesmo. Segure o botão por 5 segundos para criar o login e a senha de <b>{antigas.find((c) => c.id === sel)?.nome}</b> sem o PIN. As crianças e o progresso continuam guardados.</p>
+              <BotaoSegurar ms={5000} rotulo="Segure para criar login e senha" testId="segurar-redefinir-pin" aoCompletar={() => { ir('migrar'); setSemPin(true); }} />
+              <button type="button" className="acesso-link" onClick={() => ir('pin')}>Lembrei! Voltar</button>
             </div>
           ) : null}
 
@@ -478,9 +498,9 @@ export function AcessoAdulto({ tipo, contas, aoEntrar, sessaoAberta, confirmar, 
               e.preventDefault();
               const x = loginValido(login) ?? senhaAdultoValida(senha) ?? (senha !== senha2 ? 'As duas senhas estão diferentes.' : null);
               if (x) { setMsg(x); return; }
-              try { const s = await conta.migrar(sel, pin, login, senha); setPin(''); aberta(s); } catch (z) { setMsg(z instanceof Error ? z.message : 'Não deu.'); }
+              try { const s = semPin ? await conta.redefinirAcessoAntigo(sel, login, senha) : await conta.migrar(sel, pin, login, senha); setPin(''); aberta(s); } catch (z) { setMsg(z instanceof Error ? z.message : 'Não deu.'); }
             }}>
-              <p className="fluxo-sub">PIN certo! Agora o acesso é com <b>login e senha</b>. Crie os seus (o PIN deixa de valer).</p>
+              <p className="fluxo-sub">{semPin ? 'Crie' : 'PIN certo! Agora o acesso é com login e senha. Crie'} o login e a senha de <b>{antigas.find((c) => c.id === sel)?.nome}</b> (o PIN deixa de valer).</p>
               <CampoTexto rotulo="Login (e-mail ou nome de usuário)" valor={login} aoMudar={setLogin} testId="migrar-login" auto="username" foco />
               <div className="acesso-duas">
                 <CampoSenha valor={senha} aoMudar={setSenha} testId="migrar-senha" nova />

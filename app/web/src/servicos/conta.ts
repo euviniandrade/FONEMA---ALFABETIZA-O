@@ -30,6 +30,8 @@ export interface ServicoConta {
   entrar(contaId: string, credencial: string): Promise<ResultadoEntrada>;
   /** Conta antiga (só PIN): com o PIN certo, cria o login e a senha e abre a sessão. */
   migrar(contaId: string, pin: string, login: string, senha: string): Promise<Sessao>;
+  /** Conta antiga que esqueceu o PIN (como o antigo "Esqueci o PIN": segurar 5 s no aparelho): cria login e senha sem o PIN. */
+  redefinirAcessoAntigo(contaId: string, login: string, senha: string): Promise<Sessao>;
   /** "Esqueci a senha" (sem servidor, feito no próprio aparelho): senha nova para o login. */
   redefinirSenha(login: string, novaSenha: string): Promise<Sessao>;
   /** Conta antiga: "Esqueci o PIN" continua funcionando como antes. */
@@ -159,6 +161,22 @@ export class ServicoContaLocal implements ServicoConta {
     delete c.hashPin;
     if (!c.email && c.login.includes('@')) c.email = c.login;
     await this.repo.salvarContas(contas);
+    return this.abrir(c);
+  }
+
+  async redefinirAcessoAntigo(contaId: string, login: string, senha: string) {
+    const e = loginValido(login) ?? senhaAdultoValida(senha);
+    if (e) throw new Error(e);
+    const contas = await this.repo.listarContas();
+    const c = contas.find((x) => x.id === contaId);
+    if (!c || c.hashSenha) throw new Error('Esta conta já usa login e senha: use "Esqueci a senha".');
+    c.login = await this.loginLivre(login, contas, c.id);
+    c.salt = novoSalt();
+    c.hashSenha = await hashSenhaAdulto(senha, c.salt);
+    delete c.hashPin;
+    if (!c.email && c.login.includes('@')) c.email = c.login;
+    await this.repo.salvarContas(contas);
+    this.erros = 0; this.bloqueadoAte = 0;
     return this.abrir(c);
   }
 
