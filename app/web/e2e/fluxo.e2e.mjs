@@ -25,6 +25,7 @@ import { trechoCaca } from './trecho-caca.mjs';
 import { trechoAdmin } from './trecho-admin.mjs';
 import { trechoGerenciador } from './trecho-gerenciador.mjs';
 import { trechoFoto3d } from './trecho-foto3d.mjs';
+import { capturasEstudio, trechoEstudio } from './trecho-estudio.mjs';
 import { trechoTutorial } from './trecho-tutorial.mjs';
 import { trechoFichas } from './trecho-fichas.mjs';
 import { trechoDesbloqueio } from './trecho-desbloqueio.mjs';
@@ -741,6 +742,16 @@ async function main() {
     if (errosF3.length) throw new Error(`erros na página:\n${errosF3.join('\n')}`);
     return;
   }
+  if (process.argv.includes('--estudio') || process.argv.includes('--capturas-estudio')) {
+    // fila nº 32/33: Estúdio criativo do administrador (trecho-estudio.mjs); API do ElevenLabs sempre FALSA (page.route)
+    const errosE = [];
+    try {
+      if (process.argv.includes('--capturas-estudio')) await capturasEstudio(browser, { BASE, dir: process.env.CAPTURAS_ESTUDIO ?? DIR_CAP, erros: errosE });
+      else await trechoEstudio(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros: errosE });
+    } finally { await browser.close(); servidor?.kill(); }
+    if (errosE.length) throw new Error(`erros na página:\n${errosE.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--mundo3d') || process.argv.includes('--capturas-mundo3d')) {
     const errosM = [];
     const capM = process.argv.includes('--capturas-mundo3d') ? DIR_CAP : undefined;
@@ -1319,6 +1330,7 @@ async function main() {
   await trechoAdmin(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoGerenciador(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoFoto3d(browser, { BASE, ok, erros });
+  await trechoEstudio(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, erros });
   await trechoTutorial(browser, { BASE, ok, passarPorteira, cadastrar, erros, dirCap: DIR_CAP });
   await trechoTelas(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros });
   await trechoGuia(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros });

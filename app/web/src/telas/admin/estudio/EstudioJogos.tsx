@@ -42,9 +42,10 @@ export function EstudioJogos() {
   const mover = async (lista: JogoParque[], i: number, d: -1 | 1) => {
     const a = lista[i], b = lista[i + d];
     if (!a || !b) return;
-    // troca as posições (duas edições; ficam no Histórico)
-    const ra = await salvarVerificando({ colecao: 'jogos', item: a.id, tipo: 'definir', caminho: ['ordem'], valor: b.ordem, nota: `ordem: ${textoDoJogo(a).nome} ${d < 0 ? 'sobe' : 'desce'}` });
-    const rb = await salvarVerificando({ colecao: 'jogos', item: b.id, tipo: 'definir', caminho: ['ordem'], valor: a.ordem, nota: 'ordem (troca)' });
+    // troca as posições (duas edições; ficam no Histórico). Os valores são lidos ANTES: a edição muda o objeto no lugar.
+    const [oa, ob] = [a.ordem, b.ordem === a.ordem ? a.ordem + d : b.ordem];
+    const ra = await salvarVerificando({ colecao: 'jogos', item: a.id, tipo: 'definir', caminho: ['ordem'], valor: ob, nota: `ordem: ${textoDoJogo(a).nome} ${d < 0 ? 'sobe' : 'desce'}` });
+    const rb = await salvarVerificando({ colecao: 'jogos', item: b.id, tipo: 'definir', caminho: ['ordem'], valor: oa, nota: 'ordem (troca)' });
     setMsg(ra.ok && rb.ok ? `"${textoDoJogo(a).nome}" ${d < 0 ? 'subiu' : 'desceu'} no Parque.` : 'Não deu para mudar a ordem.');
   };
   return (

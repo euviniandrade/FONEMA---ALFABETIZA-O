@@ -255,7 +255,7 @@ function LinhaResultado({ r, comparar, quem, autorizacao }: { r: Resultado; comp
       <div className="adm-linha">
         <button className="btn adm-btn" onClick={() => void tocarUrl(r.url)} data-testid="robo-ouvir"><Icone nome="tocar" />Ouvir</button>
         <button className="btn adm-btn" onClick={comparar} data-testid="robo-comparar"><Icone nome="repetir" />Comparar (minha voz → transformada)</button>
-        <button className="btn adm-btn" onClick={() => baixar(r.blob, `fonema-robo-voz-${r.voz.nome.replace(/[^\p{L}\p{N}]+/gu, '-').toLowerCase()}-${carimbo()}.mp3`)} data-testid="robo-baixar"><Icone nome="baixar" />Baixar</button>
+        <button className="btn adm-btn" onClick={() => baixar(r.blob, `fonema-robo-voz-${r.voz.nome.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}-${carimbo()}.mp3`)} data-testid="robo-baixar"><Icone nome="baixar" />Baixar</button>
         <button className="btn adm-btn pri" onClick={() => setSalvar(!salvar)} aria-expanded={salvar} data-testid="robo-salvar-fala"><Icone nome="microfone" />Salvar numa fala</button>
       </div>
       {salvar ? <SalvarNaFala r={r} quem={quem} autorizacao={autorizacao} fechar={() => setSalvar(false)} /> : null}
