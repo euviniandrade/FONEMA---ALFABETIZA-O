@@ -4,7 +4,7 @@
  *
  *  - "Já legível": todos os valores sonoros ensinados numa unidade CONCLUÍDA (05 §2–3; o mesmo critério dos jogos da vila e da
  *    escrita própria), sem os valores que o verificador só avisa (vogal nasalizada) e com todos os sons puros publicados (a
- *    ficha toca cada som). O resto do campo fica trancado, "em breve" — nunca para ler (regra 2).
+ *    ficha toca cada som). O resto do campo fica trancado, "abre com as missões" — nunca para ler (regra 2).
  *  - Níveis destrancam com acertos SOZINHO (sem ajuda) no nível anterior, em qualquer campo [DP: 3 acertos]; nada fecha de
  *    novo e errar não tira nada (sem punição).
  *  - Registro (contrato do motor, estado.ts): mecânica 'ficha'; `formato` diz o nível; ler junto (nível 1) é EXPOSIÇÃO; as
@@ -59,7 +59,7 @@ function legivelNaUnidade(n: number, w: string): boolean {
 
 export interface EstadoCampo { campo: CampoSemantico; legiveis: string[]; trancadas: string[] }
 
-/** Cada campo com as palavras que a criança já lê e as trancadas ("em breve"). */
+/** Cada campo com as palavras que a criança já lê e as trancadas ("abre com as missões"). */
 export function estadoDosCampos(p: Progresso): EstadoCampo[] {
   return CAMPOS_SEMANTICOS.map((campo) => {
     const legiveis = campo.palavras.filter((w) => legivelNaFicha(p, w));

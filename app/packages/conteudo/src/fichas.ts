@@ -2,7 +2,7 @@
  * FICHAS DE LEITURA POR CAMPO SEMÂNTICO (D033, pedido do dono; docs/decisoes/033-fichas-de-leitura-por-campo-semantico.md).
  *
  * Cada campo (animais, comidas, casa…) junta palavras do banco com pronúncia anotada (fases/tf-banco.ts) e figura. A ficha
- * mostra para LER só as palavras cujos sons a criança já aprendeu (motor › fichas.ts); as outras ficam trancadas, "em breve",
+ * mostra para LER só as palavras cujos sons a criança já aprendeu (motor › fichas.ts); as outras ficam trancadas, "abre com as missões",
  * e nunca aparecem escritas para ler (regra 2; docs/pedagogia/05 §3).
  *
  * Os quatro níveis (D033; o "como" é decisão do projeto [DP]):

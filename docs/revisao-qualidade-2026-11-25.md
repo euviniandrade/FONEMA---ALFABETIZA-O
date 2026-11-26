@@ -44,7 +44,7 @@ continuam passando).
 | b | Pílula "Mariana" do topo cobre a placa do Coreto | passeio 3D no celular | B | idem |
 | c | Captura do passeio no PC sem placa de vídeo demora > 30 s (o carregamento mostra "Preparando a Vila das Letras…") | passeio 3D | B | idem; no tablet/celular abriu e voltou sem erro |
 | d | 5 ilhas do mapa com "Em breve" | Arquipélago | M | é conteúdo ainda não feito (D027/D030), não defeito de tela |
-| e | "em breve" nos campos das Fichas quando a criança ainda não tem as letras (parece "não pronto") | Fichas | M | o texto é decisão documentada no `Fichas.tsx` (palavra trancada nunca aparece escrita); sugestão ao dono: "abre com as missões" |
+| e | "em breve" nos campos das Fichas quando a criança ainda não tem as letras (parece "não pronto") | Fichas | M | **Resolvido depois (26/11, fila nº 30):** o dono escolheu "abre com as missões"; o texto trocou no cartão do campo, na palavra trancada e na frase do campo vazio (`Fichas.tsx`). A palavra trancada continua sem aparecer escrita (regra 2) |
 | f | Fim da 1ª missão abre já rolado até o painel "Abriu!" (título da fase fica fora da tela) | ritual de fim | B | é de propósito (`Desbloqueio.tsx` rola até o que abriu) |
 | g | Fala de fim igual em todas as missões ("Hoje você trabalhou com muita atenção, [NOME].") | fim de missão | M | **precisa de voz nova**: 3–5 variantes gravadas (Sofia e Tales) para revezar |
 | h | "Letra A", "Próxima: Letra E", "Fase concluída: Letra A!" — o nome da fase tem a letra só maiúscula | títulos de fase, painel guia, ritual | B | é título de conteúdo (e também falado); pergunta ao dono se vira "Letra Aa" |

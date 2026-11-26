@@ -3,7 +3,8 @@
  * palavras para ler e trancadas, e os níveis) e …/ficha.<campo>.<modo> (a atividade). `.desafio` no fim = oferecida no fim de
  * uma lição da Trilha dos Sons (contexto 'desafio'); sem isso, contexto 'livre'. Nada aqui trava a trilha nem dá moedinhas.
  *
- * Palavras trancadas aparecem só como figura apagada com cadeado ("em breve"), NUNCA escritas (regra 2). As palavras para ler
+ * Palavras trancadas aparecem só como figura apagada com cadeado ("abre com as missões"; era "em breve" até a fila nº 30),
+ * NUNCA escritas (regra 2). As palavras para ler
  * aparecem escritas, sem figura (a figura é a resposta do nível 1).
  */
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
@@ -113,7 +114,7 @@ function Campos({ criancaId }: { criancaId: string }) {
             <span className="ficha-campo-capa"><Figura palavra={c.campo.capa} /></span>
             <b>{c.campo.titulo}</b>
             <span className="ficha-campo-conta">
-              {c.legiveis.length ? <><Icone nome="olho" />{c.legiveis.length} para ler</> : <><Icone nome="cadeado" />em breve</>}
+              {c.legiveis.length ? <><Icone nome="olho" />{c.legiveis.length} para ler</> : <><Icone nome="cadeado" />abre com as missões</>}
               <i className="ficha-campo-barra" aria-hidden="true"><i style={{ width: `${(100 * c.legiveis.length) / c.campo.palavras.length}%` }} /></i>
             </span>
           </button>
@@ -136,7 +137,7 @@ function Campo({ criancaId, campoId, sufixo, desafio }: { criancaId: string; cam
         <span className="ficha-campo-capa grande"><Figura palavra={c.campo.capa} /></span>
         <div>
           <h1 className="t">{c.campo.titulo}{desafio ? <small className="ficha-desafio-selo">desafio</small> : null}</h1>
-          <p className="ficha-sub">{c.legiveis.length ? `${c.legiveis.length} palavras que você já sabe ler` : 'Ainda não tem palavra para ler aqui. Logo, logo!'}</p>
+          <p className="ficha-sub">{c.legiveis.length ? `${c.legiveis.length} palavras que você já sabe ler` : 'Ainda não tem palavra para ler aqui: abre com as missões.'}</p>
         </div>
       </header>
       <h2 className="biblio-secao t"><Icone nome="estrela" />Escolha o nível</h2>
@@ -156,8 +157,8 @@ function Campo({ criancaId, campoId, sufixo, desafio }: { criancaId: string; cam
           <span key={w} className="ficha-palavra-cartao" data-legivel={w}>{w.toUpperCase()}{lidas.has(w) ? <Icone nome="check" /> : null}</span>
         ))}
         {c.trancadas.map((w, k) => (
-          <span key={w} className="ficha-palavra-cartao trancada" data-trancada={k} aria-label="Palavra em breve">
-            <Figura palavra={w} /><span className="ficha-cadeado"><Icone nome="cadeado" />em breve</span>
+          <span key={w} className="ficha-palavra-cartao trancada" data-trancada={k} aria-label="Palavra que abre com as missões">
+            <Figura palavra={w} /><span className="ficha-cadeado"><Icone nome="cadeado" />abre com as missões</span>
           </span>
         ))}
       </div>
