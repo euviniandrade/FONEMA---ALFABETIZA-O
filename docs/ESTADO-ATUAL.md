@@ -9,6 +9,30 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Entrada nova com acessos separados (fila nº 34; 26/11; no ramo, NÃO publicado):**
+- **Primeira página refeita do zero** (`telas/entrada/Entrada.tsx`, `estilos-portal.css`): botão grande amarelo da **criança**
+  ("Vamos jogar!" / "Continuar, [nome]!", com a dupla 3D; sem senha) → cartões das crianças; cartão **"Para adultos · com login e
+  senha"** com **Família** e **Professor(a)**; "Primeira vez aqui? Criar conta"; link discreto **Administrador** no rodapé → `#/admin`
+  (o de dentro do admin não mudou). Textos editáveis em `TEXTOS_TELA` (chaves antigas mantidas, novas: `entrada.aluno.nota`,
+  `entrada.adultos`, `entrada.adultos.sub`, `entrada.admin`).
+- **Contas de adulto com login e senha** (`servicos/conta.ts`): login = e-mail ou usuário (único no aparelho, sem diferença de
+  maiúsculas), senha ≥ 6 com letras, só o hash PBKDF2-SHA-256 (100 mil iterações, `p2:`) no IndexedDB. A conta da família não abre a
+  porta do professor (e vice-versa, avisa a porta certa). Criar outra conta num aparelho que já tem conta pede antes um adulto já
+  cadastrado (toda conta vê as crianças do aparelho). "Esqueci a senha": diz que sem servidor não manda e-mail; troca no próprio
+  aparelho (login + segurar 5 s; as crianças ficam). **Contas antigas (PIN de 4 números, D028)** entram com o PIN uma vez e criam
+  login e senha (`migrar`). Admin › "Zerar o acesso" pede a senha do adulto (ou o PIN de conta antiga).
+- **E2E:** `passarPorteira` usa login e senha ("ana.familia"/"ana.professor", senha "fonema123") e agora FALHA se não passar;
+  trecho novo `--entrada` (`e2e/trecho-entrada.mjs`, também no completo e no `--sem-jornada`): 4 acessos em 5 tamanhos (390×844,
+  820×1180, 1440×900, 1280×720, 360×640), alvos ≥ 44 px, professor/família/esqueci/PIN antigo/administrador — **39 ✓ 0 ✗**.
+- **Verificado (worktree, build servido na 4860):** typecheck, lint, `npm test` 517/517 (7 novos em `conta.test.ts`); `--admin` 23 ✓;
+  `--telas` ok; `--sem-jornada` **610 ✓ e 1 ✗** — o ✗ é no trecho das várias missões (D036, outra frente: "painel guia mostra Missão 2
+  de hoje"), depois de todos os trechos que passam pela entrada; uma 1ª tentativa caiu por tempo no botão da Chegada (máquina com 3
+  E2E ao mesmo tempo) e passou na 2ª. Capturas `app/docs/capturas/v18-entrada-{antes,depois}-{celular,tablet,pc}.jpg` e
+  `v18-entrada-depois-acesso-{criar,login}-{celular,pc}.jpg`.
+- **Limite honesto:** sem servidor, cada login vale só naquele aparelho e navegador; o "esqueci a senha" de segurar 5 s é fraco
+  (qualquer adulto no aparelho troca); quem abrir `#/admin` primeiro num aparelho novo vira o administrador geral daquele aparelho.
+  **Pede número de decisão** (substitui o PIN da D028 pelos logins).
+
 **Várias missões no mesmo dia (fila nº 31, D036; 26/11; no ramo, NÃO publicado):**
 - **Feito:** fim da missão (`Ritual.tsx`) com botão grande "Próxima missão" (leva à ENTRADA da próxima; nada começa sozinho) e
   "Voltar para a vila", presos embaixo; painel guia "Missão 2 de hoje" + "Hoje: N missões feitas" (saiu o "Missão de hoje: feita!");
