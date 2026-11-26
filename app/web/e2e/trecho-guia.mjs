@@ -108,7 +108,7 @@ export async function trechoGuia(browser, h) {
     // Fichas: "abre com as missões" no lugar de "em breve"
     await pg.goto(BASE + `#/c/${id}/leitura/ficha.animais`);
     await pg.getByTestId('ficha-campo').waitFor();
-    await cap('ficha-campo', 700);
+    if (dirCap) { await pg.locator('[data-trancada]').first().scrollIntoViewIfNeeded().catch(() => {}); await cap('ficha-campo', 700); }
     const fc = await pg.getByTestId('ficha-campo').innerText();
     ok(/abre com as missões/.test(fc) && !/em breve/i.test(fc), `Fichas${suf}: palavra trancada diz "abre com as missões"`);
     ok(await pg.getByTestId('proxima-missao').count() === 0, `Fichas${suf}: dentro de uma ficha, sem pílula (só na lista)`);

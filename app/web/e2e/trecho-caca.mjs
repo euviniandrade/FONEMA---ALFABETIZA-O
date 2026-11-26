@@ -71,7 +71,7 @@ export async function trechoCaca(browser, { BASE, ok, passarPorteira, cadastrar,
   await frame.waitForFunction(() => window.FONEMA_GUIA?.objetivo?.chave === 'missao', null, { timeout: 120000, polling: 300 });
   await frame.evaluate(() => window.FONEMA_PASSEIO.simular(0.5));
   const livreG = await frame.evaluate(() => ({ faixa: document.querySelector('#guiaFaixa')?.innerText, trilha: window.FONEMA_GUIA.moedasTrilha, marcador: window.FONEMA_GUIA.objetivo.marcador, mini: !!document.querySelector('#miniMapa canvas') }));
-  ok(/Missão de hoje/.test(livreG.faixa) && livreG.marcador, `passeio livre: próximo passo sempre à vista ("${livreG.faixa}") com seta sobre a Escola`);
+  ok(/Missão de hoje/.test(livreG.faixa) && !/\/[a-zãéêóô]{1,3}\//i.test(livreG.faixa) && livreG.marcador, `passeio livre: próximo passo sempre à vista ("${livreG.faixa}") com seta sobre a Escola`);
   ok(livreG.trilha.length >= 4, `trilha de moedas até a Escola (${livreG.trilha.length} moedas no chão)`);
   const pegou = await frame.evaluate(() => { const g = window.FONEMA_GUIA, p = window.FONEMA_PASSEIO; const m = g.moedasTrilha[0]; const a = g.moedas; p.teleportar(m.x, m.z); p.simular(0.2); return g.moedas - a; });
   ok(pegou >= 1, 'passar pela moeda pega (enfeite: conta no contador, não fica guardada)');

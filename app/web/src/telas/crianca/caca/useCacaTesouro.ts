@@ -19,7 +19,7 @@ import { useCrianca } from '../../../contexto.tsx';
 import { caminhoFigura } from '../../../componentes/ui.tsx';
 import { voz } from '../../../servicos/voz.ts';
 import { espera, modoTeste } from '../../../servicos/ambiente.ts';
-import { falar } from '../../../util.ts';
+import { falar, semFonetica } from '../../../util.ts';
 import { sementeDaTentativa } from '../../../mecanicas/comum.tsx';
 import { registro } from '../../../mecanicas/tf-comum.tsx';
 import { comemorar, corrigirEscolha, tocarSom } from '../../../mecanicas/jogos/correcao.ts';
@@ -67,7 +67,7 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
     const p = d.current.progresso;
     if (!p) return;
     const titulo = FASE_POR_ID[p.faseAtual]?.titulo;
-    enviar('fonema:guia', { missao: { texto: titulo ? `Missão de hoje: ${titulo}` : 'Missão de hoje: vá até a Escola', fala: FALAS_CACA.missaoHoje, lembrete: { quem: 'tales', texto: 'Agora é com você, [NOME]! Vamos continuar a missão?' } } });
+    enviar('fonema:guia', { missao: { texto: titulo ? `Missão de hoje: ${semFonetica(titulo)}` : 'Missão de hoje: vá até a Escola', fala: FALAS_CACA.missaoHoje, lembrete: { quem: 'tales', texto: 'Agora é com você, [NOME]! Vamos continuar a missão?' } } });
   };
   /** Grava o que a rodada juntou (uma vez). `fimNivel` anota a rodada feita (é o que abre o nível seguinte e o barco). */
   const gravar = async (fimNivel?: { nivel: NivelCaca; acertos: number; total: number }) => {
