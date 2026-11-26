@@ -9,6 +9,19 @@ da memória da conversa anterior.
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
+**Várias missões no mesmo dia (fila nº 31, D036; 26/11; no ramo, NÃO publicado):**
+- **Feito:** fim da missão (`Ritual.tsx`) com botão grande "Próxima missão" (leva à ENTRADA da próxima; nada começa sozinho) e
+  "Voltar para a vila", presos embaixo; painel guia "Missão 2 de hoje" + "Hoje: N missões feitas" (saiu o "Missão de hoje: feita!");
+  contador `Progresso.missoesDoDia` (só contagem; `guia.ts › missoesHoje/contarMissao`); fim sem "amanhã" com outra missão à mão
+  (`guia.ts › fimDaMissao`: gancho sem "amanhã" ou a fala já gravada "tales|Vamos continuar a missão?"; sem o "Tchau… a tela vai
+  descansar"); a partir da 3ª missão do dia [DP] "Que tal uma pausa?" + o fim de antes, sem bloquear; chefe que não passou fica sem o
+  botão (a fala diz "outro dia"); painel da família "missões" e "missões hoje". Textos das fases e áudios NÃO mudaram.
+- **Não muda:** domínio (2 SESSÕES, não 2 dias — pergunta ao dono na D036), revisão espaçada em dias, teto de moedinhas do dia.
+- **Verificado:** typecheck, lint, `npm test` 493/493 (novo `motor/test/d036.test.ts`); E2E `--missoes` (novo, também no
+  `--sem-jornada`) 40 ✓ 0 ✗ em 390×844 e 1440×900: 3 missões seguidas no mesmo dia, AL-A → TF-01 (2 sessões) → AL-E, pausa na 3ª.
+  Capturas `app/docs/capturas/v18-missoes-{antes,depois}-*.jpg`.
+- **Conflito registrado:** pesquisa 42 R13 ("sem botão continuar") e R2 (1–2 sessões/dia): vale a decisão do dono (D036).
+
 **Estúdio criativo e robô de voz no administrador (fila nº 32 e 33; 26/11; no ramo, NÃO publicado):**
 - **Aba nova `#/admin/estudio/<jogos|personagens|vozes|robo>`** (`telas/admin/estudio/`); as 12 abas antigas ficam iguais.
 - **Jogos como dados** (`conteudo/src/jogos.ts`, coleção `jogos` do gerenciador): nome, "treina", ligado, ordem e as palavras
