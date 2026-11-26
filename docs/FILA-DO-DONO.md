@@ -49,6 +49,8 @@ Legenda: ✅ no ar · 🔧 em andamento · ⏳ na fila · ⏸ aguardando o dono
 | A5 | Validar os sons puros e as listas de palavras (fonoaudióloga/alfabetizadora); conferir E/O duvidosos e vozes novas de ouvido | Pessoa para ouvir |
 | A6 | LGPD/termos com advogado antes de piloto com crianças | Advogado |
 | A7 | Créditos: ElevenLabs (~8,8 mil caracteres) e Higgsfield (1 crédito) | Recarga quando der |
+| A8 | Publicar na Vercel (26/11): a Vercel recusou publicar ("conta com pagamento em atraso; cadastre um meio de pagamento"). Itens 23, 24 e 28 estão prontos e testados no ramo (5e6581b: typecheck, lint, 484 testes, build; E2E --sem-jornada 471 ✓ 0 ✗; trechos do completo 430 ✓ + admin 23, gerenciador 29, foto3d 7, tutorial 47, telas 5, 0 ✗) | Dono regularizar o pagamento na Vercel (vercel.com, conta do time) e avisar; aí publico na hora |
+| A9 | Perguntas da revisão de qualidade (26/11): 1) títulos "Letra A" / "Próxima: Letra E" viram "Letra Aa"? (são falados); 2) nas Fichas, trocar "em breve" por "abre com as missões"? 3) gravar 3 a 5 variantes da fala de fim de missão | Resposta do dono (3 depende de gravação) |
 
 ## Concluídos recentes (no ar)
 - D031 alternar letras e leitura; portão do nível 7 na TF-R2; nomes com "Sons"; app leve (2 MB); barra da vila com 5 botões;
