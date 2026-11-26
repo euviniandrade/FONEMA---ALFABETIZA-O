@@ -50,7 +50,7 @@ export function lugaresDoPasseio(p: Progresso): Record<string, EstadoLugar> {
     casa: { aberto: true, ...(escrita ? {} : { falta: 'Escrever do seu jeito abre depois do som do M; por enquanto, a casa é do seu boneco.' }) },
     coreto: { aberto: true, ...(flu.liberada ? {} : { falta: 'Ler mais ligeiro abre quando você ler quase sem errar; por enquanto, tem palmas no coreto.' }) },
     // fila nº 25: o barquinho abre com a chave ganha na Caça ao tesouro (Charadas da vila); quem embarca é a página (js/barco.js)
-    barco: barcoLiberado(p) ? { aberto: true } : { aberto: false, falta: 'Abre com a chave da Caça ao tesouro: faça as Charadas da vila (botão do mapa).' }
+    barco: barcoLiberado(p) ? { aberto: true } : { aberto: false, falta: 'A chave do barquinho se ganha na Caça ao tesouro, nas Charadas da vila. Depois, use a chave aqui no píer.' }
   };
 }
 

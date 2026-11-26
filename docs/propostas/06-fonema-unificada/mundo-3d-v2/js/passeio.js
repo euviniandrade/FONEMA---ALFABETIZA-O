@@ -27,7 +27,8 @@ export const LUGARES = [
   { id: 'padaria', nome: 'Padaria', sub: 'Lojinha', icone: '🛍️', pos: [18.8, -6.6], raio: 3.0, alto: 3.4 },
   { id: 'casa', nome: 'Casa da Sofia', sub: 'Escrever do seu jeito', icone: '✏️', pos: [-5.2, 20], raio: 2.8, alto: 3.2 },
   { id: 'coreto', nome: 'Coreto', sub: 'Ler mais ligeiro', icone: '⚡', pos: [0, 8.8], raio: 2.8, alto: 3.0 },
-  { id: 'barco', nome: 'Barquinho', sub: 'Em breve na Lojinha', icone: '⛵', pos: [40.4, 12.6], raio: 4.2, alto: 2.6, emBreve: true },
+  // fila nº 30: o barquinho abre com a CHAVE da Caça ao tesouro (era "Em breve na Lojinha", que não valia mais). `emBreve` = ainda sem a chave.
+  { id: 'barco', nome: 'Barquinho', sub: 'Precisa da chave', icone: '⛵', pos: [40.4, 12.6], raio: 4.2, alto: 2.6, emBreve: true },
 ];
 
 const PARTIDA = { x: 0, z: 19.5, giro: Math.PI }; // na entrada da praça, de frente para o coreto (a Sofia passeia ali)

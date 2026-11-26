@@ -313,7 +313,8 @@ export function useCacaNoPasseio(ref: RefObject<HTMLIFrameElement | null>, crian
     if (!vivo()) return;
     atual.current = null;
     const ganhouBarco = nivel === 3 && !barcoLiberado(p);
-    enviar('fonema:caca-fim', { texto: ganhouBarco ? 'Você ganhou a chave do barquinho! Ele está no píer.' : `${NOME_NIVEL_CACA[nivel]}: tesouro completo!` });
+    // fila nº 30: o aviso diz para que serve a chave e onde usar; `chave` faz o guia do passeio apontar o píer até embarcar
+    enviar('fonema:caca-fim', { texto: ganhouBarco ? 'Você ganhou a chave do barquinho! Ela abre o barco no píer: siga as moedinhas.' : `${NOME_NIVEL_CACA[nivel]}: tesouro completo!`, chave: ganhouBarco });
     await diz(FALAS_ESCUTA.muitoBem);
     if (ganhouBarco) await diz(FALAS_CACA.chave);
     await gravar({ nivel, acertos, total });

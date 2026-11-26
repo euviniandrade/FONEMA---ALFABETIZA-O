@@ -56,6 +56,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
   #cacaMenu .bt.trancado { background: #E1E4EC; }
   #cacaMenu .bt small { font: 700 13px Andika, sans-serif; opacity: .8; }
   #cacaMenu .fechar { margin-top: 10px; width: auto; min-height: 56px; }
+  #cacaMenu .chave-linha { margin: -4px 0 10px; font: 700 17px Andika, sans-serif; color: var(--tinta); }
   #cacaMoedas { left: max(156px, calc(env(safe-area-inset-left) + 156px)); top: calc(var(--topo) + 18px); background: rgba(255,248,236,.95); border-radius: 22px; padding: 6px 14px; font-size: 22px; box-shadow: var(--sombra); display: none; pointer-events: none; }
   #cacaMoedas.on { display: block; }
   #btDescer { position: fixed; z-index: 6; right: max(16px, env(safe-area-inset-right)); bottom: max(250px, calc(env(safe-area-inset-bottom) + 250px)); display: none; background: var(--sol); }
@@ -198,6 +199,7 @@ export function ligarCaca({ mundo, passeio, avisar }) {
   const barco = criarBarco(mundo, passeio, {
     aoEmbarcar() {
       document.body.classList.add('no-barco');
+      if (guia.extra?.chave === 'pier') guia.objetivoExtra(null); // fila nº 30: a chave foi usada; o guia volta à missão
       let visto = false; try { visto = localStorage.getItem('fonema-barco-visto') === '1'; localStorage.setItem('fonema-barco-visto', '1'); } catch { /* sem armazenamento */ }
       if (!visto) { mostrarAviso('⛵', falaBarco?.texto || 'Arraste o dedo ou use as setinhas para remar. Para descer, volte ao píer.', 9000); if (falaBarco) avisar('fonema:falar', { falas: [falaBarco] }); }
       avisar('fonema:caca-barco', { on: true });
@@ -245,10 +247,13 @@ export function ligarCaca({ mundo, passeio, avisar }) {
   function abrirMenu() {
     menu.innerHTML = '';
     menu.append(el('h3', { textContent: '🗺️ Caça ao tesouro' }));
+    // fila nº 30: para que serve a chave e onde usar (só texto; a fala da chave é a gravada do fim das charadas)
+    if (barcoAberto) { const k = el('p', { className: 'chave-linha', textContent: '🔑 A chave do barquinho é sua: use no píer ⛵' }); k.dataset.testid = 'caca-chave'; menu.append(k); }
     const grade = el('div', { className: 'niveis' });
     if (!niveis.length) grade.append(el('p', { textContent: 'A caça abre pelo app.' }));
     for (const n of niveis) {
-      const b = bt(n.aberto ? n.icone : '🔒', `${n.nome}${n.aberto ? '' : `<small>${n.falta || ''}</small>`}`, () => { if (!n.aberto) return; fecharMenu(); avisar('fonema:caca-comecar', { nivel: n.nivel }); }, n.aberto ? 'sol' : 'trancado', `caca-nivel-${n.nivel}`);
+      const ganha = n.nivel === 3 && n.aberto && !barcoAberto ? '<small>🔑 ganha a chave do barquinho</small>' : '';
+      const b = bt(n.aberto ? n.icone : '🔒', `${n.nome}${n.aberto ? ganha : `<small>${n.falta || ''}</small>`}`, () => { if (!n.aberto) return; fecharMenu(); avisar('fonema:caca-comecar', { nivel: n.nivel }); }, n.aberto ? 'sol' : 'trancado', `caca-nivel-${n.nivel}`);
       b.dataset.aberto = n.aberto ? '1' : '0';
       grade.append(b);
     }
@@ -353,8 +358,11 @@ export function ligarCaca({ mundo, passeio, avisar }) {
       }
       case 'fonema:caca-aviso': mostrarAviso(d.icone || '🗺️', d.texto || '', d.ms ?? 5000); break;
       case 'fonema:caca-fim':
-        emCaca = false; fecharPainel(); mostrarSeta(null); guia.marcas = []; guia.objetivoLivre();
-        mostrarAviso('🏆', d.texto || 'Tesouro encontrado!', 5000);
+        emCaca = false; fecharPainel(); mostrarSeta(null); guia.marcas = [];
+        // fila nº 30: ganhou a chave → o próximo passo é usá-la no píer (trilha de moedas e seta até lá, até embarcar)
+        if (d.chave) guia.objetivoExtra({ chave: 'pier', x: 37.8, z: 12.6, texto: 'Use a chave no píer ⛵', icone: '🔑', trilha: true, marcador: true });
+        guia.objetivoLivre(); // (o corpo ainda tem a classe "caca" por 2,5 s: chama aqui para o objetivo novo aparecer já)
+        mostrarAviso(d.chave ? '🔑' : '🏆', d.texto || 'Tesouro encontrado!', d.chave ? 9000 : 5000);
         setTimeout(() => { if (!emCaca) { limparBaus(); faixa.classList.remove('on'); document.body.classList.remove('caca'); for (const mm of moedas) grupo.remove(mm); moedas.length = 0; } }, 2500);
         break;
       case 'fonema:caca-parar': sair(); break;

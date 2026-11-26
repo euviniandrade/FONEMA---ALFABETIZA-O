@@ -7,6 +7,8 @@
 //    coluna de luz sobre o destino; `parar`: a trilha termina a N m do destino (caça: leva à ÁREA dos baús, nunca ao baú certo, regra 3).
 //  - `guia.marcas = [{ x, z, cor }]`: o que aparece no minimapa além das portas (baús da caça, todos iguais).
 //  - Fora da caça o objetivo é a MISSÃO DE HOJE (porta da Escola), que o app manda (fonema:guia {missao}).
+//  - `guia.objetivoExtra(obj|null)` (fila nº 30): um objetivo que passa na frente da missão só nesta visita (ex.: "use a chave no
+//    píer" logo depois de ganhar a chave do barquinho); quem pôs tira (a caça tira ao embarcar). Depois volta a ser a missão.
 //  - Lembrete: depois de ~3,5 min no passeio livre, a Sofia/Tales pergunta "Vamos continuar a missão?"; "Vamos!" entra na Escola,
 //    "Mais um pouquinho" adia 2 min. Na caça, no barco ou com cartão aberto o relógio não anda.
 // Tudo roda em `passeio.noQuadro` (também no `simular()` dos testes). Moedinhas da trilha são enfeite (não ficam guardadas).
@@ -189,6 +191,7 @@ export function criarGuia({ mundo, passeio, avisar }) {
   // ---------------------------------------------------------------- objetivo ----------------------------------------------------------------
   let obj = null, chave = null, trilhaDe = null, refazer = 0;
   let missao = null; // objetivo do passeio livre (vem do app)
+  let extra = null; // fila nº 30: objetivo que passa na frente da missão nesta visita (chave → píer)
   let livreT = 0, lembreteAberto = false, falouLivre = false;
   function mostrarFaixa() {
     if (!obj?.texto) { faixa.classList.remove('on'); return; }
@@ -203,6 +206,7 @@ export function criarGuia({ mundo, passeio, avisar }) {
   }
   /** Volta ao objetivo do passeio livre (a missão de hoje). */
   function objetivoLivre() {
+    if (extra) { definir(extra); return; }
     if (!missao) { definir(null); return; }
     const l = passeio.LUGARES.find((x) => x.id === 'escola');
     definir({ chave: 'missao', x: l.pos[0], z: l.pos[1], texto: missao.texto, icone: '🏫', trilha: true, marcador: true, fala: falouLivre ? undefined : missao.fala });
@@ -257,6 +261,9 @@ export function criarGuia({ mundo, passeio, avisar }) {
 
   const api = {
     definir, objetivoLivre, marcas: [],
+    /** Fila nº 30: objetivo que passa na frente da missão (null tira). Fora da caça já aparece; na caça, quando ela acabar. */
+    objetivoExtra(o) { extra = o || null; if (!document.body.classList.contains('caca')) objetivoLivre(); },
+    get extra() { return extra ? { ...extra } : null; },
     get objetivo() { return obj ? { ...obj } : null; },
     get moedasTrilha() { return moedas.map((s) => ({ x: s.position.x, z: s.position.z })); },
     get moedas() { return nMoedas; },

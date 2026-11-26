@@ -223,7 +223,11 @@ if (!temWebGL()) {
     },
     aoTrancado(l, st) {
       const fala = app.lugares?.[l.id]?.fala;
-      cartao.abrir(l.emBreve ? '⛵' : '🔒', l.emBreve ? `${l.nome}: em breve!` : `${l.nome}: ainda trancado`, st.falta || (l.emBreve ? 'Logo, logo dá para passear de barco.' : 'Abre depois, continue aprendendo!'), [bt('Ok', '👍', () => cartao.fechar(), 'sol')]);
+      // fila nº 30: o barquinho diz o que falta (a chave) e leva direto à caça, onde a chave se ganha
+      const botoes = [];
+      if (l.emBreve && window.FONEMA_CACA) botoes.push(bt('Caça ao tesouro', '🗺️', () => { cartao.fechar(); window.FONEMA_CACA.abrirMenu(); }, 'sol'));
+      botoes.push(bt('Ok', '👍', () => cartao.fechar(), l.emBreve ? '' : 'sol'));
+      cartao.abrir(l.emBreve ? '🔑' : '🔒', l.emBreve ? `${l.nome}: precisa da chave` : `${l.nome}: ainda trancado`, st.falta || (l.emBreve ? 'A chave do barquinho se ganha na Caça ao tesouro.' : 'Abre depois, continue aprendendo!'), botoes);
       if (fala) avisar('fonema:falar', { falas: [fala] });
     },
     aoEntrando(l) { posAntesDaPorta = ondeEsta(); cartao.fechar(); $('#btAcao').classList.remove('on'); },
