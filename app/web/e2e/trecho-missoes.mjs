@@ -76,7 +76,7 @@ export async function trechoMissoes(browser, h) {
     await pg.waitForTimeout(600);
     const guia = (await pg.getByTestId('painel-guia').innerText().catch(() => '')).replace(/\s+/g, ' ');
     await cap('vila-depois-da-1', 900);
-    ok(/Missão 2 de hoje/.test(guia) && !/Missão de hoje: feita/.test(guia), `vila${suf}: painel guia mostra "Missão 2 de hoje" (não "feita")`);
+    ok(/Missão 2 de hoje/i.test(guia) && !/Missão de hoje: feita/i.test(guia), `vila${suf}: painel guia mostra "Missão 2 de hoje" (não "feita")`);
     ok(/Próxima missão/.test(await pg.getByTestId('proxima-missao').innerText().catch(() => 'Próxima missão')), `vila${suf}: a pílula diz "Próxima missão"`);
 
     if (soCapturas) { await ctx.close(); continue; }
@@ -90,7 +90,8 @@ export async function trechoMissoes(browser, h) {
     await fimDoRitual();
     const p2 = await lerProgresso(pg, id);
     ok(p2.sessoesFeitas === 2 && p2.missoesDoDia?.n === 2, `missão 2 contada no mesmo dia (hoje ${p2.missoesDoDia?.n})`);
-    ok(/Fim da missão|missão/i.test(await pg.locator('.topo').first().innerText().catch(() => '')), 'topo do fim sem "de hoje" fixo');
+    const h1 = await pg.getByTestId('ritual').locator('h1').innerText();
+    ok(/Missão 2 de hoje feita|Fase concluída/i.test(h1), `fim da missão 2: "${h1}"`);
 
     // ---- missão 3 pelo botão "Próxima missão" do fim ----
     await pg.getByTestId('ritual-proxima').click();
@@ -101,7 +102,8 @@ export async function trechoMissoes(browser, h) {
     ok(await pg.getByTestId('ritual').count() === 0, 'a missão 3 começa do zero (não reaproveita o fim da anterior)');
     await jogarSessao(pg);
     const gancho3 = await fimDoRitual();
-    await cap('ritual-3-pausa', 300);
+    if (dirCap) await pg.getByTestId('ritual-pausa').scrollIntoViewIfNeeded().catch(() => {});
+    await cap('ritual-3-pausa', 500);
     const p3 = await lerProgresso(pg, id);
     ok(p3.sessoesFeitas === 3 && p3.missoesDoDia?.n === 3, `três missões no mesmo dia (sessões ${p3.sessoesFeitas}, hoje ${p3.missoesDoDia?.n})`);
     ok(p3.concluidas.length >= 2 && p3.faseAtual !== p0.faseAtual, `o progresso andou: ${p0.faseAtual} → ${p3.faseAtual} (concluídas: ${p3.concluidas.join(', ')})`);
