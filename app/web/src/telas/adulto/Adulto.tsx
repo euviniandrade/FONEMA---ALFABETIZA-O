@@ -335,7 +335,8 @@ export function PainelFamilia({ criancaId }: { criancaId: string }) {
               <h2><Icone nome="caderno" />Esta semana</h2>
               <div className="numeros">
                 <div className="numero"><b>{resumo.atividadesSemana}</b><small>atividades</small></div>
-                <div className="numero"><b>{resumo.sessoesSemana}</b><small>sessões</small></div>
+                <div className="numero"><b>{resumo.sessoesSemana}</b><small>missões</small></div>
+                <div className="numero" data-testid="missoes-hoje"><b>{resumo.missoesHoje}</b><small>missões hoje</small></div>
                 <div className="numero"><b>{resumo.moedinhas.saldo}</b><small>moedinhas</small></div>
               </div>
               <h3>Conquistas recentes</h3>
@@ -614,7 +615,7 @@ export function Configuracoes({ area = 'familia' }: { area?: AreaId }) {
           <fieldset className="campo config-grupo"><legend><Icone nome="lojinha" />Lojinha de brincadeira</legend>
             <p className="nota-mic">As moedinhas só se ganham aprendendo. Nada é comprado com dinheiro de verdade.</p>
             <label className="opcao-linha"><input type="checkbox" checked={configBruta.lojinha.naVila} onChange={(e) => set({ lojinha: { ...configBruta.lojinha, naVila: e.target.checked } })} /> Mostrar a Lojinha no mapa da vila</label>
-            <label className="opcao-linha"><input type="checkbox" checked={configBruta.lojinha.noFimDaSessao} onChange={(e) => set({ lojinha: { ...configBruta.lojinha, noFimDaSessao: e.target.checked } })} /> Oferecer a Lojinha quando a missão do dia termina</label>
+            <label className="opcao-linha"><input type="checkbox" checked={configBruta.lojinha.noFimDaSessao} onChange={(e) => set({ lojinha: { ...configBruta.lojinha, noFimDaSessao: e.target.checked } })} /> Oferecer a Lojinha quando uma missão termina</label>
           </fieldset>
 
           <fieldset className="campo config-grupo"><legend><Icone nome="escudo" />Dados deste aparelho</legend>

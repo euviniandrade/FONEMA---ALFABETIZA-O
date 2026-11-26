@@ -14,7 +14,7 @@ import { anotarNovidades, extrasQueAbriram } from './desbloqueio.ts';
 import { avaliarConquistas } from './conquistas.ts';
 import { calcularNivel } from './nivel.ts';
 import { resultadoProvaRelampago } from './trilha-expressa.ts';
-import { resumoDaMissao } from './guia.ts';
+import { contarMissao, resumoDaMissao } from './guia.ts';
 
 export interface ResultadoAtividade {
   sessao: string;
@@ -214,6 +214,9 @@ export function fecharSessao(
 
   // 6. D032: resumo da última missão para o painel guia (estrelinhas e selos; não mexe no domínio)
   p = { ...p, ultimaMissao: resumoDaMissao({ faseId: fase.id, atividades: args.atividades, tentativas: args.tentativasDaSessao, selos: ac.novas.map((g) => g.id), faseConcluida }, agora) };
+  // 7. D036: mais uma missão no contador do dia (várias por dia; só contagem, não mexe no domínio nem na revisão). Conta a partir
+  //    do progresso de ANTES desta missão (o `ultimaMissao` acima já é a de agora e contaria em dobro no progresso antigo).
+  p = { ...p, missoesDoDia: contarMissao(p0, agora).missoesDoDia };
 
   return {
     progresso: p,

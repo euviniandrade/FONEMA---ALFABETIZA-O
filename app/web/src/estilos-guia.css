@@ -77,6 +77,7 @@
 .guia-selos{display:flex;gap:4px}.guia-selo{width:44px;height:44px;display:block}
 .guia-vazio{display:flex;align-items:center;gap:6px;font-family:var(--f-titulo);font-size:16px;color:var(--cinza)}.guia-vazio .ic{color:var(--ipe2)}
 .guia-fase{font-family:var(--f-titulo);font-weight:700;font-size:20px;color:var(--marinho);margin:0 0 2px}
+.guia-hoje{display:flex;align-items:center;gap:6px;margin:6px 0 0;font-family:var(--f-titulo);font-weight:600;font-size:15px;color:var(--cinza)}.guia-hoje .ic{width:20px;height:20px;color:var(--ipe-esc)}
 .btn.enorme.guia-continuar{width:100%;margin-top:8px;min-height:72px;font-size:26px;padding:0 18px 0 12px;gap:10px}.btn.enorme.guia-continuar .ic{width:52px;height:52px}
 .guia-aqui{margin-top:24px;width:100%;min-height:64px;display:flex;align-items:center;gap:10px;text-align:left;border-radius:18px;padding:6px 12px 6px 6px;background:linear-gradient(180deg,#FFF8DC,#FFEDB8);box-shadow:0 4px 0 #E8C66A;transition:transform .2s var(--mola)}
 .guia-aqui:active{transform:translateY(3px);box-shadow:0 1px 0 #E8C66A}

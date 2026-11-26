@@ -82,6 +82,25 @@ html,body{overflow-x:clip}
   .tela-ritual .palco{animation-fill-mode:backwards}
 }
 
+/* D036: várias missões por dia — "Próxima missão" (destaque) e "Voltar para a vila" presos embaixo; os outros botões vêm antes */
+.tela-ritual .ritual-botoes.com-seguir{position:static;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;margin:14px 0 0;padding:0;border-radius:0}
+.tela-ritual .ritual-seguir{position:sticky;bottom:0;z-index:6;display:flex;gap:14px;justify-content:center;align-items:stretch;flex-wrap:wrap;
+  margin:18px calc(-1 * clamp(18px,3vw,34px)) calc(-1 * clamp(18px,3vw,34px));padding:14px 16px calc(14px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(255,255,255,.97) 35%);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:22px 22px 0 0}
+.tela-ritual .ritual-proxima{min-height:72px;min-width:min(100%,340px);display:inline-flex;align-items:center;gap:12px;text-align:left}
+.tela-ritual .ritual-proxima .rp-txt{display:flex;flex-direction:column;line-height:1.1}
+.tela-ritual .ritual-proxima .rp-txt b{font-size:1.15em}
+.tela-ritual .ritual-proxima .rp-txt small{font-size:.72em;font-weight:600;opacity:.9;max-width:26ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tela-ritual .ritual-vila{min-height:72px}
+.ritual-pausa{display:flex;align-items:center;gap:12px;margin:14px auto 0;max-width:640px;padding:12px 18px;border-radius:var(--r-m);background:var(--ceu);color:var(--marinho);font-size:18px;text-align:left}
+.ritual-pausa .ic{width:30px;height:30px;flex:none;color:var(--ipe-esc)}
+@media (max-width:700px){
+  .tela-ritual .ritual-seguir{position:fixed;left:0;right:0;bottom:0;margin:0;gap:8px;flex-direction:column;align-items:stretch;padding:10px 14px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -6px 24px rgba(0,0,0,.12)}
+  .tela-ritual .ritual-proxima{min-height:64px;min-width:0;justify-content:center}
+  .tela-ritual .ritual-vila{min-height:52px;font-size:.9em}
+  .tela-ritual .ritual-cartao:has(.ritual-seguir){padding-bottom:170px}
+}
+
 /* entrada da fase: o botão de ouvir de novo no lugar do texto do objetivo */
 .entrada-cab .entrada-ouvir{width:64px;height:64px;margin-top:6px}
 .entrada-cab .entrada-ouvir .ic{width:46px;height:46px}

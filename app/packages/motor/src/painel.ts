@@ -16,6 +16,7 @@ import { tipoDaTentativa } from './tentativas.ts';
 import { calcularNivel } from './nivel.ts';
 import { descreverTermometro, termometroMaximoDoConteudo } from './termometro.ts';
 import { fasesConcluidas, missaoInicialFeita } from './sequencia.ts';
+import { missoesHoje } from './guia.ts';
 import { renderFala } from './falas.ts';
 
 export interface ResumoFamilia {
@@ -28,6 +29,8 @@ export interface ResumoFamilia {
   aprendendo: { nome: string; falta: string[] }[];
   atividadesSemana: number;
   sessoesSemana: number;
+  /** D036: missões feitas hoje (podem ser várias no mesmo dia). */
+  missoesHoje: number;
   selosRecentes: string[];
   moedinhas: { saldo: number; total: number };
   mensagemWhatsApp: string;
@@ -67,6 +70,7 @@ export function resumoFamilia(c: Crianca, p: Progresso, eventos: Evento[], cfg: 
     aprendendo,
     atividadesSemana: semana.filter((e) => e.tipo === 'atividade').length,
     sessoesSemana: semana.filter((e) => e.tipo === 'sessao').length,
+    missoesHoje: missoesHoje(p, agora),
     selosRecentes,
     moedinhas: { saldo: p.moedinhas.saldo, total: p.moedinhas.total },
     mensagemWhatsApp: msg

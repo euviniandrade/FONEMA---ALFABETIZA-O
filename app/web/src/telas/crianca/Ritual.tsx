@@ -1,7 +1,7 @@
 import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { useEffect, useMemo, useState } from 'react';
 import { CAMPO_POR_ID, CONQUISTA_POR_ID, FASE_POR_ID, FALAS, type Fase } from '@fonema/conteudo';
-import { abriuParaMostrar, calcularNivel, campoDoDesafio, desafioDaFase, desafioMemoria, fasesConcluidas, missaoInicialFeita, infoNome, situacaoSondagem, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
+import { abriuParaMostrar, calcularNivel, campoDoDesafio, desafioDaFase, desafioMemoria, fasesConcluidas, fimDaMissao, missaoInicialFeita, missoesHoje, infoNome, situacaoSondagem, type Crianca, type Progresso, type RelatorioSessao } from '@fonema/motor';
 import { useApp } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Topo } from '../../componentes/basicos.tsx';
@@ -17,7 +17,10 @@ const NOME_DESAFIO = { 'estrada-pares': 'Desafio: Estrada dos Pares', carteiro: 
 
 /**
  * C9 · Ritual de fim: recapitula, moedinhas EM BLOCO voando ao porquinho (cofrinho), conquistas e surpresas
- * DEPOIS do fato (P1-b), barra do próximo OBJETIVO, gancho e despedida. Sem botão "continuar".
+ * DEPOIS do fato (P1-b), barra do próximo OBJETIVO, gancho e despedida.
+ * D036 (dono, 26/11): várias missões no mesmo dia. O fim tem o botão grande "Próxima missão" (leva à ENTRADA da missão seguinte;
+ * nada começa sozinho) ao lado de "Voltar para a vila"; não diz "amanhã" quando há outra missão para fazer agora; depois de
+ * PAUSA_DEPOIS_DE missões no dia sugere uma pausa, sem bloquear. Substitui o "sem botão continuar" (pesquisa 42 R13) da fila nº 30.
  */
 export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { crianca: Crianca; progresso: Progresso; relatorio: RelatorioSessao; fase: Fase; expressa: boolean }) {
   const { config } = useApp();
@@ -36,6 +39,13 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
   const memoria = useMemo(() => desafioMemoria(progresso, fase.id), [progresso, fase.id]);
   // D034: extras que abriram nesta missão (jogos, leitura, peças da Lojinha)
   const abriu = useMemo(() => abriuParaMostrar(relatorio.abriu ?? [], crianca.genero), [relatorio.abriu, crianca.genero]);
+  // D036: quantas missões hoje (esta incluída) e como o fim fecha (só falas já gravadas; guia.ts › fimDaMissao)
+  const feitasHoje = useMemo(() => Math.max(1, missoesHoje(progresso, Date.now())), [progresso]);
+  const fim = useMemo(() => fimDaMissao({
+    fase, faseConcluida: relatorio.faseConcluida, feitasHoje,
+    haProxima: !!proxima && progresso.fases[proxima.id]?.estado !== 'concluida',
+    chefeNaoPassou: !!relatorio.chefe && !relatorio.chefe.passou
+  }), [fase, relatorio, feitasHoje, proxima, progresso]);
 
   useEffect(() => {
     let vivo = true;
@@ -59,8 +69,8 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
       if (relatorio.chefe && !relatorio.chefe.passou) await f('Vamos treinar mais um pouquinho e tentar de novo outro dia. Nada se perde!');
       if (!vivo) return;
       setPasso(3);
-      await f(relatorio.faseConcluida ? fase.gancho.texto : FALAS.ritual.amanha, relatorio.faseConcluida ? fase.gancho.quem as 'sofia' | 'tales' : 'sofia');
-      await f(FALAS.ritual.tchau);
+      await f(fim.gancho.texto, fim.gancho.quem as 'sofia' | 'tales');
+      if (fim.tchau) await f(FALAS.ritual.tchau);
     })();
     return () => { vivo = false; voz.parar(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,21 +87,20 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
   }, [relatorio.moedinhas]);
   const saldoAgora = saldoAntes + Math.max(somadas, passo >= 1 && moedasAnim === 0 ? relatorio.moedinhas : 0);
   // fila nº 30 ("sempre saber qual é a próxima missão"): o fim mostra SEMPRE a próxima missão (outra fase ou a mesma de novo), em
-  // qualquer modo de prêmio (missão não é prêmio). Só texto: sem botão de começar aqui (C9/R13: o fim não tem "continuar"); o
-  // "Voltar para a vila" leva à vila, onde a estrela e o botão da missão brilham.
+  // qualquer modo de prêmio (missão não é prêmio). D036: e agora também o botão para começá-la (leva à entrada da fase).
   const idade = new Date().getFullYear() - crianca.anoNascimento;
   return (
     <div className="tela-ritual" data-testid="ritual">
       <Fundo cena="arte/paisagem-sem-dupla" desfoque={10} tom="claro" />
       {relatorio.conquistasNovas.length || relatorio.faseConcluida ? <div className="confete" aria-hidden="true">{Array.from({ length: 26 }, (_, i) => <i key={i} style={{ left: `${(i * 41 + 7) % 100}%`, animationDuration: `${3.5 + (i % 5) * 0.7}s`, animationDelay: `${(i % 9) * 0.25}s` }} />)}</div> : null}
-      <Topo crianca={crianca} moedinhas={saldoAgora} titulo="Fim da missão de hoje" />
+      <Topo crianca={crianca} moedinhas={saldoAgora} titulo="Fim da missão" />
       <main className="palco ritual">
         <section className="cartao ritual-cartao">
           <div className="ritual-raios" aria-hidden="true" />
           {relatorio.faseConcluida ? <FiguraLimpa className="ritual-trofeu" src={asset('figuras/estrela.webp')} /> : null}
-          <h1 className="t">{relatorio.faseConcluida ? `Fase concluída: ${semFonetica(fase.titulo)}!` : 'Missão de hoje feita!'}</h1>
+          <h1 className="t">{relatorio.faseConcluida ? `Fase concluída: ${semFonetica(fase.titulo)}!` : feitasHoje > 1 ? `Missão ${feitasHoje} de hoje feita!` : 'Missão de hoje feita!'}</h1>
           <Balao fala={{ quem: 'sofia', texto: FALAS.ritual.recap }} crianca={crianca} />
-          <p className="ritual-desafios">Hoje: <b>{relatorio.atividades}</b> desafios feitos</p>
+          <p className="ritual-desafios">Nesta missão: <b>{relatorio.atividades}</b> desafios feitos</p>
           {/* D034: o que abriu fica logo no alto (no celular, o resto do ritual vem embaixo) */}
           {passo >= 2 && abriu.length ? <PainelAbriu ids={relatorio.abriu ?? []} sexo={crianca.genero} criancaId={crianca.id} ir={navegar} /> : null}
           <div className="ritual-grade">
@@ -132,8 +141,11 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
           {relatorio.termometroDepois > relatorio.termometroAntes ? <div className="ritual-termo"><p>O termômetro da leitura subiu!</p><Termometro valor={relatorio.termometroDepois} comNumero={false} /></div> : null}
           {relatorio.tituloNovo ? <p className="titulo-novo">Título novo: <b>{relatorio.tituloNovo}</b></p> : null}
           <BarraObjetivo nivel={nivel} objetivo={proxima ? semFonetica(proxima.titulo) : undefined} rotuloObjetivo="Próxima missão" />
-          {passo >= 3 ? <Balao fala={relatorio.faseConcluida ? fase.gancho : { quem: 'sofia', texto: FALAS.ritual.amanha }} crianca={crianca} humor="curiosa" /> : null}
-          <div className="linha-botoes ritual-botoes">
+          {/* o balão mostra a fala que tocou (D036: sem "amanhã" quando há outra missão agora) */}
+          {passo >= 3 ? <div data-testid="ritual-gancho"><Balao fala={fim.gancho} crianca={crianca} humor="curiosa" /></div> : null}
+          {/* D036 [DP]: depois de PAUSA_DEPOIS_DE missões no dia, só uma sugestão de pausa (texto, sem voz nova); a próxima continua aberta */}
+          {fim.pausa ? <p className="ritual-pausa" data-testid="ritual-pausa"><Icone nome="coracao" /><span><b>Que tal uma pausa?</b> Você já fez {feitasHoje} missões hoje. Se quiser, a próxima espera por você.</span></p> : null}
+          <div className={`linha-botoes ritual-botoes ${fim.proxima && proxima ? 'com-seguir' : ''}`}>
             {fase.demonstracao ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/mostra/${fase.id}`)} data-testid="mostra-professor"><Icone nome="chapeu" />Mostra pro professor</button> : null}
             <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/album`)}><Icone nome="album" />Álbum</button>
             {config.lojinha.noFimDaSessao ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/lojinha`)} data-testid="ir-lojinha"><Icone nome="lojinha" />Lojinha</button> : null}
@@ -143,8 +155,17 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
             {desafio ? <button className="btn grande verde" onClick={() => navegar(`c/${crianca.id}/jogo/${desafio.jogo}/${fase.id}`)} data-testid="desafio-jogo"><Icone nome="play" />{NOME_DESAFIO[desafio.jogo]}</button> : null}
             {memoria ? <button className="btn grande verde" onClick={() => navegar(`c/${crianca.id}/memoria/${fase.id}`)} data-testid="desafio-memoria"><Icone nome="estrela" />Desafio: Memória dos Sons</button> : null}
             {ficha ? <button className="btn grande verde" onClick={() => navegar(`c/${crianca.id}/leitura/ficha.${ficha}.desafio`)} data-testid="desafio-ficha"><Icone nome="boca" />Ficha de leitura: {CAMPO_POR_ID[ficha].titulo}</button> : null}
-            <button className="btn grande ipe" onClick={() => navegar(`c/${crianca.id}/vila`)} data-testid="voltar-vila"><Icone nome="casa" />{textoTela('Tchau! Voltar para a vila', crianca)}</button>
+            {fim.proxima && proxima ? null : <button className="btn grande ipe" onClick={() => navegar(`c/${crianca.id}/vila`)} data-testid="voltar-vila"><Icone nome="casa" />{textoTela('Tchau! Voltar para a vila', crianca)}</button>}
           </div>
+          {/* D036: "Próxima missão" e "Voltar para a vila" sempre à vista (presos embaixo), a próxima em destaque */}
+          {fim.proxima && proxima ? (
+            <div className="ritual-seguir">
+              <button className={`btn enorme ipe ${fim.pausa ? '' : 'brilha'} ritual-proxima`} onClick={() => navegar(`c/${crianca.id}/fase/${proxima.id}`)} data-testid="ritual-proxima" aria-label={`Próxima missão: ${semFonetica(proxima.titulo)}`}>
+                <Icone nome="play" /><span className="rp-txt"><b>Próxima missão</b><small>{semFonetica(proxima.titulo)}</small></span>
+              </button>
+              <button className="btn enorme ritual-vila" onClick={() => navegar(`c/${crianca.id}/vila`)} data-testid="voltar-vila"><Icone nome="casa" />{textoTela('Voltar para a vila', crianca)}</button>
+            </div>
+          ) : null}
         </section>
       </main>
     </div>

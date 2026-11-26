@@ -87,8 +87,8 @@ const ROTULO_ETAPA: Record<EstadoEtapa, string> = { feita: 'já feita', agora: '
 /**
  * Fila nº 30 ("sempre saber qual é a próxima missão"): pílula dourada com a missão de agora (o mesmo `missaoDeHoje` do painel guia e
  * as mesmas palavras: "Missão de hoje" antes de fazer, "Próxima missão" depois). Leva à ENTRADA da fase (como o "Continuar" do
- * painel), nunca direto à lição. Vai no topo das telas de fora da missão; nunca no meio de uma atividade, no fim da missão (sem
- * botão "continuar", C9) nem no passeio 3D (que tem o próprio guia). Só texto na tela: não fala (não há clipe gravado).
+ * painel), nunca direto à lição. Vai no topo das telas de fora da missão; nunca no meio de uma atividade, no fim da missão (que tem
+ * o próprio botão "Próxima missão", D036) nem no passeio 3D (que tem o próprio guia). Só texto na tela: não fala (não há clipe gravado).
  */
 export function ProximaMissao({ criancaId, progresso, className = '' }: { criancaId: string; progresso: Progresso; className?: string }) {
   const missao = missaoDeHoje(progresso, Date.now());
@@ -126,6 +126,7 @@ export function PainelGuia({ crianca, progresso, onde }: { crianca: Crianca; pro
   const nivel = calcularNivel(progresso.desafios, missaoInicialFeita(progresso), fasesConcluidas(progresso));
   const missao = missaoDeHoje(progresso, agora);
   const fase = FASE_POR_ID[missao.faseId];
+  const rotuloMissao = missao.feitasHoje ? `Missão ${missao.numero} de hoje` : 'Missão de hoje';
   const caminho = estadoDoCaminho(progresso);
   const etapaAgora = caminho.find((e) => e.estado === 'agora')?.etapa;
   const ultima = progresso.ultimaMissao;
@@ -142,7 +143,7 @@ export function PainelGuia({ crianca, progresso, onde }: { crianca: Crianca; pro
       <button className="guia-faixa vidro" onClick={() => { efeitos.suave(); setAberto((a) => !a); }} aria-expanded={aberto} aria-controls={`guia-corpo-${onde}`} data-testid="guia-abrir">
         {etapaAgora ? <span className="guia-faixa-fig"><FiguraEtapa etapa={etapaAgora} /></span> : null}
         <span className="guia-faixa-txt"><b>{nivel.nivel > 0 ? `Nível ${nivel.nivel}` : 'Começando'}</b><small>{etapaAgora ? etapaAgora.titulo : 'Seu guia'}</small></span>
-        <BarraMissao passos={missao.passos} feitos={missao.feitaHoje ? missao.passos : 0} agora={missao.feitaHoje ? undefined : 0} className="guia-faixa-barra" />
+        <BarraMissao passos={missao.passos} feitos={0} agora={0} className="guia-faixa-barra" />
         <span className="guia-faixa-seta"><Icone nome={aberto ? 'x' : 'mais'} /></span>
       </button>
 
@@ -170,12 +171,13 @@ export function PainelGuia({ crianca, progresso, onde }: { crianca: Crianca; pro
           ) : <p className="guia-vazio"><Icone nome="estrela" />A primeira está esperando!</p>}
         </section>
 
-        <section className="guia-bloco guia-missao" aria-label="Missão de hoje">
-          <h3 className="guia-rotulo">{missao.feitaHoje ? 'Missão de hoje: feita!' : 'Missão de hoje'}</h3>
-          {/* feita hoje: a barra cheia é a de HOJE; o nome que aparece embaixo é o da PRÓXIMA missão, com rótulo (antes parecia a mesma) */}
-          {missao.feitaHoje ? null : <p className="guia-fase">{semFonetica(fase?.titulo ?? '')}</p>}
-          <BarraMissao passos={missao.passos} feitos={missao.feitaHoje ? missao.passos : 0} agora={missao.feitaHoje ? undefined : 0} rotulo={missao.feitaHoje ? 'Missão de hoje feita' : `Missão de hoje: ${missao.passos} passos`} />
-          {missao.feitaHoje && fase ? <p className="guia-fase guia-proxima" data-testid="guia-proxima"><small>Próxima:</small> {semFonetica(fase.titulo)}</p> : null}
+        {/* D036 (dono, 26/11): várias missões no mesmo dia. Depois de uma missão, a próxima aparece DISPONÍVEL ("Missão 2 de hoje"),
+            com a barra vazia e o "Continuar"; nada de "feita, volte amanhã". */}
+        <section className="guia-bloco guia-missao" aria-label={rotuloMissao} data-testid="guia-missao" data-numero={missao.numero}>
+          <h3 className="guia-rotulo">{rotuloMissao}</h3>
+          <p className="guia-fase">{semFonetica(fase?.titulo ?? '')}</p>
+          <BarraMissao passos={missao.passos} feitos={0} agora={0} rotulo={`${rotuloMissao}: ${missao.passos} passos`} />
+          {missao.feitasHoje ? <p className="guia-hoje" data-testid="guia-hoje"><Icone nome="estrela" />{missao.feitasHoje === 1 ? 'Hoje: 1 missão feita' : `Hoje: ${missao.feitasHoje} missões feitas`}</p> : null}
           <button className="btn enorme ipe brilha guia-continuar" onClick={continuar} data-testid="guia-continuar"><Icone nome="play" />{progresso.sessoesFeitas ? 'Continuar' : 'Começar'}</button>
         </section>
 

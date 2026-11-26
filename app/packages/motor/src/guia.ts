@@ -10,7 +10,7 @@
  * - Missão: a barrinha da missão de hoje (passos da fase atual) e o resumo da última missão (estrelinhas e selos).
  *   As estrelinhas são retorno de desempenho para a criança, não critério de domínio (o domínio é do dominio.ts).
  */
-import { ETAPAS_DO_CAMINHO, FASES, FASE_POR_ID, type EtapaCaminho } from '@fonema/conteudo';
+import { ETAPAS_DO_CAMINHO, FALAS, FASES, FASE_POR_ID, type EtapaCaminho, type Fala } from '@fonema/conteudo';
 import type { Progresso, ResumoMissao, Tentativa } from './estado.ts';
 import { diaDe } from './estado.ts';
 import { ehAvaliada } from './tentativas.ts';
@@ -74,10 +74,53 @@ export function passosDaMissao(faseId: string): number {
   return f ? Math.max(1, f.cenas.length) : 1;
 }
 
-/** A barrinha da missão de hoje, para a vila e as trilhas. */
-export function missaoDeHoje(p: Pick<Progresso, 'faseAtual' | 'ultimaMissao' | 'ultimaSessao'>, agora: number): { faseId: string; passos: number; feitaHoje: boolean } {
+/**
+ * D036 (dono, 26/11): a criança pode fazer VÁRIAS missões no mesmo dia. Quantas já fez hoje (0 se o contador é de outro dia).
+ * Progresso antigo sem o contador: a última missão de hoje vale 1 (não dá para saber se foram mais).
+ */
+export function missoesHoje(p: Pick<Progresso, 'missoesDoDia' | 'ultimaMissao' | 'ultimaSessao'>, agora: number): number {
+  const hoje = diaDe(agora);
+  if (p.missoesDoDia) return p.missoesDoDia.dia === hoje ? p.missoesDoDia.n : 0;
   const feita = p.ultimaMissao?.em ?? p.ultimaSessao;
-  return { faseId: p.faseAtual, passos: passosDaMissao(p.faseAtual), feitaHoje: feita !== undefined && diaDe(feita) === diaDe(agora) };
+  return feita !== undefined && diaDe(feita) === hoje ? 1 : 0;
+}
+
+/** Soma uma missão ao contador do dia (no fecharSessao). Só contagem: domínio, revisão e moedinhas não olham para ele. */
+export function contarMissao(p: Progresso, agora: number): Progresso {
+  return { ...p, missoesDoDia: { dia: diaDe(agora), n: missoesHoje(p, agora) + 1 } };
+}
+
+/**
+ * A missão de agora, para a vila, as trilhas e a pílula. `feitasHoje` = quantas já foram feitas hoje; `numero` = qual é esta
+ * no dia (1ª, 2ª…). `feitaHoje` fica por compatibilidade: diz só que JÁ houve missão hoje — a próxima continua disponível (D036).
+ */
+export function missaoDeHoje(p: Pick<Progresso, 'faseAtual' | 'ultimaMissao' | 'ultimaSessao' | 'missoesDoDia'>, agora: number): { faseId: string; passos: number; feitaHoje: boolean; feitasHoje: number; numero: number } {
+  const feitasHoje = missoesHoje(p, agora);
+  return { faseId: p.faseAtual, passos: passosDaMissao(p.faseAtual), feitaHoje: feitasHoje > 0, feitasHoje, numero: feitasHoje + 1 };
+}
+
+/** D036 **[DP]**: depois de quantas missões no mesmo dia o fim sugere uma pausa (só sugere; nunca bloqueia). */
+export const PAUSA_DEPOIS_DE = 3;
+
+/** D036: convite para a próxima missão, com a fala JÁ GRAVADA do Tales (manifesto: "tales|Vamos continuar a missão?"). */
+export const CONVITE_PROXIMA: Fala = { quem: 'tales', texto: 'Vamos continuar a missão?' };
+
+/**
+ * D036: como o fim da missão (C9) fecha. Só falas já gravadas; nenhuma fala nova, nenhuma voz do navegador.
+ *  - Há outra missão para fazer agora e ainda não deu a hora da pausa: o fim NÃO diz "amanhã" (não seria verdade). Fica o gancho
+ *    da fase quando ele não fala em amanhã (ex.: "Tem um lago lá na frente…"); senão, o convite do Tales. Sem o "Tchau… a tela vai
+ *    descansar" (o botão "Próxima missão" está ali).
+ *  - Pausa (≥ PAUSA_DEPOIS_DE missões hoje), chefe que pede treino "outro dia" ou jornada sem próxima: o fim de antes (gancho ou
+ *    "Amanhã a gente lembra!" + "Tchau… a tela vai descansar e você também."), que vira a sugestão de pausa.
+ *  - `proxima`: mostrar o botão "Próxima missão" (some só quando não há próxima e quando o chefe pediu "outro dia").
+ */
+export function fimDaMissao(args: { fase: { gancho: Fala }; faseConcluida: boolean; feitasHoje: number; haProxima: boolean; chefeNaoPassou?: boolean }): { gancho: Fala; tchau: boolean; pausa: boolean; proxima: boolean } {
+  const antigo: Fala = args.faseConcluida ? args.fase.gancho : { quem: 'sofia', texto: FALAS.ritual.amanha };
+  const proxima = args.haProxima && !args.chefeNaoPassou;
+  const pausa = args.feitasHoje >= PAUSA_DEPOIS_DE;
+  if (!proxima || pausa) return { gancho: antigo, tchau: true, pausa: pausa && proxima, proxima };
+  const gancho = args.faseConcluida && !/amanh/i.test(args.fase.gancho.texto) ? args.fase.gancho : CONVITE_PROXIMA;
+  return { gancho, tchau: false, pausa: false, proxima };
 }
 
 /**

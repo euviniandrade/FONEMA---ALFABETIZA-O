@@ -2,7 +2,7 @@
 // quando usá-lo". Em 390×844 (celular) e 1440×900 (computador), confere:
 //   1. pílula "Próxima missão" no topo da Lojinha, Álbum, Brincar, Cantinho, Fichas, região e no mapa das ilhas (nas trilhas, o "Continuar" do painel guia): à vista, ≥ 44 px,
 //      dentro da largura, com o nome da missão de agora; tocar leva à entrada da fase (nunca direto à lição);
-//   2. nada disso no meio da lição nem no fim da missão (sem botão "continuar", C9); o fim mostra "Próxima missão: …" em texto;
+//   2. nada disso no meio da lição nem no fim da missão; o fim mostra "Próxima missão: …" e (D036) o próprio botão "Próxima missão";
 //   3. "para que serve" no cofrinho, na Lojinha (peças e utensílios) e no Álbum;
 //   4. Fichas: "abre com as missões" no lugar de "em breve".
 // Uso: node e2e/fluxo.e2e.mjs --guia                     (também roda dentro do --sem-jornada)
@@ -72,7 +72,8 @@ export async function trechoGuia(browser, h) {
     await cap('ritual', 300);
     const obj = await pg.getByTestId('bo-objetivo').innerText().catch(() => '');
     ok(/^Próxima missão: \S/.test(obj), `fim da missão: mostra "${obj}"${suf}`);
-    ok(await pg.getByTestId('proxima-missao').count() === 0, `fim da missão: sem botão de começar a próxima (C9: sem "continuar")${suf}`);
+    // D036 (várias missões por dia): o fim tem o próprio botão "Próxima missão" (trecho-missoes.mjs); a pílula do topo não se repete ali
+    ok(await pg.getByTestId('proxima-missao').count() === 0 && await pg.getByTestId('ritual-proxima').count() === 1, `fim da missão: botão "Próxima missão" do fim, sem a pílula repetida${suf}`);
     if (dirCap) { await pg.getByTestId('barra-objetivo').scrollIntoViewIfNeeded().catch(() => {}); await cap('ritual-proxima', 500); }
 
     // a vila depois da 1ª missão (referência: o painel guia já mostrava a próxima)

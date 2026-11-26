@@ -213,6 +213,8 @@ export interface Progresso {
   jogosVila?: DadosJogosVila;
   /** D034: extras que ABRIRAM e a criança ainda não visitou (selo "Novo!"; desbloqueio.ts). Ausente = nada novo. */
   novidades?: string[];
+  /** D036: missões feitas no dia `dia` (guia.ts › missoesHoje). Ausente ou de outro dia = nenhuma hoje. Só contagem: não mexe no domínio. */
+  missoesDoDia?: { dia: string; n: number };
 }
 
 /** Casa do Som e garagem (jogos-vila.ts). Só enfeite e brincadeira (regra 4): nunca entra no domínio. */
