@@ -88,3 +88,6 @@
 .est-fala:hover{border-color:var(--marinho)}
 @media (max-width:640px){.est-parte{grid-template-columns:40px 1fr;padding:10px}.est-parte-ic{width:40px;height:40px}.est-parte small{display:none}.est-partes{grid-template-columns:1fr 1fr}}
 @media (prefers-reduced-motion:reduce){.est-parte{transition:none}.est-parte:hover{transform:none}}
+.est-jogo-acoes .adm-etq{align-self:flex-start}
+.est-cenario select{margin-top:auto}
+@media (min-width:641px) and (max-width:1099px){.est-partes{grid-template-columns:1fr 1fr}}

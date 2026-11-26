@@ -63,7 +63,7 @@ export function explicar(msg: string): Problema {
   m = /^texto com (\d+)%/.exec(msg);
   if (m) return { tecnico: msg, simples: `Só ${m[1]}% das palavras do texto a criança já lê sozinha. Precisa ser pelo menos 95%.` };
   m = /^"([^"]+)" tem vogal que muda na fala/.exec(msg);
-  if (m) return { tecnico: msg, palavra: m[1], simples: `"${m[1]}" tem uma vogal que muda quando a gente fala (como em "cama"). Num jogo livre isso confunde: escolha outra palavra.` };
+  if (m) return { tecnico: msg, palavra: m[1], simples: `"${m[1]}" tem uma vogal que muda quando a gente fala (o A antes de M ou N soa diferente, como em "banana"). Num jogo livre isso confunde: escolha outra palavra.` };
   m = /^"([^"]+)" não tem figura com arte/.exec(msg);
   if (m) return { tecnico: msg, palavra: m[1], simples: `"${m[1]}" ainda não tem figura. Suba a figura na aba Imagens antes (o jogo mostra a figura do móvel).` };
   if (/pelo menos 3 palavras/.test(msg)) return { tecnico: msg, simples: 'Deixe pelo menos 3 palavras na lista: o jogo só abre com 3.' };

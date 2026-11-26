@@ -283,7 +283,7 @@ export async function capturasEstudio(browser, { BASE, dir, erros }) {
       await pg.getByTestId('robo-converter').click();
       await pg.getByTestId('robo-resultado').first().waitFor();
       await foto('robo');
-      await pg.getByTestId('passo-converter').scrollIntoViewIfNeeded();
+      await pg.getByTestId('passo-resultados').evaluate((el) => window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 360));
       await foto('robo-resultado');
     } finally { await ctx.close(); }
   }
