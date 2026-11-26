@@ -1,6 +1,6 @@
 # FONEMA — Estado atual e passagem de bastão
 
-Atualizado em 2026-11-19 (seção 0: lote de correções nº 27). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
+Atualizado em 2026-11-26 (seção 0: o jogo guia, fila nº 30). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
 Tudo o que foi feito está neste repositório, no ramo `claude/eager-brahmagupta-3d2lhr` (commit e push a cada mudança). Nada depende
 da memória da conversa anterior.
 
@@ -8,6 +8,23 @@ da memória da conversa anterior.
 
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
+
+**O jogo guia: próxima missão e para que serve cada item (fila nº 30; 26/11; no ramo, NÃO publicado):**
+- **Auditoria como criança:** a vila já guiava bem (estrela "Missão de hoje", botão Missão brilhando, painel guia com "Próxima:" e
+  "Continuar"); o passeio já tinha a faixa da missão com seta e moedinhas. Faltava: nas telas de fora da missão (Lojinha, Álbum,
+  Brincar, Cantinho, Fichas, trilhas, mapa das ilhas) não havia caminho de volta à missão a não ser voltar à vila; o fim da missão só
+  mostrava o próximo objetivo quando a fase acabava; o barquinho dizia "Em breve na Lojinha" (errado: abre com a chave da caça); a chave
+  não dizia onde usar; a faixa do passeio mostrava "O som /a/"; cofrinho, utensílios e Álbum não diziam para que servem.
+- **Feito:** `ProximaMissao` (`componentes/Guia.tsx`): pílula dourada no topo dessas telas (e embaixo no mapa das ilhas), mesmo
+  `missaoDeHoje` do painel guia, leva à ENTRADA da fase; nunca no meio da lição, no fim da missão nem no passeio. Fim da missão: sempre
+  "Próxima missão: …" (só texto; sem botão de começar, regra C9/R13). Linhas "💡 Para que serve" no cofrinho, Lojinha (PC), utensílios e
+  Álbum (só texto, sem voz). Fichas: "abre com as missões". Passeio: barquinho "Precisa da chave" + cartão com botão "Caça ao tesouro";
+  Charadas mostram "🔑 ganha a chave do barquinho"; ao ganhar, aviso "Ela abre o barco no píer: siga as moedinhas" e o guia aponta o
+  píer (`guia.objetivoExtra`, só nesta visita) até embarcar; menu da caça lembra "A chave do barquinho é sua: use no píer"; faixa da
+  missão com `semFonetica`. Nenhuma fala nova, nenhum áudio gerado. D034 ainda cita "Em breve na Lojinha" (decisão não editada; vale isto).
+- **Deixado de propósito:** as 5 ilhas "Em breve" (conteúdo que não existe), Alfabeto "Frases · Em breve", etapas futuras do caminho;
+  Memória dos Sons sem pílula (é jogo; o voltar leva ao Brincar, que tem).
+- **Verificado:** ver resultado dos testes na FILA nº 30. Capturas `app/docs/capturas/v17-guia-{antes,depois}-*.jpg`.
 
 **Passeio 3D, gráfico rodada 2 + corrida + mechas (fila nº 24/28; 25–26/11; no ramo, NÃO publicado):**
 - **Chão:** ruas calçadas só no médio/alto (`materiais.js`, contas no próprio desenho): paralelepípedo na avenida das casas, rua
