@@ -43,6 +43,8 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
 - **Não muda:** domínio (2 SESSÕES, não 2 dias — pergunta ao dono na D036), revisão espaçada em dias, teto de moedinhas do dia.
 - **Verificado:** typecheck, lint, `npm test` 493/493 (novo `motor/test/d036.test.ts`); E2E `--missoes` (novo, também no
   `--sem-jornada`) 40 ✓ 0 ✗ em 390×844 e 1440×900: 3 missões seguidas no mesmo dia, AL-A → TF-01 (2 sessões) → AL-E, pausa na 3ª.
+  `--sem-jornada` inteiro (build com as frentes 32–34 juntas, porta 4850): **683 ✓ 0 ✗, E2E OK** (1ª tentativa caiu no `--jogos`,
+  "Letra A ofereceu só o Bichinho", com a máquina cheia; sozinho o `--jogos` passou e a 2ª tentativa inteira passou).
   Capturas `app/docs/capturas/v18-missoes-{antes,depois}-*.jpg`.
 - **Conflito registrado:** pesquisa 42 R13 ("sem botão continuar") e R2 (1–2 sessões/dia): vale a decisão do dono (D036).
 
