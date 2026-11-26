@@ -435,7 +435,7 @@ export function AcessoAdulto({ tipo, contas, aoEntrar, sessaoAberta, confirmar, 
               <p className="fluxo-sub">O FONEMA ainda não tem servidor, então <b>não dá para mandar e-mail</b> com uma senha nova. A conta fica só neste aparelho; por isso a troca é feita aqui mesmo. As crianças e o progresso continuam guardados.</p>
               <CampoTexto rotulo="Seu login" valor={login} aoMudar={(v) => { setLogin(v); setMsg(''); }} testId="esqueci-login" auto="username" />
               <p className={`acesso-erro ${msg ? '' : 'vazio'}`} role={msg ? 'alert' : undefined}>{msg}</p>
-              <BotaoSegurar ms={5000} rotulo="Segure para criar uma senha nova" testId="segurar-redefinir" aoCompletar={() => {
+              <BotaoSegurar key={msg} ms={5000} rotulo="Segure para criar uma senha nova" testId="segurar-redefinir" aoCompletar={() => {
                 const achou = contas.some((c) => c.login && c.login === login.trim().toLowerCase());
                 if (achou) ir('nova-senha'); else setMsg('Não achamos este login neste aparelho. Confira como foi escrito.');
               }} />

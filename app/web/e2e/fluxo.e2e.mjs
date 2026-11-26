@@ -32,6 +32,7 @@ import { trechoDesbloqueio } from './trecho-desbloqueio.mjs';
 import { trechoTelas } from './trecho-telas.mjs';
 import { trechoGuia } from './trecho-guia.mjs';
 import { trechoMissoes } from './trecho-missoes.mjs';
+import { trechoEntrada } from './trecho-entrada.mjs';
 
 const aqui = dirname(fileURLToPath(import.meta.url));
 const CAPTURAS_V2 = process.argv.includes('--capturas-v2');
@@ -110,30 +111,56 @@ async function capA(page, nome, espera = 450) {
 }
 
 /**
- * Acesso do adulto (D028): na primeira vez cria a conta (nome + PIN 1234); depois, digita o PIN.
- * Serve para qualquer rota de adulto (#/familia, #/professor e as antigas #/adulto/...).
+ * Acesso do adulto (fila do dono nº 34: login e senha; antes D028 com PIN). Serve para qualquer rota de adulto
+ * (#/familia, #/professor, #/primeira-vez e as antigas #/adulto/...): cria a conta que faltar (login derivado do tipo:
+ * "ana.familia" / "ana.professor", senha "fonema123") ou entra com ela. Se a porta pede um adulto já cadastrado para
+ * criar a conta nova, confirma com a outra conta. Falha (em vez de seguir calado) se não passar.
  */
-async function passarPorteira(page, { nome = 'Ana', pin = '1234' } = {}) {
-  for (let i = 0; i < 4; i++) {
+const SENHA_E2E = 'fonema123';
+const loginE2E = (nome, tipo) => `${nome.toLowerCase().normalize('NFD').replace(/[^a-z]/g, '')}.${tipo === 'professor' ? 'professor' : 'familia'}`;
+async function passarPorteira(page, { nome = 'Ana', senha = SENHA_E2E } = {}) {
+  for (let i = 0; i < 8; i++) {
     const criar = page.getByTestId('conta-nome');
-    const campoPin = page.getByTestId('pin');
-    await Promise.race([criar.waitFor({ timeout: 1500 }).catch(() => {}), campoPin.waitFor({ timeout: 1500 }).catch(() => {}), page.waitForTimeout(700)]);
+    const login = page.getByTestId('login-usuario');
+    await Promise.race([criar.waitFor({ timeout: 1500 }).catch(() => {}), login.waitFor({ timeout: 1500 }).catch(() => {}), page.waitForTimeout(700)]);
     if (await criar.count()) {
+      const tipo = (await page.locator('[data-testid="criar-conta"]').getAttribute('data-tipo')) ?? 'responsavel';
       await criar.fill(nome);
-      await page.getByTestId('conta-continuar').click();
-      await page.getByTestId('conta-pin').fill(pin);
-      await page.getByTestId('conta-pin2').fill(pin);
+      await page.getByTestId('conta-login').fill(loginE2E(nome, tipo));
+      await page.getByTestId('conta-senha').fill(senha);
+      await page.getByTestId('conta-senha2').fill(senha);
       await page.getByTestId('conta-criar').click();
-      await page.getByTestId('criar-conta').waitFor({ state: 'detached', timeout: 8000 });
+      await Promise.race([
+        page.getByTestId('criar-conta').waitFor({ state: 'detached', timeout: 10000 }),
+        page.getByTestId('conta-erro').waitFor({ timeout: 10000 }).then(async () => { throw new Error(`passarPorteira: ${await page.getByTestId('conta-erro').innerText()}`); })
+      ]);
       continue;
     }
-    if (await campoPin.count()) {
-      await campoPin.fill(pin);
-      await page.getByTestId('tela-pin').waitFor({ state: 'detached', timeout: 8000 });
+    if (await login.count()) {
+      const porta = page.getByTestId('acesso-adulto');
+      const tipo = await porta.getAttribute('data-tipo');
+      const tentativas = tipo === 'qualquer' ? [loginE2E(nome, 'responsavel'), loginE2E(nome, 'professor')] : [loginE2E(nome, tipo)];
+      let entrou = false;
+      for (const l of tentativas) {
+        await login.fill(l);
+        await page.getByTestId('login-senha').fill(senha);
+        await page.getByTestId('login-entrar').click();
+        const r = await Promise.race([
+          porta.waitFor({ state: 'detached', timeout: 10000 }).then(() => 'saiu'),
+          page.locator('[data-testid="login-msg"]:not(.vazio), [data-testid="login-outra-porta"]').first().waitFor({ timeout: 10000 }).then(() => 'erro'),
+          page.locator('[data-testid="acesso-adulto"][data-modo="criar"], [data-testid="criar-conta"]').first().waitFor({ timeout: 10000 }).then(() => 'criar')
+        ]).catch(() => 'nada');
+        if (r === 'saiu' || r === 'criar') { entrou = true; break; }
+      }
+      if (entrou) continue;
+      if (tipo === 'qualquer') throw new Error('passarPorteira: nenhuma conta conhecida confirmou');
+      // a conta deste tipo ainda não existe: "Criar conta" (pode pedir antes um adulto já cadastrado)
+      await page.getByTestId('ir-criar-conta').click();
       continue;
     }
     return;
   }
+  throw new Error('passarPorteira: não passou do acesso do adulto em 8 voltas');
 }
 
 /** Cadastro da criança em 3 passos: quem vai aprender (nome, idade, como a dupla fala) → de onde começa → tudo certo (autorização). */
@@ -864,6 +891,15 @@ async function main() {
     if (errosG.length) throw new Error(`erros na página:\n${errosG.join('\n')}`);
     return;
   }
+  if (process.argv.includes('--entrada') || process.argv.includes('--capturas-entrada')) {
+    const errosE = [];
+    const dirE = process.argv.includes('--capturas-entrada') ? (process.env.CAPTURAS_ENTRADA ?? DIR_CAP) : undefined;
+    if (dirE) mkdirSync(dirE, { recursive: true });
+    await trechoEntrada(browser, { BASE, ok, erros: errosE, dirCap: dirE });
+    await browser.close(); servidor?.kill();
+    if (errosE.length) throw new Error(`erros na página:\n${errosE.join('\n')}`);
+    return;
+  }
   if (process.argv.includes('--missoes') || process.argv.includes('--capturas-missoes')) {
     const errosM = [];
     const dirM = process.argv.includes('--capturas-missoes') ? (process.env.CAPTURAS_MISSOES ?? DIR_CAP) : undefined;
@@ -923,7 +959,7 @@ async function main() {
   await page.getByTestId('primeira-vez').waitFor();
   if (CAPTURAS) await page.waitForTimeout(2200); // a entrada tem animação (logo cai, painel sobe)
   await cap(page, 'entrada');
-  ok(await page.locator('.porta').count() === 4, 'a primeira página é "Quem vai entrar?" com os 4 caminhos (D028)');
+  ok(await page.locator('[data-papel]').count() === 4 && await page.locator('[data-papel="admin"]').count() === 1, 'a primeira página mostra os acessos separados: criança, família, professor e administrador (fila nº 34)');
   await page.getByTestId('entrar-aluno').click();
   await page.getByTestId('alunos-vazio').waitFor();
   ok(true, 'sem criança cadastrada, "Sou aluno(a)" explica que um adulto cadastra primeiro');
@@ -932,7 +968,7 @@ async function main() {
   await cap(page, 'primeira-vez-conta-do-adulto');
   await passarPorteira(page);
   await page.getByTestId('campo-nome').waitFor();
-  ok(/familia\/cadastro/.test(page.url()), 'primeira vez: conta do responsável com PIN → cadastro da criança');
+  ok(/familia\/cadastro/.test(page.url()), 'primeira vez: conta do responsável com login e senha → cadastro da criança');
   // configurações: o painel abre por cima de tudo e fecha com Esc
   await page.getByTestId('abrir-ajustes').click();
   await page.getByTestId('ajustes-painel').waitFor();
@@ -1048,10 +1084,11 @@ async function main() {
   console.log('5. Painel da família');
   await page.getByTestId('sair').click();
   await page.getByTestId('entrar-familia').click();
-  await page.getByTestId('pin').waitFor();
-  await page.getByTestId('pin').fill('0000');
-  await page.getByText('PIN incorreto').waitFor();
-  ok(true, 'Área da Família pede o PIN e recusa o PIN errado');
+  await page.getByTestId('login-usuario').fill('ana.familia');
+  await page.getByTestId('login-senha').fill('senha-errada1');
+  await page.getByTestId('login-entrar').click();
+  await page.getByText('Login ou senha errados').waitFor();
+  ok(true, 'Área da Família pede login e senha e recusa a senha errada');
   await passarPorteira(page);
   await page.getByTestId('area-familia').waitFor();
   await page.getByTestId('painel-Mariana').click();
@@ -1335,6 +1372,7 @@ async function main() {
   await trechoTelas(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros });
   await trechoGuia(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros });
   await trechoMissoes(browser, { BASE, ok, passarPorteira, cadastrar, montarAvatar, jogarSessao, erros });
+  await trechoEntrada(browser, { BASE, ok, erros });
 
   if (CAPTURAS_AL) {
     const cel = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: 'pt-BR' });
@@ -1406,8 +1444,8 @@ async function main() {
     await capCel('01-entrada', 2400);
     await p2.evaluate(() => sessionStorage.clear());
     await p2.getByTestId('entrar-familia').click();
-    await p2.getByTestId('pin').waitFor();
-    await capCel('02-pin-do-adulto', 600);
+    await p2.getByTestId('login-usuario').waitFor();
+    await capCel('02-login-do-adulto', 600);
     await passarPorteira(p2);
     await p2.goto(BASE + '#/familia/cadastro');
     await p2.getByTestId('campo-nome').fill('Bia');
