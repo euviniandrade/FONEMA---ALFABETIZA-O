@@ -1,0 +1,171 @@
+/* ==========================================================================================
+   FONEMA · ENTRADA NOVA (fila do dono nº 34, 26/11/2026) e telas de LOGIN dos adultos.
+   Três jeitos de entrar, cada um com a sua cara: criança (botão grande e colorido, sem senha), adultos (Família e
+   Professor, com login e senha) e administrador (link discreto no rodapé). Usa os tokens de estilos.css.
+   Alvos de toque ≥ 44 px; "menos movimento" (do app e do sistema) desliga as animações.
+   ========================================================================================== */
+
+/* ------------------------------ moldura ------------------------------ */
+.tela-portal{min-height:100vh;min-height:100dvh;overflow-x:hidden;background:#16295A;color:var(--marinho)}
+.portal-arte{position:fixed!important;inset:0;z-index:0!important;pointer-events:none}
+.portal-arte img,.portal-arte video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.portal-veu{position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,26,64,0) 34%,rgba(12,26,64,.34) 58%,rgba(12,26,64,.62) 100%)}
+.portal-ajustes{position:absolute!important;top:0;right:0;z-index:3!important;padding:14px clamp(12px,2vw,22px)}
+
+.portal-palco{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(460px,600px);grid-template-rows:auto auto;align-content:center;column-gap:clamp(16px,3vw,56px);row-gap:clamp(10px,2.4vh,26px);padding:clamp(16px,3vh,40px) clamp(16px,4vw,72px)}
+.portal-logo,.portal-painel{grid-column:2}
+.portal-logo{display:grid;place-items:center;pointer-events:none}
+.tela-portal .logo-g{--lt:clamp(56px,min(7.4vw,13vh),118px)}
+.portal-logo{margin-bottom:clamp(14px,3vh,34px)}
+.portal-painel{display:flex;flex-direction:column;gap:clamp(12px,2vh,20px);width:100%}
+
+/* ------------------------------ criança: o botão grande ------------------------------ */
+.portal-crianca{position:relative;display:grid;grid-template-columns:clamp(120px,30%,190px) minmax(0,1fr) auto;align-items:center;gap:clamp(8px,1.4vw,18px);
+  min-height:clamp(132px,19vh,176px);padding:12px clamp(14px,1.8vw,22px) 12px 8px;border-radius:34px;text-align:left;
+  background:radial-gradient(120% 140% at 0% 0%,#FFF2A6 0%,#FFD34D 38%,#F8A916 100%);
+  box-shadow:0 8px 0 #B97707,0 26px 40px -14px rgba(12,26,64,.7),inset 0 3px 0 rgba(255,255,255,.8),inset 0 -4px 0 rgba(150,80,0,.18);
+  transition:transform .25s var(--mola),box-shadow .16s;animation:portalSobe .7s var(--mola) .15s both}
+.portal-crianca:hover{transform:translateY(-4px) rotate(-.4deg)}
+.portal-crianca:active{transform:translateY(5px);box-shadow:0 3px 0 #B97707,0 10px 20px -10px rgba(12,26,64,.6),inset 0 3px 0 rgba(255,255,255,.8)}
+.portal-crianca:focus-visible{outline:4px solid #fff;outline-offset:4px}
+.portal-crianca-arte{position:relative;align-self:stretch;display:grid;place-items:end center}
+.portal-crianca-arte>img{position:absolute;bottom:-10px;left:50%;height:134%;width:auto;max-width:none;translate:-50% 0;filter:drop-shadow(0 10px 10px rgba(100,50,0,.35));animation:portalAceno 3.8s ease-in-out 1s infinite;transform-origin:50% 100%}
+.portal-crianca-arte .avatar-mini{align-self:center;justify-self:center;border:5px solid #fff;box-shadow:0 6px 14px -4px rgba(100,50,0,.45)}
+.portal-crianca-texto{min-width:0;display:flex;flex-direction:column;gap:2px}
+.portal-etiqueta{align-self:flex-start;padding:3px 12px;border-radius:999px;background:rgba(255,255,255,.72);font-family:var(--f-titulo);font-weight:600;font-size:clamp(13px,1vw,15px);letter-spacing:.3px;color:#6B4300}
+.portal-crianca-texto b{font-family:var(--f-titulo);font-weight:700;font-size:clamp(30px,2.9vw,44px);line-height:1.02;color:#3B2500;text-shadow:0 2px 0 rgba(255,255,255,.55);overflow-wrap:anywhere}
+.portal-crianca-texto em{font-style:normal;font-family:var(--f-adulto);font-weight:700;font-size:clamp(14px,1.05vw,16px);line-height:1.25;color:#6B4300}
+.portal-play{width:clamp(64px,5.6vw,84px);height:clamp(64px,5.6vw,84px);border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(180deg,#3FB86E,#1E7A43);box-shadow:0 5px 0 #145A30,0 10px 18px -6px rgba(12,26,64,.5),inset 0 2px 0 rgba(255,255,255,.45);position:relative}
+.portal-play .ic{width:46%;height:46%;margin-left:6%}
+.portal-play::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:3px solid rgba(255,255,255,.85);animation:portalPulso 2.2s ease-out 1.2s infinite}
+
+/* ------------------------------ adultos: login e senha ------------------------------ */
+.portal-adultos{border-radius:30px;padding:clamp(14px,2vh,20px) clamp(14px,1.6vw,22px) clamp(10px,1.4vh,14px);background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(244,249,254,.93));-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1.5px solid rgba(255,255,255,.9);box-shadow:0 26px 50px -20px rgba(12,26,64,.7);animation:portalSobe .7s var(--mola) .3s both}
+.portal-adultos-titulo{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;margin:0 2px clamp(10px,1.4vh,14px)}
+.portal-adultos-titulo>span{font-family:var(--f-titulo);font-weight:700;font-size:clamp(20px,1.6vw,24px);color:var(--marinho)}
+.portal-adultos-titulo small{display:inline-flex;align-items:center;gap:6px;padding:4px 12px 4px 8px;border-radius:999px;background:var(--ceu);font-family:var(--f-adulto);font-weight:700;font-size:14px;color:var(--marinho2)}
+.portal-adultos-titulo small .ic{width:18px;height:18px}
+.portal-portas{display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,1vw,12px)}
+.portal-porta{--pa:#E3F0FB;--pc:var(--marinho2);position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;min-height:clamp(84px,11vh,100px);padding:10px 10px 10px 10px;border-radius:22px;text-align:left;background:#fff;border:2px solid #DCE8F4;border-bottom-width:5px;transition:transform .2s var(--mola),border-color .15s,background .15s}
+.portal-porta:hover{transform:translateY(-3px);border-color:var(--pc);background:#FBFDFF}
+.portal-porta:active{transform:translateY(2px)}
+.portal-porta:focus-visible{outline:4px solid var(--azul);outline-offset:3px}
+.portal-porta.familia{--pa:#FFE7D6;--pc:#D9825F}.portal-porta.professor{--pa:#DDF4E4;--pc:#2A9150}
+.portal-porta-arte{width:clamp(54px,4.6vw,66px);height:clamp(54px,4.6vw,66px);border-radius:18px;display:flex;align-items:center;justify-content:center;background:var(--pa);overflow:hidden;flex:none}
+.portal-porta-arte>img{max-width:84%;max-height:84%;object-fit:contain;filter:drop-shadow(0 3px 3px rgba(12,26,64,.2))}
+.portal-porta-arte.porta-par img{width:60%;max-width:none;max-height:none}
+.portal-porta-texto{min-width:0}
+.portal-porta-texto b{display:block;font-family:var(--f-titulo);font-weight:700;font-size:clamp(19px,1.5vw,22px);line-height:1.1;color:var(--marinho)}
+.portal-porta-texto small{display:block;margin-top:3px;font-family:var(--f-adulto);font-size:clamp(13px,.95vw,14.5px);line-height:1.25;color:var(--cinza)}
+.portal-seta{width:36px!important;height:36px!important;padding:8px;border-radius:50%;background:var(--pa);color:var(--marinho);flex:none}
+.portal-pe{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:clamp(8px,1.2vh,12px);padding-top:clamp(6px,1vh,10px);border-top:1.5px solid #E1ECF7}
+.portal-nova,.portal-admin{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 14px;border-radius:999px;font-family:var(--f-adulto);font-size:15px;transition:background .15s,transform .2s var(--mola)}
+.portal-nova{color:var(--marinho);background:var(--ceu)}
+.portal-nova b{color:var(--marinho2);text-decoration:underline;text-underline-offset:3px}
+.portal-nova:hover{background:#D5E8F8}
+.portal-nova .ic{width:20px;height:20px;padding:3px;border-radius:50%;background:var(--marinho2);color:#fff;box-sizing:content-box}
+.portal-admin{min-height:44px;padding:0 12px;color:var(--cinza);font-weight:700;font-size:14px}
+.portal-admin:hover{background:#EEF3F9;color:var(--marinho)}
+.portal-admin .ic{width:22px;height:22px}
+.portal-nota{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;font-family:var(--f-adulto);font-size:14px;line-height:1.3;color:#fff;text-align:center;text-shadow:0 1px 3px rgba(12,26,64,.9);animation:portalSome .8s ease .7s both}
+.portal-nota .ic{width:18px;height:18px;flex:none}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+@keyframes portalSobe{from{opacity:0;translate:0 28px}to{opacity:1;translate:0 0}}
+@keyframes portalSome{from{opacity:0}to{opacity:1}}
+@keyframes portalPulso{0%{opacity:.9;scale:1}80%,100%{opacity:0;scale:1.35}}
+@keyframes portalAceno{0%,100%{rotate:0deg}50%{rotate:-1.6deg}}
+
+/* tela em pé ou estreita: arte em retrato, logo em cima, tudo numa coluna */
+@media (orientation:portrait),(max-width:900px){
+  .portal-veu{background:linear-gradient(180deg,rgba(255,255,255,.1) 0%,rgba(12,26,64,0) 28%,rgba(12,26,64,.22) 50%,rgba(12,26,64,.88) 100%)}
+  .portal-palco{grid-template-columns:minmax(0,600px);justify-content:center;align-content:space-between;padding:clamp(56px,8vh,96px) clamp(12px,4vw,40px) clamp(12px,2.4vh,32px)}
+  .portal-logo,.portal-painel{grid-column:1}
+  .portal-logo{margin-bottom:0}
+  /* a arte em retrato sobe: a dupla do fundo fica atrás dos cartões (o botão da criança já traz a dupla) */
+  .portal-arte img{height:158%;object-position:50% 0}
+  .tela-portal .logo-g{--lt:clamp(52px,14vw,112px)}
+}
+@media (max-width:560px){
+  .portal-palco{padding:60px 12px 12px;row-gap:10px}
+  .portal-crianca{grid-template-columns:118px minmax(0,1fr) auto;min-height:118px;border-radius:28px;padding:8px 10px 8px 2px;gap:6px}
+  .portal-crianca-arte>img{height:122%;bottom:-8px}
+  .portal-crianca-arte .avatar-mini{width:92px!important;height:92px!important}
+  .portal-crianca-texto b{font-size:clamp(24px,7.2vw,30px);white-space:nowrap}
+  .portal-crianca-texto em{font-size:13px}
+  .portal-etiqueta{font-size:12px;padding:2px 10px}
+  .portal-play{width:56px;height:56px}
+  .portal-adultos{border-radius:26px;padding:12px 10px 8px}
+  .portal-adultos-titulo{margin-bottom:8px}
+  .portal-adultos-titulo>span{font-size:19px}
+  .portal-adultos-titulo small{font-size:12.5px;padding:3px 10px 3px 6px}
+  .portal-portas{gap:8px}
+  .portal-porta{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;gap:6px;min-height:0;padding:10px 6px 8px}
+  .portal-porta-arte{width:52px;height:52px;border-radius:16px}
+  .portal-porta-texto b{font-size:18px}
+  .portal-porta-texto small{font-size:12.5px}
+  .portal-porta .portal-seta{display:none}
+  .portal-pe{justify-content:center}
+  .portal-nova{font-size:14px;padding:0 12px}
+  .portal-nota{font-size:12.5px}
+}
+/* telas baixas deitadas (celular deitado): rola em vez de cortar */
+@media (max-height:620px) and (orientation:landscape){
+  .portal-palco{grid-template-columns:minmax(0,1fr) minmax(420px,560px);align-content:start}
+  .portal-logo{display:none}
+  .portal-crianca{min-height:104px}.portal-crianca-texto b{font-size:28px}
+}
+
+html.menos-movimento .portal-crianca,html.menos-movimento .portal-adultos,html.menos-movimento .portal-nota,
+html.menos-movimento .portal-crianca-arte>img,html.menos-movimento .portal-play::after{animation:none}
+@media (prefers-reduced-motion:reduce){
+  .portal-crianca,.portal-adultos,.portal-nota,.portal-crianca-arte>img,.portal-play::after{animation:none}
+  .portal-crianca,.portal-porta{transition:none}
+}
+html.contraste .portal-crianca{background:#FFD34D;border:3px solid #000}
+html.contraste .portal-adultos,html.contraste .portal-porta{background:#fff;border-color:#000}
+html.contraste .portal-porta-texto small,html.contraste .portal-admin{color:#000}
+
+/* ------------------------------ login dos adultos ------------------------------ */
+.acesso-palco{flex:1;min-height:0;display:grid;place-items:center;padding:4px clamp(10px,3vw,24px) clamp(12px,2.6vh,28px)}
+.acesso-cartao{width:min(100%,540px);display:flex;flex-direction:column;gap:clamp(8px,1.4vh,12px);padding:clamp(16px,2.6vh,26px) clamp(16px,3vw,30px)}
+.acesso-cab{display:flex;align-items:center;gap:14px}
+.acesso-arte{--aa:clamp(58px,8vh,74px);width:var(--aa);height:var(--aa);flex:none;border-radius:20px;background:var(--ceu);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.acesso-arte img{max-width:86%;max-height:86%;object-fit:contain}
+.acesso-arte .porta-par img{width:58%;max-width:none}.acesso-arte .porta-par img+img{margin-left:-14px}
+.tela-acesso[data-tipo=responsavel] .acesso-arte{background:#FFE7D6}.tela-acesso[data-tipo=professor] .acesso-arte{background:#DDF4E4}
+.acesso-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 6px;border-radius:999px;background:var(--ceu);font-family:var(--f-adulto);font-weight:700;font-size:13px;color:var(--marinho2)}
+.acesso-chip .ic{width:16px;height:16px}
+.acesso-cab h1{margin-top:4px;font-size:clamp(24px,2.4vw,32px);line-height:1.1}
+.acesso-form{display:flex;flex-direction:column;gap:clamp(8px,1.3vh,12px)}
+.acesso-form .fluxo-sub{font-family:var(--f-adulto);font-size:16px;margin:0}
+.acesso-campo{margin:0}
+.acesso-campo>span:first-child{font-size:16px;margin-bottom:5px}
+.acesso-entrada{position:relative;display:block}
+.campo.acesso-campo input:not([type=checkbox]){min-height:56px;font-size:19px;font-family:var(--f-adulto);padding:0 16px;border-radius:16px}
+.acesso-entrada:has(.acesso-ver) input{padding-right:118px}
+.acesso-ver{position:absolute;right:6px;top:50%;translate:0 -50%;min-height:44px;display:inline-flex;align-items:center;gap:6px;padding:0 12px;border-radius:12px;font-family:var(--f-adulto);font-weight:700;font-size:14px;color:var(--marinho2);background:var(--ceu)}
+.acesso-ver .ic{width:20px;height:20px}
+.acesso-ver[aria-pressed=true]{background:var(--ipe-claro);color:#6B4300}
+.acesso-duas{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acesso-erro{margin:0;font-family:var(--f-adulto);font-weight:700;font-size:15px;color:var(--terracota)}
+.acesso-erro.vazio{display:none}
+.acesso-outra{display:grid;gap:8px;padding:10px 14px;border-radius:16px;background:var(--ipe-claro);border:1.5px solid #F2CE6B;font-family:var(--f-adulto);font-size:15px;color:#5A3A00}
+.acesso-outra p{margin:0}.acesso-outra .btn{min-height:48px;font-size:17px;justify-self:start}
+.acesso-entrar{width:100%;min-height:64px!important;font-size:21px!important}
+.acesso-links{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 10px}
+.acesso-link{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border-radius:12px;font-family:var(--f-adulto);font-weight:700;font-size:15px;color:var(--marinho2);text-decoration:underline;text-underline-offset:3px}
+.acesso-link:hover{background:var(--ceu)}
+.acesso-link.forte{text-decoration:none;background:var(--ceu);color:var(--marinho)}
+.acesso-link .ic{width:18px;height:18px}
+.acesso-nota{display:flex;align-items:flex-start;gap:8px;margin:0;font-family:var(--f-adulto);font-size:13.5px;line-height:1.35;color:var(--cinza)}
+.acesso-nota .ic{width:18px;height:18px;flex:none;color:var(--folha2)}
+.acesso-quem{margin:0;text-align:center;font-family:var(--f-adulto);font-size:17px}
+.acesso-pin{align-items:center;text-align:center}
+.acesso-pin .pin{width:min(100%,220px)}
+.acesso-form .segurar{align-self:center;margin:4px 0}
+.fluxo-corpo .acesso-nota{margin-top:2px}
+@media (max-width:560px){
+  .acesso-duas{grid-template-columns:1fr}
+  .acesso-cartao{padding:14px 14px 16px}
+}

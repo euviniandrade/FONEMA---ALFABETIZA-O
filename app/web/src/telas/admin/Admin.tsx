@@ -159,7 +159,7 @@ function Zerar({ aoCancelar }: { aoCancelar: () => void }) {
   const zerar = async () => {
     if (adultos.length) {
       const r = await servicoConta(repo).entrar(quem, pin);
-      if (!r.ok) { setErro(r.motivo === 'espera' ? `Espere ${r.segundos} s.` : 'PIN errado.'); return; }
+      if (!r.ok) { setErro(r.motivo === 'espera' ? `Espere ${r.segundos} s.` : 'Senha (ou PIN) errada.'); return; }
     }
     await servicoAdmin().zerar();
     location.reload();
@@ -169,9 +169,9 @@ function Zerar({ aoCancelar }: { aoCancelar: () => void }) {
       <p>Isto apaga, <b>só neste aparelho</b>: o acesso do administrador, os dados da escola e os <b>áudios trocados</b>. As crianças e o progresso ficam.</p>
       {adultos.length ? (
         <div className="adm-form">
-          <p>Para confirmar, um adulto cadastrado neste aparelho digita o PIN.</p>
-          <label className="adm-campo">Adulto <select value={quem} onChange={(e) => setQuem(e.target.value)}>{adultos.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}</select></label>
-          <label className="adm-campo">PIN <input type="password" inputMode="numeric" maxLength={4} value={pin} onChange={(e) => setPin(e.target.value)} /></label>
+          <p>Para confirmar, um adulto cadastrado neste aparelho digita a senha dele (ou o PIN, se a conta é antiga).</p>
+          <label className="adm-campo">Adulto <select value={quem} onChange={(e) => setQuem(e.target.value)}>{adultos.map((c) => <option key={c.id} value={c.id}>{c.nome}{c.login ? ` (${c.login})` : ''}</option>)}</select></label>
+          <label className="adm-campo">Senha (ou PIN) <input type="password" value={pin} onChange={(e) => setPin(e.target.value)} autoComplete="current-password" /></label>
         </div>
       ) : null}
       <label className="adm-campo">Escreva ZERAR para confirmar <input value={texto} onChange={(e) => setTexto(e.target.value)} /></label>
