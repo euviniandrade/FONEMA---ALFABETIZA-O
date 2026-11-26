@@ -263,7 +263,7 @@ function Publicar() {
   const [msg, setMsg] = useState('');
   const [gerando, setGerando] = useState(false);
   const lista = [...trocados.values()].sort((a, b) => a.id.localeCompare(b.id));
-  const semAutorizacao = lista.filter((m) => m.origem === 'gravacao' && !m.autorizacao).length;
+  const semAutorizacao = lista.filter((m) => m.origem !== 'arquivo' && !m.autorizacao).length;
   const gerar = async () => {
     setGerando(true);
     try {
@@ -271,7 +271,7 @@ function Publicar() {
       const entradas = await Promise.all(registros.map(async (r) => {
         const dados = new Uint8Array(await r.blob.arrayBuffer());
         const it = catalogo?.find((x) => x.id === r.id);
-        return { id: r.id, dados, mime: r.blob.type || 'application/octet-stream', texto: it?.texto ?? r.texto, tipo: it ? ROTULO_TIPO_AUDIO[it.tipo] : undefined, origem: r.origem, quem: r.quem, autorizacao: r.autorizacao, duracaoMs: r.duracaoMs, em: r.em, sha256: await sha256(dados) };
+        return { id: r.id, dados, mime: r.blob.type || 'application/octet-stream', texto: it?.texto ?? r.texto, tipo: it ? ROTULO_TIPO_AUDIO[it.tipo] : undefined, origem: r.origem, robo: r.robo, quem: r.quem, autorizacao: r.autorizacao, duracaoMs: r.duracaoMs, em: r.em, sha256: await sha256(dados) };
       }));
       const r = await PROVEDORES[0].publicar(entradas);
       if (r.zip) baixar(new Blob([r.zip as unknown as BlobPart], { type: 'application/zip' }), `fonema-pacote-audios-${carimbo()}.zip`);
@@ -296,7 +296,7 @@ function Publicar() {
       </div>
       {lista.length ? (
         <div className="adm-rolar"><table className="adm-tabela"><thead><tr><th>Áudio</th><th>Texto</th><th>Trocado em</th><th>Quem gravou</th><th>Autorização</th></tr></thead>
-          <tbody>{lista.map((m) => <tr key={m.id}><td><code>{m.id}</code></td><td>{m.texto}</td><td>{dataCurta(m.em)}</td><td>{m.quem ?? '—'}</td><td>{m.autorizacao ? 'sim' : m.origem === 'arquivo' ? '—' : 'não marcada'}</td></tr>)}</tbody>
+          <tbody>{lista.map((m) => <tr key={m.id}><td><code>{m.id}</code></td><td>{m.texto}</td><td>{dataCurta(m.em)}</td><td>{m.origem === 'robo' ? `Robô de voz (${m.robo?.voz ?? '?'}) a partir da voz de ${m.quem ?? '—'}` : m.quem ?? '—'}</td><td>{m.autorizacao ? 'sim' : m.origem === 'arquivo' ? '—' : 'não marcada'}</td></tr>)}</tbody>
         </table></div>
       ) : <p className="adm-nota">Nenhum áudio trocado neste aparelho ainda.</p>}
       <h2>Formas de publicar</h2>

@@ -20,7 +20,7 @@ export function PublicarTudo() {
   const [gerando, setGerando] = useState(false);
   const nEd = edicoes.edicoes().length;
   const nMid = edicoes.midias().length;
-  const semAutorizacao = [...trocados.values()].filter((m) => m.origem === 'gravacao' && !m.autorizacao).length;
+  const semAutorizacao = [...trocados.values()].filter((m) => m.origem !== 'arquivo' && !m.autorizacao).length;
   const gerar = async () => {
     setGerando(true);
     try {
@@ -28,7 +28,7 @@ export function PublicarTudo() {
       const audios = await Promise.all(registros.map(async (r) => {
         const dados = new Uint8Array(await r.blob.arrayBuffer());
         const it = catalogo?.find((x) => x.id === r.id);
-        return { id: r.id, dados, mime: r.blob.type || 'application/octet-stream', texto: it?.texto ?? r.texto, tipo: it ? ROTULO_TIPO_AUDIO[it.tipo] : undefined, origem: r.origem, quem: r.quem, autorizacao: r.autorizacao, duracaoMs: r.duracaoMs, em: r.em, sha256: await sha256(dados) };
+        return { id: r.id, dados, mime: r.blob.type || 'application/octet-stream', texto: it?.texto ?? r.texto, tipo: it ? ROTULO_TIPO_AUDIO[it.tipo] : undefined, origem: r.origem, robo: r.robo, quem: r.quem, autorizacao: r.autorizacao, duracaoMs: r.duracaoMs, em: r.em, sha256: await sha256(dados) };
       }));
       const midias: EntradaMidia[] = await Promise.all((await edicoes.listarMidias()).map(async (m) => {
         const dados = new Uint8Array(await m.blob.arrayBuffer());

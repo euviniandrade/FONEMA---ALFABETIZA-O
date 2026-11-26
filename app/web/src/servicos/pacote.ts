@@ -51,7 +51,7 @@ export function montarPacoteGeral(dados: { audios: EntradaPacote[]; edicoes: Edi
   const audiosOrd = [...dados.audios].sort((a, b) => a.id.localeCompare(b.id));
   const audios: ItemPacote[] = audiosOrd.map((e, i) => ({
     id: e.id, arquivo: nomeNoPacote(i, e.id, e.mime), mime: e.mime, bytes: e.dados.length, sha256: e.sha256, texto: e.texto, tipo: e.tipo,
-    origem: e.origem, quem: e.quem, autorizacao: e.autorizacao, duracaoMs: e.duracaoMs, em: new Date(e.em).toISOString()
+    origem: e.origem, ...(e.robo ? { robo: e.robo } : {}), quem: e.quem, autorizacao: e.autorizacao, duracaoMs: e.duracaoMs, em: new Date(e.em).toISOString()
   }));
   const midiasOrd = [...dados.midias].sort((a, b) => a.caminho.localeCompare(b.caminho));
   for (const m of midiasOrd) if (!caminhoDeMidiaPermitido(m.caminho)) throw new Error(`Caminho de figura não permitido: ${m.caminho}`);

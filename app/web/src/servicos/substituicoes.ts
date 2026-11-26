@@ -34,7 +34,10 @@ export interface MetaSubstituto {
   id: string;
   /** Nome do arquivo que o administrador subiu (ou "gravação.wav"). */
   nomeArquivo: string;
-  origem: 'arquivo' | 'gravacao';
+  /** 'robo' = saiu do Robô de voz (ElevenLabs): voz SINTÉTICA, nunca registrada como "voz humana". */
+  origem: 'arquivo' | 'gravacao' | 'robo';
+  /** Robô de voz: a voz de destino (nome na biblioteca do ElevenLabs) e o modelo usado. */
+  robo?: { voz: string; modelo: string };
   em: number;
   duracaoMs?: number;
   /** Quem gravou (texto livre, opcional — ex.: "Agatha"). */

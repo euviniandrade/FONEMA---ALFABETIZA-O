@@ -24,7 +24,9 @@ export interface ItemPacote {
   texto?: string;
   /** Tipo para gente ler: "som puro da letra", "palavra", "frase"… */
   tipo?: string;
-  origem: 'arquivo' | 'gravacao';
+  /** 'robo' = Robô de voz (ElevenLabs, voz sintética a partir de uma gravação). */
+  origem: 'arquivo' | 'gravacao' | 'robo';
+  robo?: { voz: string; modelo: string };
   quem?: string;
   autorizacao?: boolean;
   duracaoMs?: number;
@@ -159,15 +161,15 @@ export function lerZip(zip: Uint8Array, inflar?: (d: Uint8Array) => Uint8Array):
 
 /* ------------------------------------------------------------------ pacote */
 export interface EntradaPacote {
-  id: string; dados: Uint8Array; mime: string; texto?: string; tipo?: string; origem: 'arquivo' | 'gravacao';
-  quem?: string; autorizacao?: boolean; duracaoMs?: number; em: number; sha256?: string;
+  id: string; dados: Uint8Array; mime: string; texto?: string; tipo?: string; origem: 'arquivo' | 'gravacao' | 'robo';
+  robo?: { voz: string; modelo: string }; quem?: string; autorizacao?: boolean; duracaoMs?: number; em: number; sha256?: string;
 }
 /** Monta o pacote (zip com pacote.json + audios/…) a partir dos áudios trocados. */
 export function montarPacote(entradas: EntradaPacote[], quando = new Date()): { zip: Uint8Array; pacote: Pacote } {
   const ordenadas = [...entradas].sort((a, b) => a.id.localeCompare(b.id));
   const itens: ItemPacote[] = ordenadas.map((e, i) => ({
     id: e.id, arquivo: nomeNoPacote(i, e.id, e.mime), mime: e.mime, bytes: e.dados.length, sha256: e.sha256, texto: e.texto, tipo: e.tipo,
-    origem: e.origem, quem: e.quem, autorizacao: e.autorizacao, duracaoMs: e.duracaoMs, em: new Date(e.em).toISOString()
+    origem: e.origem, ...(e.robo ? { robo: e.robo } : {}), quem: e.quem, autorizacao: e.autorizacao, duracaoMs: e.duracaoMs, em: new Date(e.em).toISOString()
   }));
   const pacote: Pacote = { formato: FORMATO_PACOTE, versao: 1, criadoEm: quando.toISOString(), aviso: AVISO_PACOTE, itens };
   const leia = [

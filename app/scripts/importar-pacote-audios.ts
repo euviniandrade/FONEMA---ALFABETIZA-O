@@ -79,7 +79,10 @@ export function importarPacote(zip: Uint8Array, o: OpcoesImportacao = {}): Resul
   const agora = (o.agora ?? new Date()).toISOString();
   const { pacote, arquivos } = abrirPacote(zip, (d) => inflateRawSync(d));
   const avisos: string[] = [];
-  const semAutorizacao = pacote.itens.filter((i) => i.origem === 'gravacao' && !i.autorizacao);
+  const semAutorizacao = pacote.itens.filter((i) => i.origem !== 'arquivo' && !i.autorizacao);
+  // Robô de voz (voz sintética): nunca entra no lugar de um SOM PURO de letra (esses são voz humana conferida na auditoria)
+  const roboEmSom = pacote.itens.filter((i) => i.origem === 'robo' && i.id.startsWith('som:'));
+  if (roboEmSom.length) throw new Error(`Áudio do Robô de voz no lugar de som de letra (${roboEmSom.map((i) => i.id).join(', ')}): não é permitido. Grave a voz de verdade.`);
   if (semAutorizacao.length && !o.confirmoAutorizacao) {
     throw new Error(`${semAutorizacao.length} gravação(ões) sem a marca de autorização por escrito (${semAutorizacao.map((i) => i.id).join(', ')}). ` +
       'Confira a autorização de quem gravou e rode de novo com --confirmo-autorizacao.');
@@ -128,8 +131,9 @@ export function importarPacote(zip: Uint8Array, o: OpcoesImportacao = {}): Resul
       const vozId = resto.slice(0, i);
       const chave = resto.slice(i + 1);
       if (vozId !== 'sofia' && vozId !== 'tales') throw new Error(`Voz desconhecida em ${it.id}`);
+      const marca = it.origem === 'robo' ? 'robo' : 'humana';
       if (tipo === 'fala') {
-        const base = `${vozId}-humana-${hash}`;
+        const base = `${vozId}-${marca}-${hash}`;
         if (diretoParaPublic) {
           destino = gravarAudio(dados, it.mime, resolve(PUB, 'audio/falas', base), converter, seco);
           pubFalas[resto] = destino.slice(resolve(PUB, 'audio/falas').length + 1);
@@ -139,7 +143,7 @@ export function importarPacote(zip: Uint8Array, o: OpcoesImportacao = {}): Resul
         }
         fontesFalas[resto] = destino.slice(destino.lastIndexOf('/') + 1);
       } else {
-        const base = `${slug(chave)}-humana-${hash}`;
+        const base = `${slug(chave)}-${marca}-${hash}`;
         if (diretoParaPublic) {
           destino = gravarAudio(dados, it.mime, resolve(PUB, 'audio/nomes', vozId, base), converter, seco);
           (pubNomes.arquivos[vozId] ??= {})[chave] = destino.slice(destino.lastIndexOf('/') + 1);
@@ -157,7 +161,7 @@ export function importarPacote(zip: Uint8Array, o: OpcoesImportacao = {}): Resul
       if (gravado !== alvo) { avisos.push(`${resto}: sem ffmpeg o arquivo ficou como ${gravado.slice(PUB.length + 1)} e o original continua tocando. Converta para mp3 e rode de novo.`); }
       destino = gravado;
     } else throw new Error(`Tipo de áudio desconhecido: ${it.id}`);
-    registro[it.id] = { destino: destino.slice(raiz.length + 1), texto: it.texto, quem: it.quem, autorizacao: !!it.autorizacao, origem: it.origem, sha256: it.sha256, pacote: pacote.criadoEm, importadoEm: agora };
+    registro[it.id] = { destino: destino.slice(raiz.length + 1), texto: it.texto, quem: it.quem, autorizacao: !!it.autorizacao, origem: it.origem === 'robo' ? 'robo de voz (sintética)' : it.origem, ...(it.robo ? { robo: it.robo } : {}), sha256: it.sha256, pacote: pacote.criadoEm, importadoEm: agora };
     aplicados.push({ id: it.id, destino: destino.slice(raiz.length + 1) });
     log(`  ${it.id}  →  ${destino.slice(raiz.length + 1)}`);
   }
@@ -192,6 +196,8 @@ p = sys.argv[1]
 lista = json.load(open(p))
 for m in json.load(sys.stdin):
     achou = False
+    robo = m['marca'].get('origem') == 'robo'
+    campo = 'voz_robo' if robo else 'voz_humana'
     for c in lista:
         if c.get('voz') != m['voz']:
             continue
@@ -201,10 +207,10 @@ for m in json.load(sys.stdin):
             arq = str(c.get('arquivo', ''))
             ok = c.get('tipo') != 'fala' and ('nomes/' + m['voz'] + '/') in arq and (c.get('chave') == m['chave'] or ('/' + m['chave']) in arq)
         if ok:
-            c['voz_humana'] = m['marca']
+            c[campo] = m['marca']
             achou = True
     if not achou:
-        lista.append({'tipo': m['tipo'], 'voz': m['voz'], 'chave': m['chave'], 'arquivo': m['marca'].get('destino'), 'gravidade': 'humana', 'voz_humana': m['marca']})
+        lista.append({'tipo': m['tipo'], 'voz': m['voz'], 'chave': m['chave'], 'arquivo': m['marca'].get('destino'), 'gravidade': 'robo' if robo else 'humana', campo: m['marca']})
 json.dump(lista, open(p, 'w'), ensure_ascii=False, indent=1)
 `;
 
@@ -212,7 +218,8 @@ json.dump(lista, open(p, 'w'), ensure_ascii=False, indent=1)
 function marcarAuditoria(raiz: string, pacote: Pacote, aplicados: { id: string; destino: string }[], agora: string) {
   const audP = resolve(raiz, 'docs/auditoria-audio.json');
   const destinoDe = new Map(aplicados.map((a) => [a.id, a.destino]));
-  const marca = (it: ItemPacote) => ({ em: agora, pacote: pacote.criadoEm, quem: it.quem ?? null, autorizacao: !!it.autorizacao, destino: destinoDe.get(it.id) });
+  // Robô de voz: marcado como "voz_robo" (sintética a partir da gravação de quem), nunca como voz humana (regra 8)
+  const marca = (it: ItemPacote) => ({ em: agora, pacote: pacote.criadoEm, quem: it.quem ?? null, autorizacao: !!it.autorizacao, destino: destinoDe.get(it.id), ...(it.origem === 'robo' ? { origem: 'robo', robo: it.robo ?? null } : {}) });
   if (existsSync(audP)) {
     const marcas: { tipo: string; voz: string; chave: string; marca: ReturnType<typeof marca> }[] = [];
     for (const it of pacote.itens) {

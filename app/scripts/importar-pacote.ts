@@ -72,7 +72,7 @@ export function importarPacoteGeral(zip: Uint8Array, o: OpcoesPacote = {}): Resu
     return { edicoes: 0, midias: [], audios: r.aplicados.length, avisos: r.avisos };
   }
   // 1. autorização das gravações (antes de mudar qualquer coisa)
-  const semAutorizacao = pacote.audios.filter((i) => i.origem === 'gravacao' && !i.autorizacao);
+  const semAutorizacao = pacote.audios.filter((i) => i.origem !== 'arquivo' && !i.autorizacao);
   if (semAutorizacao.length && !o.confirmoAutorizacao) {
     throw new Error(`${semAutorizacao.length} gravação(ões) sem a marca de autorização por escrito (${semAutorizacao.map((i) => i.id).join(', ')}). ` +
       'Confira a autorização de quem gravou e rode de novo com --confirmo-autorizacao.');
