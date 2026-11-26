@@ -1,6 +1,6 @@
 // FONEMA · trecho E2E: O JOGO GUIA (fila do dono nº 30, 26/11): "sempre saber qual é a próxima missão, o objetivo de cada item e
 // quando usá-lo". Em 390×844 (celular) e 1440×900 (computador), confere:
-//   1. pílula "Próxima missão" no topo da Lojinha, Álbum, Brincar, Cantinho, Fichas, trilhas e no mapa das ilhas: à vista, ≥ 44 px,
+//   1. pílula "Próxima missão" no topo da Lojinha, Álbum, Brincar, Cantinho, Fichas, região e no mapa das ilhas (nas trilhas, o "Continuar" do painel guia): à vista, ≥ 44 px,
 //      dentro da largura, com o nome da missão de agora; tocar leva à entrada da fase (nunca direto à lição);
 //   2. nada disso no meio da lição nem no fim da missão (sem botão "continuar", C9); o fim mostra "Próxima missão: …" em texto;
 //   3. "para que serve" no cofrinho, na Lojinha (peças e utensílios) e no Álbum;
@@ -83,7 +83,7 @@ export async function trechoGuia(browser, h) {
     // trilha semeada (letras até G e sons até TF-22) e moedinhas
     await semear(pg, id, [...AL_ATE_G, ...TF_ATE_22], 30);
     const telas = [['lojinha', 'lojinha', 2500], ['album', 'album', 1200], ['brincar', 'brincar', 1200], ['leitura', 'leitura', 900], ['leitura/fichas', 'fichas', 900],
-      ['jogo', 'jogos-vila', 900], ['sons', 'trilha-sons', 900], ['alfabeto', 'trilha-az', 900], ['mapa', 'mapa', 1200], ['regiao/R1', 'regiao', 900]];
+      ['jogo', 'jogos-vila', 900], ['mapa', 'mapa', 1200], ['regiao/R1', 'regiao', 900]];
     let faseAgora = null;
     for (const [rota, nome, espera] of telas) {
       await pg.goto(BASE + `#/c/${id}/${rota}`);
@@ -96,6 +96,13 @@ export async function trechoGuia(browser, h) {
       faseAgora ??= m.fase;
       ok(m.fase === faseAgora && /^(Próxima missão|Missão de hoje) \S/.test(m.texto), `${nome}${suf}: "${m.texto}"`);
       ok(m.h >= 44 && m.esq >= 0 && m.dir <= m.vw && m.topo >= 0 && m.base <= m.vh && m.livre, `${nome}${suf}: inteira à vista e sem nada por cima (${m.h} px de altura, ${m.esq}–${m.dir} de ${m.vw})`);
+    }
+    // nas trilhas o painel guia (ao lado/no topo) já tem "Continuar": a pílula não repete o botão
+    for (const [rota, nome] of [['sons', 'trilha-sons'], ['alfabeto', 'trilha-az']]) {
+      await pg.goto(BASE + `#/c/${id}/${rota}`);
+      await pg.getByTestId('guia-continuar').waitFor({ state: 'attached' }).catch(() => {});
+      await cap(nome, 900);
+      ok(await pg.getByTestId('proxima-missao').count() === 0 && await pg.getByTestId('guia-continuar').count() === 1, `${nome}${suf}: só o "Continuar" do painel guia (sem pílula repetida)`);
     }
     // tocar leva à ENTRADA da missão (não direto à lição)
     if (!soCapturas) {
