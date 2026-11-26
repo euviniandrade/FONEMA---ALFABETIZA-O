@@ -18,6 +18,7 @@ import { UNIDADE_DA_REVISAO_TF } from '../fases/tf.ts';
 import { FALAS } from '../falas-gerais.ts';
 import { ETAPAS_DO_CAMINHO, FALAS_TUTORIAL } from '../caminho.ts';
 import { TEXTOS_TELA, RECURSOS } from '../textos-tela.ts';
+import { JOGOS_PARQUE, JOGO_PARQUE_POR_ID } from '../jogos.ts';
 import type { Fase } from '../tipos.ts';
 import { Sobreposicao, colecaoLista, colecaoRegistro, ordenarEDesligarCenas, type Colecao } from './sobreposicao.ts';
 
@@ -102,6 +103,7 @@ export function criarColecoes(): Colecao[] {
         PALAVRAS_DAS_FICHAS.push(...todas);
       }
     }),
+    colecaoLista('jogos', 'Jogos do Parque (nome, ligado, ordem, palavras)', JOGOS_PARQUE, [JOGO_PARQUE_POR_ID]),
     colecaoLista('jogos-escuta', 'Jogos de escuta', JOGOS_ESCUTA, [JOGO_ESCUTA_POR_ID]),
     colecaoRegistro('banco', 'Banco de palavras (pronúncia)', reg(BANCO)),
     colecaoRegistro('falas-gerais', 'Falas gerais (chegada, vila…)', reg(FALAS)),

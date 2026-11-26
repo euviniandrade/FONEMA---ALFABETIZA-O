@@ -8,7 +8,8 @@
  */
 import { BANCO } from '../fases/tf-banco.ts';
 import { verificarFase } from '../fases/verificar-fases.ts';
-import { UNIDADES_TF, analisar, numeroDaUnidade, verificarFrase, verificarPalavra, verificarTexto } from '../decodificabilidade.ts';
+import { UNIDADES_TF, VALORES_AVISO, analisar, numeroDaUnidade, unidadeQueLibera, valoresDaEntrada, verificarFrase, verificarPalavra, verificarTexto } from '../decodificabilidade.ts';
+import { temFiguraJogo, type JogoParque } from '../jogos.ts';
 import { textoCorrido } from '../biblioteca/textos.ts';
 import type { TextoDecodificavel } from '../biblioteca/tipos.ts';
 import type { CampoSemantico } from '../fichas.ts';
@@ -61,9 +62,46 @@ export function explicar(msg: string): Problema {
   if (m) return { tecnico: msg, simples: 'A frase tem mais de uma palavra que a criança ainda não lê pelos sons (como "é", "um", "não"). Deixe no máximo uma.' };
   m = /^texto com (\d+)%/.exec(msg);
   if (m) return { tecnico: msg, simples: `Só ${m[1]}% das palavras do texto a criança já lê sozinha. Precisa ser pelo menos 95%.` };
+  m = /^"([^"]+)" tem vogal que muda na fala/.exec(msg);
+  if (m) return { tecnico: msg, palavra: m[1], simples: `"${m[1]}" tem uma vogal que muda quando a gente fala (como em "cama"). Num jogo livre isso confunde: escolha outra palavra.` };
+  m = /^"([^"]+)" não tem figura com arte/.exec(msg);
+  if (m) return { tecnico: msg, palavra: m[1], simples: `"${m[1]}" ainda não tem figura. Suba a figura na aba Imagens antes (o jogo mostra a figura do móvel).` };
+  if (/pelo menos 3 palavras/.test(msg)) return { tecnico: msg, simples: 'Deixe pelo menos 3 palavras na lista: o jogo só abre com 3.' };
+  if (/palavra repetida/.test(msg)) return { tecnico: msg, simples: 'Há uma palavra repetida na lista.' };
   m = /^"([^"]+)" não é uma palavra do banco das fichas/.exec(msg);
   if (m) return { tecnico: msg, palavra: m[1], semPronuncia: true, simples: `"${m[1]}" ainda não tem pronúncia anotada nem figura: anote a pronúncia (e suba a figura na aba Imagens).` };
   return { tecnico: msg, simples: msg };
+}
+
+/**
+ * Palavras de um JOGO (Casa do Som: a criança ESCREVE): cada uma precisa estar no banco (pronúncia anotada), ter figura,
+ * ser decodificável em alguma lição da trilha e não depender de vogal nasalizada/reduzida (o jogo livre não é lugar de
+ * dúvida, como em motor/jogos-vila.ts › palavraLiberada). Com menos de 3 palavras o jogo nunca abriria.
+ * A lição em que cada palavra passa a valer aparece no Estúdio (licaoQueLibera); no jogo, cada criança só recebe a palavra
+ * depois dessa lição (palavraLiberada).
+ */
+export function errosDasPalavrasDoJogo(j: JogoParque): string[] {
+  const erros: string[] = [];
+  if (!j.palavras || !j.usoPalavras) return erros;
+  const ultima = UNIDADES_TF.length;
+  for (const w0 of j.palavras) {
+    const w = w0.toLowerCase().trim();
+    const e = BANCO[w];
+    if (!e) { erros.push(`"${w}" não está no banco de palavras com pronúncia anotada`); continue; }
+    const r = verificarPalavra(w, ultima, BANCO);
+    if (!r.ok) { erros.push(...r.erros); continue; }
+    if (valoresDaEntrada(e).valores.some((v) => VALORES_AVISO.includes(v))) erros.push(`"${w}" tem vogal que muda na fala (nasalizada ou reduzida): não entra em jogo livre`);
+    if (!temFiguraJogo(w)) erros.push(`"${w}" não tem figura com arte`);
+  }
+  if (j.palavras.length < 3) erros.push('a lista precisa de pelo menos 3 palavras (o jogo abre com 3)');
+  if (new Set(j.palavras.map((w) => w.toLowerCase().trim())).size !== j.palavras.length) erros.push('a lista tem palavra repetida');
+  return erros;
+}
+
+/** Lição a partir da qual a palavra pode ser lida/escrita sozinha ("TF-16"), ou undefined (fora do banco). */
+export function licaoQueLibera(palavra: string): string | undefined {
+  const n = unidadeQueLibera(palavra.toLowerCase().trim(), BANCO);
+  return n ? UNIDADES_TF[n - 1]?.id : undefined;
 }
 
 /** Os erros (texto técnico) de um item, conforme a coleção. Coleções sem leitura da criança: nenhum. */
@@ -84,6 +122,8 @@ export function errosDoItem(colecao: string, item: unknown): { erros: string[]; 
   } else if (colecao === 'fichas') {
     // as fichas mostram palavras escritas só quando a criança já lê (motor/fichas.ts); aqui cada palavra precisa estar no banco
     for (const w of (item as CampoSemantico).palavras) if (!BANCO[w.toLowerCase()]) erros.push(`"${w}" não é uma palavra do banco das fichas`);
+  } else if (colecao === 'jogos') {
+    erros.push(...errosDasPalavrasDoJogo(item as JogoParque));
   } else if (colecao === 'banco') {
     erros.push(...analisar(item as { texto: string; sons: string }).erros);
   }
@@ -132,7 +172,7 @@ export function verificarEdicao(s: Sobreposicao, e: Edicao, outras: Edicao[] = [
 /** Confere TODO o conteúdo como está agora (com as edições aplicadas): usado pelo importador e pelos testes. */
 export function verificarTudo(s: Sobreposicao): { colecao: string; item: string; erros: string[] }[] {
   const out: { colecao: string; item: string; erros: string[] }[] = [];
-  for (const c of ['fases', 'textos', 'fichas']) {
+  for (const c of ['fases', 'textos', 'fichas', 'jogos']) {
     const col = s.colecao(c);
     if (!col) continue;
     for (const id of col.ids()) {

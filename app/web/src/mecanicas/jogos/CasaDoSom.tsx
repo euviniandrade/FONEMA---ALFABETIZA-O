@@ -10,7 +10,7 @@
  */
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as PE } from 'react';
 import { FALAS_BIBLIOTECA as B, FALAS_ESCUTA, FALAS_TRILHA_SONS as T, LETRA_POR_ID, comSons, nomeDaFigura, type Fala } from '@fonema/conteudo';
-import { alinharEscrita, MOVEIS_CASA, type CasaAlinhada, type EncomendaCasa, type Tentativa } from '@fonema/motor';
+import { alinharEscrita, nomeDoMovel as nomeDoMovelMotor, type CasaAlinhada, type EncomendaCasa, type Tentativa } from '@fonema/motor';
 import { Balao, Brilho } from '../../componentes/basicos.tsx';
 import { Figura, Icone } from '../../componentes/ui.tsx';
 import { espera, modoTeste } from '../../servicos/ambiente.ts';
@@ -21,7 +21,7 @@ import { useFala } from '../livre-comum.tsx';
 import type { PropsJogoVila } from './vila-comum.tsx';
 import './estilos-jogos-vila.css';
 
-export const nomeDoMovel = (w: string) => MOVEIS_CASA.find((m) => m.palavra === w)?.nome ?? w;
+export const nomeDoMovel = (w: string) => nomeDoMovelMotor(w);
 
 type Etapa = 'escrever' | 'comparar' | 'chegando';
 

@@ -6,7 +6,7 @@
  *    Bichinho Come-Som, com OS MESMOS ITENS da fase; as tentativas voltam para a sessão no contexto 'desafio'.
  */
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
-import { FALAS_ALFABETO, FALAS_FONICAS, LETRA_POR_ID, type AtividadeEscolher, type Fala } from '@fonema/conteudo';
+import { FALAS_ALFABETO, FALAS_FONICAS, LETRA_POR_ID, nomeDoJogo, treinaDoJogo, type AtividadeEscolher, type Fala } from '@fonema/conteudo';
 import { ESCOLHAS_POR_RODADA, NIVEL_MAXIMO, desafioDaCena, montarOndas, montarRodada, proximoNivel, variacoesDoJogo, type Crianca, type JogoFonicoId, type Progresso, type VariacaoJogo } from '@fonema/motor';
 import { Figura, Icone } from '../../componentes/ui.tsx';
 import { voz } from '../../servicos/voz.ts';
@@ -30,14 +30,14 @@ export interface InfoJogo {
 /** Nomes e textos do projeto (regra 9). Enunciados: falas já gravadas, exceto o do "termina com" (falas-pendentes §1c). */
 export const JOGOS_FONICOS: InfoJogo[] = [
   {
-    id: 'corre-som', nome: 'Corre-Som', treina: 'Ouvir o som e correr para a letra certa', cor: 'coral', capa: ['letra:M', 'letra:A', 'letra:S'],
+    id: 'corre-som', get nome() { return nomeDoJogo('corre-som', 'Corre-Som'); }, get treina() { return treinaDoJogo('corre-som', 'Ouvir o som e correr para a letra certa'); }, cor: 'coral', capa: ['letra:M', 'letra:A', 'letra:S'],
     variacoes: [
       { id: 'letra', nome: 'Letras', treina: 'Ouve o som e passa no arco da letra', enunciado: { quem: 'sofia', texto: FALAS_ALFABETO.acheALetra }, capa: ['letra:F', 'letra:V'] },
       { id: 'figura', nome: 'Figuras', treina: 'Ouve o som e passa na figura que começa com ele', enunciado: { quem: 'sofia', texto: FALAS_FONICAS.qualFigura }, capa: ['foca', 'vaca'] }
     ]
   },
   {
-    id: 'come-som', nome: 'Bichinho Come-Som', treina: 'Dar ao Bolota a comida que começa com o som', cor: 'verde', capa: ['uva', 'abacaxi', 'banana'],
+    id: 'come-som', get nome() { return nomeDoJogo('come-som', 'Bichinho Come-Som'); }, get treina() { return treinaDoJogo('come-som', 'Dar ao Bolota a comida que começa com o som'); }, cor: 'verde', capa: ['uva', 'abacaxi', 'banana'],
     variacoes: [
       { id: 'inicio', nome: 'Começa com', treina: 'A comida que começa com o som', enunciado: { quem: 'sofia', texto: FALAS_FONICAS.qualFigura }, capa: ['uva', 'pipoca'] },
       { id: 'fim', nome: 'Termina com', treina: 'A comida que termina com o som', enunciado: { quem: 'sofia', texto: 'Qual figura termina com este som?' }, capa: ['jaca', 'peixe'] }

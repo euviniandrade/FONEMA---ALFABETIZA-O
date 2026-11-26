@@ -8,7 +8,7 @@
  * as moedinhas da jornada (D002) e a casinha decorada é brincadeira: nada disso conta como domínio (regra 4).
  */
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { FALAS_ESCUTA } from '@fonema/conteudo';
+import { FALAS_ESCUTA, jogoLigado } from '@fonema/conteudo';
 import {
   CORES_VEICULO, comprar, corLiberada, dadosBiblioteca, dadosJogosVila, escolherCor, moverMovel, podeComprar, receberMovel,
   registrarLivre, rodadaDaCasa, rodadaDaEstrada, rodadaDoCarteiro, variacoesDaEstrada, type JogoVilaId, type Progresso, type Tentativa, type VariacaoEstrada
@@ -103,6 +103,16 @@ export function JogosVila({ criancaId, jogoId }: { criancaId: string; jogoId?: s
     setJogando(null);
   };
   const jogar = (variacao?: VariacaoEstrada) => { efeitos.toque(); setFim(null); setNovo(undefined); setJogando((j) => ({ rodada: (j?.rodada ?? 0) + 1, variacao })); };
+  // Estúdio criativo › Jogos (fila nº 32): jogo desligado pelo administrador não abre pelo Parque (o desafio da missão já não o oferece)
+  if (jogo && !faseId && !jogoLigado(jogo.id)) {
+    return (
+      <div className="tela-jogos-vila" data-testid="jogo-desligado">
+        <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={voltar} titulo={jogo.nome} />
+        <main className="palco"><section className="cartao biblio-feito"><h1 className="t">Este jogo está descansando</h1><p>Escolha outro jogo no Parque.</p>
+          <div className="linha-botoes centro"><button className="btn grande ipe" onClick={() => navegar(voltar)}><Icone nome="seta-esq" />Outros jogos</button></div></section></main>
+      </div>
+    );
+  }
 
   return (
     <div className="tela-jogos-vila" data-testid="jogos-vila" data-jogo={jogoId ?? ''} data-contexto={contexto}>

@@ -13,7 +13,7 @@
  *  - `Progresso.novidades`: o que abriu e a criança ainda não visitou (selo "Novo!"); `marcarVisto` tira.
  * Nada aqui conta como domínio (regra 4): é só o que a criança pode visitar.
  */
-import { BANCO, FASES, FASE_POR_ID, HISTORIAS, LETRA_POR_ID, PECAS_AVATAR, SONS_PUBLICADOS, TEXTOS_DECODIFICAVEIS, usaSomReal } from '@fonema/conteudo';
+import { BANCO, FASES, FASE_POR_ID, HISTORIAS, LETRA_POR_ID, PECAS_AVATAR, SONS_PUBLICADOS, TEXTOS_DECODIFICAVEIS, jogoLigado, usaSomReal } from '@fonema/conteudo';
 import type { Progresso } from './estado.ts';
 import { concluirFase } from './sequencia.ts';
 import { sonsEnsinados, variacoesDoJogo, MINIMO_DE_SONS } from './jogos-fonicos.ts';
@@ -48,6 +48,9 @@ const temSomPublicado = (f: string) => SONS_PUBLICADOS.includes(f);
 
 /** Letras cujo som pode entrar nos jogos livres (som real, com clipe). */
 const LETRAS_DOS_JOGOS = Object.entries(LETRA_POR_ID).filter(([, l]) => !!l.fonema && usaSomReal(l) && temSomPublicado(l.fonema)).map(([id]) => id);
+
+/** Id do extra → id do jogo no Parque (conteudo/jogos.ts). */
+const ID_DO_JOGO: Record<string, string> = { memoria: 'memoria-sons' };
 
 const NOME_VARIACAO: Record<string, string> = { letra: 'Letras', figura: 'Figuras', inicio: 'Começa com', fim: 'Termina com' };
 const NOME_NIVEL_MEMORIA: Record<number, string> = { 1: 'Olhar e lembrar', 2: 'Memória', 3: 'Memória grande', 4: 'Só ouvindo' };
@@ -124,7 +127,8 @@ export function catalogoDeExtras(p: Progresso, opts: { rapido?: boolean } = {}):
     const ab = e === 'aberta' || e === 'concluida';
     out.push({ id: `peca:${peca.categoria}:${peca.id}`, grupo: 'lojinha', nome: peca.nome, rota: 'lojinha', aberto: ab, sexo: peca.sexo, ...(ab ? {} : { falta: `Abre na missão "${FASE_POR_ID[peca.fase]?.titulo ?? peca.fase}".` }) });
   }
-  return out;
+  // Estúdio criativo › Jogos (fila nº 32): jogo desligado pelo administrador sai do catálogo (sem "Novo!" nem cadeado)
+  return out.filter((x) => !x.id.startsWith('jogo:') || jogoLigado(ID_DO_JOGO[x.id.split(':')[1]] ?? x.id.split(':')[1]));
 }
 
 /** Ids dos extras abertos agora (só o que depende de fases e do que já foi ensinado). */

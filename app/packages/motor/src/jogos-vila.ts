@@ -18,7 +18,7 @@
  * som já visto na bandeja da Casa do Som.
  * O que NUNCA conta (regra 4): cor do carro, móvel recebido, casa decorada, rodadas jogadas. Números [DP] = decisão do projeto.
  */
-import { BANCO, FASES_TF, FIGURAS, PARES_CONFUSOS, VALORES_AVISO, habilidadeDoPar, valoresDaEntrada, verificarPalavra } from '@fonema/conteudo';
+import { BANCO, FASES_TF, FIGURAS, FIGURAS_EXTRAS_JOGOS, PARES_CONFUSOS, VALORES_AVISO, habilidadeDoPar, jogoLigado, palavrasDaCasaDoSom, temFiguraJogo, valoresDaEntrada, verificarPalavra } from '@fonema/conteudo';
 import type { AtividadeEscolher, AtividadeParMinimo, ItemParMinimo } from '@fonema/conteudo';
 import type { DadosJogosVila, Progresso } from './estado.ts';
 import { unidadeConcluida } from './biblioteca.ts';
@@ -34,10 +34,10 @@ export const ITENS_POR_RODADA: Record<JogoVilaId, number> = { 'estrada-pares': 6
 export const HABILIDADE_CARTEIRO = 'leitura-cvcv';
 export const HABILIDADE_CASA = 'escrita-cvcv';
 
-/** Figuras com arte que o banco (`FIGURAS`/`BANCO`) ainda não conhece: só usadas pelos jogos da vila. */
-export const FIGURAS_EXTRAS_VILA = ['pia', 'bule', 'mapa'];
+/** Figuras com arte que o banco (`FIGURAS`/`BANCO`) ainda não conhece: só usadas pelos jogos (conteudo/jogos.ts). */
+export const FIGURAS_EXTRAS_VILA = FIGURAS_EXTRAS_JOGOS;
 /** A palavra tem figura com arte (para as placas do modo ouvir e as casas do Carteiro). */
-export const temFiguraVila = (w: string): boolean => !!FIGURAS[w] || !!BANCO[w]?.figura || FIGURAS_EXTRAS_VILA.includes(w);
+export const temFiguraVila = temFiguraJogo;
 
 function misturar<T>(xs: readonly T[], r: () => number): T[] {
   const a = [...xs];
@@ -234,10 +234,16 @@ export const MOVEIS_CASA: { palavra: string; nome: string }[] = [
   { palavra: 'dado', nome: 'Dado' }, { palavra: 'gato', nome: 'Gatinho' }, { palavra: 'tapete', nome: 'Tapete' },
   { palavra: 'tomate', nome: 'Tomate' }
 ];
+/** Nome do móvel (palavra nova da lista editada: a própria palavra com maiúscula). */
+export const nomeDoMovel = (w: string): string => MOVEIS_CASA.find((m) => m.palavra === w)?.nome ?? (w.charAt(0).toUpperCase() + w.slice(1));
 
-/** Móveis que já podem ser encomendados (escritos) agora. */
+/**
+ * Móveis que já podem ser encomendados (escritos) agora: a lista editável do Estúdio (conteudo/jogos.ts) passada SEMPRE
+ * pelo `palavraLiberada` desta criança (regra 2), qualquer que seja a lista. Móveis que a criança já ganhou continuam
+ * na casinha mesmo se a palavra sair da lista (não se tira nada dela).
+ */
 export function moveisLiberados(p: Progresso): string[] {
-  return MOVEIS_CASA.map((m) => m.palavra).filter((w) => palavraLiberada(p, w));
+  return [...new Set(palavrasDaCasaDoSom().map((w) => w.toLowerCase().trim()))].filter((w) => palavraLiberada(p, w));
 }
 
 /** Mínimo de móveis diferentes para a Casa do Som abrir [DP]. */
@@ -341,10 +347,11 @@ export function desafioDaFase(p: Progresso, faseId: string): { jogo: JogoVilaId;
   const f = FASES_TF.find((x) => x.id === faseId);
   if (!f || p.fases[faseId]?.estado !== 'concluida') return null;
   const tipos = new Set(f.cenas.map((c) => c.atividade?.tipo));
-  if (tipos.has('parMinimo')) {
+  // Estúdio criativo › Jogos: jogo desligado pelo administrador não é oferecido no fim da missão
+  if (tipos.has('parMinimo') && jogoLigado('estrada-pares')) {
     for (const v of ['ouvir', 'ler'] as const) if (bancoDaEstrada(p, v, faseId).length) return { jogo: 'estrada-pares', variacao: v };
   }
-  if (tipos.has('ditado') && casaLiberada(p).liberada) return { jogo: 'casa-som' };
-  if (f.cenas.some((c) => c.atividade?.tipo === 'escolher' && (c.atividade as AtividadeEscolher).itens.some((i) => i.formato === 'ler-figura')) && carteiroLiberado(p).liberada) return { jogo: 'carteiro' };
+  if (tipos.has('ditado') && jogoLigado('casa-som') && casaLiberada(p).liberada) return { jogo: 'casa-som' };
+  if (jogoLigado('carteiro') && f.cenas.some((c) => c.atividade?.tipo === 'escolher' && (c.atividade as AtividadeEscolher).itens.some((i) => i.formato === 'ler-figura')) && carteiroLiberado(p).liberada) return { jogo: 'carteiro' };
   return null;
 }
