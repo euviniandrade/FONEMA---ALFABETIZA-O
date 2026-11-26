@@ -1,15 +1,22 @@
 # FONEMA — Estado atual e passagem de bastão
 
-Atualizado em 2026-11-26 (seção 0: o jogo guia, fila nº 30). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
+Atualizado em 2026-11-26 (seção 0: publicado 82fc2e9 com as filas 23–34). **Leia este arquivo primeiro ao retomar o trabalho em qualquer sessão ou modelo.**
 Tudo o que foi feito está neste repositório, no ramo `claude/eager-brahmagupta-3d2lhr` (commit e push a cada mudança). Nada depende
 da memória da conversa anterior.
 
 ## 0. Situação agora (15/11/2026, 23h UTC) — leia isto primeiro
 
+**26/11/2026, 17h UTC — PUBLICADO:** o commit 82fc2e9 está no ar em fonema.vercel.app (dpl_H1SA5DhF; a Vercel voltou a aceitar,
+A8 resolvido). Entraram as filas nº 23, 24, 28, 30, 31, 32, 33 e 34 (D036 e D037). Antes de publicar: typecheck, lint, 518 testes,
+build; E2E --sem-jornada 685 ✓ 0 ✗ e trechos admin 23, gerenciador 29, foto3d 7, estúdio 49, tutorial 47, telas 5, mundo3d 45,
+caça 57, guia 75 (todos 0 ✗). Conferido no site publicado: "Vamos jogar", "Para adultos", "Próxima missão", "Que tal uma pausa",
+"Estúdio criativo" e "Robô de voz" estão nos arquivos servidos. Nenhum agente rodando. Perguntas abertas: D036 (2 sessões vs.
+2 dias; pausa; voz da pausa), D037 (esqueci a senha), cenários Cômica/Narrador do robô de voz, A9 (variantes de voz, "mais tarde").
+
 O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `claude/eager-brahmagupta-3d2lhr`, com commit e push.
 **Nenhum agente está rodando**; não há trabalho pela metade fora do repositório.
 
-**Entrada nova com acessos separados (fila nº 34; 26/11; no ramo, NÃO publicado):**
+**Entrada nova com acessos separados (fila nº 34; 26/11; no ar 26/11):**
 - **Primeira página refeita do zero** (`telas/entrada/Entrada.tsx`, `estilos-portal.css`): botão grande amarelo da **criança**
   ("Vamos jogar!" / "Continuar, [nome]!", com a dupla 3D; sem senha) → cartões das crianças; cartão **"Para adultos · com login e
   senha"** com **Família** e **Professor(a)**; "Primeira vez aqui? Criar conta"; link discreto **Administrador** no rodapé → `#/admin`
@@ -35,7 +42,7 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   (qualquer adulto no aparelho troca); quem abrir `#/admin` primeiro num aparelho novo vira o administrador geral daquele aparelho.
   **Pede número de decisão** (substitui o PIN da D028 pelos logins).
 
-**Várias missões no mesmo dia (fila nº 31, D036; 26/11; no ramo, NÃO publicado):**
+**Várias missões no mesmo dia (fila nº 31, D036; 26/11; no ar 26/11):**
 - **Feito:** fim da missão (`Ritual.tsx`) com botão grande "Próxima missão" (leva à ENTRADA da próxima; nada começa sozinho) e
   "Voltar para a vila", presos embaixo; painel guia "Missão 2 de hoje" + "Hoje: N missões feitas" (saiu o "Missão de hoje: feita!");
   contador `Progresso.missoesDoDia` (só contagem; `guia.ts › missoesHoje/contarMissao`); fim sem "amanhã" com outra missão à mão
@@ -50,7 +57,7 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   Capturas `app/docs/capturas/v18-missoes-{antes,depois}-*.jpg`.
 - **Conflito registrado:** pesquisa 42 R13 ("sem botão continuar") e R2 (1–2 sessões/dia): vale a decisão do dono (D036).
 
-**Estúdio criativo e robô de voz no administrador (fila nº 32 e 33; 26/11; no ramo, NÃO publicado):**
+**Estúdio criativo e robô de voz no administrador (fila nº 32 e 33; 26/11; no ar 26/11):**
 - **Aba nova `#/admin/estudio/<jogos|personagens|vozes|robo>`** (`telas/admin/estudio/`); as 12 abas antigas ficam iguais.
 - **Jogos como dados** (`conteudo/src/jogos.ts`, coleção `jogos` do gerenciador): nome, "treina", ligado, ordem e as palavras
   da Casa do Som (eram `MOVEIS_CASA` fixas no motor). Verificador: `errosDasPalavrasDoJogo` (fora do banco, sem figura,
@@ -76,7 +83,7 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
 - **Falta / limites:** o dono criar a chave e testar a 1ª conversão real; ninguém ouviu uma conversão de verdade; nomes da
   Caça ao Tesouro não editáveis; palavras dos jogos de escutar não editáveis (são ouvidas, estrutura própria).
 
-**O jogo guia: próxima missão e para que serve cada item (fila nº 30; 26/11; no ramo, NÃO publicado):**
+**O jogo guia: próxima missão e para que serve cada item (fila nº 30; 26/11; no ar 26/11):**
 - **Auditoria como criança:** a vila já guiava bem (estrela "Missão de hoje", botão Missão brilhando, painel guia com "Próxima:" e
   "Continuar"); o passeio já tinha a faixa da missão com seta e moedinhas. Faltava: nas telas de fora da missão (Lojinha, Álbum,
   Brincar, Cantinho, Fichas, trilhas, mapa das ilhas) não havia caminho de volta à missão a não ser voltar à vila; o fim da missão só
@@ -97,7 +104,7 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
   Capturas `app/docs/capturas/v17-guia-{antes,depois}-*.jpg` (celular 390×844 e PC 1440×900; o "antes" é o commit 21e1bde
   fotografado com o mesmo roteiro, `GUIA_PREFIXO=antes`).
 
-**Passeio 3D, gráfico rodada 2 + corrida + mechas (fila nº 24/28; 25–26/11; no ramo, NÃO publicado):**
+**Passeio 3D, gráfico rodada 2 + corrida + mechas (fila nº 24/28; 25–26/11; no ar 26/11):**
 - **Chão:** ruas calçadas só no médio/alto (`materiais.js`, contas no próprio desenho): paralelepípedo na avenida das casas, rua
   cruzada e caminho da escola (pedra mais lisa no meio, rejunte esverdeado na beira), pedra portuguesa em relevo na praça, lajotas no
   pátio da escola; some aos poucos de longe e quando a pedra fica pequena na tela (sem chuvisco). Meio-fio de pedra na avenida e no
