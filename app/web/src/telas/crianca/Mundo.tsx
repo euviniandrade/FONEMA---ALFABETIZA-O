@@ -11,7 +11,7 @@ import { asset, mundo3dDisponivel } from '../../servicos/ambiente.ts';
 import { DocaVila } from './DocaVila.tsx';
 import { primeiraEntradaDoDia } from '../../servicos/saudacao.ts';
 import { limparMarca } from '../../servicos/origem-passeio.ts';
-import { PainelGuia } from '../../componentes/Guia.tsx';
+import { PainelGuia, ProximaMissao } from '../../componentes/Guia.tsx';
 import { Dupla3DGiravel } from '../../componentes/Personagem3D.tsx';
 import { falar, falarVarias, semFonetica, textoTela } from '../../util.ts';
 
@@ -244,6 +244,8 @@ export function Arquipelago({ criancaId }: { criancaId: string }) {
   return (
     <div className="tela-mapa">
       <MapaNavegavel imagem={asset('arte/mapa-arquipelago.webp')} proporcao={1920 / 1072} marcadores={marcadores} foco={{ x: ILHA[regiaoAtual]?.x ?? 40, y: 40 }} rotulo="Mapa das ilhas: arraste para passear" />
+      {/* fila nº 30: no mapa das ilhas, a próxima missão fica num botão só, embaixo e no meio */}
+      <ProximaMissao criancaId={criancaId} progresso={progresso} className="hud-proxima" />
       <div className="hud-topo">
         <div className="hud-grupo">
           <button className="hud-btn" onClick={() => navegar(`c/${criancaId}/vila`)} aria-label="Voltar para a vila"><Icone nome="voltar" /></button>
@@ -266,7 +268,7 @@ export function Regiao({ criancaId, regiaoId }: { criancaId: string; regiaoId: s
   return (
     <div className="tela-regiao">
       <Fundo cena={cenaDe(r.cenario)} desfoque={8} tom="claro" />
-      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/mapa`} titulo={r.nome} />
+      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/mapa`} titulo={r.nome}><ProximaMissao criancaId={criancaId} progresso={progresso} /></Topo>
       <main className="palco">
         <section className="cartao regiao-cartao">
           <h1 className="t">{r.nome}</h1>

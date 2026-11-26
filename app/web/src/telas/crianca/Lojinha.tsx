@@ -3,6 +3,7 @@ import { ITENS_LOJA, pecasPara, type ItemLoja, type PecaAvatar } from '@fonema/c
 import { alternarAcessibilidade, comprar, comprarPeca, estadoPeca, pecaEmUso, podeComprar, rotuloCadeado, vestir, type AvatarCrianca } from '@fonema/motor';
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { Carregando, Topo } from '../../componentes/basicos.tsx';
+import { ProximaMissao } from '../../componentes/Guia.tsx';
 import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { Cofrinho } from '../../componentes/recompensas.tsx';
 import { Boneco3D, RetratoBoneco } from '../../componentes/Boneco3D.tsx';
@@ -95,7 +96,7 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
   return (
     <div className="tela-lojinha" data-testid="lojinha">
       <Fundo cena="feira" desfoque={14} tom="calmo" />
-      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/vila`} titulo="Lojinha da vila" />
+      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/vila`} titulo="Lojinha da vila"><ProximaMissao criancaId={criancaId} progresso={progresso} /></Topo>
       <main className="palco loja">
         <aside className="loja-boneco">
           <Boneco3D aparencia={aparencia} nome={crianca.nome} />
@@ -107,6 +108,7 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
             <div>
               <h1 className="t">Lojinha</h1>
               <p>Moedinhas só se ganham aprendendo. Nada com dinheiro de verdade, nada por sorte.</p>
+              <p className="para-que-serve" data-testid="lojinha-para-que">Peça com cadeado abre com as missões; depois é só trocar moedinhas.</p>
               {itemMeta ? (
                 <div className="meta-cofrinho">
                   <img src={asset(itemMeta.imagem)} alt="" />
@@ -185,6 +187,7 @@ export function Lojinha({ criancaId }: { criancaId: string }) {
             </div>
           ) : (
             <div role="tabpanel" aria-label="Utensílios">
+              <p className="nota-mic para-que-serve" data-testid="utensilios-para-que">Para que serve: o utensílio vai para a mochila e aparece no seu Álbum, ao lado do boneco.</p>
               {itemMeta ? null : <p className="nota-mic">Toque em "Quero juntar" para escolher uma meta para o cofrinho.</p>}
               <div className="grade-loja">
                 {ITENS_LOJA.map((i) => {

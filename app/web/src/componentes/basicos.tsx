@@ -65,7 +65,7 @@ export function Moedinhas({ valor, id }: { valor: number; id?: string }) {
       <img src={asset('recompensas/cofrinho-porquinho.webp')} alt="" />
       <b>{valor}</b>
       <span className="sr">moedinhas</span>
-      {aberto ? <PremioAmpliado qual="porquinho" titulo="Meu cofrinho" aoFechar={() => setAberto(false)}><p>Você tem <b>{valor}</b> {valor === 1 ? 'moedinha guardada' : 'moedinhas guardadas'}.</p></PremioAmpliado> : null}
+      {aberto ? <PremioAmpliado qual="porquinho" titulo="Meu cofrinho" aoFechar={() => setAberto(false)}><p>Você tem <b>{valor}</b> {valor === 1 ? 'moedinha guardada' : 'moedinhas guardadas'}.</p><p className="para-que-serve" data-testid="cofrinho-para-que">Para que serve: você ganha moedinhas nas missões e troca por roupas e cabelos na Lojinha.</p></PremioAmpliado> : null}
     </div>
   );
 }

@@ -16,6 +16,7 @@ import {
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { lerRota, navegar } from '../../rotas.ts';
 import { Carregando, Topo } from '../../componentes/basicos.tsx';
+import { ProximaMissao } from '../../componentes/Guia.tsx';
 import { Figura, Fundo, Icone } from '../../componentes/ui.tsx';
 import { novoId } from '../../dados/repositorio.ts';
 import { efeitos } from '../../servicos/efeitos.ts';
@@ -106,7 +107,7 @@ export function JogosVila({ criancaId, jogoId }: { criancaId: string; jogoId?: s
   return (
     <div className="tela-jogos-vila" data-testid="jogos-vila" data-jogo={jogoId ?? ''} data-contexto={contexto}>
       <Fundo cena={jogo?.id === 'casa-som' ? 'arte/jogos/sala-casa-som' : jogo?.id === 'carteiro' ? 'arte/jogos/rua-vila' : 'arte/paisagem-sem-dupla'} desfoque={12} tom="claro" />
-      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={voltar} titulo={jogo ? jogo.nome : 'Jogos da vila'} />
+      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={voltar} titulo={jogo ? jogo.nome : 'Jogos da vila'}>{jogo ? null : <ProximaMissao criancaId={criancaId} progresso={progresso} />}</Topo>
       <main className="palco">
         {!jogo ? (
           <section className="cartao jv-parque">

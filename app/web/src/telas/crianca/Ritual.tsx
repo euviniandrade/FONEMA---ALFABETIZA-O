@@ -76,8 +76,9 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
     return () => window.clearTimeout(relogio);
   }, [relatorio.moedinhas]);
   const saldoAgora = saldoAntes + Math.max(somadas, passo >= 1 && moedasAnim === 0 ? relatorio.moedinhas : 0);
-  // "próximo objetivo" só quando é OUTRA missão (se a mesma precisa ser treinada de novo, a Sofia já diz no gancho)
-  const proximaDeVerdade = relatorio.faseConcluida && proxima && proxima.id !== fase.id ? proxima : undefined;
+  // fila nº 30 ("sempre saber qual é a próxima missão"): o fim mostra SEMPRE a próxima missão (outra fase ou a mesma de novo), em
+  // qualquer modo de prêmio (missão não é prêmio). Só texto: sem botão de começar aqui (C9/R13: o fim não tem "continuar"); o
+  // "Voltar para a vila" leva à vila, onde a estrela e o botão da missão brilham.
   const idade = new Date().getFullYear() - crianca.anoNascimento;
   return (
     <div className="tela-ritual" data-testid="ritual">
@@ -130,7 +131,7 @@ export function Ritual({ crianca, progresso, relatorio, fase, expressa }: { cria
           {expressa && relatorio.expressa ? <p className="ritual-chefe"><Icone nome="raio" />{relatorio.expressa.passou ? 'Trilha Expressa: fase feita em ritmo rápido!' : 'Essa a gente vai fazer com calma, juntos!'}</p> : null}
           {relatorio.termometroDepois > relatorio.termometroAntes ? <div className="ritual-termo"><p>O termômetro da leitura subiu!</p><Termometro valor={relatorio.termometroDepois} comNumero={false} /></div> : null}
           {relatorio.tituloNovo ? <p className="titulo-novo">Título novo: <b>{relatorio.tituloNovo}</b></p> : null}
-          <BarraObjetivo nivel={nivel} objetivo={config.recompensas.modo === 'surpresa' && proximaDeVerdade ? semFonetica(proximaDeVerdade.titulo) : undefined} />
+          <BarraObjetivo nivel={nivel} objetivo={proxima ? semFonetica(proxima.titulo) : undefined} rotuloObjetivo="Próxima missão" />
           {passo >= 3 ? <Balao fala={relatorio.faseConcluida ? fase.gancho : { quem: 'sofia', texto: FALAS.ritual.amanha }} crianca={crianca} humor="curiosa" /> : null}
           <div className="linha-botoes ritual-botoes">
             {fase.demonstracao ? <button className="btn grande" onClick={() => navegar(`c/${crianca.id}/mostra/${fase.id}`)} data-testid="mostra-professor"><Icone nome="chapeu" />Mostra pro professor</button> : null}

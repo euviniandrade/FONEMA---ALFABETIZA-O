@@ -389,7 +389,7 @@ export function Termometro({ valor, comNumero = true }: { valor: number; comNume
  * Barra do PRÓXIMO OBJETIVO (P1-b): mostra o objetivo de aprendizagem, não o prêmio.
  * 4–5 anos: bolinhas para preencher (no máximo 8 visíveis); a Sofia fala o número.
  */
-export function BarraObjetivo({ nivel, objetivo, compacta = false }: { nivel: InfoNivel; objetivo?: string; compacta?: boolean }) {
+export function BarraObjetivo({ nivel, objetivo, compacta = false, rotuloObjetivo = 'Próximo objetivo' }: { nivel: InfoNivel; objetivo?: string; compacta?: boolean; rotuloObjetivo?: string }) {
   const total = Math.min(8, nivel.custoProximo || 1);
   const feitos = Math.round(((nivel.desafiosNoNivel || 0) / (nivel.custoProximo || 1)) * total);
   return (
@@ -398,7 +398,7 @@ export function BarraObjetivo({ nivel, objetivo, compacta = false }: { nivel: In
       <div className="bo-bolinhas" aria-label={`Faltam ${nivel.faltam} desafios para o nível ${nivel.nivel + 1}`}>
         {Array.from({ length: total }, (_, i) => <i key={i} className={i < feitos ? 'cheia' : ''} />)}
       </div>
-      {objetivo ? <p className="bo-obj">Próximo objetivo: <b>{objetivo}</b></p> : null}
+      {objetivo ? <p className="bo-obj" data-testid="bo-objetivo">{rotuloObjetivo}: <b>{objetivo}</b></p> : null}
       {nivel.portao && nivel.desafiosNoNivel + (nivel.estrelas ? nivel.custoProximo : 0) >= 0 && !compacta ? <p className="bo-portao">Rumo a um título novo: vencer <b>{nivel.portao.nome}</b></p> : null}
     </div>
   );

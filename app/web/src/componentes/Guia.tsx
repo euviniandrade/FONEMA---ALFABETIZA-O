@@ -4,6 +4,8 @@
  * - CaminhoEtapas: o caminho do que a criança vai aprender (etapas de conteudo/caminho.ts, "Você está aqui");
  * - PainelGuia: nível, estrelinhas e selos da última missão, a missão de hoje com "Continuar" e a etapa atual.
  *   No PC/tablet deitado fica ao lado; no celular fica em cima, recolhido numa faixa que abre ao tocar.
+ * - ProximaMissao (fila nº 30): a pílula "Próxima missão" no topo das telas de fora da missão (Lojinha, Álbum, Brincar, mapas…),
+ *   para a criança sempre saber qual é a próxima missão e ter um botão só para ir até ela.
  * Nada aqui avalia: só mostra o que o motor já calculou (guia.ts, nivel.ts).
  */
 import { useState, type CSSProperties } from 'react';
@@ -79,6 +81,30 @@ export function CaminhoEtapas({ progresso, crianca, destaque, vistas, compacto =
   );
 }
 const ROTULO_ETAPA: Record<EstadoEtapa, string> = { feita: 'já feita', agora: 'você está aqui', depois: 'vem depois', trancada: 'trancada, em breve' };
+
+/* ------------------------------------------------------------ próxima missão ------------------------------------------------------------ */
+
+/**
+ * Fila nº 30 ("sempre saber qual é a próxima missão"): pílula dourada com a missão de agora (o mesmo `missaoDeHoje` do painel guia e
+ * as mesmas palavras: "Missão de hoje" antes de fazer, "Próxima missão" depois). Leva à ENTRADA da fase (como o "Continuar" do
+ * painel), nunca direto à lição. Vai no topo das telas de fora da missão; nunca no meio de uma atividade, no fim da missão (sem
+ * botão "continuar", C9) nem no passeio 3D (que tem o próprio guia). Só texto na tela: não fala (não há clipe gravado).
+ */
+export function ProximaMissao({ criancaId, progresso, className = '' }: { criancaId: string; progresso: Progresso; className?: string }) {
+  const missao = missaoDeHoje(progresso, Date.now());
+  const fase = FASE_POR_ID[missao.faseId];
+  if (!fase) return null;
+  const rotulo = missao.feitaHoje ? 'Próxima missão' : 'Missão de hoje';
+  const titulo = semFonetica(fase.titulo);
+  return (
+    <button className={`btn ipe brilha proxima-missao ${className}`} onClick={() => { efeitos.toque(); navegar(`c/${criancaId}/fase/${fase.id}`); }}
+      data-testid="proxima-missao" data-fase={fase.id} aria-label={`${rotulo}: ${titulo}. Ir para a missão`}>
+      <span className="pm-estrela" aria-hidden="true"><Icone nome="estrela" /></span>
+      <span className="pm-txt"><small>{rotulo}</small><b>{titulo}</b></span>
+      <Icone nome="play" className="pm-ir" />
+    </button>
+  );
+}
 
 /* -------------------------------------------------------------- painel guia -------------------------------------------------------------- */
 

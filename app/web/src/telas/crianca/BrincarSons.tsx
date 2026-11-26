@@ -9,6 +9,7 @@ import { creditarEmBloco, dadosBiblioteca, memoriaAberta, moedinhasDaCorrida, va
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Carregando, Topo } from '../../componentes/basicos.tsx';
+import { ProximaMissao } from '../../componentes/Guia.tsx';
 import { Figura, Fundo, Icone } from '../../componentes/ui.tsx';
 import { asset } from '../../servicos/ambiente.ts';
 import { voz } from '../../servicos/voz.ts';
@@ -80,7 +81,7 @@ export function BrincarSons({ criancaId, jogoId }: { criancaId: string; jogoId?:
   return (
     <div className="tela-brincar" data-testid="brincar" data-jogo={jogoId ?? ''}>
       <Fundo cena="quintal" desfoque={12} tom="claro" />
-      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={jogo ? `c/${criancaId}/brincar` : `c/${criancaId}/vila`} titulo="Brincar com sons" />
+      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={jogo ? `c/${criancaId}/brincar` : `c/${criancaId}/vila`} titulo="Brincar com sons">{jogo ? null : <ProximaMissao criancaId={criancaId} progresso={progresso} />}</Topo>
       <main className="palco">
         {jogo && fim ? (
           <section className="cartao biblio-feito" data-testid="brincar-fim">

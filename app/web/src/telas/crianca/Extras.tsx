@@ -5,6 +5,7 @@ import { AREA_DO_DEGRAU, ehSeloDeParticipacao, infoNome, registrarSondagem, resu
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { AvatarGrande, Balao, BotaoOuvir, Carregando, Topo } from '../../componentes/basicos.tsx';
+import { ProximaMissao } from '../../componentes/Guia.tsx';
 import { Figura, Fundo, Icone } from '../../componentes/ui.tsx';
 import { Modelo3D, Selo } from '../../componentes/recompensas.tsx';
 import { EspelhoBoca, useEspelhoEmbed } from '../../componentes/EspelhoDoSom.tsx';
@@ -25,7 +26,7 @@ export function Album({ criancaId }: { criancaId: string }) {
   return (
     <div className="tela-album" data-testid="album">
       <Fundo cena="biblioteca" desfoque={14} tom="calmo" />
-      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/vila`} titulo="Álbum de Conquistas" />
+      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={`c/${criancaId}/vila`} titulo="Álbum de Conquistas"><ProximaMissao criancaId={criancaId} progresso={progresso} /></Topo>
       <main className="palco">
         <section className="cartao">
           <div className="album-cab">
@@ -34,6 +35,7 @@ export function Album({ criancaId }: { criancaId: string }) {
               <h1 className="t">Álbum de {crianca.nome}</h1>
               <p className="album-contagem"><img src={asset('figuras/estrela.webp')} alt="" />{ganhas} {ganhas === 1 ? 'conquista' : 'conquistas'}</p>
               <p>Cada uma conta uma coisa que você aprendeu.</p>
+              <p className="para-que-serve" data-testid="album-para-que">Para que serve: guardar as conquistas. Elas chegam no fim das missões.</p>
               {progresso.itens.length ? <div className="mochila"><b>Mochila:</b>{progresso.itens.map((i) => <img key={i} src={asset(`itens/${i}.webp`)} alt={i} title={i} />)}</div> : null}
               {progresso.areas.length ? <p className="nota-mic">Lugares novos na vila: {SURPRESAS.filter((s) => progresso.areas.includes(s.id)).map((s) => s.nome).join(' · ')}</p> : null}
             </div>

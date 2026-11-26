@@ -18,6 +18,7 @@ import { Falta, SeloNovo, ehNovo, marcarVistoAqui, useMissoesAteAbrir } from '..
 import { useApp, useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Carregando, Topo } from '../../componentes/basicos.tsx';
+import { ProximaMissao } from '../../componentes/Guia.tsx';
 import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { CaminhoFluencia } from '../../componentes/GraficoFluencia.tsx';
 import { novoId } from '../../dados/repositorio.ts';
@@ -157,7 +158,7 @@ export function Biblioteca({ criancaId, sub }: { criancaId: string; sub?: string
   return (
     <div className="tela-biblio" data-testid="biblioteca" data-sub={sub ?? ''}>
       <Fundo cena="biblioteca" desfoque={12} tom="claro" />
-      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={sub ? voltar : `c/${criancaId}/vila`} titulo="Cantinho da Leitura" />
+      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={sub ? voltar : `c/${criancaId}/vila`} titulo="Cantinho da Leitura">{sub ? null : <ProximaMissao criancaId={criancaId} progresso={progresso} />}</Topo>
       <main className="palco">{corpo}</main>
     </div>
   );

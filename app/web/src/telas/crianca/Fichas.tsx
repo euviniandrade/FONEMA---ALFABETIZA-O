@@ -13,6 +13,7 @@ import { estadoDosCampos, modosDaFicha, tentativasDasFichas, type ModoFicha } fr
 import { useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { Balao, Carregando, Topo } from '../../componentes/basicos.tsx';
+import { ProximaMissao } from '../../componentes/Guia.tsx';
 import { Boquinha } from '../../componentes/Boquinha.tsx';
 import { Figura, Fundo, Icone } from '../../componentes/ui.tsx';
 import { voz } from '../../servicos/voz.ts';
@@ -88,7 +89,7 @@ export function TelaFichas({ criancaId, sub }: { criancaId: string; sub: string 
   return (
     <div className="tela-biblio tela-fichas" data-testid="fichas" data-sub={sub}>
       <Fundo cena="biblioteca" desfoque={12} tom="claro" />
-      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={voltar} titulo="Fichas de leitura" />
+      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={voltar} titulo="Fichas de leitura">{campo ? null : <ProximaMissao criancaId={criancaId} progresso={progresso} />}</Topo>
       <main className="palco">{corpo}</main>
     </div>
   );

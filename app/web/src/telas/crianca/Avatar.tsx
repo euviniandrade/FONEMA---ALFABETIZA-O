@@ -5,6 +5,7 @@ import { Fundo, Icone } from '../../componentes/ui.tsx';
 import { useCrianca } from '../../contexto.tsx';
 import { navegar } from '../../rotas.ts';
 import { BotaoOuvir, Carregando, Topo } from '../../componentes/basicos.tsx';
+import { ProximaMissao } from '../../componentes/Guia.tsx';
 import { Boneco3D, RetratoBoneco } from '../../componentes/Boneco3D.tsx';
 import { modelosExistentes, resolverAparencia } from '../../avatar3d/index.ts';
 import { asset } from '../../servicos/ambiente.ts';
@@ -96,7 +97,7 @@ function Montador({ crianca, progresso, salvarCrianca }: { crianca: Crianca; pro
   return (
     <div className="tela-avatar" data-testid="montar-avatar" data-passo={passo}>
       <Fundo cena="quintal" desfoque={14} tom="calmo" />
-      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={jaTinha ? `c/${criancaId}/vila` : undefined} titulo="Meu boneco" />
+      <Topo crianca={crianca} moedinhas={progresso.moedinhas.saldo} voltar={jaTinha ? `c/${criancaId}/vila` : undefined} titulo="Meu boneco">{jaTinha && progresso.sessoesFeitas ? <ProximaMissao criancaId={criancaId} progresso={progresso} /> : null}</Topo>
       <main className="montar">
         <section className="montar-palco" aria-label="Seu boneco">
           <Boneco3D aparencia={aparencia} nome={crianca.nome} />
