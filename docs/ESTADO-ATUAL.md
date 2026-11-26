@@ -24,10 +24,12 @@ O dono vai continuar o trabalho com outro modelo (Opus). Tudo está no ramo `cla
 - **E2E:** `passarPorteira` usa login e senha ("ana.familia"/"ana.professor", senha "fonema123") e agora FALHA se não passar;
   trecho novo `--entrada` (`e2e/trecho-entrada.mjs`, também no completo e no `--sem-jornada`): 4 acessos em 5 tamanhos (390×844,
   820×1180, 1440×900, 1280×720, 360×640), alvos ≥ 44 px, professor/família/esqueci/PIN antigo/administrador — **39 ✓ 0 ✗**.
-- **Verificado (worktree, build servido na 4860):** typecheck, lint, `npm test` 517/517 (7 novos em `conta.test.ts`); `--admin` 23 ✓;
-  `--telas` ok; `--sem-jornada` **610 ✓ e 1 ✗** — o ✗ é no trecho das várias missões (D036, outra frente: "painel guia mostra Missão 2
-  de hoje"), depois de todos os trechos que passam pela entrada; uma 1ª tentativa caiu por tempo no botão da Chegada (máquina com 3
-  E2E ao mesmo tempo) e passou na 2ª. Capturas `app/docs/capturas/v18-entrada-{antes,depois}-{celular,tablet,pc}.jpg` e
+- **Verificado (worktree, build do commit 179fd6b servido na 4860):** typecheck, lint, `npm test` 518/518 (8 novos em
+  `conta.test.ts`); `--entrada` **42 ✓ 0 ✗**; `--admin` 23 ✓; `--missoes` 40 ✓; `--telas` ok; **`--sem-jornada` inteiro 686 ✓ 0 ✗,
+  E2E OK** (com o `--entrada` dentro). Duas tentativas anteriores caíram em trechos de outras frentes com a máquina rodando 3 E2E ao
+  mesmo tempo (botão da Chegada por tempo; "Missão 2 de hoje" num build antes do acabamento da D036); a 3ª passou inteira.
+  Contas antigas com PIN não perdem nada: "Esqueci o PIN" (segurar 5 s → cria login e senha) e o adulto antigo confirma a criação de
+  conta em qualquer porta. "Esqueci a senha" só troca a senha na porta certa. Capturas `app/docs/capturas/v18-entrada-{antes,depois}-{celular,tablet,pc}.jpg` e
   `v18-entrada-depois-acesso-{criar,login}-{celular,pc}.jpg`.
 - **Limite honesto:** sem servidor, cada login vale só naquele aparelho e navegador; o "esqueci a senha" de segurar 5 s é fraco
   (qualquer adulto no aparelho troca); quem abrir `#/admin` primeiro num aparelho novo vira o administrador geral daquele aparelho.
